@@ -3,4 +3,5 @@
   <Project Path="src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj" />
   <Project Path="src/WPF/TheSingularityWorkshop.GUI.WPF.csproj" />
   <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
+  <Project Path="tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj" />
 </Solution>
