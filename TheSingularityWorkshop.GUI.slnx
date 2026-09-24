@@ -1,3 +1,6 @@
 <Solution>
-  <Project Path="TheSingularityWorkshop.GUI.csproj" />
+  <Project Path="src/Core/TheSingularityWorkshop.GUI.Core.csproj" />
+  <Project Path="src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj" />
+  <Project Path="src/WPF/TheSingularityWorkshop.GUI.WPF.csproj" />
+  <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
 </Solution>
