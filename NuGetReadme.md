@@ -2,11 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-[![GUI Core NuGet version](https://img.shields.io/nuget/v/TheSingularityWorkshop.GUI.Core?style=flat-square&logo=nuget&logoColor=white)](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Core)
-[![GUI Core NuGet downloads](https://img.shields.io/nuget/dt/TheSingularityWorkshop.GUI.Core?logo=nuget&style=flat-square)](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Core)
-[![GUI Blazor NuGet version](https://img.shields.io/nuget/v/TheSingularityWorkshop.GUI.Blazor?style=flat-square&logo=nuget&logoColor=white)](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Blazor)
-[![GUI Blazor NuGet downloads](https://img.shields.io/nuget/dt/TheSingularityWorkshop.GUI.Blazor?logo=nuget&style=flat-square)](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Blazor)
-
 [![Build Status](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.GUI/package.yml?branch=master&style=flat-square&logo=github)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
 [![Last commit](https://img.shields.io/github/last-commit/TrentBest/TheSingularityWorkshop.GUI/master)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commits/master)
 [![Code Coverage](https://img.shields.io/codecov/c/github/TrentBest/TheSingularityWorkshop.GUI?style=flat-square)](https://app.codecov.io/gh/TrentBest/TheSingularityWorkshop.GUI)
@@ -19,7 +14,7 @@
 [![CoderLegion](https://coderlegion.com/cl_badge_logo1.png) Join the CoderLegion Community](https://coderlegion.com/user/The+Singularity+Workshop)
 
 [**💖 Support Us**](https://www.paypal.com/donate/?hosted_button_id=3Z7263LCQMV9J)
-
+\n<a href="https://www.patreon.com/TheSingularityWorkshop" target="_blank">\n    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/FSM_API/Branding/TheSingularityWorkshop.png" alt="Support The Singularity Workshop on Patreon" height="200" style="display: block;">\n</a>\n
 A platform-neutral GUI engineering layer for C# applications.
 
 The Singularity Workshop GUI separates **semantic interface intent** from **platform-specific manifestation**.
@@ -129,7 +124,7 @@ The first production proving ground is the **WebPage** repository, where the sem
 
 The architecture is intentionally being developed in the open while the contracts stabilize.
 
-The first public NuGet packages are **0.1.0-alpha** and **0.1.0-alpha.1** prereleases. The repository's CI validates tests, uploads code coverage, and publishes the versioned packages to NuGet.org through trusted publishing.
+The first public NuGet packages are **0.1.0-alpha** and **0.1.0-alpha.1** prereleases. The repository's CI validates tests, uploads code coverage, and produces versioned NuGet package artifacts. NuGet.org publication is currently disabled behind an explicit release switch.
 
 ## Documentation
 
