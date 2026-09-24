@@ -26,20 +26,23 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Restore
-        run: dotnet restore TheSingularityWorkshop.GUI.sln
+      - name: Restore Core
+        run: dotnet restore src/Core/TheSingularityWorkshop.GUI.Core.csproj
 
-      - name: Build
-        run: dotnet build TheSingularityWorkshop.GUI.sln --configuration Release --no-restore
+      - name: Restore Blazor
+        run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
 
-      - name: Test
-        run: dotnet test TheSingularityWorkshop.GUI.sln --configuration Release --no-build
+      - name: Test Core
+        run: dotnet test tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj --configuration Release
+
+      - name: Test Blazor
+        run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release
 
       - name: Pack Core
-        run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --no-build --output ./packages
+        run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
 
       - name: Pack Blazor
-        run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --no-build --output ./packages
+        run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
 
       - name: Publish packages
         if: github.event_name != 'pull_request'
