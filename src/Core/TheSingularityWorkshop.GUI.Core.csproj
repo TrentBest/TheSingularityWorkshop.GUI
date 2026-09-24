@@ -5,7 +5,7 @@
     <Nullable>enable</Nullable>
     <RootNamespace>TheSingularityWorkshop.Workshop.Gui</RootNamespace>
     <PackageId>TheSingularityWorkshop.GUI.Core</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-alpha</Version>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>

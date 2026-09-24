@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
@@ -34,11 +36,18 @@ jobs:
       - name: Restore Blazor
         run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
 
-      - name: Test Core
-        run: dotnet test tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj --configuration Release
+      - name: Test Core with coverage
+        run: dotnet test tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/Core
 
-      - name: Test Blazor
-        run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release
+      - name: Test Blazor with coverage
+        run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/Blazor
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./TestResults/**/coverage.cobertura.xml
+          fail_ci_if_error: true
 
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
@@ -46,6 +55,23 @@ jobs:
       - name: Pack Blazor
         run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
 
+      - name: Upload NuGet packages as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gui-nuget-packages
+          path: ./packages/*.nupkg
+
+  publish_nuget:
+    needs: test-and-package
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && false
+
+    steps:
+      - name: Download NuGet packages
+        uses: actions/download-artifact@v4
+        with:
+          name: gui-nuget-packages
+          path: ./packages
+
       - name: Publish packages to NuGet.org
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate

@@ -9,7 +9,7 @@
 
 [![Build Status](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.GUI/package.yml?branch=master&style=flat-square&logo=github)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
 [![Last commit](https://img.shields.io/github/last-commit/TrentBest/TheSingularityWorkshop.GUI/master)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commits/master)
-[![Code Coverage](https://img.shields.io/codecov/c/github/TrentBest/TheSingularityWorkshop.GUI)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
+[![Code Coverage](https://img.shields.io/codecov/c/github/TrentBest/TheSingularityWorkshop.GUI?style=flat-square)](https://app.codecov.io/gh/TrentBest/TheSingularityWorkshop.GUI)
 [![Known Vulnerabilities](https://snyk.io/test/github/TrentBest/TheSingularityWorkshop.GUI/badge.svg)](https://snyk.io/test/github/TrentBest/TheSingularityWorkshop.GUI)
 
 [![GitHub stars](https://img.shields.io/github/stars/TrentBest/TheSingularityWorkshop.GUI?style=social)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/stargazers)
@@ -44,16 +44,20 @@ The same semantic GUI can therefore be represented through Blazor, WPF, Unity UI
 
 The platform-neutral recursive GUI model and builder primitives.
 
+For the current prerelease:
+
 ```bash
-dotnet add package TheSingularityWorkshop.GUI.Core
+dotnet add package TheSingularityWorkshop.GUI.Core --version 0.1.0-alpha
 ```
 
 ### TheSingularityWorkshop.GUI.Blazor
 
 Blazor builders and the Blazor manifestation layer built on GUI Core.
 
+For the current prerelease:
+
 ```bash
-dotnet add package TheSingularityWorkshop.GUI.Blazor
+dotnet add package TheSingularityWorkshop.GUI.Blazor --version 0.1.0-alpha
 ```
 
 The Blazor package depends on GUI Core.
@@ -125,6 +129,8 @@ The first production proving ground is the **WebPage** repository, where the sem
 
 The architecture is intentionally being developed in the open while the contracts stabilize.
 
+The first public NuGet packages are **0.1.0-alpha** prereleases. The repository's CI validates tests, uploads code coverage, and produces NuGet package artifacts. Publication to NuGet.org remains behind an explicit release switch.
+
 ## Documentation
 
 The full engineering and theory documentation lives in the repository:
@@ -148,3 +154,4 @@ Issues, experiments, architectural criticism, and pull requests are welcome.
 MIT License.
 
 Copyright © 2026 The Singularity Workshop.
+
