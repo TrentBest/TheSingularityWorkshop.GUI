@@ -9,10 +9,18 @@
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
-    <PackageDescription>Recursive fluent GUI builders and Blazor manifestation for The Singularity Workshop.</PackageDescription>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>NuGetReadme.md</PackageReadmeFile>
+    <PackageIcon>docs/assets/ideal-gui-separation-of-concerns.jpg</PackageIcon>
+    <PackageDescription>Recursive semantic GUI builders and Blazor manifestation for The Singularity Workshop.</PackageDescription>
+    <PackageTags>gui;semantic-gui;blazor;builder;rendering;platform-adapter;singularity;TheSingularityWorkshop</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
     <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
+    <None Include="NuGetReadme.md" Pack="true" PackagePath="\" />
+    <None Include="docs/assets/ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
   </ItemGroup>
 </Project>
