@@ -58,6 +58,12 @@ Interoperability does not require two systems to share implementation details. T
 
 [Read the chapter](THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
 
+### 6. Spatial Representation and Controlled Observation
+
+A GUI can represent subjects through independent views, viewports, and cameras. The 2D presentation domain provides the composition surface; 3D extends the subject space without requiring a separate GUI theory.
+
+[Read the chapter](THEORY/06_SPATIAL_REPRESENTATION.md)
+
 ## Textbook intent
 
 The chapters are written as reusable conceptual material rather than as marketing copy.
