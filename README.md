@@ -99,6 +99,18 @@ The goal is not to build a larger widget library. The goal is to build a semanti
 
 This is also the foundation for VR: semantic interaction such as Activate, Select, Point, Navigate, or Rotate must not intrinsically mean mouse click, keyboard input, or any other particular physical device.
 
+## Visual references
+
+Concrete images are useful as **reference manifestations** of the semantic model.
+
+The first reference is the Workshop map: a large spatial/operational interface combining navigation, a map/scene, destination indexing, textual information, and controls. It is intentionally treated as evidence of expressiveness rather than as a pixel-level Core contract.
+
+When committed, the canonical asset path is:
+
+`docs/assets/workshop-map-reference.png`
+
+See [docs/GUI_VISUAL_REFERENCE.md](docs/GUI_VISUAL_REFERENCE.md) for the reference-artifact convention and the path from visual reference to semantic model to adapter manifestation.
+
 See:
 
 - docs/IDEAL_GUI.md — the philosophical and architectural boundary.
