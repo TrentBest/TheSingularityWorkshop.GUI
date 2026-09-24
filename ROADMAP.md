@@ -15,6 +15,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [x] Define expressive visualization
 - [x] Define GUI/FSM_API relationship
 - [x] Define the ephemeral GUI lifecycle
+- [ ] Survey existing GUI systems and extract recurring semantic primitives
+- [ ] Define the digital-shadow coverage principle
 - [ ] Convert these principles into executable contracts
 
 ## Phase 1 — establish the neutral model
@@ -31,6 +33,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Define capability terminology
 - [ ] Define representation/media contracts
 - [ ] Define semantic input/interaction contracts
+- [ ] Define localization/internationalization contracts
+- [ ] Define accessibility/alternate-presentation contracts
 - [ ] Define lifecycle contracts
 
 ## Phase 2 — expressiveness before platform breadth
@@ -49,6 +53,7 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] Deliberately unstructured visual representation
 - [ ] Input abstraction independent of physical devices
 - [ ] Accessibility intent
+- [ ] Localization, Unicode, bidirectional text, and locale-aware presentation
 - [ ] State/data observation and binding
 
 ## Phase 3 — adapter conformance
