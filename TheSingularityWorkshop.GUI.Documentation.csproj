@@ -17,6 +17,7 @@
     <None Include="docs\GUI_MODEL.md" Link="Documentation\GUI_MODEL.md" />
     <None Include="docs\GUI_TAXONOMY.md" Link="Documentation\GUI_TAXONOMY.md" />
     <None Include="docs\GUI_VISUAL_REFERENCE.md" Link="Documentation\GUI_VISUAL_REFERENCE.md" />
+    <None Include="docs\GUI_BENCHMARKING.md" Link="Documentation\GUI_BENCHMARKING.md" />
     <None Include="docs\IDEAL_GUI.md" Link="Documentation\IDEAL_GUI.md" />
     <None Include="docs\GUI_SPATIAL_DOMAIN.md" Link="Documentation\GUI_SPATIAL_DOMAIN.md" />
     <None Include="docs\GUI_SPATIAL_CONTRACTS.md" Link="Documentation\GUI_SPATIAL_CONTRACTS.md" />
