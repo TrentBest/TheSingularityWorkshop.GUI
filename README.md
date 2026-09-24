@@ -47,11 +47,11 @@ This distinction is the central engineering problem for this repository.
 
 See:
 
-- docs/ARCHITECTURE.md
-- docs/GUI_MODEL.md
-- docs/PLATFORM_ADAPTERS.md
-- docs/TESTING.md
-- ROADMAP.md
+- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
+- [docs/GUI_MODEL.md](docs/GUI_MODEL.md)
+- [docs/PLATFORM_ADAPTERS.md](docs/PLATFORM_ADAPTERS.md)
+- [docs/TESTING.md](docs/TESTING.md)
+- [ROADMAP.md](ROADMAP.md)
 
 ## Current integrations
 
