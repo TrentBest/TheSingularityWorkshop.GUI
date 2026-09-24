@@ -26,7 +26,7 @@ The repository currently contains the first recursive model and two platform imp
 
 ## Phase 3 — adapters
 
-- [ ] Blazor contract tests
+- [x] Blazor contract tests
 - [ ] WPF contract tests
 - [ ] Unity UI Toolkit adapter
 - [ ] Shared adapter conformance cases
