@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.RenderTree;
 using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.GUI.Blazor.Tests;
