@@ -33,6 +33,7 @@
     <None Include="docs\THEORY\03_DIGITAL_SHADOW.md" Link="Theory\03_DIGITAL_SHADOW.md" />
     <None Include="docs\THEORY\04_EXECUTION_BOUNDARY.md" Link="Theory\04_EXECUTION_BOUNDARY.md" />
     <None Include="docs\THEORY\05_REPRESENTATIONAL_COMPATIBILITY.md" Link="Theory\05_REPRESENTATIONAL_COMPATIBILITY.md" />
+    <None Include="docs\THEORY\06_SPATIAL_REPRESENTATION.md" Link="Theory\06_SPATIAL_REPRESENTATION.md" />
 
     <None Include="docs\assets\workshop-map-reference.jpg" Link="Reference Assets\workshop-map-reference.jpg" />
   </ItemGroup>
