@@ -62,3 +62,47 @@ RevitFamilyManagerBuilders remains unchanged. Reusable WPF infrastructure is bei
 ## Status
 
 The repository is in active contract-design phase. The current recursive tree is intentionally small. The next work is to replace ambiguous stringly-typed behavior with explicit semantic contracts, capability negotiation, shared adapter conformance tests, and deterministic GUI artifacts.
+
+
+## The Land of Idealism
+
+The long-term design begins with a stronger premise than platform abstraction.
+
+The GUI is an **extrinsic interface layer**: an ephemeral observer and interaction boundary around a digital experience. It is not an intrinsic member of the experience's domain code.
+
+An experience manifest identifies micro-bundles and configuration. It does not contain GUI implementation. The GUI observes the resulting runtime and manifests an appropriate representation.
+
+Conceptually:
+
+```
+experience manifest
+    -> micro-bundles + configuration
+    -> runtime experience
+    -> GUI observation / interaction
+    -> platform manifestation
+```
+
+The intended relationship with FSM_API is similarly separated:
+
+- **FSM_API** provides behavior and state-transition machinery.
+- **GUI** provides visualization and interaction representation.
+- **Platform adapters** turn semantic GUI intent into platform-native manifestation.
+- **Input devices** provide physical or external input to the interaction boundary.
+
+## GUI is larger than widgets
+
+GUI purpose is independent of GUI platform.
+
+The model must eventually support diagnostic, operational, informational, spatial, immersive, and expressive visualization. A GUI may represent a button, a floor plan, a state inspector, a 3D scene, an image, a mesh, animation, or even deliberately unstructured visual output such as static/noise.
+
+The goal is not to build a larger widget library. The goal is to build a semantic representation space expressive enough to describe digital visualization without making a particular device or rendering technology intrinsic to the domain.
+
+This is also the foundation for VR: semantic interaction such as Activate, Select, Point, Navigate, or Rotate must not intrinsically mean mouse click, keyboard input, or any other particular physical device.
+
+See:
+
+- docs/IDEAL_GUI.md — the philosophical and architectural boundary.
+- docs/GUI_TAXONOMY.md — GUI purposes independent of platform.
+- docs/MANIFEST_BOUNDARY.md — why GUI implementation stays outside experience manifests.
+- docs/GUI_EXPRESSIVENESS.md — the intended visualization and interaction domain.
+- docs/GUI_LIFECYCLE.md — ephemeral and multi-observer lifecycle.
