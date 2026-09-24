@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>TheSingularityWorkshop.GUI.Blazor</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>The Singularity Workshop</Authors>
+    <Company>The Singularity Workshop</Company>
+    <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
+    <PackageDescription>Recursive fluent GUI builders and Blazor manifestation for The Singularity Workshop.</PackageDescription>
+  </PropertyGroup>
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
+  </ItemGroup>
+</Project>

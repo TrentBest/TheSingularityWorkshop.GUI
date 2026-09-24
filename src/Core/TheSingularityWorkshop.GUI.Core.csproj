@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TheSingularityWorkshop.Workshop.Gui</RootNamespace>
+    <PackageId>TheSingularityWorkshop.GUI.Core</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>The Singularity Workshop</Authors>
+    <Company>The Singularity Workshop</Company>
+    <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
+    <PackageDescription>Platform-neutral recursive GUI model and builder primitives.</PackageDescription>
+  </PropertyGroup>
+</Project>

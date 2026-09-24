@@ -1,0 +1,45 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <EnableDefaultItems>false</EnableDefaultItems>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Link="Solution Documentation\README.md" />
+    <None Include="ROADMAP.md" Link="Solution Documentation\ROADMAP.md" />
+
+    <None Include="docs\ARCHITECTURE.md" Link="Documentation\ARCHITECTURE.md" />
+    <None Include="docs\GUI_COVERAGE_SURVEY.md" Link="Documentation\GUI_COVERAGE_SURVEY.md" />
+    <None Include="docs\GUI_EXECUTION_MODEL.md" Link="Documentation\GUI_EXECUTION_MODEL.md" />
+    <None Include="docs\GUI_EXPRESSIVENESS.md" Link="Documentation\GUI_EXPRESSIVENESS.md" />
+    <None Include="docs\GUI_LIFECYCLE.md" Link="Documentation\GUI_LIFECYCLE.md" />
+    <None Include="docs\GUI_MODEL.md" Link="Documentation\GUI_MODEL.md" />
+    <None Include="docs\GUI_TAXONOMY.md" Link="Documentation\GUI_TAXONOMY.md" />
+    <None Include="docs\GUI_VISUAL_REFERENCE.md" Link="Documentation\GUI_VISUAL_REFERENCE.md" />
+    <None Include="docs\GUI_BENCHMARKING.md" Link="Documentation\GUI_BENCHMARKING.md" />
+    <None Include="docs\GUI_SPATIAL_DOMAIN.md" Link="Documentation\GUI_SPATIAL_DOMAIN.md" />
+    <None Include="docs\GUI_SPATIAL_CONTRACTS.md" Link="Documentation\GUI_SPATIAL_CONTRACTS.md" />
+    <None Include="docs\NEXT_CONTRACT_SURFACE.md" Link="Documentation\NEXT_CONTRACT_SURFACE.md" />
+    <None Include="docs\IDEAL_GUI.md" Link="Documentation\IDEAL_GUI.md" />
+    <None Include="docs\MANIFEST_BOUNDARY.md" Link="Documentation\MANIFEST_BOUNDARY.md" />
+    <None Include="docs\PLATFORM_ADAPTERS.md" Link="Documentation\PLATFORM_ADAPTERS.md" />
+    <None Include="docs\TESTING.md" Link="Documentation\TESTING.md" />
+
+    <None Include="docs\START_HERE.md" Link="Documentation\START_HERE.md" />
+    <None Include="docs\THEORY_GUIDE.md" Link="Documentation\THEORY_GUIDE.md" />
+    <None Include="docs\THEORY_TEXTBOOK_MAP.md" Link="Documentation\THEORY_TEXTBOOK_MAP.md" />
+
+    <None Include="docs\THEORY\01_EXTRINSIC_INTERFACE_LAYER.md" Link="Theory\01_EXTRINSIC_INTERFACE_LAYER.md" />
+    <None Include="docs\THEORY\02_BREAKWATER_PRINCIPLE.md" Link="Theory\02_BREAKWATER_PRINCIPLE.md" />
+    <None Include="docs\THEORY\03_DIGITAL_SHADOW.md" Link="Theory\03_DIGITAL_SHADOW.md" />
+    <None Include="docs\THEORY\04_EXECUTION_BOUNDARY.md" Link="Theory\04_EXECUTION_BOUNDARY.md" />
+    <None Include="docs\THEORY\05_REPRESENTATIONAL_COMPATIBILITY.md" Link="Theory\05_REPRESENTATIONAL_COMPATIBILITY.md" />
+    <None Include="docs\THEORY\06_SPATIAL_REPRESENTATION.md" Link="Theory\06_SPATIAL_REPRESENTATION.md" />
+
+    <None Include="docs\assets\ideal-gui-separation-of-concerns.jpg" Link="Reference Assets\ideal-gui-separation-of-concerns.jpg" />
+    <None Include="docs\assets\gui-engineering-boundary.jpg" Link="Reference Assets\gui-engineering-boundary.jpg" />
+    <None Include="docs\assets\repository-structure-overview.jpg" Link="Reference Assets\repository-structure-overview.jpg" />
+    <None Include="docs\assets\workshop-map-reference.jpg" Link="Reference Assets\workshop-map-reference.jpg" />
+  </ItemGroup>
+</Project>
