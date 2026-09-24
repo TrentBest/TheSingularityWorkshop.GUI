@@ -13,7 +13,6 @@ on:
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   test-and-package:
@@ -66,6 +65,9 @@ jobs:
     needs: test-and-package
     runs-on: ubuntu-latest
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Download NuGet packages
@@ -74,5 +76,11 @@ jobs:
           name: gui-nuget-packages
           path: ./packages
 
+      - name: Authenticate with NuGet Trusted Publishing
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: TheSingularityWorkshop
+
       - name: Publish packages to NuGet.org
-        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
