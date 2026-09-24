@@ -23,9 +23,9 @@ This image illustrates the separation between physical/external input, FSM_API r
 
 This image emphasizes the breakwater around the semantic core. Web/Blazor, desktop/WPF, and spatial/Unity are shown as manifestations outside the protected semantic boundary.
 
-### Spatial reference
+### Workshop map
 
-![Workshop spatial reference](assets/workshop-map-reference.jpg)
+![Workshop map](assets/workshop-map-reference.jpg)
 
 The Workshop map is the concrete visual companion for the spatial-domain work: it combines a scene, navigation, indexed destinations, text, and operational controls. It provides a useful starting point for asking how a semantic GUI can describe a spatial surface without becoming tied to one renderer.
 
@@ -36,12 +36,6 @@ It belongs with [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) and [Spatial Represe
 ![Repository structure](assets/repository-structure-overview.jpg)
 
 This image is a conceptual repository map. It is intentionally not an exhaustive file listing.
-
-### Workshop map
-
-![Workshop map](assets/workshop-map-reference.jpg)
-
-The Workshop map is a concrete reference manifestation combining navigation, spatial information, indexed destinations, text, and operational controls.
 
 ## Asset convention
 

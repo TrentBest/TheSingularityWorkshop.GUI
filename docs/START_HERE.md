@@ -39,6 +39,9 @@ Start with:
 - [Platform Adapters](PLATFORM_ADAPTERS.md)
 - [Testing](TESTING.md)
 - [GUI Execution Model](GUI_EXECUTION_MODEL.md)
+- [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md)
+- [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
+- [GUI Visual Reference](GUI_VISUAL_REFERENCE.md)
 - [Roadmap](../ROADMAP.md)
 
 This prong should let another developer inspect the implementation and answer:
