@@ -79,6 +79,7 @@ Start with:
 - [Digital Shadow](THEORY/03_DIGITAL_SHADOW.md)
 - [Execution Boundary](THEORY/04_EXECUTION_BOUNDARY.md)
 - [Representational Compatibility](THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
+- [Spatial Representation](THEORY/06_SPATIAL_REPRESENTATION.md)
 
 The theory track is deliberately written so that a textbook author can lift a chapter, section, definition, or example with minimal rewriting.
 
@@ -220,6 +221,8 @@ The live WebPage is the practical proving ground. Its current production manifes
 ### 2. See how the proof is constructed
 
 Open the [WebPage repository](https://github.com/TrentBest/WebPage) on its `development` branch and inspect its reference to this GUI repository.
+
+The migration is tracked in [WebPage issue #52](https://github.com/TrentBest/WebPage/issues/52).
 
 The intended progression is:
 
