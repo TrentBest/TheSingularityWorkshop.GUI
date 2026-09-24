@@ -42,6 +42,7 @@ jobs:
       - name: Test Blazor with coverage
         run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/Blazor
 
+      # Coverage is part of the normal quality gate; the repository secret is supplied by GitHub Actions.
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5
         with:
