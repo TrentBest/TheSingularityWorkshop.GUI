@@ -57,7 +57,7 @@ Blazor builders and the Blazor manifestation layer built on GUI Core.
 For the current prerelease:
 
 ```bash
-dotnet add package TheSingularityWorkshop.GUI.Blazor --version 0.1.0-alpha
+dotnet add package TheSingularityWorkshop.GUI.Blazor --version 0.1.0-alpha.1
 ```
 
 The Blazor package depends on GUI Core.
@@ -129,7 +129,7 @@ The first production proving ground is the **WebPage** repository, where the sem
 
 The architecture is intentionally being developed in the open while the contracts stabilize.
 
-The first public NuGet packages are **0.1.0-alpha** prereleases. The repository's CI validates tests, uploads code coverage, and produces NuGet package artifacts. Publication to NuGet.org remains behind an explicit release switch.
+The first public NuGet packages are **0.1.0-alpha** and **0.1.0-alpha.1** prereleases. The repository's CI validates tests, uploads code coverage, and publishes the versioned packages to NuGet.org through trusted publishing.
 
 ## Documentation
 
