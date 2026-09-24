@@ -18,7 +18,7 @@
     <PackageTags>gui;semantic-gui;gui-model;builder;blazor;wpf;unity;platform-neutral;singularity;TheSingularityWorkshop</PackageTags>
   </PropertyGroup>
   <ItemGroup>
-    <None Include="NuGetReadme.md" Pack="true" PackagePath="\" />
-    <None Include="docs/assets/ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
+    <None Include="..\..\NuGetReadme.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\docs\assets\ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
   </ItemGroup>
 </Project>
