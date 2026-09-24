@@ -145,6 +145,98 @@ But the GUI model itself must remain useful without embedding FSM_API types into
 
 This keeps the two systems composable.
 
+## The 2D domain
+
+Ideal GUI land begins with a two-dimensional space.
+
+Not because a GUI must be flat, but because 2D is the smallest useful spatial model in which we can describe composition, containment, adjacency, alignment, overlap, visibility, focus, and interaction without tying those ideas to a particular renderer.
+
+A 2D GUI therefore needs more than a collection of rectangles. It needs a vocabulary for a **viewable surface**:
+
+- regions and bounds
+- panels and sub-panels
+- anchors and alignment
+- layering and occlusion
+- clipping and visibility
+- selection and focus
+- text and symbolic content
+- interaction targets
+- spatial relationships
+- viewports
+- cameras
+- transformations between coordinate spaces
+
+The important distinction is between **the thing being represented** and **the place from which it is being viewed**.
+
+A panel can be a region of the GUI. A viewport can be a window onto a larger semantic space. A camera can describe how that space is observed. None of those concepts requires WPF, CSS, a browser, or a particular graphics API.
+
+### Multiple panels as multiple views
+
+Imagine a dozen panels, each displaying the **hero view of a targeted unit**:
+
+```
+Digital Reality
+      |
+      +---- Unit A ----> Camera A ----> Panel A
+      +---- Unit B ----> Camera B ----> Panel B
+      +---- Unit C ----> Camera C ----> Panel C
+      |          ...
+      +---- Unit L ----> Camera L ----> Panel L
+```
+
+This is not twelve unrelated GUIs. It is one GUI containing twelve **views** over a digital reality.
+
+A camera can change without changing the identity of the represented unit. A panel can be replaced without changing the experience it observes. A user can select a unit in one part of the interface while its representation changes elsewhere.
+
+The semantic relationship is:
+
+> **subject → view → viewport → presentation surface**
+
+The GUI model should be able to describe that relationship without prescribing how the final pixels are produced.
+
+## The 3D extension
+
+Three-dimensional visualization should extend the 2D model rather than become a separate conceptual universe.
+
+```
+3D semantic space
+        |
+        v
+     Camera
+        |
+        v
+   Projection
+        |
+        v
+2D viewport / panel
+        |
+        v
+   GUI manifestation
+```
+
+A 3D scene adds depth, position, orientation, scale, volume, spatial hierarchy, and projection. But its observation still terminates in a presentation surface.
+
+**2D is not the limit of the GUI model. It is the presentation plane onto which richer spatial domains can be observed.**
+
+The word *camera* is therefore a semantic concept: controlled observation. For 2D it may mean pan, zoom, crop, and focus. For 3D it may additionally describe position, orientation, projection, field of view, and clipping.
+
+The important abstraction is not the graphics-engine camera. It is **the relationship between a subject, an observation, and the surface on which that observation is presented**.
+
+## What the ideal model must eventually define
+
+This spatial domain leaves several contracts to be specified and tested:
+
+- coordinate spaces and transformations
+- viewport and camera semantics
+- clipping and occlusion
+- hit testing and interaction routing
+- 2D-to-3D projection
+- selection and focus across multiple views
+- platform-neutral rendering hints
+- lifecycle of views and cameras
+
+The objective is not to build a graphics engine inside Core. It is to define enough semantic structure that different renderers can faithfully manifest the same intended GUI.
+
 ## The GUI must be alive
 
 A GUI is not merely a static picture.
