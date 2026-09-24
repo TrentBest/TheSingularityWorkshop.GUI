@@ -1,16 +1,14 @@
-# Start Here: Try to Disprove the GUI
+# Start Here: Explore the GUI
 
 If you arrived here thinking:
 
-> "I already know how to build a GUI. Why would I need another abstraction?"
+> "I already know how to build a GUI. What would another abstraction add?"
 
-Good.
+That is a useful question.
 
-That is the intended starting point.
+This repository is designed to answer it gradually. Rather than asking you to adopt a new vocabulary all at once, it starts with familiar GUI problems and works outward toward the abstraction.
 
-This repository should not ask you to believe that a platform-neutral GUI model is useful. It should give you enough evidence, terminology, source code, tests, and theory to decide whether the model survives technical scrutiny.
-
-The fastest way to evaluate it is **not** to read every document. Follow the two documentation prongs below and try to break the assumptions.
+The fastest way to explore it is **not** to read every document. Follow the two documentation prongs below, move between the implementation and the ideas behind it, and let the examples do most of the persuasion.
 
 ---
 
@@ -78,13 +76,13 @@ The theory track is deliberately written so that a textbook author can lift a ch
 
 ---
 
-# The skeptic's path
+# A practical evaluation path
 
 You do not need to agree with the architecture.
 
 Instead, ask five questions.
 
-## 1. Is the semantic model actually platform-neutral?
+## 1. Can the semantic model remain platform-neutral?
 
 Open the Core project.
 
@@ -132,7 +130,7 @@ The adapter decides how that meaning appears on a particular platform.
 
 ---
 
-## 3. Does abstraction make the developer's job harder?
+## 3. Does the abstraction earn its place?
 
 This is the important skeptical test.
 
@@ -146,7 +144,7 @@ Platform-specific power is not erased. It is moved to an appropriate boundary.
 
 ---
 
-## 4. Can the model describe things that are not conventional widgets?
+## 4. Can the model describe more than conventional widgets?
 
 Try to leave the world of buttons.
 
@@ -177,7 +175,7 @@ See [GUI Expressiveness](GUI_EXPRESSIVENESS.md) and [GUI Coverage Survey](GUI_CO
 
 ---
 
-## 5. Does the theory predict useful engineering boundaries?
+## 5. Does the theory clarify useful engineering boundaries?
 
 The theory is not decoration.
 
@@ -210,13 +208,7 @@ If you have ten minutes, do this:
 
 That last step matters.
 
-A skeptic should not be converted by rhetoric.
-
-A skeptic should be given enough structure to say:
-
-> "I tried to break the model, and here is exactly where it breaks."
-
-That is a productive result.
+The goal is not to turn a skeptic into a believer. It is to make the tradeoffs clear enough that a developer can decide whether the abstraction removes friction from problems they already have.
 
 ---
 
