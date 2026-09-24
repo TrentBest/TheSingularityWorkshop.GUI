@@ -8,6 +8,8 @@ The benchmark project is **not** intended to produce a single number that declar
 
 It exists to establish controlled baselines for the semantic layer and its adapters.
 
+The benchmark work is tracked in [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2).
+
 The first benchmark should answer:
 
 > What does the semantic GUI abstraction actually cost as the workload becomes more expressive?
