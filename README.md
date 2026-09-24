@@ -1,5 +1,9 @@
 # TheSingularityWorkshop.GUI
 
+![The Land of Idealism](docs/assets/ideal-gui-separation-of-concerns.jpg)
+
+The visual above is a reference manifestation of the architectural idea: semantic interaction and runtime behavior remain distinct from platform-specific presentation.
+
 A platform-neutral GUI engineering layer with recursive builders and platform adapters.
 
 The repository exists to separate GUI intent from GUI manifestation.
@@ -20,7 +24,7 @@ A consuming application should be able to describe an interface once and allow a
 
 If you are skeptical that this abstraction is necessary, start with:
 
-- [START HERE — The Skeptic's Path](docs/START_HERE.md)
+- [START HERE — Explore the GUI](docs/START_HERE.md)
 
 The documentation intentionally has two prongs:
 
@@ -34,6 +38,9 @@ The documentation intentionally has two prongs:
 - [Platform Adapters](docs/PLATFORM_ADAPTERS.md)
 - [Testing](docs/TESTING.md)
 - [GUI Execution Model](docs/GUI_EXECUTION_MODEL.md)
+- [GUI Spatial Domain](docs/GUI_SPATIAL_DOMAIN.md)
+- [GUI Spatial Contracts](docs/GUI_SPATIAL_CONTRACTS.md)
+- [GUI Visual Reference](docs/GUI_VISUAL_REFERENCE.md)
 - [Roadmap](ROADMAP.md)
 
 ### Theory
@@ -45,6 +52,7 @@ The documentation intentionally has two prongs:
 - [Digital Shadow](docs/THEORY/03_DIGITAL_SHADOW.md)
 - [Execution Boundary](docs/THEORY/04_EXECUTION_BOUNDARY.md)
 - [Representational Compatibility](docs/THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
+- [Spatial Representation](docs/THEORY/06_SPATIAL_REPRESENTATION.md)
 
 The two tracks are deliberately separate. **The code is the case study. The theory documents the argument. The engineering documentation documents the implementation.**
 
@@ -67,6 +75,10 @@ TheSingularityWorkshop.GUI
 For the fastest evaluation, open `Documentation / START_HERE.md`.
 
 ## The engineering boundary
+
+![The engineering boundary](docs/assets/gui-engineering-boundary.jpg)
+
+The image is a visual companion to the breakwater idea: platform-specific details are allowed to be sophisticated, but they should cross the semantic boundary through an adapter rather than becoming Core dependencies.
 
 The important abstraction is not a shared collection of buttons and panels.
 
@@ -116,6 +128,10 @@ The repository is in active contract-design phase. The current recursive tree is
 
 
 ## The Land of Idealism
+
+![Repository structure](docs/assets/repository-structure-overview.jpg)
+
+The repository structure image is a conceptual map of how the semantic model, adapters, tests, and documentation fit together. It is not intended to be an exhaustive current file listing.
 
 The long-term design begins with a stronger premise than platform abstraction.
 

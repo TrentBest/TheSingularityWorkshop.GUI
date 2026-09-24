@@ -1,5 +1,9 @@
 # The 2D GUI Domain and Its 3D Extension
 
+![Many views over one GUI](assets/multi-view-spatial-observation.jpg)
+
+*Reference manifestation: many views can coexist as observations of one digital reality.*
+
 ## Purpose
 
 This document defines the spatial domain that the ideal GUI should be able to express.
@@ -165,6 +169,9 @@ The same semantic model can describe:
 The platform adapter remains responsible for turning that semantic description into a concrete manifestation.
 
 ## 7. What remains to be defined
+
+The complete gap analysis is maintained in [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md), including identity, coordinate spaces, transforms, projection, visibility, hit testing, multi-view synchronization, accessibility, localization, performance, persistence, and adapter capability boundaries.
+
 
 This document intentionally establishes a domain vocabulary rather than pretending that all contracts are settled.
 

@@ -18,6 +18,9 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Survey existing GUI systems and extract recurring semantic primitives
 - [ ] Define the digital-shadow coverage principle
 - [ ] Convert these principles into executable contracts
+- [x] Define the 2D GUI spatial domain
+- [x] Define the 3D extension and camera vocabulary
+- [x] Identify the spatial contract surface
 - [x] Define GUI as the outer execution boundary
 - [x] Define the execution-host / manifestation distinction
 
@@ -51,12 +54,22 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] Data/diagnostic presentation
 - [ ] Operational interaction
 - [ ] Viewport / scene intent
+- [ ] 2D view/viewport contract
+- [ ] Coordinate-space and transform contract
+- [ ] Camera/observation contract
+- [ ] Projection contract
+- [ ] Visibility/depth/occlusion contract
+- [ ] Hit-testing and interaction-routing contract
+- [ ] Selection/focus semantics across views
+- [ ] Multi-view synchronization
 - [ ] 3D representation intent
 - [ ] Deliberately unstructured visual representation
 - [ ] Input abstraction independent of physical devices
 - [ ] Accessibility intent
 - [ ] Localization, Unicode, bidirectional text, and locale-aware presentation
 - [ ] State/data observation and binding
+- [ ] Spatial accessibility and alternate presentation
+- [ ] Spatial performance/LOD hints
 
 ## Phase 3 — adapter conformance
 

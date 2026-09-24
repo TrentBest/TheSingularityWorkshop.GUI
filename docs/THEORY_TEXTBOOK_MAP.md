@@ -99,6 +99,31 @@ Primary source:
 
 ---
 
+### Chapter 6 — Spatial Representation and Controlled Observation
+
+**Core question:** How can one interface describe many views of changing digital reality while keeping observation separate from presentation?
+
+Introduces:
+
+- the 2D presentation domain
+- subjects, views, viewports, and presentation surfaces
+- coordinate spaces and transforms
+- camera as controlled observation
+- projection from 3D into 2D
+- multi-view composition
+- spatial interaction and hit testing
+- selection and synchronization across views
+
+Primary source:
+
+[Spatial Representation](THEORY/06_SPATIAL_REPRESENTATION.md)
+
+Engineering companion:
+
+[GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
+
+---
+
 ## Suggested textbook treatment
 
 Each chapter should follow the same editorial pattern:

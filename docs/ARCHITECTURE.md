@@ -1,5 +1,9 @@
 # GUI Architecture
 
+![The engineering boundary](assets/gui-engineering-boundary.jpg)
+
+*The semantic model is the protected boundary; native platform details remain in manifestations and adapters.*
+
 ## Purpose
 
 The GUI repository owns the engineering boundary between GUI intent and platform manifestation.
@@ -60,6 +64,12 @@ Conceptually:
 Experience -> Panel -> Panel -> Button -> Text
 
 The same structural intent can then be materialized by different adapters.
+
+## Spatial semantics belong at the same boundary
+
+Spatial concepts such as coordinate intent, views, viewports, cameras, transforms, and semantic interaction targets belong in Core only when their meaning can be stated independently of a rendering platform. Their concrete manifestation belongs to adapters.
+
+The detailed spatial contract is maintained in [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md).
 
 ## Stable boundary
 

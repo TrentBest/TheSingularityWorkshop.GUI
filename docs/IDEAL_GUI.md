@@ -2,6 +2,10 @@
 
 ## The Land of Idealism
 
+![The Land of Idealism — separation of concerns](assets/ideal-gui-separation-of-concerns.jpg)
+
+*Reference manifestation: semantic interaction and behavior remain distinct from platform presentation.*
+
 This repository is not intended to begin with the question:
 
 > How do we make a button in WPF, Blazor, Unity, or some other toolkit?
@@ -196,6 +200,10 @@ The GUI model should be able to describe that relationship without prescribing h
 
 ## The 3D extension
 
+![The engineering boundary](assets/gui-engineering-boundary.jpg)
+
+*Reference manifestation: the semantic core remains insulated from native platform details.*
+
 Three-dimensional visualization should extend the 2D model rather than become a separate conceptual universe.
 
 ```
@@ -223,6 +231,8 @@ The word *camera* is therefore a semantic concept: controlled observation. For 2
 The important abstraction is not the graphics-engine camera. It is **the relationship between a subject, an observation, and the surface on which that observation is presented**.
 
 ## What the ideal model must eventually define
+
+The spatial domain is expanded into an explicit contract checklist in [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md). That document is intentionally more precise about what must eventually be specified and tested without pretending those contracts are already implemented.
 
 This spatial domain leaves several contracts to be specified and tested:
 

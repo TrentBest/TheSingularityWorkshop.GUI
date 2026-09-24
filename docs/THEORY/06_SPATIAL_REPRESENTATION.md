@@ -1,5 +1,9 @@
 # Spatial Representation and Controlled Observation
 
+![Many views over one GUI](../assets/multi-view-spatial-observation.jpg)
+
+*Reference manifestation: one interface can compose many controlled observations without becoming many independent applications.*
+
 ## The problem
 
 Graphical interfaces are often described in terms of widgets: buttons, panels, lists, fields, and windows.
@@ -152,6 +156,8 @@ Platform adapters should describe manifestation.
 Graphics engines should remain free to provide implementation-specific capabilities where the semantic model cannot or should not standardize them.
 
 ## Further work
+
+The engineering consequences are collected in [GUI Spatial Contracts](../GUI_SPATIAL_CONTRACTS.md). That checklist deliberately separates established vocabulary from contracts that still require implementation and tests.
 
 The theory implies concrete contracts that must eventually be tested:
 
