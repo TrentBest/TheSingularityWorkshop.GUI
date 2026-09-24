@@ -3,9 +3,11 @@ name: Package GUI
 on:
   push:
     branches:
+      - master
       - development
   pull_request:
     branches:
+      - master
       - development
   workflow_dispatch:
 
@@ -44,6 +46,6 @@ jobs:
       - name: Pack Blazor
         run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
 
-      - name: Publish packages
-        if: github.event_name != 'pull_request'
-        run: dotnet nuget push "./packages/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
+      - name: Publish packages to NuGet.org
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ secrets.NUGET_API_KEY }}" --skip-duplicate
