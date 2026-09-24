@@ -70,6 +70,10 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] State/data observation and binding
 - [ ] Spatial accessibility and alternate presentation
 - [ ] Spatial performance/LOD hints
+- [ ] Semantic geometry primitives and representation contracts
+- [ ] Scene/subject hierarchy semantics without renderer ownership
+- [ ] View/camera lifecycle and observation state transitions
+- [ ] Cross-view identity, selection, focus, and synchronization invariants
 
 ## Phase 3 — adapter conformance
 
@@ -78,6 +82,7 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] Shared adapter conformance cases
 - [ ] Build a second materially different adapter
 - [ ] Unity UI Toolkit adapter
+- [ ] Establish GUI benchmark project and baseline methodology
 - [ ] Capability negotiation
 - [ ] Adapter-specific manifestation tests
 
@@ -117,7 +122,14 @@ Candidate platforms are implementation targets, not semantic definitions:
 
 ## Phase 6 — integration
 
-- [ ] Migrate WebPage domain builders
+The WebPage is the first practical proving ground for the architecture.
+
+- [ ] Refactor the WebPage's reusable GUI construction onto TheSingularityWorkshop.GUI
+- [ ] Keep WebPage domain semantics outside the GUI repository
+- [ ] Demonstrate the Blazor adapter through the WebPage rather than through isolated GUI-only examples
+- [ ] Use the WebPage as the ten-minute evaluation path from the GUI documentation
+- [ ] Capture representative GUI reference artifacts from the working WebPage
+- [ ] Keep the live WebPage manifestation explicitly separate from the semantic GUI contract
 - [ ] Keep domain semantics outside the GUI repository
 - [ ] Publish stable platform packages
 - [ ] Document package/version compatibility
