@@ -5,5 +5,14 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageId>TheSingularityWorkshop.GUI.WPF</PackageId>
+    <Version>0.1.0</Version>
+    <Authors>The Singularity Workshop</Authors>
+    <Company>The Singularity Workshop</Company>
+    <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
+    <PackageDescription>Reusable WPF GUI builders for The Singularity Workshop.</PackageDescription>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
+  </ItemGroup>
 </Project>
