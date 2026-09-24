@@ -45,8 +45,9 @@ The fastest route is intentionally small.
 **Then explore the relevant layer:**
 
 - **Architecture & manifestation:** [Architecture](ARCHITECTURE.md) · [Platform Adapters](PLATFORM_ADAPTERS.md) · [GUI Execution Model](GUI_EXECUTION_MODEL.md)
-- **Spatial model:** [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) · [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md) · [GUI Visual Reference](GUI_VISUAL_REFERENCE.md)
+- **Spatial model:** [Ideal GUI](IDEAL_GUI.md) · [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) · [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
 - **Verification & measurement:** [Testing](TESTING.md) · [GUI Benchmarking](GUI_BENCHMARKING.md) · [Roadmap](../ROADMAP.md)
+- **Next contract surface:** [Next Contract Surface](NEXT_CONTRACT_SURFACE.md)
 
 The repository structure is also documented visually:
 
@@ -68,13 +69,12 @@ The theory track treats the project as an engineering thesis rather than a widge
 
 It develops concepts such as:
 
-- the GUI as an **extrinsic interface layer**
-- the **breakwater principle**
-- the **digital shadow**
-- **execution-boundary inversion**
-- **representational compatibility**
-- the separation of semantic intent from platform manifestation
-- spatial representation and controlled observation
+- the GUI as an **extrinsic interface layer** — the boundary around the experience
+- the **breakwater principle** — platform complexity is absorbed at the boundary
+- the **digital shadow** — a semantic representation can observe another system without becoming that system
+- **execution-boundary inversion** — the GUI boundary can host execution rather than merely render its result
+- **representational compatibility** — interoperability does not require implementation equivalence
+- spatial representation and controlled observation — one reality can have many semantic views
 
 Start with the [Theory Guide](THEORY_GUIDE.md), then use the [Textbook Map](THEORY_TEXTBOOK_MAP.md) to follow the chapters.
 
@@ -138,9 +138,7 @@ The adapter decides how that meaning appears on a particular platform.
 
 ## 3. Does the abstraction earn its place?
 
-This is the important skeptical test.
-
-If a supposedly neutral abstraction forces developers to write the lowest common denominator of every platform, it has failed.
+A useful abstraction should reduce friction without forcing every target platform into the same shape.
 
 Neutrality therefore means:
 
@@ -259,7 +257,7 @@ At this point the question becomes concrete: does the code you just inspected pr
 
 ### 4. Then explore the spatial model
 
-If the WebPage example has made the boundary useful, continue into [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) and [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md).
+If the WebPage example has made the boundary useful, continue into [Ideal GUI](IDEAL_GUI.md), [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md), and [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md).
 
 The important example is not a button.
 
@@ -298,7 +296,7 @@ In particular, the execution-host model, capability negotiation, and some of the
 
 The roadmap is therefore part of the documentation, not an afterthought.
 
-See [ROADMAP.md](../ROADMAP.md).
+See [ROADMAP.md](../ROADMAP.md) and [Next Contract Surface](NEXT_CONTRACT_SURFACE.md).
 
 The distinction is intentional:
 
