@@ -15,6 +15,39 @@ A consuming application should be able to describe an interface once and allow a
 - docs — architecture, model, adapter, and testing contracts.
 - ROADMAP.md — engineering work required to make the neutral model durable.
 
+
+## Evaluate the architecture
+
+If you are skeptical that this abstraction is necessary, start with:
+
+- [START HERE — The Skeptic's Path](docs/START_HERE.md)
+
+The documentation intentionally has two prongs:
+
+1. **Technology** — what the repository implements, how the semantic model works, how adapters manifest it, how it is tested, and what remains on the roadmap.
+2. **Theory** — why the boundaries exist, what engineering problems they address, and how the ideas can be used as textbook-ready material.
+
+### Technology
+
+- [Architecture](docs/ARCHITECTURE.md)
+- [GUI Model](docs/GUI_MODEL.md)
+- [Platform Adapters](docs/PLATFORM_ADAPTERS.md)
+- [Testing](docs/TESTING.md)
+- [GUI Execution Model](docs/GUI_EXECUTION_MODEL.md)
+- [Roadmap](ROADMAP.md)
+
+### Theory
+
+- [Theory Guide](docs/THEORY_GUIDE.md)
+- [Textbook Map](docs/THEORY_TEXTBOOK_MAP.md)
+- [Extrinsic Interface Layer](docs/THEORY/01_EXTRINSIC_INTERFACE_LAYER.md)
+- [Breakwater Principle](docs/THEORY/02_BREAKWATER_PRINCIPLE.md)
+- [Digital Shadow](docs/THEORY/03_DIGITAL_SHADOW.md)
+- [Execution Boundary](docs/THEORY/04_EXECUTION_BOUNDARY.md)
+- [Representational Compatibility](docs/THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
+
+The two tracks are deliberately separate. **The code is the case study. The theory documents the argument. The engineering documentation documents the implementation.**
+
 ## The engineering boundary
 
 The important abstraction is not a shared collection of buttons and panels.
