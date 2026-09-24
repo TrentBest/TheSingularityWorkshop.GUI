@@ -107,7 +107,7 @@ The first reference is the Workshop map: a large spatial/operational interface c
 
 When committed, the canonical asset path is:
 
-`docs/assets/workshop-map-reference.png`
+`docs/assets/workshop-map-reference.jpg`
 
 See [docs/GUI_VISUAL_REFERENCE.md](docs/GUI_VISUAL_REFERENCE.md) for the reference-artifact convention and the path from visual reference to semantic model to adapter manifestation.
 
