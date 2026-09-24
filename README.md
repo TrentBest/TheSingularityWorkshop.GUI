@@ -48,6 +48,24 @@ The documentation intentionally has two prongs:
 
 The two tracks are deliberately separate. **The code is the case study. The theory documents the argument. The engineering documentation documents the implementation.**
 
+
+### Where the documentation appears in Visual Studio
+
+The solution includes a dedicated `TheSingularityWorkshop.GUI.Documentation` project so Markdown files are real project items rather than relying on solution-folder discovery.
+
+Expand:
+
+```
+TheSingularityWorkshop.GUI
+└── TheSingularityWorkshop.GUI.Documentation
+    ├── Solution Documentation
+    ├── Documentation
+    ├── Theory
+    └── Reference Assets
+```
+
+For the fastest evaluation, open `Documentation / START_HERE.md`.
+
 ## The engineering boundary
 
 The important abstraction is not a shared collection of buttons and panels.
