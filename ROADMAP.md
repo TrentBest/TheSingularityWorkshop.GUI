@@ -1,6 +1,6 @@
 # GUI Engineering Roadmap
 
-The roadmap follows the Land of Idealism: define the semantic boundary first, prove it with tests, then add platform manifestations.
+The roadmap follows the Land of Idealism: define the semantic boundary first, prove it with tests and a real application, then add platform manifestations and runtime composition.
 
 ## Phase 0 — define the ideal
 
@@ -75,14 +75,15 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] View/camera lifecycle and observation state transitions
 - [ ] Cross-view identity, selection, focus, and synchronization invariants
 
-## Phase 3 — adapter conformance
+## Phase 3 — adapter conformance and measurement
 
 - [x] Blazor contract tests
 - [ ] WPF contract tests
 - [ ] Shared adapter conformance cases
 - [ ] Build a second materially different adapter
 - [ ] Unity UI Toolkit adapter
-- [ ] Establish GUI benchmark project and baseline methodology — tracked by [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2)
+- [ ] Establish GUI benchmark methodology
+- [ ] Establish executable GUI benchmark project and baseline — tracked by [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2)
 - [ ] Capability negotiation
 - [ ] Adapter-specific manifestation tests
 
@@ -119,6 +120,20 @@ Candidate platforms are implementation targets, not semantic definitions:
 - [ ] Headless operation
 - [ ] FSM_API integration boundary
 - [ ] Input routing boundary
+- [ ] Capability negotiation and degradation policy
+- [ ] Semantic input contract
+- [ ] Telemetry boundary and diagnostic stream
+
+The intended order is deliberately conservative:
+
+1. exercise the semantic model in the WebPage;
+2. audit Core and adapters against the theory;
+3. establish benchmark baselines;
+4. make stable spatial contracts executable;
+5. define the minimal execution contract;
+6. add capability negotiation and semantic input.
+
+See [Next Contract Surface](docs/NEXT_CONTRACT_SURFACE.md).
 
 ## Phase 6 — integration
 
