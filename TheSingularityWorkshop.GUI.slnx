@@ -1,4 +1,25 @@
 <Solution>
+  <Folder Name="/Solution Documentation/">
+    <File Path="README.md" />
+    <File Path="ROADMAP.md" />
+  </Folder>
+  <Folder Name="/Documentation/">
+    <File Path="docs/ARCHITECTURE.md" />
+    <File Path="docs/GUI_COVERAGE_SURVEY.md" />
+    <File Path="docs/GUI_EXECUTION_MODEL.md" />
+    <File Path="docs/GUI_EXPRESSIVENESS.md" />
+    <File Path="docs/GUI_LIFECYCLE.md" />
+    <File Path="docs/GUI_MODEL.md" />
+    <File Path="docs/GUI_TAXONOMY.md" />
+    <File Path="docs/GUI_VISUAL_REFERENCE.md" />
+    <File Path="docs/IDEAL_GUI.md" />
+    <File Path="docs/MANIFEST_BOUNDARY.md" />
+    <File Path="docs/PLATFORM_ADAPTERS.md" />
+    <File Path="docs/TESTING.md" />
+  </Folder>
+  <Folder Name="/Reference Assets/">
+    <File Path="docs/assets/workshop-map-reference.jpg" />
+  </Folder>
   <Project Path="src/Core/TheSingularityWorkshop.GUI.Core.csproj" />
   <Project Path="src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj" />
   <Project Path="src/WPF/TheSingularityWorkshop.GUI.WPF.csproj" />
