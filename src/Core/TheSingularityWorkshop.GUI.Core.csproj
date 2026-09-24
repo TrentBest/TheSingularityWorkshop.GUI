@@ -9,6 +9,16 @@
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
-    <PackageDescription>Platform-neutral recursive GUI model and builder primitives.</PackageDescription>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>NuGetReadme.md</PackageReadmeFile>
+    <PackageIcon>docs/assets/ideal-gui-separation-of-concerns.jpg</PackageIcon>
+    <PackageDescription>Platform-neutral recursive GUI model and builder primitives for The Singularity Workshop.</PackageDescription>
+    <PackageTags>gui;semantic-gui;gui-model;builder;blazor;wpf;unity;platform-neutral;singularity;TheSingularityWorkshop</PackageTags>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="NuGetReadme.md" Pack="true" PackagePath="\" />
+    <None Include="docs/assets/ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
+  </ItemGroup>
 </Project>
