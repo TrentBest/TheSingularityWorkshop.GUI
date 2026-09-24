@@ -18,6 +18,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Survey existing GUI systems and extract recurring semantic primitives
 - [ ] Define the digital-shadow coverage principle
 - [ ] Convert these principles into executable contracts
+- [x] Define GUI as the outer execution boundary
+- [x] Define the execution-host / manifestation distinction
 
 ## Phase 1 — establish the neutral model
 
@@ -87,8 +89,13 @@ Candidate platforms are implementation targets, not semantic definitions:
 ## Phase 5 — runtime composition
 
 - [ ] GUI micro-bundle contract
+- [ ] Runnable experience contract
+- [ ] Execution context contract
+- [ ] GUI.Execute(...) execution contract
 - [ ] GUI configuration contract
 - [ ] Runtime observer model
+- [ ] Execution lifecycle ownership
+- [ ] External boundary adapter contract
 - [ ] Multiple observers of one experience
 - [ ] Hot replacement / reconfiguration
 - [ ] Headless operation
