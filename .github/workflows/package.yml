@@ -1,0 +1,46 @@
+name: Package GUI
+
+on:
+  push:
+    branches:
+      - development
+  pull_request:
+    branches:
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  test-and-package:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore
+        run: dotnet restore TheSingularityWorkshop.GUI.sln
+
+      - name: Build
+        run: dotnet build TheSingularityWorkshop.GUI.sln --configuration Release --no-restore
+
+      - name: Test
+        run: dotnet test TheSingularityWorkshop.GUI.sln --configuration Release --no-build
+
+      - name: Pack Core
+        run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --no-build --output ./packages
+
+      - name: Pack Blazor
+        run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --no-build --output ./packages
+
+      - name: Publish packages
+        if: github.event_name != 'pull_request'
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
