@@ -64,7 +64,7 @@ jobs:
   publish_nuget:
     needs: test-and-package
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master' && false
     permissions:
       contents: read
       id-token: write
