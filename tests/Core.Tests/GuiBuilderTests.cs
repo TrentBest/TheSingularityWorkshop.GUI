@@ -45,7 +45,32 @@ public sealed class GuiBuilderTests
     }
 
     [Fact]
-    public void Find_reports_missing_node_without_using_null_as_not_found()
+    public void TryFind_returns_found_node_without_exceptions()
+    {
+        var root = GuiBuilder.Create("Panel", "root")
+            .Child("Text", "message", child => child.Text("Hello"))
+            .Build();
+
+        var found = root.TryFind("message", out var node);
+
+        Assert.True(found);
+        Assert.NotNull(node);
+        Assert.Equal("Hello", node!.Text);
+    }
+
+    [Fact]
+    public void TryFind_returns_false_for_missing_node()
+    {
+        var root = GuiBuilder.Create("Panel", "root").Build();
+
+        var found = root.TryFind("missing", out var node);
+
+        Assert.False(found);
+        Assert.Null(node);
+    }
+
+    [Fact]
+    public void Find_reports_missing_node()
     {
         var root = GuiBuilder.Create("Panel", "root").Build();
 
