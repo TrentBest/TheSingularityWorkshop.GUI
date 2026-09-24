@@ -14,7 +14,11 @@
 [![CoderLegion](https://coderlegion.com/cl_badge_logo1.png) Join the CoderLegion Community](https://coderlegion.com/user/The+Singularity+Workshop)
 
 [**💖 Support Us**](https://www.paypal.com/donate/?hosted_button_id=3Z7263LCQMV9J)
-\n<a href="https://www.patreon.com/TheSingularityWorkshop" target="_blank">\n    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/FSM_API/Branding/TheSingularityWorkshop.png" alt="Support The Singularity Workshop on Patreon" height="200" style="display: block;">\n</a>\n
+
+<a href="https://www.patreon.com/TheSingularityWorkshop" target="_blank">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/FSM_API/Branding/TheSingularityWorkshop.png" alt="Support The Singularity Workshop on Patreon" height="200" style="display: block;">
+</a>
+
 A platform-neutral GUI engineering layer for C# applications.
 
 The Singularity Workshop GUI separates **semantic interface intent** from **platform-specific manifestation**.
