@@ -22,7 +22,7 @@ public sealed class BlazorGuiRendererTests
 
         Assert.Equal("div", frames[0].ElementName);
         Assert.Equal("root", FindAttribute(frames, "id", "root"));
-        Assert.Equal("button", frames[3].ElementName);
+        Assert.Equal("button", frames[2].ElementName);
         Assert.Equal("save", FindAttribute(frames, "id", "save"));
     }
 
