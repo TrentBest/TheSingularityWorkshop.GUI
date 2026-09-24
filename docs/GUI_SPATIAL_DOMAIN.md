@@ -60,6 +60,105 @@ A transformation changes where something appears without changing what it means.
 
 This distinction becomes essential when a single GUI contains many independent views.
 
+
+## 2.1 Semantic roles are distinct
+
+The following terms are deliberately not interchangeable:
+
+| Concept | Meaning |
+|---|---|
+| **subject** | The thing in the digital reality being represented. |
+| **representation** | A semantic description of how a subject may be represented. |
+| **view** | An observation of a subject or semantic space. |
+| **viewport** | The bounded region through which a view is presented. |
+| **surface** | The presentation space containing regions and viewports. |
+| **camera** | The state that controls observation. |
+| **transform** | A mapping between coordinate spaces. |
+| **layer** | A semantic ordering relationship affecting visibility. |
+| **interaction target** | A semantic recipient of translated external input. |
+
+This distinction prevents a common collapse in GUI design:
+
+> **A panel is not the subject, a camera is not the subject, and a renderer is not the view.**
+
+The same subject can have many representations, many views, many cameras, and many presentation surfaces without acquiring multiple identities.
+
+## 2.2 Geometry is not identity
+
+Geometry describes spatial extent. Identity describes what a thing is.
+
+A semantic spatial model should therefore be able to express, independently:
+
+- points;
+- vectors;
+- rectangles and bounds;
+- lines and paths;
+- regions and shapes;
+- volumes and bounding volumes;
+- transforms;
+- geometry associated with a representation.
+
+A subject may change geometry, move through space, or receive an entirely different representation without becoming a different subject.
+
+This is the spatial analogue of the repository's broader identity principle: **representation is replaceable; identity is not.**
+
+## 2.3 Spatial state is temporal
+
+A spatial GUI is not only a static arrangement.
+
+At time (t_0):
+
+```
+subject -> view -> camera -> viewport
+```
+
+At time (t_1):
+
+```
+subject -> view -> camera' -> viewport
+```
+
+The observation may change while the subject identity remains constant.
+
+Likewise:
+
+- a subject may move;
+- a camera may pan;
+- a viewport may resize;
+- a selection may change;
+- a representation may be replaced;
+- a panel may be created or destroyed.
+
+The semantic model should represent those changes as state transitions rather than making animation mechanics part of identity.
+
+## 2.4 The invariant that ties 2D and 3D together
+
+The essential continuity is:
+
+```
+subject
+   |
+   v
+representation
+   |
+   v
+observation
+   |
+   v
+viewport
+   |
+   v
+presentation surface
+```
+
+For a 2D subject, observation may be affine and bounded.
+
+For a 3D subject, observation may include projection, depth, field of view, and clipping.
+
+The final presentation relationship remains recognizable.
+
+That is why 3D is an extension of the GUI spatial domain rather than a second GUI architecture.
+
 ## 3. Many views of one reality
 
 Consider a GUI containing twelve panels. Each panel displays a hero view of a selected unit.
@@ -171,6 +270,8 @@ The platform adapter remains responsible for turning that semantic description i
 ## 7. What remains to be defined
 
 The complete gap analysis is maintained in [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md), including identity, coordinate spaces, transforms, projection, visibility, hit testing, multi-view synchronization, accessibility, localization, performance, persistence, and adapter capability boundaries.
+
+The intended contract surface is therefore broad enough to cover both conventional 2D interfaces and richer spatial systems without turning Core into a renderer.
 
 
 This document intentionally establishes a domain vocabulary rather than pretending that all contracts are settled.
