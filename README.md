@@ -41,6 +41,7 @@ The documentation intentionally has two prongs:
 - [GUI Spatial Domain](docs/GUI_SPATIAL_DOMAIN.md)
 - [GUI Spatial Contracts](docs/GUI_SPATIAL_CONTRACTS.md)
 - [GUI Visual Reference](docs/GUI_VISUAL_REFERENCE.md)
+- [GUI Benchmarking](docs/GUI_BENCHMARKING.md)
 - [Roadmap](ROADMAP.md)
 
 ### Theory
@@ -118,7 +119,13 @@ See:
 
 ## Current integrations
 
-The WebPage repository is the first migration target for the Blazor layer.
+The WebPage repository is the first migration target for the Blazor layer and the intended ten-minute proving ground for this architecture.
+
+The live Workshop is available at:
+
+https://lemon-ground-09f542010.1.azurestaticapps.net/
+
+The production site is a demonstration of the Workshop experience. The development migration is the implementation proof: the goal is for the WebPage itself to consume the semantic GUI model and Blazor adapter rather than merely describe the architecture.
 
 RevitFamilyManagerBuilders remains unchanged. Reusable WPF infrastructure is being migrated here for forward-moving applications rather than modifying that existing repository.
 
