@@ -82,7 +82,7 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] Shared adapter conformance cases
 - [ ] Build a second materially different adapter
 - [ ] Unity UI Toolkit adapter
-- [ ] Establish GUI benchmark project and baseline methodology
+- [ ] Establish GUI benchmark project and baseline methodology — tracked by [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2)
 - [ ] Capability negotiation
 - [ ] Adapter-specific manifestation tests
 
@@ -123,6 +123,8 @@ Candidate platforms are implementation targets, not semantic definitions:
 ## Phase 6 — integration
 
 The WebPage is the first practical proving ground for the architecture.
+
+The active migration is tracked by [WebPage issue #52](https://github.com/TrentBest/WebPage/issues/52).
 
 - [ ] Refactor the WebPage's reusable GUI construction onto TheSingularityWorkshop.GUI
 - [ ] Keep WebPage domain semantics outside the GUI repository
