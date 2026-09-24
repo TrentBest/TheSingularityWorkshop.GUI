@@ -12,7 +12,7 @@ The fastest way to explore it is **not** to read every document. Follow the two 
 
 ![The Land of Idealism](assets/ideal-gui-separation-of-concerns.jpg)
 
-The image above is a reference manifestation of the separation this repository is trying to make tangible: runtime behavior, semantic GUI meaning, and platform presentation can cooperate without becoming the same thing.
+*Figure 1 — A reference manifestation of the separation this repository is trying to make tangible: runtime behavior, semantic GUI meaning, and platform presentation can cooperate without becoming the same thing.*
 
 ---
 
@@ -36,18 +36,23 @@ This is the engineering documentation:
 - implementation constraints
 - roadmap and known unfinished contracts
 
-Start with:
+The fastest route is intentionally small.
 
-- [GUI Model](GUI_MODEL.md)
-- [Architecture](ARCHITECTURE.md)
-- [Platform Adapters](PLATFORM_ADAPTERS.md)
-- [Testing](TESTING.md)
-- [GUI Execution Model](GUI_EXECUTION_MODEL.md)
-- [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md)
-- [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
-- [GUI Visual Reference](GUI_VISUAL_REFERENCE.md)
-- [GUI Benchmarking](GUI_BENCHMARKING.md)
-- [Roadmap](../ROADMAP.md)
+**Start here:**
+
+- [GUI Model](GUI_MODEL.md) — the neutral semantic tree and current primitives
+
+**Then explore the relevant layer:**
+
+- **Architecture & manifestation:** [Architecture](ARCHITECTURE.md) · [Platform Adapters](PLATFORM_ADAPTERS.md) · [GUI Execution Model](GUI_EXECUTION_MODEL.md)
+- **Spatial model:** [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) · [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md) · [GUI Visual Reference](GUI_VISUAL_REFERENCE.md)
+- **Verification & measurement:** [Testing](TESTING.md) · [GUI Benchmarking](GUI_BENCHMARKING.md) · [Roadmap](../ROADMAP.md)
+
+The repository structure is also documented visually:
+
+![Repository structure](assets/repository-structure-overview.jpg)
+
+*Figure 2 — A conceptual map of how the semantic model, adapters, tests, and documentation fit together. It is not intended to be an exhaustive file listing.*
 
 This prong should let another developer inspect the implementation and answer:
 
@@ -69,17 +74,9 @@ It develops concepts such as:
 - **execution-boundary inversion**
 - **representational compatibility**
 - the separation of semantic intent from platform manifestation
+- spatial representation and controlled observation
 
-Start with:
-
-- [Theory Guide](THEORY_GUIDE.md)
-- [Textbook Map](THEORY_TEXTBOOK_MAP.md)
-- [Extrinsic Interface Layer](THEORY/01_EXTRINSIC_INTERFACE_LAYER.md)
-- [Breakwater Principle](THEORY/02_BREAKWATER_PRINCIPLE.md)
-- [Digital Shadow](THEORY/03_DIGITAL_SHADOW.md)
-- [Execution Boundary](THEORY/04_EXECUTION_BOUNDARY.md)
-- [Representational Compatibility](THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
-- [Spatial Representation](THEORY/06_SPATIAL_REPRESENTATION.md)
+Start with the [Theory Guide](THEORY_GUIDE.md), then use the [Textbook Map](THEORY_TEXTBOOK_MAP.md) to follow the chapters.
 
 The theory track is deliberately written so that a textbook author can lift a chapter, section, definition, or example with minimal rewriting.
 
@@ -216,7 +213,9 @@ Interact with it.
 
 Notice what the interface is doing, what changes over time, what feels like state, what feels like presentation, and where the experience crosses from ordinary web UI into something more deliberately expressive.
 
-The live WebPage is the practical proving ground. Its current production manifestation is not, by itself, a conformance test for this repository; the important next step is to make the WebPage itself a consumer of this GUI architecture on the development path.
+The live WebPage is the practical proving ground.
+
+The important architectural step is now explicit: the WebPage is being refactored on `development` to consume this GUI repository rather than merely demonstrate similar ideas independently.
 
 ### 2. See how the proof is constructed
 
@@ -254,6 +253,8 @@ Now return to this repository.
 
 ![The engineering boundary](assets/gui-engineering-boundary.jpg)
 
+*Figure 3 — Platform-specific details can be sophisticated while remaining outside the semantic Core boundary.*
+
 At this point the question becomes concrete: does the code you just inspected provide a useful place to put the semantic layer you observed in the running application?
 
 ### 4. Then explore the spatial model
@@ -273,9 +274,13 @@ subject
 
 A dozen panels can therefore become a dozen controlled observations of one changing reality rather than twelve unrelated GUI implementations.
 
+For the theory behind that model, see [Spatial Representation and Controlled Observation](THEORY/06_SPATIAL_REPRESENTATION.md).
+
 ### 5. Measure it
 
-The next stage is a dedicated GUI benchmark project.
+The next stage is a dedicated GUI benchmark project, after the WebPage has a representative working slice built on the GUI repository.
+
+The benchmark work is tracked in [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2).
 
 That benchmark should measure the semantic layer itself—construction, traversal, observation/view composition, multi-view scaling, adapter manifestation, and allocation—without pretending that a GUI abstraction can be summarized by a single number.
 
