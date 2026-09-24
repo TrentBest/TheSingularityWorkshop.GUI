@@ -38,7 +38,6 @@
 
     <None Include="docs\assets\ideal-gui-separation-of-concerns.jpg" Link="Reference Assets\ideal-gui-separation-of-concerns.jpg" />
     <None Include="docs\assets\gui-engineering-boundary.jpg" Link="Reference Assets\gui-engineering-boundary.jpg" />
-    <None Include="docs\assets\multi-view-spatial-observation.jpg" Link="Reference Assets\multi-view-spatial-observation.jpg" />
     <None Include="docs\assets\repository-structure-overview.jpg" Link="Reference Assets\repository-structure-overview.jpg" />
     <None Include="docs\assets\workshop-map-reference.jpg" Link="Reference Assets\workshop-map-reference.jpg" />
   </ItemGroup>

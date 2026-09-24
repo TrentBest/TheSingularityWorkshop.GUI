@@ -1,8 +1,8 @@
 # The 2D GUI Domain and Its 3D Extension
 
-![Many views over one GUI](assets/multi-view-spatial-observation.jpg)
+![Workshop spatial reference](assets/workshop-map-reference.jpg)
 
-*Reference manifestation: many views can coexist as observations of one digital reality.*
+*Reference manifestation: a spatial/operational interface can combine a scene, navigation, indexing, text, and controls.*
 
 ## Purpose
 

@@ -1,8 +1,8 @@
 # Spatial Representation and Controlled Observation
 
-![Many views over one GUI](../assets/multi-view-spatial-observation.jpg)
+![Workshop spatial reference](../assets/workshop-map-reference.jpg)
 
-*Reference manifestation: one interface can compose many controlled observations without becoming many independent applications.*
+*Reference manifestation: one interface can compose spatial observation with navigation and operational information.*
 
 ## The problem
 

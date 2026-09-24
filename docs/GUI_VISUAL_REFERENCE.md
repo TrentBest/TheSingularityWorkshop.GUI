@@ -23,11 +23,11 @@ This image illustrates the separation between physical/external input, FSM_API r
 
 This image emphasizes the breakwater around the semantic core. Web/Blazor, desktop/WPF, and spatial/Unity are shown as manifestations outside the protected semantic boundary.
 
-### Many views over one GUI
+### Spatial reference
 
-![Many views over one GUI](assets/multi-view-spatial-observation.jpg)
+![Workshop spatial reference](assets/workshop-map-reference.jpg)
 
-This image is the visual companion for the spatial-domain work: a single interface can contain multiple controlled observations rather than becoming a collection of unrelated GUIs.
+The Workshop map is the concrete visual companion for the spatial-domain work: it combines a scene, navigation, indexed destinations, text, and operational controls. It provides a useful starting point for asking how a semantic GUI can describe a spatial surface without becoming tied to one renderer.
 
 It belongs with [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) and [Spatial Representation](THEORY/06_SPATIAL_REPRESENTATION.md).
 
@@ -49,7 +49,6 @@ Generated filenames are renamed to semantic names when they enter the repository
 
 - ideal-gui-separation-of-concerns.jpg
 - gui-engineering-boundary.jpg
-- multi-view-spatial-observation.jpg
 - repository-structure-overview.jpg
 - workshop-map-reference.jpg
 

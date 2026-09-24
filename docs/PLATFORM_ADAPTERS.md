@@ -1,5 +1,9 @@
 # Platform Adapter Guide
 
+![The engineering boundary](assets/gui-engineering-boundary.jpg)
+
+*Platform adapters are the controlled passage from semantic GUI intent to native manifestation.*
+
 A platform adapter is a compiler-like boundary: it consumes the neutral GUI model and materializes it for a target UI technology.
 
 ## Adapter responsibilities
