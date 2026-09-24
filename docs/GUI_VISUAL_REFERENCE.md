@@ -15,7 +15,7 @@ The first reference image is the Workshop map produced during the current WebPag
 
 When the source image is committed, place it at:
 
-`docs/assets/workshop-map-reference.png`
+`docs/assets/workshop-map-reference.jpg`
 
 The filename is intentionally semantic rather than generator-specific. The image is a reference artifact; it does not define the Core GUI model and should not be treated as a pixel-perfect implementation contract.
 
