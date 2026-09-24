@@ -22,6 +22,17 @@
     <None Include="docs\PLATFORM_ADAPTERS.md" Link="Documentation\PLATFORM_ADAPTERS.md" />
     <None Include="docs\TESTING.md" Link="Documentation\TESTING.md" />
 
+
+    <None Include="docs\START_HERE.md" Link="Documentation\START_HERE.md" />
+    <None Include="docs\THEORY_GUIDE.md" Link="Documentation\THEORY_GUIDE.md" />
+    <None Include="docs\THEORY_TEXTBOOK_MAP.md" Link="Documentation\THEORY_TEXTBOOK_MAP.md" />
+
+    <None Include="docs\THEORY\01_EXTRINSIC_INTERFACE_LAYER.md" Link="Theory\01_EXTRINSIC_INTERFACE_LAYER.md" />
+    <None Include="docs\THEORY\02_BREAKWATER_PRINCIPLE.md" Link="Theory\02_BREAKWATER_PRINCIPLE.md" />
+    <None Include="docs\THEORY\03_DIGITAL_SHADOW.md" Link="Theory\03_DIGITAL_SHADOW.md" />
+    <None Include="docs\THEORY\04_EXECUTION_BOUNDARY.md" Link="Theory\04_EXECUTION_BOUNDARY.md" />
+    <None Include="docs\THEORY\05_REPRESENTATIONAL_COMPATIBILITY.md" Link="Theory\05_REPRESENTATIONAL_COMPATIBILITY.md" />
+
     <None Include="docs\assets\workshop-map-reference.jpg" Link="Reference Assets\workshop-map-reference.jpg" />
   </ItemGroup>
 </Project>
