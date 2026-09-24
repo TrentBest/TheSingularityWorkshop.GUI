@@ -8,7 +8,11 @@ That is a useful question.
 
 This repository is designed to answer it gradually. Rather than asking you to adopt a new vocabulary all at once, it starts with familiar GUI problems and works outward toward the abstraction.
 
-The fastest way to explore it is **not** to read every document. Follow the two documentation prongs below, move between the implementation and the ideas behind it, and let the examples do most of the persuasion.
+The fastest way to explore it is **not** to read every document. Follow the two documentation prongs below, but make the first ten minutes experiential: see the Workshop running, then come back to the implementation and ideas behind it.
+
+![The Land of Idealism](assets/ideal-gui-separation-of-concerns.jpg)
+
+The image above is a reference manifestation of the separation this repository is trying to make tangible: runtime behavior, semantic GUI meaning, and platform presentation can cooperate without becoming the same thing.
 
 ---
 
@@ -42,6 +46,7 @@ Start with:
 - [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md)
 - [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
 - [GUI Visual Reference](GUI_VISUAL_REFERENCE.md)
+- [GUI Benchmarking](GUI_BENCHMARKING.md)
 - [Roadmap](../ROADMAP.md)
 
 This prong should let another developer inspect the implementation and answer:
@@ -198,20 +203,82 @@ Those predictions are useful precisely because they can be challenged.
 
 # A ten-minute evaluation
 
-If you have ten minutes, do this:
+The ten-minute path should begin with the thing this repository is ultimately meant to help build: a working experience.
+
+### 1. See the Workshop
+
+Open the live [The Singularity Workshop WebPage](https://lemon-ground-09f542010.1.azurestaticapps.net/).
+
+Do not begin by reading the architecture.
+
+Interact with it.
+
+Notice what the interface is doing, what changes over time, what feels like state, what feels like presentation, and where the experience crosses from ordinary web UI into something more deliberately expressive.
+
+The live WebPage is the practical proving ground. Its current production manifestation is not, by itself, a conformance test for this repository; the important next step is to make the WebPage itself a consumer of this GUI architecture on the development path.
+
+### 2. See how the proof is constructed
+
+Open the [WebPage repository](https://github.com/TrentBest/WebPage) on its `development` branch and inspect its reference to this GUI repository.
+
+The intended progression is:
+
+```
+WebPage experience
+      |
+      v
+TheSingularityWorkshop.GUI semantic model
+      |
+      v
+Blazor adapter
+      |
+      v
+browser manifestation
+```
+
+That makes the WebPage more than a demo. It becomes an integration case study: the repository that consumes the abstraction is itself demonstrating what the abstraction is capable of.
+
+### 3. Inspect the boundary
+
+Now return to this repository.
 
 1. Read [GUI Model](GUI_MODEL.md).
-2. Read [Platform Adapters](PLATFORM_ADAPTERS.md).
-3. Inspect `src/Core`.
-4. Inspect `src/Blazor` and `src/WPF`.
+2. Inspect `src/Core`.
+3. Inspect `src/Blazor`.
+4. Inspect `src/WPF`.
 5. Read the Core tests.
 6. Read [Extrinsic Interface Layer](THEORY/01_EXTRINSIC_INTERFACE_LAYER.md).
-7. Find one place where the architecture appears unnecessarily complicated.
-8. Decide whether that complexity protects a real boundary or merely moves complexity around.
 
-That last step matters.
+![The engineering boundary](assets/gui-engineering-boundary.jpg)
 
-The goal is not to turn a skeptic into a believer. It is to make the tradeoffs clear enough that a developer can decide whether the abstraction removes friction from problems they already have.
+At this point the question becomes concrete: does the code you just inspected provide a useful place to put the semantic layer you observed in the running application?
+
+### 4. Then explore the spatial model
+
+If the WebPage example has made the boundary useful, continue into [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) and [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md).
+
+The important example is not a button.
+
+It is one digital reality observed many ways:
+
+```
+subject
+  -> view
+      -> viewport
+          -> presentation surface
+```
+
+A dozen panels can therefore become a dozen controlled observations of one changing reality rather than twelve unrelated GUI implementations.
+
+### 5. Measure it
+
+The next stage is a dedicated GUI benchmark project.
+
+That benchmark should measure the semantic layer itself—construction, traversal, observation/view composition, multi-view scaling, adapter manifestation, and allocation—without pretending that a GUI abstraction can be summarized by a single number.
+
+See [GUI Benchmarking](GUI_BENCHMARKING.md) for the methodology.
+
+The goal is not to turn a skeptic into a believer. It is to make the tradeoffs visible enough that a developer can decide whether the abstraction removes friction from problems they already have.
 
 ---
 
