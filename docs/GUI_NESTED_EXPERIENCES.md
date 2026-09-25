@@ -30,13 +30,22 @@ This means nesting is not a special GUI feature. It is a consequence of treating
 The distinction should remain explicit:
 
 - Experience — something that can execute.
-- Hub — an execution boundary that can host and coordinate experiences.
+- Hub — an intrinsic GUI boundary that can host or coordinate experiences.
+- Domain purpose — something supplied by the consuming project, not by GUI Core.
+
+The GUI therefore exposes one fundamental accessor:
+
+`Gui.Hub`
+
+The accessor exists whether or not an application chooses to use any hub functionality. Accessing it does not render, manifest, or impose a visual surface. The hub is simply a small, stable object with its own identity.
+
+The intrinsic hub deliberately does **not** contain concepts such as Arcade, City, Game, Timeline, Editor, Simulation, Reality, Fiction, or other purposes. Those meanings belong to the consuming project.
+
+A consuming project can define its own interfaces and capabilities around the intrinsic boundary. For example, an application may define an arcade-specific experience contract, while another project defines a scientific-laboratory contract. Neither requires GUI Core to know what an arcade or laboratory is.
 
 A Hub may host an Experience, and an Experience may itself expose another Hub boundary.
 
-Therefore the conceptual graph is recursive: Hub -> Experience -> Hub -> Experience.
-
-AsHub() should therefore mean more than making a node named Hub. It should establish an executable composition boundary.
+Therefore the conceptual graph remains recursive: Hub -> Experience -> Hub -> Experience.
 
 The GUI semantic tree remains the manifestation model. The experience graph is a separate recursive execution structure. They may correspond, but they are not the same structure.
 
@@ -112,18 +121,24 @@ This permits the same game or IP experience to participate in many larger experi
 
 ## Architectural consequence
 
-The GUI project should not evolve toward a collection of special-case containers such as AsHub(), AsExperience(), AsArcade(), AsGame(), AsCity(), and AsTimeline(). Those are domain concepts, not GUI primitives.
+The GUI project should not evolve toward a collection of special-case containers such as AsHub(), AsExperience(), AsArcade(), AsGame(), AsCity(), and AsTimeline().
 
-The reusable semantic contract should instead support the recursive relationship:
+The fundamental GUI surface is deliberately smaller:
 
-AsHub()
+Gui.Hub
+
+From that intrinsic boundary, the reusable execution contract can support the recursive relationship:
+
+Gui.Hub
   -> Execute(Experience)
        -> Execute(Experience)
             -> Execute(Experience)
 
-with the experience graph remaining recursively composable.
+The hub is not a declaration of purpose. It is the place where purpose can be attached by the consuming project.
 
-Domain-specific builders can then describe City, Arcade, Game, and Timeline experiences without requiring GUI Core to know what those domains mean.
+Domain-specific builders and interfaces can then describe City, Arcade, Game, Timeline, laboratory, editor, simulation, reality, fiction, or entirely new concepts without requiring GUI Core to know what those domains mean.
+
+This keeps the GUI technology broadly expressive rather than encoding today's imagined universe into tomorrow's core API.
 
 ## Design rule
 
