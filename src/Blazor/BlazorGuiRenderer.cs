@@ -1,7 +1,6 @@
 using System;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
-using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.Workshop.Gui;
 
@@ -10,28 +9,27 @@ public static class BlazorGuiRenderer
     public static RenderFragment Render(GuiNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
-        return builder => RenderNode(builder, node, 0);
+        return builder => RenderNode(builder, node);
     }
 
-    private static int RenderNode(RenderTreeBuilder builder, GuiNode node, int sequence)
+    private static void RenderNode(RenderTreeBuilder builder, GuiNode node)
     {
-        builder.OpenElement(sequence++, ResolveTag(node.Kind));
-        builder.AddAttribute(sequence++, "id", node.Id);
+        builder.OpenElement(0, ResolveTag(node.Kind));
+        builder.AddAttribute(1, "id", node.Id);
 
         if (!string.IsNullOrWhiteSpace(node.Source))
-            builder.AddAttribute(sequence++, "src", node.Source);
+            builder.AddAttribute(2, "src", node.Source);
 
         foreach (var property in node.Properties)
-            builder.AddAttribute(sequence++, property.Key, property.Value);
+            builder.AddAttribute(3, property.Key, property.Value);
 
         if (node.Text is not null)
-            builder.AddContent(sequence++, node.Text);
+            builder.AddContent(4, node.Text);
 
         foreach (var child in node.Children)
-            sequence = RenderNode(builder, child, sequence);
+            RenderNode(builder, child);
 
         builder.CloseElement();
-        return sequence;
     }
 
     private static string ResolveTag(string kind) => kind switch
