@@ -6,7 +6,7 @@
     <RootNamespace>TheSingularityWorkshop.Workshop.Gui</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>TheSingularityWorkshop.GUI.Blazor</PackageId>
-    <Version>0.1.0-alpha.4</Version>
+    <Version>0.1.0-alpha.5</Version>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
