@@ -85,4 +85,24 @@ public sealed class BlazorGuiRendererTests
 
         return null;
     }
+    [Fact]
+    public void RendererManifestsSemanticStyleProperties()
+    {
+        var node = GuiBuilder
+            .Create("Panel", "root")
+            .Property("style:position", "fixed")
+            .Property("style:inset", "0")
+            .Build();
+
+        var renderTree = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(node)(renderTree);
+
+        var frames = renderTree.GetFrames().Array;
+
+        Assert.Contains(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Attribute &&
+            frame.AttributeName == "style" &&
+            (string?)frame.AttributeValue == "position:fixed;inset:0");
+    }
+
 }
