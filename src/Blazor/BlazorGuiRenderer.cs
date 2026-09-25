@@ -20,11 +20,25 @@ public static class BlazorGuiRenderer
         if (!string.IsNullOrWhiteSpace(node.Source))
             builder.AddAttribute(2, "src", node.Source);
 
+        var sequence = 3;
+        var style = new List<string>();
+
         foreach (var property in node.Properties)
-            builder.AddAttribute(3, property.Key, property.Value);
+        {
+            if (property.Key.StartsWith("style:", StringComparison.Ordinal))
+            {
+                style.Add($"{property.Key["style:".Length..]}:{property.Value}");
+                continue;
+            }
+
+            builder.AddAttribute(sequence++, property.Key, property.Value);
+        }
+
+        if (style.Count > 0)
+            builder.AddAttribute(sequence++, "style", string.Join(";", style));
 
         if (node.Text is not null)
-            builder.AddContent(4, node.Text);
+            builder.AddContent(sequence++, node.Text);
 
         foreach (var child in node.Children)
             RenderNode(builder, child);
