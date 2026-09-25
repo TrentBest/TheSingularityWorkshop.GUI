@@ -44,6 +44,30 @@ public sealed class BlazorGuiRendererTests
         Assert.Equal("Run", frames[2].TextContent);
     }
 
+    [Fact]
+    public void ElementBuilder_materializes_wheel_and_stop_propagation_attributes()
+    {
+        var builder = new RenderTreeBuilder();
+
+        WorkshopGui.Element(this, "div")
+            .OnWheel(_ => { })
+            .StopPropagation("onclick")
+            .Build()(builder);
+
+        var frames = builder.GetFrames().Array;
+
+        Assert.Contains(
+            frames,
+            frame => frame.FrameType == RenderTreeFrameType.Attribute &&
+                     frame.AttributeName == "onwheel");
+
+        Assert.Contains(
+            frames,
+            frame => frame.FrameType == RenderTreeFrameType.Attribute &&
+                     frame.AttributeName == "onclick:stopPropagation" &&
+                     Equals(frame.AttributeValue, true));
+    }
+
     private static string? FindAttribute(
         RenderTreeFrame[] frames,
         string name,
