@@ -10,6 +10,12 @@ on:
       - master
       - development
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the packed packages to NuGet.org"
+        required: false
+        default: false
+        type: boolean
 
 permissions:
   contents: read
@@ -64,7 +70,7 @@ jobs:
   publish_nuget:
     needs: test-and-package
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
     permissions:
       contents: read
       id-token: write
