@@ -96,6 +96,9 @@ public class ElementBuilder
     public ElementBuilder OnKeyDown(Action<KeyboardEventArgs> action) =>
         Attribute("onkeydown", EventCallback.Factory.Create(_receiver, action));
 
+    public ElementBuilder OnWheel(Action<WheelEventArgs> action) =>
+        Attribute("onwheel", EventCallback.Factory.Create<WheelEventArgs>(_receiver, action));
+
     public ElementBuilder OnMouseEnter(Action action) =>
         Attribute("onmouseenter", EventCallback.Factory.Create(_receiver, action));
 
@@ -104,6 +107,9 @@ public class ElementBuilder
 
     public ElementBuilder PreventDefault(string eventName) =>
         Attribute($"{eventName}:preventDefault", true);
+
+    public ElementBuilder StopPropagation(string eventName) =>
+        Attribute($"{eventName}:stopPropagation", true);
 
     public ElementBuilder BuildChildren(params ElementBuilder[] children)
     {
