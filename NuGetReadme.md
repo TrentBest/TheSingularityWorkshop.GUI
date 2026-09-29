@@ -10,31 +10,29 @@ A platform-neutral GUI engineering layer for C# applications.
 
 The Singularity Workshop GUI separates **semantic interface intent** from **platform-specific manifestation**.
 
-```text
-application / experience
-        |
-semantic GUI model
-        |
-platform adapter
-        |
-native GUI
-```
-
 ## Packages
 
 ### TheSingularityWorkshop.GUI.Core
 
 The platform-neutral recursive GUI model and builder primitives.
 
+**Current branch version:** `0.1.0-alpha.2`
+
 ### TheSingularityWorkshop.GUI.Blazor
 
 Blazor builders and the Blazor manifestation layer built on GUI Core.
+
+**Current branch version:** `0.1.0-alpha.7`
 
 ### TheSingularityWorkshop.GUI.WPF
 
 Reusable WPF builders and the native desktop manifestation layer built on GUI Core.
 
-The WPF layer contains the reusable builder lineage recovered from earlier application work, but it has no dependency on Revit, FTI, or any application-specific host.
+**Current branch version:** `0.1.0-alpha.1`
+
+The WPF layer contains reusable builder lineage recovered from earlier application work and adapted into this repository. It has no dependency on Revit, FTI, or an application-specific host.
+
+The first WPF package release is intentionally separate from the Core and Blazor version lines.
 
 ## Core builder vocabulary
 
@@ -53,7 +51,7 @@ The default builders create a platform-neutral semantic tree:
 - `GuiBuilders.Separator(...)` — visual separation.
 - `GuiBuilders.TextBox(...)` — editable text surface.
 
-The lower-level `GuiBuilder` remains available for custom semantic kinds and properties.
+Example:
 
 ```csharp
 var page = GuiBuilders.Column("page")
@@ -64,27 +62,56 @@ var page = GuiBuilders.Column("page")
 
 The result is a `GuiNode` snapshot. Core does not know how that node will be displayed.
 
-### Choosing a platform package
+## WPF native builders
+
+GUI.WPF is deliberately more expressive than the neutral Core vocabulary because native desktop applications can require platform-specific capabilities.
+
+The current WPF surface includes:
+
+- root/window builder infrastructure;
+- panel, stack, grid, uniform-grid, wrap, tabbed, and multi-panel builders;
+- numeric and enum controls;
+- tree-view and pivot-grid controls;
+- color-picker and CRUD dialogs;
+- reflection-driven property editors;
+- diagnostic/log viewing;
+- semantic Core-to-WPF rendering;
+- Hub rendering;
+- WPF visual helpers and factory utilities.
+
+These builders are **WPF-native APIs**. They are not promoted into Core merely because WPF supports them.
+
+See [WPF Guide](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/WPF_GUIDE.md) and [Implementation Status](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/IMPLEMENTATION_STATUS.md).
+
+## Choosing a package
 
 Use **GUI.Core** wherever GUI intent is authored or shared.
 
-Add **GUI.Blazor** when the host manifests that intent in Blazor.
+Add **GUI.Blazor** at a browser manifestation boundary.
 
-Add **GUI.WPF** when the host manifests that intent in WPF. GUI.WPF also contains richer WPF-native builders for desktop applications that need capabilities beyond the neutral semantic surface.
+Add **GUI.WPF** at a Windows desktop manifestation boundary, or when a WPF application intentionally wants its richer native builder surface.
 
-This separation lets a shared experience describe its interface once while different hosts choose their own manifestation technology.
+The semantic model and the native builder APIs therefore coexist without forcing native concerns downward into Core.
 
 ## Relationship with FSM
 
 - **FSM_API** provides state-transition and runtime behavior.
 - **FSM_COS** assembles runtime composition.
-- **GUI** provides visualization and interaction representation.
+- **GUI** provides semantic presentation and interaction representation.
 - **Platform adapters** turn semantic GUI intent into platform-native manifestation.
-- **MicroBundleDomain** provides the microbundle contracts used by composition infrastructure.
+- **MicroBundleDomain** provides the MicroBundle contracts used by composition infrastructure.
 
-## Current status
+GUI does not own runtime composition.
 
-This package family is under active development. NuGet publication remains a deliberate release action; repository documentation may be updated independently of package publication.
+## Current release posture
+
+This repository is actively developing an alpha platform family.
+
+Documentation may advance independently of package publication.
+
+A package is considered released only when it has successfully passed its build/test/pack lane and has been explicitly published through the repository's trusted-publishing workflow.
+
+The WPF package is staged as `0.1.0-alpha.1` for its first publication.
 
 ## Resources
 
