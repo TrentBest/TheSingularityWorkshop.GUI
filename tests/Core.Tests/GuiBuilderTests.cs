@@ -78,4 +78,31 @@ public sealed class GuiBuilderTests
 
         Assert.Contains("missing", exception.Message);
     }
+
+    [Fact]
+    public void Default_builders_create_canonical_semantic_kinds()
+    {
+        var root = GuiBuilders.Column("settings")
+            .Child(GuiKinds.Text, "title", child => child.Text("Settings"))
+            .Child(GuiKinds.Button, "save", child => child.Text("Save"))
+            .Build();
+
+        Assert.Equal(GuiKinds.Column, root.Kind);
+        Assert.Equal("Vertical", root.Properties["orientation"]);
+        Assert.Equal(GuiKinds.Text, root.Find("title").Kind);
+        Assert.Equal("Settings", root.Find("title").Text);
+        Assert.Equal(GuiKinds.Button, root.Find("save").Kind);
+    }
+
+    [Fact]
+    public void Convenience_builder_creates_expected_snapshot()
+    {
+        var button = GuiBuilders.Button("save", "Save").Build();
+
+        Assert.Equal(GuiKinds.Button, button.Kind);
+        Assert.Equal("Save", button.Text);
+        Assert.Empty(button.Children);
+    }
+
 }
+
