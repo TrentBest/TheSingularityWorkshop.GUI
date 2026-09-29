@@ -155,7 +155,7 @@ Blazor is an adapter, not the semantic model.
 
 | Package | Current branch version | Role | Status |
 |---|---:|---|---|
-| **TheSingularityWorkshop.GUI.Core** | `0.1.0-alpha.2` | Semantic model and builders | Implemented |
+| **TheSingularityWorkshop.GUI.Core** | `0.1.0-alpha.3` | Semantic model and builders | Implemented |
 | **TheSingularityWorkshop.GUI.Blazor** | `0.1.0-alpha.7` | Blazor manifestation | Implemented |
 | **TheSingularityWorkshop.GUI.WPF** | `0.1.0-alpha.1` | WPF manifestation and native builders | Implemented; first release pending |
 
