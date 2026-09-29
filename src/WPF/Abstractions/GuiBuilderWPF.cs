@@ -176,7 +176,7 @@ public class GuiBuilderWPF : IComponentBuilder
     }
 
     public void ReceiveBusPayload(string topic, object? payload) => Receive(topic, payload);
-    public void Receive(string topic, object payload)
+    public void Receive(string topic, object? payload)
     {
         if (_bus.TryGetValue(topic, out var handler)) handler(payload);
     }
