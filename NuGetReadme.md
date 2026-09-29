@@ -57,8 +57,8 @@ The lower-level `GuiBuilder` remains available for custom semantic kinds and pro
 
 ```csharp
 var page = GuiBuilders.Column("page")
-    .Child(GuiKinds.Text, "heading", b => b.Text("Hello"))
-    .Child(GuiKinds.Button, "continue", b => b.Text("Continue"))
+    .Child(GuiBuilders.Text("heading", "Hello"))
+    .Child(GuiBuilders.Button("continue", "Continue"))
     .Build();
 ```
 
