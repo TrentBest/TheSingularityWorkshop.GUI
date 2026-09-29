@@ -21,9 +21,9 @@ GUI.Core provides the default semantic vocabulary used by platform manifestation
 
 ```csharp
 var view = GuiBuilders.Column("settings")
-    .Child(GuiKinds.Text, "title", b => b.Text("Settings"))
-    .Child(GuiKinds.Button, "save", b => b.Text("Save"))
-    .Child(GuiKinds.Warning, "warning", b => b.Text("Changes are not saved yet."))
+    .Child(GuiBuilders.Text("title", "Settings"))
+    .Child(GuiBuilders.Button("save", "Save"))
+    .Child(GuiBuilders.Warning("warning", "Changes are not saved yet."))
     .Build();
 ```
 
