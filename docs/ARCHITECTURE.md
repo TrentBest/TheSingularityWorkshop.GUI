@@ -10,13 +10,21 @@ The GUI repository owns the engineering boundary between GUI intent and platform
 
 A consuming application should be able to describe a user interface without choosing WPF, Blazor, Unity UI Toolkit, or another presentation technology at the point where the domain experience is authored.
 
-The central question is not how to make a WPF button and a Blazor button look similar. It is:
+## Ownership
 
-> What is the smallest, stable representation of a GUI that can be interpreted correctly by multiple platforms?
+Each layer has a deliberately narrow owner:
 
-## Layers
+| Layer | Owns | Does not own |
+|---|---|---|
+| **GUI.Core** | semantic GUI tree, builder primitives, Hub contract | rendering, WPF, Blazor, HTML, XAML, runtime composition |
+| **GUI.Blazor** | browser manifestation | semantic ownership, runtime composition |
+| **GUI.WPF** | desktop manifestation and WPF-native builders | Core semantics, FSM_COS composition |
+| **FSM_COS** | runtime composition and assembly | rendering implementation |
+| **WebPage / WebForge** | browser host and domain experience | generic GUI semantics |
 
-### 1. Core model
+This ownership table is a key architectural constraint.
+
+## 1. Core model
 
 src/Core contains platform-neutral primitives.
 
@@ -29,11 +37,30 @@ The current model is a recursive tree:
 - builders construct trees recursively;
 - a built tree is a snapshot and does not retain mutable builder state.
 
+Core also defines the intrinsic GUI Hub boundary. IGuiHub exposes identity plus a semantic GuiNode root. The Hub is therefore a platform-neutral surface, not a renderer and not a Blazor component.
+
 Core must not reference WPF, Blazor, HTML, CSS, JavaScript, XAML, Unity, or another presentation framework.
 
-### 2. Platform adapters
+## 2. Platform manifestations
 
 Platform projects translate the neutral model into native constructs.
+
+### Blazor
+
+GUI.Blazor currently manifests the canonical Core kinds through a Blazor renderer. Its implementation is intentionally conservative: it maps the supported semantic vocabulary and selected common properties rather than pretending all future GUI capabilities already exist.
+
+### WPF
+
+GUI.WPF currently provides two related surfaces:
+
+1. **Semantic manifestation** — WpfGuiRenderer and WpfGuiHubRenderer consume Core trees/Hub roots and create WPF controls.
+2. **Native builder system** — WPF-specific builders expose richer desktop composition primitives where Core intentionally remains neutral.
+
+The native builder system includes layouts, controls, dialogs, reflection, diagnostics, and window-oriented composition.
+
+These two surfaces are complementary. A WPF application can either consume the semantic Core model or intentionally use the WPF-native builder APIs.
+
+## 3. Platform adapters
 
 A platform adapter owns:
 
@@ -47,54 +74,65 @@ A platform adapter owns:
 
 A platform adapter must not force platform-native concepts into Core merely because the target platform exposes them.
 
-### 3. Domain builders
+## 4. Domain builders
 
 A consuming application may provide builders such as FsmForgeGuiBuilder or SpatialWorldGuiBuilder.
 
 These builders express domain intent. They belong in the consuming repository because the GUI repository should not know what a Forge, workshop, laboratory, or AEC office means.
 
-## Recursive construction
+## Hub and composition
 
-Recursion is the fundamental composition mechanism.
+The Hub is the default GUI surface, but GUI does not own runtime composition.
 
-A builder can create a node and configure children, and each child can recursively create more children. This means a GUI can be assembled from small builders without requiring a monolithic page builder.
+```text
+RuntimeManifest
+      |
+      v
+   FSM_COS
+      |
+      v
+ RuntimeAssembly
+      |
+      +---- Hub MicroBundle
+                |
+                v
+          GUI Core semantic Hub
+                |
+                v
+       platform-specific adapter
+        /          |          \
+     Blazor       WPF        Unity
+```
 
-Conceptually:
+The Hub MicroBundle is an ordinary FSM_COS composition participant. FSM_COS assembles it; GUI.Core defines what its platform-neutral surface means; a platform adapter decides how that surface is manifested.
 
-Experience -> Panel -> Panel -> Button -> Text
+## Current boundary
 
-The same structural intent can then be materialized by different adapters.
+The architecture is intentionally ahead of some implementation.
 
-## Spatial semantics belong at the same boundary
+Implemented today:
 
-Spatial concepts such as coordinate intent, views, viewports, cameras, transforms, and semantic interaction targets belong in Core only when their meaning can be stated independently of a rendering platform. Their concrete manifestation belongs to adapters.
+- recursive Core model and builder vocabulary;
+- Core Hub surface;
+- Blazor manifestation;
+- WPF manifestation;
+- WPF-native builder family;
+- package/build lanes for Core, Blazor, and WPF.
 
-The detailed spatial contract is maintained in [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md).
+Not implemented as stable runtime contracts yet:
 
-## Stable boundary
+- semantic input;
+- capability negotiation;
+- accessibility contract;
+- deterministic GUI serialization;
+- GUI execution host;
+- stable GUI MicroBundle contract;
+- Unity manifestation.
 
-The following concepts belong in Core only when they have platform-independent semantics:
-
-- identity;
-- hierarchy;
-- textual content;
-- semantic properties;
-- resource/source references;
-- coordinate intent;
-- eventually: layout intent, interaction intent, state binding, accessibility intent, and lifecycle intent.
-
-The following do not belong in Core:
-
-- RenderFragment;
-- DependencyObject;
-- DOM nodes;
-- XAML;
-- CSS declarations;
-- JavaScript callbacks;
-- Unity-specific UI objects.
+See [Implementation Status](IMPLEMENTATION_STATUS.md) and [Roadmap](../ROADMAP.md) before treating an architectural document as an API guarantee.
 
 ## Design principle
 
-Core should be boring.
+**Core should be boring.**
 
 The sophistication belongs in the contracts and in the adapters, not in a hidden dependency on one rendering technology.

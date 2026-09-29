@@ -21,7 +21,7 @@ permissions:
   contents: read
 
 jobs:
-  test-and-package:
+  build-core:
     runs-on: ubuntu-24.04
 
     steps:
@@ -38,37 +38,83 @@ jobs:
       - name: Restore Core
         run: dotnet restore src/Core/TheSingularityWorkshop.GUI.Core.csproj
 
-      - name: Restore Blazor
-        run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
-
       - name: Test Core with coverage
         run: dotnet test tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/Core
-
-      - name: Test Blazor with coverage
-        run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/Blazor
 
       # Coverage is part of the normal quality gate; the repository secret is supplied by GitHub Actions.
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v6
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./TestResults/**/coverage.cobertura.xml
+          files: ./TestResults/Core/coverage.cobertura.xml
           fail_ci_if_error: true
 
       - name: Pack Core
-        run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
+        run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages --no-restore
 
-      - name: Pack Blazor
-        run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
-
-      - name: Upload NuGet packages as artifact
+      - name: Upload Core package
         uses: actions/upload-artifact@v7
         with:
-          name: gui-nuget-packages
+          name: gui-nuget-package-core
           path: ./packages/*.nupkg
 
-  publish_nuget:
-    needs: test-and-package
+  build-blazor:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore Blazor
+        run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
+
+      - name: Test Blazor with coverage
+        run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/Blazor
+
+      - name: Pack Blazor
+        run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages --no-restore
+
+      - name: Upload Blazor package
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-nuget-package-blazor
+          path: ./packages/*.nupkg
+
+  build-wpf:
+    runs-on: windows-2025
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore WPF
+        run: dotnet restore src/WPF/TheSingularityWorkshop.GUI.WPF.csproj
+
+      - name: Build WPF
+        run: dotnet build src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release --no-restore
+
+      # WPF tests will be added to this Windows quality lane once tests/WPF.Tests exists.
+      - name: Pack WPF
+        run: dotnet pack src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release --output ./packages --no-build
+
+      - name: Upload WPF package
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-nuget-package-wpf
+          path: ./packages/*.nupkg
+
+  publish_nuget_core:
+    needs: build-core
     runs-on: ubuntu-24.04
     if: github.event_name == 'workflow_dispatch' && inputs.publish == true
     permissions:
@@ -76,10 +122,10 @@ jobs:
       id-token: write
 
     steps:
-      - name: Download NuGet packages
+      - name: Download Core package
         uses: actions/download-artifact@v8
         with:
-          name: gui-nuget-packages
+          name: gui-nuget-package-core
           path: ./packages
 
       - name: Authenticate with NuGet Trusted Publishing
@@ -88,5 +134,53 @@ jobs:
         with:
           user: TheSingularityWorkshop
 
-      - name: Publish packages to NuGet.org
+      - name: Publish Core package to NuGet.org
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
+
+  publish_nuget_blazor:
+    needs: build-blazor
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Download Blazor package
+        uses: actions/download-artifact@v8
+        with:
+          name: gui-nuget-package-blazor
+          path: ./packages
+
+      - name: Authenticate with NuGet Trusted Publishing
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: TheSingularityWorkshop
+
+      - name: Publish Blazor package to NuGet.org
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
+
+  publish_nuget_wpf:
+    needs: build-wpf
+    runs-on: ubuntu-24.04
+    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Download WPF package
+        uses: actions/download-artifact@v8
+        with:
+          name: gui-nuget-package-wpf
+          path: ./packages
+
+      - name: Authenticate with NuGet Trusted Publishing
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: TheSingularityWorkshop
+
+      - name: Publish WPF package to NuGet.org
         run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate

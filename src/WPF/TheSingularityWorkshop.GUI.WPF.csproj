@@ -6,13 +6,21 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>TheSingularityWorkshop.GUI.WPF</PackageId>
-    <Version>0.1.0</Version>
+    <Version>0.1.0-alpha.1</Version>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
-    <PackageDescription>Reusable WPF GUI builders for The Singularity Workshop.</PackageDescription>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>NuGetReadme.md</PackageReadmeFile>
+    <PackageIcon>docs/assets/ideal-gui-separation-of-concerns.jpg</PackageIcon>
+    <PackageDescription>Reusable WPF GUI builders and desktop manifestation infrastructure for The Singularity Workshop.</PackageDescription>
+    <PackageTags>gui;wpf;builder;desktop;semantic-gui;platform-adapter;singularity;TheSingularityWorkshop</PackageTags>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
+    <None Include="..\..\NuGetReadme.md" Pack="true" PackagePath="" />
+    <None Include="..\..\docs\assets\ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
   </ItemGroup>
 </Project>

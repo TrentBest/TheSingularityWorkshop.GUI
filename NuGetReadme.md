@@ -5,37 +5,10 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.GUI/package.yml?branch=master&style=flat-square&logo=github)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
 [![Last commit](https://img.shields.io/github/last-commit/TrentBest/TheSingularityWorkshop.GUI/master)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commits/master)
 [![Code Coverage](https://img.shields.io/codecov/c/github/TrentBest/TheSingularityWorkshop.GUI?style=flat-square)](https://app.codecov.io/gh/TrentBest/TheSingularityWorkshop.GUI)
-[![Known Vulnerabilities](https://snyk.io/test/github/TrentBest/TheSingularityWorkshop.GUI/badge.svg)](https://snyk.io/test/github/TrentBest/TheSingularityWorkshop.GUI)
-
-[![GitHub stars](https://img.shields.io/github/stars/TrentBest/TheSingularityWorkshop.GUI?style=social)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/stargazers)
-[![GitHub contributors](https://img.shields.io/github/contributors/TrentBest/TheSingularityWorkshop.GUI)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/graphs/contributors)
-[![Open Issues](https://img.shields.io/github/issues/TrentBest/TheSingularityWorkshop.GUI)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues)
-
-[![CoderLegion](https://coderlegion.com/cl_badge_logo1.png) Join the CoderLegion Community](https://coderlegion.com/user/The+Singularity+Workshop)
-
-[**💖 Support Us**](https://www.paypal.com/donate/?hosted_button_id=3Z7263LCQMV9J)
-
-<a href="https://www.patreon.com/TheSingularityWorkshop" target="_blank">
-    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/FSM_API/Branding/TheSingularityWorkshop.png" alt="Support The Singularity Workshop on Patreon" height="200" style="display: block;">
-</a>
 
 A platform-neutral GUI engineering layer for C# applications.
 
 The Singularity Workshop GUI separates **semantic interface intent** from **platform-specific manifestation**.
-
-```
-application / experience
-        ↓
-semantic GUI model
-        ↓
-platform adapter
-        ↓
-native GUI
-```
-
-The same semantic GUI can therefore be represented through Blazor, WPF, Unity UI Toolkit, or future adapters without making any one presentation technology intrinsic to the application's domain.
-
-![The Land of Idealism](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.GUI/master/docs/assets/ideal-gui-separation-of-concerns.jpg)
 
 ## Packages
 
@@ -43,114 +16,127 @@ The same semantic GUI can therefore be represented through Blazor, WPF, Unity UI
 
 The platform-neutral recursive GUI model and builder primitives.
 
-For the current prerelease:
-
-```bash
-dotnet add package TheSingularityWorkshop.GUI.Core --version 0.1.0-alpha
-```
+**Current branch version:** `0.1.0-alpha.2`
 
 ### TheSingularityWorkshop.GUI.Blazor
 
 Blazor builders and the Blazor manifestation layer built on GUI Core.
 
-For the current prerelease:
+**Current branch version:** `0.1.0-alpha.7`
 
-```bash
-dotnet add package TheSingularityWorkshop.GUI.Blazor --version 0.1.0-alpha.4
-```
+### TheSingularityWorkshop.GUI.WPF
 
-The Blazor package depends on GUI Core.
+Reusable WPF builders and the native desktop manifestation layer built on GUI Core.
 
-## Quick start
+**Current branch version:** `0.1.0-alpha.1`
 
-Build a semantic GUI tree without introducing HTML, DOM, CSS, or Blazor types into Core:
+The WPF layer contains reusable builder lineage recovered from earlier application work and adapted into this repository. It has no dependency on Revit, FTI, or an application-specific host.
+
+The first WPF package release is intentionally separate from the Core and Blazor version lines.
+
+## Core builder vocabulary
+
+The Core package is intended to be useful on its own.
+
+The default builders create a platform-neutral semantic tree:
+
+- `GuiBuilders.Panel(...)` — generic container.
+- `GuiBuilders.Stack(...)` — stack-oriented container.
+- `GuiBuilders.Row(...)` — horizontal composition.
+- `GuiBuilders.Column(...)` — vertical composition.
+- `GuiBuilders.Text(...)` — textual content.
+- `GuiBuilders.Button(...)` — semantic action surface.
+- `GuiBuilders.Image(...)` — image/media surface.
+- `GuiBuilders.Warning(...)` — warning/informational surface.
+- `GuiBuilders.Separator(...)` — visual separation.
+- `GuiBuilders.TextBox(...)` — editable text surface.
+
+Example:
 
 ```csharp
-using TheSingularityWorkshop.Workshop.Gui;
-
-var gui = GuiBuilder
-    .Create("Panel", "workshop")
-    .Text("The Singularity Workshop")
-    .Child("Panel", "content", child =>
-    {
-        child
-            .Child("Text", "title", text => text.Text("Welcome"))
-            .Child("Button", "enter", button => button.Text("Enter Workshop"));
-    })
+var page = GuiBuilders.Column("page")
+    .Child(GuiBuilders.Text("heading", "Hello"))
+    .Child(GuiBuilders.Button("continue", "Continue"))
     .Build();
 ```
 
-The resulting object is a recursive semantic model. Platform adapters decide how that model is manifested.
+The result is a `GuiNode` snapshot. Core does not know how that node will be displayed.
 
-## Why this exists
+## WPF native builders
 
-GUI code tends to become coupled to the technology used to render it.
+GUI.WPF is deliberately more expressive than the neutral Core vocabulary because native desktop applications can require platform-specific capabilities.
 
-This project deliberately puts a boundary between:
+The current WPF surface includes:
 
-- **experience semantics** — what the application wants to communicate or allow;
-- **GUI semantics** — the representation and interaction model;
-- **platform manifestation** — how that representation becomes HTML, WPF controls, Unity UI, or another native surface.
+- root/window builder infrastructure;
+- panel, stack, grid, uniform-grid, wrap, tabbed, and multi-panel builders;
+- numeric and enum controls;
+- tree-view and pivot-grid controls;
+- color-picker and CRUD dialogs;
+- reflection-driven property editors;
+- diagnostic/log viewing;
+- semantic Core-to-WPF rendering;
+- Hub rendering;
+- WPF visual helpers and factory utilities.
 
-Core therefore does **not** depend on HTML, DOM, CSS, JavaScript, Blazor `RenderFragment`, WPF `DependencyObject`, XAML, or Unity UI Toolkit types.
+These builders are **WPF-native APIs**. They are not promoted into Core merely because WPF supports them.
 
-## Recursive composition
+See [WPF Guide](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/WPF_GUIDE.md) and [Implementation Status](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/IMPLEMENTATION_STATUS.md).
 
-The model is intentionally recursive:
+## Choosing a package
 
-```
-Experience
-  └── Panel
-      ├── Panel
-      │   ├── Text
-      │   └── Image
-      └── Button
-          └── Text
-```
+Use **GUI.Core** wherever GUI intent is authored or shared.
 
-Small builders can therefore compose larger interfaces while retaining semantic identity and structure.
+Add **GUI.Blazor** at a browser manifestation boundary.
 
-## Relationship with FSM_API
+Add **GUI.WPF** at a Windows desktop manifestation boundary, or when a WPF application intentionally wants its richer native builder surface.
 
-The GUI layer and the state layer have different responsibilities:
+The semantic model and the native builder APIs therefore coexist without forcing native concerns downward into Core.
+
+## Relationship with FSM
 
 - **FSM_API** provides state-transition and runtime behavior.
-- **GUI** provides visualization and interaction representation.
+- **FSM_COS** assembles runtime composition.
+- **GUI** provides semantic presentation and interaction representation.
 - **Platform adapters** turn semantic GUI intent into platform-native manifestation.
+- **MicroBundleDomain** provides the MicroBundle contracts used by composition infrastructure.
 
-This separation allows an experience to change state without making the state machine itself responsible for rendering technology.
+GUI does not own runtime composition.
 
-## Current status
+## Current release posture
 
-This package is under active development.
+This repository is actively developing an alpha platform family.
 
-The first production proving ground is the **WebPage** repository, where the semantic GUI model is being integrated into a live Blazor experience.
+Documentation may advance independently of package publication.
 
-The architecture is intentionally being developed in the open while the contracts stabilize.
+A package is considered released only when it has successfully passed its build/test/pack lane and has been explicitly published through the repository's trusted-publishing workflow.
 
-The current Blazor prerelease is **0.1.0-alpha.4**; prerelease packages are versioned as the semantic GUI contract evolves. The repository's CI validates tests, uploads code coverage, and produces versioned NuGet package artifacts. NuGet.org publication is currently disabled behind an explicit release switch.
+The WPF package is staged as `0.1.0-alpha.1` for its first publication.
 
-## Documentation
+## Resources
 
-The full engineering and theory documentation lives in the repository:
+### Repositories
 
-- [Start Here](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/START_HERE.md)
-- [Architecture](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/ARCHITECTURE.md)
-- [GUI Model](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/GUI_MODEL.md)
-- [Platform Adapters](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/PLATFORM_ADAPTERS.md)
-- [GUI Execution Model](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/GUI_EXECUTION_MODEL.md)
-- [Testing](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/docs/TESTING.md)
-- [Roadmap](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/master/ROADMAP.md)
+- [TheSingularityWorkshop.GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI)
+- [WebPage / WebForge](https://github.com/TrentBest/WebPage)
+- [FSM_API](https://github.com/TrentBest/FSM_API)
+- [FSM_COS](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS)
+- [FSM_Serialization](https://github.com/TrentBest/TheSingularityWorkshop.FSM_Serialization)
+- [MicroBundleDomain](https://github.com/TrentBest/TheSingularityWorkshop.MicroBundleDomain)
+- [FSM_API Unity package](https://github.com/TrentBest/FSM_API_Unity)
 
-## Feedback and contributions
+### NuGet packages
 
-Issues, experiments, architectural criticism, and pull requests are welcome.
-
-[Open an issue](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues) or explore the repository on GitHub.
+- [TheSingularityWorkshop.GUI.Core](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Core)
+- [TheSingularityWorkshop.GUI.Blazor](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Blazor)
+- [TheSingularityWorkshop.GUI.WPF](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.WPF)
+- [TheSingularityWorkshop.FSM_API](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_API)
+- [TheSingularityWorkshop.FSM_COS](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_COS)
+- [TheSingularityWorkshop.FSM_Serialization](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_Serialization)
+- [TheSingularityWorkshop.MicroBundleDomain](https://www.nuget.org/packages/TheSingularityWorkshop.MicroBundleDomain)
 
 ## License
 
 MIT License.
 
 Copyright © 2026 The Singularity Workshop.
-

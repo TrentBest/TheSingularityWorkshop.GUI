@@ -1,217 +1,238 @@
 # TheSingularityWorkshop.GUI
 
-![The Land of Idealism](docs/assets/ideal-gui-separation-of-concerns.jpg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.GUI/package.yml?branch=master&style=flat-square&logo=github)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
+[![Last commit](https://img.shields.io/github/last-commit/TrentBest/TheSingularityWorkshop.GUI/master)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commits/master)
+[![Code Coverage](https://img.shields.io/codecov/c/github/TrentBest/TheSingularityWorkshop.GUI?style=flat-square)](https://app.codecov.io/gh/TrentBest/TheSingularityWorkshop.GUI)
 
-The visual above is a reference manifestation of the architectural idea: semantic interaction and runtime behavior remain distinct from platform-specific presentation.
+A platform-neutral GUI engineering layer with recursive semantic builders and native platform manifestations.
 
-A platform-neutral GUI engineering layer with recursive builders and platform adapters.
+The repository separates **what an interface means** from **how a particular platform displays and operates it**.
 
-The repository exists to separate GUI intent from GUI manifestation.
+~~~text
+experience / application
+          |
+          v
+     semantic GUI
+          |
+     +----+----+
+     |         |
+   Blazor     WPF
+     |         |
+ browser     desktop
+ manifestation / platform behavior
+~~~
 
-A consuming application should be able to describe an interface once and allow a platform adapter to materialize it for WPF, Blazor, Unity UI Toolkit, or another supported technology.
+## Start here
+
+If you are new to the repository, read **[docs/START_HERE.md](docs/START_HERE.md)** first.
+
+The documentation intentionally has two tracks:
+
+- **Technology:** what is implemented, how it works, how it is tested, and where the boundaries are.
+- **Theory:** why the boundaries exist and where the architecture is intended to go.
+
+For a concise implementation snapshot, see **[docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md)**.
 
 ## Repository structure
 
-- src/Core — the neutral recursive GUI model and platform-independent primitives.
-- src/Blazor — Blazor builders and the first Core-to-web manifestation.
-- src/WPF — reusable WPF builders and desktop manifestation infrastructure.
-- tests/Core.Tests — platform-independent contract tests.
-- docs — architecture, model, adapter, and testing contracts.
-- ROADMAP.md — engineering work required to make the neutral model durable.
+~~~text
+TheSingularityWorkshop.GUI/
+|
++-- src/
+|   +-- Core/       platform-neutral semantic model and builders
+|   +-- Blazor/     browser manifestation
+|   +-- WPF/        native desktop manifestation and WPF builders
+|
++-- tests/
+|   +-- Core.Tests/    Core contract tests
+|   +-- Blazor.Tests/  Blazor manifestation tests
+|   +-- WPF.Tests/     planned/being established
+|
++-- docs/
+|   +-- START_HERE.md
+|   +-- IMPLEMENTATION_STATUS.md
+|   +-- ARCHITECTURE.md
+|   +-- PLATFORM_ADAPTERS.md
+|   +-- WPF_GUIDE.md
+|   +-- GUI_MODEL.md
+|   +-- TESTING.md
+|   +-- theory and design documents
+|
++-- .github/workflows/
+    +-- package.yml
+~~~
 
+## Core: author semantic intent once
 
-## Evaluate the architecture
+GUI.Core is the platform-neutral package. Its current default vocabulary includes:
 
-If you are skeptical that this abstraction is necessary, start with:
+- `Panel`
+- `Stack`
+- `Row`
+- `Column`
+- `Text`
+- `Button`
+- `Image`
+- `Warning`
+- `Separator`
+- `TextBox`
 
-- [START HERE — Explore the GUI](docs/START_HERE.md)
+A simple composition looks like this:
 
-The documentation intentionally has two prongs:
-
-1. **Technology** — what the repository implements, how the semantic model works, how adapters manifest it, how it is tested, and what remains on the roadmap.
-2. **Theory** — why the boundaries exist, what engineering problems they address, and how the ideas can be used as textbook-ready material.
-
-### Technology
-
-- [Architecture](docs/ARCHITECTURE.md)
-- [GUI Model](docs/GUI_MODEL.md)
-- [Platform Adapters](docs/PLATFORM_ADAPTERS.md)
-- [Testing](docs/TESTING.md)
-- [GUI Execution Model](docs/GUI_EXECUTION_MODEL.md)
-- [GUI Spatial Domain](docs/GUI_SPATIAL_DOMAIN.md)
-- [GUI Spatial Contracts](docs/GUI_SPATIAL_CONTRACTS.md)
-- [GUI Visual Reference](docs/GUI_VISUAL_REFERENCE.md)
-- [GUI Benchmarking](docs/GUI_BENCHMARKING.md)
-- [Roadmap](ROADMAP.md)
-
-### Theory
-
-- [Theory Guide](docs/THEORY_GUIDE.md)
-- [Textbook Map](docs/THEORY_TEXTBOOK_MAP.md)
-- [Extrinsic Interface Layer](docs/THEORY/01_EXTRINSIC_INTERFACE_LAYER.md)
-- [Breakwater Principle](docs/THEORY/02_BREAKWATER_PRINCIPLE.md)
-- [Digital Shadow](docs/THEORY/03_DIGITAL_SHADOW.md)
-- [Execution Boundary](docs/THEORY/04_EXECUTION_BOUNDARY.md)
-- [Representational Compatibility](docs/THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
-- [Spatial Representation](docs/THEORY/06_SPATIAL_REPRESENTATION.md)
-
-The two tracks are deliberately separate. **The code is the case study. The theory documents the argument. The engineering documentation documents the implementation.**
-
-
-### Where the documentation appears in Visual Studio
-
-The solution includes a dedicated `TheSingularityWorkshop.GUI.Documentation` project so Markdown files are real project items rather than relying on solution-folder discovery.
-
-Expand:
-
-```
-TheSingularityWorkshop.GUI
-└── TheSingularityWorkshop.GUI.Documentation
-    ├── Solution Documentation
-    ├── Documentation
-    ├── Theory
-    └── Reference Assets
+```csharp
+var view = GuiBuilders.Column("settings")
+    .Child(GuiBuilders.Text("title", "Settings"))
+    .Child(GuiBuilders.Button("save", "Save"))
+    .Child(GuiBuilders.Warning("warning", "Changes are not saved yet."))
+    .Build();
 ```
 
-For the fastest evaluation, open `Documentation / START_HERE.md`.
+The result is a `GuiNode` tree. Core does **not** create WPF controls, Blazor components, HTML, XAML, JavaScript, or browser state.
 
-## The engineering boundary
+That makes Core the place to author reusable GUI meaning.
 
-![The engineering boundary](docs/assets/gui-engineering-boundary.jpg)
+## The Hub boundary
 
-The image is a visual companion to the breakwater idea: platform-specific details are allowed to be sophisticated, but they should cross the semantic boundary through an adapter rather than becoming Core dependencies.
+GUI.Core also defines the semantic Hub surface used by an assembled runtime.
 
-The important abstraction is not a shared collection of buttons and panels.
+~~~text
+RuntimeManifest
+      |
+      v
+   FSM_COS
+      |
+      v
+RuntimeAssembly
+      |
+      +---- Hub MicroBundle
+                |
+                v
+          GUI.Core / IGuiHub
+                |
+          +-----+-----+
+          |           |
+       Blazor        WPF
+          |           |
+       browser      desktop
+~~~
 
-It is a semantic GUI model:
+FSM_COS owns composition. GUI owns the semantic presentation boundary. Platform projects own manifestation.
 
-application intent -> recursive GUI model -> platform adapter -> native GUI
+The GUI repository does **not** make FSM_COS depend on a rendering technology.
 
-Core therefore must not depend on HTML, DOM, CSS, JavaScript, Blazor RenderFragment, WPF DependencyObject, XAML, Unity UI Toolkit types, or platform event delegates.
+## WPF
 
-Platform adapters own those details.
+GUI.WPF is a real implementation, not a placeholder for a future adapter.
 
-## Recursive builders
+It currently provides:
 
-The model is intentionally recursive. A builder can contain children, and each child can itself contain children.
+- a Core-to-WPF semantic renderer;
+- an `IGuiHub` WPF renderer;
+- reusable WPF panel/layout builders;
+- a fluent native WPF window/builder surface;
+- tabbed and multi-panel composition;
+- numeric, enum, tree-view, and pivot-grid controls;
+- color-picker and CRUD dialog builders;
+- reflection-driven editors;
+- diagnostic/log viewer infrastructure;
+- a WPF utility/factory layer;
+- WPF visual helpers.
 
-For example:
+The WPF package targets **.NET 8 for Windows** and depends on GUI.Core.
 
-Experience -> Panel -> Panel -> Button -> Text
+The current WPF release does **not** claim adapter parity with every Core semantic capability, and its dedicated `tests/WPF.Tests` project is not yet part of the repository. See [Implementation Status](docs/IMPLEMENTATION_STATUS.md) and [WPF Guide](docs/WPF_GUIDE.md).
 
-This permits small builders to compose larger interfaces without creating a single application-specific GUI builder.
+## Blazor
 
-## Neutrality is a contract
+GUI.Blazor provides the browser manifestation of the same semantic Core model.
 
-Neutral does not mean copying the lowest common denominator between platforms.
+The current renderer supports the repository's canonical node kinds and translates supported semantic properties into Blazor/HTML presentation.
 
-A Core concept belongs in the model only when it has a defined, platform-independent meaning. Platform-specific details are translated by adapters.
+Blazor is an adapter, not the semantic model.
 
-This distinction is the central engineering problem for this repository.
+## Package family
 
-See:
+| Package | Current branch version | Role | Status |
+|---|---:|---|---|
+| **TheSingularityWorkshop.GUI.Core** | `0.1.0-alpha.2` | Semantic model and builders | Implemented |
+| **TheSingularityWorkshop.GUI.Blazor** | `0.1.0-alpha.7` | Blazor manifestation | Implemented |
+| **TheSingularityWorkshop.GUI.WPF** | `0.1.0-alpha.1` | WPF manifestation and native builders | Implemented; first release pending |
 
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- [docs/GUI_MODEL.md](docs/GUI_MODEL.md)
-- [docs/PLATFORM_ADAPTERS.md](docs/PLATFORM_ADAPTERS.md)
-- [docs/TESTING.md](docs/TESTING.md)
-- [ROADMAP.md](ROADMAP.md)
+These packages are intentionally independently versioned.
 
-## Current integrations
+The GUI family sits beside:
 
-The WebPage repository is the first migration target for the Blazor layer and the intended ten-minute proving ground for this architecture.
+| Package | Role |
+|---|---|
+| **TheSingularityWorkshop.FSM_API** | State and transition runtime |
+| **TheSingularityWorkshop.FSM_COS** | Runtime composition and assembly |
+| **TheSingularityWorkshop.FSM_Serialization** | Binary representation boundary |
+| **TheSingularityWorkshop.MicroBundleDomain** | MicroBundle domain descriptors |
 
-The live Workshop is available at:
+## What is deliberately not implemented yet
 
-https://lemon-ground-09f542010.1.azurestaticapps.net/
+The architecture contains capabilities that are documented but not yet stable runtime contracts.
 
-The production site is a demonstration of the Workshop experience. The development migration is the implementation proof: the goal is for the WebPage itself to consume the semantic GUI model and Blazor adapter rather than merely describe the architecture.
+Examples include:
 
-RevitFamilyManagerBuilders remains unchanged. Reusable WPF infrastructure is being migrated here for forward-moving applications rather than modifying that existing repository.
+- typed semantic property contracts;
+- semantic input/interaction contracts;
+- capability negotiation;
+- accessibility contracts;
+- localization contracts;
+- deterministic GUI serialization;
+- shared cross-platform adapter conformance tests;
+- GUI execution-host contracts;
+- a stable GUI MicroBundle contract;
+- `Gui.Execute(...)`;
+- Unity UI Toolkit manifestation;
+- a dedicated WPF test project.
 
-## Status
+These are not being represented as completed features. The roadmap and status documents distinguish implemented code from specified or proposed architecture.
 
-The repository is in active contract-design phase. The current recursive tree is intentionally small. The next work is to replace ambiguous stringly-typed behavior with explicit semantic contracts, capability negotiation, shared adapter conformance tests, and deterministic GUI artifacts.
+## Documentation map
 
+| Document | Purpose |
+|---|---|
+| [Start Here](docs/START_HERE.md) | Guided entry point |
+| [Implementation Status](docs/IMPLEMENTATION_STATUS.md) | What exists, what is partial, what is not implemented |
+| [Architecture](docs/ARCHITECTURE.md) | Ownership and dependency boundaries |
+| [Platform Adapters](docs/PLATFORM_ADAPTERS.md) | Adapter responsibilities and conformance |
+| [WPF Guide](docs/WPF_GUIDE.md) | Current WPF builder and renderer surface |
+| [GUI Model](docs/GUI_MODEL.md) | Current semantic tree contract |
+| [Testing](docs/TESTING.md) | Verification strategy |
+| [Roadmap](ROADMAP.md) | Future contract and integration work |
 
-## The Land of Idealism
+The remaining documents explore spatial GUI, expressiveness, lifecycle, execution, nested experiences, visual references, and the broader theory.
 
-![Repository structure](docs/assets/repository-structure-overview.jpg)
+## Resources
 
-The repository structure image is a conceptual map of how the semantic model, adapters, tests, and documentation fit together. It is not intended to be an exhaustive current file listing.
+### Repositories
 
-The long-term design begins with a stronger premise than platform abstraction.
+- [TheSingularityWorkshop.GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI)
+- [WebPage / WebForge](https://github.com/TrentBest/WebPage)
+- [FSM_API](https://github.com/TrentBest/FSM_API)
+- [FSM_COS](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS)
+- [FSM_Serialization](https://github.com/TrentBest/TheSingularityWorkshop.FSM_Serialization)
+- [MicroBundleDomain](https://github.com/TrentBest/TheSingularityWorkshop.MicroBundleDomain)
+- [FSM_API Unity package](https://github.com/TrentBest/FSM_API_Unity)
 
-The GUI is an **extrinsic interface layer**: an ephemeral observer and interaction boundary around a digital experience. It is not an intrinsic member of the experience's domain code.
+### NuGet packages
 
-An experience manifest identifies micro-bundles and configuration. It does not contain GUI implementation. The GUI observes the resulting runtime and manifests an appropriate representation.
-
-Conceptually:
-
-```
-experience manifest
-    -> micro-bundles + configuration
-    -> runtime experience
-    -> GUI observation / interaction
-    -> platform manifestation
-```
-
-The intended relationship with FSM_API is similarly separated:
-
-- **FSM_API** provides behavior and state-transition machinery.
-- **GUI** provides visualization and interaction representation.
-- **Platform adapters** turn semantic GUI intent into platform-native manifestation.
-- **Input devices** provide physical or external input to the interaction boundary.
-
-## GUI is larger than widgets
-
-GUI purpose is independent of GUI platform.
-
-The model must eventually support diagnostic, operational, informational, spatial, immersive, and expressive visualization. A GUI may represent a button, a floor plan, a state inspector, a 3D scene, an image, a mesh, animation, or even deliberately unstructured visual output such as static/noise.
-
-The goal is not to build a larger widget library. The goal is to build a semantic representation space expressive enough to describe digital visualization without making a particular device or rendering technology intrinsic to the domain.
-
-This is also the foundation for VR: semantic interaction such as Activate, Select, Point, Navigate, or Rotate must not intrinsically mean mouse click, keyboard input, or any other particular physical device.
-
-## Visual references
-
-Concrete images are useful as **reference manifestations** of the semantic model.
-
-The first reference is the Workshop map: a large spatial/operational interface combining navigation, a map/scene, destination indexing, textual information, and controls. It is intentionally treated as evidence of expressiveness rather than as a pixel-level Core contract.
-
-When committed, the canonical asset path is:
-
-`docs/assets/workshop-map-reference.jpg`
-
-See [docs/GUI_VISUAL_REFERENCE.md](docs/GUI_VISUAL_REFERENCE.md) for the reference-artifact convention and the path from visual reference to semantic model to adapter manifestation.
-
-See:
-
-- docs/IDEAL_GUI.md — the philosophical and architectural boundary.
-- docs/GUI_TAXONOMY.md — GUI purposes independent of platform.
-- docs/MANIFEST_BOUNDARY.md — why GUI implementation stays outside experience manifests.
-- docs/GUI_EXPRESSIVENESS.md — the intended visualization and interaction domain.
-- docs/GUI_LIFECYCLE.md — ephemeral and multi-observer lifecycle.
+- [TheSingularityWorkshop.GUI.Core](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Core)
+- [TheSingularityWorkshop.GUI.Blazor](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Blazor)
+- [TheSingularityWorkshop.GUI.WPF](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.WPF)
+- [TheSingularityWorkshop.FSM_API](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_API)
+- [TheSingularityWorkshop.FSM_COS](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_COS)
+- [TheSingularityWorkshop.FSM_Serialization](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_Serialization)
+- [TheSingularityWorkshop.MicroBundleDomain](https://www.nuget.org/packages/TheSingularityWorkshop.MicroBundleDomain)
 
 ---
 
-## 🔗 Resources & Support
-
-### 📦 Get FSM_API
-
-- **Unity Asset Store:** [FSM_API for Unity](https://assetstore.unity.com/packages/slug/332450)
-- **Core NuGet:** [TheSingularityWorkshop.FSM_API](https://www.nuget.org/packages/TheSingularityWorkshop.FSM_API)
-- **Source Code:** [TheSingularityWorkshop.GUI on GitHub](https://github.com/TrentBest/TheSingularityWorkshop.GUI)
-- **This Package:** [TheSingularityWorkshop.GUI](https://www.nuget.org/packages/TheSingularityWorkshop.GUI)
-
-### 💖 Support The Singularity Workshop
-
-- **Patreon:** [Support us on Patreon](https://www.patreon.com/c/TheSingularityWorkshop)
-- **PayPal:** [Make a donation](https://www.paypal.com/donate/?hosted_button_id=3Z7263LCQMV9J)
-
 <p align="center">
   <a href="https://github.com/TrentBest/FSM_API">
-    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" height="200">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/FSM_API/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" height="200">
   </a>
 </p>
 

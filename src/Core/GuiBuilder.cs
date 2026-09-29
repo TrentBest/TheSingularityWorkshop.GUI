@@ -19,6 +19,13 @@ public sealed class GuiBuilder
         _root.Children.Add(child);
         return this;
     }
+
+    public GuiBuilder Child(GuiBuilder child)
+    {
+        ArgumentNullException.ThrowIfNull(child);
+        _root.Children.Add(child._root);
+        return this;
+    }
     public GuiNode Build() => _root.Build();
     private sealed class NodeBuilder
     {

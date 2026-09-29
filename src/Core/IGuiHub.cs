@@ -1,15 +1,17 @@
+using System;
+
 namespace TheSingularityWorkshop.Workshop.Gui;
 
 /// <summary>
-/// The minimal intrinsic GUI hub boundary.
-///
-/// The hub has identity, but no domain-specific purpose. Consuming projects
-/// may add purpose through their own interfaces and capabilities.
+/// Platform-neutral boundary for the default GUI hub.
 /// </summary>
 public interface IGuiHub
 {
-    /// <summary>
-    /// Gets the stable identity of this hub instance.
-    /// </summary>
+    /// <summary>Gets the stable identity of this hub instance.</summary>
     Guid Id { get; }
+
+    /// <summary>
+    /// Gets the semantic root surface. It contains no renderer-specific types.
+    /// </summary>
+    GuiNode Root { get; }
 }

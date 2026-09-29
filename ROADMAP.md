@@ -78,6 +78,7 @@ The model must first prove that it can describe more than conventional widgets.
 ## Phase 3 — adapter conformance and measurement
 
 - [x] Blazor contract tests
+- [x] WPF manifestation implementation
 - [ ] WPF contract tests
 - [ ] Shared adapter conformance cases
 - [ ] Build a second materially different adapter
