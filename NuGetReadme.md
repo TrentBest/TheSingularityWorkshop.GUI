@@ -36,6 +36,44 @@ Reusable WPF builders and the native desktop manifestation layer built on GUI Co
 
 The WPF layer contains the reusable builder lineage recovered from earlier application work, but it has no dependency on Revit, FTI, or any application-specific host.
 
+## Core builder vocabulary
+
+The Core package is intended to be useful on its own.
+
+The default builders create a platform-neutral semantic tree:
+
+- `GuiBuilders.Panel(...)` — generic container.
+- `GuiBuilders.Stack(...)` — stack-oriented container.
+- `GuiBuilders.Row(...)` — horizontal composition.
+- `GuiBuilders.Column(...)` — vertical composition.
+- `GuiBuilders.Text(...)` — textual content.
+- `GuiBuilders.Button(...)` — semantic action surface.
+- `GuiBuilders.Image(...)` — image/media surface.
+- `GuiBuilders.Warning(...)` — warning/informational surface.
+- `GuiBuilders.Separator(...)` — visual separation.
+- `GuiBuilders.TextBox(...)` — editable text surface.
+
+The lower-level `GuiBuilder` remains available for custom semantic kinds and properties.
+
+```csharp
+var page = GuiBuilders.Column("page")
+    .Child(GuiKinds.Text, "heading", b => b.Text("Hello"))
+    .Child(GuiKinds.Button, "continue", b => b.Text("Continue"))
+    .Build();
+```
+
+The result is a `GuiNode` snapshot. Core does not know how that node will be displayed.
+
+### Choosing a platform package
+
+Use **GUI.Core** wherever GUI intent is authored or shared.
+
+Add **GUI.Blazor** when the host manifests that intent in Blazor.
+
+Add **GUI.WPF** when the host manifests that intent in WPF. GUI.WPF also contains richer WPF-native builders for desktop applications that need capabilities beyond the neutral semantic surface.
+
+This separation lets a shared experience describe its interface once while different hosts choose their own manifestation technology.
+
 ## Relationship with FSM
 
 - **FSM_API** provides state-transition and runtime behavior.
