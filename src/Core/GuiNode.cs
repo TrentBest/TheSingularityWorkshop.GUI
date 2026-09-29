@@ -49,7 +49,7 @@ public sealed class GuiNode
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
         if (TryFind(id, out var node))
-            return node;
+            return node!;
 
         throw new InvalidOperationException(
             $"GUI node '{id}' was not found beneath '{Id}'.");
