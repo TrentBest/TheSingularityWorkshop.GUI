@@ -14,7 +14,7 @@ Status vocabulary:
 
 | Package | Branch version | Status | Current verification |
 |---|---:|---|---|
-| `TheSingularityWorkshop.GUI.Core` | `0.1.0-alpha.2` | Implemented | Build, xUnit, coverage |
+| `TheSingularityWorkshop.GUI.Core` | `0.1.0-alpha.3` | Implemented | Build, xUnit, coverage |
 | `TheSingularityWorkshop.GUI.Blazor` | `0.1.0-alpha.7` | Implemented / partial | Build, Blazor tests |
 | `TheSingularityWorkshop.GUI.WPF` | `0.1.0-alpha.1` | Implemented / partial | Windows build and pack; dedicated WPF tests pending |
 
