@@ -134,19 +134,8 @@ public class GuiBuilderWPF : IComponentBuilder
         _definitions.Add(() =>
         {
             var panel = new StackPanel { Margin = new Thickness(0, 5, 0, 5) };
-            panel.Children.Add(new TextBlock
-            {
-                Text = label.ToUpperInvariant(),
-                FontSize = 9,
-                Foreground = SystemColors.GrayTextBrush
-            });
-            panel.Children.Add(new TextBlock
-            {
-                Text = value,
-                FontSize = 13,
-                TextWrapping = TextWrapping.Wrap,
-                Foreground = SystemColors.ControlTextBrush
-            });
+            panel.Children.Add(new TextBlock { Text = label.ToUpperInvariant(), FontSize = 9, Foreground = SystemColors.GrayTextBrush });
+            panel.Children.Add(new TextBlock { Text = value, FontSize = 13, TextWrapping = TextWrapping.Wrap, Foreground = SystemColors.ControlTextBrush });
             _content.Children.Add(panel);
         });
         return this;
@@ -166,7 +155,26 @@ public class GuiBuilderWPF : IComponentBuilder
         return this;
     }
 
-    public void Publish(string topic, object payload) => _bus.TryGetValue(topic, out var handler) ? handler(payload) : Parent is GuiBuilderWPF parent ? parent.Publish(topic, payload) : Parent is IComponentWPF component ? component.Publish(topic, payload) : throw new InvalidOperationException($"No subscriber for '{topic}'.");
+    public void Publish(string topic, object payload)
+    {
+        if (_bus.TryGetValue(topic, out var handler))
+        {
+            handler(payload);
+            return;
+        }
+
+        if (Parent is GuiBuilderWPF parent)
+        {
+            parent.Publish(topic, payload);
+            return;
+        }
+
+        if (Parent is IComponentWPF component)
+        {
+            component.Publish(topic, payload);
+        }
+    }
+
     public void ReceiveBusPayload(string topic, object? payload) => Receive(topic, payload);
     public void Receive(string topic, object payload)
     {
