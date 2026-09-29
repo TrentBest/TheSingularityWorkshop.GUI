@@ -22,6 +22,11 @@ public static class BlazorGuiRenderer
 
         var sequence = 3;
         var style = new List<string>();
+        if (node.Kind is "Row" or "Column" or "Stack")
+        {
+            style.Add("display:flex");
+            style.Add($"flex-direction:{ResolveOrientation(node)}");
+        }
 
         foreach (var property in node.Properties)
         {
@@ -46,6 +51,12 @@ public static class BlazorGuiRenderer
         builder.CloseElement();
     }
 
+    private static string ResolveOrientation(GuiNode node) =>
+        node.Properties.TryGetValue("orientation", out var value) &&
+        string.Equals(value, "Horizontal", StringComparison.OrdinalIgnoreCase)
+            ? "row"
+            : "column";
+
     private static string ResolveTag(string kind) => kind switch
     {
         "Panel" => "div",
@@ -53,6 +64,8 @@ public static class BlazorGuiRenderer
         "Image" => "img",
         "Text" => "span",
         "Warning" => "aside",
+        "Separator" => "hr",
+        "TextBox" => "input",
         _ => "div"
     };
 }
