@@ -175,8 +175,9 @@ public static class WpfGuiRenderer
     private static string SanitizeName(string id)
     {
         var chars = id.Where(char.IsLetterOrDigit).ToArray();
-        return chars.Length == 0 || !char.IsLetter(chars[0])
-            ? "Gui_" + id.GetHashCode().ToString("X8", CultureInfo.InvariantCulture)
-            : new string(chars);
-    }
-}
+        if (chars.Length == 0)
+            return "GuiNode";
+
+        var name = new string(chars);
+        return char.IsLetter(name[0]) ? name : "Gui_" + name;
+    }}
