@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.RenderTree;
+#pragma warning disable BL0006
+
 using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.GUI.Blazor.Tests;
