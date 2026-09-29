@@ -1,3 +1,5 @@
+#pragma warning disable BL0006
+
 using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.GUI.Blazor.Tests;
