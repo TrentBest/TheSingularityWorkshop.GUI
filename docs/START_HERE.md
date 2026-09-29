@@ -40,7 +40,9 @@ The fastest route is intentionally small.
 
 **Start here:**
 
+- [Implementation Status](IMPLEMENTATION_STATUS.md) — what is actually implemented, partial, specified, or planned
 - [GUI Model](GUI_MODEL.md) — the neutral semantic tree and current primitives
+- [WPF Guide](WPF_GUIDE.md) — the current desktop manifestation and native builder surface
 
 **Then explore the relevant layer:**
 
@@ -291,6 +293,8 @@ The goal is not to turn a skeptic into a believer. It is to make the tradeoffs v
 # What this repository is not claiming yet
 
 The architecture contains ideas that are ahead of the current implementation.
+
+For the current code boundary, use [Implementation Status](IMPLEMENTATION_STATUS.md) before treating an architectural statement as a shipped API.
 
 In particular, the execution-host model, capability negotiation, and some of the richer semantic contracts are still being designed.
 
