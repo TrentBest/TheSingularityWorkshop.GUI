@@ -1,0 +1,182 @@
+using System.Globalization;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using TheSingularityWorkshop.Workshop.Gui;
+
+namespace TheSingularityWorkshop.GUI.WPF;
+
+/// <summary>
+/// WPF manifestation adapter for the platform-neutral GUI node tree.
+/// </summary>
+public static class WpfGuiRenderer
+{
+    public static FrameworkElement Render(GuiNode node)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+        return RenderNode(node);
+    }
+
+    private static FrameworkElement RenderNode(GuiNode node)
+    {
+        FrameworkElement element = node.Kind switch
+        {
+            GuiKinds.Text => new TextBlock { Text = node.Text ?? string.Empty },
+            GuiKinds.Button => CreateButton(node),
+            GuiKinds.TextBox => CreateTextBox(node),
+            GuiKinds.Image => CreateImage(node),
+            GuiKinds.Warning => CreateWarning(node),
+            GuiKinds.Separator => new Separator(),
+            GuiKinds.Row => new StackPanel { Orientation = Orientation.Horizontal },
+            GuiKinds.Stack => new StackPanel { Orientation = ResolveOrientation(node) },
+            GuiKinds.Column => new StackPanel { Orientation = Orientation.Vertical },
+            GuiKinds.Panel => new Grid(),
+            _ => new Grid()
+        };
+
+        element.Name = SanitizeName(node.Id);
+        ApplyProperties(element, node);
+
+        if (element is Panel panel)
+        {
+            foreach (var child in node.Children)
+                panel.Children.Add(RenderNode(child));
+        }
+        else if (element is ContentControl content && node.Children.Count > 0)
+        {
+            content.Content = RenderNode(node.Children[0]);
+        }
+
+        return element;
+    }
+
+    private static Button CreateButton(GuiNode node) =>
+        new() { Content = node.Text ?? string.Empty };
+
+    private static TextBox CreateTextBox(GuiNode node) =>
+        new() { Text = GetProperty(node, "value") ?? node.Text ?? string.Empty };
+
+    private static Image CreateImage(GuiNode node)
+    {
+        var image = new Image();
+        if (!string.IsNullOrWhiteSpace(node.Source))
+        {
+            try
+            {
+                image.Source = new BitmapImage(new Uri(node.Source, UriKind.RelativeOrAbsolute));
+            }
+            catch (UriFormatException)
+            {
+                // Leave Source unset; the semantic tree remains renderable.
+            }
+        }
+
+        return image;
+    }
+
+    private static Border CreateWarning(GuiNode node) =>
+        new()
+        {
+            Child = new TextBlock
+            {
+                Text = node.Text ?? string.Empty,
+                TextWrapping = TextWrapping.Wrap
+            },
+            Padding = new Thickness(8)
+        };
+
+    private static Orientation ResolveOrientation(GuiNode node) =>
+        string.Equals(GetProperty(node, "orientation"), "Horizontal", StringComparison.OrdinalIgnoreCase)
+            ? Orientation.Horizontal
+            : Orientation.Vertical;
+
+    private static void ApplyProperties(FrameworkElement element, GuiNode node)
+    {
+        if (TryDouble(node, "width", out var width))
+            element.Width = width;
+
+        if (TryDouble(node, "height", out var height))
+            element.Height = height;
+
+        if (TryDouble(node, "opacity", out var opacity))
+            element.Opacity = opacity;
+
+        if (bool.TryParse(GetProperty(node, "isEnabled"), out var enabled))
+            element.IsEnabled = enabled;
+
+        if (bool.TryParse(GetProperty(node, "isVisible"), out var visible))
+            element.Visibility = visible ? Visibility.Visible : Visibility.Collapsed;
+
+        if (TryThickness(node, "margin", out var margin))
+            element.Margin = margin;
+
+        if (TryThickness(node, "padding", out var padding) && element is Control control)
+            control.Padding = padding;
+
+        if (element is Control styled)
+        {
+            if (TryBrush(node, "foreground", out var foreground))
+                styled.Foreground = foreground;
+
+            if (TryBrush(node, "background", out var background))
+                styled.Background = background;
+        }
+
+        if (element is Panel panel && TryBrush(node, "background", out var panelBackground))
+            panel.Background = panelBackground;
+
+        if (node.Properties.TryGetValue("tooltip", out var tooltip))
+            element.ToolTip = tooltip;
+    }
+
+    private static string? GetProperty(GuiNode node, string name) =>
+        node.Properties.TryGetValue(name, out var value) ? value : null;
+
+    private static bool TryDouble(GuiNode node, string name, out double value) =>
+        double.TryParse(GetProperty(node, name), NumberStyles.Float, CultureInfo.InvariantCulture, out value);
+
+    private static bool TryThickness(GuiNode node, string name, out Thickness value)
+    {
+        value = default;
+        var raw = GetProperty(node, name);
+        if (string.IsNullOrWhiteSpace(raw))
+            return false;
+
+        try
+        {
+            value = (Thickness)new ThicknessConverter().ConvertFromInvariantString(raw)!;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool TryBrush(GuiNode node, string name, out Brush? brush)
+    {
+        brush = null;
+        var raw = GetProperty(node, name);
+        if (string.IsNullOrWhiteSpace(raw))
+            return false;
+
+        try
+        {
+            brush = (Brush)new BrushConverter().ConvertFromInvariantString(raw)!;
+            return true;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static string SanitizeName(string id)
+    {
+        var chars = id.Where(char.IsLetterOrDigit).ToArray();
+        return chars.Length == 0 || !char.IsLetter(chars[0])
+            ? "Gui_" + id.GetHashCode().ToString("X8", CultureInfo.InvariantCulture)
+            : new string(chars);
+    }
+}
