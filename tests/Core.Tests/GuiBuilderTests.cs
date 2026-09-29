@@ -104,5 +104,19 @@ public sealed class GuiBuilderTests
         Assert.Empty(button.Children);
     }
 
+    [Fact]
+    public void Default_builders_compose_directly()
+    {
+        var page = GuiBuilders.Column("page")
+            .Child(GuiBuilders.Text("heading", "Hello"))
+            .Child(GuiBuilders.Button("continue", "Continue"))
+            .Build();
+
+        Assert.Equal(GuiKinds.Column, page.Kind);
+        Assert.Equal(GuiKinds.Text, page.Children[0].Kind);
+        Assert.Equal("Hello", page.Children[0].Text);
+        Assert.Equal(GuiKinds.Button, page.Children[1].Kind);
+    }
+
 }
 
