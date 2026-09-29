@@ -15,12 +15,24 @@ public sealed class TreeViewGuiBuilderWPF : GuiPanelBuilderWPF<Grid, TreeViewGui
     public TreeViewGuiBuilderWPF(GuiConfiguration config) : base(config)
     {
         _tree.SelectedItemChanged += (_, e) => NodeSelected?.Invoke((e.NewValue as TreeViewItem)?.Tag);
-        _tree.Expanded += (_, e) => { if (e.OriginalSource is TreeViewItem item && item.Tag is string key) NodeExpansionChanged?.Invoke(key, true); };
-        _tree.Collapsed += (_, e) => { if (e.OriginalSource is TreeViewItem item && item.Tag is string key) NodeExpansionChanged?.Invoke(key, false); };
+        _tree.AddHandler(TreeViewItem.ExpandedEvent, new RoutedEventHandler(OnNodeExpanded));
+        _tree.AddHandler(TreeViewItem.CollapsedEvent, new RoutedEventHandler(OnNodeCollapsed));
     }
 
     public Action<object?>? NodeSelected { get; set; }
     public Action<string, bool>? NodeExpansionChanged { get; set; }
+
+    private void OnNodeExpanded(object sender, RoutedEventArgs e)
+    {
+        if (e.OriginalSource is TreeViewItem item && item.Tag is string key)
+            NodeExpansionChanged?.Invoke(key, true);
+    }
+
+    private void OnNodeCollapsed(object sender, RoutedEventArgs e)
+    {
+        if (e.OriginalSource is TreeViewItem item && item.Tag is string key)
+            NodeExpansionChanged?.Invoke(key, false);
+    }
 
     public TreeViewGuiBuilderWPF AddBranch(string key, string header, bool expanded = true)
     {
