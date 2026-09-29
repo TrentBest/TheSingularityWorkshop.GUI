@@ -46,7 +46,7 @@ public sealed class ColorForgePickerWPF : GuiPanelBuilderWPF<Grid, ColorForgePic
         Grid.SetRow(text, row);
         Grid.SetColumn(text, 0);
 
-        var slider = new Slider { Minimum = 0, Maximum = 255, Value = value, Margin = new Thickness(5, 0) };
+        var slider = new Slider { Minimum = 0, Maximum = 255, Value = value, Margin = new Thickness(5, 0, 5, 0) };
         Grid.SetRow(slider, row);
         Grid.SetColumn(slider, 1);
 
