@@ -18,13 +18,33 @@ An adapter should:
 6. own platform resources and event lifetimes;
 7. avoid changing domain meaning.
 
+## Current adapters
+
+| Adapter | Target | Current role | Dedicated tests |
+|---|---|---|---|
+| **GUI.Blazor** | Blazor / browser | Semantic manifestation and Hub renderer | Yes |
+| **GUI.WPF** | WPF / Windows | Semantic manifestation, Hub renderer, native builder family | Not yet |
+| **Unity** | Unity UI Toolkit | Planned | No |
+
+## Blazor
+
+Blazor currently maps the canonical Core vocabulary to Blazor/HTML constructs and applies a limited set of common presentation properties.
+
+It should be treated as a working manifestation layer, not as proof that every semantic capability has a final cross-platform contract.
+
+## WPF
+
+WPF has both a semantic renderer and a native builder surface.
+
+The semantic renderer maps the current Core kinds to WPF controls. The native builders intentionally expose WPF-specific capabilities such as windows, panels, dialogs, reflection-driven editors, diagnostics, and richer control composition.
+
+See [WPF Guide](WPF_GUIDE.md).
+
 ## Do not use blind property passthrough
 
 A renderer should not assume that every Core property is a native attribute.
 
-For example, a future Core property named layout.horizontalAlignment should be translated by each adapter according to its own platform rules. It should not become an HTML attribute merely because HTML permits arbitrary attributes.
-
-The current Blazor renderer contains a deliberately simple compatibility implementation. It should be treated as an adapter prototype, not the final cross-platform contract.
+For example, a future Core property named `layout.horizontalAlignment` should be translated by each adapter according to its own platform rules. It should not become an HTML attribute merely because HTML permits arbitrary attributes.
 
 ## Capability differences
 
@@ -39,6 +59,8 @@ Instead, capabilities should eventually be:
 - degraded predictably; or
 - rejected with a useful diagnostic.
 
+That capability contract is not yet implemented.
+
 ## Testing adapters
 
 Adapter tests should have two levels:
@@ -51,4 +73,6 @@ Verify that the same Core tree produces the required semantic result.
 
 Verify native behavior that cannot be represented by Core alone.
 
-This keeps platform behavior testable without making the Core model platform-aware.
+The repository currently has Core and Blazor test projects. The WPF Windows build/pack lane is active, but its dedicated test project is intentionally still being established.
+
+This distinction matters: **a green WPF build is not the same thing as a complete WPF conformance suite.**
