@@ -11,8 +11,18 @@ on:
       - development
   workflow_dispatch:
     inputs:
-      publish:
-        description: "Publish the packed packages to NuGet.org"
+      publish_core:
+        description: "Publish the GUI.Core package to NuGet.org"
+        required: false
+        default: false
+        type: boolean
+      publish_blazor:
+        description: "Publish the GUI.Blazor package to NuGet.org"
+        required: false
+        default: false
+        type: boolean
+      publish_wpf:
+        description: "Publish the GUI.WPF package to NuGet.org"
         required: false
         default: false
         type: boolean
@@ -116,7 +126,7 @@ jobs:
   publish_nuget_core:
     needs: build-core
     runs-on: ubuntu-24.04
-    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_core == true
     permissions:
       contents: read
       id-token: write
@@ -140,7 +150,7 @@ jobs:
   publish_nuget_blazor:
     needs: build-blazor
     runs-on: ubuntu-24.04
-    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_blazor == true
     permissions:
       contents: read
       id-token: write
@@ -164,7 +174,7 @@ jobs:
   publish_nuget_wpf:
     needs: build-wpf
     runs-on: ubuntu-24.04
-    if: github.event_name == 'workflow_dispatch' && inputs.publish == true
+    if: github.event_name == 'workflow_dispatch' && inputs.publish_wpf == true
     permissions:
       contents: read
       id-token: write
