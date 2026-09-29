@@ -43,7 +43,7 @@ A platform adapter owns:
 - resource management;
 - platform capability differences.
 
-For example, GUI.Blazor manifests the Core Hub through BlazorGuiHubRenderer. A future WPF or Unity adapter can consume the same Hub root without changing Core.
+GUI.Blazor manifests the Core Hub through BlazorGuiHubRenderer. GUI.WPF manifests the same Hub through WpfGuiHubRenderer. A future Unity adapter can consume the same Hub root without changing Core.
 
 A platform adapter must not force platform-native concepts into Core merely because the target platform exposes them.
 
