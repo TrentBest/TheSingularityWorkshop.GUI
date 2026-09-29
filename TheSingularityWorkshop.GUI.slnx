@@ -1,8 +1,9 @@
 <Solution>
-  <Project Path="TheSingularityWorkshop.GUI.Documentation.csproj" />
-  <Project Path="src/Core/TheSingularityWorkshop.GUI.Core.csproj" />
+  <Project Path="../TheSingularityWorkshop.GUI.WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj" Id="792fbbf7-aacc-418f-84f0-e572fdc7235b" />
   <Project Path="src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj" />
+  <Project Path="src/Core/TheSingularityWorkshop.GUI.Core.csproj" />
   <Project Path="src/WPF/TheSingularityWorkshop.GUI.WPF.csproj" />
-  <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
   <Project Path="tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj" />
+  <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
+  <Project Path="TheSingularityWorkshop.GUI.Documentation.csproj" />
 </Solution>
