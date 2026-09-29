@@ -10,9 +10,21 @@ The GUI repository owns the engineering boundary between GUI intent and platform
 
 A consuming application should be able to describe a user interface without choosing WPF, Blazor, Unity UI Toolkit, or another presentation technology at the point where the domain experience is authored.
 
-## Layers
+## Ownership
 
-### 1. Core model
+Each layer has a deliberately narrow owner:
+
+| Layer | Owns | Does not own |
+|---|---|---|
+| **GUI.Core** | semantic GUI tree, builder primitives, Hub contract | rendering, WPF, Blazor, HTML, XAML, runtime composition |
+| **GUI.Blazor** | browser manifestation | semantic ownership, runtime composition |
+| **GUI.WPF** | desktop manifestation and WPF-native builders | Core semantics, FSM_COS composition |
+| **FSM_COS** | runtime composition and assembly | rendering implementation |
+| **WebPage / WebForge** | browser host and domain experience | generic GUI semantics |
+
+This ownership table is a key architectural constraint.
+
+## 1. Core model
 
 src/Core contains platform-neutral primitives.
 
@@ -29,9 +41,26 @@ Core also defines the intrinsic GUI Hub boundary. IGuiHub exposes identity plus 
 
 Core must not reference WPF, Blazor, HTML, CSS, JavaScript, XAML, Unity, or another presentation framework.
 
-### 2. Platform adapters
+## 2. Platform manifestations
 
 Platform projects translate the neutral model into native constructs.
+
+### Blazor
+
+GUI.Blazor currently manifests the canonical Core kinds through a Blazor renderer. Its implementation is intentionally conservative: it maps the supported semantic vocabulary and selected common properties rather than pretending all future GUI capabilities already exist.
+
+### WPF
+
+GUI.WPF currently provides two related surfaces:
+
+1. **Semantic manifestation** — WpfGuiRenderer and WpfGuiHubRenderer consume Core trees/Hub roots and create WPF controls.
+2. **Native builder system** — WPF-specific builders expose richer desktop composition primitives where Core intentionally remains neutral.
+
+The native builder system includes layouts, controls, dialogs, reflection, diagnostics, and window-oriented composition.
+
+These two surfaces are complementary. A WPF application can either consume the semantic Core model or intentionally use the WPF-native builder APIs.
+
+## 3. Platform adapters
 
 A platform adapter owns:
 
@@ -43,11 +72,9 @@ A platform adapter owns:
 - resource management;
 - platform capability differences.
 
-GUI.Blazor manifests the Core Hub through BlazorGuiHubRenderer. GUI.WPF manifests the same Hub through WpfGuiHubRenderer. A future Unity adapter can consume the same Hub root without changing Core.
-
 A platform adapter must not force platform-native concepts into Core merely because the target platform exposes them.
 
-### 3. Domain builders
+## 4. Domain builders
 
 A consuming application may provide builders such as FsmForgeGuiBuilder or SpatialWorldGuiBuilder.
 
@@ -79,10 +106,33 @@ RuntimeManifest
 
 The Hub MicroBundle is an ordinary FSM_COS composition participant. FSM_COS assembles it; GUI.Core defines what its platform-neutral surface means; a platform adapter decides how that surface is manifested.
 
-This prevents the composition kernel from acquiring a GUI or browser dependency while still giving every host a common default presentation boundary.
+## Current boundary
+
+The architecture is intentionally ahead of some implementation.
+
+Implemented today:
+
+- recursive Core model and builder vocabulary;
+- Core Hub surface;
+- Blazor manifestation;
+- WPF manifestation;
+- WPF-native builder family;
+- package/build lanes for Core, Blazor, and WPF.
+
+Not implemented as stable runtime contracts yet:
+
+- semantic input;
+- capability negotiation;
+- accessibility contract;
+- deterministic GUI serialization;
+- GUI execution host;
+- stable GUI MicroBundle contract;
+- Unity manifestation.
+
+See [Implementation Status](IMPLEMENTATION_STATUS.md) and [Roadmap](../ROADMAP.md) before treating an architectural document as an API guarantee.
 
 ## Design principle
 
-Core should be boring.
+**Core should be boring.**
 
 The sophistication belongs in the contracts and in the adapters, not in a hidden dependency on one rendering technology.
