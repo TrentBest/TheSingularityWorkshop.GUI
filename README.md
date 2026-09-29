@@ -15,6 +15,38 @@ The repository exists to separate GUI intent from GUI manifestation.
 - tests/Blazor.Tests — Blazor manifestation tests.
 - docs — architecture, model, adapter, and testing contracts.
 
+## Default Core builders
+
+GUI.Core provides the default semantic vocabulary used by platform manifestations.
+
+```csharp
+var view = GuiBuilders.Column("settings")
+    .Child(GuiKinds.Text, "title", b => b.Text("Settings"))
+    .Child(GuiKinds.Button, "save", b => b.Text("Save"))
+    .Child(GuiKinds.Warning, "warning", b => b.Text("Changes are not saved yet."))
+    .Build();
+```
+
+For common controls, the convenience builders are shorter:
+
+```csharp
+var save = GuiBuilders.Button("save", "Save").Build();
+```
+
+These calls produce a `GuiNode` tree. They do not create WPF controls, Blazor components, HTML, XAML, JavaScript, or browser state.
+
+That makes Core the place to author reusable GUI intent. A platform package then manifests the same semantic tree:
+
+```text
+GUI.Core -> GuiBuilders -> GuiNode tree
+                             |
+                      +------+------+
+                      |             |
+                  GUI.Blazor     GUI.WPF
+```
+
+**Recommended dependency rule:** author shared GUI intent against GUI.Core. Add GUI.Blazor or GUI.WPF only at the platform boundary where that tree is manifested.
+
 ## The integrated Hub
 
 The GUI Hub is the default semantic presentation surface for an assembled runtime.
