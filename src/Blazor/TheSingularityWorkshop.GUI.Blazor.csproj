@@ -6,7 +6,7 @@
     <RootNamespace>TheSingularityWorkshop.Workshop.Gui</RootNamespace>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>TheSingularityWorkshop.GUI.Blazor</PackageId>
-    <Version>0.1.0-alpha.5</Version>
+    <Version>0.1.0-alpha.6</Version>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
@@ -22,8 +22,8 @@
     <SupportedPlatform Include="browser" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.20" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.20" />
-    <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
-    <None Include="..\..\NuGetReadme.md" Pack="true" PackagePath="\" />
-    <None Include="..\..\docs\assets\ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
+    <ProjectReference Include="..\\Core\\TheSingularityWorkshop.GUI.Core.csproj" />
+    <None Include="..\\..\\NuGetReadme.md" Pack="true" PackagePath="\\" />
+    <None Include="..\\..\\docs\\assets\\ideal-gui-separation-of-concerns.jpg" Pack="true" PackagePath="docs/assets/" />
   </ItemGroup>
 </Project>
