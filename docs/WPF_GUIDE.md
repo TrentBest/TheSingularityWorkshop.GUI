@@ -10,7 +10,7 @@ It has an important dual role:
 ## Package
 
 **Package:** `TheSingularityWorkshop.GUI.WPF`  
-**Current staged version:** `0.1.0-alpha.1`  
+**Current staged version:** `0.1.0-alpha.2`  
 **Target:** .NET 8 / Windows  
 **License:** MIT
 
