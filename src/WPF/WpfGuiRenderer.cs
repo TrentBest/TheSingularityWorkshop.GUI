@@ -123,11 +123,94 @@ public static class WpfGuiRenderer
                 styled.Background = background;
         }
 
+        if (element is Control control)
+        {
+            if (TryDouble(node, "fontSize", out var fontSize))
+                control.FontSize = fontSize;
+
+            if (int.TryParse(GetProperty(node, "fontWeight"), out var fontWeight))
+                control.FontWeight = new FontWeight(fontWeight);
+
+            if (node.Properties.TryGetValue("fontFamily", out var fontFamily) &&
+                !string.IsNullOrWhiteSpace(fontFamily))
+            {
+                control.FontFamily = new System.Windows.Media.FontFamily(fontFamily);
+            }
+        }
+
+        if (TryHorizontalAlignment(node, out var horizontalAlignment))
+            element.HorizontalAlignment = horizontalAlignment;
+
+        if (TryVerticalAlignment(node, out var verticalAlignment))
+            element.VerticalAlignment = verticalAlignment;
+
+        ApplyWaveAnimation(element, node);
+
         if (element is Panel panel && TryBrush(node, "background", out var panelBackground))
             panel.Background = panelBackground;
 
         if (node.Properties.TryGetValue("tooltip", out var tooltip))
             element.ToolTip = tooltip;
+    }
+
+    private static bool TryHorizontalAlignment(GuiNode node, out HorizontalAlignment alignment)
+    {
+        alignment = HorizontalAlignment.Stretch;
+        return Enum.TryParse(GetProperty(node, "horizontalAlignment"), true, out alignment);
+    }
+
+    private static bool TryVerticalAlignment(GuiNode node, out VerticalAlignment alignment)
+    {
+        alignment = VerticalAlignment.Stretch;
+        return Enum.TryParse(GetProperty(node, "verticalAlignment"), true, out alignment);
+    }
+
+    private static void ApplyWaveAnimation(FrameworkElement element, GuiNode node)
+    {
+        if (!TryDouble(node, "wavePeriod", out var period) || period <= 0)
+            return;
+
+        if (!TryDouble(node, "waveAmplitude", out var amplitude) || amplitude == 0)
+            amplitude = 4;
+
+        if (!TryDouble(node, "waveRotation", out var rotation) || rotation == 0)
+            rotation = 2;
+
+        var phase = 0d;
+        TryDouble(node, "wavePhase", out phase);
+        phase = Math.Clamp(phase, 0, 1);
+
+        var group = new TransformGroup();
+        var translate = new TranslateTransform();
+        var rotate = new RotateTransform();
+        group.Children.Add(translate);
+        group.Children.Add(rotate);
+        element.RenderTransformOrigin = new Point(.5, 1);
+        element.RenderTransform = group;
+
+        var duration = new Duration(TimeSpan.FromSeconds(period));
+        translate.BeginAnimation(
+            TranslateTransform.YProperty,
+            new DoubleAnimation
+            {
+                From = -amplitude,
+                To = amplitude,
+                Duration = duration,
+                AutoReverse = true,
+                RepeatBehavior = RepeatBehavior.Forever,
+                BeginTime = TimeSpan.FromSeconds(period * phase)
+            });
+        rotate.BeginAnimation(
+            RotateTransform.AngleProperty,
+            new DoubleAnimation
+            {
+                From = -rotation,
+                To = rotation,
+                Duration = duration,
+                AutoReverse = true,
+                RepeatBehavior = RepeatBehavior.Forever,
+                BeginTime = TimeSpan.FromSeconds(period * phase)
+            });
     }
 
     private static string? GetProperty(GuiNode node, string name) =>
