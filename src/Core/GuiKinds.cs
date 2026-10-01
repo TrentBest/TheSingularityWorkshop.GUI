@@ -1,9 +1,5 @@
 namespace TheSingularityWorkshop.Workshop.Gui;
 
-/// <summary>
-/// Canonical semantic kinds understood by the default GUI builders.
-/// Platform adapters decide how each kind is manifested.
-/// </summary>
 public static class GuiKinds
 {
     public const string Panel = "Panel";
@@ -16,4 +12,8 @@ public static class GuiKinds
     public const string Warning = "Warning";
     public const string Separator = "Separator";
     public const string TextBox = "TextBox";
+    public const string IntegerSlider = "IntegerSlider";
+    public const string FloatSlider = "FloatSlider";
+    public const string Toggle = "Toggle";
+    public const string Object = "Object";
 }
