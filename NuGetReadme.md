@@ -14,9 +14,9 @@ The Singularity Workshop GUI separates **semantic interface intent** from **plat
 
 ### TheSingularityWorkshop.GUI.Core
 
-The platform-neutral recursive GUI model and builder primitives.
+The platform-neutral recursive GUI model, builder primitives, and reflection-driven model projection.
 
-**Current branch version:** `0.1.0-alpha.3`
+**Current branch version:** `0.1.0-alpha.4`
 
 ### TheSingularityWorkshop.GUI.Blazor
 
