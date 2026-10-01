@@ -129,7 +129,7 @@ public static class WpfGuiRenderer
                 control.FontSize = fontSize;
 
             if (int.TryParse(GetProperty(node, "fontWeight"), out var fontWeight))
-                control.FontWeight = new FontWeight(fontWeight);
+                control.FontWeight = FontWeight.FromOpenTypeWeight(fontWeight);
 
             if (node.Properties.TryGetValue("fontFamily", out var fontFamily) &&
                 !string.IsNullOrWhiteSpace(fontFamily))
