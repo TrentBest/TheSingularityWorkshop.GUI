@@ -139,6 +139,24 @@ public static class WpfGuiRenderer
             }
         }
 
+        if (element is TextBlock textBlock)
+        {
+            if (TryBrush(node, "foreground", out var foreground))
+                textBlock.Foreground = foreground;
+
+            if (TryDouble(node, "fontSize", out var fontSize))
+                textBlock.FontSize = fontSize;
+
+            if (int.TryParse(GetProperty(node, "fontWeight"), out var fontWeight))
+                textBlock.FontWeight = FontWeight.FromOpenTypeWeight(fontWeight);
+
+            if (node.Properties.TryGetValue("fontFamily", out var fontFamily) &&
+                !string.IsNullOrWhiteSpace(fontFamily))
+            {
+                textBlock.FontFamily = new System.Windows.Media.FontFamily(fontFamily);
+            }
+        }
+
         if (TryHorizontalAlignment(node, out var horizontalAlignment))
             element.HorizontalAlignment = horizontalAlignment;
 
