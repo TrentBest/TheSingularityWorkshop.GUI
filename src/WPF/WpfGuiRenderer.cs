@@ -112,8 +112,8 @@ public static class WpfGuiRenderer
         if (TryThickness(node, "margin", out var margin))
             element.Margin = margin;
 
-        if (TryThickness(node, "padding", out var padding) && element is Control control)
-            control.Padding = padding;
+        if (TryThickness(node, "padding", out var padding) && element is Control paddedControl)
+            paddedControl.Padding = padding;
 
         if (element is Control styled)
         {
