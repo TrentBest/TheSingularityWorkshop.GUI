@@ -10,6 +10,9 @@ namespace TheSingularityWorkshop.Workshop.Gui;
 /// </summary>
 public static class ReflectionGuiBuilder
 {
+    /// <summary>Projects a model instance into a recursive semantic GUI tree using its public properties.</summary>
+    /// <param name="model">The model to inspect. Its type does not need to reference GUI.Core.</param>
+    /// <returns>A platform-neutral semantic GUI tree.</returns>
     public static GuiNode Create(object model)
     {
         ArgumentNullException.ThrowIfNull(model);
