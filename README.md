@@ -63,6 +63,14 @@ TheSingularityWorkshop.GUI/
     +-- package.yml
 ~~~
 
+## GUI: the datum ↔ human bridge
+
+GUI is not the owner of the datum and it is not the physical input system. It is the common semantic bridge through which people observe, understand, and request changes to datum.
+
+A useful test is a rendered horse: the horse remains datum; lines, meshes, and native controls are manifestations; GUI owns the semantic presentation — label, displayed weight, dimensions, placement, sizing, selection, and interaction meaning.
+
+See [Datum, Presentation, and Interaction Boundary](docs/DATUM_AND_INTERACTION_BOUNDARY.md) for the full ownership model, including the common-capability intersection and bridge principle.
+
 ## Core: author semantic intent once
 
 GUI.Core is the platform-neutral package. Its current default vocabulary includes:
