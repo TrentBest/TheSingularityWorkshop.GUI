@@ -134,7 +134,7 @@ jobs:
   publish_nuget_blazor:
     needs: build-blazor
     runs-on: ubuntu-24.04
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')) && false }}
     permissions:
       contents: read
       id-token: write
@@ -158,7 +158,7 @@ jobs:
   publish_nuget_wpf:
     needs: build-wpf
     runs-on: ubuntu-24.04
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')) && false }}
     permissions:
       contents: read
       id-token: write
