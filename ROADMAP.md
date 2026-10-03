@@ -37,7 +37,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Define stable identity rules
 - [ ] Define capability terminology
 - [ ] Define representation/media contracts
-- [ ] Define semantic input/interaction contracts
+- [x] Define GUI ownership boundary for semantic interaction; physical input remains external
+- [ ] Define semantic input/interaction contracts in the dedicated input/output boundary
 - [ ] Define localization/internationalization contracts
 - [ ] Define accessibility/alternate-presentation contracts
 - [ ] Define lifecycle contracts
@@ -64,7 +65,8 @@ The model must first prove that it can describe more than conventional widgets.
 - [ ] Multi-view synchronization
 - [ ] 3D representation intent
 - [ ] Deliberately unstructured visual representation
-- [ ] Input abstraction independent of physical devices
+- [x] Establish input as an external concern consumed by GUI rather than owned by GUI
+- [ ] Define input abstraction independent of physical devices in the input/output package
 - [ ] Accessibility intent
 - [ ] Localization, Unicode, bidirectional text, and locale-aware presentation
 - [ ] State/data observation and binding

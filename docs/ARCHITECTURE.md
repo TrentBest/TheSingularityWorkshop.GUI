@@ -26,6 +26,8 @@ This ownership table is a key architectural constraint.
 
 ## 1. Core model
 
+GUI is the human-facing semantic bridge between datum and platform manifestation. See [Datum, Presentation, and Interaction Boundary](DATUM_AND_INTERACTION_BOUNDARY.md) for the ownership model: GUI describes presentation and interaction semantics around datum, while domain/application code retains datum ownership and platform adapters retain native manifestation.
+
 src/Core contains platform-neutral primitives.
 
 The current model is a recursive tree:
