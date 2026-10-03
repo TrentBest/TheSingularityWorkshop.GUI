@@ -110,7 +110,7 @@ jobs:
   publish_nuget_core:
     needs: build-core
     runs-on: ubuntu-24.04
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
+    if: ${{ (github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')) && false }}
     permissions:
       contents: read
       id-token: write
