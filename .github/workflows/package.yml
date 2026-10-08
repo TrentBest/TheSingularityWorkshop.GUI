@@ -45,5 +45,5 @@ jobs:
         run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
 
       - name: Publish packages
-        if: github.event_name != 'pull_request'
+        if: github.event_name != 'pull_request' && false
         run: dotnet nuget push "./packages/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
