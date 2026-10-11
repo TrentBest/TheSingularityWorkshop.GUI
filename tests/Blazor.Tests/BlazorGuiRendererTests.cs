@@ -70,6 +70,31 @@ public sealed class BlazorGuiRendererTests
                      Equals(frame.AttributeValue, true));
     }
 
+
+    [Theory]
+    [InlineData("Image", "img")]
+    [InlineData("Separator", "hr")]
+    [InlineData("TextBox", "input")]
+    public void Renderer_does_not_emit_content_inside_html_void_elements(string kind, string expectedTag)
+    {
+        var node = GuiBuilder.Create(kind, "void")
+            .Text("This content must not be rendered")
+            .Child("Button", "invalid-child", button => button.Text("Invalid"))
+            .Build();
+
+        var builder = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(node)(builder);
+        var frames = builder.GetFrames().Array;
+
+        Assert.Equal(expectedTag, frames[0].ElementName);
+        Assert.DoesNotContain(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Element &&
+            frame.ElementName == "button");
+        Assert.DoesNotContain(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Text &&
+            frame.TextContent == "This content must not be rendered");
+    }
+
     private static string? FindAttribute(
         RenderTreeFrame[] frames,
         string name,
