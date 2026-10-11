@@ -42,11 +42,16 @@ public static class BlazorGuiRenderer
         if (style.Count > 0)
             builder.AddAttribute(sequence++, "style", string.Join(";", style));
 
-        if (node.Text is not null)
-            builder.AddContent(sequence++, node.Text);
+        // HTML void elements cannot contain text or child elements. Keep the
+        // semantic tree tolerant of those values, but never emit invalid markup.
+        if (!IsVoidElement(node.Kind))
+        {
+            if (node.Text is not null)
+                builder.AddContent(sequence++, node.Text);
 
-        foreach (var child in node.Children)
-            RenderNode(builder, child);
+            foreach (var child in node.Children)
+                RenderNode(builder, child);
+        }
 
         builder.CloseElement();
     }
@@ -56,6 +61,9 @@ public static class BlazorGuiRenderer
         string.Equals(value, "Horizontal", StringComparison.OrdinalIgnoreCase)
             ? "row"
             : "column";
+
+    private static bool IsVoidElement(string kind) =>
+        kind is "Image" or "Separator" or "TextBox";
 
     private static string ResolveTag(string kind) => kind switch
     {
