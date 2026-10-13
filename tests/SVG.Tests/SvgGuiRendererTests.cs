@@ -61,7 +61,7 @@ public sealed class SvgGuiRendererTests
             .Child("svg-polygon", "facet", p => p.Property("points", "0,0 10,0 5,10")
                 .Property("fill", "#7ee0bd"))
             .Child("svg-path", "curve", p => p.Property("d", "M0 0 C10 20 20 20 30 0")
-                .Property("fill", "none").Property("stroke-width", "0.5"))
+                .Property("fill", "none").Property("stroke-width", "0.5").Property("marker-end", "url(#arrow)"))
             .Build();
 
         var doc = XDocument.Parse(_renderer.Render(scene));
@@ -73,6 +73,7 @@ public sealed class SvgGuiRendererTests
         Assert.Equal("0,0 10,15 20,5", (string?)doc.Descendants(svg + "polyline").Single().Attribute("points"));
         Assert.NotNull(doc.Descendants(svg + "polygon").Single());
         Assert.Equal("M0 0 C10 20 20 20 30 0", (string?)doc.Descendants(svg + "path").Last().Attribute("d"));
+        Assert.Equal("url(#arrow)", (string?)doc.Descendants(svg + "path").Last().Attribute("marker-end"));
     }
 
     [Fact]
