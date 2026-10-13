@@ -43,7 +43,10 @@ The output is a regular SVG document; a browser, Markdown viewer, image viewer, 
 | `svg-text`, `svg-tspan` | Text, multiline text spans, and text styling |
 | `svg-image` | Image reference from `href` or the Core node's `Source` |
 | `svg-defs`, `svg-linear-gradient`, `svg-radial-gradient`, `svg-stop` | Reusable gradient definitions |
+| `svg-symbol`, `svg-use` | Define and reuse a semantic geometry fragment |
+| `svg-pattern`, `svg-marker` | Reusable fill patterns and path markers |
 | `svg-clip-path`, `svg-mask` | Clipping and masking definitions |
+| `svg-filter` and `svg-fe-*` | Common filter pipeline primitives: blur, offset, blend, flood, composite, color matrix, and merge |
 | `svg-animate`, `svg-animate-transform`, `svg-animate-motion` | Explicit SVG animation instructions |
 | Other node kinds | A grouping element (`g`), retaining child structure and a title when text is present |
 
@@ -77,7 +80,7 @@ By default it writes `docs/assets/svg-adapter-gallery.svg`. CI runs the same sam
 
 ## Verification
 
-The contract suite covers coordinate mapping, primitive geometry, transforms, XML escaping, gradient/clip/mask definitions, image and text accessibility, explicit animation nodes, invalid ranges, and invalid dimensions.
+The contract suite covers coordinate mapping, primitive geometry, transforms, XML escaping, gradient/clip/mask/pattern definitions, symbol reuse, markers, filter primitives, image and text accessibility, explicit animation nodes, invalid ranges, and invalid dimensions.
 
 Run:
 
