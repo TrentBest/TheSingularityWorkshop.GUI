@@ -130,6 +130,47 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Renders_reusable_symbols_patterns_markers_and_filter_primitives()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-defs", "defs", defs => defs
+                .Child("svg-symbol", "marker-symbol", symbol => symbol
+                    .Property("viewBox", "0 0 10 10")
+                    .Child("svg-circle", "symbol-dot", dot => dot.Property("cx", "5").Property("cy", "5").Property("r", "4")))
+                .Child("svg-pattern", "stripe-pattern", pattern => pattern
+                    .Property("width", "8").Property("height", "8").Property("patternUnits", "userSpaceOnUse")
+                    .Child("svg-path", "stripe", path => path.Property("d", "M0 0L8 8").Property("stroke", "#7ee0bd")))
+                .Child("svg-marker", "arrowhead", marker => marker
+                    .Property("refX", "5").Property("refY", "5").Property("markerWidth", "6")
+                    .Property("markerHeight", "6").Property("orient", "auto")
+                    .Child("svg-polygon", "arrow", polygon => polygon.Property("points", "0,0 10,5 0,10")))
+                .Child("svg-filter", "soft-glow", filter => filter
+                    .Child("svg-fe-gaussian-blur", "blur", blur => blur.Property("in", "SourceGraphic").Property("stdDeviation", "1.5"))
+                    .Child("svg-fe-offset", "offset", offset => offset.Property("in", "blur").Property("dx", "0").Property("dy", "1"))
+                    .Child("svg-fe-merge", "merge", merge => merge
+                        .Child("svg-fe-merge-node", "merge-shadow", node => node.Property("in", "offset"))
+                        .Child("svg-fe-merge-node", "merge-source", node => node.Property("in", "SourceGraphic")))))
+            .Child("svg-use", "reused-marker", use => use.Property("href", "#marker-symbol").Property("x", "10").Property("y", "10"))
+            .Child("svg-rect", "patterned-panel", panel => panel.Property("width", "50").Property("height", "20")
+                .Property("fill", "url(#stripe-pattern)").Property("filter", "url(#soft-glow)"))
+            .Child("svg-line", "default-line", line => line.Property("x1", "0").Property("y1", "0")
+                .Property("x2", "20").Property("y2", "20"))
+            .Build();
+
+        var doc = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.NotNull(doc.Descendants(svg + "symbol").Single());
+        Assert.NotNull(doc.Descendants(svg + "pattern").Single());
+        Assert.NotNull(doc.Descendants(svg + "marker").Single());
+        Assert.NotNull(doc.Descendants(svg + "filter").Single());
+        Assert.NotNull(doc.Descendants(svg + "feGaussianBlur").Single());
+        Assert.Equal("#7ee0bd", (string?)doc.Descendants(svg + "line").Single().Attribute("stroke"));
+        Assert.Equal("url(#stripe-pattern)", (string?)doc.Descendants(svg + "rect").Single().Attribute("fill"));
+        Assert.Equal("#marker-symbol", (string?)doc.Descendants(svg + "use").Single().Attribute("href"));
+    }
+
+    [Fact]
     public void Emits_explicit_svg_animation_and_transform_nodes_from_gui_model()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
