@@ -24,10 +24,11 @@ public sealed class SvgGuiRenderer
         if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width), "Width must be positive.");
         if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height), "Height must be positive.");
 
+        var viewHeight = 100d * height / width;
         var svg = new XElement(Svg + "svg",
             new XAttribute("width", width),
             new XAttribute("height", height),
-            new XAttribute("viewBox", "0 0 100 100"),
+            new XAttribute("viewBox", $"0 0 100 {F(viewHeight)}"),
             new XAttribute("preserveAspectRatio", "xMidYMid meet"),
             new XAttribute("role", "img"),
             new XAttribute("aria-label", root.Text ?? root.Id),
@@ -65,7 +66,7 @@ public sealed class SvgGuiRenderer
                 if (coordinates is { } range)
                 {
                     x = Map(x, range.Minimum, range.Maximum);
-                    y = 100 - Map(y, range.Minimum, range.Maximum);
+                    y = range.ViewHeight - Map(y, range.Minimum, range.Maximum) * range.ViewHeight / 100;
                 }
                 element = new XElement(Svg + "circle",
                     new XAttribute("cx", F(x)),
@@ -116,6 +117,14 @@ public sealed class SvgGuiRenderer
                     new XAttribute("fill", Value(node, "fill", "none")));
                 AddStroke(element, node);
                 break;
+            case "svg-animate":
+                element = new XElement(Svg + "animate");
+                CopyProperties(node, element, "attributeName", "from", "to", "dur", "repeatCount", "values", "keyTimes", "calcMode", "begin");
+                break;
+            case "svg-animate-motion":
+                element = new XElement(Svg + "animateMotion");
+                CopyProperties(node, element, "path", "dur", "repeatCount", "rotate", "begin");
+                break;
             default:
                 element = new XElement(Svg + "g");
                 if (node.Text is not null)
@@ -129,7 +138,7 @@ public sealed class SvgGuiRenderer
         return element;
     }
 
-    private static void AddCoordinateSystem(XElement svg, GuiNode node)
+    private static void AddCoordinateSystem(XElement svg, GuiNode node, CoordinateRange range)
     {
         var grid = Value(node, "grid", "hidden") == "visible";
         var axes = Value(node, "axes", "hidden") == "visible";
@@ -144,29 +153,28 @@ public sealed class SvgGuiRenderer
                 new XAttribute("stroke-width", "0.2"));
             for (var p = 10; p < 100; p += 10)
             {
-                gridGroup.Add(new XElement(Svg + "path", new XAttribute("d", $"M{p} 0V100")));
-                gridGroup.Add(new XElement(Svg + "path", new XAttribute("d", $"M0 {p}H100")));
+                var y = p * range.ViewHeight / 100;
+                gridGroup.Add(new XElement(Svg + "path", new XAttribute("d", $"M{p} 0V{F(range.ViewHeight)}")));
+                gridGroup.Add(new XElement(Svg + "path", new XAttribute("d", $"M0 {F(y)}H100")));
             }
             svg.Add(gridGroup);
         }
 
         if (axes)
         {
-            var range = ReadCoordinateRange(node);
             var originX = Map(Number(node, "origin-x", (range.Minimum + range.Maximum) / 2), range.Minimum, range.Maximum);
-            var originY = 100 - Map(Number(node, "origin-y", (range.Minimum + range.Maximum) / 2), range.Minimum, range.Maximum);
+            var originY = range.ViewHeight - Map(Number(node, "origin-y", (range.Minimum + range.Maximum) / 2), range.Minimum, range.Maximum) * range.ViewHeight / 100;
             svg.Add(new XElement(Svg + "path",
                 new XAttribute("id", node.Id + "-axes"),
-                new XAttribute("d", $"M{F(originX)} 0V100M0 {F(originY)}H100"),
+                new XAttribute("d", $"M{F(originX)} 0V{F(range.ViewHeight)}M0 {F(originY)}H100"),
                 new XAttribute("stroke", "#7390a8"),
                 new XAttribute("stroke-width", "0.35")));
         }
 
         if (origin)
         {
-            var range = ReadCoordinateRange(node);
             var x = Map(Number(node, "origin-x", (range.Minimum + range.Maximum) / 2), range.Minimum, range.Maximum);
-            var y = 100 - Map(Number(node, "origin-y", (range.Minimum + range.Maximum) / 2), range.Minimum, range.Maximum);
+            var y = range.ViewHeight - Map(Number(node, "origin-y", (range.Minimum + range.Maximum) / 2), range.Minimum, range.Maximum) * range.ViewHeight / 100;
             svg.Add(new XElement(Svg + "circle",
                 new XAttribute("id", node.Id + "-origin"),
                 new XAttribute("cx", F(x)),
@@ -180,7 +188,7 @@ public sealed class SvgGuiRenderer
             svg.Add(new XElement(Svg + "rect",
                 new XAttribute("id", node.Id + "-bounds"),
                 new XAttribute("x", "0"), new XAttribute("y", "0"),
-                new XAttribute("width", "100"), new XAttribute("height", "100"),
+                new XAttribute("width", "100"), new XAttribute("height", F(range.ViewHeight)),
                 new XAttribute("fill", "none"),
                 new XAttribute("stroke", "#7390a8"),
                 new XAttribute("stroke-width", "0.35")));
@@ -197,13 +205,20 @@ public sealed class SvgGuiRenderer
             element.SetAttributeValue("stroke-width", F(parsed));
     }
 
-    private static CoordinateRange ReadCoordinateRange(GuiNode node)
+    private static CoordinateRange ReadCoordinateRange(GuiNode node, double viewHeight)
     {
         var minimum = Number(node, "minimum", 0);
         var maximum = Number(node, "maximum", 100);
         if (maximum <= minimum)
             throw new ArgumentException("Coordinate-system maximum must be greater than minimum.", nameof(node));
-        return new CoordinateRange(minimum, maximum);
+        return new CoordinateRange(minimum, maximum, viewHeight);
+    }
+
+    private static void CopyProperties(GuiNode node, XElement element, params string[] allowedNames)
+    {
+        foreach (var name in allowedNames)
+            if (node.Properties.TryGetValue(name, out var value))
+                element.SetAttributeValue(name, value);
     }
 
     private static double Map(double value, double minimum, double maximum) =>
@@ -223,5 +238,5 @@ public sealed class SvgGuiRenderer
 
     private static string F(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
 
-    private readonly record struct CoordinateRange(double Minimum, double Maximum);
+    private readonly record struct CoordinateRange(double Minimum, double Maximum, double ViewHeight);
 }
