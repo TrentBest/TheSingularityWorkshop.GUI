@@ -8,10 +8,15 @@ on:
     branches:
       - development
   workflow_dispatch:
+    inputs:
+      publish:
+        description: "Publish the verified GUI packages to NuGet.org"
+        required: true
+        default: false
+        type: boolean
 
 permissions:
   contents: read
-  packages: write
 
 jobs:
   test-and-package:
@@ -53,6 +58,32 @@ jobs:
       - name: Pack SVG
         run: dotnet pack src/SVG/TheSingularityWorkshop.GUI.SVG.csproj --configuration Release --output ./packages
 
-      - name: Publish packages
-        if: github.event_name != 'pull_request' && false
-        run: dotnet nuget push "./packages/*.nupkg" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --api-key "${{ secrets.GITHUB_TOKEN }}" --skip-duplicate
+      - name: Upload NuGet package artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-nuget-packages
+          path: ./packages/*.nupkg
+          if-no-files-found: error
+
+  publish_nuget:
+    needs: test-and-package
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download NuGet package artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: gui-nuget-packages
+          path: ./packages
+
+      - name: Authenticate with NuGet Trusted Publishing
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: TheSingularityWorkshop
+
+      - name: Publish packages to NuGet.org
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
