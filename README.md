@@ -21,7 +21,7 @@ GUI separates the semantic description of an interface from the platform-specifi
 
 ## 🟣 02 Why
 
-The Workshop is easier to understand when each repository states its responsibility clearly and shows how it connects to the wider system—without claiming ownership of neighboring layers.
+A neutral interface model allows one description of intent to be manifested by different platform adapters. Without that boundary, application meaning becomes entangled with the widgets and APIs of whichever UI technology was chosen first.
 
 ## 🔺 03 How
 
