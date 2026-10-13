@@ -24,7 +24,7 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("scene-axes", svg);
         Assert.Contains("id=\"upper-right\"", svg);
         Assert.Contains("cx=\"75\"", svg);
-        Assert.Contains("cy=\"20\"", svg);
+        Assert.Contains("cy=\"11.25\"", svg);
     }
 
     [Fact]
@@ -43,6 +43,26 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("id=\"marker\"", svg);
         Assert.Contains("fill=\"#ffcf86\"", svg);
         Assert.Contains("A &amp; B", svg);
+    }
+
+    [Fact]
+    public void Emits_explicit_svg_animation_nodes_from_gui_model()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-circle", "marker", marker => marker
+                .Property("cx", "50").Property("cy", "25").Property("r", "2")
+                .Child("svg-animate-motion", "motion", motion => motion
+                    .Property("path", "M10 10L90 10")
+                    .Property("dur", "4s")
+                    .Property("repeatCount", "indefinite")))
+            .Build();
+
+        var svg = _renderer.Render(scene);
+
+        Assert.Contains("<animateMotion", svg);
+        Assert.Contains("path=\"M10 10L90 10\"", svg);
+        Assert.Contains("repeatCount=\"indefinite\"", svg);
+        Assert.Contains("viewBox=\"0 0 100 56.25\"", svg);
     }
 
     [Fact]
