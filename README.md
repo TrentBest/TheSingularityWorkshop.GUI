@@ -25,7 +25,7 @@ A neutral interface model allows one description of intent to be manifested by d
 
 ## 🔺 03 How
 
-Describe GUI intent in the neutral model, then use a supported adapter to manifest it in a host such as Blazor or WPF. Adapter support and completeness remain repository-specific.
+Describe GUI intent in the neutral model, then use a supported adapter to manifest it in a host such as Blazor, WPF, or SVG. The new `TheSingularityWorkshop.GUI.SVG` project turns neutral GUI nodes and coordinate-system scenes into accessible, inspectable SVG markup; it is an initial 2D adapter, not yet a Visualize integration or an animation runtime.
 
 ## 🟢 04 See it in a minute
 
@@ -54,7 +54,9 @@ A consuming application should be able to describe an interface once and allow a
 - src/Core — the neutral recursive GUI model and platform-independent primitives.
 - src/Blazor — Blazor builders and the first Core-to-web manifestation.
 - src/WPF — reusable WPF builders and desktop manifestation infrastructure.
+- src/SVG — the SVG manifestation adapter for inspectable 2D scenes and GUI trees.
 - tests/Core.Tests — platform-independent contract tests.
+- tests/SVG.Tests — SVG serialization and coordinate-mapping contract tests.
 - docs — architecture, model, adapter, and testing contracts.
 - ROADMAP.md — engineering work required to make the neutral model durable.
 
