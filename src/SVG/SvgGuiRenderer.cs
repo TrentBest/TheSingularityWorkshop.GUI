@@ -203,6 +203,9 @@ public sealed class SvgGuiRenderer
             double.TryParse(width, NumberStyles.Float, CultureInfo.InvariantCulture, out var parsed) &&
             double.IsFinite(parsed) && parsed >= 0)
             element.SetAttributeValue("stroke-width", F(parsed));
+        foreach (var name in new[] { "stroke-dasharray", "stroke-linecap", "stroke-linejoin", "opacity", "fill-opacity" })
+            if (node.Properties.TryGetValue(name, out var value))
+                element.SetAttributeValue(name, value);
     }
 
     private static CoordinateRange ReadCoordinateRange(GuiNode node, double viewHeight)
