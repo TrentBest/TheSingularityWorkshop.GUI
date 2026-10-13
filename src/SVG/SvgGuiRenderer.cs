@@ -111,21 +111,31 @@ public sealed class SvgGuiRenderer
                     new XAttribute("x1", F(Number(node, "x1", 0))),
                     new XAttribute("y1", F(Number(node, "y1", 0))),
                     new XAttribute("x2", F(Number(node, "x2", 100))),
-                    new XAttribute("y2", F(Number(node, "y2", 100))));
+                    new XAttribute("y2", F(Number(node, "y2", 100))),
+                    new XAttribute("stroke", Value(node, "stroke", "#7ee0bd")),
+                    new XAttribute("stroke-width", F(NonNegative(node, "stroke-width", 0.6))));
                 break;
             case "svg-rect":
                 element = new XElement(Svg + "rect",
                     new XAttribute("x", F(Number(node, "x", 0))),
                     new XAttribute("y", F(Number(node, "y", 0))),
                     new XAttribute("width", F(NonNegative(node, "width", 10))),
-                    new XAttribute("height", F(NonNegative(node, "height", 10))));
+                    new XAttribute("height", F(NonNegative(node, "height", 10))),
+                    new XAttribute("fill", Value(node, "fill", "none")));
                 if (node.Properties.ContainsKey("rx")) element.SetAttributeValue("rx", F(NonNegative(node, "rx", 0)));
                 if (node.Properties.ContainsKey("ry")) element.SetAttributeValue("ry", F(NonNegative(node, "ry", 0)));
                 break;
             case "svg-polyline":
+                element = new XElement(Svg + "polyline",
+                    new XAttribute("points", Value(node, "points", string.Empty)),
+                    new XAttribute("fill", Value(node, "fill", "none")),
+                    new XAttribute("stroke", Value(node, "stroke", "#7ee0bd")),
+                    new XAttribute("stroke-width", F(NonNegative(node, "stroke-width", 0.6))));
+                break;
             case "svg-polygon":
-                element = new XElement(Svg + (node.Kind == "svg-polygon" ? "polygon" : "polyline"),
-                    new XAttribute("points", Value(node, "points", string.Empty)));
+                element = new XElement(Svg + "polygon",
+                    new XAttribute("points", Value(node, "points", string.Empty)),
+                    new XAttribute("fill", Value(node, "fill", "#7ee0bd")));
                 break;
             case "svg-text":
             case "text":
@@ -183,6 +193,58 @@ public sealed class SvgGuiRenderer
             case "svg-mask":
                 element = new XElement(Svg + "mask");
                 CopyProperties(node, element, "x", "y", "width", "height", "maskUnits", "maskContentUnits");
+                break;
+            case "svg-use":
+                element = new XElement(Svg + "use",
+                    new XAttribute("href", Value(node, "href", string.Empty)));
+                CopyProperties(node, element, "x", "y", "width", "height");
+                break;
+            case "svg-symbol":
+                element = new XElement(Svg + "symbol");
+                CopyProperties(node, element, "viewBox", "preserveAspectRatio", "refX", "refY");
+                break;
+            case "svg-pattern":
+                element = new XElement(Svg + "pattern");
+                CopyProperties(node, element, "x", "y", "width", "height", "patternUnits", "patternContentUnits", "patternTransform", "viewBox", "preserveAspectRatio");
+                break;
+            case "svg-marker":
+                element = new XElement(Svg + "marker");
+                CopyProperties(node, element, "refX", "refY", "markerWidth", "markerHeight", "markerUnits", "orient", "viewBox", "preserveAspectRatio");
+                break;
+            case "svg-filter":
+                element = new XElement(Svg + "filter");
+                CopyProperties(node, element, "x", "y", "width", "height", "filterUnits", "primitiveUnits", "filterRes", "color-interpolation-filters");
+                break;
+            case "svg-fe-gaussian-blur":
+                element = new XElement(Svg + "feGaussianBlur");
+                CopyProperties(node, element, "in", "stdDeviation", "edgeMode");
+                break;
+            case "svg-fe-offset":
+                element = new XElement(Svg + "feOffset");
+                CopyProperties(node, element, "in", "dx", "dy");
+                break;
+            case "svg-fe-color-matrix":
+                element = new XElement(Svg + "feColorMatrix");
+                CopyProperties(node, element, "in", "type", "values");
+                break;
+            case "svg-fe-blend":
+                element = new XElement(Svg + "feBlend");
+                CopyProperties(node, element, "in", "in2", "mode");
+                break;
+            case "svg-fe-flood":
+                element = new XElement(Svg + "feFlood");
+                CopyProperties(node, element, "flood-color", "flood-opacity");
+                break;
+            case "svg-fe-composite":
+                element = new XElement(Svg + "feComposite");
+                CopyProperties(node, element, "in", "in2", "operator", "k1", "k2", "k3", "k4");
+                break;
+            case "svg-fe-merge":
+                element = new XElement(Svg + "feMerge");
+                break;
+            case "svg-fe-merge-node":
+                element = new XElement(Svg + "feMergeNode");
+                CopyProperties(node, element, "in");
                 break;
             case "svg-animate":
                 element = new XElement(Svg + "animate");
