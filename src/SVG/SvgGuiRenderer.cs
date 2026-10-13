@@ -35,10 +35,14 @@ public sealed class SvgGuiRenderer
 
         if (root.Kind is "svg-scene" or "svg" or "coordinate-system")
         {
+            CoordinateRange? coordinates = null;
             if (root.Kind == "coordinate-system")
+            {
+                coordinates = ReadCoordinateRange(root);
                 AddCoordinateSystem(svg, root);
+            }
             foreach (var child in root.Children)
-                svg.Add(RenderNode(child, root.Kind == "coordinate-system" ? ReadCoordinateRange(root) : null));
+                svg.Add(RenderNode(child, coordinates));
         }
         else
         {
