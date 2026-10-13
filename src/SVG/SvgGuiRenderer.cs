@@ -39,8 +39,8 @@ public sealed class SvgGuiRenderer
             CoordinateRange? coordinates = null;
             if (root.Kind == "coordinate-system")
             {
-                coordinates = ReadCoordinateRange(root);
-                AddCoordinateSystem(svg, root);
+                coordinates = ReadCoordinateRange(root, viewHeight);
+                AddCoordinateSystem(svg, root, coordinates.Value);
             }
             foreach (var child in root.Children)
                 svg.Add(RenderNode(child, coordinates));
