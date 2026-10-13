@@ -18,8 +18,8 @@ public sealed class SvgGuiRenderer
     [
         "class", "transform", "opacity", "fill-opacity", "stroke-opacity",
         "stroke", "stroke-width", "stroke-dasharray", "stroke-dashoffset",
-        "stroke-linecap", "stroke-linejoin", "fill-rule", "clip-rule",
-        "vector-effect", "display", "visibility", "pointer-events",
+        "stroke-linecap", "stroke-linejoin", "marker-start", "marker-mid", "marker-end",
+        "fill-rule", "clip-rule", "color", "vector-effect", "display", "visibility", "pointer-events",
         "font-family", "font-size", "font-weight", "font-style",
         "text-anchor", "dominant-baseline", "text-decoration",
         "clip-path", "mask", "filter", "style", "role", "tabindex",
