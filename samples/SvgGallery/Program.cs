@@ -23,7 +23,22 @@ scene.Child("svg-defs", "definitions", defs => defs
     .Child("svg-clip-path", "panel-clip", clip => clip
         .Child("svg-rect", "clip-panel", rect => rect
             .Property("x", "4").Property("y", "4").Property("width", "92").Property("height", "48.25")
-            .Property("rx", "3"))));
+            .Property("rx", "3")))
+    .Child("svg-pattern", "circuit-pattern", pattern => pattern
+        .Property("width", "8").Property("height", "8").Property("patternUnits", "userSpaceOnUse")
+        .Child("svg-path", "pattern-line", path => path.Property("d", "M0 8L8 0")
+            .Property("stroke", "#7ee0bd").Property("stroke-width", "0.3")))
+    .Child("svg-marker", "arrowhead", marker => marker
+        .Property("refX", "5").Property("refY", "5").Property("markerWidth", "4")
+        .Property("markerHeight", "4").Property("orient", "auto")
+        .Child("svg-polygon", "arrowhead-shape", polygon => polygon.Property("points", "0,0 10,5 0,10")
+            .Property("fill", "#7ee0bd")))
+    .Child("svg-filter", "soft-glow", filter => filter
+        .Child("svg-fe-gaussian-blur", "glow-blur", blur => blur.Property("in", "SourceGraphic")
+            .Property("stdDeviation", "0.5")))
+    .Child("svg-symbol", "star-symbol", symbol => symbol.Property("viewBox", "0 0 10 10")
+        .Child("svg-polygon", "star-shape", polygon => polygon.Property("points", "5,0 6.5,3.5 10,4 7.5,6.5 8.2,10 5,8 1.8,10 2.5,6.5 0,4 3.5,3.5")
+            .Property("fill", "#ffcf86"))));
 
 scene.Child("svg-rect", "panel", panel => panel
     .Property("x", "4").Property("y", "4").Property("width", "92").Property("height", "48.25")
@@ -34,12 +49,22 @@ scene.Child("svg-rect", "panel", panel => panel
 scene.Child("svg-path", "curve", path => path
     .Property("d", "M9 37 C22 14 34 49 47 28 S72 13 86 31")
     .Property("fill", "none").Property("stroke", "#7ee0bd")
-    .Property("stroke-width", "0.7").Property("stroke-linecap", "round"));
+    .Property("stroke-width", "0.7").Property("stroke-linecap", "round")
+    .Property("marker-end", "url(#arrowhead)"));
 
 scene.Child("svg-polygon", "facet", polygon => polygon
     .Property("points", "73,14 84,10 91,18 83,24")
     .Property("fill", "#ffcf86").Property("fill-opacity", "0.9")
-    .Property("stroke", "#fff1ce").Property("stroke-width", "0.25"));
+    .Property("stroke", "#fff1ce").Property("stroke-width", "0.25")
+    .Property("filter", "url(#soft-glow)"));
+
+scene.Child("svg-rect", "pattern-swatch", panel => panel
+    .Property("x", "86").Property("y", "39").Property("width", "7").Property("height", "7")
+    .Property("fill", "url(#circuit-pattern)").Property("stroke", "#426478").Property("stroke-width", "0.25"));
+
+scene.Child("svg-use", "reused-star", use => use
+    .Property("href", "#star-symbol").Property("x", "86").Property("y", "10")
+    .Property("width", "7").Property("height", "7"));
 
 scene.Child("svg-circle", "animated-marker", marker => marker
     .Property("cx", "47").Property("cy", "28").Property("r", "1.6")
