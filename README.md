@@ -1,4 +1,43 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
+
 # TheSingularityWorkshop.GUI
+
+
+> **A platform-neutral GUI engineering layer built around recursive builders and platform adapters.**
+
+GUI separates the semantic description of an interface from the platform-specific work that presents it.
+
+```mermaid
+flowchart TD
+  I[Interface intent] --> M[Neutral GUI model]
+  M --> B[Recursive builders]
+  B --> A[Platform adapter]
+  A --> P[WPF / Blazor / other host]
+```
+
+## 🟦 01 What
+
+GUI separates the semantic description of an interface from the platform-specific work that presents it.
+
+## 🟣 02 Why
+
+The Workshop is easier to understand when each repository states its responsibility clearly and shows how it connects to the wider system—without claiming ownership of neighboring layers.
+
+## 🔺 03 How
+
+Describe GUI intent in the neutral model, then use a supported adapter to manifest it in a host such as Blazor or WPF. Adapter support and completeness remain repository-specific.
+
+## 🟢 04 See it in a minute
+
+Start with the repository's [Explore the GUI guide](docs/START_HERE.md), then build and run the contract tests for the adapter you intend to use.
+
+## 🟪 05 Documentation and theory
+
+[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [Testing](docs/TESTING.md)
+
+---
+
+## Detailed guide
 
 ![The Land of Idealism](docs/assets/ideal-gui-separation-of-concerns.jpg)
 
