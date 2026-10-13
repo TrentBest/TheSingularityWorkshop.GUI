@@ -49,6 +49,27 @@ jobs:
       - name: Test SVG
         run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
 
+      - name: Generate GUI.SVG feature gallery
+        run: dotnet run --project samples/SvgGallery/SvgGallery.csproj --configuration Release -- ./artifacts/svg-adapter-gallery.svg
+
+      - name: Verify generated GUI.SVG gallery
+        shell: bash
+        run: |
+          set -euo pipefail
+          gallery="./artifacts/svg-adapter-gallery.svg"
+          test -s "$gallery"
+          grep -q '<linearGradient' "$gallery"
+          grep -q '<clipPath' "$gallery"
+          grep -q '<animate' "$gallery"
+          grep -q 'aria-label="GUI.SVG manifestation gallery"' "$gallery"
+
+      - name: Upload GUI.SVG feature gallery
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-feature-gallery
+          path: ./artifacts/svg-adapter-gallery.svg
+          if-no-files-found: error
+
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
 
