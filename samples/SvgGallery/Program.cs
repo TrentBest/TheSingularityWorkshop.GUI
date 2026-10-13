@@ -1,0 +1,67 @@
+using TheSingularityWorkshop.Workshop.Gui;
+using TheSingularityWorkshop.Workshop.Gui.Svg;
+
+var output = args.Length > 0
+    ? Path.GetFullPath(args[0])
+    : Path.GetFullPath("docs/assets/svg-adapter-gallery.svg");
+
+var scene = GuiBuilder.Create("svg-scene", "gui-svg-gallery")
+    .Text("GUI.SVG manifestation gallery")
+    .Property("description", "A single semantic scene demonstrating vector geometry, reusable definitions, text, transforms, and declarative SVG animation.");
+
+scene.Child("svg-rect", "background", node => node
+    .Property("width", "100").Property("height", "56.25")
+    .Property("fill", "#0b1725"));
+
+scene.Child("svg-defs", "definitions", defs => defs
+    .Child("svg-linear-gradient", "workshop-gradient", gradient => gradient
+        .Property("x1", "0%").Property("y1", "0%").Property("x2", "100%").Property("y2", "100%")
+        .Child("svg-stop", "gradient-start", stop => stop
+            .Property("offset", "0%").Property("stop-color", "#173b4c"))
+        .Child("svg-stop", "gradient-end", stop => stop
+            .Property("offset", "100%").Property("stop-color", "#302b58")))
+    .Child("svg-clip-path", "panel-clip", clip => clip
+        .Child("svg-rect", "clip-panel", rect => rect
+            .Property("x", "4").Property("y", "4").Property("width", "92").Property("height", "48.25")
+            .Property("rx", "3"))));
+
+scene.Child("svg-rect", "panel", panel => panel
+    .Property("x", "4").Property("y", "4").Property("width", "92").Property("height", "48.25")
+    .Property("rx", "3").Property("fill", "url(#workshop-gradient)")
+    .Property("stroke", "#426478").Property("stroke-width", "0.35")
+    .Property("clip-path", "url(#panel-clip)"));
+
+scene.Child("svg-path", "curve", path => path
+    .Property("d", "M9 37 C22 14 34 49 47 28 S72 13 86 31")
+    .Property("fill", "none").Property("stroke", "#7ee0bd")
+    .Property("stroke-width", "0.7").Property("stroke-linecap", "round"));
+
+scene.Child("svg-polygon", "facet", polygon => polygon
+    .Property("points", "73,14 84,10 91,18 83,24")
+    .Property("fill", "#ffcf86").Property("fill-opacity", "0.9")
+    .Property("stroke", "#fff1ce").Property("stroke-width", "0.25"));
+
+scene.Child("svg-circle", "animated-marker", marker => marker
+    .Property("cx", "47").Property("cy", "28").Property("r", "1.6")
+    .Property("fill", "#ffcf86").Property("stroke", "#fff1ce").Property("stroke-width", "0.25")
+    .Child("svg-animate", "marker-pulse", animation => animation
+        .Property("attributeName", "r").Property("values", "1.6;2.8;1.6")
+        .Property("keyTimes", "0;0.5;1").Property("dur", "2.4s")
+        .Property("repeatCount", "indefinite")));
+
+scene.Child("svg-text", "heading", text => text
+    .Text("GUI.SVG")
+    .Property("x", "9").Property("y", "12")
+    .Property("font-family", "sans-serif").Property("font-size", "4")
+    .Property("font-weight", "700").Property("fill", "#eef6ff"));
+
+scene.Child("svg-text", "caption", text => text
+    .Text("Semantic model → SVG manifestation")
+    .Property("x", "9").Property("y", "47")
+    .Property("font-family", "sans-serif").Property("font-size", "2.4")
+    .Property("fill", "#d6e7f4"));
+
+var svg = new SvgGuiRenderer().Render(scene.Build(), width: 1280, height: 720);
+Directory.CreateDirectory(Path.GetDirectoryName(output)!);
+File.WriteAllText(output, svg);
+Console.WriteLine($"GUI.SVG gallery generated: {output}");
