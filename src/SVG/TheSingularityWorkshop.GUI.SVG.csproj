@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageId>TheSingularityWorkshop.GUI.SVG</PackageId>
+    <Version>0.1.0-alpha.1</Version>
+    <Authors>The Singularity Workshop</Authors>
+    <Company>The Singularity Workshop</Company>
+    <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageDescription>SVG manifestation adapter for the platform-neutral Workshop GUI model, including inspectable 2D scenes.</PackageDescription>
+    <PackageTags>gui;svg;2d;visualization;adapter;accessibility</PackageTags>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
+  </ItemGroup>
+</Project>
