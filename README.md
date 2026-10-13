@@ -25,7 +25,7 @@ A neutral interface model allows one description of intent to be manifested by d
 
 ## 🔺 03 How
 
-Describe GUI intent in the neutral model, then use a supported adapter to manifest it in a host such as Blazor, WPF, or SVG. The new `TheSingularityWorkshop.GUI.SVG` project turns neutral GUI nodes and coordinate-system scenes into accessible, inspectable SVG markup; it is an initial 2D adapter, not yet a Visualize integration or an animation runtime.
+Describe GUI intent in the neutral model, then use a supported adapter to manifest it in a host such as Blazor, WPF, or SVG. The `TheSingularityWorkshop.GUI.SVG` project turns neutral GUI nodes and coordinate-system scenes into accessible, inspectable SVG markup. Visualize consumes it through an explicit adapter; SVG animation is declarative output, not an animation clock or GPU pipeline.
 
 ## 🟢 04 See it in a minute
 
@@ -33,7 +33,7 @@ Start with the repository's [Explore the GUI guide](docs/START_HERE.md), then bu
 
 ## 🟪 05 Documentation and theory
 
-[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [Testing](docs/TESTING.md)
+[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md)
 
 ---
 
