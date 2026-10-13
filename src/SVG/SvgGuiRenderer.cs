@@ -275,6 +275,15 @@ public sealed class SvgGuiRenderer
             element.SetAttributeValue("fill", fill);
     }
 
+    private static CoordinateRange ReadCoordinateRange(GuiNode node, double viewHeight)
+    {
+        var minimum = Number(node, "minimum", 0);
+        var maximum = Number(node, "maximum", 100);
+        if (maximum <= minimum)
+            throw new ArgumentException("Coordinate-system maximum must be greater than minimum.", nameof(node));
+        return new CoordinateRange(minimum, maximum, viewHeight);
+    }
+
     private static void CopyProperties(GuiNode node, XElement element, params string[] allowedNames)
     {
         foreach (var name in allowedNames)
