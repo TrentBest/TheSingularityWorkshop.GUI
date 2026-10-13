@@ -23,7 +23,7 @@ public sealed class WorkshopGuiBuilderEventTests
         Assert.Contains(frames, frame =>
             frame.FrameType == RenderTreeFrameType.Attribute &&
             frame.AttributeName == "onwheel" &&
-            frame.AttributeValue is EventCallback<WheelEventArgs>);
+            frame.AttributeValue is Action<WheelEventArgs>);
 
         Assert.Contains(frames, frame =>
             frame.FrameType == RenderTreeFrameType.Attribute &&
