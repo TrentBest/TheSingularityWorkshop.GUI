@@ -41,6 +41,8 @@ public class ElementBuilder
     public ElementBuilder OnKeyDown(Action<KeyboardEventArgs> action)=>Attribute("onkeydown",EventCallback.Factory.Create(_receiver,action));
     public ElementBuilder OnMouseEnter(Action action)=>Attribute("onmouseenter",EventCallback.Factory.Create(_receiver,action));
     public ElementBuilder OnMouseLeave(Action action)=>Attribute("onmouseleave",EventCallback.Factory.Create(_receiver,action));
+    public ElementBuilder OnWheel(Action<WheelEventArgs> action)=>Attribute("onwheel",EventCallback.Factory.Create<WheelEventArgs>(_receiver,action));
+    public ElementBuilder StopPropagation(string eventName = "onclick")=>Attribute($"{eventName}:stopPropagation",true);
     public ElementBuilder PreventDefault(string eventName)=>Attribute($"{eventName}:preventDefault",true);
     public ElementBuilder BuildChildren(params ElementBuilder[] children){foreach(var child in children)Child(child);return this;}
     public RenderFragment Build()
