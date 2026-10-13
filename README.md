@@ -17,7 +17,7 @@ flowchart TD
 
 ## 🟦 01 What
 
-GUI separates the semantic description of an interface from the platform-specific work that presents it.
+Its core responsibility is the neutral model and builder contracts. Platform adapters own manifestation details; consuming applications own their domain meaning and behavior.
 
 ## 🟣 02 Why
 
