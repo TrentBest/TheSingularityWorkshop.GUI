@@ -32,17 +32,26 @@ jobs:
       - name: Restore Blazor
         run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
 
+      - name: Restore SVG
+        run: dotnet restore src/SVG/TheSingularityWorkshop.GUI.SVG.csproj
+
       - name: Test Core
         run: dotnet test tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj --configuration Release
 
       - name: Test Blazor
         run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release
 
+      - name: Test SVG
+        run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
+
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
 
       - name: Pack Blazor
         run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
+
+      - name: Pack SVG
+        run: dotnet pack src/SVG/TheSingularityWorkshop.GUI.SVG.csproj --configuration Release --output ./packages
 
       - name: Publish packages
         if: github.event_name != 'pull_request' && false
