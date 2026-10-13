@@ -63,6 +63,18 @@ The root document receives a `role` and `aria-label`, plus a `title`. Set `descr
 
 The adapter does not fetch remote images, validate arbitrary SVG path syntax, implement an interaction runtime, or promise identical rendering across SVG viewers. Use local or trusted image sources in documentation and demos.
 
+## Feature gallery
+
+The repository includes a runnable gallery that composes a gradient-backed panel, a clipping definition, vector paths, a polygon facet, accessible labels, and an animated marker using the same public builder surface.
+
+Run it from the repository root:
+
+```sh
+dotnet run --project samples/SvgGallery/SvgGallery.csproj --configuration Release
+```
+
+By default it writes `docs/assets/svg-adapter-gallery.svg`. CI runs the same sample and uploads the generated document as the `gui-svg-feature-gallery` artifact, so the actual adapter output can be inspected independently of source code.
+
 ## Verification
 
 The contract suite covers coordinate mapping, primitive geometry, transforms, XML escaping, gradient/clip/mask definitions, image and text accessibility, explicit animation nodes, invalid ranges, and invalid dimensions.
