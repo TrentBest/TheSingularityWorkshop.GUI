@@ -221,6 +221,42 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Rejects_duplicate_node_ids_before_emitting_ambiguous_svg_references()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-circle", "marker", circle => circle.Property("r", "2"))
+            .Child("svg-rect", "marker", rect => rect.Property("width", "10").Property("height", "10"))
+            .Build();
+
+        var error = Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+        Assert.Contains("marker", error.Message);
+        Assert.Contains("unique", error.Message);
+    }
+
+    [Fact]
+    public void Rejects_collisions_with_synthesized_coordinate_overlay_ids()
+    {
+        var scene = GuiBuilder.Create("coordinate-system", "plot")
+            .Grid()
+            .Child("svg-circle", "plot-grid", circle => circle.Property("r", "1"))
+            .Build();
+
+        var error = Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+        Assert.Contains("plot-grid", error.Message);
+    }
+
+    [Fact]
+    public void Rejects_coordinate_ranges_whose_finite_endpoints_overflow_the_span()
+    {
+        var scene = GuiBuilder.Create("coordinate-system", "scene")
+            .Property("minimum", "-1e308")
+            .Property("maximum", "1e308")
+            .Build();
+
+        Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+    }
+
+    [Fact]
     public void Rejects_negative_geometry_dimensions()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
