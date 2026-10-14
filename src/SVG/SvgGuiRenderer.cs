@@ -35,6 +35,7 @@ public sealed class SvgGuiRenderer
         ArgumentNullException.ThrowIfNull(root);
         if (width <= 0) throw new ArgumentOutOfRangeException(nameof(width), "Width must be positive.");
         if (height <= 0) throw new ArgumentOutOfRangeException(nameof(height), "Height must be positive.");
+        ValidateUniqueIds(root);
 
         var viewHeight = 100d * height / width;
         var label = Value(root, "aria-label", root.Text ?? root.Id);
@@ -337,12 +338,46 @@ public sealed class SvgGuiRenderer
             element.SetAttributeValue("fill", fill);
     }
 
+    private static void ValidateUniqueIds(GuiNode root)
+    {
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+
+        void Add(string id)
+        {
+            if (!ids.Add(id))
+                throw new ArgumentException($"SVG node id '{id}' is duplicated. SVG ids must be unique within a document.", nameof(root));
+        }
+
+        void Visit(GuiNode node)
+        {
+            Add(node.Id);
+            foreach (var child in node.Children)
+                Visit(child);
+        }
+
+        Visit(root);
+
+        // Coordinate-system overlays create real SVG elements with synthesized ids.
+        if (root.Kind == "coordinate-system")
+        {
+            foreach (var (property, suffix) in new[]
+            {
+                ("grid", "grid"), ("axes", "axes"), ("origin", "origin"), ("bounds", "bounds")
+            })
+            {
+                if (Value(root, property, "hidden") == "visible")
+                    Add(root.Id + "-" + suffix);
+            }
+        }
+    }
+
     private static CoordinateRange ReadCoordinateRange(GuiNode node, double viewHeight)
     {
         var minimum = Number(node, "minimum", 0);
         var maximum = Number(node, "maximum", 100);
-        if (maximum <= minimum)
-            throw new ArgumentException("Coordinate-system maximum must be greater than minimum.", nameof(node));
+        var span = maximum - minimum;
+        if (!double.IsFinite(span) || span <= 0)
+            throw new ArgumentException("Coordinate-system maximum must be greater than minimum with a finite range.", nameof(node));
         return new CoordinateRange(minimum, maximum, viewHeight);
     }
 
@@ -353,8 +388,13 @@ public sealed class SvgGuiRenderer
                 element.SetAttributeValue(name, value);
     }
 
-    private static double Map(double value, double minimum, double maximum) =>
-        (value - minimum) / (maximum - minimum) * 100;
+    private static double Map(double value, double minimum, double maximum)
+    {
+        var mapped = (value - minimum) / (maximum - minimum) * 100;
+        if (!double.IsFinite(mapped))
+            throw new ArgumentOutOfRangeException(nameof(value), value, "Coordinate mapping produced a non-finite SVG position.");
+        return mapped;
+    }
 
     private static double Number(GuiNode node, string name, double fallback)
     {
