@@ -85,6 +85,7 @@ public sealed class SvgGuiRenderer
                 nextY = y + 34;
                 break;
             case "toggle":
+            {
                 var enabled = node.Properties.TryGetValue("Value", out var toggleValue) &&
                     (string.Equals(toggleValue, "true", StringComparison.OrdinalIgnoreCase) || toggleValue == "1");
                 sb.Append("<g role=\"img\" aria-label=\"").Append(E("Toggle " + label + (enabled ? ", on" : ", off"))).Append("\"><rect x=\"")
@@ -94,6 +95,7 @@ public sealed class SvgGuiRenderer
                   .Append("\" y=\"").Append(N(y)).Append("\">").Append(E(label)).Append("</text></g>");
                 nextY = y + 26;
                 break;
+            }
             case "image":
                 sb.Append("<g role=\"img\" aria-label=\"").Append(E("Image: " + label)).Append("\"><rect x=\"").Append(N(x)).Append("\" y=\"")
                   .Append(N(y - 20)).Append("\" width=\"").Append(N(Math.Min(safeWidth, 240))).Append("\" height=\"72\" rx=\"4\" fill=\"#e5e7eb\" stroke=\"#9ca3af\"/>")
@@ -110,7 +112,8 @@ public sealed class SvgGuiRenderer
                 nextY = y + 42;
                 break;
             case "separator":
-                sb.Append("<path d=\"M ").Append(N(x)).Append(' ').Append(N(y)).Append(" h ").Append(N(safeWidth))
+                sb.Append("<path role=\"img\" aria-label=\"").Append(E("Separator: " + label)).Append("\" d=\"M ")
+                  .Append(N(x)).Append(' ').Append(N(y)).Append(" h ").Append(N(safeWidth))
                   .Append("\" stroke=\"currentColor\" stroke-opacity=\".25\"/>");
                 nextY = y + 16;
                 break;
