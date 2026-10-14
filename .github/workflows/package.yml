@@ -68,6 +68,8 @@ jobs:
           grep -q '<feComponentTransfer' "$gallery"
           grep -q '<feDiffuseLighting' "$gallery"
           grep -q '<feDistantLight' "$gallery"
+          grep -q 'filter="url(#surface-relief)"' "$gallery"
+          grep -q 'filter="url(#surface-lighting)"' "$gallery"
           grep -q '<use' "$gallery"
           grep -q '<a ' "$gallery"
           grep -q '<animate' "$gallery"
