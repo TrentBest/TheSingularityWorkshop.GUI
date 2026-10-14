@@ -59,7 +59,8 @@ Current implementation includes:
 - optional validated background color;
 - XML text/attribute escaping;
 - a nesting-depth guard;
-- basic recursive vertical placement.
+- basic recursive vertical placement for most containers;
+- horizontal placement for direct children of `Row` nodes, with row height estimated from the tallest child.
 
 Still to be designed or proven:
 
@@ -72,7 +73,7 @@ Still to be designed or proven:
 - cross-adapter conformance tests;
 - successful CI build and test evidence.
 
-The current renderer uses a simple vertical traversal. Container outlines now estimate their height from the descendant tree so nested content sits inside the visible boundary, but this is a structural estimate—not font-metric measurement or a shared layout contract. The renderer does **not** yet honor horizontal row layout or provide a responsive layout engine. Those limitations are important: the canonical kind names preserve semantic intent, but the current SVG manifestation is still an early visual mapping.
+The current renderer uses a deliberately small layout model: most containers place children vertically, while `Row` places its direct children side by side and sizes its outline from the tallest child. Container heights are structural estimates—not font-metric measurement or a shared Core layout contract. Row widths are evenly divided from the available width; this is not responsive sizing, and `Stack` orientation is not yet honored. The canonical kind names preserve semantic intent, but the current SVG manifestation is still an early visual mapping.
 
 ## Living motion example
 
@@ -85,7 +86,7 @@ This is hand-authored illustrative SVG—not output from `SvgGuiRenderer`, not a
 ## Next steps toward a serious manifestation
 
 1. **Correctness:** parse generated output as XML in tests; cover every canonical kind, escaping, dimensions, accessibility metadata, malformed input, and nesting limits.
-2. **Layout:** define a small, explicit layout contract before implementing row/column behavior; do not infer CSS or browser layout semantics by accident.
+2. **Layout:** define a shared Core layout contract for row/column/stack orientation, sizing, spacing, and constraints; extend beyond the current estimated horizontal `Row` layout without accidentally inheriting browser/CSS semantics.
 3. **Resources:** implement a deliberate image policy, including whether the output references a URI or embeds data.
 4. **Style:** define safe, typed style tokens and consistent defaults instead of accepting arbitrary renderer-specific strings.
 5. **Conformance:** share test cases across Blazor, WPF, and SVG where semantics overlap, while testing native capabilities separately.
