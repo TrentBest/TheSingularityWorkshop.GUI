@@ -156,6 +156,29 @@ public sealed class SvgGuiRenderer
                     new XAttribute("d", Value(node, "d", string.Empty)),
                     new XAttribute("fill", Value(node, "fill", "none")));
                 break;
+            case "svg-a":
+            {
+                var href = Value(node, "href", string.Empty);
+                if (string.IsNullOrWhiteSpace(href))
+                    throw new ArgumentException($"SVG link '{node.Id}' requires a non-empty href.", nameof(node));
+                element = new XElement(Svg + "a", new XAttribute("href", href));
+                CopyProperties(node, element, "target", "rel", "download", "hreflang", "type");
+                break;
+            }
+            case "svg-desc":
+                element = new XElement(Svg + "desc", node.Text ?? string.Empty);
+                break;
+            case "svg-metadata":
+                element = new XElement(Svg + "metadata", node.Text ?? string.Empty);
+                break;
+            case "svg-view":
+                element = new XElement(Svg + "view");
+                CopyProperties(node, element, "viewBox", "preserveAspectRatio", "zoomAndPan");
+                break;
+            case "svg-switch":
+            case "svg-g":
+                element = new XElement(Svg + (node.Kind == "svg-switch" ? "switch" : "g"));
+                break;
             case "svg-image":
                 element = new XElement(Svg + "image",
                     new XAttribute("x", F(Number(node, "x", 0))),
