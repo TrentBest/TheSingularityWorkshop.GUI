@@ -44,6 +44,8 @@ The output is a regular SVG document; a browser, Markdown viewer, image viewer, 
 | `svg-image` | Image reference from `href` or the Core node's `Source` |
 | `svg-defs`, `svg-linear-gradient`, `svg-radial-gradient`, `svg-stop` | Reusable gradient definitions |
 | `svg-symbol`, `svg-use` | Define and reuse a semantic geometry fragment |
+| `svg-a` | Navigable links inside the SVG, with explicit destination and optional target/relationship metadata |
+| `svg-desc`, `svg-metadata`, `svg-view`, `svg-switch` | Semantic descriptions, metadata, named views, and conditional-content containers |
 | `svg-pattern`, `svg-marker` | Reusable fill patterns and path markers |
 | `svg-clip-path`, `svg-mask` | Clipping and masking definitions |
 | `svg-filter` and `svg-fe-*` | Filter pipelines: blur, offset, color matrix, blend, flood, composite, merge, turbulence, displacement, morphology, tiling, convolution, component transfer, image input, and diffuse/specular lighting with distant, point, or spot lights |
