@@ -48,6 +48,9 @@ public sealed class SvgGuiRenderer
         if (depth > 64) throw new InvalidOperationException("GUI tree exceeds the SVG renderer's maximum depth (64).");
         var label = node.Text ?? node.Id;
         var kind = node.Kind;
+        if (kind.Equals("TextBox", StringComparison.OrdinalIgnoreCase) &&
+            node.Properties.TryGetValue("value", out var inputValue))
+            label = inputValue;
         var safeWidth = Math.Max(48, width - depth * 12);
         int nextY;
 
@@ -86,7 +89,9 @@ public sealed class SvgGuiRenderer
                 break;
             case "toggle":
             {
-                var enabled = node.Properties.TryGetValue("Value", out var toggleValue) &&
+                var hasToggleValue = node.Properties.TryGetValue("value", out var toggleValue) ||
+                    node.Properties.TryGetValue("Value", out toggleValue);
+                var enabled = hasToggleValue &&
                     (string.Equals(toggleValue, "true", StringComparison.OrdinalIgnoreCase) || toggleValue == "1");
                 sb.Append("<g role=\"img\" aria-label=\"").Append(E("Toggle " + label + (enabled ? ", on" : ", off"))).Append("\"><rect x=\"")
                   .Append(N(x)).Append("\" y=\"").Append(N(y - 15)).Append("\" width=\"38\" height=\"20\" rx=\"10\" fill=\"")
