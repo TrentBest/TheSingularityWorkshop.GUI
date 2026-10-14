@@ -140,7 +140,7 @@ public sealed class SvgGuiRenderer
         }
 
         // Row is the first explicit horizontal layout primitive. Other containers remain vertical.
-        if (kind.Equals("Row", StringComparison.OrdinalIgnoreCase) && node.Children.Count > 0)
+        if (UsesHorizontalLayout(node) && node.Children.Count > 0)
         {
             var children = node.Children.ToArray();
             // Reserve the row's left inset and inter-item gaps before dividing its width.
@@ -168,8 +168,14 @@ public sealed class SvgGuiRenderer
         return nextY;
     }
 
-    // Estimates container height from the same vertical advances used by RenderNode.
-    // Row uses its tallest child because its children share a starting y-coordinate.
+    private static bool UsesHorizontalLayout(GuiNode node) =>
+        node.Kind.Equals("Row", StringComparison.OrdinalIgnoreCase) ||
+        (node.Kind.Equals("Stack", StringComparison.OrdinalIgnoreCase) &&
+         node.Properties.TryGetValue("orientation", out var orientation) &&
+         orientation.Equals("Horizontal", StringComparison.OrdinalIgnoreCase));
+
+    // Estimates container height from the same advances used by RenderNode.
+    // Horizontal containers use their tallest child because children share a starting y-coordinate.
     // This is not font-metric measurement or a shared Core layout contract.
     private static int MeasureSubtreeHeight(GuiNode node)
     {
@@ -187,7 +193,7 @@ public sealed class SvgGuiRenderer
             _ => 40
         };
 
-        if (kind == "row")
+        if (UsesHorizontalLayout(node))
         {
             var tallestChild = 0;
             foreach (var child in node.Children)
