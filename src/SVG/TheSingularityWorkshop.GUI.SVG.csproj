@@ -13,8 +13,17 @@
     <PackageDescription>SVG manifestation adapter for the platform-neutral Workshop GUI model, including inspectable 2D scenes.</PackageDescription>
     <PackageTags>gui;svg;2d;visualization;adapter;accessibility</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="/" />
+    <None Include="..\..\docs\SVG_ADAPTER.md" Pack="true" PackagePath="docs/SVG_ADAPTER.md" />
+    <None Include="..\..\artifacts\svg-adapter-gallery.svg"
+          Pack="true"
+          PackagePath="docs/assets/svg-adapter-gallery.svg"
+          Condition="Exists('..\..\artifacts\svg-adapter-gallery.svg')" />
   </ItemGroup>
 </Project>
