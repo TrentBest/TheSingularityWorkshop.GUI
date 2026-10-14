@@ -43,12 +43,14 @@ TheSingularityWorkshop.GUI/
 |   +-- Core/       platform-neutral semantic model and builders
 |   +-- Blazor/     browser manifestation
 |   +-- WPF/        native desktop manifestation and WPF builders
+|   +-- SVG/        standalone vector manifestation
 |   +-- SVG/        standalone SVG manifestation and vector output
 |
 +-- tests/
 |   +-- Core.Tests/    Core contract tests
 |   +-- Blazor.Tests/  Blazor manifestation tests
 |   +-- WPF.Tests/     planned/being established
+|   +-- SVG.Tests/     SVG serializer contract tests
 |
 +-- docs/
 |   +-- START_HERE.md
@@ -161,6 +163,7 @@ Blazor is an adapter, not the semantic model.
 | **TheSingularityWorkshop.GUI.Core** | `0.1.0-alpha.3` | Semantic model and builders | Implemented |
 | **TheSingularityWorkshop.GUI.Blazor** | `0.1.0-alpha.7` | Blazor manifestation | Implemented |
 | **TheSingularityWorkshop.GUI.WPF** | `0.1.0-alpha.1` | WPF manifestation and native builders | Implemented; first release pending |
+| **TheSingularityWorkshop.GUI.SVG** | branch prototype | Standalone SVG manifestation | Initial implementation; verification pending |
 
 These packages are intentionally independently versioned.
 
@@ -205,6 +208,8 @@ These are not being represented as completed features. The roadmap and status do
 | [WPF Guide](docs/WPF_GUIDE.md) | Current WPF builder and renderer surface |
 | [GUI Model](docs/GUI_MODEL.md) | Current semantic tree contract |
 | [Testing](docs/TESTING.md) | Verification strategy |
+| [SVG Guide](docs/SVG_GUIDE.md) | SVG rendering boundary and motion study |
+| [Living Documentation](docs/LIVING_DOCUMENTATION.md) | Visual documentation principles |
 | [Roadmap](ROADMAP.md) | Future contract and integration work |
 
 The remaining documents explore spatial GUI, expressiveness, lifecycle, execution, nested experiences, visual references, and the broader theory.
