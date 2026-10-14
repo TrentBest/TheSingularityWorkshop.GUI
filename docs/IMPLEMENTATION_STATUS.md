@@ -18,6 +18,20 @@ Status vocabulary:
 | `TheSingularityWorkshop.GUI.Blazor` | `0.1.0-alpha.7` | Implemented / partial | Build, Blazor tests |
 | `TheSingularityWorkshop.GUI.WPF` | `0.1.0-alpha.1` | Implemented / partial | Windows build and pack; dedicated WPF tests pending |
 
+## GUI.SVG
+
+### Initial implementation / verification pending
+
+- Separate SVG manifestation project referencing GUI.Core.
+- Deterministic standalone SVG string serialization.
+- Accessible title/description metadata and optional background.
+- Basic text, button-like, warning, separator, and fallback rendering.
+- Simple vertical tree layout; this is not a shared layout engine.
+- Serializer tests scaffolded and included in the solution/CI lane.
+- Animated documentation examples demonstrate SVG capability but are not renderer output.
+
+Not yet established: complete canonical-kind mapping, typed style/layout contracts, semantic interaction, responsive layout, image/media handling, adapter conformance, or a published package. A successful CI run is still required before calling the implementation verified.
+
 ## GUI.Core
 
 ### Implemented
@@ -162,6 +176,7 @@ FSM_COS remains the owner of runtime composition. GUI does not become a composit
 
 | Platform | Status |
 |---|---|
+| SVG | Initial implementation; verification pending |
 | Blazor | Implemented / partial |
 | WPF | Implemented / partial |
 | Unity UI Toolkit | Planned |
