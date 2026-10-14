@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <PackageId>TheSingularityWorkshop.GUI.SVG</PackageId>
+    <Description>SVG manifestation for the platform-neutral TheSingularityWorkshop.GUI semantic model.</Description>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="../Core/TheSingularityWorkshop.GUI.Core.csproj" />
+  </ItemGroup>
+</Project>
