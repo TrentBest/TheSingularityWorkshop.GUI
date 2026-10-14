@@ -36,6 +36,20 @@ scene.Child("svg-defs", "definitions", defs => defs
     .Child("svg-filter", "soft-glow", filter => filter
         .Child("svg-fe-gaussian-blur", "glow-blur", blur => blur.Property("in", "SourceGraphic")
             .Property("stdDeviation", "0.5")))
+    .Child("svg-filter", "surface-relief", filter => filter
+        .Child("svg-fe-turbulence", "relief-noise", noise => noise
+            .Property("baseFrequency", "0.025 0.06").Property("numOctaves", "2").Property("type", "fractalNoise"))
+        .Child("svg-fe-displacement-map", "relief-displacement", displacement => displacement
+            .Property("in", "SourceGraphic").Property("in2", "relief-noise").Property("scale", "1.5")
+            .Property("xChannelSelector", "R").Property("yChannelSelector", "G"))
+        .Child("svg-fe-component-transfer", "relief-tone", transfer => transfer
+            .Child("svg-fe-func-r", "relief-red-curve", curve => curve.Property("type", "gamma")
+                .Property("amplitude", "1").Property("exponent", "0.95").Property("offset", "0"))))
+    .Child("svg-filter", "surface-lighting", filter => filter
+        .Child("svg-fe-diffuse-lighting", "diffuse-study", lighting => lighting
+            .Property("surfaceScale", "1.5").Property("diffuseConstant", "0.8")
+            .Child("svg-fe-distant-light", "gallery-light", light => light
+                .Property("azimuth", "225").Property("elevation", "40"))))
     .Child("svg-symbol", "star-symbol", symbol => symbol.Property("viewBox", "0 0 10 10")
         .Child("svg-polygon", "star-shape", polygon => polygon.Property("points", "5,0 6.5,3.5 10,4 7.5,6.5 8.2,10 5,8 1.8,10 2.5,6.5 0,4 3.5,3.5")
             .Property("fill", "#ffcf86"))));
