@@ -27,7 +27,7 @@ var svg = new SvgGuiRenderer().Render(view, new SvgRenderOptions
 });
 ```
 
-**Verification note:** confirm this builder example against the current Core API by building the project before treating it as a verified sample.
+The builder chain shown here is the same public composition style documented in the repository README. The SVG project and tests still require an actual build/test run before release readiness can be claimed.
 
 ## Current contract
 
@@ -41,6 +41,12 @@ var svg = new SvgGuiRenderer().Render(view, new SvgRenderOptions
 ## Boundaries
 
 This first pass is a deterministic serializer, not a browser application or interaction runtime. SVG buttons are pictures of buttons: they do not dispatch GUI events. Layout is basic and does not yet provide a full constraint, flex, grid, or responsive layout engine. Image sources, typed styling, state updates, keyboard interaction, animation contracts, and adapter conformance remain future work unless verified in code.
+
+## Living motion example
+
+[Open the animated energy-field SVG](examples/living-energy-vortex.svg). It explores alternating gold/blue pulses, a slowly rotating orbital field, a breathing focal point, and a reduced-motion fallback. It is an illustration of SVG's expressive potential—not output from `SvgGuiRenderer`, not a physical light simulation, and not yet connected to GUI node state.
+
+![Living energy-field motion study](examples/living-energy-vortex.svg)
 
 ## Next capabilities
 
