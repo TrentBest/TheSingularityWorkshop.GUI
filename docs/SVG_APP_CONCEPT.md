@@ -89,8 +89,6 @@ Answer these from existing code and a runnable proof before adding abstractions.
 
 ## Related contracts
 
-- [GUI.SVG Guide](SVG_GUIDE.md) — renderer capabilities and current limitations, when available on the working documentation branch.
 - [GUI Manifest Boundary](MANIFEST_BOUNDARY.md) — experience composition and GUI implementation are separate.
 - [FSM_COS Architecture](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/master/docs/ARCHITECTURE.md) — the composition kernel and `RuntimeAssembly` handoff.
 - [FSM_COS Runtime Boundary](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/master/docs/RUNTIME_BOUNDARY.md) — responsibilities that remain with the host.
-- [GUI.SVG adapter](SVG_ADAPTER.md) — SVG-specific serialization contract, when available on the working documentation branch.
