@@ -72,7 +72,15 @@ scene.Child("svg-polygon", "facet", polygon => polygon
     .Property("points", "73,14 84,10 91,18 83,24")
     .Property("fill", "#ffcf86").Property("fill-opacity", "0.9")
     .Property("stroke", "#fff1ce").Property("stroke-width", "0.25")
-    .Property("filter", "url(#soft-glow)"));
+    .Property("filter", "url(#surface-relief)"));
+
+scene.Child("svg-circle", "glow-swatch", glow => glow
+    .Property("cx", "65").Property("cy", "16").Property("r", "2")
+    .Property("fill", "#7ee0bd").Property("filter", "url(#soft-glow)"));
+
+scene.Child("svg-polygon", "lit-swatch", lit => lit
+    .Property("points", "63,25 67,21 71,25")
+    .Property("fill", "#ffcf86").Property("filter", "url(#surface-lighting)"));
 
 scene.Child("svg-rect", "pattern-swatch", panel => panel
     .Property("x", "86").Property("y", "39").Property("width", "7").Property("height", "7")
