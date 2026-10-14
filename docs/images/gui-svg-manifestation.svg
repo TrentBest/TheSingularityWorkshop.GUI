@@ -55,9 +55,7 @@
 <path class="pulse" d="M470 417V451H205V488"/>
 <path class="route" d="M600 417V488"/><path class="pulse" d="M600 417V488"/>
 <path class="route" d="M730 417V451H995V488"/><path class="pulse" d="M730 417V451H995V488"/>
-<circle class="dot" r="4"><animateMotion dur="4.6s" repeatCount="indefinite" path="M470 417V451H205V488"/></circle>
-<circle class="dot" r="4"><animateMotion dur="3.8s" repeatCount="indefinite" path="M600 417V488"/></circle>
-<circle class="dot" r="4"><animateMotion dur="5.1s" repeatCount="indefinite" path="M730 417V451H995V488"/></circle>
+<!-- CSS-only pathway pulses honor prefers-reduced-motion below. -->
 <!-- manifestation cards -->
 <g>
  <rect class="card" x="70" y="488" width="270" height="112" rx="16" stroke="#67e8f9"/>
