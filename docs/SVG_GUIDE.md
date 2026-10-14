@@ -1,6 +1,6 @@
 # GUI.SVG Guide
 
-> **Status:** early implementation. The project, serializer, and tests are in the repository; a successful build/test run is still required before the adapter can be called verified.
+> **Status:** early implementation, with a verified baseline. The latest package workflow for the current `master` head completed successfully, including the SVG tests and package/gallery checks. See [GitHub Actions](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions) for current runs; treat this guide as a snapshot, not a substitute for the tests.
 
 ![One semantic GUI, multiple manifestations](images/gui-svg-manifestation.svg)
 
@@ -59,8 +59,9 @@ Current implementation includes:
 - optional validated background color;
 - XML text/attribute escaping;
 - a nesting-depth guard;
-- basic recursive vertical placement for most containers;
-- horizontal placement for direct children of `Row` nodes, with row height estimated from the tallest child.
+- recursive placement for most containers;
+- horizontal placement for direct children of `Row` and `Stack` nodes when a Stack's `orientation` property is `Horizontal`;
+- row/container outline estimates based on child advances, with horizontal containers sized from their tallest child.
 
 Still to be designed or proven:
 
@@ -70,10 +71,9 @@ Still to be designed or proven:
 - explicit semantic accessibility mappings for every node;
 - event and state contracts owned by a host;
 - animation/transition intent in the semantic model;
-- cross-adapter conformance tests;
-- successful CI build and test evidence.
+- cross-adapter conformance tests.
 
-The current renderer uses a deliberately small layout model: most containers place children vertically, while `Row` places its direct children side by side and sizes its outline from the tallest child. Container heights are structural estimates—not font-metric measurement or a shared Core layout contract. Row widths are evenly divided from the available width; this is not responsive sizing, and `Stack` orientation is not yet honored. The canonical kind names preserve semantic intent, but the current SVG manifestation is still an early visual mapping.
+The current renderer uses a deliberately small layout model: most containers place children vertically; `Row` lays out direct children side by side; and a `Stack` does so when its `orientation` property is `Horizontal`. Horizontal children share a starting vertical coordinate, and the container outline is estimated from the tallest child. Dense rows divide available width among children, so this is not responsive sizing. Container heights are structural estimates—not font-metric measurement or a shared Core layout contract. These are explicit early boundaries, not browser/CSS layout semantics.
 
 ## Living motion example
 
@@ -85,11 +85,10 @@ This is hand-authored illustrative SVG—not output from `SvgGuiRenderer`, not a
 
 ## Next steps toward a serious manifestation
 
-1. **Correctness:** parse generated output as XML in tests; cover every canonical kind, escaping, dimensions, accessibility metadata, malformed input, and nesting limits.
-2. **Layout:** define a shared Core layout contract for row/column/stack orientation, sizing, spacing, and constraints; extend beyond the current estimated horizontal `Row` layout without accidentally inheriting browser/CSS semantics.
-3. **Resources:** implement a deliberate image policy, including whether the output references a URI or embeds data.
-4. **Style:** define safe, typed style tokens and consistent defaults instead of accepting arbitrary renderer-specific strings.
-5. **Conformance:** share test cases across Blazor, WPF, and SVG where semantics overlap, while testing native capabilities separately.
-6. **Living documentation:** use motion to explain state and structure, with reduced-motion behavior and clear separation between illustration and generated output.
+1. **Layout contract:** define shared Core intent for row/column/stack orientation, sizing, spacing, and constraints without accidentally inheriting browser/CSS semantics.
+2. **Resources:** implement a deliberate image policy, including whether the output references a URI or embeds data.
+3. **Style:** define safe, typed style tokens and consistent defaults instead of accepting arbitrary renderer-specific strings.
+4. **Conformance:** share test cases across Blazor, WPF, and SVG where semantics overlap, while testing native capabilities separately.
+5. **Living documentation:** connect visual examples to the source and tests that generate them; keep illustrative motion distinct from runtime output.
 
 Related: [Start Here](START_HERE.md) · [GUI Model](GUI_MODEL.md) · [Architecture](ARCHITECTURE.md) · [Implementation Status](IMPLEMENTATION_STATUS.md) · [Testing](TESTING.md) · [Living Documentation](LIVING_DOCUMENTATION.md)
