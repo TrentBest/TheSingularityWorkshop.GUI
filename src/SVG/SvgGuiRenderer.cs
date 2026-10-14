@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Net;
 using System.Text;
-using TheSingularityWorkshop.GUI.Core;
+using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.GUI.SVG;
 
@@ -45,7 +45,7 @@ public sealed class SvgGuiRenderer
     private static void RenderNode(StringBuilder sb, GuiNode node, int x, int y, int width, int depth)
     {
         if (depth > 64) throw new InvalidOperationException("GUI tree exceeds the SVG renderer's maximum depth (64).");
-        var label = ReadString(node, "Text") ?? ReadString(node, "text") ?? node.Kind;
+        var label = node.Text ?? node.Id;
         var kind = node.Kind ?? "Unknown";
         var safeWidth = Math.Max(48, width - depth * 12);
 
@@ -85,20 +85,11 @@ public sealed class SvgGuiRenderer
                 break;
         }
 
-        foreach (var child in node.Children ?? Enumerable.Empty<GuiNode>())
+        foreach (var child in node.Children)
         {
             RenderNode(sb, child, x + 12, y, safeWidth - 12, depth + 1);
             y += 44;
         }
-    }
-
-    private static string? ReadString(GuiNode node, string key)
-    {
-        // Core's semantic property representation is intentionally treated as data;
-        // renderer does not execute or interpret arbitrary values.
-        if (node.Properties is not null && node.Properties.TryGetValue(key, out var value))
-            return value?.ToString();
-        return null;
     }
 
     private static string E(string? value) => WebUtility.HtmlEncode(value ?? string.Empty);
