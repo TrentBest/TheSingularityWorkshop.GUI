@@ -43,6 +43,7 @@ The fastest route is intentionally small.
 - [Implementation Status](IMPLEMENTATION_STATUS.md) — what is actually implemented, partial, specified, or planned
 - [GUI Model](GUI_MODEL.md) — the neutral semantic tree and current primitives
 - [WPF Guide](WPF_GUIDE.md) — the current desktop manifestation and native builder surface
+- [SVG Guide](SVG_GUIDE.md) — portable vector output, current layout behavior, and the boundary between illustration and an interactive runtime
 
 **Then explore the relevant layer:**
 
