@@ -76,6 +76,7 @@ jobs:
           grep -q '<mpath' "$gallery"
           grep -q '<set' "$gallery"
           grep -q 'aria-label="GUI.SVG manifestation gallery"' "$gallery"
+          cmp "$gallery" ./docs/assets/svg-adapter-gallery.svg
 
       - name: Upload GUI.SVG feature gallery
         uses: actions/upload-artifact@v7
