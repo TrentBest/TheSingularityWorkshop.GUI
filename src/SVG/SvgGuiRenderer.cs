@@ -197,11 +197,11 @@ public sealed class SvgGuiRenderer
                 break;
             case "svg-linear-gradient":
                 element = new XElement(Svg + "linearGradient");
-                CopyProperties(node, element, "x1", "y1", "x2", "y2", "gradientUnits", "spreadMethod", "gradientTransform");
+                CopyProperties(node, element, "x1", "y1", "x2", "y2", "gradientUnits", "spreadMethod", "gradientTransform", "href");
                 break;
             case "svg-radial-gradient":
                 element = new XElement(Svg + "radialGradient");
-                CopyProperties(node, element, "cx", "cy", "r", "fx", "fy", "fr", "gradientUnits", "spreadMethod", "gradientTransform");
+                CopyProperties(node, element, "cx", "cy", "r", "fx", "fy", "fr", "gradientUnits", "spreadMethod", "gradientTransform", "href");
                 break;
             case "svg-stop":
                 element = new XElement(Svg + "stop");
@@ -213,7 +213,7 @@ public sealed class SvgGuiRenderer
                 break;
             case "svg-mask":
                 element = new XElement(Svg + "mask");
-                CopyProperties(node, element, "x", "y", "width", "height", "maskUnits", "maskContentUnits");
+                CopyProperties(node, element, "x", "y", "width", "height", "maskUnits", "maskContentUnits", "mask-type");
                 break;
             case "svg-use":
                 element = new XElement(Svg + "use",
@@ -226,7 +226,7 @@ public sealed class SvgGuiRenderer
                 break;
             case "svg-pattern":
                 element = new XElement(Svg + "pattern");
-                CopyProperties(node, element, "x", "y", "width", "height", "patternUnits", "patternContentUnits", "patternTransform", "viewBox", "preserveAspectRatio");
+                CopyProperties(node, element, "x", "y", "width", "height", "patternUnits", "patternContentUnits", "patternTransform", "viewBox", "preserveAspectRatio", "href");
                 break;
             case "svg-marker":
                 element = new XElement(Svg + "marker");
@@ -331,6 +331,18 @@ public sealed class SvgGuiRenderer
                 element = new XElement(Svg + "feMergeNode");
                 CopyProperties(node, element, "in");
                 break;
+            case "svg-set":
+                element = new XElement(Svg + "set");
+                CopyProperties(node, element, "attributeName", "attributeType", "to", "begin", "dur", "end", "repeatCount", "repeatDur", "fill", "restart", "min", "max");
+                break;
+            case "svg-mpath":
+            {
+                var href = Value(node, "href", string.Empty);
+                if (string.IsNullOrWhiteSpace(href))
+                    throw new ArgumentException($"SVG motion path '{node.Id}' requires a non-empty href.", nameof(node));
+                element = new XElement(Svg + "mpath", new XAttribute("href", href));
+                break;
+            }
             case "svg-animate":
                 element = new XElement(Svg + "animate");
                 CopyProperties(node, element, "attributeName", "attributeType", "from", "to", "by", "dur", "repeatCount", "repeatDur", "values", "keyTimes", "keySplines", "calcMode", "begin", "end", "fill", "additive", "accumulate");
