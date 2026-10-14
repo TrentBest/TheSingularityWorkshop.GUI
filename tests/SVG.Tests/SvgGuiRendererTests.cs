@@ -216,6 +216,7 @@ public sealed class SvgGuiRendererTests
     public void Emits_explicit_svg_animation_and_transform_nodes_from_gui_model()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-path", "motion-route", path => path.Property("d", "M10 10L90 10").Property("display", "none"))
             .Child("svg-circle", "marker", marker => marker
                 .Property("cx", "50").Property("cy", "25").Property("r", "2")
                 .Child("svg-animate", "pulse", animation => animation
@@ -237,6 +238,7 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("<animate", svg);
         Assert.Contains("<animateTransform", svg);
         Assert.Contains("<animateMotion", svg);
+        Assert.Contains("id=\"motion-route\"", svg);
         Assert.Contains("<mpath href=\"#motion-route\"", svg);
         Assert.Contains("<set", svg);
         Assert.Contains("to=\"1\"", svg);
