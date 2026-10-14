@@ -73,7 +73,16 @@ The coordinate-system builder supplies a shared minimum/maximum range and can op
 
 The root document receives a `role` and `aria-label`, plus a `title`. Set `description` on the root node to emit an SVG `desc`. Individual images can provide descriptive text. Text content is XML-escaped. The renderer validates output dimensions, coordinate ranges, finite numeric properties, non-negative radii/dimensions, unique node IDs (including synthesized coordinate overlays), and a maximum tree depth of 256. Tree-depth validation is iterative and runs before recursive serialization, so an excessively deep scene is rejected with a clear exception instead of exhausting the call stack.
 
-The adapter does not fetch remote images, validate arbitrary SVG path syntax, implement an interaction runtime, or promise identical rendering across SVG viewers. Use local or trusted image sources in documentation and demos.
+## Trust and security boundary
+
+**XML escaping is not the same as sanitizing SVG behavior.** The renderer produces well-formed XML and constrains several structural properties, but it is not a security sanitizer for arbitrary or untrusted scene data.
+
+- Treat `GuiNode` trees, property values, image sources, links, and embedded style values as trusted application input unless a separate validation policy says otherwise.
+- SVG output can contain references to external resources and navigation destinations. A renderer that does not fetch those resources itself does not prevent a browser or other SVG viewer from resolving them later.
+- Do not use this serializer alone as a safe-preview boundary for user-submitted SVG content. Validate allowed URLs, CSS/style, path data, and element-specific properties according to the consuming application's threat model before rendering or serving the result.
+- When generating documentation or CI artifacts, prefer local assets and controlled scene definitions; inspect generated SVG when adding new node kinds or properties.
+
+This is a statement of the current boundary, not a claim that GUI.SVG already implements a general-purpose sanitizer or URL allow-list.
 
 ## Feature gallery
 
