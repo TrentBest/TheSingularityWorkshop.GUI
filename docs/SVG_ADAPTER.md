@@ -57,6 +57,10 @@ The filter vocabulary includes the channel transfer functions `svg-fe-func-r`, `
 
 Presentation properties include transforms, opacity, fill/stroke settings, dash patterns, line caps and joins, font settings, visibility, clipping, masking, filters, class/style, and accessibility attributes. Properties are serialized as XML attributes; XML text and attribute escaping is handled by `System.Xml.Linq`.
 
+## Generated gallery
+
+The checked-in `docs/assets/svg-adapter-gallery.svg` is a snapshot emitted by `samples/SvgGallery/Program.cs`. CI regenerates the SVG and compares it byte-for-byte with the snapshot before packing, so a scene change cannot silently leave the documentation image behind. When the sample changes intentionally, regenerate the image with the sample, review the resulting SVG, and update the snapshot in the same change.
+
 ## Coordinate systems
 
 The coordinate-system builder supplies a shared minimum/maximum range and can opt into grid, axes, origin, and bounds. The renderer maps coordinates to a normalized 100-unit-wide viewBox and flips Y so Cartesian points remain intuitive (larger Y appears higher). A non-square output changes the viewBox height to preserve the requested aspect ratio.
