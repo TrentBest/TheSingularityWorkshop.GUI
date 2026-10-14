@@ -69,6 +69,7 @@ jobs:
           grep -q '<feDiffuseLighting' "$gallery"
           grep -q '<feDistantLight' "$gallery"
           grep -q '<use' "$gallery"
+          grep -q '<a ' "$gallery"
           grep -q '<animate' "$gallery"
           grep -q 'aria-label="GUI.SVG manifestation gallery"' "$gallery"
 
