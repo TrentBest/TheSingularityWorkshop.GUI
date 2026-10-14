@@ -237,7 +237,7 @@ public sealed class SvgGuiRendererTests
     public void Rejects_collisions_with_synthesized_coordinate_overlay_ids()
     {
         var scene = GuiBuilder.Create("coordinate-system", "plot")
-            .Grid()
+            .Property("grid", "visible")
             .Child("svg-circle", "plot-grid", circle => circle.Property("r", "1"))
             .Build();
 
