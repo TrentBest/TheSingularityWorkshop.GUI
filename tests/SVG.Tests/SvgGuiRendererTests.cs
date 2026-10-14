@@ -79,6 +79,30 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Render_DenseRowKeepsChildrenWithinAvailableWidth()
+    {
+        var children = Enumerable.Range(0, 24)
+            .Select(i => new GuiNode("Text", "item-" + i, "Item " + i))
+            .ToArray();
+        var tree = new GuiNode("Row", "dense-row", children: children);
+
+        var document = XDocument.Parse(new SvgGuiRenderer().Render(tree,
+            new SvgRenderOptions { Width = 1000, Height = 400 }));
+        XNamespace ns = "http://www.w3.org/2000/svg";
+        var itemTexts = document.Descendants(ns + "text")
+            .Where(element => element.Value.StartsWith("Item ", StringComparison.Ordinal))
+            .ToArray();
+        var xCoordinates = itemTexts
+            .Select(element => double.Parse((string)element.Attribute("x")!,
+                System.Globalization.CultureInfo.InvariantCulture))
+            .ToArray();
+
+        Assert.Equal(24, xCoordinates.Length);
+        Assert.Equal(24, xCoordinates.Distinct().Count());
+        Assert.All(xCoordinates, x => Assert.InRange(x, 28, 984));
+    }
+
+    [Fact]
     public void Render_RowOutlineUsesTallestChildRatherThanStackingChildren()
     {
         var tree = new GuiNode("Row", "actions", children: new[]
