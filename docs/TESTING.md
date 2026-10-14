@@ -14,6 +14,7 @@ They should not be tested as one problem.
 | GUI.Core | Yes | Yes | Yes | Ubuntu |
 | GUI.Blazor | Yes | Yes | Test lane present | Ubuntu |
 | GUI.WPF | Yes | **Not yet** | Not yet | Windows |
+| GUI.SVG | Initial lane added; CI result pending | Serializer tests scaffolded | Test collector configured | Ubuntu |
 | Future Unity adapter | No | No | No | Unity |
 
 The absence of WPF tests is deliberate and documented; tests should establish real behavioral contracts rather than fabricated placeholders.
@@ -39,6 +40,10 @@ Core is the foundation for every adapter.
 Blazor tests verify the current browser manifestation surface and its relationship to the semantic model.
 
 They belong in the Blazor layer because browser rendering details do not belong in Core.
+
+## SVG tests
+
+SVG tests should verify serialized output as an artifact, independently of browser layout. The initial suite covers accessible metadata, XML-sensitive text encoding, positive dimensions, and null-root rejection. Expand it to cover every supported node kind, nested layout order, safe attribute values, maximum depth, and structural validity. The workflow now has an SVG restore/test/pack artifact lane; until a run succeeds, this remains unverified.
 
 ## WPF tests
 
@@ -84,6 +89,7 @@ The package workflow is split into independently releasable lanes:
 build-core   -> publish_nuget_core
 build-blazor -> publish_nuget_blazor
 build-wpf    -> publish_nuget_wpf
+build-svg    -> SVG package artifact (publication not configured)
 ```
 
 Each publish job is manually gated by the workflow's `publish=true` input.
