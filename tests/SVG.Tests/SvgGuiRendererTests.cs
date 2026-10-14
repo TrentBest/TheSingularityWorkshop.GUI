@@ -60,6 +60,42 @@ public sealed class SvgGuiRendererTests
             double.Parse((string)outline.Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture) > 28));
     }
 
+    [Fact]
+    public void Render_RowPlacesChildrenSideBySide()
+    {
+        var tree = new GuiNode("Row", "actions", children: new[]
+        {
+            new GuiNode("Text", "first", "First"),
+            new GuiNode("Text", "second", "Second")
+        });
+
+        var document = XDocument.Parse(new SvgGuiRenderer().Render(tree));
+        XNamespace ns = "http://www.w3.org/2000/svg";
+        var first = document.Descendants(ns + "text").Single(element => element.Value == "First");
+        var second = document.Descendants(ns + "text").Single(element => element.Value == "Second");
+
+        Assert.NotEqual((string?)first.Attribute("x"), (string?)second.Attribute("x"));
+        Assert.Equal((string?)first.Attribute("y"), (string?)second.Attribute("y"));
+    }
+
+    [Fact]
+    public void Render_RowOutlineUsesTallestChildRatherThanStackingChildren()
+    {
+        var tree = new GuiNode("Row", "actions", children: new[]
+        {
+            new GuiNode("Text", "label", "Label"),
+            new GuiNode("Button", "save", "Save")
+        });
+
+        var document = XDocument.Parse(new SvgGuiRenderer().Render(tree));
+        XNamespace ns = "http://www.w3.org/2000/svg";
+        var outline = document.Descendants(ns + "rect")
+            .Single(rect => (string?)rect.Attribute("stroke-opacity") == ".22");
+
+        Assert.Equal(82, double.Parse((string)outline.Attribute("height")!,
+            System.Globalization.CultureInfo.InvariantCulture));
+    }
+
     [Theory]
     [InlineData(0, 100)]
     [InlineData(100, 0)]
