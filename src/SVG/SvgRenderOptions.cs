@@ -23,5 +23,14 @@ public sealed record SvgRenderOptions
     {
         if (Width <= 0) throw new ArgumentOutOfRangeException(nameof(Width));
         if (Height <= 0) throw new ArgumentOutOfRangeException(nameof(Height));
+        if (Background is not null && !IsSafeColor(Background))
+            throw new ArgumentException("Background must be a named CSS color or a hex color (#RGB, #RRGGBB, or #RRGGBBAA).", nameof(Background));
+    }
+
+    private static bool IsSafeColor(string value)
+    {
+        if ((value.Length is 4 or 7 or 9) && value[0] == '#')
+            return value.AsSpan(1).ToString().All(Uri.IsHexDigit);
+        return value.Length > 0 && value.All(char.IsAsciiLetter);
     }
 }
