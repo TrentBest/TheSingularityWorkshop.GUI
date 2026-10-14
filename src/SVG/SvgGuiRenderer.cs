@@ -139,14 +139,34 @@ public sealed class SvgGuiRenderer
                 break;
         }
 
-        // Layout is intentionally a simple vertical stack until Core exposes a shared layout contract.
-        foreach (var child in node.Children)
-            nextY = RenderNode(sb, child, x + 12, nextY + 4, Math.Max(48, safeWidth - 12), depth + 1);
+        // Row is the first explicit horizontal layout primitive. Other containers remain vertical.
+        if (kind.Equals("Row", StringComparison.OrdinalIgnoreCase) && node.Children.Count > 0)
+        {
+            var children = node.Children.ToArray();
+            var availableWidth = Math.Max(48, safeWidth - 12 - 4 * (children.Length - 1));
+            var childWidth = Math.Max(48, availableWidth / children.Length);
+            var childY = nextY + 4;
+            var rowEndY = childY;
+            for (var i = 0; i < children.Length; i++)
+            {
+                var childX = x + 12 + i * (childWidth + 4);
+                rowEndY = Math.Max(rowEndY,
+                    RenderNode(sb, children[i], childX, childY, childWidth, depth + 1));
+            }
+            nextY = rowEndY;
+        }
+        else
+        {
+            foreach (var child in node.Children)
+                nextY = RenderNode(sb, child, x + 12, nextY + 4, Math.Max(48, safeWidth - 12), depth + 1);
+        }
+
         return nextY;
     }
 
-    // Keep container outlines around their descendants while layout remains a vertical stack.
-    // The measure mirrors the vertical advances used by RenderNode; it is not text-metric measurement.
+    // Estimates container height from the same vertical advances used by RenderNode.
+    // Row uses its tallest child because its children share a starting y-coordinate.
+    // This is not font-metric measurement or a shared Core layout contract.
     private static int MeasureSubtreeHeight(GuiNode node)
     {
         var kind = node.Kind.ToLowerInvariant();
@@ -162,6 +182,14 @@ public sealed class SvgGuiRenderer
             "warning" => 44,
             _ => 40
         };
+
+        if (kind == "row")
+        {
+            var tallestChild = 0;
+            foreach (var child in node.Children)
+                tallestChild = Math.Max(tallestChild, checked(4 + MeasureSubtreeHeight(child)));
+            return checked(ownHeight + tallestChild);
+        }
 
         var total = ownHeight;
         foreach (var child in node.Children)
