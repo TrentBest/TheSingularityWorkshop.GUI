@@ -44,12 +44,13 @@ The output is a regular SVG document; a browser, Markdown viewer, image viewer, 
 | `svg-image` | Image reference from `href` or the Core node's `Source` |
 | `svg-defs`, `svg-linear-gradient`, `svg-radial-gradient`, `svg-stop` | Reusable gradient definitions |
 | `svg-symbol`, `svg-use` | Define and reuse a semantic geometry fragment |
+| Gradients and patterns with `href` | Inherit or reuse an existing definition rather than duplicating it |
 | `svg-a` | Navigable links inside the SVG, with explicit destination and optional target/relationship metadata |
 | `svg-desc`, `svg-metadata`, `svg-view`, `svg-switch` | Semantic descriptions, metadata, named views, and conditional-content containers |
 | `svg-pattern`, `svg-marker` | Reusable fill patterns and path markers |
 | `svg-clip-path`, `svg-mask` | Clipping and masking definitions |
 | `svg-filter` and `svg-fe-*` | Filter pipelines: blur, offset, color matrix, blend, flood, composite, merge, turbulence, displacement, morphology, tiling, convolution, component transfer, image input, and diffuse/specular lighting with distant, point, or spot lights |
-| `svg-animate`, `svg-animate-transform`, `svg-animate-motion` | Explicit SVG animation instructions |
+| `svg-animate`, `svg-animate-transform`, `svg-animate-motion`, `svg-set`, `svg-mpath` | Attribute/transform/motion animation, discrete timed changes, and reusable referenced motion paths |
 | Other node kinds | A grouping element (`g`), retaining child structure and a title when text is present |
 
 The filter vocabulary includes the channel transfer functions `svg-fe-func-r`, `svg-fe-func-g`, `svg-fe-func-b`, and `svg-fe-func-a`; these belong beneath `svg-fe-component-transfer`. Lighting source nodes belong beneath diffuse/specular lighting primitives. These nodes describe standard SVG filter graphs; actual appearance and support depend on the SVG viewer.
