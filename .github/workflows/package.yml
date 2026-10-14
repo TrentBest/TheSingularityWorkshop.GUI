@@ -79,6 +79,33 @@ jobs:
           name: gui-nuget-package-blazor
           path: ./packages/*.nupkg
 
+  build-svg:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore SVG
+        run: dotnet restore src/SVG/TheSingularityWorkshop.GUI.SVG.csproj
+
+      - name: Test SVG
+        run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release --collect:"XPlat Code Coverage" --results-directory ./TestResults/SVG
+
+      - name: Pack SVG
+        run: dotnet pack src/SVG/TheSingularityWorkshop.GUI.SVG.csproj --configuration Release --output ./packages --no-restore
+
+      - name: Upload SVG package
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-nuget-package-svg
+          path: ./packages/*.nupkg
+
   build-wpf:
     runs-on: windows-2025
 
