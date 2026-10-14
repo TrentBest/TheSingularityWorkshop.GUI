@@ -45,6 +45,39 @@ public sealed class SvgGuiRendererTests
         Assert.Throws<ArgumentOutOfRangeException>(() => new SvgGuiRenderer().Render(tree, new SvgRenderOptions { Width = width, Height = height }));
     }
 
+    [Theory]
+    [InlineData("Panel")]
+    [InlineData("Stack")]
+    [InlineData("Row")]
+    [InlineData("Column")]
+    [InlineData("Object")]
+    [InlineData("Image")]
+    [InlineData("TextBox")]
+    [InlineData("IntegerSlider")]
+    [InlineData("FloatSlider")]
+    [InlineData("Toggle")]
+    [InlineData("Warning")]
+    [InlineData("Separator")]
+    [InlineData("Button")]
+    [InlineData("Text")]
+    public void Render_ProducesSvgForEveryCanonicalKind(string kind)
+    {
+        var node = new GuiNode(kind, "sample", "Sample node", source: "image.png",
+            properties: new Dictionary<string, string> { ["Value"] = "true" });
+        var svg = new SvgGuiRenderer().Render(node);
+        Assert.StartsWith("<svg ", svg);
+        Assert.EndsWith("</svg>", svg);
+        Assert.Contains("Sample node", svg);
+    }
+
+    [Fact]
+    public void Render_RejectsUnsafeBackgroundColor()
+    {
+        var tree = new GuiNode("Text", "heading", "Hello");
+        Assert.Throws<ArgumentException>(() => new SvgGuiRenderer().Render(tree,
+            new SvgRenderOptions { Background = "url(javascript:alert(1))" }));
+    }
+
     [Fact]
     public void Render_RejectsNullRoot() => Assert.Throws<ArgumentNullException>(() => new SvgGuiRenderer().Render(null!));
 
