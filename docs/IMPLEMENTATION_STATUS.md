@@ -25,12 +25,13 @@ Status vocabulary:
 - Separate SVG manifestation project referencing GUI.Core.
 - Deterministic standalone SVG string serialization.
 - Accessible title/description metadata and optional background.
-- Basic text, button-like, warning, separator, and fallback rendering.
-- Simple vertical tree layout; this is not a shared layout engine.
-- Serializer tests scaffolded and included in the solution/CI lane.
-- Animated documentation examples demonstrate SVG capability but are not renderer output.
+- Basic visual mappings for all 14 canonical `GuiKinds`, including container outlines, text, button-like visuals, warning, separator, textbox-like, slider-like, toggle, image placeholder, and unknown-kind fallback.
+- Simple vertical recursive placement; `Row` does not yet imply horizontal layout, and this is not a shared layout engine.
+- Optional title/description metadata, background color validation, XML escaping, and a nesting-depth guard.
+- Serializer tests and a package build lane are included in the solution/CI workflow; execution evidence still needs to be confirmed.
+- Animated documentation examples demonstrate SVG capability but are hand-authored illustrations, not renderer output.
 
-Not yet established: complete canonical-kind mapping, typed style/layout contracts, semantic interaction, responsive layout, image/media handling, adapter conformance, or a published package. A successful CI run is still required before calling the implementation verified.
+Not yet established: faithful semantic behavior, typed style/layout contracts, event routing, responsive layout, real image/media rendering, cross-adapter conformance, or a published package. A successful CI run is still required before calling the implementation verified.
 
 ## GUI.Core
 
