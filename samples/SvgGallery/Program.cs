@@ -88,11 +88,14 @@ scene.Child("svg-circle", "animated-marker", marker => marker
         .Property("keyTimes", "0;0.5;1").Property("dur", "2.4s")
         .Property("repeatCount", "indefinite")));
 
-scene.Child("svg-text", "heading", text => text
-    .Text("GUI.SVG")
-    .Property("x", "9").Property("y", "12")
-    .Property("font-family", "sans-serif").Property("font-size", "4")
-    .Property("font-weight", "700").Property("fill", "#eef6ff"));
+scene.Child("svg-a", "heading-link", link => link
+    .Property("href", "https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/SVG_ADAPTER.md")
+    .Property("target", "_blank").Property("rel", "noopener")
+    .Child("svg-text", "heading", text => text
+        .Text("GUI.SVG")
+        .Property("x", "9").Property("y", "12")
+        .Property("font-family", "sans-serif").Property("font-size", "4")
+        .Property("font-weight", "700").Property("fill", "#eef6ff")));
 
 scene.Child("svg-text", "caption", text => text
     .Text("Semantic model → SVG manifestation")
