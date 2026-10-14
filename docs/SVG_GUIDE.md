@@ -72,7 +72,7 @@ Still to be designed or proven:
 - cross-adapter conformance tests;
 - successful CI build and test evidence.
 
-The current renderer uses a simple vertical traversal. It does **not** yet honor horizontal row layout, provide a responsive layout engine, or calculate sophisticated container geometry. Those limitations are important: the canonical kind names preserve semantic intent, but the current SVG manifestation is still an early visual mapping.
+The current renderer uses a simple vertical traversal. Container outlines now estimate their height from the descendant tree so nested content sits inside the visible boundary, but this is a structural estimate—not font-metric measurement or a shared layout contract. The renderer does **not** yet honor horizontal row layout or provide a responsive layout engine. Those limitations are important: the canonical kind names preserve semantic intent, but the current SVG manifestation is still an early visual mapping.
 
 ## Living motion example
 
