@@ -52,7 +52,9 @@ scene.Child("svg-defs", "definitions", defs => defs
                 .Property("azimuth", "225").Property("elevation", "40"))))
     .Child("svg-symbol", "star-symbol", symbol => symbol.Property("viewBox", "0 0 10 10")
         .Child("svg-polygon", "star-shape", polygon => polygon.Property("points", "5,0 6.5,3.5 10,4 7.5,6.5 8.2,10 5,8 1.8,10 2.5,6.5 0,4 3.5,3.5")
-            .Property("fill", "#ffcf86"))));
+            .Property("fill", "#ffcf86")))
+    .Child("svg-path", "orbit-path", path => path.Property("d", "M12 38 C24 12 42 48 58 24 S82 16 90 32")
+        .Property("fill", "none")));
 
 scene.Child("svg-rect", "panel", panel => panel
     .Property("x", "4").Property("y", "4").Property("width", "92").Property("height", "48.25")
@@ -86,7 +88,9 @@ scene.Child("svg-circle", "animated-marker", marker => marker
     .Child("svg-animate", "marker-pulse", animation => animation
         .Property("attributeName", "r").Property("values", "1.6;2.8;1.6")
         .Property("keyTimes", "0;0.5;1").Property("dur", "2.4s")
-        .Property("repeatCount", "indefinite")));
+        .Property("repeatCount", "indefinite"))
+    .Child("svg-set", "marker-emphasis", set => set.Property("attributeName", "stroke-width")
+        .Property("to", "0.5").Property("begin", "2s")));
 
 scene.Child("svg-a", "heading-link", link => link
     .Property("href", "https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/SVG_ADAPTER.md")
@@ -96,6 +100,13 @@ scene.Child("svg-a", "heading-link", link => link
         .Property("x", "9").Property("y", "12")
         .Property("font-family", "sans-serif").Property("font-size", "4")
         .Property("font-weight", "700").Property("fill", "#eef6ff")));
+
+scene.Child("svg-circle", "motion-scout", scout => scout
+    .Property("cx", "12").Property("cy", "38").Property("r", "0.7")
+    .Property("fill", "#fff1ce").Property("stroke", "#0b1725").Property("stroke-width", "0.2")
+    .Child("svg-animate-motion", "scout-motion", motion => motion
+        .Property("dur", "5s").Property("repeatCount", "indefinite").Property("rotate", "auto")
+        .Child("svg-mpath", "scout-route-reference", reference => reference.Property("href", "#orbit-path"))));
 
 scene.Child("svg-text", "caption", text => text
     .Text("Semantic model → SVG manifestation")
