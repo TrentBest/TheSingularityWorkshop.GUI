@@ -66,9 +66,10 @@ public sealed class SvgGuiRenderer
             case "row":
             case "column":
             case "object":
+                var containerHeight = MeasureSubtreeHeight(node) + 18;
                 sb.Append("<g aria-label=\"").Append(E(string.IsNullOrWhiteSpace(node.Text) ? kind : node.Text))
                   .Append("\"><rect x=\"").Append(N(x)).Append("\" y=\"").Append(N(y - 18))
-                  .Append("\" width=\"").Append(N(Math.Min(safeWidth, 640))).Append("\" height=\"28\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".22\"/>")
+                  .Append("\" width=\"").Append(N(Math.Min(safeWidth, 640))).Append("\" height=\"").Append(N(Math.Max(28, containerHeight))).Append("\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".22\"/>")
                   .Append("<text x=\"").Append(N(x + 8)).Append("\" y=\"").Append(N(y + 1)).Append("\" font-size=\"12\" opacity=\".7\">")
                   .Append(E(kind + ": " + (string.IsNullOrWhiteSpace(node.Text) ? node.Id : node.Text))).Append("</text></g>");
                 nextY = y + 18;
@@ -142,6 +143,30 @@ public sealed class SvgGuiRenderer
         foreach (var child in node.Children)
             nextY = RenderNode(sb, child, x + 12, nextY + 4, Math.Max(48, safeWidth - 12), depth + 1);
         return nextY;
+    }
+
+    // Keep container outlines around their descendants while layout remains a vertical stack.
+    // The measure mirrors the vertical advances used by RenderNode; it is not text-metric measurement.
+    private static int MeasureSubtreeHeight(GuiNode node)
+    {
+        var kind = node.Kind.ToLowerInvariant();
+        var ownHeight = kind switch
+        {
+            "text" => 28,
+            "panel" or "stack" or "row" or "column" or "object" => 18,
+            "textbox" or "button" => 42,
+            "integerslider" or "floatslider" => 34,
+            "toggle" => 26,
+            "image" => 82,
+            "separator" => 16,
+            "warning" => 44,
+            _ => 40
+        };
+
+        var total = ownHeight;
+        foreach (var child in node.Children)
+            total = checked(total + 4 + MeasureSubtreeHeight(child));
+        return total;
     }
 
     private static string N(int value) => value.ToString(CultureInfo.InvariantCulture);
