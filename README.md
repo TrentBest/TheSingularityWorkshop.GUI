@@ -43,6 +43,7 @@ TheSingularityWorkshop.GUI/
 |   +-- Core/       platform-neutral semantic model and builders
 |   +-- Blazor/     browser manifestation
 |   +-- WPF/        native desktop manifestation and WPF builders
+|   +-- SVG/        standalone SVG manifestation and vector output
 |
 +-- tests/
 |   +-- Core.Tests/    Core contract tests
@@ -51,6 +52,8 @@ TheSingularityWorkshop.GUI/
 |
 +-- docs/
 |   +-- START_HERE.md
+|   +-- SVG_GUIDE.md
+|   +-- LIVING_DOCUMENTATION.md
 |   +-- IMPLEMENTATION_STATUS.md
 |   +-- ARCHITECTURE.md
 |   +-- PLATFORM_ADAPTERS.md
