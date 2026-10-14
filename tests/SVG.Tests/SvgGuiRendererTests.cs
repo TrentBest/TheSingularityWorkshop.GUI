@@ -1,3 +1,4 @@
+using System.Xml.Linq;
 using TheSingularityWorkshop.GUI.SVG;
 using TheSingularityWorkshop.Workshop.Gui;
 using Xunit;
@@ -68,6 +69,8 @@ public sealed class SvgGuiRendererTests
         Assert.StartsWith("<svg ", svg);
         Assert.EndsWith("</svg>", svg);
         Assert.Contains("Sample node", svg);
+        var document = XDocument.Parse(svg);
+        Assert.Equal("svg", document.Root!.Name.LocalName);
     }
 
     [Fact]
