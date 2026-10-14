@@ -3,6 +3,8 @@
   <Project Path="src/Core/TheSingularityWorkshop.GUI.Core.csproj" />
   <Project Path="src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj" />
   <Project Path="src/WPF/TheSingularityWorkshop.GUI.WPF.csproj" />
+  <Project Path="src/SVG/TheSingularityWorkshop.GUI.SVG.csproj" />
   <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
   <Project Path="tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj" />
+  <Project Path="tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj" />
 </Solution>
