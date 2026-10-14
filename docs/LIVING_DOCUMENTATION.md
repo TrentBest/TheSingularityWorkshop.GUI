@@ -13,7 +13,12 @@ Documentation should demonstrate GUI architecture where motion or spatial relati
 - **Link concept to code.** Implementation claims should point to source or tests where possible.
 - **Keep source reviewable.** Prefer understandable SVG over opaque generated markup.
 
-The SVG above is an explanatory architecture diagram, not runtime output from the SVG renderer.
+The architecture SVG above is explanatory, not runtime output from the SVG renderer. The [living energy-field example](examples/living-energy-vortex.svg) is a separate motion study: it demonstrates animation and reduced-motion handling, not application state or physically accurate lighting.
+
+## Examples
+
+- [Semantic GUI manifestations](images/gui-svg-manifestation.svg) — animated relationship diagram for Core, SVG, Blazor, and WPF.
+- [Living energy field](examples/living-energy-vortex.svg) — alternating pulse and orbit study with a reduced-motion fallback.
 
 ## Document audit checklist
 
