@@ -92,7 +92,7 @@ build-wpf    -> publish_nuget_wpf
 build-svg    -> SVG package artifact (publication not configured)
 ```
 
-Each publish job is manually gated by the workflow's `publish=true` input.
+Each NuGet publish job currently includes a hard `&& false` condition, so package publication remains disabled. SVG has a build/test/pack artifact lane but no NuGet publish job.
 
 A successful build/test/pack run creates an artifact. It does not silently publish to NuGet.
 
