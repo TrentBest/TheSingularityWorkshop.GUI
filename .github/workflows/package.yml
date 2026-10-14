@@ -93,6 +93,17 @@ jobs:
       - name: Pack SVG
         run: dotnet pack src/SVG/TheSingularityWorkshop.GUI.SVG.csproj --configuration Release --output ./packages
 
+      - name: Verify GUI.SVG package documentation and gallery
+        shell: bash
+        run: |
+          set -euo pipefail
+          package="$(find ./packages -maxdepth 1 -type f -name 'TheSingularityWorkshop.GUI.SVG.*.nupkg' -print -quit)"
+          test -n "$package" && test -s "$package"
+          unzip -l "$package" > ./artifacts/gui-svg-package-contents.txt
+          grep -q 'README.md' ./artifacts/gui-svg-package-contents.txt
+          grep -q 'docs/SVG_ADAPTER.md' ./artifacts/gui-svg-package-contents.txt
+          grep -q 'docs/assets/svg-adapter-gallery.svg' ./artifacts/gui-svg-package-contents.txt
+
       - name: Upload NuGet package artifacts
         uses: actions/upload-artifact@v7
         with:
