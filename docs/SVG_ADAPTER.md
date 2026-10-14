@@ -46,9 +46,11 @@ The output is a regular SVG document; a browser, Markdown viewer, image viewer, 
 | `svg-symbol`, `svg-use` | Define and reuse a semantic geometry fragment |
 | `svg-pattern`, `svg-marker` | Reusable fill patterns and path markers |
 | `svg-clip-path`, `svg-mask` | Clipping and masking definitions |
-| `svg-filter` and `svg-fe-*` | Common filter pipeline primitives: blur, offset, blend, flood, composite, color matrix, and merge |
+| `svg-filter` and `svg-fe-*` | Filter pipelines: blur, offset, color matrix, blend, flood, composite, merge, turbulence, displacement, morphology, tiling, convolution, component transfer, image input, and diffuse/specular lighting with distant, point, or spot lights |
 | `svg-animate`, `svg-animate-transform`, `svg-animate-motion` | Explicit SVG animation instructions |
 | Other node kinds | A grouping element (`g`), retaining child structure and a title when text is present |
+
+The filter vocabulary includes the channel transfer functions `svg-fe-func-r`, `svg-fe-func-g`, `svg-fe-func-b`, and `svg-fe-func-a`; these belong beneath `svg-fe-component-transfer`. Lighting source nodes belong beneath diffuse/specular lighting primitives. These nodes describe standard SVG filter graphs; actual appearance and support depend on the SVG viewer.
 
 Presentation properties include transforms, opacity, fill/stroke settings, dash patterns, line caps and joins, font settings, visibility, clipping, masking, filters, class/style, and accessibility attributes. Properties are serialized as XML attributes; XML text and attribute escaping is handled by `System.Xml.Linq`.
 
