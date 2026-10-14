@@ -20,7 +20,7 @@ This is a direction to validate against the actual contracts, not a claim that t
 SVG_App (future host / entrypoint)
     ├── supplies RuntimeManifest + host-provided configuration/data
     ▼
-IFsmCos.Execute(...)
+FsmCos.Execute(...)
     ▼
 FSM_COS
     ├── resolves requested MicroBundles and dependencies
@@ -54,7 +54,9 @@ The current `RuntimeAssembly` exposes:
 - optional `Intent`
 - `TryGetBundle(...)` helpers for retrieving loaded capabilities
 
-It does **not** expose a `GuiNode`, SVG markup, a scene graph, or a renderer. A bundle may offer useful behavior or data through its own contract, but the host must inspect those actual bundle contracts before assuming what is available.
+The domain-owned `IMicroBundle` contract exposes a `MicroBundleDescriptor`, identity, dependency requests, and load/arbitration behavior. The descriptor provides bundle ID, version, declared dependency IDs, and provider IDs.
+
+The assembly does **not** expose a `GuiNode`, SVG markup, a scene graph, or a renderer. It does, however, contain enough metadata to make a truthful *composition inspection* graphic without pretending that arbitrary application data is automatically available.
 
 ### GUI.SVG input and output
 
@@ -76,29 +78,39 @@ GUI.SVG owns SVG serialization, SVG-specific element and attribute behavior, and
 
 The experience manifest identifies capabilities and versions needed for composition. SVG layout, scene content, rendering options, and artifact destinations should not be smuggled into the manifest as renderer implementation details. The host can supply appropriate configuration/data through the relevant contracts.
 
-## A deliberately small first milestone
+## Recommended first proof: visualize the assembly itself
 
-Before creating a broad application framework, prove one vertical slice with real repository contracts:
+The safest first vertical slice is a **composition inspection graphic**, not a claim that the composed bundles already provide a complete GUI experience.
 
-1. Identify the smallest useful manifest and catalog for an SVG-oriented composition.
-2. Use a real, existing MicroBundle contract where possible; avoid inventing bundle vocabulary before the example requires it.
-3. Supply any per-bundle configuration through the existing configuration boundary.
-4. Receive a successfully converged `RuntimeAssembly` in a minimal host.
-5. Demonstrate, from a concrete bundle contract, what runtime data the host can actually consume.
-6. Build a small `GuiNode` scene from that data and call `SvgGuiRenderer.Render`.
-7. Write the resulting SVG artifact and verify meaningful output in a test or CI step.
-8. Test failure paths as well as the happy path: missing bundles, dependency/configuration failures, non-convergence, invalid SVG input, and output-generation failure.
+Why this is the strongest starting point:
 
-This sequence is a proposed investigation plan, not a claim that every failure path is currently represented by a single API.
+- The actual `RuntimeAssembly` provides loaded bundles.
+- Each bundle's actual descriptor provides identity, version, declared dependency IDs, and provider IDs.
+- GUI.SVG already has the primitives needed to draw nodes, connectors, labels, and accessible descriptions.
+- This proves composition → host interpretation → `GuiNode` → SVG without inventing an application-specific bundle contract or adding dependencies to FSM_COS.
+
+A first proof could show the runtime ID and arbitration result, each loaded bundle in assembly order, its version, declared dependencies, and provider IDs. It must distinguish **declared dependency metadata** from **verified graph edges**: the host should not imply a relationship that it has not resolved from the actual assembly/catalog contracts.
+
+The FSM_COS repository has a minimal in-memory catalog / dependency example on its `development` branch at [Minimal Consumer](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/development/samples/FSM_COS.MinimalConsumer/Program.cs). That is useful as a composition reference; it is not an SVG integration and should not be described as available on every branch.
+
+This is a recommendation for the first proof, not an implemented feature or a requirement to make every future SVG experience an assembly diagram.
+
+## A deliberately small implementation milestone
+
+1. Confirm the package/project reference strategy for the host. FSM_COS alpha.6 is still a source candidate; do not assume it is already available from NuGet.
+2. Use the existing minimal-consumer composition pattern: an in-memory catalog, a tiny bundle set, and a versioned `RuntimeManifest`.
+3. Receive a successfully converged `RuntimeAssembly` in the host.
+4. Build a small composition-inspection `GuiNode` scene from the real assembly and descriptor fields.
+5. Call `SvgGuiRenderer.Render`, write a standalone SVG artifact, and verify its semantic content in a test or CI step.
+6. Test meaningful failure paths: missing bundles, dependency/configuration failures, non-convergence, invalid SVG input, and output-generation failure.
+
+This sequence is a proposed plan. It does not claim that every failure path is represented by one API or that the end-to-end host currently exists.
 
 ## Questions to settle with evidence
 
-These are implementation questions—not assumptions to bake into the first version:
-
-- Which existing MicroBundle provides useful data or behavior for the first SVG proof?
-- Does its current public contract expose that data, or is a small host-side adapter appropriate?
-- What should the first scene represent: a composition/loaded-capability map, a documentation artifact, or a real experience?
-- Should the host write a standalone `.svg` file, return markup to another host, or support both as separate output policies?
+- Where should the first host live? A future dedicated `SVG_App` repository is a clean boundary, but should be created only when the project/package references can be made reproducible.
+- What is the narrowest reproducible dependency strategy while FSM_COS alpha.6 and the GUI.SVG project/package are still in development?
+- Should the first host write a standalone `.svg` file, return markup to another host, or support both as separate output policies?
 - Which rendering options are application configuration, and which belong to GUI.SVG's explicit API?
 
 Answer these from source and a runnable proof before adding abstractions.
