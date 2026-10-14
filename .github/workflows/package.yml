@@ -71,6 +71,8 @@ jobs:
           grep -q '<use' "$gallery"
           grep -q '<a ' "$gallery"
           grep -q '<animate' "$gallery"
+          grep -q '<mpath' "$gallery"
+          grep -q '<set' "$gallery"
           grep -q 'aria-label="GUI.SVG manifestation gallery"' "$gallery"
 
       - name: Upload GUI.SVG feature gallery
