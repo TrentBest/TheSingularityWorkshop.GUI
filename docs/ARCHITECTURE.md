@@ -52,7 +52,7 @@ GUI.Blazor currently manifests the canonical Core kinds through a Blazor rendere
 
 ### SVG
 
-GUI.SVG serializes the Core semantic tree to a standalone SVG artifact. It is useful for vector output and documentation, but its current renderer is deliberately limited: simple vertical placement, a subset of visual node kinds, and no GUI event runtime. SVG animation examples in `docs/` demonstrate the medium, not a capability automatically produced by Core.
+GUI.SVG serializes the Core semantic tree to a standalone SVG artifact. The current serializer has basic visual mappings for all 14 canonical `GuiKinds`, including button-like, input-like, slider-like, toggle, container, warning, and image-placeholder representations. These visuals are not interactive controls, and the image source is not yet rendered. Layout is a simple vertical traversal: `Row` does not yet guarantee horizontal layout, and no shared layout contract or responsive engine exists. Build/test verification remains pending. The animated SVG examples in `docs/` demonstrate the medium, not a capability automatically produced by Core.
 
 ### WPF
 
@@ -123,7 +123,7 @@ Implemented today:
 - WPF manifestation;
 - WPF-native builder family;
 - package/build lanes for Core, Blazor, and WPF;
-- an initial SVG serializer, tests, and artifact build lane (verification pending).
+- an initial SVG serializer with basic mappings for all canonical kinds, tests, and an artifact build lane (verification pending).
 
 Not implemented as stable runtime contracts yet:
 
