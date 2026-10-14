@@ -143,13 +143,17 @@ public sealed class SvgGuiRenderer
         if (kind.Equals("Row", StringComparison.OrdinalIgnoreCase) && node.Children.Count > 0)
         {
             var children = node.Children.ToArray();
-            var availableWidth = Math.Max(48, safeWidth - 12 - 4 * (children.Length - 1));
-            var childWidth = Math.Max(48, availableWidth / children.Length);
+            // Reserve the row's left inset and inter-item gaps before dividing its width.
+            // For dense rows, allow narrower cells rather than silently overflowing the parent.
+            var gapWidth = 4L * (children.Length - 1);
+            var availableWidth = Math.Max(1L, (long)safeWidth - 12L - gapWidth);
+            var childWidth = (int)Math.Max(1L, availableWidth / children.Length);
             var childY = nextY + 4;
             var rowEndY = childY;
             for (var i = 0; i < children.Length; i++)
             {
-                var childX = x + 12 + i * (childWidth + 4);
+                var childX = (int)Math.Min(int.MaxValue,
+                    (long)x + 12L + (long)i * (childWidth + 4L));
                 rowEndY = Math.Max(rowEndY,
                     RenderNode(sb, children[i], childX, childY, childWidth, depth + 1));
             }
