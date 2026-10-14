@@ -5,7 +5,9 @@
   </a>
 </p>
 
-# TheSingularityWorkshop.GUI
+This README follows the Workshop's shared [Documentation Standard](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/master/DOCUMENTATION_STANDARD.md).
+
+# ✳️ 00 The Singularity Workshop — GUI
 
 [![Build](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.GUI/package.yml?branch=master&style=flat-square&logo=github)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -19,7 +21,7 @@ TheSingularityWorkshop.GUI explores a different boundary: **author semantic inte
 
 ![One semantic GUI, multiple manifestations](docs/images/gui-svg-manifestation.svg)
 
-## 01 — What: one semantic model, multiple manifestations
+## 🟦 01 What
 
 GUI.Core represents an interface as a recursive `GuiNode` tree. Nodes have a kind, identity, optional text or source, properties, and children. Fluent builders make that tree composable.
 
@@ -35,7 +37,7 @@ var settings = GuiBuilders.Column("settings")
 
 This builds semantic data. It does not create WPF controls, Blazor components, HTML, XAML, or a running interaction host.
 
-## 02 — Why: protect meaning from platform mechanics
+## 🟣 02 Why
 
 The separation is not an attempt to make every platform identical. It gives each concern a clear owner:
 
@@ -47,7 +49,7 @@ The separation is not an attempt to make every platform identical. It gives each
 
 A platform may offer capabilities another platform lacks. Those differences belong at the boundary—not hidden inside domain meaning. Typed properties, shared capability negotiation, portable interaction, and other larger contracts remain explicit future work; see the [implementation status](docs/IMPLEMENTATION_STATUS.md).
 
-## 03 — How: follow the boundary
+## 🩵 03 How
 
 ```text
 domain experience / application
@@ -75,7 +77,7 @@ The tree is the shared *description*, not a promise that all manifestations alre
 
 These packages are independently versioned. Check the [implementation status](docs/IMPLEMENTATION_STATUS.md) before relying on a capability or package version.
 
-## 04 — See it in a minute
+## 🟢 04 See it in a minute
 
 1. **Start with the experience:** [The Singularity Workshop](https://lemon-ground-09f542010.1.azurestaticapps.net/).
 2. **Follow the integration:** [WebPage repository](https://github.com/TrentBest/WebPage) — the practical proving ground for consuming the GUI architecture.
