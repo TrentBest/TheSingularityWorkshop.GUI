@@ -19,6 +19,7 @@ Each layer has a deliberately narrow owner:
 | **GUI.Core** | semantic GUI tree, builder primitives, Hub contract | rendering, WPF, Blazor, HTML, XAML, runtime composition |
 | **GUI.Blazor** | browser manifestation | semantic ownership, runtime composition |
 | **GUI.WPF** | desktop manifestation and WPF-native builders | Core semantics, FSM_COS composition |
+| **GUI.SVG** | standalone vector artifact manifestation | Core semantics, interactive host behavior, FSM_COS composition |
 | **FSM_COS** | runtime composition and assembly | rendering implementation |
 | **WebPage / WebForge** | browser host and domain experience | generic GUI semantics |
 
@@ -48,6 +49,10 @@ Platform projects translate the neutral model into native constructs.
 ### Blazor
 
 GUI.Blazor currently manifests the canonical Core kinds through a Blazor renderer. Its implementation is intentionally conservative: it maps the supported semantic vocabulary and selected common properties rather than pretending all future GUI capabilities already exist.
+
+### SVG
+
+GUI.SVG serializes the Core semantic tree to a standalone SVG artifact. It is useful for vector output and documentation, but its current renderer is deliberately limited: simple vertical placement, a subset of visual node kinds, and no GUI event runtime. SVG animation examples in `docs/` demonstrate the medium, not a capability automatically produced by Core.
 
 ### WPF
 
@@ -117,7 +122,8 @@ Implemented today:
 - Blazor manifestation;
 - WPF manifestation;
 - WPF-native builder family;
-- package/build lanes for Core, Blazor, and WPF.
+- package/build lanes for Core, Blazor, and WPF;
+- an initial SVG serializer, tests, and artifact build lane (verification pending).
 
 Not implemented as stable runtime contracts yet:
 
