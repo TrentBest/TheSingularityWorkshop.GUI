@@ -79,6 +79,10 @@ These packages are independently versioned. Check the [implementation status](do
 
 ## 🟢 04 See it in a minute
 
+Open the [hosted Workshop experience](https://lemon-ground-09f542010.1.azurestaticapps.net/) to see the current user-facing manifestation. This is an integration-level preview, not a standalone proof that every GUI adapter or runtime capability is complete; check [Implementation Status](docs/IMPLEMENTATION_STATUS.md) for the verified boundary.
+
+## 🟪 05 Available documentation and theory
+
 1. **Start with the experience:** [The Singularity Workshop](https://lemon-ground-09f542010.1.azurestaticapps.net/).
 2. **Follow the integration:** [WebPage repository](https://github.com/TrentBest/WebPage) — the practical proving ground for consuming the GUI architecture.
 3. **Understand the model:** [GUI Model](docs/GUI_MODEL.md).
