@@ -58,6 +58,49 @@ public sealed class SvgGuiRenderer
                   .Append(E(label)).Append("</text>");
                 nextY = y + 28;
                 break;
+            case "panel":
+            case "stack":
+            case "row":
+            case "column":
+            case "object":
+                sb.Append("<g aria-label=\"").Append(E(string.IsNullOrWhiteSpace(node.Text) ? kind : node.Text))
+                  .Append("\"><rect x=\"").Append(N(x)).Append("\" y=\"").Append(N(y - 18))
+                  .Append("\" width=\"").Append(N(Math.Min(safeWidth, 640))).Append("\" height=\"28\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".22\"/>")
+                  .Append("<text x=\"").Append(N(x + 8)).Append("\" y=\"").Append(N(y + 1)).Append("\" font-size=\"12\" opacity=\".7\">")
+                  .Append(E(kind + ": " + (string.IsNullOrWhiteSpace(node.Text) ? node.Id : node.Text))).Append("</text></g>");
+                nextY = y + 18;
+                break;
+            case "textbox":
+                sb.Append("<g aria-label=\"").Append(E("Text input: " + label)).Append("\"><rect x=\"").Append(N(x)).Append("\" y=\"").Append(N(y - 20))
+                  .Append("\" width=\"").Append(N(Math.Min(safeWidth, 320))).Append("\" height=\"34\" rx=\"4\" fill=\"none\" stroke=\"currentColor\" stroke-opacity=\".55\"/>")
+                  .Append("<text x=\"").Append(N(x + 8)).Append("\" y=\"").Append(N(y + 2)).Append("\">").Append(E(label)).Append("</text></g>");
+                nextY = y + 42;
+                break;
+            case "integerslider":
+            case "floatslider":
+                sb.Append("<g role=\"img\" aria-label=\"").Append(E(kind + ": " + label)).Append("\"><text x=\"").Append(N(x)).Append("\" y=\"").Append(N(y)).Append("\">")
+                  .Append(E(label)).Append("</text><path d=\"M ").Append(N(x)).Append(' ').Append(N(y + 12)).Append(" h ")
+                  .Append(N(Math.Min(safeWidth, 280))).Append("\" stroke=\"currentColor\" stroke-opacity=\".45\" stroke-width=\"4\" stroke-linecap=\"round\"/><circle cx=\"")
+                  .Append(N(x + Math.Min(safeWidth, 280) / 2)).Append("\" cy=\"").Append(N(y + 12)).Append("\" r=\"7\" fill=\"#2563eb\"/></g>");
+                nextY = y + 34;
+                break;
+            case "toggle":
+                var enabled = node.Properties.TryGetValue("Value", out var toggleValue) &&
+                    (string.Equals(toggleValue, "true", StringComparison.OrdinalIgnoreCase) || toggleValue == "1");
+                sb.Append("<g role=\"img\" aria-label=\"").Append(E("Toggle " + label + (enabled ? ", on" : ", off"))).Append("\"><rect x=\"")
+                  .Append(N(x)).Append("\" y=\"").Append(N(y - 15)).Append("\" width=\"38\" height=\"20\" rx=\"10\" fill=\"")
+                  .Append(enabled ? "#2563eb" : "#9ca3af").Append("\"/><circle cx=\"").Append(N(x + (enabled ? 27 : 11)))
+                  .Append("\" cy=\"").Append(N(y - 5)).Append("\" r=\"7\" fill=\"white\"/><text x=\"").Append(N(x + 48))
+                  .Append("\" y=\"").Append(N(y)).Append("\">").Append(E(label)).Append("</text></g>");
+                nextY = y + 26;
+                break;
+            case "image":
+                sb.Append("<g role=\"img\" aria-label=\"").Append(E("Image: " + label)).Append("\"><rect x=\"").Append(N(x)).Append("\" y=\"")
+                  .Append(N(y - 20)).Append("\" width=\"").Append(N(Math.Min(safeWidth, 240))).Append("\" height=\"72\" rx=\"4\" fill=\"#e5e7eb\" stroke=\"#9ca3af\"/>")
+                  .Append("<text x=\"").Append(N(x + 8)).Append("\" y=\"").Append(N(y + 18)).Append("\" fill=\"#374151\">")
+                  .Append(E(string.IsNullOrWhiteSpace(node.Source) ? label : "Image: " + label)).Append("</text></g>");
+                nextY = y + 82;
+                break;
             case "button":
                 sb.Append("<g role=\"img\" aria-label=\"").Append(E("Button: " + label)).Append("\"><rect x=\"")
                   .Append(N(x)).Append("\" y=\"").Append(N(y - 20)).Append("\" width=\"").Append(N(Math.Min(safeWidth, 240)))
