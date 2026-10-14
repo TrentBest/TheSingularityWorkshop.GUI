@@ -79,6 +79,26 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Render_HorizontalStackPlacesChildrenSideBySide()
+    {
+        var tree = new GuiNode("Stack", "toolbar", properties:
+            new Dictionary<string, string> { ["orientation"] = "Horizontal" },
+            children: new[]
+            {
+                new GuiNode("Text", "first", "First"),
+                new GuiNode("Text", "second", "Second")
+            });
+
+        var document = XDocument.Parse(new SvgGuiRenderer().Render(tree));
+        XNamespace ns = "http://www.w3.org/2000/svg";
+        var first = document.Descendants(ns + "text").Single(element => element.Value == "First");
+        var second = document.Descendants(ns + "text").Single(element => element.Value == "Second");
+
+        Assert.NotEqual((string?)first.Attribute("x"), (string?)second.Attribute("x"));
+        Assert.Equal((string?)first.Attribute("y"), (string?)second.Attribute("y"));
+    }
+
+    [Fact]
     public void Render_DenseRowKeepsChildrenWithinAvailableWidth()
     {
         var children = Enumerable.Range(0, 24)
