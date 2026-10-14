@@ -21,9 +21,8 @@
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
     <None Include="..\..\docs\SVG_ADAPTER.md" Pack="true" PackagePath="docs/SVG_ADAPTER.md" />
-    <None Include="..\..\artifacts\svg-adapter-gallery.svg"
+    <None Include="..\..\docs\assets\svg-adapter-gallery.svg"
           Pack="true"
-          PackagePath="docs/assets/svg-adapter-gallery.svg"
-          Condition="Exists('..\..\artifacts\svg-adapter-gallery.svg')" />
+          PackagePath="docs/assets/svg-adapter-gallery.svg" />
   </ItemGroup>
 </Project>
