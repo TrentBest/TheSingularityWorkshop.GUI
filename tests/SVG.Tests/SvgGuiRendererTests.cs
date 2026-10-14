@@ -36,6 +36,30 @@ public sealed class SvgGuiRendererTests
         Assert.True(svg.IndexOf("First", StringComparison.Ordinal) < svg.IndexOf("Save &quot;now&quot;", StringComparison.Ordinal));
     }
 
+    [Fact]
+    public void Render_ContainerOutlineEnclosesItsDescendants()
+    {
+        var tree = new GuiNode("Panel", "root", "Root", children: new[]
+        {
+            new GuiNode("Text", "heading", "Heading"),
+            new GuiNode("Button", "save", "Save"),
+            new GuiNode("Panel", "nested", "Nested", children: new[]
+            {
+                new GuiNode("Text", "detail", "Detail")
+            })
+        });
+
+        var document = XDocument.Parse(new SvgGuiRenderer().Render(tree));
+        XNamespace ns = "http://www.w3.org/2000/svg";
+        var outlines = document.Descendants(ns + "rect")
+            .Where(rect => (string?)rect.Attribute("stroke-opacity") == ".22")
+            .ToArray();
+
+        Assert.Equal(2, outlines.Length);
+        Assert.All(outlines, outline => Assert.True(
+            double.Parse((string)outline.Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture) > 28));
+    }
+
     [Theory]
     [InlineData(0, 100)]
     [InlineData(100, 0)]
