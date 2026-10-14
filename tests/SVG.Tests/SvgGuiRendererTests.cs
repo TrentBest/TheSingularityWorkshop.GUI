@@ -131,6 +131,45 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Emits_navigable_svg_links_and_semantic_metadata_nodes()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-a", "guide-link", link => link
+                .Property("href", "https://example.invalid/guide")
+                .Property("target", "_blank")
+                .Property("rel", "noopener")
+                .Child("svg-text", "link-label", label => label.Text("Open guide")
+                    .Property("x", "5").Property("y", "10")))
+            .Child("svg-desc", "scene-description", description => description.Text("A navigable learning diagram."))
+            .Child("svg-metadata", "scene-metadata", metadata => metadata.Text("Workshop sample metadata"))
+            .Child("svg-view", "detail-view", view => view.Property("viewBox", "0 0 50 50")
+                .Property("preserveAspectRatio", "xMidYMid meet"))
+            .Build();
+
+        var doc = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        var link = doc.Descendants(svg + "a").Single();
+        Assert.Equal("https://example.invalid/guide", (string?)link.Attribute("href"));
+        Assert.Equal("_blank", (string?)link.Attribute("target"));
+        Assert.Equal("noopener", (string?)link.Attribute("rel"));
+        Assert.Equal("Open guide", link.Descendants(svg + "text").Single().Value);
+        Assert.Equal("A navigable learning diagram.", doc.Descendants(svg + "desc").Single().Value);
+        Assert.Equal("Workshop sample metadata", doc.Descendants(svg + "metadata").Single().Value);
+        Assert.Equal("0 0 50 50", (string?)doc.Descendants(svg + "view").Single().Attribute("viewBox"));
+    }
+
+    [Fact]
+    public void Rejects_svg_links_without_a_destination()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-a", "empty-link", _ => { })
+            .Build();
+
+        Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+    }
+
+    [Fact]
     public void Renders_reusable_symbols_patterns_markers_and_filter_primitives()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
