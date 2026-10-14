@@ -16,10 +16,10 @@ experience / application
      semantic GUI
           |
      +----+----+
-     |         |
-   Blazor     WPF
-     |         |
- browser     desktop
+     |         |         |
+   Blazor     WPF       SVG
+     |         |         |
+ browser     desktop   vector asset
  manifestation / platform behavior
 ~~~
 
