@@ -201,6 +201,48 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Emits_extended_filter_primitives_and_lighting_sources()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-filter", "advanced-filter", filter => filter
+                .Child("svg-fe-turbulence", "noise", noise => noise
+                    .Property("baseFrequency", "0.03 0.08").Property("numOctaves", "2").Property("type", "fractalNoise"))
+                .Child("svg-fe-displacement-map", "displace", displacement => displacement
+                    .Property("in", "SourceGraphic").Property("in2", "noise").Property("scale", "3")
+                    .Property("xChannelSelector", "R").Property("yChannelSelector", "G"))
+                .Child("svg-fe-morphology", "erode", morphology => morphology
+                    .Property("in", "SourceGraphic").Property("operator", "erode").Property("radius", "1"))
+                .Child("svg-fe-convolve-matrix", "sharpen", convolution => convolution
+                    .Property("order", "3").Property("kernelMatrix", "0 -1 0 -1 5 -1 0 -1 0"))
+                .Child("svg-fe-component-transfer", "tone", transfer => transfer
+                    .Child("svg-fe-func-r", "red-curve", curve => curve.Property("type", "gamma")
+                        .Property("amplitude", "1.1").Property("exponent", "0.9").Property("offset", "0")))
+                .Child("svg-fe-diffuse-lighting", "diffuse", lighting => lighting
+                    .Property("surfaceScale", "2").Property("diffuseConstant", "1")
+                    .Child("svg-fe-distant-light", "sun", light => light.Property("azimuth", "225").Property("elevation", "45")))
+                .Child("svg-fe-specular-lighting", "specular", lighting => lighting
+                    .Property("specularConstant", "0.7").Property("specularExponent", "12")
+                    .Child("svg-fe-point-light", "point-source", light => light.Property("x", "10").Property("y", "10").Property("z", "20")))
+                .Child("svg-fe-spot-light", "spot-source", light => light
+                    .Property("x", "0").Property("y", "0").Property("z", "10")
+                    .Property("pointsAtX", "20").Property("pointsAtY", "20").Property("pointsAtZ", "0"))
+                .Child("svg-fe-image", "image-source", image => image.Property("href", "#texture"))).Build();
+
+        var doc = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.NotNull(doc.Descendants(svg + "feTurbulence").Single());
+        Assert.Equal("3", (string?)doc.Descendants(svg + "feDisplacementMap").Single().Attribute("scale"));
+        Assert.NotNull(doc.Descendants(svg + "feMorphology").Single());
+        Assert.Equal("0 -1 0 -1 5 -1 0 -1 0", (string?)doc.Descendants(svg + "feConvolveMatrix").Single().Attribute("kernelMatrix"));
+        Assert.Equal("gamma", (string?)doc.Descendants(svg + "feFuncR").Single().Attribute("type"));
+        Assert.NotNull(doc.Descendants(svg + "feDistantLight").Single());
+        Assert.NotNull(doc.Descendants(svg + "fePointLight").Single());
+        Assert.NotNull(doc.Descendants(svg + "feSpotLight").Single());
+        Assert.Equal("#texture", (string?)doc.Descendants(svg + "feImage").Single().Attribute("href"));
+    }
+
+    [Fact]
     public void Rejects_non_positive_surface_dimensions()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene").Build();
