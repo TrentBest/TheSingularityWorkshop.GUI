@@ -82,6 +82,7 @@ public sealed class SvgGuiRendererTests
         var scene = GuiBuilder.Create("svg-scene", "scene")
             .Child("svg-defs", "defs", defs => defs
                 .Child("svg-linear-gradient", "mint-gradient", gradient => gradient
+                    .Property("href", "#base-gradient")
                     .Property("x1", "0%").Property("y1", "0%").Property("x2", "100%").Property("y2", "0%")
                     .Child("svg-stop", "start", stop => stop.Property("offset", "0%").Property("stop-color", "#7ee0bd"))
                     .Child("svg-stop", "end", stop => stop.Property("offset", "100%").Property("stop-color", "#5777ff")))
@@ -99,6 +100,7 @@ public sealed class SvgGuiRendererTests
         XNamespace svg = "http://www.w3.org/2000/svg";
 
         Assert.NotNull(doc.Descendants(svg + "linearGradient").Single());
+        Assert.Equal("#base-gradient", (string?)doc.Descendants(svg + "linearGradient").Single().Attribute("href"));
         Assert.Equal(2, doc.Descendants(svg + "stop").Count());
         Assert.NotNull(doc.Descendants(svg + "clipPath").Single());
         Assert.NotNull(doc.Descendants(svg + "mask").Single());
@@ -224,8 +226,10 @@ public sealed class SvgGuiRendererTests
                     .Property("from", "0").Property("to", "360")
                     .Property("dur", "4s").Property("repeatCount", "indefinite"))
                 .Child("svg-animate-motion", "motion", motion => motion
-                    .Property("path", "M10 10L90 10").Property("dur", "4s")
-                    .Property("repeatCount", "indefinite")))
+                    .Property("dur", "4s").Property("repeatCount", "indefinite")
+                    .Child("svg-mpath", "motion-reference", reference => reference.Property("href", "#motion-route")))
+                .Child("svg-set", "reveal", set => set.Property("attributeName", "opacity")
+                    .Property("to", "1").Property("begin", "1s").Property("dur", "1s")))
             .Build();
 
         var svg = _renderer.Render(scene);
@@ -233,7 +237,9 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("<animate", svg);
         Assert.Contains("<animateTransform", svg);
         Assert.Contains("<animateMotion", svg);
-        Assert.Contains("path=\"M10 10L90 10\"", svg);
+        Assert.Contains("<mpath href=\"#motion-route\"", svg);
+        Assert.Contains("<set", svg);
+        Assert.Contains("to=\"1\"", svg);
         Assert.Contains("values=\"2;4;2\"", svg);
         Assert.Contains("repeatCount=\"indefinite\"", svg);
         Assert.Contains("viewBox=\"0 0 100 56.25\"", svg);
