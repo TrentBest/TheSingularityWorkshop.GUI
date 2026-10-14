@@ -240,6 +240,70 @@ public sealed class SvgGuiRenderer
                 element = new XElement(Svg + "feComposite");
                 CopyProperties(node, element, "in", "in2", "operator", "k1", "k2", "k3", "k4");
                 break;
+            case "svg-fe-turbulence":
+                element = new XElement(Svg + "feTurbulence");
+                CopyProperties(node, element, "baseFrequency", "numOctaves", "seed", "stitchTiles", "type");
+                break;
+            case "svg-fe-displacement-map":
+                element = new XElement(Svg + "feDisplacementMap");
+                CopyProperties(node, element, "in", "in2", "scale", "xChannelSelector", "yChannelSelector");
+                break;
+            case "svg-fe-morphology":
+                element = new XElement(Svg + "feMorphology");
+                CopyProperties(node, element, "in", "operator", "radius");
+                break;
+            case "svg-fe-tile":
+                element = new XElement(Svg + "feTile");
+                CopyProperties(node, element, "in");
+                break;
+            case "svg-fe-convolve-matrix":
+                element = new XElement(Svg + "feConvolveMatrix");
+                CopyProperties(node, element, "in", "order", "kernelMatrix", "divisor", "bias", "targetX", "targetY", "edgeMode", "kernelUnitLength", "preserveAlpha");
+                break;
+            case "svg-fe-component-transfer":
+                element = new XElement(Svg + "feComponentTransfer");
+                CopyProperties(node, element, "in");
+                break;
+            case "svg-fe-func-r":
+            case "svg-fe-func-g":
+            case "svg-fe-func-b":
+            case "svg-fe-func-a":
+            {
+                var functionName = node.Kind switch
+                {
+                    "svg-fe-func-r" => "feFuncR",
+                    "svg-fe-func-g" => "feFuncG",
+                    "svg-fe-func-b" => "feFuncB",
+                    _ => "feFuncA"
+                };
+                element = new XElement(Svg + functionName);
+                CopyProperties(node, element, "type", "tableValues", "slope", "intercept", "amplitude", "exponent", "offset");
+                break;
+            }
+            case "svg-fe-diffuse-lighting":
+                element = new XElement(Svg + "feDiffuseLighting");
+                CopyProperties(node, element, "in", "surfaceScale", "diffuseConstant", "kernelUnitLength", "lighting-color");
+                break;
+            case "svg-fe-specular-lighting":
+                element = new XElement(Svg + "feSpecularLighting");
+                CopyProperties(node, element, "in", "surfaceScale", "specularConstant", "specularExponent", "kernelUnitLength", "lighting-color");
+                break;
+            case "svg-fe-distant-light":
+                element = new XElement(Svg + "feDistantLight");
+                CopyProperties(node, element, "azimuth", "elevation");
+                break;
+            case "svg-fe-point-light":
+                element = new XElement(Svg + "fePointLight");
+                CopyProperties(node, element, "x", "y", "z");
+                break;
+            case "svg-fe-spot-light":
+                element = new XElement(Svg + "feSpotLight");
+                CopyProperties(node, element, "x", "y", "z", "pointsAtX", "pointsAtY", "pointsAtZ", "specularExponent", "limitingConeAngle");
+                break;
+            case "svg-fe-image":
+                element = new XElement(Svg + "feImage");
+                CopyProperties(node, element, "href", "preserveAspectRatio");
+                break;
             case "svg-fe-merge":
                 element = new XElement(Svg + "feMerge");
                 break;
