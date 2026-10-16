@@ -354,4 +354,29 @@ public sealed class SvgGuiRendererTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() => _renderer.Render(scene));
     }
+    [Fact]
+    public void Accepts_tree_at_the_configured_maximum_depth()
+    {
+        // The root is depth zero, so 256 parent nodes above a leaf reach depth 256.
+        GuiNode tree = new GuiNode("svg-circle", "leaf");
+        for (var depth = 0; depth < 256; depth++)
+            tree = new GuiNode("svg-g", $"group-{depth}", children: new[] { tree });
+
+        var svg = _renderer.Render(tree);
+
+        Assert.Contains("id=\"leaf\"", svg);
+    }
+
+    [Fact]
+    public void Rejects_excessive_tree_depth_before_recursive_svg_serialization()
+    {
+        GuiNode tree = new GuiNode("svg-circle", "leaf");
+        for (var depth = 0; depth < 300; depth++)
+            tree = new GuiNode("svg-g", $"group-{depth}", children: new[] { tree });
+
+        var error = Assert.Throws<InvalidOperationException>(() => _renderer.Render(tree));
+        Assert.Contains("maximum depth", error.Message);
+        Assert.Contains("256", error.Message);
+    }
+
 }

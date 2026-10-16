@@ -12,6 +12,7 @@ namespace TheSingularityWorkshop.Workshop.Gui.Svg;
 /// </remarks>
 public sealed class SvgGuiRenderer
 {
+    private const int MaximumTreeDepth = 256;
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
 
     private static readonly string[] PresentationAttributes =
@@ -437,21 +438,27 @@ public sealed class SvgGuiRenderer
     private static void ValidateUniqueIds(GuiNode root)
     {
         var ids = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Stack<(GuiNode Node, int Depth)>();
+        pending.Push((root, 0));
 
-        void Add(string id)
+        // Validate depth before rendering. This traversal is iterative so a hostile or
+        // accidentally pathological tree cannot overflow the call stack before the
+        // renderer has a chance to reject it.
+        while (pending.Count > 0)
         {
-            if (!ids.Add(id))
-                throw new ArgumentException($"SVG node id '{id}' is duplicated. SVG ids must be unique within a document.", nameof(root));
-        }
+            var (node, depth) = pending.Pop();
+            if (depth > MaximumTreeDepth)
+                throw new InvalidOperationException(
+                    $"GUI tree exceeds the SVG renderer's maximum depth ({MaximumTreeDepth}).");
 
-        void Visit(GuiNode node)
-        {
-            Add(node.Id);
+            if (!ids.Add(node.Id))
+                throw new ArgumentException(
+                    $"SVG node id '{node.Id}' is duplicated. SVG ids must be unique within a document.",
+                    nameof(root));
+
             foreach (var child in node.Children)
-                Visit(child);
+                pending.Push((child, depth + 1));
         }
-
-        Visit(root);
 
         // Coordinate-system overlays create real SVG elements with synthesized ids.
         if (root.Kind == "coordinate-system")
@@ -461,8 +468,11 @@ public sealed class SvgGuiRenderer
                 ("grid", "grid"), ("axes", "axes"), ("origin", "origin"), ("bounds", "bounds")
             })
             {
-                if (Value(root, property, "hidden") == "visible")
-                    Add(root.Id + "-" + suffix);
+                if (Value(root, property, "hidden") == "visible" &&
+                    !ids.Add(root.Id + "-" + suffix))
+                    throw new ArgumentException(
+                        $"SVG node id '{root.Id}-{suffix}' collides with a synthesized coordinate overlay id.",
+                        nameof(root));
             }
         }
     }
