@@ -48,7 +48,7 @@ public sealed class GuiNode
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
-        if (TryFind(id, out var node))
+        if (TryFind(id, out var node) && node is not null)
             return node;
 
         throw new InvalidOperationException(
