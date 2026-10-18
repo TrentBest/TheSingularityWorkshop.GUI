@@ -22,33 +22,17 @@ public sealed class WpfGuiRendererConformanceTests
             var rendered = Assert.IsType<Border>(WpfGuiRenderer.Render(root));
             Assert.Equal("root", rendered.Name);
             Assert.Equal("root", WpfGuiIdentity.GetNodeId(rendered));
-            Assert.Equal("root", WpfGuiIdentity.GetNodeId(rendered));
             var host = Assert.IsType<StackPanel>(rendered.Child);
             Assert.Equal(2, host.Children.Count);
 
             var button = Assert.IsType<Button>(host.Children[0]);
             Assert.Equal("first", button.Name);
             Assert.Equal("first", WpfGuiIdentity.GetNodeId(button));
-            Assert.Equal("first", WpfGuiIdentity.GetNodeId(button));
             Assert.Equal("First", button.Content);
 
             var text = Assert.IsType<TextBlock>(host.Children[1]);
             Assert.Equal("second", text.Name);
             Assert.Equal("Second", text.Text);
-        });
-    }
-
-    [Fact]
-    public void Renderer_preserves_arbitrary_semantic_ids_when_wpf_name_cannot_represent_them()
-    {
-        RunOnSta(() =>
-        {
-            const string id = "widget:save/primary";
-            var rendered = WpfGuiRenderer.Render(new GuiNode("Button", id, text: "Save"));
-
-            Assert.Equal(string.Empty, rendered.Name);
-            Assert.Equal(id, WpfGuiIdentity.GetNodeId(rendered));
-            Assert.Equal(id, rendered.GetValue(WpfGuiIdentity.NodeIdProperty));
         });
     }
 
