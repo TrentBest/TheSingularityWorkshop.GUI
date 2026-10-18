@@ -126,3 +126,9 @@ The repository therefore documents the concept without pretending that `Gui.Exec
 That distinction is essential.
 
 See [GUI Execution Model](../GUI_EXECUTION_MODEL.md) and [ROADMAP](../../ROADMAP.md).
+
+## Repository evidence and limit
+
+The current source includes a semantic tree and manifestation adapters, but the execution-host model described here remains a design target. The [GUI Execution Model](../GUI_EXECUTION_MODEL.md), [Next Contract Surface](../NEXT_CONTRACT_SURFACE.md), and [roadmap](../../ROADMAP.md) are specifications and status records—not evidence that `Gui.Execute(...)`, capability resolution, execution context, or lifecycle ownership is already implemented.
+
+The present renderer surface can manifest a supplied model. Do not infer from that fact that it can host an arbitrary runnable experience. The next proof must be a defined execution contract, implementation, and tests for lifecycle and failure semantics.
