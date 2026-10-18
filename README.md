@@ -160,13 +160,13 @@ See:
 
 ## Current integrations
 
-The WebPage repository is the first migration target for the Blazor layer and the intended ten-minute proving ground for this architecture.
+The WebPage repository is the intended proving ground for the Blazor layer and the ten-minute evaluation path for this architecture.
 
 The live Workshop is available at:
 
 https://lemon-ground-09f542010.1.azurestaticapps.net/
 
-The production site demonstrates the Workshop experience, but it does not by itself prove that this GUI repository powers the page. The intended development integration is tracked in [WebPage issue #52](https://github.com/TrentBest/WebPage/issues/52) and remains open in the [GUI roadmap](ROADMAP.md). Treat the WebPage as a verified integration proof only after its development build and tests establish the actual semantic GUI model and Blazor adapter path.
+The original migration issue [WebPage #52](https://github.com/TrentBest/WebPage/issues/52) was closed on 2026-09-29. The current WebPage development project references `TheSingularityWorkshop.GUI.Blazor` v0.1.0-alpha.8 in NuGet mode and the GUI Blazor project in opt-in repository-source mode. These are concrete dependency-integration signals, but neither issue closure nor a package reference alone proves that the live production page is rendered through this path. Keep the WebPage marked as a verified end-to-end integration only when its current development build and tests demonstrate reusable semantic GUI construction and Blazor manifestation through this adapter; the unchecked roadmap items remain the evidence checklist.
 
 RevitFamilyManagerBuilders remains unchanged. Reusable WPF infrastructure is being migrated here for forward-moving applications rather than modifying that existing repository.
 
