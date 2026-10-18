@@ -26,7 +26,9 @@ Panel(root) -> Button(save) -> Text(Save)
 
 The relevant comparison is hierarchy, identity, semantic kind, text, child order, and any other explicitly specified invariant—not equality of WPF controls and browser render-tree nodes.
 
-Current status is tracked in [ROADMAP.md](../ROADMAP.md). Focused Blazor and SVG contract tests cover adapter-specific invariants. A new shared conformance test project now runs one common tree through both adapters and compares observable identity, child ordering, and text preservation; this is an initial narrow fixture, not yet broad conformance coverage. WPF contract tests and expansion of the shared fixture set remain open. Do not infer that every adapter has equivalent coverage merely because one adapter's tests pass.
+Current status is tracked in [ROADMAP.md](../ROADMAP.md). Focused Blazor and SVG contract tests cover adapter-specific invariants. The shared conformance project runs a common tree through Blazor and SVG and compares selected observable properties such as identity, child ordering, and text preservation. This is an initial, narrow fixture, not broad cross-platform conformance coverage.
+
+The WPF suite runs on Windows and tests the WPF renderer's current supported surface, including nested hierarchy/order, text, supported dimensions and spacing, colors, typography, alignment, null-root rejection, unknown-kind fallback, duplicate-ID rejection, the 256-edge depth guard, and exact semantic-ID preservation through a WPF-specific attached property when `FrameworkElement.Name` cannot represent the ID. See [Platform Adapters](PLATFORM_ADAPTERS.md) for the distinction between this evidence and full adapter parity.
 
 ## SVG adapter tests and generated gallery
 
@@ -42,7 +44,7 @@ For the gallery, review both the generator and its output. A passing byte-for-by
 
 ## Platform tests
 
-Platform-specific tests should verify behavior that cannot be established by Core tests alone, such as native WPF configuration, Blazor render output, event wiring, resource lifetime, and accessibility integration. State which platform and behavior a test covers.
+Platform-specific tests should verify behavior that cannot be established by Core tests alone, such as native WPF configuration, Blazor render output, event wiring, resource lifetime, and accessibility integration. State which platform and behavior a test covers. WPF tests require a Windows runner; a Linux cross-targeting build is not a substitute for running the native tests.
 
 ## Evidence and status discipline
 
@@ -58,4 +60,4 @@ A passing workflow is evidence for the checks it actually ran—not proof that a
 
 ## Current limits
 
-The richer execution-host model, capability negotiation, shared adapter conformance, and many spatial invariants remain design targets. See [Next Contract Surface](NEXT_CONTRACT_SURFACE.md), [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md), and [ROADMAP.md](../ROADMAP.md) before treating those concepts as current Core APIs.
+The richer execution-host model, capability negotiation, broad shared adapter conformance, and many spatial invariants remain design targets. See [Next Contract Surface](NEXT_CONTRACT_SURFACE.md), [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md), and [ROADMAP.md](../ROADMAP.md) before treating those concepts as current Core APIs.
