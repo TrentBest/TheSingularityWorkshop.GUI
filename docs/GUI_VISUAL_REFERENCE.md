@@ -37,6 +37,24 @@ It belongs with [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) and [Spatial Represe
 
 This image is a conceptual repository map. It is intentionally not an exhaustive file listing.
 
+## Living manifestation: GUI.SVG gallery
+
+![GUI.SVG manifestation gallery](assets/svg-adapter-gallery.svg)
+
+[Open the SVG gallery source](assets/svg-adapter-gallery.svg) · [Read the GUI.SVG adapter contract](SVG_ADAPTER.md)
+
+Unlike the reference images above, this artifact is an actual SVG document produced for the GUI.SVG adapter gallery. Open it in a browser to observe declarative motion: the marker pulses and a scout travels along a path. The scene also demonstrates vector geometry, gradients, reusable symbols, patterns, clipping, filters, and semantic document metadata in one inspectable artifact.
+
+This is a **living picture, not a screenshot of a hypothetical interface**. Its animation is native SVG behavior; it does not imply that GUI.SVG owns a clock, that Visualize is submitting GPU work, or that AnyApp's current WPF proof is GPU-rendered. Those are separate runtime and backend responsibilities.
+
+The progression is intentional:
+
+1. **Reference images** communicate the architectural question.
+2. **The SVG gallery** makes a real, inspectable manifestation move.
+3. **The adapter contract and tests** establish what is implemented and what behavior is verified.
+
+A future gallery improvement should prefer examples generated from the same semantic inputs used by tests, so the living documentation can serve as an implementation witness rather than drift into decorative illustration.
+
 ## Asset convention
 
 Generated filenames are renamed to semantic names when they enter the repository:
