@@ -125,21 +125,21 @@ public static class WpfGuiRenderer
                 case "background":
                     if (TryBrush(value, out var background))
                     {
-                        if (element is Control c) c.Background = background;
+                        if (element is Control backgroundControl) backgroundControl.Background = background;
                         else if (element is Border b) b.Background = background;
                     }
                     break;
                 case "foreground":
                     if (TryBrush(value, out var foreground))
                     {
-                        if (element is Control c) c.Foreground = foreground;
+                        if (element is Control foregroundControl) foregroundControl.Foreground = foreground;
                         else if (element is TextBlock t) t.Foreground = foreground;
                     }
                     break;
                 case "fontSize":
                     if (TryDouble(value, out var fontSize))
                     {
-                        if (element is Control c) c.FontSize = fontSize;
+                        if (element is Control fontSizeControl) fontSizeControl.FontSize = fontSize;
                         else if (element is TextBlock t) t.FontSize = fontSize;
                     }
                     break;
@@ -147,12 +147,12 @@ public static class WpfGuiRenderer
                     if (int.TryParse(value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var weight))
                     {
                         var fontWeight = weight >= 700 ? FontWeights.Bold : weight >= 600 ? FontWeights.SemiBold : weight >= 500 ? FontWeights.Medium : FontWeights.Normal;
-                        if (element is Control c) c.FontWeight = fontWeight;
+                        if (element is Control fontWeightControl) fontWeightControl.FontWeight = fontWeight;
                         else if (element is TextBlock t) t.FontWeight = fontWeight;
                     }
                     break;
                 case "fontFamily":
-                    if (element is Control c) c.FontFamily = new FontFamily(value);
+                    if (element is Control fontFamilyControl) fontFamilyControl.FontFamily = new FontFamily(value);
                     else if (element is TextBlock t) t.FontFamily = new FontFamily(value);
                     break;
             }
