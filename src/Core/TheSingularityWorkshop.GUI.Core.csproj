@@ -6,9 +6,16 @@
     <RootNamespace>TheSingularityWorkshop.Workshop.Gui</RootNamespace>
     <PackageId>TheSingularityWorkshop.GUI.Core</PackageId>
     <Version>0.1.0</Version>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>gui;core;model;builder;platform-neutral</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
     <PackageDescription>Platform-neutral recursive GUI model and builder primitives.</PackageDescription>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
 </Project>
