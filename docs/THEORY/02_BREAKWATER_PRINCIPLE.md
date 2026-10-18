@@ -129,3 +129,9 @@ Some differences are semantically meaningful.
 If an experience genuinely needs a capability that exists only in one environment, the architecture must be able to represent that fact rather than pretending every platform is equivalent.
 
 The principle therefore favors explicit capability boundaries over false uniformity.
+
+## Repository evidence and limit
+
+The Core/adapter boundary is visible in [GuiNode](../../src/Core/GuiNode.cs), [GuiBuilder](../../src/Core/GuiBuilder.cs), and the separate [Blazor](../../src/Blazor/BlazorGuiRenderer.cs), [WPF](../../src/WPF/WpfGuiRenderer.cs), and [SVG](../../src/SVG/SvgGuiRenderer.cs) implementations. The [Blazor renderer tests](../../tests/Blazor.Tests/BlazorGuiRendererTests.cs) and [SVG renderer tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs) provide concrete adapter-level checks.
+
+This is evidence of separation, not proof that all environmental volatility is contained. The WPF adapter does not have equivalent contract-test coverage established by those links, and shared cross-adapter conformance remains a separate task tracked in the [roadmap](../../ROADMAP.md).
