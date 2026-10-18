@@ -147,7 +147,6 @@ The original migration issue [WebPage #52](https://github.com/TrentBest/WebPage/
 - [ ] Use the WebPage as the ten-minute evaluation path from the GUI documentation
 - [ ] Capture representative GUI reference artifacts from the working WebPage
 - [ ] Keep the live WebPage manifestation explicitly separate from the semantic GUI contract
-- [ ] Keep domain semantics outside the GUI repository
 - [ ] Publish stable platform packages
 - [ ] Document package/version compatibility
 - [ ] Establish compatibility policy for GUI artifacts and micro-bundles
