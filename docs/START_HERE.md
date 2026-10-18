@@ -14,6 +14,14 @@ The fastest way to explore it is **not** to read every document. Follow the two 
 
 *Figure 1 — A reference manifestation of the separation this repository is trying to make tangible: runtime behavior, semantic GUI meaning, and platform presentation can cooperate without becoming the same thing.*
 
+## See a real manifestation move
+
+![Animated GUI.SVG gallery](assets/svg-adapter-gallery.svg)
+
+[Open the animated SVG directly](assets/svg-adapter-gallery.svg) · [Inspect how the adapter produces it](SVG_ADAPTER.md)
+
+This is a real SVG artifact, not a mockup: the marker pulses and a point travels along a path using declarative SVG animation. It demonstrates that our documentation can show actual manifestation behavior without claiming a GPU renderer or a GUI-owned animation loop. The [Visual Reference](GUI_VISUAL_REFERENCE.md) explains which artifacts are conceptual references and which are executable/inspectable outputs.
+
 ---
 
 ## The two-prong documentation model
