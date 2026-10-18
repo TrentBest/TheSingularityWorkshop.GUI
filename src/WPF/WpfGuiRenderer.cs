@@ -125,7 +125,6 @@ public static class WpfGuiRenderer
     private static void ApplyProperties(FrameworkElement element, GuiNode node)
     {
         WpfGuiIdentity.SetNodeId(element, node.Id);
-        WpfGuiIdentity.SetNodeId(element, node.Id);
         element.Name = IsLegalName(node.Id) ? node.Id : string.Empty;
 
         foreach (var property in node.Properties)
