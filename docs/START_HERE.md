@@ -47,7 +47,7 @@ The fastest route is intentionally small.
 - **Architecture & manifestation:** [Architecture](ARCHITECTURE.md) · [Platform Adapters](PLATFORM_ADAPTERS.md) · [GUI Execution Model](GUI_EXECUTION_MODEL.md)
 - **Spatial model:** [Ideal GUI](IDEAL_GUI.md) · [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md) · [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
 - **Verification & measurement:** [Testing](TESTING.md) · [GUI Benchmarking](GUI_BENCHMARKING.md) · [Roadmap](../ROADMAP.md)
-- **Next contract surface:** [Next Contract Surface](NEXT_CONTRACT_SURFACE.md)
+- **Next contract surface:** [Next Contract Surface](NEXT_CONTRACT_SURFACE.md) · [Subcomposition and Digital Art](SUBCOMPOSITION_AND_DIGITAL_ART.md) — voxel carving, derived meshes, editable-project persistence, and drawing/painting boundaries
 
 The repository structure is also documented visually:
 
