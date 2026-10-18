@@ -67,6 +67,41 @@ public sealed class SharedAdapterConformanceTests
     }
 
     [Fact]
+    public void Property_forwarding_is_currently_adapter_specific()
+    {
+        var model = new GuiNode(
+            "Panel",
+            "property-surface",
+            properties: new Dictionary<string, string>
+            {
+                ["class"] = "sample-class",
+                ["data-note"] = "prototype-only",
+                ["fill"] = "none"
+            });
+
+        var blazorBuilder = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(model)(blazorBuilder);
+        var blazorAttributes = blazorBuilder.GetFrames().Array
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Attribute)
+            .ToDictionary(frame => frame.AttributeName, frame => frame.AttributeValue);
+
+        var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+        var svgRoot = svgDocument.Root!;
+        var svgNode = svgDocument.Descendants(svg + "g")
+            .Single(element => (string?)element.Attribute("id") == "property-surface");
+
+        Assert.Equal("sample-class", blazorAttributes["class"]);
+        Assert.Equal("prototype-only", blazorAttributes["data-note"]);
+        Assert.Equal("none", blazorAttributes["fill"]);
+
+        Assert.Equal("sample-class", (string?)svgNode.Attribute("class"));
+        Assert.Equal("none", (string?)svgNode.Attribute("fill"));
+        Assert.Null(svgNode.Attribute("data-note"));
+        Assert.Null(svgRoot.Attribute("data-note"));
+    }
+
+    [Fact]
     public void Both_adapters_preserve_node_identity_when_properties_contain_id()
     {
         var model = new GuiNode(
