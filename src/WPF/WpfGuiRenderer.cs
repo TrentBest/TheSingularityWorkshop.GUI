@@ -133,14 +133,14 @@ public static class WpfGuiRenderer
                     if (TryBrush(value, out var foreground))
                     {
                         if (element is Control foregroundControl) foregroundControl.Foreground = foreground;
-                        else if (element is TextBlock foregroundTextBlock) t.Foreground = foreground;
+                        else if (element is TextBlock foregroundTextBlock) foregroundTextBlock.Foreground = foreground;
                     }
                     break;
                 case "fontSize":
                     if (TryDouble(value, out var fontSize))
                     {
                         if (element is Control fontSizeControl) fontSizeControl.FontSize = fontSize;
-                        else if (element is TextBlock fontSizeTextBlock) t.FontSize = fontSize;
+                        else if (element is TextBlock fontSizeTextBlock) fontSizeTextBlock.FontSize = fontSize;
                     }
                     break;
                 case "fontWeight":
@@ -148,12 +148,12 @@ public static class WpfGuiRenderer
                     {
                         var fontWeight = weight >= 700 ? FontWeights.Bold : weight >= 600 ? FontWeights.SemiBold : weight >= 500 ? FontWeights.Medium : FontWeights.Normal;
                         if (element is Control fontWeightControl) fontWeightControl.FontWeight = fontWeight;
-                        else if (element is TextBlock fontWeightTextBlock) t.FontWeight = fontWeight;
+                        else if (element is TextBlock fontWeightTextBlock) fontWeightTextBlock.FontWeight = fontWeight;
                     }
                     break;
                 case "fontFamily":
                     if (element is Control fontFamilyControl) fontFamilyControl.FontFamily = new FontFamily(value);
-                    else if (element is TextBlock fontFamilyTextBlock) t.FontFamily = new FontFamily(value);
+                    else if (element is TextBlock fontFamilyTextBlock) fontFamilyTextBlock.FontFamily = new FontFamily(value);
                     break;
             }
         }
