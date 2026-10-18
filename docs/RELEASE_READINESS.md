@@ -111,6 +111,16 @@ These findings are evidence-based and are not an exhaustive audit. Revisit them 
 
 This is an audit record, not a release approval. The duplicate-call cleanup is not a claim of changed runtime behavior or successful CI.
 
+## Follow-up implementation audit — WPF tree validation
+
+- [x] Removed the duplicate semantic-ID assignment in `WpfGuiRenderer.ApplyProperties`; the single assignment was verified in the current source.
+- [x] Removed repeated whole-subtree validation during recursive rendering. Public `Render` now validates the complete tree once, then delegates descendants to a private validated render path. Source inspection confirms recursive calls no longer re-enter public `Render`.
+- [ ] Run and record the Windows WPF tests for the exact follow-up commits. Available status queries have not provided evidence of a fresh passing workflow for these changes.
+- [ ] Continue the property/source/media, accessibility, and interaction behavior audit; existing tests do not establish full adapter parity.
+- [ ] Resolve release version, license policy, and WPF package scope before altering package metadata or publication workflow.
+
+These are implementation cleanups, not release approval. The single-validation change is intended to avoid repeatedly traversing each descendant subtree (which would cause avoidable quadratic validation work on nested trees); runtime performance has not been benchmarked in this environment. Keep the publish job's `&& false` guard intact until explicit release approval.
+
 ## Release decision record
 
 Complete this section for each candidate.
