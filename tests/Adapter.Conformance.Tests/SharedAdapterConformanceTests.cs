@@ -65,6 +65,23 @@ public sealed class SharedAdapterConformanceTests
         Assert.Equal(new[] { "Save", "Ready" }, svgText);
     }
 
+    [Fact]
+    public void Both_adapters_reject_duplicate_ids_in_a_tree()
+    {
+        var duplicateIds = GuiBuilder.Create("Panel", "root")
+            .Child("Text", "duplicate")
+            .Child("Button", "duplicate")
+            .Build();
+
+        var blazorException = Assert.Throws<System.ArgumentException>(
+            () => BlazorGuiRenderer.Render(duplicateIds));
+        var svgException = Assert.Throws<System.ArgumentException>(
+            () => new SvgGuiRenderer().Render(duplicateIds));
+
+        Assert.Contains("duplicate", blazorException.Message);
+        Assert.Contains("duplicate", svgException.Message);
+    }
+
     private static GuiNode CreateFixture() =>
         GuiBuilder.Create("Panel", "root")
             .Child("Panel", "actions", panel => panel
