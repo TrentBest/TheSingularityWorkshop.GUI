@@ -37,6 +37,8 @@ For example, a future Core property named `layout.horizontalAlignment` should be
 
 The current Blazor renderer contains a deliberately simple compatibility implementation. It forwards node properties as render attributes and maps a small set of known kinds to HTML tags. This is useful prototype behavior, not the final cross-platform contract.
 
+Its recursive render-tree builder uses source-stable sequence numbers: each invocation of the renderer method starts at the same local sequence positions instead of carrying a global counter through the tree. The Blazor conformance test pins this behavior because sequence numbers guide framework diffing; they are not node IDs or a runtime count.
+
 The SVG renderer has a separate explicit SVG scene vocabulary. It can serialize SVG-specific nodes and coordinate-system scenes, but a generic Core tree is not automatically equivalent to an interactive widget tree merely because it can be serialized as SVG.
 
 ## Capability differences
