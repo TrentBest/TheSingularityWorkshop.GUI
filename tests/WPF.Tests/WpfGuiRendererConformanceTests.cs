@@ -1,0 +1,97 @@
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using TheSingularityWorkshop.Workshop.Gui;
+using TheSingularityWorkshop.GUI.WPF;
+
+namespace TheSingularityWorkshop.GUI.WPF.Tests;
+
+public sealed class WpfGuiRendererConformanceTests
+{
+    [Fact]
+    public void Renderer_preserves_supported_nested_tree_order_identity_and_text()
+    {
+        RunOnSta(() =>
+        {
+            var root = GuiBuilder.Create("Panel", "root")
+                .Child("Button", "first", button => button.Text("First"))
+                .Child("Text", "second", text => text.Text("Second"))
+                .Build();
+
+            var rendered = Assert.IsType<Border>(WpfGuiRenderer.Render(root));
+            Assert.Equal("root", rendered.Name);
+            var host = Assert.IsType<StackPanel>(rendered.Child);
+            Assert.Equal(2, host.Children.Count);
+
+            var button = Assert.IsType<Button>(host.Children[0]);
+            Assert.Equal("first", button.Name);
+            Assert.Equal("First", button.Content);
+
+            var text = Assert.IsType<TextBlock>(host.Children[1]);
+            Assert.Equal("second", text.Name);
+            Assert.Equal("Second", text.Text);
+        });
+    }
+
+    [Fact]
+    public void Renderer_maps_supported_dimensions_spacing_and_colors()
+    {
+        RunOnSta(() =>
+        {
+            var node = new GuiNode(
+                "Button",
+                "save",
+                text: "Save",
+                properties: new Dictionary<string, string>
+                {
+                    ["width"] = "120",
+                    ["height"] = "32",
+                    ["margin"] = "1,2,3,4",
+                    ["padding"] = "5",
+                    ["background"] = "#FF0000",
+                    ["tooltip"] = "Save changes"
+                });
+
+            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(node));
+            Assert.Equal(120, button.Width);
+            Assert.Equal(32, button.Height);
+            Assert.Equal(new Thickness(1, 2, 3, 4), button.Margin);
+            Assert.Equal(new Thickness(5), button.Padding);
+            Assert.Equal("Save changes", button.ToolTip);
+            Assert.Equal(Color.FromRgb(255, 0, 0), Assert.IsType<SolidColorBrush>(button.Background).Color);
+        });
+    }
+
+    [Fact]
+    public void Renderer_rejects_null_root()
+    {
+        RunOnSta(() => Assert.Throws<ArgumentNullException>(() => WpfGuiRenderer.Render(null!)));
+    }
+
+    [Fact]
+    public void Renderer_uses_fallback_panel_for_unknown_kind()
+    {
+        RunOnSta(() =>
+        {
+            var rendered = Assert.IsType<Border>(WpfGuiRenderer.Render(new GuiNode("FutureKind", "future")));
+            Assert.IsType<StackPanel>(rendered.Child);
+        });
+    }
+
+    private static void RunOnSta(Action action)
+    {
+        Exception? failure = null;
+        var thread = new Thread(() =>
+        {
+            try { action(); }
+            catch (Exception exception) { failure = exception; }
+        });
+        thread.SetApartmentState(ApartmentState.STA);
+        thread.Start();
+        thread.Join();
+
+        if (failure is not null)
+            throw new Xunit.Sdk.XunitException($"STA test action failed: {failure}");
+    }
+}
