@@ -248,7 +248,7 @@ The more immediate architectural gap is not platform leakage. It is semantic ric
 
 That is important because it tells us **what not to fix prematurely**. We do not need to introduce execution interfaces merely to make the current Core look more abstract. We need to increase semantic precision where the existing model is genuinely stringly typed.
 
-One concrete identity discrepancy is now visible in the adapter audit: `GuiNode` requires each node's ID to be non-empty, but Core does not enforce uniqueness across a tree. The SVG renderer rejects duplicate IDs in its input tree; the Blazor renderer currently emits them without equivalent validation. The shared conformance fixture covers unique IDs and nested ordering, not duplicate-ID policy. Treat stable, tree-wide identity rules as an open contract—not as an existing cross-adapter guarantee—until the policy is defined and enforced consistently.
+One concrete identity discrepancy found during the adapter audit was that Core requires each node ID to be non-empty but does not enforce tree-wide uniqueness, while SVG rejected duplicate IDs and Blazor did not. The policy is now consistent at the adapter boundary: both Blazor and SVG reject duplicate IDs in a rendered tree before producing output. Core remains permissive so construction and non-rendering uses are not silently given a new breaking invariant. Shared conformance tests cover both rejection paths. Stable identity across movement, representation replacement, and multiple views remains a broader unresolved contract.
 
 ## 6. The contract should be layered
 
