@@ -12,7 +12,7 @@ The term *subcomposition* names the authoring operation, not the mesh algorithm.
 
 ## 01. Place the capability in the ecosystem
 
-The capability belongs at the intersection of a domain model, an editor/tool experience, rendering, and durable project storage. These responsibilities must remain independently replaceable.
+The capability belongs at the intersection of a domain model, an editor/tool experience, rendering, and durable project storage. These responsibilities must remain independently replaceable. This document is linked from GUI because it defines the editor-facing contract; **GUI is not the home of the voxel model or storage implementation.**
 
 ```text
 User / Workshop editor
@@ -60,6 +60,12 @@ pixels / inspectable preview
 | Distribution of versioned tool MicroBundles | MicroBundleRepository |
 
 The tool should be consumable by multiple experiences. It must not be embedded exclusively in Visualize, GUI, a game, or a single host. The editor is a consumer and composition of capabilities; it is not the owner of the underlying model semantics.
+
+### Proposed package placement
+
+Create a dedicated `TheSingularityWorkshop.Subcomposition` repository/package for the platform-neutral editable volume model, deterministic edit operations, stable asset identity, revisions, and surface-derivation contracts. Keep it free of GUI, renderer, GPU, and host types. The first implementation can remain deliberately small; do not create a forest of packages before the contracts justify it.
+
+The editor-facing tool should be a separately composable capability that consumes the Subcomposition contract. Drawing/painting can initially be additional tools over shared asset/operation contracts; promote them into a separate `TheSingularityWorkshop.Drawing` capability when their independent scope warrants it. The mutable persistence boundary is a separate candidate package/contract (provisionally `TheSingularityWorkshop.AssetStore`), with filesystem and cloud adapters supplied independently. These names are proposals, not existing repositories.
 
 ### MicroBundles and package boundary
 
