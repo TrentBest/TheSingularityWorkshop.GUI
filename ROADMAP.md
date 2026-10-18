@@ -80,7 +80,7 @@ The model must first prove that it can describe more than conventional widgets.
 - [x] Blazor contract tests
 - [ ] WPF contract tests
 - [ ] Shared adapter conformance cases
-- [ ] Build a second materially different adapter
+- [x] Build a second materially different adapter (SVG)
 - [ ] Unity UI Toolkit adapter
 - [ ] Establish GUI benchmark methodology
 - [ ] Establish executable GUI benchmark project and baseline — tracked by [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2)
