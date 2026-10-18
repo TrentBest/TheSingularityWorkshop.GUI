@@ -101,6 +101,16 @@ These findings are evidence-based and are not an exhaustive audit. Revisit them 
 - **The public release path is intentionally blocked.** The publish job has an explicit `&& false` guard. This is a safety control, not a failed readiness check to remove prematurely.
 - **End-to-end integration remains a separate gate.** WebPage is the proving ground. Its NuGet-mode reference to Blazor `0.1.0-alpha.8` matches the latest published Blazor version observed on 2026-10-18, but the current repository project declares `0.1.0` and Core's project declaration also diverges from its latest published version. Compile/run the actual consuming application in NuGet mode against the intentionally selected package set before calling integration verified.
 
+## Follow-up implementation audit — WPF
+
+- [x] Removed the duplicate `WpfGuiIdentity.SetNodeId(element, node.Id)` call in `src/WPF/WpfGuiRenderer.cs`. The remaining single assignment was verified in the current development file.
+- [ ] Run the Windows WPF test job against the resulting commit and record its outcome. The available commit-status query currently returns 0 status entries; the connector's commit-workflow query is PR-trigger-only and returned 0 runs, so these results do not establish that a push-triggered run passed.
+- [ ] Continue checking renderer behavior against explicit tests. Current WPF tests cover the documented basic tree, identity, dimensions/spacing, colors, typography, alignment, fallback, duplicate IDs, and depth guard; they do not establish full parity, accessibility, or event behavior.
+- [ ] Resolve package version, license, and WPF package-scope decisions before changing package metadata or the publication workflow.
+- [ ] Keep the publish job's `&& false` guard intact until explicit release approval.
+
+This is an audit record, not a release approval. The duplicate-call cleanup is not a claim of changed runtime behavior or successful CI.
+
 ## Release decision record
 
 Complete this section for each candidate.
