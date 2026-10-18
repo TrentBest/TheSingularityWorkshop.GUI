@@ -42,23 +42,23 @@ public static class BlazorGuiRenderer
 
     private static void RenderNode(RenderTreeBuilder builder, GuiNode node)
     {
-        // Sequence numbers identify source locations, not global execution order.
-        // Every recursive invocation uses the same sequence positions for this method.
-        var sequence = 0;
-        builder.OpenElement(sequence++, ResolveTag(node.Kind));
-        builder.AddAttribute(sequence++, "id", node.Id);
+        // Sequence numbers identify source-code positions, not runtime iteration
+        // order. Keep each conditional/loop at a stable sequence position so
+        // optional source/text and changing property counts do not shift later frames.
+        builder.OpenElement(0, ResolveTag(node.Kind));
+        builder.AddAttribute(1, "id", node.Id);
         if (!string.IsNullOrWhiteSpace(node.Source))
-            builder.AddAttribute(sequence++, "src", node.Source);
+            builder.AddAttribute(2, "src", node.Source);
         foreach (var property in node.Properties)
         {
             // Node identity is owned by GuiNode.Id, never by an arbitrary property.
             if (string.Equals(property.Key, "id", StringComparison.OrdinalIgnoreCase))
                 continue;
 
-            builder.AddAttribute(sequence++, property.Key, property.Value);
+            builder.AddAttribute(3, property.Key, property.Value);
         }
         if (node.Text is not null)
-            builder.AddContent(sequence++, node.Text);
+            builder.AddContent(4, node.Text);
         foreach (var child in node.Children)
             RenderNode(builder, child);
         builder.CloseElement();
