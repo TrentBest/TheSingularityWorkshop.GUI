@@ -171,3 +171,9 @@ The theory implies concrete contracts that must eventually be tested:
 - view and camera lifecycle.
 
 The theory therefore produces engineering questions rather than replacing engineering with abstraction.
+
+## Repository evidence and limit
+
+The implemented spatial foundation is intentionally narrower than the full theory. [CoordinateSystem](../../src/Core/CoordinateSystem.cs) currently supplies a normalized numeric range, finite/in-range validation, and coordinate/delta helpers; [CoordinateSystemTests](../../tests/Core.Tests/CoordinateSystemTests.cs) cover its current contract. The SVG adapter also maps coordinate-system points into SVG's y-down coordinate convention, exercised by [SVG renderer tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs).
+
+These primitives do not yet implement the full world/local/view/viewport transform chain, semantic cameras, projection, hit testing, occlusion, multi-view synchronization, or persistence. Those remain explicitly proposed in [GUI Spatial Contracts](../GUI_SPATIAL_CONTRACTS.md).
