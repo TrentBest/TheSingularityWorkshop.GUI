@@ -2,10 +2,9 @@
 
 # TheSingularityWorkshop.GUI
 
+> **A platform-neutral GUI engineering layer built around a recursive semantic model and platform adapters.**
 
-> **A platform-neutral GUI engineering layer built around recursive builders and platform adapters.**
-
-GUI separates the semantic description of an interface from the platform-specific work that presents it.
+GUI separates interface intent from the platform-specific work that presents it. Core owns the neutral model; each adapter owns its manifestation contract.
 
 ```mermaid
 flowchart TD
@@ -13,30 +12,31 @@ flowchart TD
   M --> B[Recursive builders]
   B --> BL[Blazor adapter]
   B --> SVG[SVG adapter]
-  WPF[Reusable WPF builders] -. Core bridge not yet proven .-> WPFUI[Native WPF UI]
+  B --> WPF[WPF renderer]
   BL --> WEB[Blazor host]
   SVG --> ART[Inspectable SVG artifact]
+  WPF --> NATIVE[Native WPF controls]
 ```
 
 ## 🟦 01 What
 
-Its core responsibility is the neutral model and builder contracts. Adapters own manifestation details; consuming applications own their domain meaning and behavior.
+Core provides the neutral recursive model and builder contracts. Adapters translate that model into platform-specific output; consuming applications retain their own domain meaning and behavior.
 
 ## 🟣 02 Why
 
-A neutral interface model allows one description of intent to be manifested by different platform adapters. Without that boundary, application meaning becomes entangled with the widgets and APIs of whichever UI technology was chosen first.
+A neutral interface model lets one description of intent be manifested by different platform adapters. Without that boundary, application meaning becomes entangled with the widgets and APIs of whichever UI technology was chosen first.
 
 ## 🔺 03 How
 
-Describe GUI intent in the neutral model, then use a supported adapter to manifest it. The current Core-to-platform paths are Blazor and SVG: `TheSingularityWorkshop.GUI.SVG` turns supported scene nodes and coordinate-system scenes into accessible, inspectable SVG markup. Visualize consumes SVG through an explicit adapter; SVG animation is declarative output, not an animation clock or GPU pipeline. The repository also contains reusable WPF builders, but a tested WPF bridge from `GuiNode` to native WPF controls is not yet established.
+Describe interface intent in the Core model, then pass it to an adapter. The current repository contains Blazor and WPF renderers plus an SVG manifestation adapter for supported scene nodes and coordinate-system scenes. Their contracts and coverage differ: the WPF renderer has focused Windows-native tests, while the shared conformance suite is intentionally narrow. SVG output is inspectable and may use declarative SVG animation; it is not a GUI-owned animation clock or a GPU pipeline.
 
 ## 🟢 04 See it in a minute
 
-Start with the repository's [Explore the GUI guide](docs/START_HERE.md), then build and run the contract tests for the adapter you intend to use.
+Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), then build and run the tests for the adapter you intend to use.
 
 ## 🟪 05 Documentation and theory
 
-[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Subcomposition and Digital Art](docs/SUBCOMPOSITION_AND_DIGITAL_ART.md) · [Testing](docs/TESTING.md) · [Proposed SVG_App Host Boundary](docs/SVG_APP_CONCEPT.md)
+[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
 
 ---
 
@@ -46,35 +46,33 @@ Start with the repository's [Explore the GUI guide](docs/START_HERE.md), then bu
 
 The visual above is a reference manifestation of the architectural idea: semantic interaction and runtime behavior remain distinct from platform-specific presentation.
 
-A platform-neutral GUI engineering layer with recursive builders and platform adapters.
-
-The repository exists to separate GUI intent from GUI manifestation.
-
-A consuming application should be able to describe interface intent once and let an available adapter manifest it. This repository currently includes Blazor and SVG adapters and separate reusable WPF builder infrastructure; Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
+The repository exists to separate GUI intent from GUI manifestation. It includes the neutral Core model, a Blazor renderer, an SVG manifestation adapter for its supported scene vocabulary, and reusable WPF builders with a tested initial Core-to-WPF renderer. Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
 
 ## Repository structure
 
-- src/Core — the neutral recursive GUI model and platform-independent primitives.
-- src/Blazor — the Blazor adapter and Core-to-web manifestation.
-- src/WPF — reusable WPF builders; a Core-to-WPF adapter contract remains future work.
-- src/SVG — the SVG manifestation adapter for supported 2D scene nodes.
-- tests/Core.Tests — platform-independent contract tests.
-- tests/Blazor.Tests — Blazor render-tree contract tests.
-- tests/SVG.Tests — SVG serialization and coordinate-mapping contract tests.
-- docs — architecture, model, adapter, and testing contracts.
-- ROADMAP.md — engineering work required to make the neutral model durable.
-
+- `src/Core` — neutral recursive GUI model and platform-independent primitives.
+- `src/Blazor` — Blazor renderer and Core-to-web manifestation.
+- `src/WPF` — WPF renderer and WPF-specific identity bridge.
+- `src/SVG` — SVG manifestation adapter for supported 2D scene nodes.
+- `tests/Core.Tests` — platform-independent contract tests.
+- `tests/Blazor.Tests` — Blazor render-tree contract tests.
+- `tests/SVG.Tests` — SVG serialization and coordinate-mapping contract tests.
+- `tests/WPF.Tests` — Windows-native WPF renderer tests.
+- `tests/Adapter.Conformance.Tests` — initial shared semantic checks across adapters.
+- `docs` — architecture, model, adapter, testing, theory, and release documentation.
+- [`ROADMAP.md`](ROADMAP.md) — engineering work required to make the neutral model durable.
+- [`docs/RELEASE_READINESS.md`](docs/RELEASE_READINESS.md) — explicit gates for the next package release.
 
 ## Evaluate the architecture
 
-If you are skeptical that this abstraction is necessary, start with:
-
-- [START HERE — Explore the GUI](docs/START_HERE.md)
+If you are skeptical that this abstraction is necessary, start with [START HERE — Explore the GUI](docs/START_HERE.md).
 
 The documentation intentionally has two prongs:
 
-1. **Technology** — what the repository implements, how the semantic model works, how adapters manifest it, how it is tested, and what remains on the roadmap.
+1. **Technology** — what the repository implements, how the semantic model works, how adapters manifest it, how it is tested, and what remains unfinished.
 2. **Theory** — why the boundaries exist, what engineering problems they address, and how the ideas can be used as textbook-ready material.
+
+The code is the case study. The theory documents the argument. The engineering documentation describes the implementation.
 
 ### Technology
 
@@ -88,6 +86,7 @@ The documentation intentionally has two prongs:
 - [GUI Visual Reference](docs/GUI_VISUAL_REFERENCE.md)
 - [GUI Benchmarking](docs/GUI_BENCHMARKING.md)
 - [Roadmap](ROADMAP.md)
+- [Release Readiness](docs/RELEASE_READINESS.md)
 
 ### Theory
 
@@ -99,9 +98,6 @@ The documentation intentionally has two prongs:
 - [Execution Boundary](docs/THEORY/04_EXECUTION_BOUNDARY.md)
 - [Representational Compatibility](docs/THEORY/05_REPRESENTATIONAL_COMPATIBILITY.md)
 - [Spatial Representation](docs/THEORY/06_SPATIAL_REPRESENTATION.md)
-
-The two tracks are deliberately separate. **The code is the case study. The theory documents the argument. The engineering documentation documents the implementation.**
-
 
 ### Where the documentation appears in Visual Studio
 
@@ -126,15 +122,11 @@ For the fastest evaluation, open `Documentation / START_HERE.md`.
 
 The image is a visual companion to the breakwater idea: platform-specific details are allowed to be sophisticated, but they should cross the semantic boundary through an adapter rather than becoming Core dependencies.
 
-The important abstraction is not a shared collection of buttons and panels.
+The important abstraction is not a shared collection of buttons and panels. It is a semantic GUI model:
 
-It is a semantic GUI model:
+application intent → recursive GUI model → platform adapter → native manifestation
 
-application intent -> recursive GUI model -> platform adapter -> native GUI
-
-Core therefore must not depend on HTML, DOM, CSS, JavaScript, Blazor RenderFragment, WPF DependencyObject, XAML, Unity UI Toolkit types, or platform event delegates.
-
-Platform adapters own those details.
+Core therefore must not depend on HTML, DOM, CSS, JavaScript, Blazor RenderFragment, WPF DependencyObject, XAML, Unity UI Toolkit types, or platform event delegates. Platform adapters own those details.
 
 ## Recursive builders
 
@@ -142,25 +134,15 @@ The model is intentionally recursive. A builder can contain children, and each c
 
 For example:
 
-Experience -> Panel -> Panel -> Button -> Text
+Experience → Panel → Panel → Button → Text
 
 This permits small builders to compose larger interfaces without creating a single application-specific GUI builder.
 
 ## Neutrality is a contract
 
-Neutral does not mean copying the lowest common denominator between platforms.
+Neutral does not mean copying the lowest common denominator between platforms. A Core concept belongs in the model only when it has a defined, platform-independent meaning. Platform-specific details are translated by adapters.
 
-A Core concept belongs in the model only when it has a defined, platform-independent meaning. Platform-specific details are translated by adapters.
-
-This distinction is the central engineering problem for this repository.
-
-See:
-
-- [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md)
-- [docs/GUI_MODEL.md](docs/GUI_MODEL.md)
-- [docs/PLATFORM_ADAPTERS.md](docs/PLATFORM_ADAPTERS.md)
-- [docs/TESTING.md](docs/TESTING.md)
-- [ROADMAP.md](ROADMAP.md)
+See [Architecture](docs/ARCHITECTURE.md), [GUI Model](docs/GUI_MODEL.md), [Platform Adapters](docs/PLATFORM_ADAPTERS.md), and [Testing](docs/TESTING.md).
 
 ## Current integrations
 
@@ -170,28 +152,23 @@ The live Workshop is available at:
 
 https://lemon-ground-09f542010.1.azurestaticapps.net/
 
-The original migration issue [WebPage #52](https://github.com/TrentBest/WebPage/issues/52) was closed on 2026-09-29. The current WebPage development project references `TheSingularityWorkshop.GUI.Blazor` v0.1.0-alpha.8 in NuGet mode and the GUI Blazor project in opt-in repository-source mode. These are concrete dependency-integration signals, but neither issue closure nor a package reference alone proves that the live production page is rendered through this path. Keep the WebPage marked as a verified end-to-end integration only when its current development build and tests demonstrate reusable semantic GUI construction and Blazor manifestation through this adapter; the unchecked roadmap items remain the evidence checklist.
+The original migration issue [WebPage #52](https://github.com/TrentBest/WebPage/issues/52) was closed on 2026-09-29. The WebPage development project references `TheSingularityWorkshop.GUI.Blazor` v`0.1.0-alpha.8` in NuGet mode and can opt into repository-source mode. These are dependency-integration signals, not proof that the live production page is rendered through this adapter. Keep end-to-end integration marked unverified until the current WebPage development build and tests demonstrate reusable semantic GUI construction and Blazor manifestation through this path; the unchecked roadmap items remain the evidence checklist.
 
-RevitFamilyManagerBuilders remains unchanged. Reusable WPF infrastructure is being migrated here for forward-moving applications rather than modifying that existing repository.
+The WPF renderer is an initial, tested adapter path, not full parity with Blazor or SVG. See [Platform Adapters](docs/PLATFORM_ADAPTERS.md) for its tested surface and remaining gaps.
 
 ## Status
 
-The repository is in active contract-design phase. The current recursive tree is intentionally small. The next work is to replace ambiguous stringly-typed behavior with explicit semantic contracts, capability negotiation, shared adapter conformance tests, and deterministic GUI artifacts.
-
+The repository is in active contract-design and implementation. Some adapter paths are implemented and tested, while broader semantic properties, capability negotiation, lifecycle, and cross-adapter parity remain open. Use the [roadmap](ROADMAP.md) and [release-readiness checklist](docs/RELEASE_READINESS.md) to distinguish demonstrated behavior from planned work.
 
 ## The Land of Idealism
 
 ![Repository structure](docs/assets/repository-structure-overview.jpg)
 
-The repository structure image is a conceptual map of how the semantic model, adapters, tests, and documentation fit together. It is not intended to be an exhaustive current file listing.
+The repository structure image is a conceptual map of how the semantic model, adapters, tests, and documentation fit together. It is not an exhaustive file listing.
 
-The long-term design begins with a stronger premise than platform abstraction.
-
-The GUI is an **extrinsic interface layer**: an ephemeral observer and interaction boundary around a digital experience. It is not an intrinsic member of the experience's domain code.
+The long-term design begins with a stronger premise than platform abstraction. The GUI is an **extrinsic interface layer**: an ephemeral observer and interaction boundary around a digital experience. It is not an intrinsic member of the experience's domain code.
 
 An experience manifest identifies micro-bundles and configuration. It does not contain GUI implementation. The GUI observes the resulting runtime and manifests an appropriate representation.
-
-Conceptually:
 
 ```
 experience manifest
@@ -210,9 +187,7 @@ The intended relationship with FSM_API is similarly separated:
 
 ## GUI is larger than widgets
 
-GUI purpose is independent of GUI platform.
-
-The model must eventually support diagnostic, operational, informational, spatial, immersive, and expressive visualization. A GUI may represent a button, a floor plan, a state inspector, a 3D scene, an image, a mesh, animation, or even deliberately unstructured visual output such as static/noise.
+GUI purpose is independent of GUI platform. The model must eventually support diagnostic, operational, informational, spatial, immersive, and expressive visualization. A GUI may represent a button, a floor plan, a state inspector, a 3D scene, an image, a mesh, animation, or deliberately unstructured visual output such as static/noise.
 
 The goal is not to build a larger widget library. The goal is to build a semantic representation space expressive enough to describe digital visualization without making a particular device or rendering technology intrinsic to the domain.
 
@@ -228,16 +203,9 @@ The committed reference asset is:
 
 `docs/assets/workshop-map-reference.jpg`
 
-See [docs/GUI_VISUAL_REFERENCE.md](docs/GUI_VISUAL_REFERENCE.md) for the reference-artifact convention and the path from visual reference to semantic model to adapter manifestation.
+See [GUI Visual Reference](docs/GUI_VISUAL_REFERENCE.md) for the reference-artifact convention and the path from visual reference to semantic model to adapter manifestation.
 
-See:
-
-- docs/IDEAL_GUI.md — the philosophical and architectural boundary.
-- docs/GUI_TAXONOMY.md — GUI purposes independent of platform.
-- docs/MANIFEST_BOUNDARY.md — why GUI implementation stays outside experience manifests.
-- docs/GUI_EXPRESSIVENESS.md — the intended visualization and interaction domain.
-- docs/GUI_LIFECYCLE.md — ephemeral and multi-observer lifecycle.
-
+See [Ideal GUI](docs/IDEAL_GUI.md), [GUI Taxonomy](docs/GUI_TAXONOMY.md), [Manifest Boundary](docs/MANIFEST_BOUNDARY.md), [GUI Expressiveness](docs/GUI_EXPRESSIVENESS.md), and [GUI Lifecycle](docs/GUI_LIFECYCLE.md) for the broader model.
 
 ---
 
