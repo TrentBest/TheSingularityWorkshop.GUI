@@ -126,7 +126,9 @@ Engineering companion:
 
 ## Suggested textbook treatment
 
-Each chapter should follow the same editorial pattern:
+The following is the **target editorial pattern**, not a claim that every current chapter already satisfies every item. The existing chapters are a developing manuscript; use this checklist during chapter review and mark missing evidence or sections as editorial work rather than implying they are complete.
+
+Each chapter should ultimately follow this pattern:
 
 1. **Problem** — establish a concrete engineering problem.
 2. **Observation** — identify the recurring failure mode.
