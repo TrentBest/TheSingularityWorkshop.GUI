@@ -26,7 +26,7 @@ Panel(root) -> Button(save) -> Text(Save)
 
 The relevant comparison is hierarchy, identity, semantic kind, text, child order, and any other explicitly specified invariant—not equality of WPF controls and browser render-tree nodes.
 
-Current status is tracked in [ROADMAP.md](../ROADMAP.md): Blazor contract tests are marked implemented; WPF contract tests and shared cross-adapter conformance cases remain open. Do not infer that every adapter has equivalent coverage merely because one adapter's tests pass.
+Current status is tracked in [ROADMAP.md](../ROADMAP.md): focused Blazor contract tests are implemented, while WPF contract tests and a genuinely shared cross-adapter conformance suite remain open. The Blazor tree test and SVG fallback test pin useful adapter-specific invariants, but they do not yet run the same semantic fixture against both adapters. Do not infer that every adapter has equivalent coverage merely because one adapter's tests pass.
 
 ## SVG adapter tests and generated gallery
 
