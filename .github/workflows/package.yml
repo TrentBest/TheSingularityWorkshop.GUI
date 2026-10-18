@@ -43,6 +43,9 @@ jobs:
       - name: Restore SVG
         run: dotnet restore src/SVG/TheSingularityWorkshop.GUI.SVG.csproj
 
+      - name: Restore adapter conformance tests
+        run: dotnet restore tests/Adapter.Conformance.Tests/TheSingularityWorkshop.GUI.Adapter.Conformance.Tests.csproj
+
       - name: Test Core
         run: dotnet test tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj --configuration Release
 
@@ -51,6 +54,9 @@ jobs:
 
       - name: Test SVG
         run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
+
+      - name: Test shared adapter conformance
+        run: dotnet test tests/Adapter.Conformance.Tests/TheSingularityWorkshop.GUI.Adapter.Conformance.Tests.csproj --configuration Release
 
       - name: Build WPF adapter
         run: dotnet build src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release -p:EnableWindowsTargeting=true
