@@ -33,7 +33,7 @@ Start with the repository's [Explore the GUI guide](docs/START_HERE.md), then bu
 
 ## 🟪 05 Documentation and theory
 
-[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Proposed SVG_App Host Boundary](docs/SVG_APP_CONCEPT.md)
+[Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Subcomposition and Digital Art](docs/SUBCOMPOSITION_AND_DIGITAL_ART.md) · [Testing](docs/TESTING.md) · [Proposed SVG_App Host Boundary](docs/SVG_APP_CONCEPT.md)
 
 ---
 
