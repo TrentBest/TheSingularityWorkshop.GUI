@@ -52,7 +52,7 @@ public sealed class SharedAdapterConformanceTests
 
         Assert.Equal(new[] { "root", "save", "status" }, blazorIds);
         Assert.Equal(new[] { "root", "save", "status" }, svgIds);
-        Assert.Equal(new[] { "First", "Save", "Ready" }.Skip(1), blazorText);
+        Assert.Equal(new[] { "Save", "Ready" }, blazorText);
         Assert.Equal(new[] { "save", "status" }, svgChildIds);
         Assert.Equal(new[] { "Save", "Ready" }, svgText);
     }
