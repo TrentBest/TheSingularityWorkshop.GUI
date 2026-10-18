@@ -137,9 +137,9 @@ See [Next Contract Surface](docs/NEXT_CONTRACT_SURFACE.md).
 
 ## Phase 6 — integration
 
-The WebPage is the first practical proving ground for the architecture.
+The WebPage is the intended first practical proving ground for the architecture.
 
-The active migration is tracked by [WebPage issue #52](https://github.com/TrentBest/WebPage/issues/52).
+The original migration issue [WebPage #52](https://github.com/TrentBest/WebPage/issues/52) was closed on 2026-09-29. The current WebPage development project references the published GUI.Blazor package by default and can opt into the GUI repository project in repository-source mode. Issue closure and dependency references are not substitutes for end-to-end build/test evidence; keep the remaining integration checklist below unchecked until each criterion is demonstrated.
 
 - [ ] Refactor the WebPage's reusable GUI construction onto TheSingularityWorkshop.GUI
 - [ ] Keep WebPage domain semantics outside the GUI repository
