@@ -22,7 +22,11 @@ public static class WpfGuiRenderer
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateTree(node);
+        return RenderValidated(node);
+    }
 
+    private static FrameworkElement RenderValidated(GuiNode node)
+    {
         FrameworkElement element = node.Kind switch
         {
             "Button" => new Button { Content = node.Text ?? string.Empty },
@@ -42,7 +46,7 @@ public static class WpfGuiRenderer
             if (childrenHost is not null)
             {
                 foreach (var child in node.Children)
-                    childrenHost.Children.Add(Render(child));
+                    childrenHost.Children.Add(RenderValidated(child));
             }
             else if (element is Button button)
             {
@@ -50,7 +54,7 @@ public static class WpfGuiRenderer
                 if (button.Content is string text && !string.IsNullOrEmpty(text))
                     content.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.Wrap });
                 foreach (var child in node.Children)
-                    content.Children.Add(Render(child));
+                    content.Children.Add(RenderValidated(child));
                 button.Content = content;
             }
         }
