@@ -1,8 +1,8 @@
 # GUI Execution Model
 
-The GUI is not merely a renderer.
+**Status: proposed architecture, not a completed runtime contract.** The repository currently provides a semantic GUI tree and manifestation adapters; it does not yet provide the full execution host described here.
 
-The outermost GUI boundary is the **execution host** for an experience: it accepts something that can be run, resolves the required micro-bundles and capabilities, establishes the execution context, routes external input/data into the running experience, and selects the appropriate manifestation.
+The target architecture treats the GUI as more than a renderer. It proposes that the outermost GUI boundary become the **execution host** for an experience: accepting something runnable, resolving required micro-bundles and capabilities, establishing execution context, routing external input/data, and selecting an appropriate manifestation. These are responsibilities the future contract and implementation must define and test.
 
 This is a deliberate inversion of the conventional relationship:
 
@@ -58,11 +58,11 @@ The caller does not need to know whether an experience manifests as:
 - static/noise,
 - or no visible representation at all.
 
-The execution boundary determines how the requested experience can run and what observation/interaction surface is appropriate.
+The proposed execution boundary would determine how the requested experience can run and what observation/interaction surface is appropriate.
 
 ## GUI as outermost wrapper
 
-The GUI therefore has two distinct responsibilities that must remain separate in the model:
+The target model therefore separates two responsibilities that must remain distinct:
 
 1. **Execution**
    - accept a runnable experience
@@ -112,7 +112,7 @@ A bundle may associate itself with:
 
 The experience asks for capability.
 
-The execution environment determines how that capability is supplied.
+The proposed execution environment would determine how that capability is supplied.
 
 This keeps platform-specific knowledge at the edge rather than forcing every application to know the physical or digital implementation behind the capability.
 
@@ -134,7 +134,7 @@ This is the stronger form of platform neutrality:
 
 This architecture is an inversion of control in the conventional sense: the application does not own the GUI lifecycle and then call into a GUI toolkit.
 
-Instead, the GUI execution boundary owns the lifecycle and runs the requested experience.
+Instead, under the proposed model, the GUI execution boundary would own the lifecycle and run the requested experience.
 
 The relationship becomes:
 
@@ -160,7 +160,7 @@ This should not be confused with saying that the GUI becomes the domain runtime.
 
 The domain remains authoritative over its own semantics and state.
 
-The GUI execution host is the **outer orchestration boundary**.
+The intended GUI execution host is the **outer orchestration boundary**.
 
 ## Proposed vocabulary
 
