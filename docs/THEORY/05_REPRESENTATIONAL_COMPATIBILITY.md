@@ -100,3 +100,9 @@ The question becomes:
 > "Can the same semantic intent be represented faithfully across different manifestations?"
 
 That is the interoperability problem this project is trying to make explicit.
+
+## Repository evidence and limit
+
+The repository contains a platform-neutral [GuiNode](../../src/Core/GuiNode.cs) and distinct [Blazor](../../src/Blazor/BlazorGuiRenderer.cs), [WPF](../../src/WPF/WpfGuiRenderer.cs), and [SVG](../../src/SVG/SvgGuiRenderer.cs) manifestation paths. Existing [Blazor tests](../../tests/Blazor.Tests/BlazorGuiRendererTests.cs) and [SVG tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs) check behavior within those adapters.
+
+That is a starting point for representational compatibility, not proof of equivalent behavior across every platform. Visual resemblance is not sufficient evidence. A stronger compatibility claim requires a shared set of semantic scenarios and conformance assertions across adapters; the [roadmap](../../ROADMAP.md) tracks remaining coverage.
