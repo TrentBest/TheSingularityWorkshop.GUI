@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Xml.Linq;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.RenderTree;
@@ -63,6 +64,33 @@ public sealed class SharedAdapterConformanceTests
         Assert.Equal(new[] { "actions" }, svgRootChildIds);
         Assert.Equal(new[] { "save", "status" }, svgNestedChildIds);
         Assert.Equal(new[] { "Save", "Ready" }, svgText);
+    }
+
+    [Fact]
+    public void Both_adapters_preserve_node_identity_when_properties_contain_id()
+    {
+        var model = new GuiNode(
+            "Panel",
+            "semantic-id",
+            properties: new Dictionary<string, string> { ["id"] = "property-id" });
+
+        var blazorBuilder = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(model)(blazorBuilder);
+        var blazorIds = blazorBuilder.GetFrames().Array
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Attribute &&
+                            frame.AttributeName == "id")
+            .Select(frame => (string)frame.AttributeValue!)
+            .ToArray();
+
+        var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
+        var svgIds = svgDocument.Descendants()
+            .Select(element => (string?)element.Attribute("id"))
+            .Where(id => id is not null)
+            .Cast<string>()
+            .ToArray();
+
+        Assert.Equal(new[] { "semantic-id" }, blazorIds);
+        Assert.Equal(new[] { "semantic-id" }, svgIds);
     }
 
     [Fact]
