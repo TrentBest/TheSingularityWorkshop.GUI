@@ -124,8 +124,25 @@ jobs:
           path: ./packages/*.nupkg
           if-no-files-found: error
 
+  test-wpf:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test WPF renderer
+        run: dotnet test tests/WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj --configuration Release
+
   publish_nuget:
-    needs: test-and-package
+    needs:
+      - test-and-package
+      - test-wpf
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}
     permissions:
