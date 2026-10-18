@@ -8,6 +8,8 @@ namespace TheSingularityWorkshop.Workshop.Gui;
 
 public static class BlazorGuiRenderer
 {
+    private const int MaximumTreeDepth = 256;
+
     public static RenderFragment Render(GuiNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
@@ -18,19 +20,23 @@ public static class BlazorGuiRenderer
     private static void ValidateUniqueIds(GuiNode root)
     {
         var ids = new HashSet<string>(StringComparer.Ordinal);
-        var pending = new Stack<GuiNode>();
-        pending.Push(root);
+        var pending = new Stack<(GuiNode Node, int Depth)>();
+        pending.Push((root, 0));
 
         while (pending.Count > 0)
         {
-            var node = pending.Pop();
+            var (node, depth) = pending.Pop();
+            if (depth > MaximumTreeDepth)
+                throw new InvalidOperationException(
+                    $\"GUI tree exceeds the Blazor renderer's maximum depth ({MaximumTreeDepth}).\");
+
             if (!ids.Add(node.Id))
                 throw new ArgumentException(
                     $"GUI node id '{node.Id}' is duplicated. Node ids must be unique within a rendered tree.",
                     nameof(root));
 
             foreach (var child in node.Children)
-                pending.Push(child);
+                pending.Push((child, depth + 1));
         }
     }
 
