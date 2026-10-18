@@ -78,7 +78,7 @@ The model must first prove that it can describe more than conventional widgets.
 ## Phase 3 — adapter conformance and measurement
 
 - [x] Blazor contract tests
-- [x] Initial WPF renderer contract tests (Windows-native coverage for nested tree order, identity, text, supported dimensions/spacing/colors, null root, and unknown-kind fallback; broader semantic coverage remains open)
+- [x] Initial WPF renderer contract tests (Windows-native coverage for nested tree order, identity, text, supported dimensions/spacing/colors, null root, unknown-kind fallback, duplicate-ID rejection, and the 256-edge depth guard; broader semantic coverage and arbitrary-ID preservation remain open)
 - [x] Initial shared adapter conformance cases (identity, nested hierarchy, child order, and text; broader semantic coverage remains open)
 - [x] Build a second materially different adapter (SVG)
 - [ ] Unity UI Toolkit adapter
