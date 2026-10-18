@@ -47,7 +47,13 @@ public static class BlazorGuiRenderer
         if (!string.IsNullOrWhiteSpace(node.Source))
             builder.AddAttribute(sequence++, "src", node.Source);
         foreach (var property in node.Properties)
+        {
+            // Node identity is owned by GuiNode.Id, never by an arbitrary property.
+            if (string.Equals(property.Key, "id", StringComparison.Ordinal))
+                continue;
+
             builder.AddAttribute(sequence++, property.Key, property.Value);
+        }
         if (node.Text is not null)
             builder.AddContent(sequence++, node.Text);
         foreach (var child in node.Children)
