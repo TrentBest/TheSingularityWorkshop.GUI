@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -15,9 +16,12 @@ namespace TheSingularityWorkshop.GUI.WPF;
 /// </summary>
 public static class WpfGuiRenderer
 {
+    private const int MaximumTreeDepth = 256;
+
     public static FrameworkElement Render(GuiNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
+        ValidateTree(node);
 
         FrameworkElement element = node.Kind switch
         {
@@ -52,6 +56,29 @@ public static class WpfGuiRenderer
         }
 
         return element;
+    }
+
+    private static void ValidateTree(GuiNode root)
+    {
+        var ids = new HashSet<string>(StringComparer.Ordinal);
+        var pending = new Stack<(GuiNode Node, int Depth)>();
+        pending.Push((root, 0));
+
+        while (pending.Count > 0)
+        {
+            var (node, depth) = pending.Pop();
+            if (depth > MaximumTreeDepth)
+                throw new InvalidOperationException(
+                    $"GUI tree exceeds the WPF renderer's maximum depth ({MaximumTreeDepth}).");
+
+            if (!ids.Add(node.Id))
+                throw new ArgumentException(
+                    $"GUI node id '{node.Id}' is duplicated. Node ids must be unique within a rendered tree.",
+                    nameof(root));
+
+            foreach (var child in node.Children)
+                pending.Push((child, depth + 1));
+        }
     }
 
     private static StackPanel? GetChildrenHost(FrameworkElement element) => element switch
