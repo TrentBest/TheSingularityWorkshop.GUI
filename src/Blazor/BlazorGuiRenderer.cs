@@ -14,7 +14,7 @@ public static class BlazorGuiRenderer
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, 0);
+        return builder => RenderNode(builder, node);
     }
 
     private static void ValidateUniqueIds(GuiNode root)
@@ -40,8 +40,11 @@ public static class BlazorGuiRenderer
         }
     }
 
-    private static int RenderNode(RenderTreeBuilder builder, GuiNode node, int sequence)
+    private static void RenderNode(RenderTreeBuilder builder, GuiNode node)
     {
+        // Sequence numbers identify source locations, not global execution order.
+        // Every recursive invocation uses the same sequence positions for this method.
+        var sequence = 0;
         builder.OpenElement(sequence++, ResolveTag(node.Kind));
         builder.AddAttribute(sequence++, "id", node.Id);
         if (!string.IsNullOrWhiteSpace(node.Source))
@@ -57,9 +60,8 @@ public static class BlazorGuiRenderer
         if (node.Text is not null)
             builder.AddContent(sequence++, node.Text);
         foreach (var child in node.Children)
-            sequence = RenderNode(builder, child, sequence);
+            RenderNode(builder, child);
         builder.CloseElement();
-        return sequence;
     }
 
     private static string ResolveTag(string kind) => kind switch
