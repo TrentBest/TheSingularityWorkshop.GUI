@@ -82,6 +82,25 @@ public sealed class SharedAdapterConformanceTests
         Assert.Contains("duplicate", svgException.Message);
     }
 
+    [Fact]
+    public void Both_adapters_reject_trees_deeper_than_the_shared_limit()
+    {
+        var tooDeep = CreateDeepTree(257);
+
+        Assert.Throws<System.InvalidOperationException>(
+            () => BlazorGuiRenderer.Render(tooDeep));
+        Assert.Throws<System.InvalidOperationException>(
+            () => new SvgGuiRenderer().Render(tooDeep));
+    }
+
+    private static GuiNode CreateDeepTree(int deepestNodeDepth)
+    {
+        GuiNode node = new("Panel", "node-0");
+        for (var depth = 1; depth <= deepestNodeDepth; depth++)
+            node = new GuiNode("Panel", $"node-{depth}", children: new[] { node });
+        return node;
+    }
+
     private static GuiNode CreateFixture() =>
         GuiBuilder.Create("Panel", "root")
             .Child("Panel", "actions", panel => panel
