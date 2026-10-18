@@ -39,6 +39,37 @@ public sealed class BlazorGuiRendererConformanceTests
         Assert.Equal(new[] { "First", "Second" }, text);
     }
 
+    [Fact]
+    public void Optional_fields_and_property_count_do_not_shift_later_sequence_positions()
+    {
+        var node = new GuiNode(
+            "Panel",
+            "sequence-stability",
+            text: "Ready",
+            source: "sample.png",
+            properties: new Dictionary<string, string>
+            {
+                ["class"] = "sample-class",
+                ["data-note"] = "prototype-only"
+            });
+
+        var builder = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(node)(builder);
+        var frames = builder.GetFrames().Array;
+
+        var attributes = frames
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Attribute)
+            .ToArray();
+        Assert.Equal(1, attributes.Single(frame => frame.AttributeName == "id").Sequence);
+        Assert.Equal(2, attributes.Single(frame => frame.AttributeName == "src").Sequence);
+        Assert.All(
+            attributes.Where(frame => frame.AttributeName is "class" or "data-note"),
+            frame => Assert.Equal(3, frame.Sequence));
+
+        var text = Assert.Single(frames.Where(frame => frame.FrameType == RenderTreeFrameType.Text));
+        Assert.Equal(4, text.Sequence);
+    }
+
     private static string? FindAttribute(
         RenderTreeFrame[] frames,
         string name,
