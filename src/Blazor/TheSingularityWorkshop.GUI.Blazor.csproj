@@ -6,11 +6,18 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>TheSingularityWorkshop.GUI.Blazor</PackageId>
     <Version>0.1.0</Version>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>gui;blazor;adapter;renderer;builder</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
     <PackageDescription>Recursive fluent GUI builders and Blazor manifestation for The Singularity Workshop.</PackageDescription>
   </PropertyGroup>
+  <ItemGroup>
+    <None Update="README.md" Pack="true" PackagePath="/" />
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.31" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.31" />
