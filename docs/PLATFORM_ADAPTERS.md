@@ -37,6 +37,18 @@ For example, a future Core property named `layout.horizontalAlignment` should be
 
 The current Blazor renderer contains a deliberately simple compatibility implementation. It forwards node properties as render attributes and maps a small set of known kinds to HTML tags. This is useful prototype behavior, not the final cross-platform contract.
 
+That difference is observable today: a `data-note` property is forwarded by Blazor, while the SVG renderer ignores it unless it is part of the SVG node-specific property mapping or the explicit presentation/accessibility attribute allowlist. Common names such as `class` and `fill` are supported in both paths, but that does **not** mean the property dictionaries have shared semantics. The shared conformance test records this current adapter-specific behavior as evidence, not as a finalized parity requirement.
+
+| Model field | Blazor prototype | SVG renderer |
+| --- | --- | --- |
+| `Id` | Emits semantic HTML `id`; property keys equal to `id` case-insensitively are ignored. | Emits semantic SVG `id`; generic property passthrough is not used. |
+| `Source` | Emits `src` on the mapped HTML element, regardless of node kind. | Used as an `svg-image` `href` fallback; other kinds do not automatically receive it. |
+| `Text` | Emits text content inside the HTML element. | Used according to SVG node kind; an unknown kind places it in a `title`, not visible widget text. |
+| `Properties` | Forwards entries as render attributes, except the reserved identity key. | Maps only recognized node-specific properties plus the presentation/accessibility allowlist. Unknown properties may be omitted. |
+| `Children` | Emits children in model order. | Emits children in model order, subject to the SVG vocabulary and fallback behavior. |
+
+This table describes implementation, not a recommendation to preserve every behavior forever. The next contract step is to define which properties are semantic Core concepts, which are target-specific extensions, and how unsupported properties should be reported. Do not infer that arbitrary HTML attributes, SVG scene attributes, or interactive event wiring are portable Core capabilities.
+
 Its recursive render-tree builder uses source-stable sequence numbers: each invocation of the renderer method starts at the same local sequence positions instead of carrying a global counter through the tree. The Blazor conformance test pins this behavior because sequence numbers guide framework diffing; they are not node IDs or a runtime count.
 
 The SVG renderer has a separate explicit SVG scene vocabulary. It can serialize SVG-specific nodes and coordinate-system scenes, but a generic Core tree is not automatically equivalent to an interactive widget tree merely because it can be serialized as SVG.
