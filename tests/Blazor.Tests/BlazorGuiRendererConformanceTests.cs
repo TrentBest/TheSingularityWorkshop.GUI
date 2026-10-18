@@ -27,6 +27,7 @@ public sealed class BlazorGuiRendererConformanceTests
             .ToArray();
 
         Assert.Equal(new[] { "div", "button", "span" }, elements.Select(frame => frame.ElementName));
+        Assert.Equal(new[] { 0, 0, 0 }, elements.Select(frame => frame.Sequence));
         Assert.Equal("root", FindAttribute(frames, "id", "root"));
         Assert.Equal("first", FindAttribute(frames, "id", "first"));
         Assert.Equal("second", FindAttribute(frames, "id", "second"));
