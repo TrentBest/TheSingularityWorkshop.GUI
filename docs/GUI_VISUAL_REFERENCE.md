@@ -2,7 +2,9 @@
 
 The GUI project should preserve useful visual artifacts as **reference manifestations**, not as semantic contracts.
 
-The current reference set covers four conceptual questions plus one living, generated manifestation. These artifacts have different evidentiary roles; a reference image illustrates an architectural question, while the SVG gallery is generated from runnable sample code and checked against a committed snapshot. Neither is, by itself, proof that every proposed semantic contract is implemented.\n\nThe conceptual references ask:
+The current reference set covers four conceptual questions plus one living, generated manifestation. These artifacts have different evidentiary roles; a reference image illustrates an architectural question, while the SVG gallery is generated from runnable sample code and checked against a committed snapshot. Neither is, by itself, proof that every proposed semantic contract is implemented.
+
+The conceptual references ask:
 
 1. What is the ideal boundary?
 2. How is that boundary protected from platform details?
@@ -63,8 +65,9 @@ Generated filenames are renamed to semantic names when they enter the repository
 - gui-engineering-boundary.jpg
 - repository-structure-overview.jpg
 - workshop-map-reference.jpg
+- svg-adapter-gallery.svg — generated living SVG output; maintained as a reviewed snapshot of `samples/SvgGallery/Program.cs`, not a generated JPG or a hand-authored conceptual illustration.
 
-The filename should describe the role of the artifact, not the image generator.
+The filename should describe the role of the artifact, not the image generator. The SVG snapshot should be regenerated and reviewed with its source sample whenever the sample intentionally changes; the SVG adapter documentation describes the verification workflow.
 
 ## Why these images belong in the documentation
 
