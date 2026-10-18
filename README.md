@@ -13,9 +13,9 @@ flowchart TD
   M --> B[Recursive builders]
   B --> BL[Blazor adapter]
   B --> SVG[SVG adapter]
-  WPF[Reusable WPF builders] -. separate infrastructure; Core bridge not yet proven .-> WPFUI[Native WPF UI]
+  WPF[Reusable WPF builders] -. Core bridge not yet proven .-> WPFUI[Native WPF UI]
   BL --> WEB[Blazor host]
-  SVG --> ART[Inspectible SVG artifact]
+  SVG --> ART[Inspectable SVG artifact]
 ```
 
 ## 🟦 01 What
