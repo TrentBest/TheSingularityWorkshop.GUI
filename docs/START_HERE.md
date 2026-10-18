@@ -221,7 +221,7 @@ Notice what the interface is doing, what changes over time, what feels like stat
 
 The live WebPage is the practical proving ground.
 
-The important architectural step is now explicit: the WebPage is being refactored on `development` to consume this GUI repository rather than merely demonstrate similar ideas independently.
+The intended architectural step is explicit, but the migration is not yet marked complete in the [GUI roadmap](../ROADMAP.md): the WebPage should consume this GUI repository rather than merely demonstrate similar ideas independently. Treat the live production site as an experience to explore, not as proof that the development integration has passed. The proving claim becomes valid when the WebPage's development build and tests demonstrate the actual GUI dependency and adapter path.
 
 ### 2. See how the proof is constructed
 
@@ -244,7 +244,7 @@ Blazor adapter
 browser manifestation
 ```
 
-That makes the WebPage more than a demo. It becomes an integration case study: the repository that consumes the abstraction is itself demonstrating what the abstraction is capable of.
+Once the migration is implemented and verified, the WebPage can become more than a demo: it can serve as an integration case study in which a real consuming repository demonstrates the abstraction. Until then, this diagram describes the intended integration path, not a claim that the whole path is already proven.
 
 ### 3. Inspect the boundary
 
