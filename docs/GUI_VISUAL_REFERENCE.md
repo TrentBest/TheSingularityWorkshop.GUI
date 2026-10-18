@@ -2,7 +2,7 @@
 
 The GUI project should preserve useful visual artifacts as **reference manifestations**, not as semantic contracts.
 
-The current reference set covers four documentation questions:
+The current reference set covers four conceptual questions plus one living, generated manifestation. These artifacts have different evidentiary roles; a reference image illustrates an architectural question, while the SVG gallery is generated from runnable sample code and checked against a committed snapshot. Neither is, by itself, proof that every proposed semantic contract is implemented.\n\nThe conceptual references ask:
 
 1. What is the ideal boundary?
 2. How is that boundary protected from platform details?
