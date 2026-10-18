@@ -82,6 +82,12 @@ public sealed class WpfGuiRendererConformanceTests
                     ["margin"] = "1,2,3,4",
                     ["padding"] = "5",
                     ["background"] = "#FF0000",
+                    ["foreground"] = "#00FF00",
+                    ["fontSize"] = "18",
+                    ["fontWeight"] = "700",
+                    ["fontFamily"] = "Arial",
+                    ["horizontalAlignment"] = "Center",
+                    ["verticalAlignment"] = "Bottom",
                     ["tooltip"] = "Save changes"
                 });
 
@@ -92,6 +98,12 @@ public sealed class WpfGuiRendererConformanceTests
             Assert.Equal(new Thickness(5), button.Padding);
             Assert.Equal("Save changes", button.ToolTip);
             Assert.Equal(Color.FromRgb(255, 0, 0), Assert.IsType<SolidColorBrush>(button.Background).Color);
+            Assert.Equal(Color.FromRgb(0, 255, 0), Assert.IsType<SolidColorBrush>(button.Foreground).Color);
+            Assert.Equal(18, button.FontSize);
+            Assert.Equal(FontWeights.Bold, button.FontWeight);
+            Assert.Equal("Arial", button.FontFamily.Source);
+            Assert.Equal(HorizontalAlignment.Center, button.HorizontalAlignment);
+            Assert.Equal(VerticalAlignment.Bottom, button.VerticalAlignment);
         });
     }
 
