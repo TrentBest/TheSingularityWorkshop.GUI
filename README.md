@@ -220,7 +220,7 @@ Concrete images are useful as **reference manifestations** of the semantic model
 
 The first reference is the Workshop map: a large spatial/operational interface combining navigation, a map/scene, destination indexing, textual information, and controls. It is intentionally treated as evidence of expressiveness rather than as a pixel-level Core contract.
 
-When committed, the canonical asset path is:
+The committed reference asset is:
 
 `docs/assets/workshop-map-reference.jpg`
 
