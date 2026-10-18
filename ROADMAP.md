@@ -79,7 +79,7 @@ The model must first prove that it can describe more than conventional widgets.
 
 - [x] Blazor contract tests
 - [ ] WPF contract tests
-- [ ] Shared adapter conformance cases
+- [x] Initial shared adapter conformance cases (identity, nested hierarchy, child order, and text; broader semantic coverage remains open)
 - [x] Build a second materially different adapter (SVG)
 - [ ] Unity UI Toolkit adapter
 - [ ] Establish GUI benchmark methodology
