@@ -72,7 +72,11 @@ public sealed class SharedAdapterConformanceTests
         var model = new GuiNode(
             "Panel",
             "semantic-id",
-            properties: new Dictionary<string, string> { ["id"] = "property-id" });
+            properties: new Dictionary<string, string>
+            {
+                ["id"] = "property-id",
+                ["ID"] = "case-variant-property-id"
+            });
 
         var blazorBuilder = new RenderTreeBuilder();
         BlazorGuiRenderer.Render(model)(blazorBuilder);
