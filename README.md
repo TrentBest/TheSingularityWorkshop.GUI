@@ -166,7 +166,7 @@ The live Workshop is available at:
 
 https://lemon-ground-09f542010.1.azurestaticapps.net/
 
-The production site is a demonstration of the Workshop experience. The development migration is the implementation proof: the goal is for the WebPage itself to consume the semantic GUI model and Blazor adapter rather than merely describe the architecture.
+The production site demonstrates the Workshop experience, but it does not by itself prove that this GUI repository powers the page. The intended development integration is tracked in [WebPage issue #52](https://github.com/TrentBest/WebPage/issues/52) and remains open in the [GUI roadmap](ROADMAP.md). Treat the WebPage as a verified integration proof only after its development build and tests establish the actual semantic GUI model and Blazor adapter path.
 
 RevitFamilyManagerBuilders remains unchanged. Reusable WPF infrastructure is being migrated here for forward-moving applications rather than modifying that existing repository.
 
