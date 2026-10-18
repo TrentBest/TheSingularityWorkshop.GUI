@@ -64,6 +64,6 @@ Verify that the same Core tree produces the required semantic result. Shared con
 
 Verify native behavior that cannot be represented by Core alone, including framework lifecycle, event wiring, resource ownership, accessibility integration, and native layout.
 
-The current roadmap marks Blazor tests as implemented. WPF contract tests and shared cross-adapter conformance cases remain open. SVG has a dedicated serialization suite, but that suite is not by itself proof of cross-adapter semantic equivalence.
+Blazor and SVG have adapter-specific suites, and the initial shared conformance project runs the same small semantic tree through both adapters to compare identity, child ordering, and text preservation. The shared suite is intentionally narrow: it does not establish general widget parity or cover every node kind. WPF contract tests and broader shared conformance cases remain open.
 
 This keeps platform behavior testable without making the Core model platform-aware.
