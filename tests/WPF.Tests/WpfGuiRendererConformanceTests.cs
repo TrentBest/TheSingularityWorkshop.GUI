@@ -79,6 +79,36 @@ public sealed class WpfGuiRendererConformanceTests
         });
     }
 
+    [Fact]
+    public void Renderer_rejects_duplicate_ids_before_materializing_controls()
+    {
+        RunOnSta(() =>
+        {
+            var root = new GuiNode("Panel", "root", children: new[]
+            {
+                new GuiNode("Text", "duplicate"),
+                new GuiNode("Button", "duplicate")
+            });
+
+            var exception = Assert.Throws<ArgumentException>(() => WpfGuiRenderer.Render(root));
+            Assert.Contains("duplicated", exception.Message);
+        });
+    }
+
+    [Fact]
+    public void Renderer_rejects_trees_deeper_than_256_edges()
+    {
+        RunOnSta(() =>
+        {
+            GuiNode node = new GuiNode("Text", "depth-257");
+            for (var depth = 256; depth >= 0; depth--)
+                node = new GuiNode("Panel", $"depth-{depth}", children: new[] { node });
+
+            var exception = Assert.Throws<InvalidOperationException>(() => WpfGuiRenderer.Render(node));
+            Assert.Contains("maximum depth (256)", exception.Message);
+        });
+    }
+
     private static void RunOnSta(Action action)
     {
         Exception? failure = null;
