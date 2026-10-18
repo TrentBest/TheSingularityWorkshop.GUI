@@ -153,3 +153,9 @@ It claims something narrower:
 > The meaning of an experience should not be forced to become identical to the technology used to display or manipulate it.
 
 That is the boundary this project is attempting to make explicit.
+
+## Repository evidence and limit
+
+The current implementation gives this principle a concrete, bounded test surface: [GuiNode](../../src/Core/GuiNode.cs) and [GuiBuilder](../../src/Core/GuiBuilder.cs) describe a platform-neutral tree, while [BlazorGuiRenderer](../../src/Blazor/BlazorGuiRenderer.cs), [WpfGuiRenderer](../../src/WPF/WpfGuiRenderer.cs), and [SvgGuiRenderer](../../src/SVG/SvgGuiRenderer.cs) are separate manifestation paths. This supports the narrower claim that the repository separates a semantic tree from platform-specific rendering.
+
+It does not establish that every domain can be represented, that every adapter preserves every behavior, or that the proposed execution host exists. See the adapter-specific tests and [ROADMAP](../../ROADMAP.md) before making broader claims.
