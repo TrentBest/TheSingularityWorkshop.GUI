@@ -52,7 +52,7 @@ public static class BlazorGuiRenderer
         foreach (var property in node.Properties)
         {
             // Node identity is owned by GuiNode.Id, never by an arbitrary property.
-            if (string.Equals(property.Key, "id", StringComparison.Ordinal))
+            if (string.Equals(property.Key, "id", StringComparison.OrdinalIgnoreCase))
                 continue;
 
             builder.AddAttribute(sequence++, property.Key, property.Value);
