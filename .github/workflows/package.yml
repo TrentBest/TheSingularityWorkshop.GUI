@@ -49,6 +49,9 @@ jobs:
       - name: Test SVG
         run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
 
+      - name: Build WPF adapter
+        run: dotnet build src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release -p:EnableWindowsTargeting=true
+
       - name: Generate GUI.SVG feature gallery
         run: dotnet run --project samples/SvgGallery/SvgGallery.csproj --configuration Release -- ./artifacts/svg-adapter-gallery.svg
 
