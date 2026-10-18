@@ -8,11 +8,11 @@ namespace TheSingularityWorkshop.Workshop.Gui;
 /// </summary>
 public static class GuiBuilders
 {
-    public static GuiNodeBuilder Button(string id, string text) => new("Button", id).Text(text);
-    public static GuiNodeBuilder Column(string id) => new("Column", id);
-    public static GuiNodeBuilder Text(string id, string text) => new("Text", id).Text(text);
-    public static GuiNodeBuilder Panel(string id) => new("Panel", id);
-    public static GuiNodeBuilder Warning(string id, string text) => new("Warning", id).Text(text);
+    public static GuiNodeBuilder Button(string id, string text) => new GuiNodeBuilder("Button", id).Text(text);
+    public static GuiNodeBuilder Column(string id) => new GuiNodeBuilder("Column", id);
+    public static GuiNodeBuilder Text(string id, string text) => new GuiNodeBuilder("Text", id).Text(text);
+    public static GuiNodeBuilder Panel(string id) => new GuiNodeBuilder("Panel", id);
+    public static GuiNodeBuilder Warning(string id, string text) => new GuiNodeBuilder("Warning", id).Text(text);
 }
 
 /// <summary>
