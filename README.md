@@ -47,7 +47,7 @@ A platform-neutral GUI engineering layer with recursive builders and platform ad
 
 The repository exists to separate GUI intent from GUI manifestation.
 
-A consuming application should be able to describe an interface once and allow a platform adapter to materialize it for WPF, Blazor, Unity UI Toolkit, or another supported technology.
+A consuming application should be able to describe interface intent once and let an available adapter manifest it. This repository currently includes Blazor and SVG adapters and WPF manifestation infrastructure; Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
 
 ## Repository structure
 
