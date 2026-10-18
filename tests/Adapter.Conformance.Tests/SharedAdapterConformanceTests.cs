@@ -40,7 +40,14 @@ public sealed class SharedAdapterConformanceTests
             .ToArray();
         var svgRoot = svgDocument.Descendants(svg + "g")
             .Single(element => (string?)element.Attribute("id") == "root");
-        var svgChildIds = svgRoot.Elements()
+        var svgRootChildIds = svgRoot.Elements()
+            .Select(element => (string?)element.Attribute("id"))
+            .Where(id => id is not null)
+            .Cast<string>()
+            .ToArray();
+        var svgNestedGroup = svgDocument.Descendants(svg + "g")
+            .Single(element => (string?)element.Attribute("id") == "actions");
+        var svgNestedChildIds = svgNestedGroup.Elements()
             .Select(element => (string?)element.Attribute("id"))
             .Where(id => id is not null)
             .Cast<string>()
@@ -50,16 +57,18 @@ public sealed class SharedAdapterConformanceTests
             .Where(value => value is "Save" or "Ready")
             .ToArray();
 
-        Assert.Equal(new[] { "root", "save", "status" }, blazorIds);
-        Assert.Equal(new[] { "root", "save", "status" }, svgIds);
+        Assert.Equal(new[] { "root", "actions", "save", "status" }, blazorIds);
+        Assert.Equal(new[] { "root", "actions", "save", "status" }, svgIds);
         Assert.Equal(new[] { "Save", "Ready" }, blazorText);
-        Assert.Equal(new[] { "save", "status" }, svgChildIds);
+        Assert.Equal(new[] { "actions" }, svgRootChildIds);
+        Assert.Equal(new[] { "save", "status" }, svgNestedChildIds);
         Assert.Equal(new[] { "Save", "Ready" }, svgText);
     }
 
     private static GuiNode CreateFixture() =>
         GuiBuilder.Create("Panel", "root")
-            .Child("Button", "save", button => button.Text("Save"))
-            .Child("Text", "status", text => text.Text("Ready"))
+            .Child("Panel", "actions", panel => panel
+                .Child("Button", "save", button => button.Text("Save"))
+                .Child("Text", "status", text => text.Text("Ready")))
             .Build();
 }
