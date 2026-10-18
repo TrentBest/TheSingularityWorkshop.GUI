@@ -86,15 +86,17 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 - [ ] Publish only after approval and only the inspected artifacts; verify each package/version on NuGet.org after publication.
 - [ ] If publication is not authorized or fails, leave the publish gate disabled and record the outcome without claiming release completion.
 
-## Initial audit findings to resolve
+## Initial audit findings and current disposition
 
-These are evidence-based starting points, not an exhaustive audit:
+These findings are evidence-based and are not an exhaustive audit. Revisit them against the exact candidate commit before a release decision.
 
-- **Version declarations need reconciliation.** Core, Blazor, and WPF currently declare `0.1.0`; SVG declares `0.1.0-alpha.1`. The repository README describes the WebPage NuGet dependency as Blazor `0.1.0-alpha.8`. Confirm actual published versions and choose an intentional, consistent release plan.
-- **Package scope is not yet aligned with workflow scope.** The workflow packs Core, Blazor, and SVG; it builds WPF on Linux and tests WPF on Windows but does not pack a WPF package.
-- **README status correction made on development.** The top-level README and Start Here guide now describe the initial tested WPF renderer and its limits. The release-wide documentation/version audit is still open; this correction alone does not satisfy the full documentation gate.
+- **Version declarations need reconciliation — OPEN.** Core, Blazor, and WPF currently declare `0.1.0`; SVG declares `0.1.0-alpha.1`. The repository README has described the WebPage NuGet dependency as Blazor `0.1.0-alpha.8`. Confirm actual published versions and choose an intentional, consistent release plan.
+- **Package scope is unresolved — OPEN.** The workflow packs Core, Blazor, and SVG; it builds WPF on Linux and tests WPF on Windows but does not pack a WPF package. Decide explicitly whether WPF ships as a package in this release.
+- **README/WPF status contradiction — SOURCE UPDATED, CI REVIEW PENDING.** Commits [`40e2aca`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/40e2aca844eda72bc2f50c2766f3abfe690daa4d) and [`dd9697d`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/dd9697d54ccb5f3c4ee5b68dc702644310a1468d) align the README with the initial `GuiNode`-to-WPF renderer evidence without claiming adapter parity.
+- **WPF CI compile blocker — FIXED AND VERIFIED ON COMMIT `8f82493`.** The Windows test job had failed because `WpfGuiRendererConformanceTests` declared the same test method twice. [Workflow run 39149441918](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39149441918) passed the Linux test/package job and Windows WPF tests; publication was skipped. This run predates the package README metadata changes, so it does not verify those later changes.
+- **Core and Blazor package-facing READMEs — ADDED; PACKAGE VERIFICATION PENDING.** `src/Core/README.md` and `src/Blazor/README.md` now document the implemented contracts and limitations, and both project files configure the README for NuGet packing. The repository has no root license file visible on `development`; do not assert a package license until the intended license is established.
 - **The public release path is intentionally blocked.** The publish job has an explicit `&& false` guard. This is a safety control, not a failed readiness check to remove prematurely.
-- **End-to-end integration remains a separate gate.** The roadmap says the WebPage is the proving ground but leaves its end-to-end evidence checklist open. Do not call integration verified until the consuming application demonstrates it.
+- **End-to-end integration remains a separate gate.** The roadmap says WebPage is the proving ground but leaves its end-to-end evidence checklist open. Do not call integration verified until the consuming application demonstrates it.
 
 ## Release decision record
 
