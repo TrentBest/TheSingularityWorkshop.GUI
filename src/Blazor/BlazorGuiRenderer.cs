@@ -28,7 +28,7 @@ public static class BlazorGuiRenderer
             var (node, depth) = pending.Pop();
             if (depth > MaximumTreeDepth)
                 throw new InvalidOperationException(
-                    $\"GUI tree exceeds the Blazor renderer's maximum depth ({MaximumTreeDepth}).\");
+                    $"GUI tree exceeds the Blazor renderer's maximum depth ({MaximumTreeDepth}).");
 
             if (!ids.Add(node.Id))
                 throw new ArgumentException(
