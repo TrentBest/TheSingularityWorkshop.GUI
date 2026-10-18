@@ -11,13 +11,16 @@ GUI separates the semantic description of an interface from the platform-specifi
 flowchart TD
   I[Interface intent] --> M[Neutral GUI model]
   M --> B[Recursive builders]
-  B --> A[Platform adapter]
-  A --> P[WPF / Blazor / other host]
+  B --> BL[Blazor adapter]
+  B --> SVG[SVG adapter]
+  WPF[Reusable WPF builders] -. separate infrastructure; Core bridge not yet proven .-> WPFUI[Native WPF UI]
+  BL --> WEB[Blazor host]
+  SVG --> ART[Inspectible SVG artifact]
 ```
 
 ## 🟦 01 What
 
-Its core responsibility is the neutral model and builder contracts. Platform adapters own manifestation details; consuming applications own their domain meaning and behavior.
+Its core responsibility is the neutral model and builder contracts. Adapters own manifestation details; consuming applications own their domain meaning and behavior.
 
 ## 🟣 02 Why
 
@@ -25,7 +28,7 @@ A neutral interface model allows one description of intent to be manifested by d
 
 ## 🔺 03 How
 
-Describe GUI intent in the neutral model, then use a supported adapter to manifest it in a host such as Blazor, WPF, or SVG. The `TheSingularityWorkshop.GUI.SVG` project turns neutral GUI nodes and coordinate-system scenes into accessible, inspectable SVG markup. Visualize consumes it through an explicit adapter; SVG animation is declarative output, not an animation clock or GPU pipeline.
+Describe GUI intent in the neutral model, then use a supported adapter to manifest it. The current Core-to-platform paths are Blazor and SVG: `TheSingularityWorkshop.GUI.SVG` turns supported scene nodes and coordinate-system scenes into accessible, inspectable SVG markup. Visualize consumes SVG through an explicit adapter; SVG animation is declarative output, not an animation clock or GPU pipeline. The repository also contains reusable WPF builders, but a tested WPF bridge from `GuiNode` to native WPF controls is not yet established.
 
 ## 🟢 04 See it in a minute
 
@@ -47,15 +50,16 @@ A platform-neutral GUI engineering layer with recursive builders and platform ad
 
 The repository exists to separate GUI intent from GUI manifestation.
 
-A consuming application should be able to describe interface intent once and let an available adapter manifest it. This repository currently includes Blazor and SVG adapters and WPF manifestation infrastructure; Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
+A consuming application should be able to describe interface intent once and let an available adapter manifest it. This repository currently includes Blazor and SVG adapters and separate reusable WPF builder infrastructure; Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
 
 ## Repository structure
 
 - src/Core — the neutral recursive GUI model and platform-independent primitives.
-- src/Blazor — Blazor builders and the first Core-to-web manifestation.
-- src/WPF — reusable WPF builders and desktop manifestation infrastructure.
-- src/SVG — the SVG manifestation adapter for inspectable 2D scenes and GUI trees.
+- src/Blazor — the Blazor adapter and Core-to-web manifestation.
+- src/WPF — reusable WPF builders; a Core-to-WPF adapter contract remains future work.
+- src/SVG — the SVG manifestation adapter for supported 2D scene nodes.
 - tests/Core.Tests — platform-independent contract tests.
+- tests/Blazor.Tests — Blazor render-tree contract tests.
 - tests/SVG.Tests — SVG serialization and coordinate-mapping contract tests.
 - docs — architecture, model, adapter, and testing contracts.
 - ROADMAP.md — engineering work required to make the neutral model durable.
