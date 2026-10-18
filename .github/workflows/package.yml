@@ -106,6 +106,75 @@ jobs:
       - name: Pack SVG
         run: dotnet pack src/SVG/TheSingularityWorkshop.GUI.SVG.csproj --configuration Release --output ./packages
 
+      - name: Verify Core and Blazor package README metadata
+        shell: bash
+        run: |
+          set -euo pipefail
+          for id in TheSingularityWorkshop.GUI.Core TheSingularityWorkshop.GUI.Blazor; do
+            package="$(find ./packages -maxdepth 1 -type f -name "${id}.*.nupkg" -print -quit)"
+            test -n "$package" && test -s "$package"
+            contents="$(unzip -l "$package")"
+            printf '%s\n' "$contents" | grep -q 'README.md'
+            nuspec="$(unzip -Z1 "$package" | grep '\.nuspec        run: |
+          set -euo pipefail
+          package="$(find ./packages -maxdepth 1 -type f -name 'TheSingularityWorkshop.GUI.SVG.*.nupkg' -print -quit)"
+          test -n "$package" && test -s "$package"
+          unzip -l "$package" > ./artifacts/gui-svg-package-contents.txt
+          grep -q 'README.md' ./artifacts/gui-svg-package-contents.txt
+          grep -q 'docs/SVG_ADAPTER.md' ./artifacts/gui-svg-package-contents.txt
+          grep -q 'docs/assets/svg-adapter-gallery.svg' ./artifacts/gui-svg-package-contents.txt
+
+      - name: Upload NuGet package artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-nuget-packages
+          path: ./packages/*.nupkg
+          if-no-files-found: error
+
+  test-wpf:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Test WPF renderer
+        run: dotnet test tests/WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj --configuration Release
+
+  publish_nuget:
+    needs:
+      - test-and-package
+      - test-wpf
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - name: Download NuGet package artifacts
+        uses: actions/download-artifact@v8
+        with:
+          name: gui-nuget-packages
+          path: ./packages
+
+      - name: Authenticate with NuGet Trusted Publishing
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: TheSingularityWorkshop
+
+      - name: Publish packages to NuGet.org
+        run: dotnet nuget push "./packages/*.nupkg" --source "https://api.nuget.org/v3/index.json" --api-key "${{ steps.login.outputs.NUGET_API_KEY }}" --skip-duplicate
+ | head -n 1)"
+            test -n "$nuspec"
+            unzip -p "$package" "$nuspec" | grep -q '<readme>README.md</readme>'
+          done
+
       - name: Verify GUI.SVG package documentation and gallery
         shell: bash
         run: |
