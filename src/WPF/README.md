@@ -20,10 +20,10 @@ Build on Windows with the .NET 8 SDK:
 
 ```powershell
 dotnet build src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release
-dotnet test --configuration Release
+dotnet test tests/WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj --configuration Release
 ```
 
-The solution-level test command is illustrative; run the repository's documented Windows WPF test workflow to verify the actual WPF test project and record the exact commit and workflow result.
+Run the WPF tests on Windows, as in the repository's `test-wpf` workflow job. Record the exact commit and workflow result; a successful cross-target build on Linux is not a substitute for running the Windows test suite.
 
 ## Package status
 
