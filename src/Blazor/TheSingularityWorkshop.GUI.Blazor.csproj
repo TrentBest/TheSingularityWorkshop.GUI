@@ -7,7 +7,6 @@
     <PackageId>TheSingularityWorkshop.GUI.Blazor</PackageId>
     <Version>0.1.0</Version>
     <RepositoryType>git</RepositoryType>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>gui;blazor;adapter;renderer;builder</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <Authors>The Singularity Workshop</Authors>
