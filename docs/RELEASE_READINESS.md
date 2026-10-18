@@ -27,7 +27,7 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 - [ ] Confirm the shared contract tests cover the promised semantic invariants, and list remaining adapter-specific differences.
 - [ ] Confirm duplicate-ID and depth-limit behavior is consistent with the documented adapter-boundary rules.
 - [ ] Review property mapping, source/media handling, text, child order, identity, unsupported-property behavior, accessibility, and interaction/event behavior. Explicitly mark unsupported or unverified behavior rather than implying parity.
-- [ ] Reconcile README and architecture claims with current code. The repository README currently contains older statements that the Core-to-WPF bridge is not established, while WPF renderer tests and the adapter guide describe a WPF `GuiNode` renderer; resolve that contradiction before release.
+- [x] Reconcile the top-level README's Core-to-WPF status with current code. The README and Start Here guide now describe the tested initial WPF renderer accurately; the broader documentation consistency audit remains open below.
 - [ ] Audit cross-repository integration claims. A dependency reference or closed migration issue is not by itself proof of a working end-to-end WebPage integration.
 
 ## 3. Tests and verification evidence
@@ -92,7 +92,7 @@ These are evidence-based starting points, not an exhaustive audit:
 
 - **Version declarations need reconciliation.** Core, Blazor, and WPF currently declare `0.1.0`; SVG declares `0.1.0-alpha.1`. The repository README describes the WebPage NuGet dependency as Blazor `0.1.0-alpha.8`. Confirm actual published versions and choose an intentional, consistent release plan.
 - **Package scope is not yet aligned with workflow scope.** The workflow packs Core, Blazor, and SVG; it builds WPF on Linux and tests WPF on Windows but does not pack a WPF package.
-- **README claims need updating.** The top-level README still describes WPF as reusable builders without an established Core bridge, which conflicts with the current WPF renderer, tests, and adapter guide.
+- **README status correction made on development.** The top-level README and Start Here guide now describe the initial tested WPF renderer and its limits. The release-wide documentation/version audit is still open; this correction alone does not satisfy the full documentation gate.
 - **The public release path is intentionally blocked.** The publish job has an explicit `&& false` guard. This is a safety control, not a failed readiness check to remove prematurely.
 - **End-to-end integration remains a separate gate.** The roadmap says the WebPage is the proving ground but leaves its end-to-end evidence checklist open. Do not call integration verified until the consuming application demonstrates it.
 
