@@ -12,7 +12,7 @@
 
 ## UML class diagram
 
-![UML class diagram for DataCard](assets/uml-data-card.svg)
+![UML class diagram for DataCard](../assets/uml-data-card.svg)
 
 The diagram records the members declared by `DataCard.cs`. Visibility uses UML notation: `+` public and `−` private. Nullable annotations and optional constructor defaults are shown where useful. No inheritance or implemented interface is shown because the class declares none.
 
