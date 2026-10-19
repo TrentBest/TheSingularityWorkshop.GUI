@@ -6,10 +6,12 @@ using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.Workshop.Gui;
 
+/// <summary>Renders a semantic GUI node tree as a Blazor render fragment.</summary>
 public static class BlazorGuiRenderer
 {
     private const int MaximumTreeDepth = 256;
 
+    /// <summary>Creates a Blazor render fragment for a semantic GUI node.</summary>
     public static RenderFragment Render(GuiNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
