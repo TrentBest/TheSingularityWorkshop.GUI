@@ -50,7 +50,7 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 
 ## P3 — Consumer proof and documentation alignment
 
-- [x] Baseline WebPage NuGet-mode and repository-source CI passed for the currently configured dependency set.
+- [x] WebPage repository-source integration passed on commit [`6f1d710`](https://github.com/TrentBest/WebPage/commit/6f1d710bf61285ab2536b2a5406c6de78914c234) in [run 39274438190](https://github.com/TrentBest/WebPage/actions/runs/39274438190); its source integration job built WebPage and passed the live Renderer smoke test. The separate WebPage test job failed 6 of 829 `SingularityHub.Tests` tests because experience-manifest responses supplied `text/plain` instead of the required JSON content type (the run log reports `InvalidDataException`). This is a WebPage test blocker, not evidence that GUI packages caused the failure; candidate-version NuGet integration remains unverified.
 - [ ] Re-run WebPage against the **selected candidate package versions**; baseline integration is not candidate-version proof.
 - [ ] Demonstrate the documented Blazor renderer path in a real consumer host and retain representative evidence.
 - [ ] Align README, Start Here, architecture/model/adapter/theory guides, roadmap, and package READMEs with the behavior actually implemented and tested.
