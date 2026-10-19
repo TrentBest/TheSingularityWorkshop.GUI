@@ -6,7 +6,7 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 **Current project-file declarations (reviewed 2026-10-18):** Core `0.1.0`; Blazor `0.1.0`; WPF `0.1.0`; SVG `0.1.0-alpha.1`. **Official NuGet Gallery versions observed 2026-10-18:** Core `0.1.0-alpha.4`; Blazor `0.1.0-alpha.8`; WPF `0.1.0-alpha.6`. See [Core](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Core), [Blazor](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Blazor/), and [WPF](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.WPF/). SVG publication status remains unverified. The project declarations and public package versions therefore diverge for all three listed packages; this is a release blocker, not a reason to infer a desired version.  
 **Publication:** disabled by the workflow's explicit `&& false` guard. Do not remove that guard or publish until the release candidate has passed this checklist and publication is explicitly approved.
 
-**Approximate readiness for the next package release: 55% — approaching ready, not release-ready.** This is a qualitative, evidence-based estimate while package scope is still undecided; it is not a count of checked boxes and does not authorize publication. Linux package/tests and Windows WPF tests pass, and a clean .NET 8 consumer was verified for locally packed Core/Blazor/SVG artifacts. Version/channel alignment, package scope (especially WPF), license policy, full WebPage consumer verification, and final-candidate artifact/metadata checks remain open. Re-estimate after meaningful evidence or owner decisions. The latest checklist commit `b9d5ff0` has a successful full workflow in [run 39179783838](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39179783838); `publish_nuget` was skipped.
+**Approximate readiness for the next package release: 60% — approaching ready, not release-ready.** This is a qualitative, evidence-based estimate while package scope is still undecided; it is not a count of checked boxes and does not authorize publication. The full workflow passed on checklist commit [`0f237f2`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/0f237f25f45a71e886341e9e9377b994f0622c58): Release Core/Blazor/SVG and shared conformance tests, documentation-link check, generated SVG gallery byte comparison, clean .NET 8 consumer for locally packed Core/Blazor/SVG artifacts, and Windows WPF tests all passed in [run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067). `publish_nuget` was skipped. Remaining release blockers include version/channel alignment, package scope (especially WPF), license policy, full WebPage consumer verification, and final-candidate artifact/metadata review. This remains a qualitative estimate and does not authorize publication.
 
 ## 1. Decide what this release contains
 
@@ -34,13 +34,13 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 
 ## 3. Tests and verification evidence
 
-- [ ] Run Core tests in Release configuration.
-- [ ] Run Blazor tests in Release configuration.
-- [ ] Run SVG tests in Release configuration.
-- [ ] Run shared adapter conformance tests in Release configuration.
-- [ ] Run WPF renderer tests on Windows; confirm the native test job actually executes, not just that the project compiles.
-- [ ] Run the repository documentation-link checker.
-- [ ] Regenerate the SVG feature gallery and verify it matches the committed artifact byte-for-byte.
+- [x] Run Core tests in Release configuration. Verified in [workflow run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067) on commit `0f237f2`.
+- [x] Run Blazor tests in Release configuration. Verified in [workflow run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067) on commit `0f237f2`.
+- [x] Run SVG tests in Release configuration. Verified in [workflow run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067) on commit `0f237f2`.
+- [x] Run shared adapter conformance tests in Release configuration. Verified in [workflow run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067) on commit `0f237f2`.
+- [x] Run WPF renderer tests on Windows; confirm the native test job actually executes, not just that the project compiles. The Windows `test-wpf` job passed in [workflow run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067) on commit `0f237f2`.
+- [x] Run the repository documentation-link checker. The workflow's `Check repository-local documentation links` step passed in [run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067).
+- [x] Regenerate the SVG feature gallery and verify it matches the committed artifact byte-for-byte. The generator and `cmp` verification passed in [run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067).
 - [ ] Build all in-scope projects in Release configuration with no unexpected warnings or errors.
 - [ ] Record test counts, warnings/errors, workflow URL, and exact commit SHA. A local test result is not CI evidence; a green workflow only verifies the checks it actually ran.
 - [ ] Review the full workflow result for the candidate commit and resolve every failure relevant to release.
@@ -54,7 +54,7 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 - [ ] Inspect every `.nupkg` archive and its `.nuspec`: verify the intended files, framework assets, dependency groups/versions, and absence of accidental source, build output, secrets, or unrelated files.
 - [ ] Verify package-to-package dependency versions are coherent and the dependency graph does not rely on uncommitted project references.
 - [ ] Confirm the workflow actually packs every package declared in release scope. The current workflow packs Core, Blazor, and SVG; WPF is built and tested but is not currently packed by that workflow.
-- [ ] Install each package from the produced artifacts into a clean consumer project targeting the supported framework(s), then compile and run a minimal representative use case.
+- [x] Install each package from the produced artifacts into a clean consumer project targeting the supported framework(s), then compile and run a minimal representative use case. Core, Blazor, and SVG passed the workflow's clean .NET 8 consumer in [run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067); this is not full WebPage integration.
 - [ ] For Blazor, verify the documented renderer path in a real consumer host; for SVG, verify the package can render the documented sample without relying on repository-only files.
 - [ ] Record package filenames, versions, hashes if used, and the artifact/workflow run from which they came.
 
