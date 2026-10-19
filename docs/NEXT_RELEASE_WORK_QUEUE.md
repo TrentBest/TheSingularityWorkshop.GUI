@@ -3,7 +3,7 @@
 This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
 
 **Baseline:** `development`  
-**Estimated readiness:** **76%** — MIT/WPF scope is implemented and the four-package artifact has been downloaded and inspected: all four archives include the intended framework DLL, XML API documentation, README, and MIT metadata. A follow-up CI gate now checks framework/XML assets. Version/channel alignment, candidate selection, and final consumer/integration evidence remain open.  
+**Estimated readiness:** **82%** — MIT/WPF scope is implemented; the four-package archive set has been inspected, and PR #17 has merged the target-framework/XML-documentation archive assertions into `development` (merge commit [`4bd42c7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/4bd42c78b95ba9f3834eb3b137aa710cd8f1dc3f)). The merged development workflow [run 39199053746](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199053746) is in progress; its result is not yet counted as passed. Version/channel alignment, candidate selection, and candidate-version consumer/integration evidence remain open.  
 **Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved.
 
 ## Definition of a substantial next release
