@@ -3,7 +3,7 @@
 This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
 
 **Baseline:** `development`  
-**Estimated readiness:** **70%** — owner decisions now establish MIT licensing and WPF inclusion; implementation is underway to package and verify the complete four-package family. Version/channel alignment and candidate evidence remain open.  
+**Estimated readiness:** **74%** — owner decisions establish MIT licensing and WPF inclusion, and the updated workflow successfully packed and metadata-checked all four packages. Version/channel alignment, candidate selection, and final consumer/integration evidence remain open.  
 **Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved.
 
 ## Definition of a substantial next release
@@ -40,7 +40,7 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 - [x] Verify Grid splitter/track mapping, Canvas positioning, and nested-component parent propagation; [Windows workflow run 39195444173](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195444173) passed after a compile-time assertion correction. Reusable window-host builder tests remain in a later run.
 - [ ] Audit public APIs and XML documentation for every in-scope package; build Release with no unexplained warnings/errors.
 - [ ] Inspect all candidate package archives and dependency graphs; ensure package versions and Blazor-to-Core dependencies agree.
-- [x] Wire WPF into the package workflow and configure its package README, tags, repository metadata, and MIT license expression. The PR CI must still prove the package archive contains the expected metadata and README.
+- [x] Wire WPF into the package workflow and verify its package README, tags, repository metadata, MIT license expression, and archive README presence in [workflow run 39197481340](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39197481340). The same run passed the clean Core/Blazor/SVG consumer smoke test and Windows WPF tests; `publish_nuget` was skipped.
 - [ ] Confirm Core remains platform-neutral and has no accidental UI-framework dependency.
 - [ ] Record test counts, exact workflow URL, commit SHA, package filenames, and clean-consumer result.
 
