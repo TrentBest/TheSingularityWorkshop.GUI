@@ -31,6 +31,6 @@ Run the WPF tests on Windows, as in the repository's `test-wpf` workflow job. Re
 
 ## Package status
 
-The project file currently declares package version `0.1.0`. Check [release readiness](../../docs/RELEASE_READINESS.md) before relying on that value: project-file versions and public NuGet versions have diverged, and whether WPF belongs in a particular release remains an explicit release-scope decision.
+The project currently declares package version `0.1.0`; the next release candidate must reconcile this with the public NuGet version before packaging. WPF is in scope for the planned GUI package-family release. Its package is Windows-specific (`net8.0-windows`) and is built/tested on Windows; Linux CI cross-targets it for package production.
 
-This README documents the project; it does not by itself mean the README is included in the NuGet package. The project must explicitly configure package README metadata and the resulting `.nupkg` must be inspected before making that claim.
+This README is configured as the WPF package README. The release workflow must verify that the resulting `.nupkg` contains it and declares the repository's MIT license. Treat archive inspection and Windows test results as release evidence, not assumptions.
