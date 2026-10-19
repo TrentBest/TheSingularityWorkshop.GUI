@@ -70,6 +70,27 @@ public sealed class GuiBuilderTests
     }
 
     [Fact]
+    public void TryFind_handles_deep_trees_without_recursive_traversal()
+    {
+        GuiNode? root = null;
+        const int depth = 4096;
+
+        for (var i = depth - 1; i >= 0; i--)
+        {
+            root = new GuiNode(
+                "Panel",
+                $"node-{i}",
+                children: root is null ? null : new[] { root });
+        }
+
+        Assert.NotNull(root);
+        Assert.True(root!.TryFind($"node-{depth - 1}", out var found));
+        Assert.NotNull(found);
+        Assert.Equal($"node-{depth - 1}", found!.Id);
+        Assert.False(root.TryFind("missing", out _));
+    }
+
+    [Fact]
     public void Find_reports_missing_node()
     {
         var root = GuiBuilder.Create("Panel", "root").Build();
