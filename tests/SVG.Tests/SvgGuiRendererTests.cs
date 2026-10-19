@@ -422,4 +422,46 @@ public sealed class SvgGuiRendererTests
 
         Assert.Equal(first, second);
     }
+
+
+    [Theory]
+    [InlineData("NaN")]
+    [InlineData("Infinity")]
+    [InlineData("-Infinity")]
+    public void Rejects_non_finite_numeric_geometry_properties(string value)
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-circle", "marker", circle => circle.Property("cx", value))
+            .Build();
+
+        var error = Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+        Assert.Contains("invalid numeric 'cx'", error.Message);
+    }
+
+    [Theory]
+    [InlineData("svg-a", "href")]
+    [InlineData("svg-mpath", "href")]
+    public void Rejects_blank_required_reference_properties(string kind, string property)
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child(kind, "reference", node => node.Property(property, "   "))
+            .Build();
+
+        Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+    }
+
+    [Fact]
+    public void Rejects_duplicate_ids_for_any_enabled_coordinate_overlay()
+    {
+        var scene = GuiBuilder.Create("coordinate-system", "plot")
+            .Property("grid", "visible")
+            .Property("axes", "visible")
+            .Child("svg-circle", "plot-axes", circle => circle.Property("r", "1"))
+            .Build();
+
+        var error = Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+        Assert.Contains("plot-axes", error.Message);
+        Assert.Contains("synthesized coordinate overlay", error.Message);
+    }
+
 }
