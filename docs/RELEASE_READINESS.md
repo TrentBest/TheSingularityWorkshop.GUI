@@ -1,5 +1,7 @@
 # GUI Package Release Readiness
 
+**Prioritized execution queue:** [Next-Release Work Queue](NEXT_RELEASE_WORK_QUEUE.md). Use that queue to sequence implementation; this checklist remains the authoritative release gate.
+
 This is the release gate for the packages produced by `TrentBest/TheSingularityWorkshop.GUI`. It is a working checklist, not a claim that a release is currently approved. Check an item only when the evidence is available for the exact release candidate commit.
 
 **Current review baseline:** `development`  
