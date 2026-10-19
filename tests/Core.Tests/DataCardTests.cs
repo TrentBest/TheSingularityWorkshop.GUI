@@ -57,4 +57,48 @@ public sealed class DataCardTests
         Assert.Empty(card.Children);
         Assert.Null(card.Subtitle);
     }
+
+    [Fact]
+    public void Collapsed_summary_reports_the_current_direct_child_count()
+    {
+        var card = new DataCard(
+            "private-properties",
+            "member-group",
+            "Private Properties",
+            isExpandedByDefault: false,
+            children: new[]
+            {
+                new DataCard("a", "property", "A"),
+                new DataCard("b", "property", "B"),
+                new DataCard("c", "property", "C"),
+                new DataCard("d", "property", "D")
+            });
+
+        Assert.Equal("Collapsed (4)", card.GetCollapsedSummary(isExpanded: false));
+        Assert.Null(card.GetCollapsedSummary(isExpanded: true));
+    }
+
+    [Fact]
+    public void Empty_collapsed_region_can_offer_insertion_without_a_disclosure_summary()
+    {
+        var card = new DataCard(
+            "private-properties",
+            "member-group",
+            "Private Properties",
+            isExpandedByDefault: false,
+            canRequestChildInsertion: true);
+
+        Assert.Empty(card.Children);
+        Assert.Null(card.GetCollapsedSummary(isExpanded: false));
+        Assert.True(card.CanRequestChildInsertion);
+    }
+
+    [Fact]
+    public void Insertion_affordance_is_not_enabled_by_default()
+    {
+        var card = new DataCard("namespace", "namespace", "Example");
+
+        Assert.False(card.CanRequestChildInsertion);
+    }
+
 }
