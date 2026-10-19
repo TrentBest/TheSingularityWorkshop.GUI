@@ -114,10 +114,10 @@ public sealed class WpfGuiRendererConformanceTests
                 text: "Save",
                 properties: new Dictionary<string, string>
                 {
-                    ["fontFamily"] = ""
+                    ["fontFamily"] = null!
                 })));
 
-            Assert.False(string.IsNullOrEmpty(button.FontFamily.Source));
+            Assert.Equal(SystemFonts.MessageFontFamily.Source, button.FontFamily.Source);
         });
     }
 
