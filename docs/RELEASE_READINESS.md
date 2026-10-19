@@ -6,11 +6,11 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 
 **Current review baseline:** `development`  
 **Current project-file declarations (reviewed 2026-10-18):** Core `0.1.0`; Blazor `0.1.0`; WPF `0.1.0`; SVG `0.1.0-alpha.1`. **Official NuGet Gallery versions observed 2026-10-18:** Core `0.1.0-alpha.4`; Blazor `0.1.0-alpha.8`; WPF `0.1.0-alpha.6`. See [Core](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Core), [Blazor](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.Blazor/), and [WPF](https://www.nuget.org/packages/TheSingularityWorkshop.GUI.WPF/). SVG publication status remains unverified. The project declarations and public package versions therefore diverge for all three listed packages; this is a release blocker, not a reason to infer a desired version.  
-**Publication:** disabled by the workflow's explicit `&& false` guard. Do not remove that guard or publish until the release candidate has passed this checklist and publication is explicitly approved.
+**Owner decisions (2026-10-19):** MIT is approved for the repository and all GUI packages. Core, Blazor, SVG, and WPF are all in scope for the next GUI package-family release. Version/channel alignment and candidate selection remain open. **Publication:** remains disabled during readiness work; do not publish until the exact candidate has passed this checklist and publication is explicitly approved.
 
 **Recent documentation-audit verification:** the coverage audit and queue-link commits both passed the package workflow: [audit commit run 39185094850](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185094850) and [queue-link commit run 39185108778](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185108778). These runs confirm the documentation changes do not break configured CI; they do not close release blockers or change the readiness estimate.
 
-**Latest renderer regression verification (2026-10-19):** [run 39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472) passed on [`1ca6c07`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/1ca6c07bbd96d837dc6884e238236f49ff06f7f0). Core/Blazor/SVG tests, shared conformance, generated-gallery comparison, packed-package README/documentation checks, clean consumer restore/use, and Windows WPF tests passed. The new SVG regression tests verify XML attribute escaping with Unicode round-trip and deterministic output for repeated renders. `publish_nuget` was skipped as intended. This is additional implementation evidence, not a release-candidate sign-off; archive-only package checks, external SVG reference policy, release scope/version alignment, and license policy remain unresolved.
+**Latest renderer regression verification (2026-10-19):** [run 39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472) passed on [`1ca6c07`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/1ca6c07bbd96d837dc6884e238236f49ff06f7f0). Core/Blazor/SVG tests, shared conformance, generated-gallery comparison, packed-package README/documentation checks, clean consumer restore/use, and Windows WPF tests passed. The new SVG regression tests verify XML attribute escaping with Unicode round-trip and deterministic output for repeated renders. `publish_nuget` was skipped as intended. This is additional implementation evidence, not a release-candidate sign-off; archive-only package checks, external SVG reference policy, release scope/version alignment, and candidate-artifact gates remain unresolved. MIT license alignment is now an owner-approved requirement.
 
 **Latest SVG boundary regression verification (2026-10-19):** [run 39194940274](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39194940274) passed on [`10bb190`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/10bb1900e6514f4b5e994cb0bcd7389ff695904c). In addition to the full configured package workflow and Windows WPF tests, the SVG suite now explicitly rejects non-finite numeric geometry properties, blank required `href` properties on link/motion-path nodes, and collisions between user IDs and generated coordinate-overlay IDs. The package gallery comparison and packed-package consumer smoke test passed; `publish_nuget` remained skipped. External references are still not sanitized or allow-listed, and this regression work does not close the release scope, version, license, or candidate-artifact gates.
 
@@ -27,8 +27,8 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 ## 1. Decide what this release contains
 
 - [ ] Decide the release version and channel for each package; record whether this is an alpha, preview, or stable release.
-- [ ] Decide whether this release includes Core, Blazor, SVG, and WPF, or explicitly defer any package.
-- [ ] Decide whether WPF is a supported `GuiNode` adapter package or only reusable WPF builder infrastructure for this release. Do not imply adapter parity beyond the implementation and tests.
+- [x] Scope decision: Core, Blazor, SVG, and WPF are all included in the next GUI package-family release.
+- [x] WPF is included as the current initial renderer/builder package; do not imply adapter parity beyond the implementation and tests.
 - [ ] Record the exact candidate commit and intended source branch. Release from the reviewed candidate only; do not infer release readiness from `development` alone.
 - [ ] Confirm the intended public package IDs and version relationships:
   - `TheSingularityWorkshop.GUI.Core`
@@ -64,12 +64,12 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 ## 4. Package metadata and artifact inspection
 
 - [ ] Align the version in each in-scope project file with the intended release version. Investigate any mismatch between package declarations and documentation before packing.
-- [ ] Inspect package IDs, target frameworks, authors, descriptions, repository metadata, license, tags, readme configuration, and dependency versions.
+- [ ] Inspect package IDs, target frameworks, authors, descriptions, repository metadata, MIT license, tags, readme configuration, and dependency versions.
 - [ ] Ensure every package has an appropriate NuGet README and useful package-facing documentation. SVG explicitly packs a README, adapter guide, and generated gallery; verify this in the actual `.nupkg`. Review equivalent package documentation for Core and Blazor, and decide the appropriate WPF package documentation if WPF ships.
 - [ ] Pack each in-scope package from the candidate commit into a clean output directory.
 - [ ] Inspect every `.nupkg` archive and its `.nuspec`: verify the intended files, framework assets, dependency groups/versions, and absence of accidental source, build output, secrets, or unrelated files.
 - [ ] Verify package-to-package dependency versions are coherent and the dependency graph does not rely on uncommitted project references.
-- [ ] Confirm the workflow actually packs every package declared in release scope. The current workflow packs Core, Blazor, and SVG; WPF is built and tested but is not currently packed by that workflow.
+- [ ] Confirm the workflow packs Core, Blazor, SVG, and WPF; inspect all four package archives and ensure WPF remains Windows-targeted.
 - [x] Install each package from the produced artifacts into a clean consumer project targeting the supported framework(s), then compile and run a minimal representative use case. Core, Blazor, and SVG passed the workflow's clean .NET 8 consumer in [run 39180369067](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39180369067); this is not full WebPage integration.
 - [ ] For Blazor, verify the documented renderer path in a real consumer host; for SVG, verify the package can render the documented sample without relying on repository-only files.
 - [ ] Record package filenames, versions, hashes if used, and the artifact/workflow run from which they came.
@@ -98,7 +98,7 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 - [ ] Confirm Linux checks and Windows WPF checks pass for the exact candidate commit.
 - [ ] Confirm package artifacts are retained and correspond to that same commit.
 - [ ] Confirm NuGet Trusted Publishing permissions/configuration are valid without enabling an unreviewed publish path.
-- [ ] Keep `publish_nuget` disabled while readiness is being established. The current workflow condition includes `&& false`; do not remove it as part of routine readiness work.
+- [ ] Keep `publish_nuget` disabled while readiness is being established. Do not remove the safety gate as part of routine readiness work.
 - [ ] Review the exact packages and versions to be published and obtain explicit release approval.
 - [ ] Merge/promote the reviewed candidate according to the repository's release policy, then verify the target branch and commit before publishing.
 - [ ] Publish only after approval and only the inspected artifacts; verify each package/version on NuGet.org after publication.
