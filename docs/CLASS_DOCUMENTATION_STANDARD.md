@@ -54,4 +54,4 @@ Before declaring the requirement complete, retain evidence for:
 
 ## Scope boundary
 
-This is a documentation and traceability contract. It does not mean that all UML families, editable diagrams, or model-to-code generation already exist. Sequence, collaboration/communication, use-case, activity, state-machine, component, and deployment diagrams need their own semantics and fixtures as tracked in [Data Cards and UML](../DATA_CARDS_AND_UML.md). Class pages must not fabricate these capabilities or imply that an illustrative diagram proves runtime behavior.
+This is a documentation and traceability contract. It does not mean that all UML families, editable diagrams, or model-to-code generation already exist. Sequence, collaboration/communication, use-case, activity, state-machine, component, and deployment diagrams need their own semantics and fixtures as tracked in [Data Cards and UML](DATA_CARDS_AND_UML.md). Class pages must not fabricate these capabilities or imply that an illustrative diagram proves runtime behavior.
