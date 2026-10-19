@@ -45,6 +45,11 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 - [x] Add STA regression tests for native-control system defaults, fluent style/layout overrides, builder identity, and repeatable stack-panel builds; [Windows workflow run 39195324527](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195324527) passed. See [WPF Builder Pattern Audit](WPF_BUILDER_PATTERN_AUDIT.md) for patterns extracted from other Workshop WPF builders and boundaries on what should remain optional or host-specific.
 - [x] Verify Grid splitter/track mapping, Canvas positioning, and nested-component parent propagation; [Windows workflow run 39195444173](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195444173) passed after a compile-time assertion correction. Reusable window-host builder tests remain in a later run.
 - [ ] Audit public APIs and XML documentation for every in-scope package; build Release with no unexplained warnings/errors.
+- [ ] **Inventory every production type across Core, Blazor, SVG, and WPF** and map each fully qualified type/source file to its own documentation page and UML SVG. Use [Per-Type Documentation and UML Standard](CLASS_DOCUMENTATION_STANDARD.md); XML API comments alone do not satisfy this requirement.
+- [ ] **Create one dedicated Markdown page per declared type**, including internal and nested maintained types, with source link, responsibility/boundaries, member contracts, verified relationships, behavior/failure modes, and relevant tests.
+- [ ] **Embed each type's UML class-diagram SVG on its page**; include inheritance, implemented interfaces, and source-grounded relationships, plus accessible title/description and a textual fallback. Do not use decorative or unverified diagrams.
+- [ ] **Add a central type inventory/index and CI drift checks** so every new or existing type must have a page and diagram; validate links, SVG accessibility metadata, and a deliberately missing-page/diagram failure case.
+- [ ] **Review generated diagram accuracy against source and tests** and record exact commit/workflow evidence before marking this requirement complete.
 - [ ] Inspect all candidate package archives and dependency graphs; ensure package versions and Blazor-to-Core dependencies agree.
 - [x] Wire WPF into the package workflow and verify its package README, tags, repository metadata, MIT license expression, and archive README presence in [workflow run 39197481340](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39197481340). The same run passed the clean Core/Blazor/SVG consumer smoke test and Windows WPF tests; `publish_nuget` was skipped.
 - [ ] Confirm Core remains platform-neutral and has no accidental UI-framework dependency.
@@ -74,6 +79,6 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 2. Select the exact candidate commit and source branch.
 3. Inspect the candidate four-package archive set and run clean-consumer verification against those exact versions.
 4. Candidate-version WebPage integration.
-5. Complete the remaining SVG hostile-input regression coverage and candidate sign-off; the external-reference serialization policy is documented, but the renderer intentionally does not sanitize or allow-list URLs.
+5. Complete the remaining SVG hostile-input regression coverage and candidate sign-off; the external-reference serialization policy is documented, but the renderer intentionally does not sanitize or allow-list URLs.\n6. Complete per-type documentation and UML SVG coverage across all four in-scope packages, with a source-derived inventory and CI enforcement.
 
 These are intentionally explicit blockers rather than decisions an implementation agent should silently make. Update the readiness percentage only when evidence changes; checked boxes alone do not equal release readiness.
