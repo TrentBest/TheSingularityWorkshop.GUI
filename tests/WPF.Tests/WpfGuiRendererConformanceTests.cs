@@ -92,6 +92,30 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_preserves_button_label_and_renders_nested_button_children_in_order()
+    {
+        RunOnSta(() =>
+        {
+            var root = GuiBuilder.Create("Button", "action")
+                .Text("Run")
+                .Child("Text", "caption", text => text.Text("Details"))
+                .Child("Button", "secondary", button => button.Text("More"))
+                .Build();
+
+            var rendered = Assert.IsType<Button>(WpfGuiRenderer.Render(root));
+            var content = Assert.IsType<StackPanel>(rendered.Content);
+            Assert.Equal(3, content.Children.Count);
+
+            var label = Assert.IsType<TextBlock>(content.Children[0]);
+            Assert.Equal("Run", label.Text);
+            Assert.Equal("caption", WpfGuiIdentity.GetNodeId(content.Children[1]));
+            Assert.Equal("Details", Assert.IsType<TextBlock>(content.Children[1]).Text);
+            Assert.Equal("secondary", WpfGuiIdentity.GetNodeId(content.Children[2]));
+            Assert.Equal("More", Assert.IsType<Button>(content.Children[2]).Content);
+        });
+    }
+
+    [Fact]
     public void Renderer_rejects_null_root()
     {
         RunOnSta(() => Assert.Throws<ArgumentNullException>(() => WpfGuiRenderer.Render(null!)));
