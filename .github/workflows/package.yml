@@ -122,7 +122,7 @@ jobs:
             unzip -p "$package" "$nuspec" | grep -q '<readme>README.md</readme>'
           done
 
-      - name: Verify all package license and README metadata
+      - name: Verify all package license, README, target framework, and XML documentation metadata
         shell: bash
         run: |
           set -euo pipefail
@@ -132,9 +132,18 @@ jobs:
             nuspec="$(unzip -Z1 "$package" | grep -E '[.]nuspec$' | head -n 1)"
             test -n "$nuspec"
             metadata="$(unzip -p "$package" "$nuspec")"
+            entries="$(unzip -Z1 "$package")"
             grep -q '<license type="expression">MIT</license>' <<< "$metadata"
             grep -q '<readme>README.md</readme>' <<< "$metadata"
-            unzip -l "$package" | grep -q 'README.md'
+            grep -Fxq 'README.md' <<< "$entries"
+            if [[ "$id" == "TheSingularityWorkshop.GUI.WPF" ]]; then
+              tfm="net8.0-windows7.0"
+            else
+              tfm="net8.0"
+            fi
+            grep -Fq "lib/$tfm/" <<< "$entries"
+            grep -E -q "^lib/$tfm/[^/]+[.]dll$" <<< "$entries"
+            grep -E -q "^lib/$tfm/[^/]+[.]xml$" <<< "$entries"
           done
 
       - name: Verify GUI.SVG package documentation and gallery
