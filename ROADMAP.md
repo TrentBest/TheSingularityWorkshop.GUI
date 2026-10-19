@@ -45,7 +45,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 ## Phase 2 — expressiveness before platform breadth
 
 - [ ] Define a platform-neutral data-card/diagram contract (namespace/type/member hierarchy, header/body, stable identity, expansion state, and semantic edit actions); see [UML-Inspired Data Cards](docs/DATA_CARDS_AND_UML.md)
-- [ ] Project a C# AST into ordered using-directive cards and namespace/type/member-group cards; test visibility-group ordering, expansion defaults, property details, and stable identity after visibility edits
+- [ ] Project a C# AST into ordered using-directive cards and a true namespace/type/member containment tree; test visibility-group ordering, expansion defaults, property details, and stable identity after visibility edits
+- [ ] Specify and test model-derived `Collapsed (n)` summaries and edit-mode add-to-collapsed-region actions, including empty-region behavior
 - [ ] Keep code-definition/AST semantics in the code/creation domain rather than GUI Core
 - [ ] Establish UML data-card visibility defaults and view/inspect/edit-mode affordances
 - [ ] Generate an SVG living data-card diagram from a fixture shared with automated tests
