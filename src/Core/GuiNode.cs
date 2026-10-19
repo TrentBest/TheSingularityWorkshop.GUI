@@ -59,16 +59,21 @@ public sealed class GuiNode
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
 
-        if (Id == id)
-        {
-            node = this;
-            return true;
-        }
+        var pending = new Stack<GuiNode>();
+        pending.Push(this);
 
-        foreach (var child in _children)
+        while (pending.Count > 0)
         {
-            if (child.TryFind(id, out node))
+            var current = pending.Pop();
+            if (current.Id == id)
+            {
+                node = current;
                 return true;
+            }
+
+            // Reverse push preserves the existing depth-first, left-to-right search order.
+            for (var i = current._children.Count - 1; i >= 0; i--)
+                pending.Push(current._children[i]);
         }
 
         node = null;
