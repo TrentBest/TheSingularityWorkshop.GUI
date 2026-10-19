@@ -95,6 +95,65 @@ public sealed class WpfBuilderTests
         });
     }
 
+    [Fact]
+    public void Grid_builder_maps_logical_tracks_and_propagates_parent_to_placed_components()
+    {
+        RunOnSta(() =>
+        {
+            var child = new TestComponent();
+            var builder = new GridGuiBuilderWPF("layout")
+                .AddColumnTrack(1, GridUnitType.Star, isResizable: true)
+                .AddColumnTrack(2, GridUnitType.Star)
+                .AddRowTrack(1, GridUnitType.Star, isResizable: true)
+                .AddRowTrack(3, GridUnitType.Star)
+                .PlaceComponent(1, 1, child);
+
+            var grid = Assert.IsType<Grid>(builder.Build());
+
+            Assert.Equal(3, grid.ColumnDefinitions.Count);
+            Assert.Equal(3, grid.RowDefinitions.Count);
+            Assert.Equal(2, grid.Children.OfType<GridSplitter>().Count());
+            Assert.Same(builder, child.GetParent());
+            Assert.Equal(2, Grid.GetColumn(child.BuiltElement!));
+            Assert.Equal(2, Grid.GetRow(child.BuiltElement!));
+        });
+    }
+
+    [Fact]
+    public void Canvas_builder_places_elements_at_requested_coordinates()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "At position" };
+            var canvas = new CanvasGuiBuilderWPF(new GuiConfiguration())
+                .PlaceAt(element, 42, 84)
+                .Build();
+
+            Assert.Single(canvas.Children);
+            Assert.Same(element, canvas.Children[0]);
+            Assert.Equal(42, Canvas.GetLeft(element));
+            Assert.Equal(84, Canvas.GetTop(element));
+        });
+    }
+
+    private sealed class TestComponent : IComponentWPF
+    {
+        private IComponentWPF? _parent;
+
+        public string Id { get; } = Guid.NewGuid().ToString();
+        public FrameworkElement? BuiltElement { get; private set; }
+
+        public void SetParent(IComponentWPF? parent) => _parent = parent;
+        public IComponentWPF? GetParent() => _parent;
+        public void Publish(string topic, object payload) => _parent?.Publish(topic, payload);
+        public void Receive(string topic, object payload) { }
+        public FrameworkElement Build()
+        {
+            BuiltElement = new Border();
+            return BuiltElement;
+        }
+    }
+
     private static void RunOnSta(Action action)
     {
         Exception? failure = null;
