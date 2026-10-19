@@ -125,9 +125,9 @@ public sealed class WpfBuilderTests
         RunOnSta(() =>
         {
             var element = new TextBlock { Text = "At position" };
-            var canvas = new CanvasGuiBuilderWPF(new GuiConfiguration())
+            var canvas = Assert.IsType<Canvas>(new CanvasGuiBuilderWPF(new GuiConfiguration())
                 .PlaceAt(element, 42, 84)
-                .Build();
+                .Build());
 
             Assert.Single(canvas.Children);
             Assert.Same(element, canvas.Children[0]);
