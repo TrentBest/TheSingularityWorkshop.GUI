@@ -3,8 +3,8 @@
 This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
 
 **Baseline:** `development`  
-**Estimated readiness:** **65%** — substantial CI and SVG artifact work is already verified, but the candidate package set is not yet release-ready.  
-**Publication:** Keep the workflow's explicit `&& false` publish guard unchanged until the release candidate is reviewed and explicitly approved.
+**Estimated readiness:** **70%** — owner decisions now establish MIT licensing and WPF inclusion; implementation is underway to package and verify the complete four-package family. Version/channel alignment and candidate evidence remain open.  
+**Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved.
 
 ## Definition of a substantial next release
 
@@ -14,9 +14,9 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 
 ## P0 — Decisions and hard release blockers
 
-- [ ] **Choose package scope:** Core, Blazor, SVG, and whether WPF ships in this release. If WPF is deferred, state that explicitly and do not imply it is part of the candidate package set.
+- [x] **Choose package scope:** Core, Blazor, SVG, and WPF are in scope for the next GUI package-family release. WPF remains an initial renderer/builder package; do not imply full parity with other adapters.
 - [ ] **Choose release channel and versions** for every in-scope package. Reconcile project-file declarations with published NuGet versions; do not guess a version or infer a stable-release decision.
-- [ ] **Resolve license policy with the owner.** Add the authoritative repository license and align package license metadata only after the intended license is confirmed.
+- [x] **Resolve license policy with the owner:** MIT is approved. Add the authoritative root license and align all four package license metadata.
 - [ ] **Name the candidate commit and source branch** after the scope/version decisions; all final evidence must match that exact commit.
 - [ ] **Keep publishing disabled** during readiness work; publication remains a separate explicit approval.
 
@@ -40,7 +40,7 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 - [x] Verify Grid splitter/track mapping, Canvas positioning, and nested-component parent propagation; [Windows workflow run 39195444173](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195444173) passed after a compile-time assertion correction. Reusable window-host builder tests remain in a later run.
 - [ ] Audit public APIs and XML documentation for every in-scope package; build Release with no unexplained warnings/errors.
 - [ ] Inspect all candidate package archives and dependency graphs; ensure package versions and Blazor-to-Core dependencies agree.
-- [ ] Decide whether WPF is in scope. If included, wire it into the package workflow and verify package README, tags, repository metadata, license, dependencies, and archive contents. If excluded, record the deferral.
+- [ ] Wire WPF into the package workflow and verify its package README, tags, repository metadata, MIT license, dependencies, and archive contents.
 - [ ] Confirm Core remains platform-neutral and has no accidental UI-framework dependency.
 - [ ] Record test counts, exact workflow URL, commit SHA, package filenames, and clean-consumer result.
 
@@ -64,9 +64,8 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 
 ## Current blockers / owner decisions
 
-1. Package scope and WPF disposition.
-2. Release channel and per-package versions, including dependency version alignment.
-3. Repository/package license policy.
+1. Release channel and per-package versions, including dependency version alignment.
+2. Verify the four-package archive set and clean-consumer coverage.
 4. Candidate-version WebPage integration.
 5. Candidate artifact inspection and final release sign-off.
 
