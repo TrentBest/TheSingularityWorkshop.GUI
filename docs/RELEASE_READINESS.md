@@ -117,6 +117,7 @@ This is an audit record, not a release approval. The duplicate-call cleanup is n
 - [x] Removed repeated whole-subtree validation during recursive rendering. Public `Render` now validates the complete tree once, then delegates descendants to a private validated render path. Source inspection confirms recursive calls no longer re-enter public `Render`.
 - [ ] Run and record the Windows WPF tests for the exact follow-up commits. Available status queries have not provided evidence of a fresh passing workflow for these changes.
 - [ ] Continue the property/source/media, accessibility, and interaction behavior audit; existing tests do not establish full adapter parity.
+- [x] Made invalid WPF `fontFamily` values non-fatal, matching the renderer's existing ignore-invalid-property behavior for brushes and numeric values; added `Renderer_ignores_invalid_font_family_property` with a NUL-containing value. Source and test are committed, but the Windows test has not yet been run for this change.
 - [ ] Run the new `Renderer_preserves_button_label_and_renders_nested_button_children_in_order` WPF regression test on Windows; it covers the existing button-child rendering path, including the original label and child order.
 - [ ] Resolve release version, license policy, and WPF package scope before altering package metadata or publication workflow.
 
