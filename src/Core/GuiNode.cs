@@ -5,12 +5,12 @@ using System.Linq;
 
 namespace TheSingularityWorkshop.Workshop.Gui;
 
-/// <summary>Provides the GuiNode API.</summary>
+/// <summary>Represents an immutable node in a renderer-neutral GUI tree.</summary>
 public sealed class GuiNode
 {
     private readonly ReadOnlyCollection<GuiNode> _children;
 
-    /// <summary>Provides the GuiNode member.</summary>
+    /// <summary>Creates a GUI node and snapshots its properties and child sequence.</summary>
     public GuiNode(
         string kind,
         string id,
@@ -39,20 +39,20 @@ public sealed class GuiNode
             (children ?? Enumerable.Empty<GuiNode>()).ToList());
     }
 
-    /// <summary>Provides the Kind member.</summary>
+    /// <summary>Gets the renderer-neutral kind identifier for this node.</summary>
     public string Kind { get; }
-    /// <summary>Provides the Id member.</summary>
+    /// <summary>Gets the identifier used to locate this node within the tree.</summary>
     public string Id { get; }
-    /// <summary>Sets or adds text content.</summary>
+    /// <summary>Gets the optional text content associated with this node.</summary>
     public string? Text { get; }
-    /// <summary>Provides the Source member.</summary>
+    /// <summary>Gets the optional source or resource reference associated with this node.</summary>
     public string? Source { get; }
-    /// <summary>Provides the Properties member.</summary>
+    /// <summary>Gets a read-only snapshot of this node's string-valued properties.</summary>
     public IReadOnlyDictionary<string, string> Properties { get; }
-    /// <summary>Provides the Children member.</summary>
+    /// <summary>Gets the read-only, ordered child nodes.</summary>
     public IReadOnlyList<GuiNode> Children => _children;
 
-    /// <summary>Finds and returns the first node matching an identifier.</summary>
+    /// <summary>Finds the first node with the specified identifier using depth-first, left-to-right traversal.</summary>
     public GuiNode Find(string id)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
@@ -64,7 +64,7 @@ public sealed class GuiNode
             $"GUI node '{id}' was not found beneath '{Id}'.");
     }
 
-    /// <summary>Attempts to find a node matching an identifier.</summary>
+    /// <summary>Attempts to find a node by identifier using depth-first, left-to-right traversal.</summary>
     public bool TryFind(string id, out GuiNode? node)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
