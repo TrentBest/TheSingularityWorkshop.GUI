@@ -55,6 +55,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Keep code-definition/AST semantics in the code/creation domain rather than GUI Core
 - [ ] Establish UML data-card visibility defaults and view/inspect/edit-mode affordances
 - [ ] Generate an SVG living data-card diagram from a fixture shared with automated tests
+- [ ] Define the per-type documentation inventory and required page contract (purpose, source identity, embedded source-grounded SVG UML class diagram, behavior/constraints, tests, and related types)
+- [ ] Build deterministic source/model-to-SVG class-diagram generation and CI checks for missing type pages, missing diagrams, invalid SVG, and stale generated output; document explicit exceptions
 - [ ] Verify that diagram edits cross an explicit domain command/validation boundary
 
 The model must first prove that it can describe more than conventional widgets.
