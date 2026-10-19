@@ -92,6 +92,18 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_uses_placeholder_for_unreadable_image_source()
+    {
+        RunOnSta(() =>
+        {
+            var rendered = Assert.IsType<TextBlock>(WpfGuiRenderer.Render(
+                new GuiNode("Image", "missing-image", source: "file:///C:/__fsm_gui_missing_image_test__.png")));
+
+            Assert.Contains("invalid image source", rendered.Text, StringComparison.OrdinalIgnoreCase);
+        });
+    }
+
+    [Fact]
     public void Renderer_ignores_invalid_font_family_property()
     {
         RunOnSta(() =>
