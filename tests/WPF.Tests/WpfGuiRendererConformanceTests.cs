@@ -92,6 +92,24 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_ignores_invalid_font_family_property()
+    {
+        RunOnSta(() =>
+        {
+            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
+                "Button",
+                "font-test",
+                text: "Save",
+                properties: new Dictionary<string, string>
+                {
+                    ["fontFamily"] = "\\0"
+                })));
+
+            Assert.NotEqual("\\0", button.FontFamily.Source);
+        });
+    }
+
+    [Fact]
     public void Renderer_preserves_button_label_and_renders_nested_button_children_in_order()
     {
         RunOnSta(() =>
