@@ -35,4 +35,50 @@ public sealed class CoordinateSystemUtilitiesTests
         Assert.Throws<ArgumentException>(() => CoordinateSystemUtilities.Normalize(1, 10, 10));
         Assert.Throws<ArgumentException>(() => CoordinateSystemUtilities.Denormalize(1, 10, 10));
     }
+
+    [Theory]
+    [InlineData(double.NaN, 10)]
+    [InlineData(double.PositiveInfinity, 10)]
+    [InlineData(double.NegativeInfinity, 10)]
+    [InlineData(0, double.NaN)]
+    [InlineData(0, double.PositiveInfinity)]
+    [InlineData(0, double.NegativeInfinity)]
+    public void Normalize_rejects_non_finite_range_endpoints(double minimum, double maximum)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            CoordinateSystemUtilities.Normalize(5, minimum, maximum));
+    }
+
+    [Theory]
+    [InlineData(double.NaN, 10)]
+    [InlineData(double.PositiveInfinity, 10)]
+    [InlineData(double.NegativeInfinity, 10)]
+    [InlineData(0, double.NaN)]
+    [InlineData(0, double.PositiveInfinity)]
+    [InlineData(0, double.NegativeInfinity)]
+    public void Denormalize_rejects_non_finite_range_endpoints(double minimum, double maximum)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            CoordinateSystemUtilities.Denormalize(5, minimum, maximum));
+    }
+
+    [Theory]
+    [InlineData(double.NaN)]
+    [InlineData(double.PositiveInfinity)]
+    [InlineData(double.NegativeInfinity)]
+    public void Normalize_rejects_non_finite_value(double value)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            CoordinateSystemUtilities.Normalize(value, 0, 100));
+    }
+
+    [Theory]
+    [InlineData(double.NaN)]
+    [InlineData(double.PositiveInfinity)]
+    [InlineData(double.NegativeInfinity)]
+    public void Denormalize_rejects_non_finite_normalized_value(double value)
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            CoordinateSystemUtilities.Denormalize(value, 0, 100));
+    }
 }
