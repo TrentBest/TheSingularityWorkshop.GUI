@@ -11,7 +11,7 @@
 | GUI.Core | Neutral GUI model and shared contracts | Release tests and shared conformance tests passed in recorded baseline CI. Platform neutrality still needs an explicit dependency/API audit. | Candidate scope; verify archive and neutral boundary. |
 | GUI.Blazor | Blazor-facing renderer/adapter | Release tests and a clean local-package consumer passed. Real consumer-host demonstration and candidate-version WebPage run remain open. | Candidate scope; prove the documented path in a host. |
 | GUI.SVG | Portable vector output | Release tests, generated-gallery byte comparison, clean consumer using locally packed packages, XML-attribute escaping/Unicode round-trip, and repeat-render byte determinism passed in [workflow run 39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472). Archive-only consumption, broader hostile-input coverage, and external-reference policy remain open. | Candidate scope; likely headline feature, limitations explicit. |
-| GUI.WPF | Windows-native rendering surface | Windows tests passed. Current workflow does not pack WPF; the package has previously been published, so workflow omission is not evidence it is not a product. | Owner must include and wire packaging, or explicitly defer it. |
+| GUI.WPF | Windows-native rendering surface | Windows tests and WPF package build/archive checks passed in [workflow run 39199107981](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199107981); the workflow now includes WPF packaging and a dedicated Windows test lane. This does not establish full adapter parity. | Candidate scope; verify the selected candidate archive and document adapter-specific behavior. |
 | WebPage consumer | Downstream integration / proof application | Existing NuGet-mode and repository-source CI passed for the configured dependency set, not a future GUI candidate. | Consumer proof, not another renderer package. Re-test candidate versions. |
 
 Do not infer full parity from multiple adapters. A renderer can be useful and deliberately partial; document and test its actual behavior and limitations.
@@ -72,6 +72,7 @@ A rendered visual tree is not automatically an interactive application. Separate
 - [ ] Define duplicate-ID behavior, including generated overlay/auxiliary IDs.
 - [ ] Test maximum-depth behavior at and beyond the documented limit.
 - [ ] Decide and test external href/link policy. XML escaping alone is not URL validation or sanitization.
+- **Observed implementation detail (2026-10-19):** `SvgGuiRenderer` currently copies `svg-a` `href` values directly into the SVG anchor, and writes image `href` from the node's `href` property or `Source`. It requires a non-empty anchor destination but does not validate URL schemes. SVG resource-reference attributes are also copied for features such as gradients and motion paths. This is a documented open policy decision, not evidence that output is sanitized; define per-element rules before claiming hostile-input safety.
 - [ ] State whether image/resource references are preserved, restricted, rewritten, or omitted. Do not claim sanitizer behavior without a separate tested allow-list contract.
 - [ ] Document viewer-dependent features and unsupported SVG vocabulary instead of promising universal viewer parity.
 
