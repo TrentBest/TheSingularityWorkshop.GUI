@@ -43,6 +43,15 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 
 ## 2. Implementation and contract audit
 
+- [ ] **Per-type documentation and UML coverage:** every declared production type in Core, Blazor, SVG, and WPF has a dedicated Markdown page and an embedded, source-grounded UML class-diagram SVG. XML API comments and packaged XML files do not satisfy this gate by themselves.
+- [ ] A complete type/source/page/diagram inventory is checked against actual source declarations; internal and nested maintained types are included or explicitly dispositioned.
+- [ ] Every type page documents purpose and architectural boundaries, relevant members and invariants, verified relationships, failure behavior, and representative tests.
+- [ ] Every SVG has accessible title/description and a textual fallback; links and assets validate, and CI fails on missing pages/diagrams or a deliberate negative fixture.
+- [ ] The diagram generation/maintenance path and source-to-diagram review are documented; no conceptual or invented relationship is presented as implementation fact.
+- [ ] Record the exact commit and workflow run proving coverage before checking these items.
+
+
+
 - [ ] Review Core for accidental platform dependencies and confirm the neutral-model boundary remains intact.
 - [ ] Verify public API and XML documentation for all APIs intended to be consumed in this release.
 - [ ] Review breaking changes and compatibility implications against the last published version of each package.
