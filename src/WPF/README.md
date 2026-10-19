@@ -14,6 +14,10 @@ The WPF renderer is an initial implementation, not a claim of complete parity wi
 
 Features outside that tested surface—including broader property mapping, accessibility, interaction/event behavior, and complete cross-adapter parity—must be treated as unverified until implementation and tests demonstrate them.
 
+## Builder reuse audit
+
+The existing Workshop WPF builder repositories were reviewed for reusable patterns. See [WPF Builder Pattern Audit](../../docs/WPF_BUILDER_PATTERN_AUDIT.md) for the source references, transferable ideas, and explicit boundaries between the neutral-model renderer and optional WPF-specific builders. This audit does not imply that legacy window chrome, reflection-driven editing, or application-specific services are implemented here.
+
 ## Build and test
 
 Build on Windows with the .NET 8 SDK:
