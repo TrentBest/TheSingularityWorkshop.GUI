@@ -171,3 +171,6 @@ Update with exact links and candidate commit identifiers as work proceeds; do no
 | Motion path | Requires a non-empty `href` and emits it on `mpath`. | Define allowed local/external references and test malformed/hostile values. |
 
 XML construction provides escaping, but escaping does not validate schemes or make a document safe to render in every host. This audit records the observed behavior only; it does not claim sanitization. Prefer per-element policy because navigation, image loading, and same-document SVG references have different semantics.
+
+
+**Core boundary audit verification (2026-10-19):** the expanded source-level findings were committed as [`b068968`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/b0689688093388c70d2b27604ed2962cf861f01d), and [workflow run 39274205080](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39274205080) passed. The package/test job and Windows WPF job both succeeded; the publish job was skipped. This confirms the audit update did not break the configured build/test/package pipeline, but it does not close the remaining contract, archive, version, consumer-integration, or SVG external-reference policy gates.
