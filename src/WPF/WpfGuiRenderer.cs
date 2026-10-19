@@ -144,6 +144,11 @@ public static class WpfGuiRenderer
         {
             var key = property.Key;
             var value = property.Value;
+            // GuiNode's public contract is non-nullable, but callers can still supply null values at runtime.
+            // Ignore them consistently instead of allowing parsing helpers such as TryThickness to throw.
+            if (value is null)
+                continue;
+
             switch (key)
             {
                 case "width": if (TryDouble(value, out var width)) element.Width = width; break;
