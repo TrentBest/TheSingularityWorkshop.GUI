@@ -122,6 +122,30 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_ignores_null_property_values_without_throwing()
+    {
+        RunOnSta(() =>
+        {
+            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
+                "Button",
+                "null-properties",
+                text: "Save",
+                properties: new Dictionary<string, string>
+                {
+                    ["margin"] = null!,
+                    ["padding"] = null!,
+                    ["background"] = null!,
+                    ["fontFamily"] = null!
+                })));
+
+            Assert.Equal(new Thickness(0), button.Margin);
+            Assert.Equal(new Thickness(0), button.Padding);
+            Assert.Equal("Save", button.Content);
+            Assert.Equal(SystemFonts.MessageFontFamily.Source, button.FontFamily.Source);
+        });
+    }
+
+    [Fact]
     public void Renderer_preserves_button_label_and_renders_nested_button_children_in_order()
     {
         RunOnSta(() =>
