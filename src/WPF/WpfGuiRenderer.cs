@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
@@ -114,13 +115,21 @@ public static class WpfGuiRenderer
 
         try
         {
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.CacheOption = BitmapCacheOption.OnLoad;
+            bitmap.UriSource = new Uri(source, UriKind.RelativeOrAbsolute);
+            bitmap.EndInit();
+
             return new Image
             {
-                Source = new BitmapImage(new Uri(source, UriKind.RelativeOrAbsolute)),
+                Source = bitmap,
                 Stretch = Stretch.Uniform
             };
         }
-        catch (UriFormatException)
+        catch (Exception exception) when (
+            exception is FormatException or IOException or NotSupportedException or
+            ArgumentException or InvalidOperationException)
         {
             return new TextBlock { Text = $"[invalid image source: {source}]" };
         }
