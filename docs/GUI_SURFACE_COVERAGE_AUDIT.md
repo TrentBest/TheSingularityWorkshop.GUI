@@ -148,4 +148,24 @@ Update with exact links and candidate commit identifiers as work proceeds; do no
 | Candidate package archive inspection | Open | Must be performed against selected release artifacts. |
 | Candidate-version WebPage integration | Open | Must wait for package/version decision. |
 
-**Readiness estimate remains 65%.** This audit clarifies missing coverage but does not itself close release gates or authorize publication.
+**Readiness estimate: 84% (2026-10-19).** This audit clarifies missing coverage but does not itself close release gates or authorize publication. See the [next-release work queue](NEXT_RELEASE_WORK_QUEUE.md) for the current baseline and remaining hard gates.
+
+
+## 12. Targeted source audit update (2026-10-19)
+
+### GUI.Core platform boundary — partial source review
+
+**Observed:** `src/Core/TheSingularityWorkshop.GUI.Core.csproj` targets `.NET 8.0`, declares no `PackageReference` items, and identifies itself as platform-neutral in its package metadata. Reviewed source files `GuiNode.cs`, `CoordinateSystem.cs`, and the project file use framework/base-library types and contain no visible WPF, Blazor, SVG, Unity, or other UI-framework references. `GuiNode` stores kind/id/text/source and string properties, with read-only child/property views.
+
+**Not yet proven:** this is a targeted review of selected files, not a complete scan of every Core source/public API or the transitive dependency graph. The Core package currently targets only `net8.0`; do not imply broader target-framework compatibility. Close the boundary audit by enumerating all Core files and public signatures, checking project/package dependencies, and running a clean consumer build against the exact candidate archive.
+
+### SVG reference policy — categories identified, policy still open
+
+| Output category | Current observed behavior | Required decision/test |
+|---|---|---|
+| `svg-a` anchor | Requires a non-empty `href`, then emits the value directly as an SVG `href`; optional `target`/`rel` and related attributes are copied. | Define allowed schemes and relative-link behavior; test unsafe schemes and ordinary links. |
+| `svg-image` | Emits `href` from the node's `href` property or `Source`. | Decide whether remote/data/file references are allowed, restricted, or left to the consumer; test the chosen contract. |
+| Gradient/pattern reuse | `href` may be copied as a resource-reference attribute. | Define same-document fragment/reference semantics separately from navigation URLs. |
+| Motion path | Requires a non-empty `href` and emits it on `mpath`. | Define allowed local/external references and test malformed/hostile values. |
+
+XML construction provides escaping, but escaping does not validate schemes or make a document safe to render in every host. This audit records the observed behavior only; it does not claim sanitization. Prefer per-element policy because navigation, image loading, and same-document SVG references have different semantics.
