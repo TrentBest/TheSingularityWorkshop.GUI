@@ -21,15 +21,29 @@ The existing `GuiNode` is a generic recursive GUI snapshot. It can carry a manif
 
 ## Canonical data-card structure
 
-- **Namespace card** is the outermost context and appears first.
+- **Usings section** appears before namespace/type content; it contains one card per directive and is collapsed by default.
+- **Namespace card** is the outermost code context and appears after file-level directives where applicable.
 - **Type card** is nested inside its namespace.
-- **Member rows/cards** represent fields, properties, methods, constructors, events, and other declared members.
+- **Member-group cards** group members by visibility in the fixed display order Public, Protected, Private. For example, `Public Properties` contains one child card per public property.
+- **Member cards** represent fields, properties, methods, constructors, events, and other declared members; expanding a property reveals accessors and initializer details.
 - **Header** identifies the represented item and can carry its kind/access metadata.
 - **Body** contains child members or expandable detail.
 - **Border and color** visually enclose the complete card. Color communicates a documented semantic category, not decoration alone; meaning must not depend on color only.
 - **Stable identity** persists across redraws so selection, expansion, diagnostics, and edits do not attach to the wrong item.
 
 The first implementation should support namespaces and classes without making the model class-only. Interfaces, structs, enums, records, nested types, and other member kinds should fit the same vocabulary when the domain model supplies them.
+
+## Source-code tree: AST-backed cards
+
+For C# source, the authoritative representation should be a real **Abstract Syntax Tree (AST)** or syntax model produced by a C#-aware parser. The AST is the source structure; the data-card tree is its renderer-neutral presentation. Do not make GUI Core parse C#, and do not let SVG/XML or a hand-maintained card hierarchy become a competing source of truth. A code-domain adapter translates AST nodes into data cards and maps validated edit commands back to the source model. Preserve source trivia and formatting where the chosen syntax technology supports it.
+
+The source outline should place `using` directives in their own **Usings** section before namespace/type content. Each directive is an individual data card (for example, `using System.Collections.Generic;`); the section is collapsed by default. Keep directive order and aliases/static/global distinctions from the AST rather than flattening them into display-only strings.
+
+Each type should have explicit member groups in this order: **Public**, **Protected**, then **Private**. Each group is itself a data card (for properties, a card titled `Public Properties`, `Protected Properties`, or `Private Properties`). A group card's body contains a data card for every member in that category. Public member cards are expanded by default to expose the declaration/signature; protected and private group cards are collapsed by default. Apply the same predictable policy to fields, methods, constructors, events, and nested types. Preserve the exact C# accessibility in member metadata, including `internal`, `protected internal`, and `private protected`; document how these less common categories are assigned to display groups rather than pretending they are one of the three exact language modifiers.
+
+Clicking a property card expands its details, including accessors and initializer, such as `{ get; private set; } = ...;`. The declaration and accessor visibility are distinct facts: a public property can legitimately have a private setter. Do not confuse the property's group with its accessor modifiers.
+
+In edit mode, changing a member's access modifier is a domain edit, not merely a card drag. After the authoritative AST/source model accepts the change, the member appears under the matching visibility group, with the same stable semantic identity where possible. Update the view from the changed model; do not maintain independent mutable copies in each group. The edit command must validate legal modifier combinations and report rejected changes without corrupting source.
 
 ## Default expansion and visibility
 
@@ -38,8 +52,11 @@ The initial presentation policy is:
 | Content | Default state |
 | --- | --- |
 | Namespace and type hierarchy | Expanded enough to reveal the public structure |
+| Usings section and individual using-directive cards | Collapsed by default; preserve source order |
+| Public/Protected/Private member-group cards | Public expanded; Protected and Private collapsed |
+| Public member cards | Expanded to show declaration/signature; details remain separately expandable |
 | Public field/property/method/constructor declaration | Expanded to its declaration/name/signature |
-| Public field/property initializer | Collapsed |
+| Public field/property initializer and accessor details | Collapsed until that member card is expanded |
 | Public method/constructor implementation body | Collapsed |
 | Non-public declarations and their details | Collapsed by default |
 | Empty namespace in edit mode | Show an add-type (`+`) affordance |
@@ -67,19 +84,22 @@ Prefer generating the SVG from the same diagram model used by tests and editor v
 ## Incremental implementation contract
 
 1. Define and test platform-neutral data-card/diagram types in GUI Core: identity, semantic kind, header/body structure, containment, access/visibility metadata, expansion intent, and available semantic actions.
-2. Define a separate source-code definition model in the code/creation domain. Do not add C# AST concepts to GUI Core.
-3. Define the initial UML presentation policy for namespaces, classes, public members, non-public members, initializers, and bodies.
-4. Manifest a fixture through SVG and at least one interactive adapter; compare the same semantic fixture across adapters.
-5. Test view/inspect/edit affordance differences, stable identities, empty namespace insertion, add-member insertion points, and that rendering/expansion never mutates the source definition.
-6. Connect editor commands only after the semantic contracts and validation boundary are explicit.
+2. Define a C#-aware AST/source-model adapter outside GUI Core. Project using directives, namespaces, types, and visibility-grouped member cards without making the diagram the source of truth.
+3. Define a separate source-code definition model in the code/creation domain. Do not add C# AST concepts to GUI Core.
+4. Define the initial UML presentation policy for namespaces, classes, public members, non-public members, initializers, and bodies.
+5. Manifest a fixture through SVG and at least one interactive adapter; compare the same semantic fixture across adapters.
+6. Test view/inspect/edit affordance differences, stable identities, empty namespace insertion, add-member insertion points, and that rendering/expansion never mutates the source definition.
+7. Connect editor commands only after the semantic contracts and validation boundary are explicit.
 
 ## Acceptance criteria
 
 - The same diagram data produces equivalent structure across supported adapters.
 - Namespace is the top-level context; an empty namespace can offer “add class” in edit mode.
 - Cards have a complete border, distinct header and body, and documented color semantics.
-- Public declarations are visible by default, while initializers and implementation bodies are collapsed.
-- Non-public details are collapsed by default but remain represented and available to authorized workflows.
+- The Usings section is collapsed by default and contains one card per source directive.
+- Public, Protected, and Private member groups appear in that order; Public is expanded by default and Protected/Private are collapsed.
+- Public declarations are expanded to their signature; property accessor/initializer details and method implementation bodies are collapsed until the member is expanded.
+- Non-public details are collapsed by default but remain represented and available to authorized workflows; changing visibility through an accepted edit moves the member to its new group without losing identity.
 - Plus buttons appear only where the current mode and domain command set permit an add operation.
 - No renderer or card directly edits source text without passing through the domain command/validation boundary.
 - The SVG living example is generated from a fixture shared with automated tests.
