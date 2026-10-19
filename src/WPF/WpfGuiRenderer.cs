@@ -184,8 +184,11 @@ public static class WpfGuiRenderer
                     }
                     break;
                 case "fontFamily":
-                    if (element is Control fontFamilyControl) fontFamilyControl.FontFamily = new FontFamily(value);
-                    else if (element is TextBlock fontFamilyTextBlock) fontFamilyTextBlock.FontFamily = new FontFamily(value);
+                    if (TryFontFamily(value, out var fontFamily))
+                    {
+                        if (element is Control fontFamilyControl) fontFamilyControl.FontFamily = fontFamily;
+                        else if (element is TextBlock fontFamilyTextBlock) fontFamilyTextBlock.FontFamily = fontFamily;
+                    }
                     break;
             }
         }
@@ -211,6 +214,20 @@ public static class WpfGuiRenderer
             _ => new Thickness(values[0], values[1], values[2], values[3])
         };
         return true;
+    }
+
+    private static bool TryFontFamily(string value, out FontFamily fontFamily)
+    {
+        fontFamily = SystemFonts.MessageFontFamily;
+        try
+        {
+            fontFamily = new FontFamily(value);
+            return true;
+        }
+        catch (ArgumentException)
+        {
+            return false;
+        }
     }
 
     private static bool TryBrush(string value, out Brush brush)
