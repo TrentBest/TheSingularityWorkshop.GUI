@@ -3,7 +3,7 @@
 This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
 
 **Baseline:** `development`  
-**Estimated readiness:** **74%** — owner decisions establish MIT licensing and WPF inclusion, and the updated workflow successfully packed and metadata-checked all four packages. Version/channel alignment, candidate selection, and final consumer/integration evidence remain open.  
+**Estimated readiness:** **76%** — MIT/WPF scope is implemented and the four-package artifact has been downloaded and inspected: all four archives include the intended framework DLL, XML API documentation, README, and MIT metadata. A follow-up CI gate now checks framework/XML assets. Version/channel alignment, candidate selection, and final consumer/integration evidence remain open.  
 **Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved.
 
 ## Definition of a substantial next release
@@ -13,6 +13,8 @@ The broader current-surface audit is tracked in [GUI Surface Coverage Audit](GUI
 SVG is a valid release centerpiece, but the release should deliver a dependable package family, not merely a new SVG file. The intended value is a tested, documented, reproducible path from the neutral GUI model to useful SVG output, with coherent package metadata and a real consumer proving the published artifact works.
 
 ## P0 — Decisions and hard release blockers
+
+- [x] **Inspect the four-package artifact from run 39197481340:** [artifact](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39197481340) SHA-256 `2b538293e28c4137cb172289173d541c7ac8a83d54a421fb2174f234fb5afc42`. Core `0.1.0`, Blazor `0.1.0`, and SVG `0.1.0-alpha.1` contain `lib/net8.0/*.dll` and matching XML documentation; WPF `0.1.0` contains `lib/net8.0-windows7.0/*.dll` and matching XML documentation. All four contain `README.md`, declare MIT, and have coherent Core dependency versions. Package SHA-256: Core `45621c7e0e5a73376bce8bfb15f3420905e96a5a9240de1ece09280a815221e0`; Blazor `f130b6b753f17d0d828b98e969bd74b9446780b47ac8f235b59da9f9d16dd531`; SVG `6530819034a7102cbd7b31fc7499ff756e0b326878672cccc0941c3cc256f232`; WPF `03c1e32716d16cbda236517df7d7fe04cf3c9661fb56621db4c1494465136a07`. These are implementation artifacts, not the selected release candidate; published-version drift remains unresolved.
 
 - [x] **Choose package scope:** Core, Blazor, SVG, and WPF are in scope for the next GUI package-family release. WPF remains an initial renderer/builder package; do not imply full parity with other adapters.
 - [ ] **Choose release channel and versions** for every in-scope package. Reconcile project-file declarations with published NuGet versions; do not guess a version or infer a stable-release decision.
