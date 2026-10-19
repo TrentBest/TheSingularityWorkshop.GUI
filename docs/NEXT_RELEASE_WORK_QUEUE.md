@@ -36,6 +36,8 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 
 - [x] Core, Blazor, and SVG Release tests plus shared conformance tests passed in the recorded baseline workflow.
 - [x] Windows-native WPF tests passed in the recorded baseline workflow; this does not itself mean WPF is packaged for the candidate.
+- [x] Add STA regression tests for native-control system defaults, fluent style/layout overrides, builder identity, and repeatable stack-panel builds; [Windows workflow run 39195324527](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195324527) passed. See [WPF Builder Pattern Audit](WPF_BUILDER_PATTERN_AUDIT.md) for patterns extracted from other Workshop WPF builders and boundaries on what should remain optional or host-specific.
+- [ ] Verify Grid splitter/track mapping, Canvas positioning, and nested-component parent propagation in the newest Windows run; these tests are added on `development` but are not yet verified.
 - [ ] Audit public APIs and XML documentation for every in-scope package; build Release with no unexplained warnings/errors.
 - [ ] Inspect all candidate package archives and dependency graphs; ensure package versions and Blazor-to-Core dependencies agree.
 - [ ] Decide whether WPF is in scope. If included, wire it into the package workflow and verify package README, tags, repository metadata, license, dependencies, and archive contents. If excluded, record the deferral.
