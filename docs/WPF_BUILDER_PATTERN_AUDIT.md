@@ -30,7 +30,7 @@ This audit compares the WPF adapter in this repository with existing WPF builder
 
 - [x] Add STA tests for native defaults and fluent overrides.
 - [x] Verify repeatable stack-panel construction without duplicate children.
-- [ ] Expand tests for grid track sizing/splitters, canvas placement, and nested component parent propagation.
+- [x] Expand tests for grid track sizing/splitters, canvas placement, and nested component parent propagation; [Windows run 39195444173](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195444173) passed.
 - [ ] Add an actual WPF living sample that demonstrates the same neutral model rendered by WPF and links each visible feature to its tests.
 - [ ] Decide whether a separate reusable window-host builder is in this release scope.
 - [ ] Verify package README/XML docs, metadata, dependencies, and archive contents if WPF is selected for release.
