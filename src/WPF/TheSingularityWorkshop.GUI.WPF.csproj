@@ -1,11 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net8.0-windows</TargetFramework>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <UseWPF>true</UseWPF>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <PackageId>TheSingularityWorkshop.GUI.WPF</PackageId>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageTags>gui;wpf;windows;adapter;builder</PackageTags>
     <Version>0.1.0</Version>
     <Authors>The Singularity Workshop</Authors>
     <Company>The Singularity Workshop</Company>
@@ -13,6 +18,7 @@
     <PackageDescription>Reusable WPF GUI builders for The Singularity Workshop.</PackageDescription>
   </PropertyGroup>
   <ItemGroup>
+    <None Update="README.md" Pack="true" PackagePath="/" />
     <ProjectReference Include="..\Core\TheSingularityWorkshop.GUI.Core.csproj" />
   </ItemGroup>
 </Project>
