@@ -114,10 +114,10 @@ public sealed class WpfGuiRendererConformanceTests
                 text: "Save",
                 properties: new Dictionary<string, string>
                 {
-                    ["fontFamily"] = "\0"
+                    ["fontFamily"] = ""
                 })));
 
-            Assert.NotEqual("\0", button.FontFamily.Source);
+            Assert.False(string.IsNullOrEmpty(button.FontFamily.Source));
         });
     }
 
