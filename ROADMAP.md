@@ -44,6 +44,12 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 
 ## Phase 2 — expressiveness before platform breadth
 
+- [ ] Define a platform-neutral data-card/diagram contract (namespace/type/member hierarchy, header/body, stable identity, expansion state, and semantic edit actions); see [UML-Inspired Data Cards](docs/DATA_CARDS_AND_UML.md)
+- [ ] Keep code-definition/AST semantics in the code/creation domain rather than GUI Core
+- [ ] Establish UML data-card visibility defaults and view/inspect/edit-mode affordances
+- [ ] Generate an SVG living data-card diagram from a fixture shared with automated tests
+- [ ] Verify that diagram edits cross an explicit domain command/validation boundary
+
 The model must first prove that it can describe more than conventional widgets.
 
 - [ ] Text and typography

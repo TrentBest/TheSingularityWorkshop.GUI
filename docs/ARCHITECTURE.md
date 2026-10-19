@@ -93,6 +93,10 @@ The following do not belong in Core:
 - JavaScript callbacks;
 - Unity-specific UI objects.
 
+## Structured diagrams and data cards
+
+The shared data-card/diagram representation belongs at the platform-neutral semantic boundary; code-specific definitions remain in the consuming code/creation domain. SVG, WPF, and Blazor are manifestations, not owners of the diagram contract. See [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md) for the ownership boundary, expansion defaults, edit modes, and acceptance criteria.
+
 ## Design principle
 
 Core should be boring.

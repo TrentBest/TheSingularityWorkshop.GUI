@@ -68,3 +68,7 @@ Each candidate should first acquire a platform-neutral meaning and tests before 
 Serialization is a future capability, not an implicit requirement of the current GuiNode API.
 
 When introduced, serialized GUI trees should preserve semantic intent and stable identities without serializing platform objects or delegates.
+
+## Structured diagrams and data cards
+
+The recursive `GuiNode` tree is a general GUI snapshot, not a typed source-code or diagram-editing model. A future data-card contract should add explicit platform-neutral semantics for card identity, header/body regions, containment, expansion/visibility intent, and available semantic actions. Keep code-specific AST/definition semantics in the code/creation domain; keep SVG/WPF/Blazor element details in their adapters. See [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md) before introducing these types.
