@@ -1,6 +1,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using TheSingularityWorkshop.GUI.WPF;
 using TheSingularityWorkshop.GUI.WPF.Abstractions;
 using TheSingularityWorkshop.GUI.WPF.Layouts;
 
@@ -134,6 +135,54 @@ public sealed class WpfBuilderTests
             Assert.Equal(42, Canvas.GetLeft(element));
             Assert.Equal(84, Canvas.GetTop(element));
         });
+    }
+
+    [Fact]
+    public void Window_builder_composes_content_and_host_options_without_showing_the_window()
+    {
+        RunOnSta(() =>
+        {
+            var owner = new Window { Title = "Owner" };
+            var contentElement = new StackPanel();
+            var background = new SolidColorBrush(Color.FromRgb(22, 33, 44));
+
+            var window = new WpfWindowBuilder()
+                .WithTitle("Workshop")
+                .WithSize(900, 600)
+                .WithContent(contentElement)
+                .OwnedBy(owner)
+                .WithStartupLocation(WindowStartupLocation.CenterOwner)
+                .WithResizeMode(ResizeMode.CanMinimize)
+                .WithWindowStyle(WindowStyle.SingleBorderWindow)
+                .WithBackground(background)
+                .ShowInTaskbar(false)
+                .Build();
+
+            Assert.Equal("Workshop", window.Title);
+            Assert.Equal(900, window.Width);
+            Assert.Equal(600, window.Height);
+            Assert.Same(contentElement, window.Content);
+            Assert.Same(owner, window.Owner);
+            Assert.Equal(WindowStartupLocation.CenterOwner, window.WindowStartupLocation);
+            Assert.Equal(ResizeMode.CanMinimize, window.ResizeMode);
+            Assert.Equal(WindowStyle.SingleBorderWindow, window.WindowStyle);
+            Assert.Same(background, window.Background);
+            Assert.False(window.ShowInTaskbar);
+            Assert.False(window.IsVisible);
+        });
+    }
+
+    [Theory]
+    [InlineData(0, 100)]
+    [InlineData(-1, 100)]
+    [InlineData(double.NaN, 100)]
+    [InlineData(double.PositiveInfinity, 100)]
+    [InlineData(100, 0)]
+    [InlineData(100, double.NegativeInfinity)]
+    public void Window_builder_rejects_non_positive_or_non_finite_sizes(double width, double height)
+    {
+        RunOnSta(() => Assert.Throws<ArgumentOutOfRangeException>(
+            () => new WpfWindowBuilder().WithSize(width, height)));
     }
 
     private sealed class TestComponent : IComponentWPF
