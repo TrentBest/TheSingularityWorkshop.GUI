@@ -35,6 +35,7 @@ public sealed class SharedAdapterConformanceTests
         var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
         XNamespace svg = "http://www.w3.org/2000/svg";
         var svgIds = svgDocument.Descendants()
+            .Where(element => element.Name.LocalName != "title" && element.Name.LocalName != "desc")
             .Select(element => (string?)element.Attribute("id"))
             .Where(id => id is not null)
             .Cast<string>()
@@ -123,6 +124,7 @@ public sealed class SharedAdapterConformanceTests
 
         var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
         var svgIds = svgDocument.Descendants()
+            .Where(element => element.Name.LocalName != "title" && element.Name.LocalName != "desc")
             .Select(element => (string?)element.Attribute("id"))
             .Where(id => id is not null)
             .Cast<string>()
