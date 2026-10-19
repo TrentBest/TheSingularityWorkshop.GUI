@@ -16,7 +16,7 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 
 - [x] **Choose package scope:** Core, Blazor, SVG, and WPF are in scope for the next GUI package-family release. WPF remains an initial renderer/builder package; do not imply full parity with other adapters.
 - [ ] **Choose release channel and versions** for every in-scope package. Reconcile project-file declarations with published NuGet versions; do not guess a version or infer a stable-release decision.
-- [x] **Resolve license policy with the owner:** MIT is approved. Add the authoritative root license and align all four package license metadata.
+- [x] **Resolve license policy with the owner:** MIT is approved; the root `LICENSE` and four package license expressions are implemented in the working PR and passed the archive metadata checks in [run 39197481340](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39197481340).
 - [ ] **Name the candidate commit and source branch** after the scope/version decisions; all final evidence must match that exact commit.
 - [ ] **Keep publishing disabled** during readiness work; publication remains a separate explicit approval.
 
