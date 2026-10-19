@@ -28,7 +28,8 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 - [ ] **Verify the sample using only the packed package** in a clean consumer—not repository project references or uncommitted files.
 - [ ] **Audit the documented SVG vocabulary against executable tests.** Confirm each advertised element family has a representative assertion; explicitly list known viewer-dependent or unsupported behaviors rather than promising universal rendering parity.
 - [ ] **Add regression cases for malformed/hostile-but-parseable inputs** at the serializer boundary where the renderer claims to validate them: XML escaping, dimensions/ranges, duplicate IDs (including generated overlays), depth limits, and external href/link handling. Do not claim a security sanitizer unless a dedicated allow-list/sanitization contract is implemented.
-- [ ] **Prove deterministic output** for the same input scene across repeated generation; document intentional sources of nondeterminism if any.
+- [x] **Prove deterministic output** for the same input scene across repeated generation. `Escapes_xml_attribute_values_and_preserves_non_ascii_text` and `Rendering_the_same_scene_twice_produces_identical_bytes` pass in [workflow run 39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472). No intentional nondeterministic output is documented.
+
 - [ ] **Make the living example useful:** the gallery should explain which model features are exercised and let reviewers map each visible example to the source builder and relevant test. Keep it generated from real adapter output, not a hand-drawn substitute.
 
 ## P2 — Package family integrity
