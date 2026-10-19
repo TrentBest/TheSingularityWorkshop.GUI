@@ -71,4 +71,6 @@ When introduced, serialized GUI trees should preserve semantic intent and stable
 
 ## Structured diagrams and data cards
 
-The recursive `GuiNode` tree is a general GUI snapshot, not a typed source-code or diagram-editing model. A future data-card contract should add explicit platform-neutral semantics for card identity, header/body regions, containment, expansion/visibility intent, and available semantic actions. Keep code-specific AST/definition semantics in the code/creation domain; keep SVG/WPF/Blazor element details in their adapters. See [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md) before introducing these types.
+`DataCard` is the first explicit, platform-neutral structured-diagram primitive. It provides stable identity, semantic kind, primary and optional secondary header text, an initial expansion preference, and ordered child cards. Its child sequence is snapshotted at construction, like `GuiNode`.
+
+`DataCard` deliberately does not own source-code ASTs, access-control policy, edit commands, current expansion state, or renderer elements. The code/creation domain owns the authoritative definition; the editor/command handler validates and applies edits; SVG/WPF/Blazor adapters manifest the model. Semantic add/edit actions and explicit header/body presentation regions remain follow-up work rather than being disguised as arbitrary string properties. See [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md) for the intended boundary and acceptance criteria.
