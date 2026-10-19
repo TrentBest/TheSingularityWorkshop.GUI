@@ -350,11 +350,18 @@ public sealed class SvgGuiRendererTests
         Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
     }
 
-    [Fact]
-    public void Rejects_negative_geometry_dimensions()
+    [Theory]
+    [InlineData("svg-circle", "r")]
+    [InlineData("svg-ellipse", "rx")]
+    [InlineData("svg-ellipse", "ry")]
+    [InlineData("svg-rect", "width")]
+    [InlineData("svg-rect", "height")]
+    [InlineData("svg-line", "stroke-width")]
+    [InlineData("coordinate-point", "radius")]
+    public void Rejects_negative_geometry_dimensions(string kind, string property)
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
-            .Child("svg-circle", "invalid", circle => circle.Property("r", "-1"))
+            .Child(kind, "invalid", node => node.Property(property, "-1"))
             .Build();
 
         Assert.Throws<ArgumentOutOfRangeException>(() => _renderer.Render(scene));
@@ -433,7 +440,8 @@ public sealed class SvgGuiRendererTests
     [InlineData("NaN")]
     [InlineData("Infinity")]
     [InlineData("-Infinity")]
-    public void Rejects_non_finite_numeric_geometry_properties(string value)
+    [InlineData("not-a-number")]
+    public void Rejects_non_finite_or_malformed_numeric_geometry_properties(string value)
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
             .Child("svg-circle", "marker", circle => circle.Property("cx", value))
