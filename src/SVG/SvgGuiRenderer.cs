@@ -40,6 +40,11 @@ public sealed class SvgGuiRenderer
 
         var viewHeight = 100d * height / width;
         var label = Value(root, "aria-label", root.Text ?? root.Id);
+        var hasDescription = root.Properties.TryGetValue("description", out var description) &&
+            !string.IsNullOrWhiteSpace(description);
+        var labelledBy = hasDescription
+            ? "gui-svg-title gui-svg-description"
+            : "gui-svg-title";
         var svg = new XElement(Svg + "svg",
             new XAttribute("width", width),
             new XAttribute("height", height),
@@ -49,9 +54,10 @@ public sealed class SvgGuiRenderer
             new XAttribute("aria-label", label));
 
         AddPresentationAttributes(svg, root);
-        svg.Add(new XElement(Svg + "title", label));
-        if (root.Properties.TryGetValue("description", out var description) && !string.IsNullOrWhiteSpace(description))
-            svg.Add(new XElement(Svg + "desc", description));
+        svg.SetAttributeValue("aria-labelledby", labelledBy);
+        svg.Add(new XElement(Svg + "title", new XAttribute("id", "gui-svg-title"), label));
+        if (hasDescription)
+            svg.Add(new XElement(Svg + "desc", new XAttribute("id", "gui-svg-description"), description));
 
         if (root.Kind is "svg-scene" or "svg" or "coordinate-system")
         {

@@ -68,6 +68,8 @@ public sealed class SvgGuiRendererTests
         XNamespace svg = "http://www.w3.org/2000/svg";
 
         Assert.NotNull(doc.Root!.Element(svg + "title"));
+        Assert.Equal("gui-svg-title", (string?)doc.Root.Attribute("aria-labelledby"));
+        Assert.Equal("gui-svg-title", (string?)doc.Root.Element(svg + "title")!.Attribute("id"));
         Assert.Equal("rotate(15 20 30)", (string?)doc.Descendants(svg + "ellipse").Single().Attribute("transform"));
         Assert.Equal("3", (string?)doc.Descendants(svg + "rect").Single().Attribute("rx"));
         Assert.Equal("0,0 10,15 20,5", (string?)doc.Descendants(svg + "polyline").Single().Attribute("points"));
@@ -126,6 +128,9 @@ public sealed class SvgGuiRendererTests
         XNamespace svg = "http://www.w3.org/2000/svg";
 
         Assert.Equal("Workshop map", (string?)doc.Root!.Attribute("aria-label"));
+        Assert.Equal("gui-svg-title gui-svg-description", (string?)doc.Root.Attribute("aria-labelledby"));
+        Assert.Equal("gui-svg-title", (string?)doc.Root.Element(svg + "title")!.Attribute("id"));
+        Assert.Equal("gui-svg-description", (string?)doc.Root.Element(svg + "desc")!.Attribute("id"));
         Assert.Equal("A map of the demonstration floor.", doc.Root.Element(svg + "desc")!.Value);
         Assert.Equal("https://example.invalid/map.png", (string?)doc.Descendants(svg + "image").Single().Attribute("href"));
         Assert.Equal("Demonstration floor map", (string?)doc.Descendants(svg + "image").Single().Attribute("aria-label"));
