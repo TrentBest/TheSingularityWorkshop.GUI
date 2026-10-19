@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="560" viewBox="0 0 920 560" role="img" aria-labelledby="title desc">
+  <title id="title">UML class diagram: DataCard</title>
+  <desc id="desc">Source-grounded diagram of the sealed DataCard class, its private read-only child collection, public constructor, properties, and GetCollapsedSummary method. The class has no inheritance or implemented interfaces declared in the source.</desc>
+  <style>
+    text { font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; fill: #172b3a; }
+    .head { fill: #172b3a; }
+    .headtext { fill: #f0f6fb; font-size: 18px; font-weight: 700; }
+    .stereotype { fill: #b7c8d5; font-size: 12px; }
+    .panel { fill: #f7fafc; stroke: #397d75; stroke-width: 2; }
+    .section { stroke: #397d75; stroke-width: 1.2; }
+    .muted { fill: #506779; font-size: 12px; }
+  </style>
+  <rect x="20" y="20" width="880" height="520" rx="8" class="panel"/>
+  <rect x="20" y="20" width="880" height="64" rx="8" class="head"/>
+  <rect x="20" y="72" width="880" height="12" class="head"/>
+  <text x="460" y="43" text-anchor="middle" class="stereotype">«sealed class»</text>
+  <text x="460" y="67" text-anchor="middle" class="headtext">DataCard</text>
+  <line x1="20" y1="84" x2="900" y2="84" class="section"/>
+  <text x="42" y="108" font-weight="700">Fields</text>
+  <text x="42" y="132">− _children : ReadOnlyCollection&lt;DataCard&gt; {readOnly}</text>
+  <line x1="20" y1="148" x2="900" y2="148" class="section"/>
+  <text x="42" y="172" font-weight="700">Constructor</text>
+  <text x="42" y="196">+ DataCard(id : string, kind : string, title : string, subtitle : string? = null,</text>
+  <text x="62" y="218">isExpandedByDefault : bool = true, children : IEnumerable&lt;DataCard&gt;? = null,</text>
+  <text x="62" y="240">canRequestChildInsertion : bool = false)</text>
+  <line x1="20" y1="256" x2="900" y2="256" class="section"/>
+  <text x="42" y="280" font-weight="700">Properties</text>
+  <text x="42" y="304">+ Id : string {get}</text>
+  <text x="42" y="326">+ Kind : string {get}</text>
+  <text x="42" y="348">+ Title : string {get}</text>
+  <text x="42" y="370">+ Subtitle : string? {get}</text>
+  <text x="42" y="392">+ IsExpandedByDefault : bool {get}</text>
+  <text x="42" y="414">+ CanRequestChildInsertion : bool {get}</text>
+  <text x="42" y="436">+ Children : IReadOnlyList&lt;DataCard&gt; {get}</text>
+  <line x1="20" y1="452" x2="900" y2="452" class="section"/>
+  <text x="42" y="476" font-weight="700">Methods</text>
+  <text x="42" y="500">+ GetCollapsedSummary(isExpanded : bool) : string?</text>
+  <text x="42" y="524" class="muted">No base class or implemented interface is declared in the source.</text>
+</svg>
