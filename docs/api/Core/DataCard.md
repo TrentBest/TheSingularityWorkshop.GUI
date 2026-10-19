@@ -31,7 +31,7 @@ The constructor requires nonblank `id`, `kind`, and `title`; violations throw `A
 ## Relationships and boundaries
 
 - A card can contain zero or more child `DataCard` instances.
-- [`SvgDataCardRenderer`](../SVG/SvgDataCardRenderer.md) consumes the card hierarchy to produce a static SVG manifestation.
+- The SVG adapter type `SvgDataCardRenderer` consumes the card hierarchy to produce a static SVG manifestation; its dedicated type page is still pending.
 - The type does not parse source code, execute edits, own live UI state, or depend on an SVG/WPF renderer.
 
 ## Verification
