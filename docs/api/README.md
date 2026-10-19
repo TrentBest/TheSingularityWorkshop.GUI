@@ -8,7 +8,7 @@ This is the entry point for source-grounded per-type documentation and UML class
 
 ## Current first vertical slice
 
-- [DataCard](Core/DataCard.md) — immutable card model, child snapshot, collapsed-summary contract, and its source-grounded UML SVG.
+- [DataCard](Core/DataCard.md) — immutable card model, child snapshot, collapsed-summary contract, and its source-grounded UML SVG.\n- [GuiNode](Core/GuiNode.md) — immutable GUI tree node, snapshot contract, and iterative lookup behavior.
 
 ## Coverage policy
 
