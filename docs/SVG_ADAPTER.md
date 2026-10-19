@@ -118,3 +118,22 @@ dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --config
 ```
 
 For the Visualize integration, see the [Visualize repository](https://github.com/TrentBest/TheSingularityWorkshop.Visualize) and its GUI.SVG proof output. Visualize consumes GUI.SVG through an explicit adapter; neither repository is a dependency of the other's Core model.
+
+## Gallery-to-test map
+
+The generated gallery is a runnable integration example, not evidence that every SVG viewer supports every feature. Use this map to trace visible constructions to the sample source and representative serializer tests.
+
+| Gallery construction | Sample source node / feature | Representative test |
+|---|---|---|
+| Background, panel, curve, facet | `background`, `panel`, `curve`, `facet`; rect/path/polygon and presentation attributes | `Renders_geometry_and_transform_properties_for_composed_scenes` |
+| Gradient-backed panel | `workshop-gradient`, `gradient-start`, `gradient-end`; `svg-defs` / `svg-linear-gradient` / `svg-stop` | `Emits_definitions_gradients_clips_and_masks` |
+| Clipped panel | `panel-clip`; `svg-clip-path` | `Emits_definitions_gradients_clips_and_masks` |
+| Circuit pattern swatch | `circuit-pattern`, `pattern-swatch`; `svg-pattern` and pattern URL | `Renders_reusable_symbols_patterns_markers_and_filter_primitives` |
+| Arrow on the curve | `arrowhead`; `svg-marker` and `marker-end` | `Renders_reusable_symbols_patterns_markers_and_filter_primitives` |
+| Glow, displacement, and lighting swatches | `soft-glow`, `surface-relief`, `surface-lighting`; filter primitives | `Emits_extended_filter_primitives_and_lighting_sources` |
+| Reused star | `star-symbol`, `reused-star`; `svg-symbol` / `svg-use` | `Renders_reusable_symbols_patterns_markers_and_filter_primitives` |
+| Pulsing marker | `animated-marker`; `svg-animate` and `svg-set` | `Emits_explicit_svg_animation_and_transform_nodes_from_gui_model` |
+| Moving scout | `orbit-path`, `motion-scout`, `scout-motion`, `scout-route-reference`; `svg-animate-motion` / `svg-mpath` | `Emits_explicit_svg_animation_and_transform_nodes_from_gui_model` |
+| Linked heading and caption | `heading-link`, `heading`, `caption`; `svg-a` and `svg-text` | `Emits_navigable_svg_links_and_semantic_metadata_nodes` and `Escapes_xml_attribute_values_and_preserves_non_ascii_text` |
+
+The sample is maintained in `samples/SvgGallery/Program.cs`; the checked-in image is `docs/assets/svg-adapter-gallery.svg`. CI regenerates the image and checks it byte-for-byte, so the image should not be edited independently. The named tests are representative coverage, not a claim that the gallery exercises the entire vocabulary table above.
