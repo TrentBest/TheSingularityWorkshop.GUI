@@ -166,3 +166,23 @@ This is how the tooling can make a non-coder more capable without hiding uncerta
 - View/inspect modes do not expose mutation affordances; edit commands validate against the authoritative model.
 - A first code generator has a documented supported subset, deterministic output, diagnostics for missing information, and compile/test evidence.
 - GUI Core remains platform-neutral and does not acquire C# AST, UML parsing, or application-specific command authority merely because it renders the diagrams.
+
+## Per-type documentation contract
+
+Every documented source type—class, struct, interface, record, enum, and other named type with a meaningful contract—must have a dedicated type-level documentation page. A file-level overview may link to these pages, but it does not replace them when a source file declares multiple types. The page must include an **embedded SVG UML class diagram generated from the authoritative source/model**, not a manually redrawn approximation.
+
+At minimum, each type page should provide:
+
+- **Purpose and responsibility:** what the type owns and what it deliberately does not own.
+- **Source identity:** fully qualified name, source file, and relevant generic/type parameters.
+- **UML SVG:** actual members and their meaningful visibility, signatures, inheritance/implemented interfaces, and important associations or dependencies where known. Do not fabricate relationships or omit uncertainty silently.
+- **Behavior and constraints:** key invariants, lifecycle/threading expectations, failure behavior, and extension points where applicable.
+- **Examples and links:** representative use, tests that demonstrate the contract, and related type pages.
+
+Keep the diagram legible and scoped to the type's contract. The SVG should be embedded in the Markdown page and should be reproducible from source/model metadata. When a diagram is derived from a projection rather than directly from the language AST, document the projection boundary. If a relationship cannot be established from available evidence, omit it or mark it unknown instead of guessing.
+
+### Repository-wide adoption and verification
+
+This is a cross-repository documentation convention. GUI provides the reusable diagram semantics, renderers, and eventual generation/validation tooling; each consuming repository remains responsible for its own domain facts and documentation pages. A repository adopting the convention should maintain a source-type-to-document coverage manifest or equivalent deterministic inventory. CI should fail on missing required type pages, missing embedded diagrams, malformed SVG, or generated diagrams that differ from current source/model output. Exceptions (for generated/private/compiler-only types or intentionally grouped declarations) must be explicit and reviewable, not silent gaps.
+
+Do not claim the convention is fully automated until an executable inventory and CI validation prove it. The immediate GUI milestone is a source-grounded, tested SVG class-diagram generator and a small fixture whose documentation image is generated and verified in CI; broad cross-repository enforcement follows after the contract is proven.
