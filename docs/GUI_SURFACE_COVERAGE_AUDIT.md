@@ -10,11 +10,13 @@
 |---|---|---|---|
 | GUI.Core | Neutral GUI model and shared contracts | Release tests and shared conformance tests passed in recorded baseline CI. Platform neutrality still needs an explicit dependency/API audit. | Candidate scope; verify archive and neutral boundary. |
 | GUI.Blazor | Blazor-facing renderer/adapter | Release tests and a clean local-package consumer passed. Real consumer-host demonstration and candidate-version WebPage run remain open. | Candidate scope; prove the documented path in a host. |
-| GUI.SVG | Portable vector output | Release tests, generated-gallery byte comparison, and clean consumer using locally packed packages passed. Archive-only consumption, deterministic-output proof, and hostile-input cases remain open. | Candidate scope; likely headline feature, limitations explicit. |
+| GUI.SVG | Portable vector output | Release tests, generated-gallery byte comparison, clean consumer using locally packed packages, XML-attribute escaping/Unicode round-trip, and repeat-render byte determinism passed in [workflow run 39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472). Archive-only consumption, broader hostile-input coverage, and external-reference policy remain open. | Candidate scope; likely headline feature, limitations explicit. |
 | GUI.WPF | Windows-native rendering surface | Windows tests passed. Current workflow does not pack WPF; the package has previously been published, so workflow omission is not evidence it is not a product. | Owner must include and wire packaging, or explicitly defer it. |
 | WebPage consumer | Downstream integration / proof application | Existing NuGet-mode and repository-source CI passed for the configured dependency set, not a future GUI candidate. | Consumer proof, not another renderer package. Re-test candidate versions. |
 
 Do not infer full parity from multiple adapters. A renderer can be useful and deliberately partial; document and test its actual behavior and limitations.
+
+**SVG verification update (2026-10-19):** workflow run [39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472), commit [`1ca6c07`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/1ca6c07bbd96d837dc6884e238236f49ff06f7f0), passed Core/Blazor/SVG tests, shared adapter conformance, generated-gallery byte comparison, package documentation/metadata checks, and clean consumption of locally packed Core/Blazor/SVG packages; Windows WPF tests also passed. New SVG tests prove XML attribute escaping with Unicode round-trip and deterministic bytes when rendering the same scene twice. This does **not** prove archive-only package consumption or define a security policy for external `href` values; those remain open release checks. The publish job was skipped as intended.
 
 ## 2. Cross-renderer semantic contract
 
