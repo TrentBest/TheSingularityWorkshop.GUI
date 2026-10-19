@@ -6,7 +6,7 @@
 
 Standardize how structured definitions are presented as inspectable, editable diagrams. The initial use case is UML-style source-code structure: namespace, types, fields, properties, methods, and their details. The same data-card vocabulary should remain useful for other structured domains rather than hard-coding C# or UML into the renderer.
 
-A **data card** is a fully enclosed, bordered, colored panel with a header and body. Cards nest according to semantic ownership: a namespace contains types; a type contains its members; a member may reveal its initializer, implementation, or other detail when expanded.
+A **data card** is a fully enclosed, bordered, colored panel with a header and body. Cards nest according to semantic ownership: a namespace card contains its complete represented contents (including class, struct, interface, enum, record, and nested namespace definitions where applicable); each type contains its members; a member may reveal its initializer, implementation, or other detail when expanded. The tree follows the source/domain hierarchy instead of flattening owned content into unrelated sibling cards.
 
 ## Ownership boundary
 
@@ -22,8 +22,8 @@ The existing `GuiNode` is a generic recursive GUI snapshot. It can carry a manif
 ## Canonical data-card structure
 
 - **Usings section** appears before namespace/type content; it contains one card per directive and is collapsed by default.
-- **Namespace card** is the outermost code context and appears after file-level directives where applicable.
-- **Type card** is nested inside its namespace.
+- **Namespace card** is a true content container, not just a heading: its body owns all namespace content represented by the tree. It appears after file-level directives where applicable; nested namespaces remain nested.
+- **Type cards** for classes, structs, interfaces, enums, records, and other declarations are children of the namespace that declares them; nested types remain inside their containing type.
 - **Member-group cards** group members by visibility in the fixed display order Public, Protected, Private. For example, `Public Properties` contains one child card per public property.
 - **Member cards** represent fields, properties, methods, constructors, events, and other declared members; expanding a property reveals accessors and initializer details.
 - **Header** identifies the represented item and can carry its kind/access metadata.
@@ -64,6 +64,10 @@ The initial presentation policy is:
 
 “Collapsed” is a presentation state, not deletion, filtering from the semantic model, or an access-control boundary. Non-public content remains available to authorized inspection/editing workflows. Expansion state should be separate from the authoritative code definition so opening a body does not mutate source semantics.
 
+### Collapsed regions and counts
+
+When a section or group is collapsed, its header may show an aggregate such as **`Collapsed (4)`** to communicate how many direct items it contains without expanding them. The count must be derived from the current projected model, not maintained as a separate mutable number. The collapsed region remains a real target in the hierarchy: in edit mode, a user can invoke an explicit add-to-region action from its header without opening it first. That action is available only when the current domain command set permits insertion. In view/inspect mode, the count is informational and no add affordance is shown. A zero-item region should not expose a pointless disclosure control; if edit mode permits insertion, its explicit add action may still be available. The count must not imply that hidden items are deleted or inaccessible.
+
 Public declarations should show enough signature to distinguish overloads and understand the contract; “name only” means implementation/initializer detail is not expanded by default, not that parameter or type information must be discarded. The policy should be configurable by mode and user preference without changing the represented definition.
 
 ## Modes and edit affordances
@@ -94,7 +98,8 @@ Prefer generating the SVG from the same diagram model used by tests and editor v
 ## Acceptance criteria
 
 - The same diagram data produces equivalent structure across supported adapters.
-- Namespace is the top-level context; an empty namespace can offer “add class” in edit mode.
+- Namespace is a real containment card for all represented namespace content, including class and struct definitions; nested namespaces/types retain their ownership hierarchy.
+- A collapsed region can show a model-derived count such as `Collapsed (4)` and accept an explicit add-to-region command in edit mode without requiring expansion; an empty region has no pointless disclosure control.
 - Cards have a complete border, distinct header and body, and documented color semantics.
 - The Usings section is collapsed by default and contains one card per source directive.
 - Public, Protected, and Private member groups appear in that order; Public is expanded by default and Protected/Private are collapsed.
