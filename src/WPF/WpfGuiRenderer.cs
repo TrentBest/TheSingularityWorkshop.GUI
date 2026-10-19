@@ -153,7 +153,7 @@ public static class WpfGuiRenderer
             {
                 case "width": if (TryDouble(value, out var width)) element.Width = width; break;
                 case "height": if (TryDouble(value, out var height)) element.Height = height; break;
-                case "margin": if (TryThickness(value, out var margin)) element.Margin = margin; break;
+                case "margin": if (TryThickness(value, out var margin, allowNegative: true)) element.Margin = margin; break;
                 case "padding":
                     if (TryThickness(value, out var padding))
                     {
@@ -212,14 +212,19 @@ public static class WpfGuiRenderer
         double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out result)
         && !double.IsNaN(result) && !double.IsInfinity(result) && result >= 0;
 
-    private static bool TryThickness(string value, out Thickness thickness)
+    private static bool TryThickness(string value, out Thickness thickness, bool allowNegative = false)
     {
         thickness = default;
         var parts = value.Split(',').Select(p => p.Trim()).ToArray();
         var values = new double[parts.Length];
         if (parts.Length is not (1 or 2 or 4)) return false;
         for (var i = 0; i < parts.Length; i++)
-            if (!TryDouble(parts[i], out values[i])) return false;
+        {
+            if (!double.TryParse(parts[i], NumberStyles.Float, CultureInfo.InvariantCulture, out values[i])
+                || double.IsNaN(values[i]) || double.IsInfinity(values[i])
+                || (!allowNegative && values[i] < 0))
+                return false;
+        }
 
         thickness = parts.Length switch
         {
