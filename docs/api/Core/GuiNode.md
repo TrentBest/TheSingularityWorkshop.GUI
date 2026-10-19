@@ -31,7 +31,7 @@ The constructor rejects blank `kind` or `id` values with `ArgumentException`. It
 ## Relationships and boundaries
 
 - A node may contain zero or more ordered child `GuiNode` instances.
-- [`SvgGuiRenderer`](../SVG/SvgGuiRenderer.md) consumes the node tree and maps its node kinds and properties into SVG elements.
+- The SVG adapter type `SvgGuiRenderer` consumes the node tree and maps its node kinds and properties into SVG elements; its dedicated type page is still pending.
 - The type does not render, schedule updates, execute event loops, or mutate its tree after construction.
 
 ## Verification
@@ -40,6 +40,6 @@ The source tree contains Core test suites, but a dedicated `GuiNodeTests.cs` map
 
 ## Related types
 
-- [`GuiBuilder`](GuiBuilder.md)
-- [`SvgGuiRenderer`](../SVG/SvgGuiRenderer.md)
+- The related builder type is `GuiBuilder`; its dedicated type page is still pending.
+- `SvgGuiRenderer`
 - [Per-Type Documentation and UML Standard](../../CLASS_DOCUMENTATION_STANDARD.md)
