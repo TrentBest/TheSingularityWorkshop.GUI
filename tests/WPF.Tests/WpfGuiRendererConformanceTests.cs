@@ -92,6 +92,27 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_allows_negative_margin_but_rejects_negative_padding()
+    {
+        RunOnSta(() =>
+        {
+            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
+                "Button",
+                "spacing-contract",
+                text: "Save",
+                properties: new Dictionary<string, string>
+                {
+                    ["margin"] = "-1,2,-3,4",
+                    ["padding"] = "-2"
+                })));
+
+            Assert.Equal(new Thickness(-1, 2, -3, 4), button.Margin);
+            // WPF permits negative margins but rejects negative padding; invalid padding preserves the control default.
+            Assert.Equal(new Thickness(1), button.Padding);
+        });
+    }
+
+    [Fact]
     public void Renderer_uses_placeholder_for_unreadable_image_source()
     {
         RunOnSta(() =>
