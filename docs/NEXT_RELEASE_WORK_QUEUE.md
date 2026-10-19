@@ -40,7 +40,7 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 - [x] Verify Grid splitter/track mapping, Canvas positioning, and nested-component parent propagation; [Windows workflow run 39195444173](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39195444173) passed after a compile-time assertion correction. Reusable window-host builder tests remain in a later run.
 - [ ] Audit public APIs and XML documentation for every in-scope package; build Release with no unexplained warnings/errors.
 - [ ] Inspect all candidate package archives and dependency graphs; ensure package versions and Blazor-to-Core dependencies agree.
-- [ ] Wire WPF into the package workflow and verify its package README, tags, repository metadata, MIT license, dependencies, and archive contents.
+- [x] Wire WPF into the package workflow and configure its package README, tags, repository metadata, and MIT license expression. The PR CI must still prove the package archive contains the expected metadata and README.
 - [ ] Confirm Core remains platform-neutral and has no accidental UI-framework dependency.
 - [ ] Record test counts, exact workflow URL, commit SHA, package filenames, and clean-consumer result.
 
