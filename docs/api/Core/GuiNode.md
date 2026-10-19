@@ -2,6 +2,7 @@
 
 **Namespace:** `TheSingularityWorkshop.Workshop.Gui`  
 **Kind:** sealed class  
+**Assembly:** `TheSingularityWorkshop.GUI.Core`  
 **Source:** [`GuiNode.cs`](../../../src/Core/GuiNode.cs)
 
 ## Responsibility
@@ -12,7 +13,7 @@
 
 ![UML class diagram for GuiNode](../../assets/uml/classes/Core/GuiNode.svg)
 
-The diagram shows the members declared by the source and the ordered self-containment relationship. No base class or implemented interface is declared.
+The diagram shows the private child collection, constructor, public properties, and lookup methods. The ordered child relationship is represented by the `Children` collection; no base class or implemented interface is declared.
 
 ## Constructor and invariants
 
