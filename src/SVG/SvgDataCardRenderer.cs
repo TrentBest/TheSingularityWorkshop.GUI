@@ -19,6 +19,7 @@ public sealed class SvgDataCardRenderer
     private const double ChildGap = 10;
     private const double NestIndent = 18;
     private const double BottomPadding = 12;
+    private const double SubtitleHeight = 16;
 
     /// <summary>Renders a card tree into a self-contained SVG document.</summary>
     /// <param name="root">The platform-neutral card hierarchy.</param>
@@ -56,7 +57,7 @@ public sealed class SvgDataCardRenderer
     private static double Measure(DataCard card, int depth, IReadOnlyDictionary<string, bool>? state)
     {
         var expanded = IsExpanded(card, state);
-        var height = HeaderHeight + BottomPadding;
+        var height = HeaderHeight + (string.IsNullOrWhiteSpace(card.Subtitle) ? 0 : SubtitleHeight) + BottomPadding;
         if (!expanded)
             return height;
 
@@ -123,7 +124,7 @@ public sealed class SvgDataCardRenderer
         }
 
         parent.Add(group);
-        var nextY = y + HeaderHeight + BottomPadding;
+        var nextY = y + HeaderHeight + (string.IsNullOrWhiteSpace(card.Subtitle) ? 0 : SubtitleHeight) + BottomPadding;
         if (!expanded)
             return nextY;
 
