@@ -4,6 +4,8 @@ This is the execution queue for the next release of `TrentBest/TheSingularityWor
 
 **Baseline:** `development`  
 **Estimated readiness:** **84%** — the package verification PR is merged, and development workflow [run 39199107981](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199107981) passed both `test-and-package` and Windows `test-wpf`. All four packages were packed; README/license/target-framework/XML-doc checks passed; the clean packed-package consumer check passed; and `publish_nuget` was skipped. Artifact [gui-nuget-packages](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199107981) is tied to commit `5824b38ed3efb2342b52ef310bd6076ea9cf2717`. Version/channel alignment, candidate selection, and final candidate-version consumer/integration evidence remain open.  
+The latest documentation-follow-up commit `2fecea26b4f7c7f8728e1c1438850b7d07b846e9` was independently re-verified in [workflow run 39202922536](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39202922536): `test-and-package` and Windows `test-wpf` both passed; `publish_nuget` was skipped. This confirms the current documentation commit did not break the verified package/test path; it does not resolve version/channel selection or candidate-specific integration.
+
 **Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved.
 
 ## Definition of a substantial next release
