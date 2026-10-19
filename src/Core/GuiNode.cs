@@ -5,10 +5,12 @@ using System.Linq;
 
 namespace TheSingularityWorkshop.Workshop.Gui;
 
+/// <summary>Provides the GuiNode API.</summary>
 public sealed class GuiNode
 {
     private readonly ReadOnlyCollection<GuiNode> _children;
 
+    /// <summary>Provides the GuiNode member.</summary>
     public GuiNode(
         string kind,
         string id,
@@ -37,13 +39,20 @@ public sealed class GuiNode
             (children ?? Enumerable.Empty<GuiNode>()).ToList());
     }
 
+    /// <summary>Provides the Kind member.</summary>
     public string Kind { get; }
+    /// <summary>Provides the Id member.</summary>
     public string Id { get; }
+    /// <summary>Sets or adds text content.</summary>
     public string? Text { get; }
+    /// <summary>Provides the Source member.</summary>
     public string? Source { get; }
+    /// <summary>Provides the Properties member.</summary>
     public IReadOnlyDictionary<string, string> Properties { get; }
+    /// <summary>Provides the Children member.</summary>
     public IReadOnlyList<GuiNode> Children => _children;
 
+    /// <summary>Finds and returns the first node matching an identifier.</summary>
     public GuiNode Find(string id)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
@@ -55,6 +64,7 @@ public sealed class GuiNode
             $"GUI node '{id}' was not found beneath '{Id}'.");
     }
 
+    /// <summary>Attempts to find a node matching an identifier.</summary>
     public bool TryFind(string id, out GuiNode? node)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
