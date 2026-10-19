@@ -108,3 +108,61 @@ Prefer generating the SVG from the same diagram model used by tests and editor v
 - Plus buttons appear only where the current mode and domain command set permit an add operation.
 - No renderer or card directly edits source text without passing through the domain command/validation boundary.
 - The SVG living example is generated from a fixture shared with automated tests.
+
+
+## UML beyond source-code structure
+
+The data-card hierarchy is a useful first manifestation, not the complete UML model. UML diagrams describe different projections of a system and must not be forced into one tree shape. A class/namespace outline answers “what is defined and contained here?”; a sequence diagram answers “which participant sends what message, and in what order?”; a use-case diagram answers “which actors pursue which goals across a system boundary?”
+
+The GUI repository is a natural home for **platform-neutral diagram presentation contracts and their SVG/WPF/Blazor manifestations**. It should not become the owner of every application's domain model, C# parser, or code-generation rules. Keep the boundaries explicit:
+
+- **Diagram semantics** describe participants, lifelines, messages, relationships, actors, goals, constraints, and diagram-specific layout/interaction intent.
+- **Domain/source models** remain authoritative for their own facts: a C# syntax model owns source declarations; a workflow model owns workflow behavior; a product/domain model owns its use cases and rules.
+- **Projections** turn authoritative domain models into diagrams. A diagram is editable only through commands that validate against the relevant domain model.
+- **Generators** transform sufficiently precise, validated models into code, tests, documentation, or executable definitions. Generated output must be traceable to its source model and generator version.
+
+### Diagram families to support
+
+| Diagram family | What it communicates | Useful model facts |
+| --- | --- | --- |
+| Class / type structure | Types and their relationships | Type identity, members, inheritance, interfaces, associations, multiplicity |
+| Sequence | Time-ordered interactions | Participants, lifelines, messages, call/return, guards, loops, alternatives, activation |
+| Collaboration / communication | Which objects collaborate and through which links | Participants/objects, links, numbered messages, message ordering |
+| Use case | User or external-system goals | Actors, use cases, system boundary, associations, include/extend relationships |
+| Activity | Workflow and decisions | Actions, control/object flows, decisions, merges, forks, joins, guards |
+| State machine | Lifecycle and reactive behavior | States, events, transitions, guards, effects, initial/final states |
+| Component / deployment | Logical modules and runtime placement | Components, provided/required interfaces, dependencies, nodes, deployment links |
+
+The first implementation should not attempt every UML feature at once. Prove the shared architecture with one narrow vertical slice, then add diagram families using the same principles and only family-specific semantics where necessary.
+
+### Recommended vertical slice: model → diagram → validated artifact
+
+1. Define a small platform-neutral diagram contract that can represent nodes/participants, typed relationships/messages, stable identity, constraints, and provenance without embedding SVG elements or C# syntax.
+2. Define a sequence-diagram fixture with named participants and ordered messages, including a response and one guarded/conditional interaction.
+3. Render that fixture to SVG as a generated, inspectable living picture; test structure and semantic labels from the same fixture.
+4. Add view/inspect/edit affordance policy. A visible control expresses an available operation; it does not authorize that operation.
+5. Add a validated command path for one safe edit (for example, rename a participant or reorder a message where constraints permit), then regenerate the diagram and assert the authoritative model changed exactly once.
+6. Only then prove a code-generation path for a deliberately limited subset, such as generating an interface plus a deterministic test skeleton from a validated class/interaction contract.
+
+### Code generation is a contract, not a promise
+
+A picture alone is underspecified for reliable code generation. A sequence diagram may show message order without defining parameter types, error behavior, concurrency, persistence, cancellation, or transaction boundaries. A use-case diagram captures goals and actors, not the implementation algorithm. The tooling must therefore:
+
+- identify which model fields are required for a particular generator;
+- reject or flag incomplete and contradictory models rather than silently guessing;
+- preserve stable identities and trace generated members/tests back to model elements;
+- report unsupported constructs and generated-code regions clearly;
+- keep generation deterministic for the same model and generator version;
+- distinguish generated files from user-authored files, and define safe regeneration/merge behavior;
+- test the generated artifact by compiling or executing it where practical.
+
+This is how the tooling can make a non-coder more capable without hiding uncertainty behind an attractive diagram. The aim is to make expert reasoning visible, reusable, reviewable, and testable—not to pretend that every design sketch already contains enough information to produce a correct program.
+
+### UML acceptance criteria
+
+- At least class/type, sequence, collaboration/communication, and use-case diagrams have explicit semantic definitions before claiming support.
+- The same fixture drives rendering tests and generated SVG output; the committed visual is regenerated and checked in CI rather than hand-maintained.
+- Relationships and message ordering are represented as model data, not inferred from SVG element positions alone.
+- View/inspect modes do not expose mutation affordances; edit commands validate against the authoritative model.
+- A first code generator has a documented supported subset, deterministic output, diagnostics for missing information, and compile/test evidence.
+- GUI Core remains platform-neutral and does not acquire C# AST, UML parsing, or application-specific command authority merely because it renders the diagrams.
