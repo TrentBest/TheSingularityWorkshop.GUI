@@ -8,10 +8,15 @@ namespace TheSingularityWorkshop.Workshop.Gui;
 /// </summary>
 public static class GuiBuilders
 {
+    /// <summary>Creates a button node or button builder.</summary>
     public static GuiNodeBuilder Button(string id, string text) => new GuiNodeBuilder("Button", id).Text(text);
+    /// <summary>Creates a column node builder.</summary>
     public static GuiNodeBuilder Column(string id) => new GuiNodeBuilder("Column", id);
+    /// <summary>Sets or adds text content.</summary>
     public static GuiNodeBuilder Text(string id, string text) => new GuiNodeBuilder("Text", id).Text(text);
+    /// <summary>Creates a builder for a panel.</summary>
     public static GuiNodeBuilder Panel(string id) => new GuiNodeBuilder("Panel", id);
+    /// <summary>Creates a warning node builder.</summary>
     public static GuiNodeBuilder Warning(string id, string text) => new GuiNodeBuilder("Warning", id).Text(text);
 }
 
@@ -34,9 +39,12 @@ public sealed class GuiNodeBuilder
         _id = id;
     }
 
+    /// <summary>Sets or adds text content.</summary>
     public GuiNodeBuilder Text(string text) { _text = text; return this; }
+    /// <summary>Sets an image source reference.</summary>
     public GuiNodeBuilder Image(string source) { _source = source; return this; }
 
+    /// <summary>Sets a string-valued node property.</summary>
     public GuiNodeBuilder Property(string name, string value)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
@@ -45,6 +53,7 @@ public sealed class GuiNodeBuilder
         return this;
     }
 
+    /// <summary>Adds a child element or render fragment.</summary>
     public GuiNodeBuilder Child(GuiNodeBuilder child)
     {
         ArgumentNullException.ThrowIfNull(child);
@@ -52,6 +61,7 @@ public sealed class GuiNodeBuilder
         return this;
     }
 
+    /// <summary>Adds a child element or render fragment.</summary>
     public GuiNodeBuilder Child(GuiNode child)
     {
         ArgumentNullException.ThrowIfNull(child);
@@ -59,6 +69,7 @@ public sealed class GuiNodeBuilder
         return this;
     }
 
+    /// <summary>Builds and returns the configured GUI node or render fragment.</summary>
     public GuiNode Build() => new(
         _kind, _id, _text, _source, _properties,
         _children.ConvertAll(child => child.Build()));
