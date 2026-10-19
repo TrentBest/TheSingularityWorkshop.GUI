@@ -143,6 +143,8 @@ public sealed class WpfBuilderTests
         RunOnSta(() =>
         {
             var owner = new Window { Title = "Owner" };
+            owner.Show();
+            owner.Hide();
             var contentElement = new StackPanel();
             var background = new SolidColorBrush(Color.FromRgb(22, 33, 44));
 
