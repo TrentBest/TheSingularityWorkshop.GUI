@@ -379,4 +379,47 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("256", error.Message);
     }
 
+
+    [Fact]
+    public void Escapes_xml_attribute_values_and_preserves_non_ascii_text()
+    {
+        const string destination = "https://example.invalid/search?q=one&label=\"two\"";
+        const string label = "R&D <atelier> — café";
+
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-a", "external-link", link => link
+                .Property("href", destination)
+                .Child("svg-text", "link-label", text => text.Text(label)))
+            .Build();
+
+        var serialized = _renderer.Render(scene);
+        var document = XDocument.Parse(serialized);
+        XNamespace svg = "http://www.w3.org/2000/svg";
+        var link = document.Descendants(svg + "a").Single();
+
+        Assert.Equal(destination, (string?)link.Attribute("href"));
+        Assert.Equal(label, link.Element(svg + "text")?.Value);
+        Assert.Contains("&amp;", serialized);
+        Assert.Contains("&lt;", serialized);
+        Assert.Contains("café", serialized);
+    }
+
+    [Fact]
+    public void Rendering_the_same_scene_twice_produces_identical_bytes()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-defs", "defs", defs => defs
+                .Child("svg-linear-gradient", "gradient", gradient => gradient
+                    .Property("x1", "0%").Property("x2", "100%")
+                    .Child("svg-stop", "start", stop => stop
+                        .Property("offset", "0%").Property("stop-color", "#7ee0bd"))))
+            .Child("svg-text", "caption", text => text.Text("Deterministic — scene")
+                .Property("x", "4").Property("y", "12"))
+            .Build();
+
+        var first = _renderer.Render(scene);
+        var second = _renderer.Render(scene);
+
+        Assert.Equal(first, second);
+    }
 }
