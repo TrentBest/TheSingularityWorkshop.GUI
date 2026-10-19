@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="650" viewBox="0 0 900 650" role="img" aria-labelledby="title desc">
+  <title id="title">UML class diagram: CoordinateSystem</title>
+  <desc id="desc">Readonly record struct CoordinateSystem with primary-constructor values Minimum, Maximum, OriginX and OriginY; computed Range, containment and panel-coordinate validation methods, coordinate deltas, a Normalized singleton value, and a private Validate helper.</desc>
+  <style>
+    text { font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; fill: #172b3a; }
+    .head { fill: #172b3a; }
+    .headtext { fill: #f0f6fb; font-size: 18px; font-weight: 700; }
+    .stereotype { fill: #b7c8d5; font-size: 12px; }
+    .panel { fill: #f7fafc; stroke: #397d75; stroke-width: 2; }
+    .section { stroke: #397d75; stroke-width: 1.2; }
+  </style>
+  <rect x="20" y="20" width="860" height="610" rx="8" class="panel"/>
+  <rect x="20" y="20" width="860" height="60" rx="8" class="head"/>
+  <rect x="20" y="68" width="860" height="12" class="head"/>
+  <text x="450" y="42" text-anchor="middle" class="stereotype">«readonly record struct»</text>
+  <text x="450" y="65" text-anchor="middle" class="headtext">CoordinateSystem</text>
+  <line x1="20" y1="80" x2="880" y2="80" class="section"/>
+  <text x="42" y="105" font-weight="700">Primary-constructor values</text>
+  <text x="42" y="129">+ Minimum : double = 0</text>
+  <text x="42" y="151">+ Maximum : double = 100</text>
+  <text x="42" y="173">+ OriginX : double = 50</text>
+  <text x="42" y="195">+ OriginY : double = 50</text>
+  <line x1="20" y1="210" x2="880" y2="210" class="section"/>
+  <text x="42" y="235" font-weight="700">Properties</text>
+  <text x="42" y="259">+ Range : double {get}</text>
+  <text x="42" y="281">+ Normalized : CoordinateSystem {static, get}</text>
+  <line x1="20" y1="298" x2="880" y2="298" class="section"/>
+  <text x="42" y="323" font-weight="700">Operations</text>
+  <text x="42" y="347">+ Contains(x : double, y : double) : bool</text>
+  <text x="42" y="369">+ ToPanelX(x : double) : double</text>
+  <text x="42" y="391">+ ToPanelY(y : double) : double</text>
+  <text x="42" y="413">+ ToPanel(x : double, y : double) : (X : double, Y : double)</text>
+  <text x="42" y="435">+ FromPanel(x : double, y : double) : (X : double, Y : double)</text>
+  <text x="42" y="457">+ FromPanelX(x : double) : double</text>
+  <text x="42" y="479">+ FromPanelY(y : double) : double</text>
+  <text x="42" y="501">+ DeltaX(fromX : double, toX : double) : double</text>
+  <text x="42" y="523">+ DeltaY(fromY : double, toY : double) : double</text>
+  <line x1="20" y1="540" x2="880" y2="540" class="section"/>
+  <text x="42" y="565" font-weight="700">Private operation</text>
+  <text x="42" y="589">− Validate(value : double) : double</text>
+  <text x="42" y="612" font-size="12">Coordinate validation rejects non-finite values and values outside [Minimum, Maximum].</text>
+</svg>
