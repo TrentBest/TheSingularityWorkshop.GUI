@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="440" viewBox="0 0 820 440" role="img" aria-labelledby="title desc">
+  <title id="title">UML class diagram: CoordinateSystemUtilities</title>
+  <desc id="desc">Static utility class with public Clamp, Normalize, Denormalize, and Distance methods and a private ValidateFiniteRange helper. Range mapping requires finite endpoints with minimum less than maximum.</desc>
+  <style>
+    text { font-family: "Segoe UI", Arial, sans-serif; font-size: 14px; fill: #172b3a; }
+    .head { fill: #172b3a; }
+    .headtext { fill: #f0f6fb; font-size: 18px; font-weight: 700; }
+    .stereotype { fill: #b7c8d5; font-size: 12px; }
+    .panel { fill: #f7fafc; stroke: #397d75; stroke-width: 2; }
+    .section { stroke: #397d75; stroke-width: 1.2; }
+  </style>
+  <rect x="20" y="20" width="780" height="400" rx="8" class="panel"/>
+  <rect x="20" y="20" width="780" height="60" rx="8" class="head"/>
+  <rect x="20" y="68" width="780" height="12" class="head"/>
+  <text x="410" y="42" text-anchor="middle" class="stereotype">«static class»</text>
+  <text x="410" y="65" text-anchor="middle" class="headtext">CoordinateSystemUtilities</text>
+  <line x1="20" y1="80" x2="800" y2="80" class="section"/>
+  <text x="42" y="108" font-weight="700">Public operations</text>
+  <text x="42" y="136">+ Clamp(value : double, minimum : double = 0, maximum : double = 100) : double</text>
+  <text x="42" y="164">+ Normalize(value : double, minimum : double, maximum : double) : double</text>
+  <text x="42" y="192">+ Denormalize(normalized : double, minimum : double, maximum : double) : double</text>
+  <text x="42" y="220">+ Distance(x1 : double, y1 : double, x2 : double, y2 : double) : double</text>
+  <line x1="20" y1="242" x2="800" y2="242" class="section"/>
+  <text x="42" y="270" font-weight="700">Private operation</text>
+  <text x="42" y="298">− ValidateFiniteRange(minimum : double, maximum : double) : void</text>
+  <text x="42" y="338" font-size="13">Clamp validates finite values and ordered bounds.</text>
+  <text x="42" y="360" font-size="13">Normalize/Denormalize require finite endpoints and minimum &lt; maximum.</text>
+  <text x="42" y="382" font-size="13">Distance computes Euclidean distance directly without explicit input validation.</text>
+</svg>
