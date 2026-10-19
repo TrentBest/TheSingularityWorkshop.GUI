@@ -45,6 +45,10 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 ## Phase 2 — expressiveness before platform breadth
 
 - [ ] Define a platform-neutral data-card/diagram contract (namespace/type/member hierarchy, header/body, stable identity, expansion state, and semantic edit actions); see [UML-Inspired Data Cards](docs/DATA_CARDS_AND_UML.md)
+- [ ] Define diagram-family semantics separately from renderer layout: class/type, sequence, collaboration/communication, and use-case diagrams first; see [UML-Inspired Data Cards](docs/DATA_CARDS_AND_UML.md)
+- [ ] Build a sequence-diagram fixture with participants, ordered messages, response, and a guarded interaction; render the same fixture to SVG and assert it in tests
+- [ ] Define validated diagram edit commands and provenance so rendered positions never become the source of truth
+- [ ] Prove one deterministic, limited model-to-code generator with explicit required fields, unsupported-model diagnostics, traceability, and compile/test evidence
 - [ ] Project a C# AST into ordered using-directive cards and a true namespace/type/member containment tree; test visibility-group ordering, expansion defaults, property details, and stable identity after visibility edits
 - [x] Specify and test model-derived `Collapsed (n)` summaries and the Core insertion-affordance hint, including empty-region behavior
 - [ ] Render collapsed summaries and mode-gated add affordances in the living SVG/WPF/Blazor manifestations; verify view/inspect modes never expose mutation controls
