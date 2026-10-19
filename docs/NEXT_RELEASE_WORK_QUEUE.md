@@ -3,8 +3,8 @@
 This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
 
 **Baseline:** `development`  
-**Estimated readiness:** **84%** — the package verification PR is merged, and development workflow [run 39199107981](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199107981) passed both `test-and-package` and Windows `test-wpf`. All four packages were packed; README/license/target-framework/XML-doc checks passed; the clean packed-package consumer check passed; and `publish_nuget` was skipped. Artifact [gui-nuget-packages](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199107981) is tied to commit `5824b38ed3efb2342b52ef310bd6076ea9cf2717`. Version/channel alignment, candidate selection, and final candidate-version consumer/integration evidence remain open.  
-The latest audit commit [`9e0503c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/9e0503c63554641e7f2e6f4bd82e56918ce2d8e5) was verified in [workflow run 39203411342](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39203411342): `test-and-package` and Windows `test-wpf` both passed, including package archive metadata checks, clean packed-package consumer restore/use, and generated SVG gallery verification; `publish_nuget` was skipped. This verifies the commit against configured CI but does not resolve version/channel selection, candidate-specific integration, or the external SVG href policy.
+**Estimated readiness:** **85%** — the package verification work is in place, and the latest development workflow [run 39273127713](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39273127713) passed on commit [`c6ccae9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c6ccae9d7285a0f2ccfedeaba3da420be596e079). Both `test-and-package` and Windows `test-wpf` passed; Core, Blazor, SVG, shared adapter conformance, WPF, generated SVG gallery verification, package metadata checks, and clean packed-package consumer checks completed successfully. `publish_nuget` was skipped. Version/channel alignment, candidate selection, candidate-specific archive inspection, and WebPage integration remain open.  
+Earlier package artifacts documented below are implementation evidence, not the selected release candidate. The latest successful workflow verifies the current development commit against configured CI but does not resolve the release channel/version decision, candidate-version integration, or the external SVG href policy.
 
 **Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved.
 
@@ -69,8 +69,9 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 ## Current blockers / owner decisions
 
 1. Release channel and per-package versions, including dependency version alignment.
-2. Verify the four-package archive set and clean-consumer coverage.
+2. Select the exact candidate commit and source branch.
+3. Inspect the candidate four-package archive set and run clean-consumer verification against those exact versions.
 4. Candidate-version WebPage integration.
-5. Candidate artifact inspection and final release sign-off.
+5. Define the SVG external href/resource policy and complete candidate sign-off.
 
 These are intentionally explicit blockers rather than decisions an implementation agent should silently make. Update the readiness percentage only when evidence changes; checked boxes alone do not equal release readiness.
