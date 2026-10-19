@@ -139,7 +139,8 @@ public sealed class WpfGuiRendererConformanceTests
                 })));
 
             Assert.Equal(new Thickness(0), button.Margin);
-            Assert.Equal(new Thickness(0), button.Padding);
+            // WPF Button has a framework default padding of one unit on each side; null input must preserve it.
+            Assert.Equal(new Thickness(1), button.Padding);
             Assert.Equal("Save", button.Content);
             Assert.Equal(SystemFonts.MessageFontFamily.Source, button.FontFamily.Source);
         });
