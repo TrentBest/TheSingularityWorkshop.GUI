@@ -56,42 +56,63 @@ public sealed class WpfWindowBuilder
         return this;
     }
 
+    /// <summary>Sets how WPF positions the window when it is first shown.</summary>
+    /// <param name="location">The requested startup placement policy.</param>
+    /// <returns>This builder for fluent configuration.</returns>
     public WpfWindowBuilder WithStartupLocation(WindowStartupLocation location)
     {
         _window.WindowStartupLocation = location;
         return this;
     }
 
+    /// <summary>Sets whether the window is resizable, fixed-size, or uses a size grip.</summary>
+    /// <param name="mode">The WPF resize policy.</param>
+    /// <returns>This builder for fluent configuration.</returns>
     public WpfWindowBuilder WithResizeMode(ResizeMode mode)
     {
         _window.ResizeMode = mode;
         return this;
     }
 
+    /// <summary>Sets the native window chrome style.</summary>
+    /// <param name="style">The WPF window style.</param>
+    /// <returns>This builder for fluent configuration.</returns>
     public WpfWindowBuilder WithWindowStyle(WindowStyle style)
     {
         _window.WindowStyle = style;
         return this;
     }
 
+    /// <summary>Sets the window's background brush.</summary>
+    /// <param name="background">Brush painted behind the window content.</param>
+    /// <returns>This builder for fluent configuration.</returns>
+    /// <exception cref="ArgumentNullException">The brush is <see langword="null"/>.</exception>
     public WpfWindowBuilder WithBackground(Brush background)
     {
         _window.Background = background ?? throw new ArgumentNullException(nameof(background));
         return this;
     }
 
+    /// <summary>Sets the icon displayed by the window and its taskbar representation.</summary>
+    /// <param name="icon">Image source used as the window icon.</param>
+    /// <returns>This builder for fluent configuration.</returns>
+    /// <exception cref="ArgumentNullException">The icon is <see langword="null"/>.</exception>
     public WpfWindowBuilder WithIcon(ImageSource icon)
     {
         _window.Icon = icon ?? throw new ArgumentNullException(nameof(icon));
         return this;
     }
 
+    /// <summary>Controls whether the window is represented in the Windows taskbar.</summary>
+    /// <param name="show">Set to <see langword="true"/> to show a taskbar entry; otherwise, hide it.</param>
+    /// <returns>This builder for fluent configuration.</returns>
     public WpfWindowBuilder ShowInTaskbar(bool show = true)
     {
         _window.ShowInTaskbar = show;
         return this;
     }
 
-    /// <summary>Returns the configured window without showing it.</summary>
+    /// <summary>Returns the configured window without showing it or taking ownership of its lifetime.</summary>
+    /// <returns>The single <see cref="Window"/> instance managed by this builder.</returns>
     public Window Build() => _window;
 }
