@@ -57,6 +57,17 @@ The filter vocabulary includes the channel transfer functions `svg-fe-func-r`, `
 
 Presentation properties include transforms, opacity, fill/stroke settings, dash patterns, line caps and joins, font settings, visibility, clipping, masking, filters, class/style, and accessibility attributes. Properties are serialized as XML attributes; XML text and attribute escaping is handled by `System.Xml.Linq`.
 
+## External references and URL policy
+
+This adapter does **not** apply a URL-scheme allow-list or fetch/resolve references. It serializes reference values supplied by the scene; XML well-formedness is not a destination-safety guarantee.
+
+- `svg-a` preserves its required `href` and optional navigation metadata.
+- `svg-image` serializes its `href` or Core `Source` value. `svg-fe-image` can also carry an `href`.
+- Reusable definitions and motion paths can carry references through `href`, including `svg-use`, gradient/pattern inheritance, and `svg-mpath`.
+- Fragment references such as `#definition-id` and external URLs are emitted as supplied. The renderer does not currently guarantee a restricted set of schemes, origins, or local-only resources.
+
+Consumers that handle untrusted or remotely supplied scenes must enforce their own scheme/origin policy before rendering or serving the SVG, and must consider the target viewer's external-resource and navigation behavior. Do not treat generated SVG as sanitized merely because it is well-formed XML. This package's contract is serialization, not URL authorization.
+
 ## Generated gallery
 
 The checked-in `docs/assets/svg-adapter-gallery.svg` is a snapshot emitted by `samples/SvgGallery/Program.cs`. CI regenerates the SVG and compares it byte-for-byte with the snapshot before packing, so a scene change cannot silently leave the documentation image behind. When the sample changes intentionally, regenerate the image with the sample, review the resulting SVG, and update the snapshot in the same change.
