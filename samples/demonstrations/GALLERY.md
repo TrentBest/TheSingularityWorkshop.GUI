@@ -1,8 +1,10 @@
 # GUI.SVG Recipes
 
-A visual index of reproducible recipes: each preview has a two-sentence summary and a link to the full walkthrough. The walkthrough—not this gallery—owns the implementation details, package boundaries, diagrams, commands, and verification status.
+A visual index organized by the packages and repositories each example actually uses. Each entry has a two-sentence summary and one link to its full walkthrough or source.
 
-## Recipe 01 — Primitive geometry
+## GUI.SVG only
+
+### Recipe 01 — Primitive geometry
 
 ![Recipe 01: primitive geometry — a rounded panel and marker](01-primitive-geometry.svg)
 
@@ -10,13 +12,51 @@ Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup w
 
 [**Read Recipe 01 — Primitive geometry**](recipes/01-primitive-geometry.md)
 
-## Recipe 04 — Animated scene
+### Recipe 04 — Animated scene
 
 ![Animated GUI.SVG adapter gallery with a filled star following a motion path](../../docs/assets/svg-adapter-gallery.svg)
 
 Explore reusable SVG definitions, filters, and declarative animation, including a filled star moving along a referenced path. The animation is interpreted by a compatible SVG viewer; it is not an FSM_API clock or proof of GPU rendering.
 
 [**Read Recipe 04 — Animated scene**](recipes/04-animated-scene.md)
+
+## Harvested from TheSingularityWorkshop.Physics
+
+These SVGs remain owned by Physics; this gallery links to the source rather than copying or implying GUI.SVG generated them. They are candidates for richer step-by-step lessons once their equations, data, and run records are connected to the displayed progression.
+
+### Spring and damper
+
+![Physics spring-damper living illustration](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Physics/development/docs/images/spring-damper-living.svg)
+
+A spring-damper system is a natural bridge from a formula to visible motion and changing system state. The source repository owns the illustration and its underlying lesson.
+
+[**Open the Physics source**](https://github.com/TrentBest/TheSingularityWorkshop.Physics/blob/development/docs/images/spring-damper-living.svg)
+
+### Lookup-table interpolation
+
+![Physics lookup-table interpolation illustration](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Physics/development/docs/images/lookup-table-interpolation.svg)
+
+Interpolation can be taught by showing sample points, the interval being evaluated, and the changing estimate between known values. This is a harvested Physics illustration, not yet a GUI.SVG-generated scene.
+
+[**Open the Physics source**](https://github.com/TrentBest/TheSingularityWorkshop.Physics/blob/development/docs/images/lookup-table-interpolation.svg)
+
+### Projectile trajectory
+
+![Physics projectile trajectory illustration](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Physics/development/docs/experiments/projectile-trajectory.svg)
+
+A projectile lesson can progress from initial conditions to trajectory, then compare how changing a parameter changes the path. The Physics repository retains the authoritative illustration, lesson, and run record.
+
+[**Open the Physics experiment**](https://github.com/TrentBest/TheSingularityWorkshop.Physics/blob/development/docs/experiments/projectile-trajectory.md)
+
+## Harvested from TheSingularityWorkshop.Visualize
+
+### Primitive gallery: connected points
+
+![Visualize primitive gallery connected points SVG proof](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/samples/PrimitiveGallery/generated/07-gui-svg-connected-points.svg)
+
+This artifact belongs to Visualize's primitive gallery and demonstrates a GUI.SVG proof output in that consuming repository. The linked source preserves its generation context and the boundary between an SVG proof and Visualize's own rendering path.
+
+[**Open the Visualize gallery**](https://github.com/TrentBest/TheSingularityWorkshop.Visualize/tree/development/samples/PrimitiveGallery)
 
 ---
 
