@@ -51,6 +51,7 @@ jobs:
           --configuration Release
           --diagram-svg artifacts/DataCard.semantic-uml.svg
           --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard
+          --inventory-markdown artifacts/Core.uml-inventory.md
       - name: Verify project-semantic UML model contract
         run: |
           python3 - <<'PY'
@@ -65,6 +66,11 @@ jobs:
           assert provenance["projectPath"] == "src/Core/TheSingularityWorkshop.GUI.Core.csproj"
           assert provenance["analysisMode"] == "project-semantic"
           assert model["types"], "expected compiled project types"
+          inventory = Path("artifacts/Core.uml-inventory.md").read_text(encoding="utf-8")
+          assert inventory.startswith("# Generated UML type inventory")
+          assert "## TheSingularityWorkshop.Workshop.Gui.DataCard" in inventory
+          assert "### Members" in inventory and "### Relationships" in inventory
+          assert "Source declarations" in inventory and "sourceRevision" not in inventory
           ids = {item["id"] for item in model["types"]}
           assert any(item["identity"]["metadataName"] == "DataCard" for item in model["types"])
           assert any(item["identity"]["metadataName"] == "UmlDocumentationModel" for item in model["types"])
@@ -177,6 +183,8 @@ jobs:
           grep -q 'Children' artifacts/DataCard.source-structure.svg
           test -s artifacts/DataCard.uml.svg
           test -s artifacts/DataCard.semantic-uml.svg
+          test -s artifacts/Core.uml-inventory.md
+          grep -q "Generated UML type inventory" artifacts/Core.uml-inventory.md
           grep -q 'Source-derived UML neighborhood:' artifacts/DataCard.semantic-uml.svg
           grep -q 'UML class diagram: DataCard' artifacts/DataCard.uml.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.uml.svg
