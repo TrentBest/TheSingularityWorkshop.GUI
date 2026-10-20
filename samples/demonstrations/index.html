@@ -5,47 +5,36 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>GUI.SVG · Demonstrations</title>
 <style>
-:root{color-scheme:dark;--bg:#09121e;--card:#111f2e;--line:#2b4055;--text:#edf4fb;--muted:#b3c4d5;--accent:#7ee0bd;--amber:#ffb86c}
+:root{color-scheme:dark;--bg:#09121e;--card:#111f2e;--line:#2b4055;--text:#edf4fb;--muted:#b3c4d5;--accent:#7ee0bd}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif}
 header{padding:clamp(24px,5vw,64px) max(20px,calc((100vw - 1100px)/2));border-bottom:1px solid var(--line);background:linear-gradient(135deg,#102538,#191b35)}
 header h1{margin:0 0 8px;font-size:clamp(2rem,4vw,3.2rem);line-height:1.1}header p{max-width:760px;color:var(--muted);margin:0}
 main{max-width:1100px;margin:0 auto;padding:28px 20px 64px;display:grid;gap:24px}
-.card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--card);box-shadow:0 12px 34px #0003}
+.card{overflow:hidden;border:1px solid var(--line);border-radius:18px;background:var(--card)}
 .card-head{padding:22px 24px 12px;display:flex;gap:16px;align-items:flex-start;justify-content:space-between;flex-wrap:wrap}
 h2{margin:0;font-size:1.45rem}.level{color:var(--accent);font-size:.82rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
 .preview{display:block;width:100%;aspect-ratio:16/9;max-height:500px;background:#0b1725;border-block:1px solid var(--line)}
 .preview img{width:100%;height:100%;object-fit:contain;display:block}
-.body{padding:20px 24px 24px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
-h3{font-size:.95rem;margin:0 0 6px;color:var(--accent)}p{margin:0;color:var(--muted)}.status{grid-column:1/-1;padding:12px 14px;border-left:3px solid var(--amber);background:#ffb86c12;color:#f4d8b5}
-a{color:#a9d9ff;text-underline-offset:3px}footer{padding:0 24px 24px}
-@media(max-width:640px){.body{grid-template-columns:1fr}.status{grid-column:auto}.card-head{padding:18px}.body{padding:16px}}
+.body{padding:20px 24px 24px;display:grid;grid-template-columns:minmax(0,1fr);gap:12px}
+p{margin:0;color:var(--muted)}a{color:#a9d9ff;text-underline-offset:3px}footer{padding:0 24px 24px}
+@media(max-width:640px){.card-head{padding:18px}.body{padding:16px}}
 </style>
 </head>
 <body>
 <header>
   <h1>GUI.SVG Demonstrations</h1>
-  <p>A progressive recipe gallery. The <a href="GALLERY.md">Markdown-first gallery</a> is canonical: each recipe embeds its SVG preview, names the packages it actually consumes, and links to the implementation deep dive. These cards are a convenience view; they distinguish a visible image from verified generation and runtime behavior.</p>
+  <p>A visual index. Each entry has a preview, a short summary, and one link to the full recipe; implementation details and verification belong in the linked Markdown document. The <a href="GALLERY.md">Markdown gallery</a> is canonical.</p>
 </header>
 <main>
   <article class="card">
-    <div class="card-head"><div><div class="level">Level 01 · Foundations</div><h2>Primitive geometry</h2></div><a href="01-primitive-geometry.md">Read the full write-up →</a></div>
+    <div class="card-head"><div><div class="level">Recipe 01 · Foundations</div><h2>Primitive geometry</h2></div><a href="recipes/01-primitive-geometry.md">Read the recipe →</a></div>
     <a class="preview" href="01-primitive-geometry.svg" aria-label="Open primitive geometry SVG"><img src="01-primitive-geometry.svg" alt="Rounded rectangle, circle, crosshair, and labels on a dark background"></a>
-    <div class="body">
-      <section><h3>What it shows</h3><p>Basic shapes and text with explicit geometry, fills, strokes, and stable element IDs.</p></section>
-      <section><h3>What it proves</h3><p>The reference artifact is standalone SVG and can be rendered by a browser. A checked-in C# project now invokes the actual adapter and asserts that the expected rectangle and circle appear in its output.</p></section>
-      <div class="status"><strong>Verification status:</strong> reference SVG plus a checked-in generator and XML assertions. The generator has not yet been run in this session, so a passing execution is not claimed.</div>
-    </div>
-    <footer><a href="01-primitive-geometry.svg">Open reference SVG</a> · <a href="PrimitiveGeometry/Program.cs">Generator source</a> · <a href="PrimitiveGeometry/README.md">Run instructions</a> · <a href="01-primitive-geometry.md">Full write-up</a></footer>
+    <div class="body"><p>Define a small semantic <code>GuiNode</code> tree and turn it into inspectable SVG markup with GUI.SVG. The image is reference artwork; the recipe explains the generator and verification status.</p></div>
   </article>
   <article class="card">
-    <div class="card-head"><div><div class="level">Level 04 · Existing capability</div><h2>Animated adapter gallery</h2></div><a href="../../docs/START_HERE.md">Read adapter guide →</a></div>
-    <a class="preview" href="../../docs/assets/svg-adapter-gallery.svg" aria-label="Open existing animated SVG gallery"><img src="../../docs/assets/svg-adapter-gallery.svg" alt="Existing GUI.SVG gallery with vector geometry and declarative SVG animation"></a>
-    <div class="body">
-      <section><h3>What it shows</h3><p>Existing SVG artwork includes vector geometry, reusable definitions, and declarative animation.</p></section>
-      <section><h3>What it proves</h3><p>The repository contains a working SVG artifact that browsers can display. See the adapter guide for the documented rendering path.</p></section>
-      <div class="status"><strong>Verification status:</strong> the artifact exists. Its exact generation workflow should be reproduced and tested before claiming this gallery proves a fresh build from the current adapter source.</div>
-    </div>
-    <footer><a href="../../docs/assets/svg-adapter-gallery.svg">Open existing SVG</a> · <a href="../../docs/SVG_ADAPTER.md">Adapter contract</a></footer>
+    <div class="card-head"><div><div class="level">Recipe 04 · Animation</div><h2>Animated scene</h2></div><a href="recipes/04-animated-scene.md">Read the recipe →</a></div>
+    <a class="preview" href="../../docs/assets/svg-adapter-gallery.svg" aria-label="Open animated SVG gallery"><img src="../../docs/assets/svg-adapter-gallery.svg" alt="GUI.SVG gallery with vector geometry, reusable definitions, and a moving filled star"></a>
+    <div class="body"><p>Explore reusable SVG definitions, filters, and declarative animation, including a filled star moving along a referenced path. Viewer-driven animation is not an FSM_API clock or a GPU-rendering claim.</p></div>
   </article>
 </main>
 </body>
