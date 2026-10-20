@@ -251,3 +251,18 @@ Until repository-wide source-derived coverage is fully enforced, retain this min
 - Exceptions for generated, compiler-only, or intentionally grouped declarations must be explicit and reviewable.
 
 This is a coverage gate, not a claim that all of it is already automated. The source-derived generator and its CI must demonstrate each supported case before the repository claims full automation.
+
+
+## File-level coverage and interim Mermaid verification
+
+For source files that declare types, the repository-level coverage contract is file-complete as well as type-complete:
+
+- Every implementation file declaring a class, interface, struct, record, or enum must map to a source-accurate UML class diagram. A file with multiple declarations must cover every type, including helper, nested, and internal types. A per-type page is acceptable when it links related declarations and every type page contains its own diagram.
+- Where applicable, show fully qualified name and type kind; inheritance and implemented interfaces; meaningful fields, properties, constructors, and methods with parameter/return types; visibility and static/abstract/virtual distinctions when contract-relevant; and source-supported associations, containment, dependencies, multiplicities, and cross-file links.
+- A simplified overview may omit private implementation detail for readability only when it labels itself as simplified and the detailed type page still makes the omitted contract inspectable.
+- Until source-derived SVG generation covers a case, **Mermaid `classDiagram` is the portable interim source representation**. Review it against source and tests, and check that referenced type/member names exist. This is a bridge, not evidence that automated SVG generation is complete.
+- Update a diagram in the same change as a relevant source-contract change. The long-term generated diagram must come from the same syntax/AST-backed model used by the data-card projection, not become a second manually maintained source of truth.
+- Files without declared types must be included in the inventory and document their actual unit/dependencies using an appropriate diagram, or state “class diagram not applicable” with a short rationale. Never use a misleading empty UML diagram.
+- Generated code and test fixtures follow their repository-specific documentation policy, but must not be silently counted as complete coverage.
+
+The source-to-page/diagram manifest and CI checks must make these cases observable and fail on missing coverage or stale generated output. Exceptions must be explicit and reviewable.
