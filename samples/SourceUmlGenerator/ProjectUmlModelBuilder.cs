@@ -25,10 +25,10 @@ internal static class ProjectUmlModelBuilder
             .Where(type => type.Locations.Any(location => location.IsInSource))
             .OrderBy(type => type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), StringComparer.Ordinal)
             .ToArray();
-        var ids = symbols.ToDictionary(
-            type => type,
-            type => "type:" + assemblyIdentity + ":" + type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat),
-            SymbolEqualityComparer.Default);
+        var ids = new Dictionary<INamedTypeSymbol, string>(SymbolEqualityComparer.Default);
+        foreach (var type in symbols)
+            ids.Add(type, "type:" + assemblyIdentity + ":" +
+                type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat));
 
         var documentedTypes = symbols.Select(type =>
         {
@@ -144,7 +144,7 @@ internal static class ProjectUmlModelBuilder
             var source = SourceDeclaration(syntax, projectPath);
             var signature = member.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
             yield return new UmlDocumentedMember(
-                ownerId + ":member:" + member.Kind() + ":" + signature,
+                ownerId + ":member:" + member.Kind + ":" + signature,
                 member.Kind().ToString(),
                 member.MetadataName,
                 signature,
