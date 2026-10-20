@@ -1,0 +1,72 @@
+using System.Globalization;
+using System.Xml.Linq;
+using TheSingularityWorkshop.Workshop.Gui;
+using TheSingularityWorkshop.Workshop.Gui.Svg;
+
+// Recipe 02: a sampled function plotted through the real GUI.SVG adapter.
+// The mathematical samples are computed here; the adapter maps coordinate points
+// into the visible Cartesian system. No hand-authored SVG path is used.
+const double minimum = -2;
+const double maximum = 2;
+const int intervals = 32;
+
+var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
+    .Text("Recipe 02: Cartesian coordinates and f(x) = x²")
+    .Property("minimum", "-2")
+    .Property("maximum", "2")
+    .Property("grid", "visible")
+    .Property("axes", "visible")
+    .Property("origin", "visible")
+    .Property("bounds", "visible")
+    .Property("aria-label", "Cartesian plane plotting f of x equals x squared")
+    .Property("description", "The curve is represented by sampled coordinate points generated from f(x) = x squared.")
+    .Child("svg-text", "plot-title", title => title
+        .Text("f(x) = x²")
+        .Property("x", "4")
+        .Property("y", "7")
+        .Property("font-size", "3.5")
+        .Property("font-weight", "700")
+        .Property("fill", "#eef6ff"))
+    .Child("svg-text", "x-label", label => label
+        .Text("x")
+        .Property("x", "96")
+        .Property("y", "51")
+        .Property("font-size", "3")
+        .Property("fill", "#eef6ff"))
+    .Child("svg-text", "y-label", label => label
+        .Text("y")
+        .Property("x", "53")
+        .Property("y", "5")
+        .Property("font-size", "3")
+        .Property("fill", "#eef6ff"));
+
+for (var i = 0; i <= intervals; i++)
+{
+    var x = minimum + (maximum - minimum) * i / intervals;
+    var y = x * x;
+    scene.Child("coordinate-point", $"sample-{i:D2}", point => point
+        .Property("x", x.ToString("R", CultureInfo.InvariantCulture))
+        .Property("y", y.ToString("R", CultureInfo.InvariantCulture))
+        .Property("radius", i % 4 == 0 ? "0.9" : "0.55")
+        .Property("fill", "#7ee0bd"));
+}
+
+var svg = new SvgGuiRenderer().Render(scene.Build(), width: 960, height: 540);
+var document = XDocument.Parse(svg);
+XNamespace ns = "http://www.w3.org/2000/svg";
+
+if (document.Root?.Name != ns + "svg")
+    throw new InvalidOperationException("Adapter output does not have an SVG root.");
+if (document.Descendants(ns + "circle").Count(e =>
+        ((string?)e.Attribute("id"))?.StartsWith("sample-", StringComparison.Ordinal) == true) != intervals + 1)
+    throw new InvalidOperationException("Generated SVG does not contain all expected function samples.");
+if (!document.Descendants(ns + "path").Any(e => (string?)e.Attribute("id") == "cartesian-plane-axes"))
+    throw new InvalidOperationException("Generated SVG is missing the Cartesian axes.");
+
+var outputPath = args.Length > 0
+    ? Path.GetFullPath(args[0])
+    : Path.Combine(Environment.CurrentDirectory, "02-coordinate-functions.generated.svg");
+Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+File.WriteAllText(outputPath, svg);
+Console.WriteLine($"PASS: verified Cartesian axes and {intervals + 1} samples of f(x) = x².");
+Console.WriteLine($"Generated: {outputPath}");
