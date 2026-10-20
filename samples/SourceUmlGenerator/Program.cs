@@ -210,9 +210,23 @@ static UmlClassDiagram ProjectUmlClass(BaseTypeDeclarationSyntax declaration)
         InterfaceDeclarationSyntax => "interface",
         StructDeclarationSyntax => "struct",
         EnumDeclarationSyntax => "enumeration",
+        RecordDeclarationSyntax record when record.ClassOrStructKeyword.IsKind(SyntaxKind.StructKeyword) => "record struct",
         RecordDeclarationSyntax => "record",
         _ => "class"
     };
+    if (declaration is TypeDeclarationSyntax decoratedType)
+    {
+        var modifiers = decoratedType.Modifiers
+            .Where(token => token.IsKind(SyntaxKind.AbstractKeyword) ||
+                            token.IsKind(SyntaxKind.SealedKeyword) ||
+                            token.IsKind(SyntaxKind.StaticKeyword) ||
+                            token.IsKind(SyntaxKind.ReadOnlyKeyword) ||
+                            token.IsKind(SyntaxKind.RefKeyword))
+            .Select(token => token.Text);
+        var prefix = string.Join(" ", modifiers);
+        if (!string.IsNullOrWhiteSpace(prefix))
+            kind = prefix + " " + kind;
+    }
     var relationships = declaration is TypeDeclarationSyntax type && type.BaseList is not null
         ? type.BaseList.Types.Select(t => t.ToString()).ToArray()
         : Array.Empty<string>();
