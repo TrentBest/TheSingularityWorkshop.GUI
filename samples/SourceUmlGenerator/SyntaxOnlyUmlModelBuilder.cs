@@ -32,7 +32,7 @@ internal static class SyntaxOnlyUmlModelBuilder
                 NamespaceOf(node),
                 node.Ancestors().OfType<BaseTypeDeclarationSyntax>().Reverse()
                     .Select(parent => parent.Identifier.ValueText).ToArray(),
-                node.Identifier.ValueText + GenericArity(node),
+                MetadataName(node),
                 GenericArity(node),
                 KindOf(node));
             var source = SourceDeclaration(node, sourcePath);
@@ -110,9 +110,12 @@ internal static class SyntaxOnlyUmlModelBuilder
     private static string DeclaredMetadataName(BaseTypeDeclarationSyntax node)
     {
         var containing = node.Ancestors().OfType<BaseTypeDeclarationSyntax>().Reverse()
-            .Select(parent => parent.Identifier.ValueText + GenericArity(parent));
-        return string.Join("+", containing.Append(node.Identifier.ValueText + GenericArity(node)));
+            .Select(parent => MetadataName(parent));
+        return string.Join("+", containing.Append(MetadataName(node)));
     }
+
+    private static string MetadataName(BaseTypeDeclarationSyntax node) =>
+        node.Identifier.ValueText + (GenericArity(node) == 0 ? string.Empty : "`" + GenericArity(node));
 
     private static int GenericArity(BaseTypeDeclarationSyntax node) =>
         node is TypeDeclarationSyntax type ? type.TypeParameterList?.Parameters.Count ?? 0 : 0;
