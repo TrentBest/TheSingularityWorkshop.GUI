@@ -36,6 +36,10 @@ Describe interface intent in the Core model, then pass it to an adapter. The cur
 
 Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), then build and run the tests for the adapter you intend to use.
 
+## SVG demonstration samples
+
+Browse the [scrollable SVG demonstration cards](samples/demonstrations/index.html) or the [demonstration index and evidence plan](samples/demonstrations/README.md). Each sample separates what the SVG shows from what has actually been proved about its generation or runtime behavior.
+
 ## 🟪 05 Documentation and theory
 
 [Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
