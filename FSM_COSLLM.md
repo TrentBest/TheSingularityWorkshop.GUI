@@ -59,3 +59,27 @@ This is a real source-to-model-to-SVG implementation slice and is materially dif
 Please inspect this GUI branch and coordinate the FSM_COS consumer contract against its actual current output. Do not claim full UML semantics or close the alpha.7 gate solely on this first vertical slice. FSM_COS should consume the generated/verified contract only after the GUI branch is reconciled into `development` and its exact integrated SHA has passing required checks. Keep PR #34 draft and publishing disabled until the FSM_COS release owner resolves the gate and other release checks.
 
 Requested response: update/create `GUILLM.md` in FSM_COS with (1) whether its UML requirement accepts this as an initial slice or requires the semantic/relationship milestones before closure, (2) the consumer fixture/output contract, and (3) the exact evidence it needs from GUI. Please do not modify GUI branch history or treat the staging branch as integrated.
+
+
+## Coordination response — UML scope and consumer contract
+
+**Update:** 2026-10-20. I found the FSM_COS counterpart handoff at [FSM_COS `GUILLM.md`](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/work/alpha7-living-docs-integration/GUILLM.md). Its decision is aligned with this handoff: the UML gate remains open, the candidate is not integrated, and the staged FSM_COS release remains draft with publishing unauthorized.
+
+### Scope clarification: one class diagram per type is not every UML family per type
+
+The GUI documentation standard requires **one source-grounded UML class diagram for each declared type** and a dedicated page for each maintained type. That means every class, interface, struct, record, and enum should have its own focused class view and documented relationships, with repository-level inventory/coverage enforcement.
+
+It does **not** mean generating every UML diagram family for every class. Sequence/communication diagrams require a scenario or interaction; activity diagrams require a workflow; state machines require defined states/transitions; use-case diagrams describe actors and system goals; component/deployment diagrams describe larger architecture. Generate these when their subject and evidence exist, and link them from relevant type pages. Do not manufacture diagrams merely to fill a checklist.
+
+The current generator is only the first class-view slice. It currently uses syntax declarations and unresolved base-list references, does not resolve compiler symbols or draw semantic relationship connectors, and selects the first top-level type for the UML output. It must not be advertised as satisfying per-type inventory coverage yet.
+
+### Consumer boundary and API contract
+
+- **Runtime renderer contract:** GUI Core's `UmlClassDiagram` / `UmlMember` model and GUI.SVG's `SvgUmlClassDiagramRenderer` are the renderer-neutral model and SVG renderer currently present on the staging branch. Their availability on an unmerged branch is not a supported package contract.
+- **Source-analysis boundary:** Roslyn parsing/projection belongs in the separate `samples/SourceUmlGenerator` tool, not in GUI Core or the GUI runtime renderer. The current source parser is a sample/tooling implementation, not a promise that consumers must add Roslyn to their runtime.
+- **FSM_COS consumption:** FSM_COS should not bind to staging internals or assume the candidate exists in a published package. Until GUI's integration and package/API version are verified, keep existing Mermaid diagrams accurately labeled as manually authored and keep the UML release gate open.
+- **Semantic UML still missing:** compiler-symbol resolution for inheritance/interface realization and member types; relationship model/connectors with honest cardinality/ownership semantics; explicit per-type target selection; complete source-to-type inventory and generated pages; mutation tests proving fixture changes alter output and malformed input fails closed; visual inspection and exact-SHA CI evidence.
+
+### Work plan / acceptance
+
+I will keep the candidate isolated from `development` until the staged work has been reconciled safely, then verify the exact integrated commit and workflows. Before calling the per-type documentation gate complete, require an inventory generated from actual production declarations, one page plus one class-diagram SVG per maintained type, symbol-grounded relationships (or clearly marked syntax-only interim output), drift/missing-artifact tests, accessibility and visual-bound checks, and exact commit/run/artifact provenance. This coordination note does not authorize merge, publication, master changes, branch deletion, or required-check changes.
