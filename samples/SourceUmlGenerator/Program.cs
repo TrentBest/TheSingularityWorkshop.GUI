@@ -535,9 +535,26 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 static int WriteTypePages(UmlDocumentationModel model, string directory)
 {
     Directory.CreateDirectory(directory);
+    const string manifestName = ".source-uml-generated-files";
+    var manifestPath = Path.Combine(directory, manifestName);
+    var previousGeneratedFiles = File.Exists(manifestPath)
+        ? File.ReadAllLines(manifestPath)
+            .Where(name => !string.IsNullOrWhiteSpace(name))
+            .Distinct(StringComparer.Ordinal)
+            .ToArray()
+        : Array.Empty<string>();
+    // Only prune files explicitly recorded by our previous manifest. Never enumerate
+    // the directory and delete arbitrary Markdown that may be authored by a user.
+    if (previousGeneratedFiles.Any(name =>
+            Path.GetFileName(name) != name ||
+            !name.EndsWith(".md", StringComparison.Ordinal) ||
+            string.Equals(name, manifestName, StringComparison.Ordinal)))
+        throw new InvalidDataException($"Generated UML file manifest '{manifestPath}' contains an unsafe path.");
+
     var types = model.Types.OrderBy(ModelQualifiedTypeName, StringComparer.Ordinal)
         .ThenBy(type => type.Id, StringComparer.Ordinal).ToArray();
     var byId = types.ToDictionary(type => type.Id, StringComparer.Ordinal);
+    var currentGeneratedFiles = new HashSet<string>(StringComparer.Ordinal) { "index.md" };
     var index = new System.Text.StringBuilder();
     index.AppendLine("# Generated UML type pages");
     index.AppendLine();
@@ -559,6 +576,7 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
         var hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
             System.Text.Encoding.UTF8.GetBytes(type.Id))).ToLowerInvariant()[..10];
         var fileName = safeName + "-" + hash + ".md";
+        currentGeneratedFiles.Add(fileName);
         var pagePath = Path.Combine(directory, fileName);
         File.WriteAllText(pagePath, RenderTypePage(model, type, byId, fileName) + Environment.NewLine);
         var relationshipCount = model.Relationships.Count(edge => edge.SourceTypeId == type.Id || edge.TargetTypeId == type.Id);
@@ -567,7 +585,19 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
     }
 
     File.WriteAllText(Path.Combine(directory, "index.md"), index.ToString() + Environment.NewLine);
-    return types.Length + 1;
+
+    foreach (var staleFile in previousGeneratedFiles.Except(currentGeneratedFiles, StringComparer.Ordinal))
+    {
+        var stalePath = Path.Combine(directory, staleFile);
+        if (File.Exists(stalePath))
+        {
+            File.Delete(stalePath);
+            Console.WriteLine($"Pruned stale generated UML page: {stalePath}");
+        }
+    }
+
+    File.WriteAllLines(manifestPath, currentGeneratedFiles.OrderBy(name => name, StringComparer.Ordinal));
+    return currentGeneratedFiles.Count;
 }
 
 static string RenderTypePage(
