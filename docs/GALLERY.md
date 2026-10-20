@@ -6,9 +6,9 @@ This is the repository's visual index. Each entry identifies what the artifact p
 
 **Artifact:** [Source-derived UML architecture and evidence](LIVING_UML_ARCHITECTURE.md) and [source generator](../samples/SourceUmlGenerator/Program.cs).
 
-**What it shows:** the source-file mode parses one C# file and renders syntax-derived GUI.SVG cards/class compartments. A separate project-semantic mode loads the GUI Core `.csproj` and emits a versioned JSON model with compiler-symbol-based inheritance and interface-realization relationships.
+**What it shows:** the source-file mode parses one C# file and renders syntax-derived GUI.SVG cards/class compartments. The project-semantic mode loads the GUI Core `.csproj`, emits the versioned model, resolves inheritance/interface realization/member associations/signature dependencies with Roslyn symbols, and renders a focused relationship neighborhood as SVG.
 
-**Evidence boundary:** the project-semantic JSON model is an implemented staging slice, not complete living UML. The syntax-only class SVG still labels base-list references as unresolved text; semantic edges are not yet rendered as a multi-node SVG graph. The tool does not yet extract member-type associations, generate a solution-wide inventory/per-type pages, cross-check against the exact built assembly through reflection, or prove text bounds/rendered visual correctness. Do not treat this as a complete semantic UML pipeline or supported published interchange contract.
+**Evidence boundary:** this is a CI-verified staging vertical slice, not complete living UML. The syntax-only class SVG still labels base-list references as unresolved text; compiler-backed facts are emitted separately in the project-semantic model. The focused graph renders one-hop neighbors, not a full project/solution graph. Solution-wide inventory, per-type pages, exact-build reflection comparison, large-graph layout, and comprehensive painted-text/bounds evidence remain open. Do not treat this as a complete semantic UML pipeline or supported published interchange contract.
 
 **Reproduce and inspect:** follow [Source-derived UML tooling](SOURCE_DERIVED_UML.md), then read [Living UML architecture and acceptance gates](LIVING_UML_ARCHITECTURE.md).
 
