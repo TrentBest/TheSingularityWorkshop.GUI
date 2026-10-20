@@ -83,7 +83,7 @@ internal static class ProjectUmlModelBuilder
                 switch (member)
                 {
                     case IFieldSymbol field when !field.IsConst:
-                        AddMemberTypeRelationships(relationships, type, sourceId, member, field.Type,
+                        AddMemberTypeRelationships(relationships, sourceId, member, field.Type,
                             UmlRelationshipKind.Association, "field type", ids, projectPath);
                         break;
                     case IPropertySymbol property:
@@ -91,7 +91,7 @@ internal static class ProjectUmlModelBuilder
                             UmlRelationshipKind.Association, "property type", ids, projectPath);
                         foreach (var parameter in property.Parameters)
                             AddMemberTypeRelationships(relationships, type, sourceId, member, parameter.Type,
-                                UmlRelationshipKind.Dependency, "index parameter type", ids, projectPath);
+                                UmlRelationshipKind.Dependency, "index parameter type " + parameter.Name, ids, projectPath);
                         break;
                     case IEventSymbol eventSymbol:
                         AddMemberTypeRelationships(relationships, type, sourceId, member, eventSymbol.Type,
@@ -104,7 +104,7 @@ internal static class ProjectUmlModelBuilder
                                 UmlRelationshipKind.Dependency, "return type", ids, projectPath);
                         foreach (var parameter in method.Parameters)
                             AddMemberTypeRelationships(relationships, type, sourceId, member, parameter.Type,
-                                UmlRelationshipKind.Dependency, "parameter type", ids, projectPath);
+                                UmlRelationshipKind.Dependency, "parameter type " + parameter.Name, ids, projectPath);
                         break;
                 }
             }
@@ -167,7 +167,6 @@ internal static class ProjectUmlModelBuilder
 
     private static void AddMemberTypeRelationships(
         List<UmlDocumentedRelationship> output,
-        INamedTypeSymbol source,
         string sourceId,
         ISymbol member,
         ITypeSymbol referencedType,
@@ -199,7 +198,7 @@ internal static class ProjectUmlModelBuilder
 
             var targetIsInModel = ids.TryGetValue(target, out var targetId);
             output.Add(new UmlDocumentedRelationship(
-                sourceId + ":relationship:" + kind + ":" + signature + ":" + targetName,
+                sourceId + ":relationship:" + kind + ":" + label + ":" + signature + ":" + targetName,
                 kind,
                 sourceId,
                 targetIsInModel ? targetId : null,
