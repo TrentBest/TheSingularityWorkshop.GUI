@@ -22,8 +22,7 @@ jobs:
           dotnet-version: 8.0.x
       - name: Generate and verify all maintained product projects
         env:
-          SOURCE_REVISION: $GITHUB_SHA
-        run: python3 scripts/generate_solution_uml.py
+        run: SOURCE_REVISION="$GITHUB_SHA" python3 scripts/generate_solution_uml.py
       - name: Upload solution-level UML inventory
         uses: actions/upload-artifact@v7
         with:
