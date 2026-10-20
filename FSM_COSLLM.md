@@ -130,3 +130,20 @@ Important correctness boundary: reflection metadata is not an AST and cannot rep
 Acceptance is broader than a class-compartment SVG: project-wide deterministic type inventory, a per-type page and class view for every maintained type, symbol-resolved relationship connectors, evidence-driven sequence/state/activity/architecture views, source-embedded generated includes, mutation/stale-artifact tests, malformed-input fail-closed tests, accessibility/bounds/visual inspection, and exact-SHA CI evidence.
 
 The staging branch remains unintegrated; do not treat the architecture document as proof of implementation or close the FSM_COS alpha.7 UML gate. Continue coordinating the intended consumer contract against verified GUI APIs and exact integrated commit evidence.
+
+
+## Follow-up architecture — observable diagram models and console drivers
+
+**Update:** 2026-10-20. The GUI UML staging branch now documents the complementary live-view idea in [Observable Diagram Models and Console-Driven Views](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/work/gui-svg-source-uml-generator/docs/OBSERVABLE_DIAGRAM_MODELS.md), linked from [Source-Derived Diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/work/gui-svg-source-uml-generator/docs/SOURCE_DERIVED_DIAGRAMS.md).
+
+The user proposed the direction as **View => Observes => Data <= Modifies <= ConsoleApp**. Interpret this as an observable, authoritative model with a console driver/test harness and a renderer that observes consistent snapshots. A console app should be able to construct and mutate model data directly; Roslyn/reflection are optional producers for source-derived documentation, not prerequisites for every live visualization.
+
+Implementation boundaries:
+- Model/data owns semantic state, stable IDs, revisions, constraints, provenance, and validated mutations.
+- View/renderer observes complete snapshots and projects them into diagram/SVG output.
+- A host refreshes/replaces the displayed SVG when a new model revision is rendered. An SVG file/string alone is a static snapshot; it does not make itself reactive.
+- Prefer immutable snapshots or equivalent synchronization; support coalescing obsolete revisions while guaranteeing the latest committed state is eventually rendered.
+- The console driver should stress valid extremes and boundary cases through the public command path, asserting invariants and reporting diagnostics. It must not bypass validation or treat arbitrary SVG/XML mutation as model state.
+- Prove notifications, rejected-command atomicity, observer disposal, deterministic rendering, large-model bounds, and one host-level end-to-end refresh before claiming live behavior.
+
+This complements source-derived UML generation rather than replacing it. The current GUI staging code does not yet implement subscriptions, a live host refresh path, semantic relationship connectors, or the complete project-wide source/reflection pipeline. The staging branch remains unintegrated; the FSM_COS alpha.7 UML gate stays open until implementation and exact-commit evidence support closure.
