@@ -14,7 +14,7 @@ Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup w
 
 ### Recipe 02 — Cartesian coordinates and f(x) = x²
 
-The generator builds a Cartesian coordinate system and computes 33 samples from the function before handing the semantic scene to GUI.SVG. GitHub Actions successfully generated the SVG and passed its XML assertions; the artifact is available from [workflow run 39449342991](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39449342991), but has not yet received a human visual review.
+The generator builds a Cartesian coordinate system and computes 33 samples from the function before handing the semantic scene to GUI.SVG. The artifact from [workflow run 39452760590](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39452760590) was visually reviewed; that review found formula/curve overlap, the legend was moved to the right, and the revised SVG generation and structural checks passed CI.
 
 [**Read Recipe 02 — Cartesian coordinates and sampled function**](recipes/02-coordinate-functions.md)
 
