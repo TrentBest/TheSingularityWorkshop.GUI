@@ -94,7 +94,7 @@ From the repository root:
 dotnet run --project samples/demonstrations/PrimitiveGeometry/PrimitiveGeometry.csproj -- samples/demonstrations/01-primitive-geometry.generated.svg
 ```
 
-A successful execution should print `PASS` and the output path. The generator and workflow now check the panel's stroke-aware bounds against the SVG viewBox. A prior artifact exposed a clipped panel despite passing the initial structural checks; the panel dimensions and marker position have been corrected, and the stronger bounds assertion is now part of the verification. The corrective workflow run is pending; do not consider the visual correction complete until its artifact has been inspected. Keep the generated file distinct from the hand-authored reference SVG.
+A successful execution should print `PASS` and the output path. The generator and workflow now check the panel's stroke-aware bounds against the SVG viewBox. A prior artifact exposed a clipped panel despite passing the initial structural checks; the panel dimensions and marker position have been corrected, and the stronger bounds assertion is now part of the verification. The correction is complete: workflow run [39454324734](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39454324734) passed the generator and stroke-aware bounds assertions, and the generated artifact was downloaded and visually inspected. The rounded panel and marker are fully inside the viewBox. Keep the generated file distinct from the hand-authored reference SVG.
 
 Project: [`PrimitiveGeometry.csproj`](../PrimitiveGeometry/PrimitiveGeometry.csproj).
 
@@ -104,7 +104,7 @@ Project: [`PrimitiveGeometry.csproj`](../PrimitiveGeometry/PrimitiveGeometry.csp
 |---|---|---|
 | Core can describe the scene as a recursive node tree | Actual `GuiBuilder` source and `GuiNode` implementation | Source inspected |
 | SVG adapter consumes the tree and emits SVG XML | Actual `SvgGuiRenderer.Render` call and implementation | Source inspected; execution must be recorded |
-| Output has the required panel and marker | XML assertions in generator | Assertion code exists; passing run not claimed |
+| Output has the required panel and marker | XML assertions in generator and workflow | Verified in passing workflow 39454324734; artifact visually inspected |
 | Browser can render the generated SVG | Standalone SVG format | Viewer execution not recorded here |
 | Renderer NuGet package consumes this model | Not part of this recipe | Not demonstrated |
 | Visualize package produces the visible output | Not part of this recipe | Not demonstrated |
@@ -125,8 +125,8 @@ Before implementing that next recipe, inspect the Renderer and Visualize reposit
 
 ## Acceptance criteria
 
-- [ ] Run the project against the current source and record a passing result.
-- [ ] Review and link the generated SVG, separate from the reference illustration.
-- [ ] Assert text and any other required elements if the sample adds them.
-- [ ] Keep package dependency claims aligned with project references.
+- [x] Run the project against the current source and record a passing result ([workflow 39454324734](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39454324734)).
+- [x] Review the generated SVG artifact separately from the reference illustration; the corrected panel and marker are in bounds.
+- [x] Assert the panel and marker elements and stroke-aware panel bounds.
+- [x] Keep package dependency claims aligned with project references.
 - [ ] Add the next recipe only when its source, output, and verification are reproducible.
