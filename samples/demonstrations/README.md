@@ -1,31 +1,31 @@
-# GUI.SVG Demonstrations
+# GUI.SVG Demonstrations and Recipes
 
-A progressive, inspectable gallery of SVG artifacts with a write-up for each demonstration. Each card answers four questions:
+Start with the **[Markdown-first recipe gallery](GALLERY.md)**. Each entry embeds its SVG preview, explains what it demonstrates, names the packages actually consumed, and links to a deeper implementation recipe.
 
-- **What does it show?**
-- **What does it prove today?**
-- **What does it not prove?**
-- **What is the next verification step?**
+The [scrollable HTML view](index.html) is a convenience view; the Markdown gallery is the canonical guide.
 
-Open the [scrollable demonstration gallery](index.html) in a browser for the card-based view, or read the entries directly here.
+## Progressive proof roadmap
 
-## Demonstration sequence
-
-| # | Demonstration | Artifact | Evidence status |
+| # | Recipe | Package boundary | Evidence status |
 |---|---|---|---|
-| 01 | [Primitive geometry](01-primitive-geometry.md) | [Reference SVG](01-primitive-geometry.svg) · [Runnable generator](PrimitiveGeometry/Program.cs) | Generator and XML assertions added; successful execution still needs verification |
-| 02 | Coordinate systems and transforms | Planned | Not started |
-| 03 | Reusable symbols and repeated entities | Planned | Not started |
-| 04 | Declarative SVG animation | Existing gallery reference: [svg-adapter-gallery.svg](../../docs/assets/svg-adapter-gallery.svg) | Existing SVG includes declarative animation; connect to adapter generation and test viewer behavior |
-| 05 | State-driven behavior trace | Planned | Requires deterministic state/trace producer |
-| 06 | FSM_API-driven fox and sheepdog | Planned | Must be driven by real FSM_API execution, not a parallel animation timeline |
-| 07 | GUI.SVG adapter generated from a semantic tree | Planned | Must build and compare generated artifact in a reproducible test |
-| 08 | Cross-adapter / host interoperability | Planned | Add only after each participating boundary is independently verified |
+| 01 | [Primitive geometry](GALLERY.md#recipe-01--primitive-geometry) · [implementation deep dive](recipes/01-primitive-geometry.md) | GUI Core + GUI.SVG | Generator and XML assertions exist; successful execution still needs to be recorded |
+| 02 | Coordinate systems and transforms | GUI Core + GUI.SVG | Planned |
+| 03 | Reusable symbols and repeated entities | GUI Core + GUI.SVG | Planned |
+| 04 | [Animated scene](GALLERY.md#recipe-04--animated-scene) | GUI Core + GUI.SVG | Existing generated gallery snapshot; declarative SVG animation is not an FSM_API clock |
+| 05 | State-driven behavior trace | FSM_API + a verified presentation path | Planned; requires a deterministic state/trace producer |
+| 06 | FSM_API-driven fox and sheepdog | FSM_API + GUI.SVG, then Renderer/Visualize as separate integration recipes | Planned; must be driven by real execution, not a parallel animation timeline |
+| 07 | Semantic tree to adapter output | GUI Core + relevant adapter | Planned; build and compare generated output |
+| 08 | UML/data → textual scene → Renderer → Visualize | Exact consuming package set to be verified from source | Planned; do not claim integration before a runnable consumer exists |
+| 09 | Cross-adapter / host interoperability | Each participating package boundary | Planned; add only after each boundary is independently verified |
+
+## Package organization
+
+The gallery groups recipes by **actual package consumption**, not by the package a picture resembles. Recipe 01 currently references the repository's Core and SVG source projects. Renderer, Visualize, FSM_API, and FSM_COS integration claims require their own real project references, source walkthrough, generated artifact, and reproducible verification.
 
 ## Evidence policy
 
-A visually correct SVG proves only that the SVG can be rendered. It does not by itself prove GUI.SVG generated it, that FSM_API drove its behavior, or that FSM_COS composed the pipeline.
+A visually correct SVG proves only that the SVG can be rendered. It does not by itself prove GUI.SVG generated it, that FSM_API drove its behavior, or that a Renderer/Visualize pipeline produced it.
 
-For a demonstration to claim adapter generation, include the C# source, the command used to generate the artifact, a successful test or reproducible output comparison, and the resulting SVG. Demonstration 01 now includes a runnable generator and structural assertions; its successful execution has not yet been independently verified. For behavior claims, include a trace or assertions from the actual state machine execution.
+For adapter-generation claims, include the C# source, exact command, successful test or reproducible output comparison, and generated SVG. Keep reference artwork distinct from generated output. For behavior claims, include a trace or assertions from actual runtime execution.
 
-This catalogue is intentionally incremental: a small verified proof is more useful than a spectacular but ungrounded mock-up.
+A small verified recipe is more valuable than a spectacular but ungrounded mock-up.
