@@ -65,6 +65,22 @@ if (diagnostics.Length > 0)
     return 1;
 }
 
+if (modelJsonPath is not null)
+{
+    var model = SourceUmlGenerator.SyntaxOnlyUmlModelBuilder.Build(
+        root,
+        sourceIdentity,
+        modelRepository!,
+        modelRevision!,
+        modelProject!,
+        Environment.GetEnvironmentVariable("CONFIGURATION") ?? "Release");
+    var json = UmlDocumentationModelJson.Serialize(model);
+    var modelPath = Path.GetFullPath(modelJsonPath);
+    Directory.CreateDirectory(Path.GetDirectoryName(modelPath)!);
+    File.WriteAllText(modelPath, json + Environment.NewLine);
+    Console.WriteLine($"Generated syntax-only UML model with {model.Types.Count} types and {model.Relationships.Count} asserted relationships -> {modelPath}");
+}
+
 var cards = new List<DataCard>();
 foreach (var declaration in root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
              .OrderBy(n => n.SpanStart))
