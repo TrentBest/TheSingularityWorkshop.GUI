@@ -120,7 +120,7 @@ def main() -> int:
             print(f"  - {error}", file=sys.stderr)
         return 1
 
-    print("\\nInventory validation passed: project and explicit reference checks passed. "
+    print("\nInventory validation passed: project and explicit reference checks passed. "
           "Docs, workflows, and assets are enumerated; fine-grained authored/generated/"
           "historical classification remains open.")
     return 0
