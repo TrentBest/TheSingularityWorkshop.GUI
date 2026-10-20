@@ -9,16 +9,18 @@ The source-derived diagram path begins with C# syntax, projects declarations int
 `samples/SourceUmlGenerator` currently projects top-level type declarations (class, struct, interface, enum, and record), nested types, delegates, and declared members into inspectable cards. Namespace identity is shown in type subtitles; this first slice does not yet build a nested namespace containment tree. It validates C# syntax before emitting SVG and verifies generated XML, accessible title/description, and unique card IDs.
 
 ```sh
-dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --   src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify
+dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj -- \\
+  src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify \\
+  --uml artifacts/DataCard.uml.svg
 ```
 
-This first slice is deliberately **source-derived structure**, not yet a complete UML class-diagram generator. It does not resolve symbols across projects, infer associations from semantic types, guarantee stable IDs across arbitrary source edits, generate type pages, or support round-trip editing. Those are explicit next bridges, not implied capabilities.
+The tool now emits both the general GUI.SVG structure view and a first UML class-compartment view for the first top-level type in the source file. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. This is still not a complete semantic UML generator: base-list names are explicitly unresolved, relationships are not yet drawn as UML connectors, output is one class per invocation, and it does not yet generate type pages or support round-trip editing.
 
 ## Next milestones
 
 1. Use Roslyn compilations and symbol identity to resolve base types, interfaces, field/property types, and associations across project boundaries.
-2. Add a dedicated UML class-diagram model and UML-specific GUI.SVG renderer (inheritance, realization, dependency/association, multiplicity, member compartments).
-3. Generate per-type Markdown pages and diagrams from one model; verify inventory coverage and deterministic output in CI.
+2. Resolve declarations with Roslyn compilations and render verified inheritance, interface realization, dependency/association, and multiplicity as UML connectors between class nodes.
+3. Generate one per-type Markdown page and UML SVG from the same model; verify inventory coverage and deterministic output in CI.
 4. Add fixtures that deliberately change a declaration and prove the diagram changes, and fixtures that break the source to prove generation fails closed.
 5. Add validated domain commands before offering source-edit affordances. SVG controls alone must never mutate source.
 
