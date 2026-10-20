@@ -45,7 +45,7 @@ internal static class SyntaxOnlyUmlModelBuilder
             else if (node is EnumDeclarationSyntax enumeration)
             {
                 foreach (var member in enumeration.Members)
-                    AddMember(documentedMembers, member, sourcePath);
+                    AddMember(documentedMembers, member, sourcePath, typeIds[node]);
             }
 
             return new UmlDocumentedType(
