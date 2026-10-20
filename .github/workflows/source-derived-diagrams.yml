@@ -39,6 +39,52 @@ jobs:
           grep -q 'UML class diagram: DataCard' artifacts/DataCard.uml.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.uml.svg
           cmp artifacts/DataCard.uml.svg docs/assets/uml/classes/Core/DataCard.svg
+      - name: Exercise source mutation, explicit type selection, and malformed-source failures
+        shell: bash
+        run: |
+          set -euo pipefail
+          generator="samples/SourceUmlGenerator/SourceUmlGenerator.csproj"
+
+          mkdir -p artifacts/uml-fixtures
+          cat > artifacts/uml-fixtures/Selection.cs <<'CS'
+          namespace Fixture.Alpha { public class Duplicate { public int Value { get; set; } } }
+          namespace Fixture.Beta { public class Duplicate { public void Run() { } } }
+          CS
+
+          dotnet run --project "$generator" --configuration Release --             artifacts/uml-fixtures/Selection.cs artifacts/uml-fixtures/selection-structure.svg             --uml artifacts/uml-fixtures/selected.svg --type Fixture.Beta.Duplicate
+          grep -q 'UML class diagram: Duplicate' artifacts/uml-fixtures/selected.svg
+          grep -q 'Run' artifacts/uml-fixtures/selected.svg
+
+          set +e
+          dotnet run --project "$generator" --configuration Release --             artifacts/uml-fixtures/Selection.cs artifacts/uml-fixtures/ambiguous-structure.svg             --uml artifacts/uml-fixtures/ambiguous.svg --type Duplicate             > artifacts/uml-fixtures/ambiguous.log 2>&1
+          ambiguous_status=$?
+          set -e
+          test "$ambiguous_status" -eq 2
+          grep -q 'ambiguous' artifacts/uml-fixtures/ambiguous.log
+          test ! -e artifacts/uml-fixtures/ambiguous.svg
+
+          cat > artifacts/uml-fixtures/Mutation.cs <<'CS'
+          namespace Fixture { public class Mutable { public int Before { get; set; } } }
+          CS
+          dotnet run --project "$generator" --configuration Release --             artifacts/uml-fixtures/Mutation.cs artifacts/uml-fixtures/before.svg --verify
+          sed -i 's/Before/After/g' artifacts/uml-fixtures/Mutation.cs
+          dotnet run --project "$generator" --configuration Release --             artifacts/uml-fixtures/Mutation.cs artifacts/uml-fixtures/after.svg --verify
+          ! cmp -s artifacts/uml-fixtures/before.svg artifacts/uml-fixtures/after.svg
+          grep -q 'After' artifacts/uml-fixtures/after.svg
+          ! grep -q 'Before' artifacts/uml-fixtures/after.svg
+
+          cat > artifacts/uml-fixtures/Malformed.cs <<'CS'
+          namespace Fixture { public class Broken { public void Run( { } } }
+          CS
+          set +e
+          dotnet run --project "$generator" --configuration Release --             artifacts/uml-fixtures/Malformed.cs artifacts/uml-fixtures/malformed.svg             --verify --uml artifacts/uml-fixtures/malformed-uml.svg --type Broken             > artifacts/uml-fixtures/malformed.log 2>&1
+          malformed_status=$?
+          set -e
+          test "$malformed_status" -ne 0
+          test ! -e artifacts/uml-fixtures/malformed.svg
+          test ! -e artifacts/uml-fixtures/malformed-uml.svg
+          grep -q 'error' artifacts/uml-fixtures/malformed.log
+
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@v7
         with:
