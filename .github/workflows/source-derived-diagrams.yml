@@ -72,7 +72,7 @@ jobs:
           for edge in model["relationships"]:
               if edge["resolution"] == "resolved":
                   assert edge["targetTypeId"] in ids, edge
-                  assert edge["provenance"]["kind"] == "roslyn-symbol", edge
+                  assert edge["provenance"]["kind"] in ("roslyn-symbol", "roslyn-member-symbol"), edge
           print(f"Validated project-semantic model with {len(model['types'])} types and {len(model['relationships'])} compiler-symbol relationships.")
           PY
       - name: Exercise partial generic semantic UML fixture
