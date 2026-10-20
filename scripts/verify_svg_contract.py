@@ -8,12 +8,13 @@ from __future__ import annotations
 
 import re
 import sys
+from collections import Counter
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
 SVG_NS = "{http://www.w3.org/2000/svg}"
 XLINK_HREF = "{http://www.w3.org/1999/xlink}href"
-URL_REFERENCE = re.compile(r"url\(#([^)]+)\)")
+URL_REFERENCE = re.compile(r"url\(#([^)]*)\)")
 
 
 def verify(path: Path) -> list[str]:
@@ -61,7 +62,7 @@ def verify(path: Path) -> list[str]:
                 if not target:
                     errors.append(f"{path}: empty local URL reference")
 
-    duplicates = sorted({value for value in ids if ids.count(value) > 1})
+    duplicates = sorted(value for value, count in Counter(ids).items() if count > 1)
     if duplicates:
         errors.append(f"{path}: duplicate SVG IDs: {', '.join(duplicates)}")
 
