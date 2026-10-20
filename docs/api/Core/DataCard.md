@@ -13,7 +13,7 @@
 
 ![UML class diagram for DataCard](../../assets/uml/classes/Core/DataCard.svg)
 
-The diagram shows the fields, constructor, properties, and collapsed-summary operation declared by the source. The class declares no base class or implemented interface. The child relationship is an ordered containment relation.
+The diagram is generated from the C# syntax model and shows the declared fields, properties, constructor, and collapsed-summary method. The class declares no base class or implemented interface. The ordered child containment contract is described in the source and prose below; UML relationship connectors are not yet emitted by the current renderer.
 
 ## Constructor and invariants
 
