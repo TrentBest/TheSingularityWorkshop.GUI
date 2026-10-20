@@ -32,6 +32,7 @@ This is a **source-shaped command reference**, not a claim that every arbitrary 
 - **Structure SVG:** declarations and members projected as data cards.
 - **Focused class SVG:** fields, properties, operations, and explicitly unresolved declared type references.
 - **Workflow fixtures:** selection in a multi-type source file, ambiguous selection rejection, source mutation changing generated output, and malformed C# failing closed without emitting diagram output.
+- **SVG structural contract:** `scripts/verify_svg_contract.py` checks XML parseability, non-empty accessible title/description, finite positive `viewBox` dimensions, duplicate IDs, and broken local fragment/`url(#...)` references for generated workflow artifacts. It deliberately does not claim to measure rendered text overflow or replace visual inspection.
 - **Provisional documentation model:** tested JSON contract types, but not wired into generator output.
 
 SVG output is a generated manifestation. The source and future canonical model remain the evidence-bearing inputs; do not hand-edit generated files as if they were authoritative.
@@ -45,7 +46,7 @@ SVG output is a generated manifestation. The source and future canonical model r
 - Render a multi-type graph with semantically resolved, typed connectors.
 - Generate deterministic inventory coverage and a Markdown page for every maintained type.
 - Provide complete authored use-case persistence, evidence review, and lifecycle.
-- Validate all rendered text bounds/overflows and links, or provide recorded visual inspection for every diagram.
+- Measure all painted text bounds/overflows or provide recorded visual inspection for every diagram. The current SVG contract script is a structural check, not a visual-layout proof.
 - Detect all stale, orphaned, or hand-edited generated pages and artifacts.
 
 ## Verification
