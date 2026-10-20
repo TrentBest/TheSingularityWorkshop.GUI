@@ -174,8 +174,9 @@ static UmlClassDiagram ProjectUmlClass(BaseTypeDeclarationSyntax declaration)
 
     foreach (var property in members.OfType<PropertyDeclarationSyntax>())
         properties.Add(new UmlMember(property.Identifier.ValueText,
-            property.Type + " " + property.Identifier.ValueText + " { " +
-            (property.AccessorList is null ? "init" : string.Join("; ", property.AccessorList.Accessors.Select(a => a.Modifiers + a.Keyword.Text))) + " }",
+            property.Type + " " + property.Identifier.ValueText +
+            (property.ExpressionBody is not null ? " => " + property.ExpressionBody.Expression :
+             property.AccessorList is not null ? " { " + string.Join("; ", property.AccessorList.Accessors.Select(a => a.Modifiers + a.Keyword.Text)) + " }" : ""),
             VisibilityOf(property.Modifiers), property.Modifiers.Any(SyntaxKind.StaticKeyword)));
 
     foreach (var method in members.OfType<MethodDeclarationSyntax>())
@@ -185,7 +186,9 @@ static UmlClassDiagram ProjectUmlClass(BaseTypeDeclarationSyntax declaration)
 
     foreach (var constructor in members.OfType<ConstructorDeclarationSyntax>())
         operations.Add(new UmlMember(constructor.Identifier.ValueText,
-            constructor.Identifier.ValueText + constructor.ParameterList,
+            constructor.Identifier.ValueText + "(" + string.Join(",\\n    ", constructor.ParameterList.Parameters.Select(parameter =>
+                (parameter.Type?.ToString() ?? "var") + " " + parameter.Identifier.ValueText +
+                (parameter.Default is null ? "" : " = " + parameter.Default.Value))) + ")",
             VisibilityOf(constructor.Modifiers), constructor.Modifiers.Any(SyntaxKind.StaticKeyword)));
 
     foreach (var evt in members.OfType<EventDeclarationSyntax>())
