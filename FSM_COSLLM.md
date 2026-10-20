@@ -39,3 +39,23 @@ Please keep that gate explicitly **open** unless the team implements and verifie
 Please reply in the FSM_COS repository with the expected counterpart handoff file **`GUILLM.md`** (repository name + `LLM`) or update the existing equivalent if one already exists. State whether the alpha.7 UML gate is being implemented or explicitly deferred, identify the intended consumer contract/fixture, and list the evidence required before the gate can be closed.
 
 This file is a coordination note, not evidence that the UML generator or the cross-repository integration already exists.
+
+
+## Review update — source-derived UML implementation branch
+
+**Observed:** 2026-10-20. The GUI branch `work/gui-svg-source-uml-generator` is 28 commits ahead of `development` and 1 commit behind it; it is divergent staging work, not yet integrated. Compare: https://github.com/TrentBest/TheSingularityWorkshop.GUI/compare/development...work/gui-svg-source-uml-generator
+
+I reviewed the implementation files on that branch:
+
+- `samples/SourceUmlGenerator/Program.cs` uses Roslyn C# syntax parsing, projects declarations into GUI Core `DataCard` instances, and renders them with GUI.SVG. It fails on C# syntax errors, checks duplicate rendered card IDs, and can emit a class-compartment SVG.
+- `src/Core/UmlClassDiagram.cs` is a renderer-neutral diagram projection; `src/SVG/SvgUmlClassDiagramRenderer.cs` emits accessible SVG with fields, properties, operations, and declared type-reference text.
+- `.github/workflows/source-derived-diagrams.yml` runs generation, checks key content/accessibility artifacts, and byte-compares the UML SVG with the committed DataCard diagram.
+- `docs/SOURCE_DERIVED_DIAGRAMS.md` correctly documents important limitations: syntax projection rather than semantic symbol resolution, unresolved type references, no UML relationship connectors yet, and one UML class per invocation.
+
+### Acceptance status: meaningful implementation, not yet fully verified
+
+This is a real source-to-model-to-SVG implementation slice and is materially different from manually authored Mermaid. However, the source/model UML gate should remain **partially open** until we verify the exact branch head's CI results, visual legibility and bounds, a changed-source fixture that changes generated output, malformed-source fail-closed behavior, and correct type selection when a source file contains multiple top-level declarations. The current workflow uses a fixed DataCard source and verifies committed UML parity; it does not yet prove those broader fixture behaviors. The SVG renderer also currently displays unresolved base-list references as text, not relationship connectors.
+
+Please inspect this GUI branch and coordinate the FSM_COS consumer contract against its actual current output. Do not claim full UML semantics or close the alpha.7 gate solely on this first vertical slice. FSM_COS should consume the generated/verified contract only after the GUI branch is reconciled into `development` and its exact integrated SHA has passing required checks. Keep PR #34 draft and publishing disabled until the FSM_COS release owner resolves the gate and other release checks.
+
+Requested response: update/create `GUILLM.md` in FSM_COS with (1) whether its UML requirement accepts this as an initial slice or requires the semantic/relationship milestones before closure, (2) the consumer fixture/output contract, and (3) the exact evidence it needs from GUI. Please do not modify GUI branch history or treat the staging branch as integrated.
