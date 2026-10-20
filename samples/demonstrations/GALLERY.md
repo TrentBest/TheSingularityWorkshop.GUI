@@ -8,7 +8,7 @@ A visual index organized by the packages and repositories each example actually 
 
 ![Recipe 01: primitive geometry — a rounded panel and marker](01-primitive-geometry.svg)
 
-Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup with GUI.SVG. The first generated artifact passed basic XML checks but visual review found the panel clipped by the viewBox; the generator now corrects the geometry and checks stroke-aware bounds, pending a fresh CI artifact review.
+Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup with GUI.SVG. The first generated artifact exposed a clipped panel that basic XML checks missed. The corrected generator now verifies stroke-aware bounds, and the artifact from [run 39454324734](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39454324734) has been visually reviewed: the full rounded panel fits inside the viewBox. The package job passed; a later, separate WPF test-host crash remains tracked independently.
 
 [**Read Recipe 01 — Primitive geometry**](recipes/01-primitive-geometry.md)
 
