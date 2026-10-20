@@ -6,7 +6,7 @@ The source-derived diagram path begins with C# syntax, projects declarations int
 
 ## First vertical slice
 
-`samples/SourceUmlGenerator` currently projects source-file namespaces, types (class, struct, interface, enum, and record), nested types, delegates, and declared members into stable, inspectable cards. It validates C# syntax before emitting SVG and verifies generated XML, accessible title/description, and unique card IDs.
+`samples/SourceUmlGenerator` currently projects top-level type declarations (class, struct, interface, enum, and record), nested types, delegates, and declared members into inspectable cards. Namespace identity is shown in type subtitles; this first slice does not yet build a nested namespace containment tree. It validates C# syntax before emitting SVG and verifies generated XML, accessible title/description, and unique card IDs.
 
 ```sh
 dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --   src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify
