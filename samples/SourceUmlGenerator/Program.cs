@@ -905,7 +905,7 @@ static string MetadataQualifiedTypeName(System.Reflection.Metadata.MetadataReade
     var name = metadata.GetString(type.Name);
     var declaringType = type.GetDeclaringType();
     if (!declaringType.IsNil)
-        return MetadataQualifiedTypeName(metadata, declaringType);
+        return MetadataQualifiedTypeName(metadata, declaringType) + "." + name;
 
     var ns = type.Namespace.IsNil ? string.Empty : metadata.GetString(type.Namespace);
     return string.IsNullOrEmpty(ns) ? name : ns + "." + name;
