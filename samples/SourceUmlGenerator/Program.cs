@@ -423,7 +423,10 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 
     using var workspace = MSBuildWorkspace.Create(new Dictionary<string, string>
     {
-        ["Configuration"] = configuration
+        ["Configuration"] = configuration,
+        // The source inventory runs on Linux but includes the Windows-only WPF adapter.
+        // Enable target-framework resolution for analysis without changing the consumer project.
+        ["EnableWindowsTargeting"] = "true"
     });
     workspace.WorkspaceFailed += (_, eventArgs) =>
         Console.Error.WriteLine($"MSBuild workspace {eventArgs.Diagnostic.Kind}: {eventArgs.Diagnostic.Message}");
