@@ -360,12 +360,16 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     string? revision;
     string? configuration;
     string? output;
+    string? diagramSvg;
+    string? diagramType;
     try
     {
         projectPath = GetOption(arguments, "--project");
         repository = GetOption(arguments, "--repository");
         revision = GetOption(arguments, "--revision");
         configuration = GetOption(arguments, "--configuration") ?? "Release";
+        diagramSvg = GetOption(arguments, "--diagram-svg");
+        diagramType = GetOption(arguments, "--diagram-type");
         output = arguments.Length > 0 && !arguments[0].StartsWith("--", StringComparison.Ordinal)
             ? arguments[0]
             : null;
@@ -382,6 +386,11 @@ static async Task<int> RunProjectModelMode(string[] arguments)
         string.IsNullOrWhiteSpace(revision))
     {
         Console.Error.WriteLine("--project-model-json requires an output path, --project, --repository, and --revision.");
+        return 2;
+    }
+    if ((diagramSvg is null) != (diagramType is null))
+    {
+        Console.Error.WriteLine("--diagram-svg and --diagram-type must be supplied together.");
         return 2;
     }
 
@@ -456,6 +465,24 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 
     var model = SourceUmlGenerator.ProjectUmlModelBuilder.Build(
         compilation, projectPath, repository, revision, configuration, targetFramework);
+
+    UmlDocumentedType? diagramFocus = null;
+    if (diagramType is not null)
+    {
+        var matches = model.Types.Where(type =>
+                string.Equals(ModelQualifiedTypeName(type), diagramType, StringComparison.Ordinal) ||
+                string.Equals(type.Identity.MetadataName, diagramType, StringComparison.Ordinal))
+            .ToArray();
+        if (matches.Length != 1)
+        {
+            Console.Error.WriteLine(matches.Length == 0
+                ? $"No compiled type matched diagram target '{diagramType}'."
+                : $"Diagram target '{diagramType}' is ambiguous; use a fully qualified namespace.type name.");
+            return matches.Length == 0 ? 1 : 2;
+        }
+        diagramFocus = matches[0];
+    }
+
     var json = UmlDocumentationModelJson.Serialize(model);
     var outputPath = Path.GetFullPath(output);
     Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
@@ -463,5 +490,40 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     Console.WriteLine(
         $"Generated project-semantic UML model: {model.Types.Count} types, " +
         $"{model.Relationships.Count} compiler-symbol relationships -> {outputPath}");
+
+    if (diagramSvg is not null && diagramFocus is not null)
+    {
+        var svg = new SvgUmlDocumentationGraphRenderer().Render(model, diagramFocus.Id);
+        var diagramPath = Path.GetFullPath(diagramSvg);
+        Directory.CreateDirectory(Path.GetDirectoryName(diagramPath)!);
+        File.WriteAllText(diagramPath, svg + Environment.NewLine);
+        var document = XDocument.Parse(svg);
+        XNamespace svgNamespace = "http://www.w3.org/2000/svg";
+        if (document.Root?.Element(svgNamespace + "title") is null ||
+            document.Root.Element(svgNamespace + "desc") is null)
+        {
+            Console.Error.WriteLine("Generated semantic UML SVG must have accessible title and description.");
+            return 1;
+        }
+        Console.WriteLine($"Generated focused semantic UML graph for {diagramType} -> {diagramPath}");
+    }
+
     return 0;
+}
+
+static string ModelQualifiedTypeName(UmlDocumentedType type)
+{
+    var parts = type.Identity.ContainingTypes
+        .Select(StripMetadataArity)
+        .Append(StripMetadataArity(type.Identity.MetadataName));
+    var typePath = string.Join(".", parts);
+    return string.IsNullOrWhiteSpace(type.Identity.Namespace)
+        ? typePath
+        : type.Identity.Namespace + "." + typePath;
+}
+
+static string StripMetadataArity(string name)
+{
+    var index = name.IndexOf('`');
+    return index < 0 ? name : name[..index];
 }
