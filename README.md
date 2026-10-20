@@ -38,7 +38,7 @@ Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generat
 
 ## SVG demonstration samples
 
-Browse the [scrollable SVG demonstration cards](samples/demonstrations/index.html) or the [demonstration index and evidence plan](samples/demonstrations/README.md). Each sample separates what the SVG shows from what has actually been proved about its generation or runtime behavior.
+Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md), where each entry embeds its SVG preview, explains what it proves, identifies the packages actually consumed, and links to a deeper implementation walkthrough. The [scrollable card view](samples/demonstrations/index.html) is a convenience; the [demonstration index and evidence plan](samples/demonstrations/README.md) tracks the progressive proof ladder.
 
 ## 🟪 05 Documentation and theory
 
