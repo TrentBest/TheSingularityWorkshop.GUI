@@ -5,15 +5,22 @@ using System.Xml.Linq;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
-if (args.Length < 2 || args.Length > 3)
+if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <output.svg> [--verify]");
+    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg>]");
     return 2;
 }
 
 var input = Path.GetFullPath(args[0]);
 var output = Path.GetFullPath(args[1]);
-var verify = args.Length == 3 && args[2] == "--verify";
+var verify = args.Skip(2).Contains("--verify", StringComparer.Ordinal);
+var umlOption = Array.IndexOf(args, "--uml");
+if (umlOption >= 0 && (umlOption + 1 >= args.Length || args[umlOption + 1].StartsWith("--", StringComparison.Ordinal)))
+{
+    Console.Error.WriteLine("--uml requires an output SVG path.");
+    return 2;
+}
+var umlOutput = umlOption >= 0 ? Path.GetFullPath(args[umlOption + 1]) : null;
 if (!File.Exists(input))
 {
     Console.Error.WriteLine($"Input source file does not exist: {input}");
@@ -72,6 +79,30 @@ if (verify && (cards.Count == 0 || document.Root?.Element(ns + "title") is null 
     return 1;
 }
 
+if (umlOutput is not null)
+{
+    var declaration = root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
+        .Where(node => !node.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
+        .OrderBy(node => node.SpanStart).FirstOrDefault();
+    if (declaration is null)
+    {
+        Console.Error.WriteLine("UML output requires at least one top-level type declaration.");
+        return 1;
+    }
+
+    var uml = ProjectUmlClass(declaration);
+    var classSvg = new SvgUmlClassDiagramRenderer().Render(uml, width: 1100);
+    Directory.CreateDirectory(Path.GetDirectoryName(umlOutput)!);
+    File.WriteAllText(umlOutput, classSvg);
+    var classDocument = XDocument.Parse(classSvg);
+    if (classDocument.Root?.Element(ns + "title") is null || classDocument.Root.Element(ns + "desc") is null)
+    {
+        Console.Error.WriteLine("Generated UML SVG must have accessible title and description.");
+        return 1;
+    }
+    Console.WriteLine($"Generated UML class diagram for {uml.Name} -> {umlOutput}");
+}
+
 Console.WriteLine($"Generated {renderedIds.Length} source-derived cards from {input} -> {output}");
 return 0;
 
@@ -126,6 +157,74 @@ static DataCard ProjectType(BaseTypeDeclarationSyntax declaration)
         header += " : " + typed.BaseList.Types;
     return new DataCard(StableId(declaration), kind, declaration.Identifier.ValueText,
         subtitle: NamespaceOf(declaration) + " · " + header, children: members, canRequestChildInsertion: false);
+}
+
+static UmlClassDiagram ProjectUmlClass(BaseTypeDeclarationSyntax declaration)
+{
+    var members = MembersOf(declaration).ToArray();
+    var fields = new List<UmlMember>();
+    var properties = new List<UmlMember>();
+    var operations = new List<UmlMember>();
+
+    foreach (var field in members.OfType<FieldDeclarationSyntax>())
+        foreach (var variable in field.Declaration.Variables)
+            fields.Add(new UmlMember(variable.Identifier.ValueText,
+                field.Declaration.Type + " " + variable.Identifier.ValueText,
+                VisibilityOf(field.Modifiers), field.Modifiers.Any(SyntaxKind.StaticKeyword)));
+
+    foreach (var property in members.OfType<PropertyDeclarationSyntax>())
+        properties.Add(new UmlMember(property.Identifier.ValueText,
+            property.Type + " " + property.Identifier.ValueText + " { " +
+            (property.AccessorList is null ? "init" : string.Join("; ", property.AccessorList.Accessors.Select(a => a.Modifiers + a.Keyword.Text))) + " }",
+            VisibilityOf(property.Modifiers), property.Modifiers.Any(SyntaxKind.StaticKeyword)));
+
+    foreach (var method in members.OfType<MethodDeclarationSyntax>())
+        operations.Add(new UmlMember(method.Identifier.ValueText,
+            method.ReturnType + " " + method.Identifier.ValueText + method.ParameterList,
+            VisibilityOf(method.Modifiers), method.Modifiers.Any(SyntaxKind.StaticKeyword)));
+
+    foreach (var constructor in members.OfType<ConstructorDeclarationSyntax>())
+        operations.Add(new UmlMember(constructor.Identifier.ValueText,
+            constructor.Identifier.ValueText + constructor.ParameterList,
+            VisibilityOf(constructor.Modifiers), constructor.Modifiers.Any(SyntaxKind.StaticKeyword)));
+
+    foreach (var evt in members.OfType<EventDeclarationSyntax>())
+        operations.Add(new UmlMember(evt.Identifier.ValueText, "event " + evt.Type + " " + evt.Identifier.ValueText,
+            VisibilityOf(evt.Modifiers), evt.Modifiers.Any(SyntaxKind.StaticKeyword)));
+
+    foreach (var evt in members.OfType<EventFieldDeclarationSyntax>())
+        foreach (var variable in evt.Declaration.Variables)
+            fields.Add(new UmlMember(variable.Identifier.ValueText, "event " + evt.Declaration.Type + " " + variable.Identifier.ValueText,
+                VisibilityOf(evt.Modifiers), evt.Modifiers.Any(SyntaxKind.StaticKeyword)));
+
+    foreach (var member in members.OfType<EnumMemberDeclarationSyntax>())
+        fields.Add(new UmlMember(member.Identifier.ValueText,
+            member.Identifier.ValueText + (member.EqualsValue is null ? "" : " = " + member.EqualsValue.Value),
+            "public"));
+
+    var kind = declaration switch
+    {
+        InterfaceDeclarationSyntax => "interface",
+        StructDeclarationSyntax => "struct",
+        EnumDeclarationSyntax => "enumeration",
+        RecordDeclarationSyntax => "record",
+        _ => "class"
+    };
+    var relationships = declaration is TypeDeclarationSyntax type && type.BaseList is not null
+        ? type.BaseList.Types.Select(t => t.ToString()).ToArray()
+        : Array.Empty<string>();
+    return new UmlClassDiagram(declaration.Identifier.ValueText, kind, NamespaceOf(declaration),
+        fields, properties, operations, relationships,
+        $"Source-derived UML class view for {declaration.Identifier.ValueText}. Declared members are parsed from syntax. Base-list references are displayed as unresolved source declarations, not verified semantic relationships.");
+}
+
+static string VisibilityOf(SyntaxTokenList modifiers)
+{
+    if (modifiers.Any(SyntaxKind.PublicKeyword)) return "public";
+    if (modifiers.Any(SyntaxKind.ProtectedKeyword)) return "protected";
+    if (modifiers.Any(SyntaxKind.PrivateKeyword)) return "private";
+    if (modifiers.Any(SyntaxKind.InternalKeyword)) return "internal";
+    return "package";
 }
 
 static IEnumerable<MemberDeclarationSyntax> MembersOf(BaseTypeDeclarationSyntax declaration) =>
