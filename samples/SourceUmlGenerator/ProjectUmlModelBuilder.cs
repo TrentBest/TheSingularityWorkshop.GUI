@@ -64,7 +64,7 @@ internal static class ProjectUmlModelBuilder
         foreach (var type in symbols)
         {
             var sourceId = ids[type];
-            if (type.BaseType is { SpecialType: not SpecialType.System_Object } baseType)
+            if (type.TypeKind == TypeKind.Class && type.BaseType is { SpecialType: not SpecialType.System_Object } baseType)
             {
                 relationships.Add(CreateRelationship(
                     sourceId, baseType, UmlRelationshipKind.Inheritance, "inherits", type, ids, projectPath));
@@ -138,18 +138,20 @@ internal static class ProjectUmlModelBuilder
         string ownerId,
         string projectPath)
     {
-        foreach (var reference in member.DeclaringSyntaxReferences)
-        {
-            var syntax = reference.GetSyntax();
-            var source = SourceDeclaration(syntax, projectPath);
-            var signature = member.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
-            yield return new UmlDocumentedMember(
-                ownerId + ":member:" + member.Kind + ":" + signature,
-                member.Kind().ToString(),
-                member.MetadataName,
-                signature,
-                [source]);
-        }
+        var references = member.DeclaringSyntaxReferences;
+        if (references.Length == 0)
+            yield break;
+        var signature = member.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+        var sources = references.Select(reference => SourceDeclaration(reference.GetSyntax(), projectPath))
+            .OrderBy(source => source.Path, StringComparer.Ordinal)
+            .ThenBy(source => source.Span.Start)
+            .ToArray();
+        yield return new UmlDocumentedMember(
+            ownerId + ":member:" + member.Kind + ":" + signature,
+            member.Kind.ToString(),
+            member.MetadataName,
+            signature,
+            sources);
     }
 
     private static UmlSourceDeclaration SourceDeclaration(SyntaxNode node, string projectPath)
