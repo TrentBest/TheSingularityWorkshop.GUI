@@ -199,6 +199,9 @@ public sealed class SvgGuiRenderer
             case "svg-title":
                 element = new XElement(Svg + "title", node.Text ?? string.Empty);
                 break;
+            case "svg-style":
+                element = new XElement(Svg + "style", node.Text ?? string.Empty);
+                break;
             case "svg-defs":
                 element = new XElement(Svg + "defs");
                 break;
