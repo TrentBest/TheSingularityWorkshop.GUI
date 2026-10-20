@@ -127,7 +127,8 @@ A green CI run only proves the configured checks that actually ran. A document d
 - [x] Discover all `.csproj` files and require each to be a solution member or an explicitly classified standalone sample.
 - [x] Validate solution project paths and explicit documentation-project file references; reject missing or duplicate entries.
 - [x] Enumerate repository Markdown, GitHub Actions workflow files, and visual/reference assets while excluding build/cache output.
-- [x] Compare the generated fox/sheepdog SVG against its checked-in manifestation in package CI, alongside the existing generated DataCard UML and SVG gallery comparisons.
+- [x] Compare generated DataCard UML and the SVG feature gallery against their checked-in generated assets in CI.
+- [ ] Reconcile the fox/sheepdog scene generator with the richer checked-in authored SVG. The current generator lacks several authored behavior states, so its output must stay separate rather than overwrite or be falsely declared byte-identical to the richer reference.
 - [ ] Mark each inventoried item as maintained, generated, authored, fixture, historical or retired; the current reporter enumerates broad categories but does not yet assign complete per-file lifecycle/ownership labels.
 - [ ] Identify duplicate/stale claims and choose one authoritative status location for each capability.
 - [ ] Expand drift and lifecycle validation to every generated asset, including stale/orphaned output detection and safe separation of authored files.
