@@ -83,3 +83,14 @@ The current generator is only the first class-view slice. It currently uses synt
 ### Work plan / acceptance
 
 I will keep the candidate isolated from `development` until the staged work has been reconciled safely, then verify the exact integrated commit and workflows. Before calling the per-type documentation gate complete, require an inventory generated from actual production declarations, one page plus one class-diagram SVG per maintained type, symbol-grounded relationships (or clearly marked syntax-only interim output), drift/missing-artifact tests, accessibility and visual-bound checks, and exact commit/run/artifact provenance. This coordination note does not authorize merge, publication, master changes, branch deletion, or required-check changes.
+
+
+## CI evidence update — exact staged candidate
+
+I queried GitHub Actions for GUI candidate commit `1317c31f44cb0614ed845ea18fd7cb44cf0c7950`:
+
+- [Source-derived diagrams run 39461444762](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39461444762): **success**. The generator ran, the SVG contract checks and committed UML parity check passed, and the generated artifact uploaded.
+- [Package GUI run 39461444806](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39461444806): **failure** in `test-wpf`. The log says 22 WPF tests reported passed, then the test host aborted/crashed with `System.NullReferenceException` at `System.Threading.Thread.get_CurrentThread()` / `MS.Win32.HwndSubclass.SubclassWndProc`. The `test-and-package` job passed, including Core/Blazor/SVG tests and package verification; NuGet publication was skipped. This is not a clean green package workflow, and the WPF failure must be investigated rather than dismissed as harmless.
+- Current compare after the coordination update: `work/gui-svg-source-uml-generator` is **28 commits ahead and 3 behind** GUI `development` (base now includes coordination commit `3c836977cc7a05579610e6babb6be9c45fc506e7`). It remains divergent staging work.
+
+These results verify the source-derived diagram workflow on the candidate SHA, but do not prove fixture mutation behavior, semantic relationship correctness, per-type inventory coverage, or full repository release readiness.
