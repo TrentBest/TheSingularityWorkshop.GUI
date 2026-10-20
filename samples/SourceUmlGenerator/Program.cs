@@ -600,8 +600,8 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     if (typePagesDirectory is not null)
     {
         var pagesDirectory = Path.GetFullPath(typePagesDirectory);
-        var pageCount = WriteTypePages(model, pagesDirectory);
-        Console.WriteLine($"Generated {model.Types.Count} per-type UML pages plus index -> {pagesDirectory} ({pageCount} Markdown files)");
+        var markdownPageCount = WriteTypePages(model, pagesDirectory);
+        Console.WriteLine($"Generated {model.Types.Count} per-type UML pages and SVG diagrams plus index -> {pagesDirectory} ({markdownPageCount} Markdown files, {model.Types.Count} SVGs)");
     }
 
     if (diagramSvg is not null && diagramFocus is not null)
@@ -638,10 +638,10 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
             .ToArray()
         : Array.Empty<string>();
     // Only prune files explicitly recorded by our previous manifest. Never enumerate
-    // the directory and delete arbitrary Markdown that may be authored by a user.
+    // the directory and delete arbitrary files that may be authored by a user.
     if (previousGeneratedFiles.Any(name =>
             Path.GetFileName(name) != name ||
-            !name.EndsWith(".md", StringComparison.Ordinal) ||
+            !(name.EndsWith(".md", StringComparison.Ordinal) || name.EndsWith(".svg", StringComparison.Ordinal)) ||
             string.Equals(name, manifestName, StringComparison.Ordinal)))
         throw new InvalidDataException($"Generated UML file manifest '{manifestPath}' contains an unsafe path.");
 
@@ -659,8 +659,8 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
     index.AppendLine("- Project: \u0060" + InventoryCell(model.Provenance.ProjectPath) + "\u0060");
     index.AppendLine("- Types: " + types.Length);
     index.AppendLine();
-    index.AppendLine("| Type | Kind | Members | Relationships | Page |");
-    index.AppendLine("|---|---|---:|---:|---|");
+    index.AppendLine("| Type | Kind | Members | Relationships | Page | UML SVG |");
+    index.AppendLine("|---|---|---:|---:|---|---|");
 
     foreach (var type in types)
     {
@@ -670,12 +670,21 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
         var hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
             System.Text.Encoding.UTF8.GetBytes(type.Id))).ToLowerInvariant()[..10];
         var fileName = safeName + "-" + hash + ".md";
+        var svgFileName = safeName + "-" + hash + ".svg";
         currentGeneratedFiles.Add(fileName);
+        currentGeneratedFiles.Add(svgFileName);
         var pagePath = Path.Combine(directory, fileName);
-        File.WriteAllText(pagePath, RenderTypePage(model, type, byId, fileName) + Environment.NewLine);
+        var svg = new SvgUmlDocumentationGraphRenderer().Render(model, type.Id);
+        var svgDocument = XDocument.Parse(svg);
+        XNamespace svgNamespace = "http://www.w3.org/2000/svg";
+        if (svgDocument.Root?.Element(svgNamespace + "title") is null ||
+            svgDocument.Root.Element(svgNamespace + "desc") is null)
+            throw new InvalidDataException($"Generated per-type UML SVG for '{qualifiedName}' lacks an accessible title or description.");
+        File.WriteAllText(Path.Combine(directory, svgFileName), svg + Environment.NewLine);
+        File.WriteAllText(pagePath, RenderTypePage(model, type, byId, fileName, svgFileName) + Environment.NewLine);
         var relationshipCount = model.Relationships.Count(edge => edge.SourceTypeId == type.Id || edge.TargetTypeId == type.Id);
         index.AppendLine("| \u0060" + InventoryCell(qualifiedName) + "\u0060 | \u0060" + InventoryCell(type.Identity.Kind) +
-            "\u0060 | " + type.Members.Count + " | " + relationshipCount + " | [" + fileName + "](" + fileName + ") |");
+            "\u0060 | " + type.Members.Count + " | " + relationshipCount + " | [" + fileName + "](" + fileName + ") | [" + svgFileName + "](" + svgFileName + ") |");
     }
 
     File.WriteAllText(Path.Combine(directory, "index.md"), index.ToString() + Environment.NewLine);
@@ -691,14 +700,15 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
     }
 
     File.WriteAllLines(manifestPath, currentGeneratedFiles.OrderBy(name => name, StringComparer.Ordinal));
-    return currentGeneratedFiles.Count;
+    return types.Length + 1;
 }
 
 static string RenderTypePage(
     UmlDocumentationModel model,
     UmlDocumentedType type,
     IReadOnlyDictionary<string, UmlDocumentedType> byId,
-    string fileName)
+    string fileName,
+    string svgFileName)
 {
     var builder = new System.Text.StringBuilder();
     var qualifiedName = ModelQualifiedTypeName(type);
@@ -713,6 +723,10 @@ static string RenderTypePage(
     builder.AppendLine("- Metadata name: \u0060" + InventoryCell(type.Identity.MetadataName) + "\u0060");
     builder.AppendLine("- Kind: \u0060" + InventoryCell(type.Identity.Kind) + "\u0060");
     builder.AppendLine("- Generic arity: " + type.Identity.GenericArity);
+    builder.AppendLine();
+    builder.AppendLine("## UML diagram");
+    builder.AppendLine();
+    builder.AppendLine("![UML relationship graph for this type](" + svgFileName + ")");
     builder.AppendLine();
     builder.AppendLine("## Source declarations");
     builder.AppendLine();
