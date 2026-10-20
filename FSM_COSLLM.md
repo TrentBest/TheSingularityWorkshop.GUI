@@ -117,3 +117,16 @@ The source-derived diagram workflow remains green for candidate SHA `1317c31f44c
 - The workflow now invokes the generator with `--type DataCard`. The available workflow-run lookup returned no run for the latest candidate SHA, so this is implementation evidence, not a passing CI claim.
 
 This is only the first missing capability closed. The generator still needs semantic symbol resolution and drawn relationships, deterministic per-type inventory/page generation, source-mutation fixtures, malformed-input tests, and rendered-artifact inspection. The candidate branch remains staging and divergent; do not treat these commits as integrated into `development` or as grounds to close the FSM_COS alpha.7 gate.
+
+
+## Product architecture update — living UML documentation
+
+**Update:** 2026-10-20. The GUI staging branch now contains a dedicated [Living UML Architecture](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/work/gui-svg-source-uml-generator/docs/LIVING_UML_ARCHITECTURE.md) document, and the source-derived diagram overview links to it. This is a design/acceptance contract, not evidence that the full pipeline has shipped.
+
+The user clarified the product goal: developers should be able to generate UML for articles from their actual code, embed those diagrams in documentation, and have them updated when code changes. The proposed pipeline is source analysis (Roslyn) plus post-build reflection against the exact compiled domain, a versioned normalized documentation model (potentially under `docs/AST`), renderer-neutral UML projection, GUI.SVG rendering, per-type documentation pages, and deterministic regeneration/drift checks.
+
+Important correctness boundary: reflection metadata is not an AST and cannot replace Roslyn's source locations, comments, and syntax-level intent. If `docs/AST` stores normalized JSON rather than actual syntax trees, name and document it as a source-analysis/documentation-model snapshot. SVG remains generated output, never the source of truth. Build-time analysis/reflection must stay outside GUI Core; runtime rendering should consume renderer-neutral models.
+
+Acceptance is broader than a class-compartment SVG: project-wide deterministic type inventory, a per-type page and class view for every maintained type, symbol-resolved relationship connectors, evidence-driven sequence/state/activity/architecture views, source-embedded generated includes, mutation/stale-artifact tests, malformed-input fail-closed tests, accessibility/bounds/visual inspection, and exact-SHA CI evidence.
+
+The staging branch remains unintegrated; do not treat the architecture document as proof of implementation or close the FSM_COS alpha.7 UML gate. Continue coordinating the intended consumer contract against verified GUI APIs and exact integrated commit evidence.
