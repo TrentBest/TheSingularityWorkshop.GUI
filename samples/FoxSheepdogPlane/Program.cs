@@ -85,7 +85,8 @@ scene.Child("svg-g", "plane-scene", plane =>
         fox.Property("class", "fox-moving");
         fox.Child("svg-animate-motion", "fox-route", motion => motion
             .Property("path", "M456 258 L492 276 L528 294 L564 312 L600 330 L636 348")
-            .Property("dur", "8s").Property("repeatCount", "indefinite").Property("rotate", "0"));
+            .Property("keyPoints", "0;1;1").Property("keyTimes", "0;0.29;1").Property("calcMode", "linear")
+            .Property("dur", "24s").Property("repeatCount", "indefinite").Property("rotate", "0"));
         fox.Child("svg-animate", "fox-hide-on-collision", animation => animation
             .Property("attributeName", "opacity").Property("values", "1;1;0;0;1")
             .Property("keyTimes", "0;0.33;0.38;0.96;1").Property("dur", "24s").Property("repeatCount", "indefinite"));
@@ -141,23 +142,23 @@ scene.Child("svg-style", "scene-style", style => style.Text("""
 text { font-family: ui-sans-serif, system-ui, sans-serif; }
 .dog-zzz { transform-box: fill-box; transform-origin: center; animation: snooze 1.5s ease-in-out infinite, zzz-off 24s linear infinite; }
 @keyframes snooze { 0%,100% { transform: translate(0,0); opacity:1; } 50% { transform: translate(4px,-5px); opacity:.55; } }
-@keyframes zzz-off { 0%,27% { opacity:1; } 29%,100% { opacity:0; } }
+@keyframes zzz-off { 0%,25% { opacity:1; } 27%,100% { opacity:0; } }
 .dog-posture { transform-box: fill-box; transform-origin: center; animation: dog-stand 24s linear infinite; }
-@keyframes dog-stand { 0%,28% { translate:0 0; scale:1; } 31%,39% { translate:0 -8px; scale:1.12; } 44%,100% { translate:0 0; scale:1; } }
+@keyframes dog-stand { 0%,27% { translate:0 0; scale:1; } 32%,40% { translate:0 -8px; scale:1.12; } 45%,100% { translate:0 0; scale:1; } }
 .dog-arm { transform-box: fill-box; transform-origin: 0% 50%; animation: dog-reach 24s linear infinite; }
-@keyframes dog-reach { 0%,30% { transform:translate(0,0) scaleX(.2); } 32%,39% { transform:translate(-7px,4px) scaleX(1); } 43%,100% { transform:translate(0,0) scaleX(.2); } }
+@keyframes dog-reach { 0%,29% { transform:translate(0,0) scaleX(.2); } 32%,40% { transform:translate(-7px,4px) scaleX(1); } 44%,100% { transform:translate(0,0) scaleX(.2); } }
 .fight-cloud { opacity:0; animation:fight-cloud 24s linear infinite; }
-@keyframes fight-cloud { 0%,31% { opacity:0; } 33%,43% { opacity:1; } 45%,100% { opacity:0; } }
+@keyframes fight-cloud { 0%,34% { opacity:0; } 36%,45% { opacity:1; } 47%,100% { opacity:0; } }
 .limp-fox { opacity:0; transform-box:view-box; animation:limp-show 24s linear infinite; }
-@keyframes limp-show { 0%,43% { opacity:0; transform:translateY(-12px); } 44% { opacity:1; transform:translateY(-12px); } 47%,91% { opacity:1; transform:translateY(0); } 96%,100% { opacity:0; transform:translateY(0); } }
+@keyframes limp-show { 0%,45% { opacity:0; transform:translateY(-12px); } 46% { opacity:1; transform:translateY(-12px); } 49%,91% { opacity:1; transform:translateY(0); } 96%,100% { opacity:0; transform:translateY(0); } }
 .rip-stone { opacity:0; animation:stone-show 24s linear infinite; }
-@keyframes stone-show { 0%,47% { opacity:0; } 49%,93% { opacity:1; } 100% { opacity:0; } }
+@keyframes stone-show { 0%,49% { opacity:0; } 51%,94% { opacity:1; } 100% { opacity:0; } }
 .fox-angel { opacity:0; transform-box:view-box; animation:angel-rise 24s linear infinite; }
-@keyframes angel-rise { 0%,49% { opacity:0; transform:translate(630px,344px) scale(.35); } 52% { opacity:1; } 65% { opacity:1; transform:translate(700px,190px) scale(1); } 70%,100% { opacity:0; transform:translate(740px,115px) scale(1.1); } }
+@keyframes angel-rise { 0%,51% { opacity:0; transform:translate(630px,344px) scale(.35); } 54% { opacity:1; } 66% { opacity:1; transform:translate(700px,190px) scale(1); } 72%,100% { opacity:0; transform:translate(740px,115px) scale(1.1); } }
 .wings { transform-box:fill-box; transform-origin:center; animation:wing-flap .32s ease-in-out infinite alternate; }
 @keyframes wing-flap { from { transform:scaleY(.65) rotate(-8deg); } to { transform:scaleY(1.15) rotate(8deg); } }
 .fox-moving { animation:fox-visibility 24s linear infinite; }
-@keyframes fox-visibility { 0%,33% { opacity:1; } 38%,97% { opacity:0; } 100% { opacity:1; } }
+@keyframes fox-visibility { 0%,29% { opacity:1; } 31%,97% { opacity:0; } 100% { opacity:1; } }
 @media (prefers-reduced-motion:reduce) { .dog-zzz,.dog-posture,.dog-arm,.fight-cloud,.limp-fox,.rip-stone,.fox-angel,.wings,.fox-moving { animation:none; } .dog-zzz { opacity:0; } .limp-fox,.rip-stone,.fox-angel { opacity:1; } }
 """));
 
