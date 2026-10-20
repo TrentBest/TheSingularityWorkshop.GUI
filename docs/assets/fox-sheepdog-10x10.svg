@@ -39,7 +39,7 @@
 <rect width="1200" height="760" rx="24" fill="url(#background)"/>
 <text x="40" y="43" fill="#eaf2fb" font-size="24" font-weight="850" letter-spacing="1.3">THE FOX / SHEEPDOG CELL TEST</text>
 <text x="40" y="70" fill="#9fb6cc" font-size="14">GUI.SVG scene · 10 × 10 cells · regular isometric projection · one visible encounter</text>
-<g id="plane">
+<g id="plane-scene">
  <polygon points="600,150 960,330 600,510 240,330" fill="url(#plane)" stroke="#527d8b" stroke-width="2"/>
  <path id="grid-column-0" class="grid-line" d="M600 150L240 330"/>
  <path id="grid-column-1" class="grid-line" d="M636 168L276 348"/>
@@ -72,5 +72,5 @@
  <g class="rip-marker" id="rip-marker" transform="translate(628 367)"><use href="#tombstone"/></g>
  <g class="angel-flight" id="angel-flight"><use href="#fox-angel"/></g>
 </g>
-<g id="legend"><rect x="40" y="590" width="1120" height="120" rx="16" fill="#172b3d" stroke="#345064"/><text x="64" y="624" fill="#dce8f3" font-size="16" font-weight="800">10 × 10 = 100 cells · orthogonal grid before projection</text><text x="64" y="652" fill="#ffcf86" font-size="15">Wake → stand → reach → fight cloud → limp fox → RIP stone → harp angel ascends</text><text x="64" y="680" fill="#9fb6cc" font-size="12">Illustrative SVG choreography, authored as a GUI.SVG scene model; not yet a live FSM_API trace.</text></g>
+<g id="legend"><rect x="40" y="590" width="1120" height="120" rx="16" fill="#172b3d" stroke="#345064"/><text x="64" y="624" fill="#dce8f3" font-size="16" font-weight="800">10 × 10 = 100 cells · orthogonal grid before projection</text><text x="64" y="652" fill="#ffcf86" font-size="15">Wake → stand → reach → fight cloud → limp fox → RIP stone → harp angel ascends</text><text x="64" y="680" fill="#9fb6cc" font-size="12">Illustrative SVG choreography; the corresponding GUI.SVG scene model is maintained in samples/FoxSheepdogPlane/Program.cs, and this is not yet a live FSM_API trace.</text></g>
 </svg>
