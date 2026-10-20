@@ -14,24 +14,25 @@
  text{font-family:ui-sans-serif,system-ui,sans-serif}
  .grid-line{fill:none;stroke:#74a5b4;stroke-opacity:.48;stroke-width:1.2;vector-effect:non-scaling-stroke}
  .cell-node{fill:#ffcf86;stroke:#fff0d5;stroke-width:1;opacity:.72}
- .fox-route{animation:fox-visibility 16s linear infinite}
- @keyframes fox-visibility{0%,44%{opacity:1}50%,94%{opacity:0}100%{opacity:1}}
- .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite}
+ .fox-route{animation:fox-visibility 24s linear infinite}
+ @keyframes fox-visibility{0%,33%{opacity:1}38%,97%{opacity:0}100%{opacity:1}}
+ .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite,zzz-off 24s linear infinite}
+  @keyframes zzz-off{0%,27%{opacity:1}29%,100%{opacity:0}}
  @keyframes snooze{0%,100%{transform:translateY(0);opacity:1}50%{transform:translate(4px,-5px);opacity:.55}}
- .dog-posture{transform-box:fill-box;transform-origin:center;animation:dog-stand 16s linear infinite}
- @keyframes dog-stand{0%,35%{transform:translateY(0) scale(1)}39%,56%{transform:translateY(-8px) scale(1.12)}63%,100%{transform:translateY(0) scale(1)}}
- .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 16s linear infinite}
- @keyframes reach{0%,39%{transform:translate(0,0) scaleX(.25)}44%,55%{transform:translate(-13px,4px) scaleX(1)}61%,100%{transform:translate(0,0) scaleX(.25)}}
+ .dog-posture{transform-box:fill-box;transform-origin:center;animation:dog-stand 24s linear infinite}
+ @keyframes dog-stand{0%,28%{transform:translateY(0) scale(1)}31%,39%{transform:translateY(-8px) scale(1.12)}44%,100%{transform:translateY(0) scale(1)}}
+ .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 24s linear infinite}
+ @keyframes reach{0%,30%{transform:translate(0,0) scaleX(.25)}32%,39%{transform:translate(-13px,4px) scaleX(1)}43%,100%{transform:translate(0,0) scaleX(.25)}}
  .dog-zzz{animation:zzz-off 16s linear infinite}
  @keyframes zzz-off{0%,34%{opacity:1}38%,100%{opacity:0}}
- .fight-cloud{opacity:0;animation:cloud-time 16s linear infinite}
- @keyframes cloud-time{0%,43%{opacity:0}45%,59%{opacity:1}63%,100%{opacity:0}}
- .limp-fox{opacity:0;animation:corpse-time 16s linear infinite}
- @keyframes corpse-time{0%,60%{opacity:0}64%,91%{opacity:1}97%,100%{opacity:0}}
- .rip-marker{opacity:0;animation:stone-time 16s linear infinite}
- @keyframes stone-time{0%,63%{opacity:0}67%,94%{opacity:1}100%{opacity:0}}
- .angel-flight{opacity:0;animation:angel-time 16s linear infinite}
- @keyframes angel-time{0%,68%{opacity:0;transform:translate(630px,344px) scale(.45)}71%{opacity:1}88%{opacity:1;transform:translate(700px,190px) scale(1)}97%,100%{opacity:0;transform:translate(740px,115px) scale(1.05)}}
+ .fight-cloud{opacity:0;animation:cloud-time 24s linear infinite}
+ @keyframes cloud-time{0%,31%{opacity:0}33%,43%{opacity:1}45%,100%{opacity:0}}
+ .limp-fox{opacity:0;transform-box:view-box;animation:corpse-time 24s linear infinite}
+ @keyframes corpse-time{0%,43%{opacity:0;transform:translateY(-12px)}44%{opacity:1;transform:translateY(-12px)}47%,91%{opacity:1;transform:translateY(0)}96%,100%{opacity:0;transform:translateY(0)}}
+ .rip-marker{opacity:0;animation:stone-time 24s linear infinite}
+ @keyframes stone-time{0%,47%{opacity:0}49%,93%{opacity:1}100%{opacity:0}}
+ .angel-flight{opacity:0;transform-box:view-box;animation:angel-time 24s linear infinite}
+ @keyframes angel-time{0%,49%{opacity:0;transform:translate(630px,344px) scale(.35)}52%{opacity:1}65%{opacity:1;transform:translate(700px,190px) scale(1)}70%,100%{opacity:0;transform:translate(740px,115px) scale(1.1)}}
  .wings{transform-box:fill-box;transform-origin:center;animation:wing-flap .32s ease-in-out infinite alternate}
  @keyframes wing-flap{from{transform:scaleY(.65) rotate(-8deg)}to{transform:scaleY(1.15) rotate(8deg)}}
  @media(prefers-reduced-motion:reduce){.fox-route,.dog-body,.dog-arm,.dog-zzz,.fight-cloud,.limp-fox,.rip-marker,.angel-flight,.wings{animation:none}.rip-marker{opacity:1}.dog-zzz{opacity:0}.limp-fox{opacity:1}.angel-flight{opacity:1}}
