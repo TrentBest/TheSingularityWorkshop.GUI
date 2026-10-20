@@ -296,6 +296,7 @@ jobs:
           public sealed class KeepMe { }
           public sealed class RemoveMe { }
           CS
+          mkdir -p "$pages"
           printf '%s\n' '# Authored page — must survive generation' > "$pages/authored.md"
           run_generator() {
             dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --configuration Release -- \
@@ -304,15 +305,7 @@ jobs:
               --configuration Release --type-pages-dir "$pages"
           }
           run_generator
-          stale_page="$(grep -l '^# PruningFixture.RemoveMe        uses: actions/upload-artifact@v7
-        with:
-          name: source-derived-gui-svg-diagrams
-          path: |
-            artifacts/DataCard.*.svg
-            artifacts/Core.uml-inventory.md
-            artifacts/Core.uml-types/**
-          if-no-files-found: error
- "$pages"/*.md | head -n 1)"
+          stale_page="$(grep -l '^# PruningFixture.RemoveMe$' "$pages"/*.md | head -n 1)"
           test -n "$stale_page"
           test -f "$pages/.source-uml-generated-files"
           test -f "$pages/authored.md"
