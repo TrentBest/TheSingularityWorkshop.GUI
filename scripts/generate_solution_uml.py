@@ -144,10 +144,27 @@ def main() -> int:
 
             types = model.get("types")
             pages = sorted(page for page in pages_path.glob("*.md") if page.name != "index.md")
-            if not isinstance(types, list) or not types or len(pages) != len(types) or not (pages_path / "index.md").is_file():
+            diagrams = sorted(pages_path.glob("*.svg"))
+            if (
+                not isinstance(types, list)
+                or not types
+                or len(pages) != len(types)
+                or len(diagrams) != len(types)
+                or not (pages_path / "index.md").is_file()
+            ):
                 raise ValueError(
-                    f"Type-page coverage mismatch for {project_relative}: {len(types or [])} types, {len(pages)} pages"
+                    f"Type-page/diagram coverage mismatch for {project_relative}: "
+                    f"{len(types or [])} types, {len(pages)} pages, {len(diagrams)} SVG diagrams"
                 )
+
+            for page in pages:
+                diagram = page.with_suffix(".svg")
+                if not diagram.is_file() or f"]({diagram.name})" not in page.read_text(encoding="utf-8"):
+                    raise ValueError(f"Per-type page does not embed its corresponding UML SVG: {page.relative_to(ROOT)}")
+                svg_root = ET.parse(diagram).getroot()
+                svg_namespace = "{http://www.w3.org/2000/svg}"
+                if svg_root.find(svg_namespace + "title") is None or svg_root.find(svg_namespace + "desc") is None:
+                    raise ValueError(f"Per-type UML SVG lacks accessible title/description: {diagram.relative_to(ROOT)}")
 
             provenance = model.get("provenance", {})
             if provenance.get("sourceRevision") != revision or provenance.get("projectPath") != project_relative:
