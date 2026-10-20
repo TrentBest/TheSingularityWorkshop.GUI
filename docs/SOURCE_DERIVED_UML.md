@@ -48,7 +48,7 @@ The project mode loads one `.csproj` through `MSBuildWorkspace`, requests its co
 - **Structure SVG:** source declarations and members projected as GUI.SVG data cards.
 - **Syntax class SVG:** a focused single-class view. Base-list names in this path remain explicitly unresolved text.
 - **Syntax-only model:** `--model-json` with explicit repository/revision/project provenance; it emits no semantic relationships.
-- **Project-semantic model:** `--project-model-json` emits types, partial declaration spans, members, and compiler-symbol relationships.
+- **Project-semantic model:** `--project-model-json` emits types, partial declaration spans, members, and compiler-symbol relationships. Optional `--reflection-assembly` compares source-model type metadata identities against the exact compiled assembly, failing on missing or unexpected non-generated types. This first reflection gate validates type inventory only; member signatures, attributes, constraints, and target-framework-specific surface reconciliation remain open.
 - **Generated type inventory:** `--inventory-markdown` emits deterministic Markdown for every model type, with a sorted index, type identity, members/signatures, source links pinned to the recorded revision, and incoming/outgoing relationship evidence.
 - **Standalone type pages:** `--type-pages-dir` emits one deterministic Markdown page per type plus `index.md`, including compiler-model identity, source declarations, member signatures, relationships, and revision-pinned evidence links. A `.source-uml-generated-files` manifest records the exact generated Markdown filenames. On regeneration, the tool prunes only stale Markdown files named in its previous manifest; it does not enumerate the directory and delete arbitrary user files. If the manifest contains a path rather than a simple Markdown filename, generation fails closed. Generated pages are artifacts, not hand-edited source.
 - **Relationship extraction:** inheritance and interface realization come from Roslyn type symbols; associations come from field/property/event types; dependencies come from method return/parameter and indexer parameter types. Generic arguments are inspected so application-owned types remain visible even when common `System.*` wrappers are omitted.
@@ -62,7 +62,7 @@ SVG is generated output, not the authoritative source. Do not hand-edit generate
 ## What remains open
 
 - Load a solution and its in-scope project graph as a deterministic inventory, including explicit policies for project references and target frameworks.
-- Cross-check source facts against reflection from the exact successful build output.
+- Extend the new exact-build reflection check beyond type identity to member signatures, visibility/modifiers, attributes, generic constraints, and target-framework-specific surface. The current check catches missing/unexpected non-generated type identities only.
 - Render and navigate the whole project/solution graph; the current renderer focuses on one type and one-hop neighbors.
 - Improve connector routing and large-neighborhood layout; measure actual painted text bounds/overflow and record visual inspection.
 - Add committed generated-artifact drift checks for the inventory and page set; CI currently validates completeness/order and uploads the generated outputs rather than checking them into source control.
