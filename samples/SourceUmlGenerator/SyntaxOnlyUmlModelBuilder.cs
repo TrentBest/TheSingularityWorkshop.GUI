@@ -36,12 +36,6 @@ internal static class SyntaxOnlyUmlModelBuilder
                 GenericArity(node),
                 KindOf(node));
             var source = SourceDeclaration(node, sourcePath);
-            var members = node switch
-            {
-                TypeDeclarationSyntax type => type.Members,
-                EnumDeclarationSyntax enumeration => (SyntaxList<MemberDeclarationSyntax>)default,
-                _ => default
-            };
             var documentedMembers = new List<UmlDocumentedMember>();
             if (node is TypeDeclarationSyntax declaredType)
             {
