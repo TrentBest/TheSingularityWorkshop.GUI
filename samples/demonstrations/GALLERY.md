@@ -26,6 +26,14 @@ Explore reusable SVG definitions, filters, and declarative animation, including 
 
 [**Read Recipe 04 — Animated scene**](recipes/04-animated-scene.md)
 
+## GUI Core + GUI.SVG + Physics run data
+
+### Recipe 03 — Projectile trajectory from a recorded Physics run
+
+The generator consumes the Physics-owned JSON run record at a pinned source commit, then renders its recorded X/Z positions through GUI Core and the actual GUI.SVG adapter. [The full workflow passed and uploaded the generated SVG artifact](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39453243758/artifacts/12277859868); visual review confirmed the nine plotted state markers match the input record.
+
+[**Read Recipe 03 — Physics-backed projectile trajectory**](recipes/03-projectile-trajectory.md)
+
 ## Harvested from TheSingularityWorkshop.Physics
 
 These SVGs remain owned by Physics; this gallery links to the source rather than copying or implying GUI.SVG generated them. They are candidates for richer step-by-step lessons once their equations, data, and run records are connected to the displayed progression.
