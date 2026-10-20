@@ -97,6 +97,33 @@ jobs:
           path: ./artifacts/svg-adapter-gallery.svg
           if-no-files-found: error
 
+      - name: Generate GUI.SVG fox/sheepdog plane
+        run: dotnet run --project samples/FoxSheepdogPlane/FoxSheepdogPlane.csproj --configuration Release -- ./artifacts/fox-sheepdog-10x10.svg
+
+      - name: Verify GUI.SVG fox/sheepdog plane
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/fox-sheepdog-10x10.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          ids = [node.attrib["id"] for node in root.iter() if "id" in node.attrib]
+          assert len(ids) == len(set(ids)), "SVG ids must be unique"
+          lines = [node for node in root.findall(".//svg:line", ns)]
+          assert len(lines) == 22, f"expected 22 grid lines for a 10x10 plane, got {len(lines)}"
+          assert root.find(".//svg:style", ns) is not None, "scene stylesheet is missing"
+          assert root.find(".//svg:animateMotion", ns) is not None, "fox route animation is missing"
+          print(f"Verified {len(lines)} grid lines and {len(ids)} unique SVG ids.")
+          PY
+
+      - name: Upload GUI.SVG fox/sheepdog plane
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-fox-sheepdog-plane
+          path: ./artifacts/fox-sheepdog-10x10.svg
+          if-no-files-found: error
+
+
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
 
