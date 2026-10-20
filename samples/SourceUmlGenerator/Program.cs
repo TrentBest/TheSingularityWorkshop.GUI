@@ -363,6 +363,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     string? diagramSvg;
     string? diagramType;
     string? inventoryMarkdown;
+    string? typePagesDirectory;
     try
     {
         projectPath = GetOption(arguments, "--project");
@@ -372,6 +373,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
         diagramSvg = GetOption(arguments, "--diagram-svg");
         diagramType = GetOption(arguments, "--diagram-type");
         inventoryMarkdown = GetOption(arguments, "--inventory-markdown");
+        typePagesDirectory = GetOption(arguments, "--type-pages-dir");
         output = arguments.Length > 0 && !arguments[0].StartsWith("--", StringComparison.Ordinal)
             ? arguments[0]
             : null;
@@ -501,6 +503,13 @@ static async Task<int> RunProjectModelMode(string[] arguments)
         Console.WriteLine($"Generated deterministic UML type inventory for {model.Types.Count} types -> {inventoryPath}");
     }
 
+    if (typePagesDirectory is not null)
+    {
+        var pagesDirectory = Path.GetFullPath(typePagesDirectory);
+        var pageCount = WriteTypePages(model, pagesDirectory);
+        Console.WriteLine($"Generated {model.Types.Count} per-type UML pages plus index -> {pagesDirectory} ({pageCount} Markdown files)");
+    }
+
     if (diagramSvg is not null && diagramFocus is not null)
     {
         var svg = new SvgUmlDocumentationGraphRenderer().Render(model, diagramFocus.Id);
@@ -521,6 +530,135 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     return 0;
 }
 
+
+
+static int WriteTypePages(UmlDocumentationModel model, string directory)
+{
+    Directory.CreateDirectory(directory);
+    var types = model.Types.OrderBy(ModelQualifiedTypeName, StringComparer.Ordinal)
+        .ThenBy(type => type.Id, StringComparer.Ordinal).ToArray();
+    var byId = types.ToDictionary(type => type.Id, StringComparer.Ordinal);
+    var index = new System.Text.StringBuilder();
+    index.AppendLine("# Generated UML type pages");
+    index.AppendLine();
+    index.AppendLine("> Generated output. Do not edit by hand; regenerate from the source model.");
+    index.AppendLine();
+    index.AppendLine("- Repository: \u0060" + InventoryCell(model.Provenance.Repository) + "\u0060");
+    index.AppendLine("- Revision: [\u0060" + InventoryCell(model.Provenance.SourceRevision) + "\u0060](https://github.com/" + model.Provenance.Repository + "/tree/" + model.Provenance.SourceRevision + ")");
+    index.AppendLine("- Project: \u0060" + InventoryCell(model.Provenance.ProjectPath) + "\u0060");
+    index.AppendLine("- Types: " + types.Length);
+    index.AppendLine();
+    index.AppendLine("| Type | Kind | Members | Relationships | Page |");
+    index.AppendLine("|---|---|---:|---:|---|");
+
+    foreach (var type in types)
+    {
+        var qualifiedName = ModelQualifiedTypeName(type);
+        var safeName = new string(qualifiedName.Select(character =>
+            char.IsLetterOrDigit(character) || character is '-' or '_' ? character : '-').ToArray()).Trim('-');
+        var hash = Convert.ToHexString(System.Security.Cryptography.SHA256.HashData(
+            System.Text.Encoding.UTF8.GetBytes(type.Id))).ToLowerInvariant()[..10];
+        var fileName = safeName + "-" + hash + ".md";
+        var pagePath = Path.Combine(directory, fileName);
+        File.WriteAllText(pagePath, RenderTypePage(model, type, byId, fileName) + Environment.NewLine);
+        var relationshipCount = model.Relationships.Count(edge => edge.SourceTypeId == type.Id || edge.TargetTypeId == type.Id);
+        index.AppendLine("| \u0060" + InventoryCell(qualifiedName) + "\u0060 | \u0060" + InventoryCell(type.Identity.Kind) +
+            "\u0060 | " + type.Members.Count + " | " + relationshipCount + " | [" + fileName + "](" + fileName + ") |");
+    }
+
+    File.WriteAllText(Path.Combine(directory, "index.md"), index.ToString() + Environment.NewLine);
+    return types.Length + 1;
+}
+
+static string RenderTypePage(
+    UmlDocumentationModel model,
+    UmlDocumentedType type,
+    IReadOnlyDictionary<string, UmlDocumentedType> byId,
+    string fileName)
+{
+    var builder = new System.Text.StringBuilder();
+    var qualifiedName = ModelQualifiedTypeName(type);
+    builder.AppendLine("# " + qualifiedName);
+    builder.AppendLine();
+    builder.AppendLine("> Generated from compiler-backed source analysis. Do not edit by hand.");
+    builder.AppendLine();
+    builder.AppendLine("- Repository: \u0060" + InventoryCell(model.Provenance.Repository) + "\u0060");
+    builder.AppendLine("- Revision: [\u0060" + InventoryCell(model.Provenance.SourceRevision) + "\u0060](https://github.com/" + model.Provenance.Repository + "/tree/" + model.Provenance.SourceRevision + ")");
+    builder.AppendLine("- Project: \u0060" + InventoryCell(model.Provenance.ProjectPath) + "\u0060");
+    builder.AppendLine("- Type ID: \u0060" + InventoryCell(type.Id) + "\u0060");
+    builder.AppendLine("- Metadata name: \u0060" + InventoryCell(type.Identity.MetadataName) + "\u0060");
+    builder.AppendLine("- Kind: \u0060" + InventoryCell(type.Identity.Kind) + "\u0060");
+    builder.AppendLine("- Generic arity: " + type.Identity.GenericArity);
+    builder.AppendLine();
+    builder.AppendLine("## Source declarations");
+    builder.AppendLine();
+    foreach (var source in type.SourceDeclarations.OrderBy(item => item.Path, StringComparer.Ordinal).ThenBy(item => item.Span.Start))
+        builder.AppendLine("- " + InventorySourceLink(model.Provenance, source));
+    builder.AppendLine();
+    builder.AppendLine("## Members");
+    builder.AppendLine();
+    if (type.Members.Count == 0)
+        builder.AppendLine("_No explicit source members were recorded._");
+    else
+    {
+        builder.AppendLine("| Kind | Signature | Source |");
+        builder.AppendLine("|---|---|---|");
+        foreach (var member in type.Members.OrderBy(item => item.Signature, StringComparer.Ordinal).ThenBy(item => item.Id, StringComparer.Ordinal))
+        {
+            var source = member.SourceDeclarations.OrderBy(item => item.Path, StringComparer.Ordinal).ThenBy(item => item.Span.Start).FirstOrDefault();
+            var sourceText = source is null ? "—" : InventorySourceLink(model.Provenance, source);
+            builder.AppendLine("| \u0060" + InventoryCell(member.Kind) + "\u0060 | \u0060" +
+                InventoryCell(member.Signature) + "\u0060 | " + sourceText + " |");
+        }
+    }
+
+    builder.AppendLine();
+    builder.AppendLine("## Relationships");
+    builder.AppendLine();
+    var relationships = model.Relationships.Where(edge => edge.SourceTypeId == type.Id || edge.TargetTypeId == type.Id)
+        .OrderBy(edge => edge.Kind).ThenBy(edge => edge.SourceTypeId, StringComparer.Ordinal)
+        .ThenBy(edge => edge.TargetDisplayName, StringComparer.Ordinal).ThenBy(edge => edge.Id, StringComparer.Ordinal).ToArray();
+    if (relationships.Length == 0)
+        builder.AppendLine("_No relationships were recorded by this analysis mode._");
+    else
+    {
+        builder.AppendLine("| Direction | Kind | Related type | Resolution | Evidence |");
+        builder.AppendLine("|---|---|---|---|---|");
+        foreach (var edge in relationships)
+        {
+            var outgoing = edge.SourceTypeId == type.Id;
+            var otherId = outgoing ? edge.TargetTypeId : edge.SourceTypeId;
+            var relatedName = otherId is not null && byId.TryGetValue(otherId, out var relatedType)
+                ? ModelQualifiedTypeName(relatedType) : edge.TargetDisplayName;
+            var evidence = edge.Provenance.SourcePath is null
+                ? "\u0060" + InventoryCell(edge.Provenance.Kind) + "\u0060"
+                : edge.Provenance.Span is null
+                    ? "\u0060" + InventoryCell(edge.Provenance.SourcePath) + "\u0060"
+                    : InventorySourceLink(model.Provenance, new UmlSourceDeclaration(edge.Provenance.SourcePath, edge.Provenance.Span));
+            builder.AppendLine("| " + (outgoing ? "outgoing" : "incoming") + " | \u0060" +
+                InventoryCell(edge.Kind.ToString()) + "\u0060 | \u0060" + InventoryCell(relatedName) +
+                "\u0060 | \u0060" + InventoryCell(edge.Resolution.ToString()) + "\u0060 | " + evidence + " |");
+        }
+    }
+
+    builder.AppendLine();
+    builder.AppendLine("[Back to the generated type index](index.md)");
+    return builder.ToString();
+}
+
+static string InventoryCell(string value) => value.Replace("|", "\\|", StringComparison.Ordinal)
+    .Replace("\r", " ", StringComparison.Ordinal)
+    .Replace("\n", " ", StringComparison.Ordinal)
+    .Replace("\u0060", "'", StringComparison.Ordinal);
+
+static string InventorySourceLink(UmlModelProvenance provenance, UmlSourceDeclaration source)
+{
+    var path = source.Path.Replace(" ", "%20", StringComparison.Ordinal);
+    var url = "https://github.com/" + provenance.Repository + "/blob/" +
+        provenance.SourceRevision + "/" + path + "#L" + source.Span.StartLine + "-" + source.Span.EndLine;
+    return "[\u0060" + InventoryCell(source.Path) + ":" + source.Span.StartLine + "-" +
+        source.Span.EndLine + "\u0060](" + url + ")";
+}
 
 static string RenderTypeInventory(UmlDocumentationModel model)
 {
