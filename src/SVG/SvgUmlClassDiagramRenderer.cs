@@ -31,7 +31,9 @@ public sealed class SvgUmlClassDiagramRenderer
         };
         var relationshipLines = model.DeclaredRelationships;
         var height = Top * 2 + HeaderHeight +
-            sections.Take(3).Sum(s => SectionHeadingHeight + Math.Max(1, s.Members.Count) * LineHeight) +
+            sections.Take(3).Sum(s => SectionHeadingHeight + (s.Members.Count == 0
+                ? LineHeight
+                : s.Members.Sum(member => Math.Max(1, member.Signature.Split('\\n').Length) * LineHeight))) +
             (relationshipLines.Count == 0 ? 0 : SectionHeadingHeight + relationshipLines.Count * LineHeight);
 
         var svg = new XElement(Svg + "svg",
@@ -105,8 +107,14 @@ public sealed class SvgUmlClassDiagramRenderer
             };
             var staticMarker = member.IsStatic ? " {static}" : string.Empty;
             var signature = string.IsNullOrWhiteSpace(member.Signature) ? member.Name : member.Signature;
-            svg.Add(Text(x + Padding, y + 16, $"{visibility} {signature}{staticMarker}", "#172b3a", "13", "normal"));
-            y += LineHeight;
+            var lines = signature.Split('\\n');
+            for (var index = 0; index < lines.Length; index++)
+            {
+                var prefix = index == 0 ? visibility + " " : "  ";
+                var suffix = index == lines.Length - 1 ? staticMarker : string.Empty;
+                svg.Add(Text(x + Padding, y + 16, prefix + lines[index].TrimEnd('\\r') + suffix, "#172b3a", "13", "normal"));
+                y += LineHeight;
+            }
         }
         return y;
     }
