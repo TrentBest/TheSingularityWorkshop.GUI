@@ -37,6 +37,8 @@ GENERATED_DRIFT_CHECKED_ASSETS = {
     "docs/assets/uml/classes/Core/DataCard.svg",
 }
 AUTHORED_SCENE_ASSETS = {
+    "docs/assets/concepts/gui-semantic-boundary.svg",  # authored conceptual illustration, not renderer output
+    "docs/assets/concepts/living-energy-vortex.svg",  # authored visual experiment, not renderer output
     "docs/assets/fox-sheepdog-10x10.svg",  # richer authored reference; generator parity remains open
     "samples/demonstrations/01-primitive-geometry.svg",  # authored reference, not renderer output
 }
