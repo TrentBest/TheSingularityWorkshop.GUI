@@ -641,9 +641,9 @@ static int WriteTypePages(UmlDocumentationModel model, string directory)
     // the directory and delete arbitrary files that may be authored by a user.
     if (previousGeneratedFiles.Any(name =>
             Path.GetFileName(name) != name ||
-            !(name.EndsWith(".md", StringComparison.Ordinal) || name.EndsWith(".svg", StringComparison.Ordinal)) ||
+            !IsSafeGeneratedUmlFileName(name) ||
             string.Equals(name, manifestName, StringComparison.Ordinal)))
-        throw new InvalidDataException($"Generated UML file manifest '{manifestPath}' contains an unsafe path.");
+        throw new InvalidDataException($"Generated UML file manifest '{manifestPath}' contains an unsafe path or non-generated filename.");
 
     var types = model.Types.OrderBy(ModelQualifiedTypeName, StringComparer.Ordinal)
         .ThenBy(type => type.Id, StringComparer.Ordinal).ToArray();
@@ -782,6 +782,25 @@ static string RenderTypePage(
     builder.AppendLine();
     builder.AppendLine("[Back to the generated type index](index.md)");
     return builder.ToString();
+}
+
+static bool IsSafeGeneratedUmlFileName(string name)
+{
+    if (string.Equals(name, "index.md", StringComparison.Ordinal))
+        return true;
+
+    var extension = Path.GetExtension(name);
+    if (!string.Equals(extension, ".md", StringComparison.Ordinal) &&
+        !string.Equals(extension, ".svg", StringComparison.Ordinal))
+        return false;
+
+    // Generated type files always end in the stable ten-hex identity suffix.
+    // This prevents a corrupted manifest from claiming arbitrary authored files.
+    var stem = Path.GetFileNameWithoutExtension(name);
+    var separator = stem.LastIndexOf('-');
+    return separator > 0 &&
+        stem.Length - separator - 1 == 10 &&
+        stem[(separator + 1)..].All(Uri.IsHexDigit);
 }
 
 static string InventoryCell(string value) => value.Replace("|", "\\|", StringComparison.Ordinal)
