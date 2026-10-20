@@ -4,7 +4,7 @@
 
 The source-derived UML tool is a **build-time documentation tool**, not a GUI Core runtime feature. It currently accepts one C# source file, parses it with Roslyn syntax APIs, projects declarations to GUI Core data-card nodes, and renders SVG through GUI.SVG. Its class view is syntax-derived: base-list names are displayed as unresolved text, not asserted as semantically resolved inheritance or interface connectors.
 
-The canonical interchange model in `src/Core/UmlDocumentationModel.cs` is a provisional, renderer-neutral DTO contract. The current generator does **not** emit that model yet. A schema DTO and serialization tests alone do not establish an end-to-end canonical pipeline.
+The canonical interchange model in `src/Core/UmlDocumentationModel.cs` is a provisional, renderer-neutral DTO contract. The generator now emits a **syntax-only model snapshot** with `--model-json`, including repository/revision/project provenance, declared type/member identities, and source spans. This is an initial source-to-model path, not yet a project-wide or compiler-semantic pipeline.
 
 ## Prerequisites
 
@@ -33,7 +33,7 @@ This is a **source-shaped command reference**, not a claim that every arbitrary 
 - **Focused class SVG:** fields, properties, operations, and explicitly unresolved declared type references.
 - **Workflow fixtures:** selection in a multi-type source file, ambiguous selection rejection, source mutation changing generated output, and malformed C# failing closed without emitting diagram output.
 - **SVG structural contract:** `scripts/verify_svg_contract.py` checks XML parseability, non-empty accessible title/description, finite positive `viewBox` dimensions, duplicate IDs, and broken local fragment/`url(#...)` references for generated workflow artifacts. It deliberately does not claim to measure rendered text overflow or replace visual inspection.
-- **Provisional documentation model:** tested JSON contract types, but not wired into generator output.
+- **Syntax-only documentation model:** emitted with `--model-json` when `--repository`, `--revision`, and `--project` provenance values are supplied. It intentionally emits no asserted relationships and records the assembly identity as `syntax-only`; this is not compiler-resolved UML.
 
 SVG output is a generated manifestation. The source and future canonical model remain the evidence-bearing inputs; do not hand-edit generated files as if they were authoritative.
 
@@ -42,7 +42,7 @@ SVG output is a generated manifestation. The source and future canonical model r
 - Load a `.csproj` or `.sln` into a compiler-backed semantic compilation.
 - Resolve symbols across partial/nested/generic declarations and project references.
 - Inspect the exact built assembly with reflection and compare its type surface.
-- Emit a canonical model snapshot from source and compilation.
+- Load a `.csproj` or `.sln` into a compiler-backed semantic compilation and emit a model enriched with resolved symbols; the current `--model-json` output is syntax-only.
 - Render a multi-type graph with semantically resolved, typed connectors.
 - Generate deterministic inventory coverage and a Markdown page for every maintained type.
 - Provide complete authored use-case persistence, evidence review, and lifecycle.
