@@ -519,10 +519,19 @@ static async Task<int> RunProjectModelMode(string[] arguments)
             if (!assemblyDefinition.PublicKey.IsNil)
                 reflectedAssemblyIdentity.SetPublicKey(metadata.GetBlobBytes(assemblyDefinition.PublicKey));
 
-            var identityText = reflectedAssemblyIdentity.ToString();
-            if (!string.Equals(identityText, model.Provenance.AssemblyIdentity, StringComparison.Ordinal))
+            var expectedAssemblyIdentity = new System.Reflection.AssemblyName(model.Provenance.AssemblyIdentity);
+            var reflectedCulture = string.IsNullOrEmpty(reflectedAssemblyIdentity.CultureName) ? "neutral" : reflectedAssemblyIdentity.CultureName;
+            var expectedCulture = string.IsNullOrEmpty(expectedAssemblyIdentity.CultureName) ? "neutral" : expectedAssemblyIdentity.CultureName;
+            var reflectedToken = reflectedAssemblyIdentity.GetPublicKeyToken() ?? Array.Empty<byte>();
+            var expectedToken = expectedAssemblyIdentity.GetPublicKeyToken() ?? Array.Empty<byte>();
+            var identityMatches =
+                string.Equals(reflectedAssemblyIdentity.Name, expectedAssemblyIdentity.Name, StringComparison.OrdinalIgnoreCase) &&
+                reflectedAssemblyIdentity.Version == expectedAssemblyIdentity.Version &&
+                string.Equals(reflectedCulture, expectedCulture, StringComparison.OrdinalIgnoreCase) &&
+                reflectedToken.SequenceEqual(expectedToken);
+            if (!identityMatches)
             {
-                Console.Error.WriteLine($"Compiled assembly identity '{identityText}' does not match compiler model identity '{model.Provenance.AssemblyIdentity}'.");
+                Console.Error.WriteLine($"Compiled assembly identity '{reflectedAssemblyIdentity}' does not match compiler model identity '{model.Provenance.AssemblyIdentity}'.");
                 return 1;
             }
 
