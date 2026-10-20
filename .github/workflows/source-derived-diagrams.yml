@@ -367,7 +367,23 @@ jobs:
           test "$unsafe_status" -ne 0
           grep -q 'unsafe path' "$fixture/unsafe.log"
           test "$(cat "$unsafe/.source-uml-generated-files")" = '../outside.md'
-          echo "Verified stale generated page pruning, preservation of authored Markdown, and fail-closed unsafe manifest handling."
+
+          unsafe_name="$fixture/unsafe-name-pages"
+          mkdir -p "$unsafe_name"
+          printf '%s\n' '# Authored file — must survive' > "$unsafe_name/authored.md"
+          printf '%s\n' 'authored.md' > "$unsafe_name/.source-uml-generated-files"
+          set +e
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --configuration Release -- \
+            --project-model-json "$fixture/unsafe-name-model.json" --project "$project" \
+            --repository TrentBest/TheSingularityWorkshop.GUI --revision "$SOURCE_REVISION" \
+            --configuration Release --type-pages-dir "$unsafe_name" > "$fixture/unsafe-name.log" 2>&1
+          unsafe_name_status=$?
+          set -e
+          test "$unsafe_name_status" -ne 0
+          grep -q 'unsafe path or non-generated filename' "$fixture/unsafe-name.log"
+          test -f "$unsafe_name/authored.md"
+          grep -q 'Authored file' "$unsafe_name/authored.md"
+          echo "Verified stale page/diagram pruning, preservation of authored Markdown, and fail-closed path/name manifest handling."
 
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@v7
