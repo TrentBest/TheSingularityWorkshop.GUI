@@ -87,23 +87,23 @@ internal static class ProjectUmlModelBuilder
                             UmlRelationshipKind.Association, "field type", ids, projectPath);
                         break;
                     case IPropertySymbol property:
-                        AddMemberTypeRelationships(relationships, type, sourceId, member, property.Type,
+                        AddMemberTypeRelationships(relationships, sourceId, member, property.Type,
                             UmlRelationshipKind.Association, "property type", ids, projectPath);
                         foreach (var parameter in property.Parameters)
-                            AddMemberTypeRelationships(relationships, type, sourceId, member, parameter.Type,
+                            AddMemberTypeRelationships(relationships, sourceId, member, parameter.Type,
                                 UmlRelationshipKind.Dependency, "index parameter type " + parameter.Name, ids, projectPath);
                         break;
                     case IEventSymbol eventSymbol:
-                        AddMemberTypeRelationships(relationships, type, sourceId, member, eventSymbol.Type,
+                        AddMemberTypeRelationships(relationships, sourceId, member, eventSymbol.Type,
                             UmlRelationshipKind.Association, "event type", ids, projectPath);
                         break;
                     case IMethodSymbol method when method.MethodKind is not
                         (MethodKind.PropertyGet or MethodKind.PropertySet or MethodKind.EventAdd or MethodKind.EventRemove):
                         if (!method.ReturnsVoid)
-                            AddMemberTypeRelationships(relationships, type, sourceId, member, method.ReturnType,
+                            AddMemberTypeRelationships(relationships, sourceId, member, method.ReturnType,
                                 UmlRelationshipKind.Dependency, "return type", ids, projectPath);
                         foreach (var parameter in method.Parameters)
-                            AddMemberTypeRelationships(relationships, type, sourceId, member, parameter.Type,
+                            AddMemberTypeRelationships(relationships, sourceId, member, parameter.Type,
                                 UmlRelationshipKind.Dependency, "parameter type " + parameter.Name, ids, projectPath);
                         break;
                 }
