@@ -110,3 +110,12 @@ The living UML feature is ready for adoption when a clean checkout can:
 9. Offer a usable developer command and concise documentation that lets a new user try it on their own codebase quickly.
 
 Until those conditions are met, report the implemented slice and remaining gaps precisely; do not describe the feature as complete.
+
+
+## Contract v1 implementation status — staging only
+
+The source-analysis branch now contains an initial renderer-neutral interchange DTO in `src/Core/UmlDocumentationModel.cs`, including project/build/revision provenance, metadata-based type/member identity slots, source spans, typed relationship kinds and resolution states, relationship evidence, and a separate human-authored use-case record. `UmlDocumentationModelJson` writes camel-case JSON and string-valued kebab-case enums, and rejects unsupported schema versions and unknown JSON properties. Core tests cover round-trip serialization, source provenance/spans, unresolved-edge preservation, and schema rejection.
+
+This is a **contract foundation**, not a complete canonical model pipeline or a supported package promise. The current Roslyn generator still projects directly into `DataCard` and the older single-class `UmlClassDiagram`; it does not yet emit `UmlDocumentationModel`, resolve project compiler symbols, render multi-node semantic connectors, or generate per-type pages/inventory. The DTOs also require stronger semantic validation and explicit normalization rules before they can be treated as a stable interchange contract. Keep FSM_COS on its interim Mermaid and keep the adoption gate open.
+
+The source-derived workflow now adds executable fixtures for changed-source output, fully qualified selection in a multi-type file, ambiguous simple-name rejection, and malformed-source fail-closed behavior. These are acceptance tests for the current syntax-only tool; they do not establish compiler-symbol relationship semantics.
