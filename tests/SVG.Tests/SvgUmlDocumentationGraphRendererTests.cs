@@ -59,7 +59,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
 
         var document = XDocument.Parse(new SvgUmlDocumentationGraphRenderer().Render(model, a.Id));
         Assert.Equal("Source-derived UML neighborhood: Fixture.A", document.Root!.Element(Svg + "title")!.Value);
-        Assert.Contains("2 type nodes and 2 typed relationships", document.Root.Element(Svg + "desc")!.Value);
+        Assert.Contains("3 type nodes and 2 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains("Fixture.B", text);
         Assert.Contains("global::System.IO.Stream", text);
