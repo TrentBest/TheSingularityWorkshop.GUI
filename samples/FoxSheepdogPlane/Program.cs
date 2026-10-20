@@ -1,10 +1,12 @@
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
-// This is the canonical scene model. The checked-in SVG is the inspectable manifestation.
+// This is the generated GUI.SVG demonstration model. The checked-in fox/sheepdog
+// SVG currently contains richer authored behavior states than this model; keep the
+// generated output separate until those states are represented by the scene model.
 var output = args.Length > 0
     ? Path.GetFullPath(args[0])
-    : Path.GetFullPath("docs/assets/fox-sheepdog-10x10.svg");
+    : Path.GetFullPath("artifacts/fox-sheepdog-10x10.generated.svg");
 
 var scene = GuiBuilder.Create("svg-scene", "fox-sheepdog-plane")
     .Text("GUI.SVG · 10×10 fox and sheepdog test plane")
