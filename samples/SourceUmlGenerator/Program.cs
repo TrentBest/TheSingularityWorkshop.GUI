@@ -34,7 +34,7 @@ var cards = new List<DataCard>();
 foreach (var declaration in root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
              .OrderBy(n => n.SpanStart))
 {
-    // Only top-level declarations are projected as roots; nested types remain owned by their containing type.
+    // Nested types are projected by their owner, not as duplicate root cards.
     if (declaration.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
         continue;
     cards.Add(ProjectType(declaration));
@@ -44,15 +44,13 @@ foreach (var declaration in root.DescendantNodes().OfType<DelegateDeclarationSyn
 {
     if (!declaration.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
         cards.Add(new DataCard(StableId(declaration), "delegate", declaration.Identifier.ValueText,
-            declaration.ToString()));
+            NamespaceOf(declaration), isExpandedByDefault: false));
 }
 
-var namespaces = root.DescendantNodes().OfType<BaseNamespaceDeclarationSyntax>()
-    .OrderBy(n => n.SpanStart).ToArray();
-var namespaceName = namespaces.LastOrDefault()?.Name.ToString() ?? "(global namespace)";
-var namespaceCard = new DataCard("namespace:" + namespaceName, "namespace", namespaceName,
-    subtitle: "Source-derived namespace", children: cards, canRequestChildInsertion: false);
-var svg = new SvgDataCardRenderer().Render(namespaceCard, width: 1100);
+var sourceName = Path.GetFileName(input);
+var sourceCard = new DataCard("source:" + sourceName, "source-file", sourceName,
+    subtitle: "C# source-derived structure", children: cards, canRequestChildInsertion: false);
+var svg = new SvgDataCardRenderer().Render(sourceCard, width: 1100);
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
 File.WriteAllText(output, svg);
 
@@ -104,6 +102,8 @@ static DataCard ProjectType(BaseTypeDeclarationSyntax declaration)
             BaseTypeDeclarationSyntax nested => ("nested-" + nested.Kind().ToString().ToLowerInvariant(), nested.Identifier.ValueText, nested.ToString().Split('{')[0].Trim()),
             _ => ("member", member.ToString().Split('(', '{', ';')[0].Trim(), member.Kind().ToString())
         };
+        if (member is BaseTypeDeclarationSyntax)
+            continue; // Nested types are added below as semantic children.
         if (string.IsNullOrWhiteSpace(title)) continue;
         members.Add(new DataCard(StableId(member), memberKind, title, subtitle, isExpandedByDefault: false));
     }
@@ -112,13 +112,24 @@ static DataCard ProjectType(BaseTypeDeclarationSyntax declaration)
         .Select(ProjectType).ToArray();
     members.AddRange(nestedTypes);
 
-    var header = declaration.Modifiers.Count > 0
-        ? string.Join(" ", declaration.Modifiers.Select(m => m.Text)) + " " + kind + " " + declaration.Identifier.ValueText
-        : kind + " " + declaration.Identifier.ValueText;
-    if (declaration is TypeDeclarationSyntax type && type.BaseList is not null)
-        header += " : " + type.BaseList.Types;
+    var modifiers = declaration switch
+    {
+        TypeDeclarationSyntax type => string.Join(" ", type.Modifiers.Select(m => m.Text)),
+        EnumDeclarationSyntax enumeration => string.Join(" ", enumeration.Modifiers.Select(m => m.Text)),
+        _ => string.Empty
+    };
+    var header = (string.IsNullOrWhiteSpace(modifiers) ? "" : modifiers + " ") + kind + " " + declaration.Identifier.ValueText;
+    if (declaration is TypeDeclarationSyntax typed && typed.BaseList is not null)
+        header += " : " + typed.BaseList.Types;
     return new DataCard(StableId(declaration), kind, declaration.Identifier.ValueText,
-        subtitle: header, children: members, canRequestChildInsertion: false);
+        subtitle: NamespaceOf(declaration) + " · " + header, children: members, canRequestChildInsertion: false);
+}
+
+static string NamespaceOf(SyntaxNode node)
+{
+    var names = node.Ancestors().OfType<BaseNamespaceDeclarationSyntax>()
+        .Reverse().Select(n => n.Name.ToString()).ToArray();
+    return names.Length == 0 ? "(global namespace)" : string.Join(".", names);
 }
 
 static string StableId(SyntaxNode node)
