@@ -272,6 +272,75 @@ jobs:
           test ! -e artifacts/uml-fixtures/malformed-uml.svg
           grep -q 'error' artifacts/uml-fixtures/malformed.log
 
+      - name: Verify generated-page pruning preserves authored files and rejects unsafe manifests
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          fixture="artifacts/page-pruning-fixture"
+          project="$fixture/PagePruningFixture.csproj"
+          pages="$fixture/pages"
+          mkdir -p "$fixture"
+          cat > "$project" <<'XML'
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <TargetFramework>net8.0</TargetFramework>
+              <ImplicitUsings>enable</ImplicitUsings>
+              <Nullable>enable</Nullable>
+            </PropertyGroup>
+          </Project>
+          XML
+          cat > "$fixture/Types.cs" <<'CS'
+          namespace PruningFixture;
+          public sealed class KeepMe { }
+          public sealed class RemoveMe { }
+          CS
+          printf '%s\n' '# Authored page — must survive generation' > "$pages/authored.md"
+          run_generator() {
+            dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --configuration Release -- \
+              --project-model-json "$fixture/model.json" --project "$project" \
+              --repository TrentBest/TheSingularityWorkshop.GUI --revision "$SOURCE_REVISION" \
+              --configuration Release --type-pages-dir "$pages"
+          }
+          run_generator
+          stale_page="$(grep -l '^# PruningFixture.RemoveMe        uses: actions/upload-artifact@v7
+        with:
+          name: source-derived-gui-svg-diagrams
+          path: |
+            artifacts/DataCard.*.svg
+            artifacts/Core.uml-inventory.md
+            artifacts/Core.uml-types/**
+          if-no-files-found: error
+ "$pages"/*.md | head -n 1)"
+          test -n "$stale_page"
+          test -f "$pages/.source-uml-generated-files"
+          test -f "$pages/authored.md"
+          cat > "$fixture/Types.cs" <<'CS'
+          namespace PruningFixture;
+          public sealed class KeepMe { }
+          CS
+          run_generator
+          test ! -e "$stale_page"
+          test -f "$pages/authored.md"
+          grep -q 'Authored page' "$pages/authored.md"
+          ! grep -q 'PruningFixture.RemoveMe' "$pages/index.md"
+
+          unsafe="$fixture/unsafe-pages"
+          mkdir -p "$unsafe"
+          printf '%s\n' '../outside.md' > "$unsafe/.source-uml-generated-files"
+          set +e
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --configuration Release -- \
+            --project-model-json "$fixture/unsafe-model.json" --project "$project" \
+            --repository TrentBest/TheSingularityWorkshop.GUI --revision "$SOURCE_REVISION" \
+            --configuration Release --type-pages-dir "$unsafe" > "$fixture/unsafe.log" 2>&1
+          unsafe_status=$?
+          set -e
+          test "$unsafe_status" -ne 0
+          grep -q 'unsafe path' "$fixture/unsafe.log"
+          test "$(cat "$unsafe/.source-uml-generated-files")" = '../outside.md'
+          echo "Verified stale generated page pruning, preservation of authored Markdown, and fail-closed unsafe manifest handling."
+
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@v7
         with:
