@@ -26,7 +26,7 @@ jobs:
         run: >-
           dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
           --configuration Release --
-          src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify
+          src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg
       - name: Verify source-derived SVG contract
         shell: bash
         run: |
@@ -35,9 +35,12 @@ jobs:
           grep -q 'DataCard' artifacts/DataCard.source-structure.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.source-structure.svg
           grep -q 'Children' artifacts/DataCard.source-structure.svg
+          test -s artifacts/DataCard.uml.svg
+          grep -q 'UML class diagram: DataCard' artifacts/DataCard.uml.svg
+          grep -q 'GetCollapsedSummary' artifacts/DataCard.uml.svg
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@v7
         with:
           name: source-derived-datacard-diagram
-          path: artifacts/DataCard.source-structure.svg
+          path: artifacts/DataCard.*.svg
           if-no-files-found: error
