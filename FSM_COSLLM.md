@@ -147,3 +147,132 @@ Implementation boundaries:
 - Prove notifications, rejected-command atomicity, observer disposal, deterministic rendering, large-model bounds, and one host-level end-to-end refresh before claiming live behavior.
 
 This complements source-derived UML generation rather than replacing it. The current GUI staging code does not yet implement subscriptions, a live host refresh path, semantic relationship connectors, or the complete project-wide source/reflection pipeline. The staging branch remains unintegrated; the FSM_COS alpha.7 UML gate stays open until implementation and exact-commit evidence support closure.
+
+
+## FSM_COS consumer contract response — proposed schema v1
+
+**Update:** 2026-10-20. This is a concrete proposal for coordination, not a claim that the staging implementation or a public package already supports it. The FSM_COS alpha.7 UML gate remains open.
+
+### Contract ownership and versioning
+
+- The canonical interchange is a versioned, serializable **documentation model** (not a Roslyn AST, not reflection output, and not SVG).
+- `schemaVersion` versions the serialized contract independently of NuGet/package versions. Consumers must reject unsupported major versions and must not silently interpret unknown relationship kinds as a known kind.
+- The canonical model retains source facts and provenance. A renderer-neutral diagram projection selects nodes/edges and layout hints; GUI.SVG renders that projection. Layout coordinates are presentation data, never semantic identity.
+- Proposed ownership: the stable public DTO/model contract belongs in GUI Core only after its invariants and compatibility surface are tested; SVG serialization/layout belongs in GUI.SVG; Roslyn compilation, source inventory, and post-build reflection belong in a separate build-time tool. The current `UmlClassDiagram` / `UmlMember` are staging types, not yet a supported consumer API. No package/version is promised until the model and compatibility policy are accepted and integrated.
+
+### Example canonical source/documentation model
+
+```json
+{
+  "schemaVersion": "1.0",
+  "provenance": {
+    "repository": "TrentBest/TheSingularityWorkshop.GUI",
+    "sourceRevision": "<full git commit SHA>",
+    "projectPath": "src/Core/TheSingularityWorkshop.GUI.Core.csproj",
+    "assemblyIdentity": "TheSingularityWorkshop.GUI.Core, Version=<resolved>",
+    "targetFramework": "net8.0",
+    "configuration": "Release",
+    "analysisMode": "roslyn-compilation",
+    "builtAssemblySha256": "<sha256-or-null-if-not-built>"
+  },
+  "types": [{
+    "id": "type:<assembly-id>:TheSingularityWorkshop.Workshop.Gui.DataCard",
+    "identity": {
+      "assembly": "<assembly identity>",
+      "namespace": "TheSingularityWorkshop.Workshop.Gui",
+      "containingTypes": [],
+      "metadataName": "DataCard",
+      "genericArity": 0,
+      "kind": "class"
+    },
+    "sourceDeclarations": [{
+      "path": "src/Core/DataCard.cs",
+      "span": { "start": 0, "length": 1200, "startLine": 1, "startColumn": 1, "endLine": 40, "endColumn": 2 }
+    }],
+    "members": [{
+      "id": "member:<type-id>:M:GetCollapsedSummary()",
+      "kind": "method",
+      "metadataName": "GetCollapsedSummary",
+      "signature": "string GetCollapsedSummary()",
+      "sourceDeclarations": [{
+        "path": "src/Core/DataCard.cs",
+        "span": { "start": 400, "length": 80, "startLine": 14, "startColumn": 5, "endLine": 16, "endColumn": 6 }
+      }]
+    }]
+  }],
+  "relationships": [{
+    "id": "edge:<source-type-id>:implements:<target-type-id>",
+    "kind": "interface-realization",
+    "sourceTypeId": "<source type ID>",
+    "target": {
+      "typeId": "<resolved target type ID>",
+      "displayName": "IExample",
+      "resolution": "resolved",
+      "scope": "project"
+    },
+    "direction": "source-to-target",
+    "label": "implements",
+    "multiplicity": null,
+    "ownershipEvidence": null,
+    "provenance": {
+      "kind": "compiler-symbol",
+      "sourcePath": "src/Core/Example.cs",
+      "span": { "start": 20, "length": 10, "startLine": 2, "startColumn": 20, "endLine": 2, "endColumn": 30 }
+    }
+  }]
+}
+```
+
+The values above illustrate field shapes only; placeholder identities/spans are not evidence about a real declaration. Production output must use actual compiler identities and exact source spans. Stable IDs are based on assembly/project identity plus metadata type identity (namespace, containing-type chain, metadata name and generic arity); member IDs add the canonical metadata signature including parameter/ref kinds and generic arity. Line/column/span are navigational provenance, not the sole identity basis. Paths are normalized repository-relative paths. Avoid timestamps and other volatile values in deterministic artifacts.
+
+### Relationship semantics
+
+The v1 relationship enum should be closed and typed: `inheritance`, `interface-realization`, `association`, and `dependency`. Edges are directed from the declaring/using type to the referenced target; presentation layout may place dependencies above the focus type, but must not reverse semantic direction. The target must carry an explicit resolution status such as `resolved`, `external`, or `unresolved`, and a scope/assembly identity when known.
+
+- Inheritance and interface realization require resolved compiler symbols.
+- Association/dependency must record the evidence kind and source member/operation that establishes the reference. A type appearing in a field or property signature alone does not prove ownership.
+- Multiplicity is optional and only emitted when it can be justified from the member/collection shape and documented interpretation; do not pretend generic collection syntax proves domain cardinality.
+- Aggregation/composition/ownership are **not default v1 edge kinds**. They require explicit human-authored or otherwise reviewable ownership evidence, including evidence source and review status.
+- If compilation cannot resolve a symbol, preserve its spelling as an unresolved/external reference and render it as such. Never draw a resolved semantic connector from a matching name string.
+
+### Human-authored use cases are a separate model
+
+Use-case intent is not source-derived. Keep it in a separate authored document/model, linked to type IDs but never mixed into compiler-derived facts. A v1 record should contain:
+
+```json
+{
+  "schemaVersion": "1.0",
+  "id": "use-case:<stable-slug>",
+  "title": "<actor goal>",
+  "actor": { "name": "<actor>", "kind": "human|system|external-service" },
+  "goal": "<observable outcome>",
+  "trigger": "<initiating event>",
+  "preconditions": [],
+  "mainFlow": [{ "step": 1, "text": "<action/outcome>", "evidence": [] }],
+  "alternateFlows": [{ "id": "A1", "condition": "<condition>", "steps": [], "evidence": [] }],
+  "postconditions": [],
+  "relatedTypeIds": [],
+  "evidence": [{ "kind": "test|source|trace|decision|external", "uri": "<stable link>", "claim": "<what this supports>" }],
+  "review": { "state": "draft|needs-review|accepted|rejected", "reviewer": null, "reviewedRevision": null },
+  "ownership": { "owner": "<team/person/role>", "origin": "human-authored|llm-assisted", "assumptions": [] }
+}
+```
+
+An LLM may help elicit and edit these records, but must mark assumptions and leave review state explicit. Do not generate fake use cases to meet diagram counts. Some low-level types should link to system-level use cases rather than invent actor-facing goals.
+
+### Per-type artifacts and multi-declaration files
+
+Use stable type IDs—not source filenames alone—as inventory identity. For each maintained type, generate a main `<TypeSlug>.md` page with purpose, local class card, member/contract notes, and source links, plus `<TypeSlug>UML.md` with the wider relationship diagram and authored use cases. A deterministic slug should include a namespace/containing-type disambiguator and generic arity where needed; collisions must fail generation rather than overwrite a page. Several declarations in one `.cs` file produce separate type records/pages/artifacts. Nested and partial declarations are merged by compiler symbol into one type identity with multiple source spans. A documented grouped-page exception must be explicit in the inventory, never silently assumed.
+
+### Adoption gates for FSM_COS
+
+FSM_COS should continue to use its clearly labeled interim Mermaid until all of the following are true:
+
+1. GUI exposes a documented, tested model/API and schema version on the integrated `development` line and in a verified package; no dependency on staging internals.
+2. Source-analysis tooling compiles the actual project/solution, emits stable inventory/provenance, and resolves semantic edges; unresolved symbols remain explicit.
+3. Fixture tests cover source mutation, overloads/generics/nested/partial/multiple types, ambiguous names, malformed source and compilation failure; stale/missing/orphaned artifacts fail CI.
+4. SVG tests cover XML, unique IDs, accessible title/description, bounds/text overflow, semantic edge direction/style and deterministic regeneration; rendered artifacts receive visual inspection.
+5. Package/API compatibility, build/test/security/package workflows pass on the exact integrated GUI SHA, with run links and generated artifacts recorded. The known WPF test-host crash must be compared against baseline and resolved or diagnosed transparently, not hidden.
+6. FSM_COS consumes only the verified package/API, regenerates its own artifacts deterministically, and records both GUI and FSM_COS source revisions. Its own exact candidate CI must pass; publication remains a separate release-owner decision.
+
+This proposal does not close the gate, authorize a merge/publication, or claim current implementation completeness. The next implementation step is to add the versioned canonical DTOs and semantic compiler-backed extraction in the isolated GUI candidate, then prove them with fixtures before declaring a stable package boundary.
