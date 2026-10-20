@@ -147,5 +147,6 @@ File.WriteAllText(outputPath, svg);
 Console.WriteLine($"PASS: rendered {samples.Length} recorded Physics states without recomputing trajectory physics.");
 Console.WriteLine($"Model: {modelId} v{modelVersion}; frame: {frame}; units: m and s.");
 Console.WriteLine($"Generated: {outputPath}");
+return 0;
 
 internal sealed record Sample(int Index, double ElapsedTime, double X, double Z);
