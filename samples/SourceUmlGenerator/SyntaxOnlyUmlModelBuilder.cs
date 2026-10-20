@@ -21,9 +21,9 @@ internal static class SyntaxOnlyUmlModelBuilder
         var declarations = root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
             .OrderBy(node => node.SpanStart)
             .ToArray();
-        var assemblyIdentity = "syntax-only:" + Normalize(projectPath);
+        var assemblyIdentity = "syntax-only";
         var typeIds = declarations.ToDictionary(node => node, node =>
-            "type:" + assemblyIdentity + ":" + DeclaredMetadataName(node), ReferenceEqualityComparer.Instance);
+            "type:" + assemblyIdentity + ":" + NamespaceOf(node) + ":" + DeclaredMetadataName(node));
 
         var types = declarations.Select(node =>
         {
@@ -40,7 +40,7 @@ internal static class SyntaxOnlyUmlModelBuilder
             if (node is TypeDeclarationSyntax declaredType)
             {
                 foreach (var member in declaredType.Members)
-                    AddMember(documentedMembers, member, sourcePath);
+                    AddMember(documentedMembers, member, sourcePath, typeIds[node]);
             }
             else if (node is EnumDeclarationSyntax enumeration)
             {
@@ -70,7 +70,7 @@ internal static class SyntaxOnlyUmlModelBuilder
             []);
     }
 
-    private static void AddMember(List<UmlDocumentedMember> output, MemberDeclarationSyntax member, string sourcePath)
+    private static void AddMember(List<UmlDocumentedMember> output, MemberDeclarationSyntax member, string sourcePath, string ownerTypeId)
     {
         var name = member switch
         {
@@ -93,7 +93,7 @@ internal static class SyntaxOnlyUmlModelBuilder
         var kind = member.Kind().ToString();
         var signature = member.ToString().Split('{')[0].Trim();
         var span = SourceDeclaration(member, sourcePath);
-        var id = "member:" + Normalize(sourcePath) + ":" + kind + ":" + name + ":" + signature;
+        var id = ownerTypeId + ":member:" + kind + ":" + name + ":" + signature;
         output.Add(new UmlDocumentedMember(id, kind, name, signature, [span]));
     }
 
