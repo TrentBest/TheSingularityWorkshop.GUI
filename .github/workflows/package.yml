@@ -123,6 +123,33 @@ jobs:
           path: ./artifacts/fox-sheepdog-10x10.svg
           if-no-files-found: error
 
+      - name: Generate GUI.SVG primitive geometry lesson
+        run: dotnet run --project samples/demonstrations/PrimitiveGeometry/PrimitiveGeometry.csproj --configuration Release -- ./artifacts/01-primitive-geometry.generated.svg
+
+      - name: Verify GUI.SVG primitive geometry lesson
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/01-primitive-geometry.generated.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          assert root.tag == "{http://www.w3.org/2000/svg}svg", "output is not SVG"
+          panel = root.find(".//svg:rect[@id='panel']", ns)
+          marker = root.find(".//svg:circle[@id='marker']", ns)
+          assert panel is not None, "generated panel rectangle is missing"
+          assert marker is not None, "generated marker circle is missing"
+          assert panel.attrib.get("rx") == "5", "panel corner radius changed"
+          assert marker.attrib.get("r") == "8", "marker radius changed"
+          print("Verified GUI.SVG generated primitive panel and marker.")
+          PY
+
+      - name: Upload GUI.SVG primitive geometry lesson
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-primitive-geometry
+          path: ./artifacts/01-primitive-geometry.generated.svg
+          if-no-files-found: error
+
       - name: Generate GUI.SVG coordinate transformations lesson
         run: dotnet run --project samples/demonstrations/CoordinateFunctions/CoordinateFunctions.csproj --configuration Release -- ./artifacts/02-coordinate-functions.generated.svg
 
