@@ -42,7 +42,7 @@ Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md
 
 ## 🟪 05 Available documentation and theory
 
-[Start Here](docs/START_HERE.md) · [Gallery](docs/GALLERY.md) · [Source-derived UML tooling](docs/SOURCE_DERIVED_UML.md) · [Living UML architecture](docs/LIVING_UML_ARCHITECTURE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
+[Start Here](docs/START_HERE.md) · [Gallery](docs/GALLERY.md) · [Source-derived UML tooling](docs/SOURCE_DERIVED_UML.md) · [Living UML architecture](docs/LIVING_UML_ARCHITECTURE.md) · [UML visual audit](docs/UML_VISUAL_AUDIT.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
 
 ---
 
