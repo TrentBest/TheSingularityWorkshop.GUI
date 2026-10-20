@@ -123,6 +123,39 @@ jobs:
           path: ./artifacts/fox-sheepdog-10x10.svg
           if-no-files-found: error
 
+      - name: Generate GUI.SVG coordinate transformations lesson
+        run: dotnet run --project samples/demonstrations/CoordinateFunctions/CoordinateFunctions.csproj --configuration Release -- ./artifacts/02-coordinate-functions.generated.svg
+
+      - name: Verify GUI.SVG coordinate transformations lesson
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/02-coordinate-functions.generated.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          assert root.tag == "{http://www.w3.org/2000/svg}svg", "output is not SVG"
+          sample_points = [node for node in root.findall(".//svg:circle", ns)
+                           if node.attrib.get("id", "").startswith("sample-")]
+          assert len(sample_points) == 33, f"expected 33 base samples, got {len(sample_points)}"
+          axes = root.find(".//svg:path[@id='cartesian-plane-axes']", ns)
+          assert axes is not None, "Cartesian axes are missing"
+          assert axes.attrib.get("d") == "M33.333 0V56.25M0 37.5H100", "origin axes are not centered at (0, 0)"
+          curves = {node.attrib.get("id") for node in root.findall(".//svg:polyline", ns)}
+          expected = {"curve-base", "curve-vertical-translation",
+                      "curve-horizontal-translation", "curve-scaled-reflected"}
+          assert curves == expected, f"transformation curves differ: {curves}"
+          text = " ".join(node.text or "" for node in root.findall(".//svg:text", ns))
+          for formula in ("f(x) = x²", "f(x) + 0.5", "f(x + 0.5)", "a = -0.5"):
+              assert formula in text, f"missing formula label: {formula}"
+          print("Verified coordinate origin, 33 samples, four transformation curves, and formula labels.")
+          PY
+
+      - name: Upload GUI.SVG coordinate transformations lesson
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-coordinate-transformations
+          path: ./artifacts/02-coordinate-functions.generated.svg
+          if-no-files-found: error
 
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
