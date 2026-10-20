@@ -4,13 +4,13 @@ This recipe uses GUI Core + GUI.SVG only: a semantic coordinate-system node, mat
 
 ## What the scene represents
 
-The generator samples x over [-1,1] at 32 equal intervals, producing 33 points:
+The generator samples x over [-1.5,1.5] at 32 equal intervals, producing 33 points:
 
 ```
 f(x) = x²
-vertical:   f(x) + C = x² + C, with C = 1
-horizontal: f(x + C) = (x + C)², with C = 1
-scale:      a f(x) = a x², with a = -1
+vertical:   f(x) + C = x² + C, with C = 0.5
+horizontal: f(x + C) = (x + C)², with C = 0.5
+scale:      a f(x) = a x², with a = -0.5
 ```
 
 The base curve is shown with its sampled points. Three additional curves use the same x-values and derive their y-values directly from the parameters above. The formulas, parameter values, and curve coordinates are all generated from the same constants and sample records; the curves are not hand-drawn approximations.
@@ -42,6 +42,6 @@ The program parses the adapter output as XML and checks the SVG root, mathematic
 
 - **Vertical translation, f(x)+C:** adding C changes y-values but not x-values.
 - **Horizontal translation, f(x+C):** adding C inside the function changes the input before squaring; the parabola moves left when C is positive.
-- **Scaling/reflection, af(x):** multiplying by a scales the output; a=-1 reflects the base curve across the x-axis.
+- **Scaling/reflection, af(x):** multiplying by a scales the output; a=-0.5 reflects the base curve across the x-axis.
 
 The current constants intentionally make the differences visible in one shared coordinate system. A later interactive sequence can expose one transformation at a time, but it should preserve this single-source relationship between parameters, formulas, and plotted data.
