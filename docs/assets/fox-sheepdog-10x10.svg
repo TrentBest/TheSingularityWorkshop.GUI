@@ -23,8 +23,6 @@
  @keyframes dog-stand{0%,27%{translate:0 0;scale:1}32%,40%{translate:0 -8px;scale:1.12}45%,100%{translate:0 0;scale:1}}
  .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 24s linear infinite}
  @keyframes reach{0%,29%{transform:translate(0,0) scaleX(.25)}32%,40%{transform:translate(-13px,4px) scaleX(1)}44%,100%{transform:translate(0,0) scaleX(.25)}}
- .dog-zzz{animation:zzz-off 16s linear infinite}
- @keyframes zzz-off{0%,34%{opacity:1}38%,100%{opacity:0}}
  .fight-cloud{opacity:0;animation:cloud-time 24s linear infinite}
  @keyframes cloud-time{0%,34%{opacity:0}36%,45%{opacity:1}47%,100%{opacity:0}}
  .limp-fox{opacity:0;transform-box:view-box;animation:corpse-time 24s linear infinite}
