@@ -52,6 +52,7 @@ jobs:
           --diagram-svg artifacts/DataCard.semantic-uml.svg
           --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard
           --inventory-markdown artifacts/Core.uml-inventory.md
+          --type-pages-dir artifacts/Core.uml-types
       - name: Verify project-semantic UML model contract
         run: |
           python3 - <<'PY'
@@ -87,6 +88,19 @@ jobs:
           assert inventory_names == expected_names, "inventory index must include every type in deterministic order"
           for type_name in expected_names:
               assert f"## {type_name}" in inventory, f"missing per-type section: {type_name}"
+
+          pages_dir = Path("artifacts/Core.uml-types")
+          page_files = sorted(path for path in pages_dir.glob("*.md") if path.name != "index.md")
+          assert len(page_files) == len(model["types"]), (len(page_files), len(model["types"]))
+          page_titles = sorted(path.read_text(encoding="utf-8").splitlines()[0][2:] for path in page_files)
+          assert page_titles == expected_names, "standalone page set must cover every type exactly once"
+          page_index = (pages_dir / "index.md").read_text(encoding="utf-8")
+          assert page_index.startswith("# Generated UML type pages")
+          assert all("(" + path.name + ")" in page_index for path in page_files), "index must link every generated page"
+          for page in page_files:
+              page_text = page.read_text(encoding="utf-8")
+              assert ("/blob/" + provenance["sourceRevision"] + "/") in page_text, page.name
+              assert "[Back to the generated type index](index.md)" in page_text, page.name
 
           ids = {item["id"] for item in model["types"]}
           assert any(item["identity"]["metadataName"] == "DataCard" for item in model["types"])
@@ -265,4 +279,5 @@ jobs:
           path: |
             artifacts/DataCard.*.svg
             artifacts/Core.uml-inventory.md
+            artifacts/Core.uml-types/**
           if-no-files-found: error
