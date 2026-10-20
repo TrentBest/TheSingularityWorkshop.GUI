@@ -148,3 +148,46 @@ public sealed record UmlUseCaseEvidence(string Id, string Kind, string Uri, stri
 public sealed record UmlUseCaseReview(string State, string? Reviewer, string? ReviewedRevision);
 
 public sealed record UmlUseCaseOwnership(string Owner, string Origin, IReadOnlyList<string> Assumptions);
+
+
+/// <summary>Canonical JSON serialization settings for the versioned documentation interchange.</summary>
+public static class UmlDocumentationModelJson
+{
+    public const string CurrentSchemaVersion = "1.0";
+
+    private static readonly System.Text.Json.JsonSerializerOptions Options = CreateOptions();
+
+    /// <summary>Serializes a model using camel-case JSON and string-valued kebab-case relationship enums.</summary>
+    public static string Serialize(UmlDocumentationModel model)
+    {
+        ArgumentNullException.ThrowIfNull(model);
+        if (!string.Equals(model.SchemaVersion, CurrentSchemaVersion, StringComparison.Ordinal))
+            throw new ArgumentException($"Unsupported UML documentation schema version: {model.SchemaVersion}", nameof(model));
+
+        return System.Text.Json.JsonSerializer.Serialize(model, Options);
+    }
+
+    /// <summary>Deserializes only supported schema versions and rejects unknown JSON properties.</summary>
+    public static UmlDocumentationModel Deserialize(string json)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(json);
+        var model = System.Text.Json.JsonSerializer.Deserialize<UmlDocumentationModel>(json, Options)
+            ?? throw new System.Text.Json.JsonException("The UML documentation model cannot be null.");
+        if (!string.Equals(model.SchemaVersion, CurrentSchemaVersion, StringComparison.Ordinal))
+            throw new System.Text.Json.JsonException($"Unsupported UML documentation schema version: {model.SchemaVersion}");
+        return model;
+    }
+
+    private static System.Text.Json.JsonSerializerOptions CreateOptions()
+    {
+        var options = new System.Text.Json.JsonSerializerOptions
+        {
+            PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+            WriteIndented = true,
+            UnmappedMemberHandling = System.Text.Json.Serialization.JsonUnmappedMemberHandling.Disallow
+        };
+        options.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter(
+            System.Text.Json.JsonNamingPolicy.KebabCaseLower));
+        return options;
+    }
+}
