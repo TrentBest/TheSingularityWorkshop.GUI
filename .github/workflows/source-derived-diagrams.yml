@@ -144,6 +144,7 @@ jobs:
           assert "Fixture.Other" in svg_text
           assert "association" in svg_text
           assert "dependency" in svg_text
+          assert "interface realization" in svg_text
           print("Validated partial generic type aggregation, resolved generic interface realization, association, dependency, and model-to-SVG graph rendering.")
           PY
       - name: Verify canonical UML model contract
