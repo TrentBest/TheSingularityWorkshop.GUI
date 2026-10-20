@@ -15,24 +15,24 @@
  .grid-line{fill:none;stroke:#74a5b4;stroke-opacity:.48;stroke-width:1.2;vector-effect:non-scaling-stroke}
  .cell-node{fill:#ffcf86;stroke:#fff0d5;stroke-width:1;opacity:.72}
  .fox-route{animation:fox-visibility 24s linear infinite}
- @keyframes fox-visibility{0%,33%{opacity:1}38%,97%{opacity:0}100%{opacity:1}}
+ @keyframes fox-visibility{0%,29%{opacity:1}31%,97%{opacity:0}100%{opacity:1}}
  .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite,zzz-off 24s linear infinite}
-  @keyframes zzz-off{0%,27%{opacity:1}29%,100%{opacity:0}}
+  @keyframes zzz-off{0%,25%{opacity:1}27%,100%{opacity:0}}
  @keyframes snooze{0%,100%{transform:translateY(0);opacity:1}50%{transform:translate(4px,-5px);opacity:.55}}
  .dog-posture{transform-box:fill-box;transform-origin:center;animation:dog-stand 24s linear infinite}
- @keyframes dog-stand{0%,28%{translate:0 0;scale:1}31%,39%{translate:0 -8px;scale:1.12}44%,100%{translate:0 0;scale:1}}
+ @keyframes dog-stand{0%,27%{translate:0 0;scale:1}32%,40%{translate:0 -8px;scale:1.12}45%,100%{translate:0 0;scale:1}}
  .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 24s linear infinite}
- @keyframes reach{0%,30%{transform:translate(0,0) scaleX(.25)}32%,39%{transform:translate(-13px,4px) scaleX(1)}43%,100%{transform:translate(0,0) scaleX(.25)}}
+ @keyframes reach{0%,29%{transform:translate(0,0) scaleX(.25)}32%,40%{transform:translate(-13px,4px) scaleX(1)}44%,100%{transform:translate(0,0) scaleX(.25)}}
  .dog-zzz{animation:zzz-off 16s linear infinite}
  @keyframes zzz-off{0%,34%{opacity:1}38%,100%{opacity:0}}
  .fight-cloud{opacity:0;animation:cloud-time 24s linear infinite}
- @keyframes cloud-time{0%,31%{opacity:0}33%,43%{opacity:1}45%,100%{opacity:0}}
+ @keyframes cloud-time{0%,34%{opacity:0}36%,45%{opacity:1}47%,100%{opacity:0}}
  .limp-fox{opacity:0;transform-box:view-box;animation:corpse-time 24s linear infinite}
- @keyframes corpse-time{0%,43%{opacity:0;transform:translateY(-12px)}44%{opacity:1;transform:translateY(-12px)}47%,91%{opacity:1;transform:translateY(0)}96%,100%{opacity:0;transform:translateY(0)}}
+ @keyframes corpse-time{0%,45%{opacity:0;transform:translateY(-12px)}46%{opacity:1;transform:translateY(-12px)}49%,91%{opacity:1;transform:translateY(0)}96%,100%{opacity:0;transform:translateY(0)}}
  .rip-marker{opacity:0;animation:stone-time 24s linear infinite}
- @keyframes stone-time{0%,47%{opacity:0}49%,93%{opacity:1}100%{opacity:0}}
+ @keyframes stone-time{0%,49%{opacity:0}51%,94%{opacity:1}100%{opacity:0}}
  .angel-flight{opacity:0;transform-box:view-box;animation:angel-time 24s linear infinite}
- @keyframes angel-time{0%,49%{opacity:0;transform:translate(630px,344px) scale(.35)}52%{opacity:1}65%{opacity:1;transform:translate(700px,190px) scale(1)}70%,100%{opacity:0;transform:translate(740px,115px) scale(1.1)}}
+ @keyframes angel-time{0%,51%{opacity:0;transform:translate(630px,344px) scale(.35)}54%{opacity:1}66%{opacity:1;transform:translate(700px,190px) scale(1)}72%,100%{opacity:0;transform:translate(740px,115px) scale(1.1)}}
  .wings{transform-box:fill-box;transform-origin:center;animation:wing-flap .32s ease-in-out infinite alternate}
  @keyframes wing-flap{from{transform:scaleY(.65) rotate(-8deg)}to{transform:scaleY(1.15) rotate(8deg)}}
  @media(prefers-reduced-motion:reduce){.fox-route,.dog-body,.dog-arm,.dog-zzz,.fight-cloud,.limp-fox,.rip-marker,.angel-flight,.wings{animation:none}.rip-marker{opacity:1}.dog-zzz{opacity:0}.limp-fox{opacity:1}.angel-flight{opacity:1}}
@@ -67,7 +67,7 @@
  <circle class="cell-node" cx="564" cy="276" r="3.2"/><circle class="cell-node" cx="564" cy="312" r="3.2"/><circle class="cell-node" cx="636" cy="312" r="3.2"/><circle class="cell-node" cx="636" cy="348" r="3.2"/><circle class="cell-node" cx="636" cy="384" r="3.2"/>
  <polygon points="600,330 636,348 600,366 564,348" fill="#ffcf86" fill-opacity=".15" stroke="#ffcf86" stroke-width="1.4"/>
  <g id="sleeping-sheepdog" class="dog-posture" transform="translate(600 330) scale(1.05)"><use href="#dog-actor"/><g class="dog-zzz" fill="#d5e8f8" font-weight="900"><text x="28" y="-25" font-size="13">Z</text><text x="40" y="-35" font-size="10">z</text><text x="49" y="-43" font-size="8">z</text></g><g class="dog-arm"><path d="M-7 3Q-17 2 -23 7L-31 10" fill="none" stroke="#eee9dd" stroke-width="6" stroke-linecap="round"/></g></g>
- <g id="moving-fox" class="fox-route"><use href="#fox-actor"/><animateMotion dur="8s" repeatCount="indefinite" rotate="0" path="M456 258 L492 276 L528 294 L564 312 L600 330 L636 348"/></g>
+ <g id="moving-fox" class="fox-route"><use href="#fox-actor"/><animateMotion dur="24s" repeatCount="indefinite" rotate="0" calcMode="linear" keyPoints="0;1;1" keyTimes="0;0.29;1" path="M456 258 L492 276 L528 294 L564 312 L600 330 L636 348"/></g>
  <g class="fight-cloud" id="fight-cloud"><circle cx="615" cy="335" r="18" fill="#e7d5b4"/><circle cx="636" cy="329" r="22" fill="#d7c5a5"/><circle cx="652" cy="342" r="16" fill="#e7d5b4"/><circle cx="630" cy="351" r="15" fill="#dfc9a5"/><text x="608" y="322" fill="#9f5c43" font-size="17" font-weight="900">! * ? !</text><path d="M606 330l-9-9m55 5l10-8m-24 34l6 10" stroke="#ffcf86" stroke-width="3" stroke-linecap="round"/></g>
  <g class="limp-fox" id="limp-fox" transform="translate(638 350)"><ellipse cx="0" cy="0" rx="16" ry="7" fill="url(#fox-fur)" stroke="#d96832" stroke-width="1.2"/><path d="M-9 0Q-25 7-22-5Q-17-11-9-3" fill="#f7eee0" stroke="#d77a3e" stroke-width="1.5"/><circle cx="14" cy="-1" r="7" fill="#f0a24e"/><path d="M12-7L11-14L16-8" fill="#ef8b43" stroke="#d96832" stroke-width="1"/><path d="M-4 5l-4 5m12-4l1 5" stroke="#f4b46b" stroke-width="3" stroke-linecap="round"/><path d="M11-2q2 2 4 0" fill="none" stroke="#182638" stroke-width="1.2"/></g>
  <g class="rip-marker" id="rip-marker" transform="translate(628 367)"><use href="#tombstone"/></g>
