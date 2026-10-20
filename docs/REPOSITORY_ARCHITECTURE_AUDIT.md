@@ -146,7 +146,8 @@ A green CI run only proves the configured checks that actually ran. A document d
 
 - Extend the current Core-focused project-semantic model to deterministic **solution/multi-project inventory**: project paths, project references, target frameworks, source roots, load diagnostics and inclusion/exclusion decisions.
 - Generate source inventory and per-type documentation/diagrams for each in-scope production project, not only a focused Core slice.
-- Reconcile compiler symbols with reflection from exact successful build outputs per target framework.
+- [x] Compare compiler-model type identities against the exact built Core assembly in CI; fail on missing or unexpected non-generated types.
+- [ ] Extend reflection reconciliation to member signatures, attributes, generic constraints, and each target-framework-specific surface.
 - Add whole-project graph navigation/layout after the model is normalized; do not force a giant graph before identities and relationships are reliable.
 - Verify painted text bounds and connector geometry on rendered output, in addition to XML/accessibility/local-reference checks.
 - Add authored scenario/use-case storage with provenance and clear generated/authored separation.
