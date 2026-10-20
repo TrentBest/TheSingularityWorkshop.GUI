@@ -1,13 +1,18 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.Build.Locator;
+using Microsoft.CodeAnalysis.MSBuild;
 using System.Xml.Linq;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
+if (args.Length > 0 && string.Equals(args[0], "--project-model-json", StringComparison.Ordinal))
+    return await RunProjectModelMode(args.Skip(1).ToArray());
+
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>] [--model-json <model.json> --repository <owner/repo> --revision <sha> --project <project.csproj>]");
+    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>] [--model-json <model.json> --repository <owner/repo> --revision <sha> --project <project.csproj>] | --project-model-json <model.json> --project <project.csproj> --repository <owner/repo> --revision <sha> [--configuration Release]");
     return 2;
 }
 
@@ -345,4 +350,118 @@ static string? GetOption(string[] arguments, string name)
     if (index + 1 >= arguments.Length || arguments[index + 1].StartsWith("--", StringComparison.Ordinal))
         throw new ArgumentException($"{name} requires a value.");
     return arguments[index + 1];
+}
+
+
+static async Task<int> RunProjectModelMode(string[] arguments)
+{
+    string? projectPath;
+    string? repository;
+    string? revision;
+    string? configuration;
+    string? output;
+    try
+    {
+        projectPath = GetOption(arguments, "--project");
+        repository = GetOption(arguments, "--repository");
+        revision = GetOption(arguments, "--revision");
+        configuration = GetOption(arguments, "--configuration") ?? "Release";
+        output = arguments.Length > 0 && !arguments[0].StartsWith("--", StringComparison.Ordinal)
+            ? arguments[0]
+            : null;
+    }
+    catch (ArgumentException exception)
+    {
+        Console.Error.WriteLine(exception.Message);
+        return 2;
+    }
+
+    if (string.IsNullOrWhiteSpace(output) ||
+        string.IsNullOrWhiteSpace(projectPath) ||
+        string.IsNullOrWhiteSpace(repository) ||
+        string.IsNullOrWhiteSpace(revision))
+    {
+        Console.Error.WriteLine("--project-model-json requires an output path, --project, --repository, and --revision.");
+        return 2;
+    }
+
+    projectPath = Path.GetFullPath(projectPath);
+    if (!File.Exists(projectPath))
+    {
+        Console.Error.WriteLine($"Project file does not exist: {projectPath}");
+        return 2;
+    }
+
+    try
+    {
+        MSBuildLocator.RegisterDefaults();
+    }
+    catch (InvalidOperationException exception)
+    {
+        Console.Error.WriteLine($"Could not register MSBuild: {exception.Message}");
+        return 1;
+    }
+
+    using var workspace = MSBuildWorkspace.Create(new Dictionary<string, string>
+    {
+        ["Configuration"] = configuration
+    });
+    workspace.WorkspaceFailed += (_, eventArgs) =>
+        Console.Error.WriteLine($"MSBuild workspace {eventArgs.Diagnostic.Kind}: {eventArgs.Diagnostic.Message}");
+
+    Microsoft.CodeAnalysis.Project project;
+    try
+    {
+        project = await workspace.OpenProjectAsync(projectPath);
+    }
+    catch (Exception exception)
+    {
+        Console.Error.WriteLine($"Could not load project '{projectPath}': {exception.Message}");
+        return 1;
+    }
+
+    var compilation = await project.GetCompilationAsync();
+    if (compilation is null)
+    {
+        Console.Error.WriteLine($"MSBuild workspace did not produce a compilation for '{projectPath}'.");
+        return 1;
+    }
+
+    var errors = compilation.GetDiagnostics()
+        .Where(diagnostic => diagnostic.Severity == DiagnosticSeverity.Error)
+        .ToArray();
+    if (errors.Length > 0)
+    {
+        foreach (var error in errors)
+            Console.Error.WriteLine(error);
+        Console.Error.WriteLine($"Semantic UML generation refused to emit a model because compilation has {errors.Length} error(s).");
+        return 1;
+    }
+
+    string? targetFramework = null;
+    try
+    {
+        var projectXml = XDocument.Load(projectPath);
+        targetFramework = projectXml.Descendants()
+            .FirstOrDefault(element => element.Name.LocalName == "TargetFramework")?.Value;
+        targetFramework ??= projectXml.Descendants()
+            .FirstOrDefault(element => element.Name.LocalName == "TargetFrameworks")?.Value
+            .Split(';', StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries)
+            .FirstOrDefault();
+    }
+    catch (System.Xml.XmlException)
+    {
+        // MSBuild already loaded the project; framework provenance can remain unspecified.
+    }
+
+    var model = ProjectUmlModelBuilder.Build(
+        compilation, projectPath, repository, revision, configuration, targetFramework);
+    var json = UmlDocumentationModelJson.Serialize(model);
+    var outputPath = Path.GetFullPath(output);
+    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+    File.WriteAllText(outputPath, json + Environment.NewLine);
+    Console.WriteLine(
+        $"Generated project-semantic UML model: {model.Types.Count} types, " +
+        $"{model.Relationships.Count} compiler-symbol relationships -> {outputPath}");
+    return 0;
 }
