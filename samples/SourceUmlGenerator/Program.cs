@@ -548,7 +548,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
         }
         catch (Exception exception) when (exception is IOException
                                            or BadImageFormatException
-                                           or System.Reflection.MetadataException)
+                                           or InvalidOperationException)
         {
             Console.Error.WriteLine($"Could not reconcile compiled assembly metadata '{fullAssemblyPath}': {exception.Message}");
             return 1;
