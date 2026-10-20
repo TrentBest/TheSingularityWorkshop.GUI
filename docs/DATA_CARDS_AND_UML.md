@@ -237,3 +237,17 @@ The name element uses a text input or equivalent editing control during an edit 
 6. Tests must assert both the model change and the resulting projection/viewport intent; a visually moved card alone is not proof that the source model changed.
 
 GUI Core owns generic card hierarchy, identity, presentation, and interaction intent. It does **not** own C# parsing, symbol resolution, compilation context, or AST mutation authority. SVG can visualize this model and may express clickable affordances when hosted by an interactive application, but a standalone SVG image is not itself a trusted code editor. The host interaction bridge and validated code-domain command handler are required for edits.
+
+
+## Interim per-file UML coverage contract
+
+Until repository-wide source-derived coverage is fully enforced, retain this minimum coverage rule:
+
+- Every implementation file declaring a class, interface, struct, record, or enum must be accounted for by a source-accurate UML diagram. If one page covers a file with multiple declarations, include every declared type, including nested, helper, and internal types; alternatively, maintain one page per type and link related pages.
+- Where applicable, diagrams identify fully qualified name and type kind, inheritance and implemented interfaces, meaningful fields/properties/constructors/methods with parameter and return types, and important source-supported relationships. Never invent a relationship when source evidence is absent.
+- Files that declare no types must still appear in the coverage inventory. Mark them explicitly as “class diagram not applicable” with a brief rationale, rather than silently omitting them.
+- Maintain a deterministic source-file/type-to-document-and-diagram coverage manifest. CI must fail when required pages or embedded diagrams are missing, diagrams are malformed, or generated diagrams are stale relative to the source/model.
+- Keep the current interim Mermaid/source-outline verification as a bridge only where the source-derived SVG generator does not yet cover a case. Do not describe that interim check as equivalent to generated, source-accurate UML.
+- Exceptions for generated, compiler-only, or intentionally grouped declarations must be explicit and reviewable.
+
+This is a coverage gate, not a claim that all of it is already automated. The source-derived generator and its CI must demonstrate each supported case before the repository claims full automation.
