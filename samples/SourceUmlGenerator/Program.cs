@@ -232,7 +232,7 @@ static UmlClassDiagram ProjectUmlClass(BaseTypeDeclarationSyntax declaration)
         : Array.Empty<string>();
     return new UmlClassDiagram(declaration.Identifier.ValueText, kind, NamespaceOf(declaration),
         fields, properties, operations, relationships,
-        $"Source-derived UML class view for {declaration.Identifier.ValueText}. Declared members are parsed from syntax. Base-list references are displayed as unresolved source declarations, not verified semantic relationships.");
+        $"Source-derived UML class view for {declaration.Identifier.ValueText}. Fields, properties, and operations are parsed from syntax. Type references are not yet semantically resolved, and relationships are not yet drawn as UML connectors.");
 }
 
 static string VisibilityOf(SyntaxTokenList modifiers)
