@@ -8,7 +8,7 @@ Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries g
 
 | # | Recipe | Focus | Evidence status |
 |---|---|---|---|
-| 01 | [Primitive geometry](recipes/01-primitive-geometry.md) | Semantic nodes → basic SVG | Initial generator passed in [run 39453980142](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39453980142), but visual review found the panel clipped by the viewBox; geometry and stroke-aware bounds assertions corrected; rerun and visual review pending |
+| 01 | [Primitive geometry](recipes/01-primitive-geometry.md) | Semantic nodes → basic SVG | Corrected geometry and stroke-aware bounds assertions passed in [run 39454324734](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39454324734); generated artifact visually reviewed and panel fits inside the viewBox. The package job passed; a separate WPF test-host crash occurred in a later run and is being tracked independently |
 | 02 | [Coordinate systems, functions, and transforms](recipes/02-coordinate-functions.md) | Cartesian plane; base function plus vertical/horizontal translations and reflection | Generator and SVG/XML assertions passed in CI; artifact visually reviewed; legend layout corrected and reverified in run [39452760590](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39452760590) |
 | 03 | Reusable symbols and repeated entities | Define once, reuse many times | Planned |
 | 04 | [Animated scene](recipes/04-animated-scene.md) | SVG definitions and declarative motion | Existing generated gallery snapshot; regenerate and verify against source |
