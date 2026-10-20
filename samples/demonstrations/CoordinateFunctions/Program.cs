@@ -90,8 +90,18 @@ if (document.Root?.Name != ns + "svg")
 if (document.Descendants(ns + "circle").Count(e =>
         ((string?)e.Attribute("id"))?.StartsWith("sample-", StringComparison.Ordinal) == true) != intervals + 1)
     throw new InvalidOperationException("Generated SVG does not contain all expected function samples.");
-if (!document.Descendants(ns + "path").Any(e => (string?)e.Attribute("id") == "cartesian-plane-axes"))
+
+var axes = document.Descendants(ns + "path")
+    .SingleOrDefault(e => (string?)e.Attribute("id") == "cartesian-plane-axes");
+if (axes is null)
     throw new InvalidOperationException("Generated SVG is missing the Cartesian axes.");
+if ((string?)axes.Attribute("d") != "M33.333 0V56.25M0 37.5H100")
+    throw new InvalidOperationException("Cartesian axes do not cross at the configured mathematical origin (0, 0).");
+
+var origin = document.Descendants(ns + "circle")
+    .SingleOrDefault(e => (string?)e.Attribute("id") == "cartesian-plane-origin");
+if ((string?)origin?.Attribute("cx") != "33.333" || (string?)origin?.Attribute("cy") != "37.5")
+    throw new InvalidOperationException("Generated origin marker is not positioned at (0, 0).");
 if (!document.Descendants(ns + "polyline").Any(e => (string?)e.Attribute("id") == "function-curve"))
     throw new InvalidOperationException("Generated SVG is missing the sampled function curve.");
 
@@ -100,5 +110,5 @@ var outputPath = args.Length > 0
     : Path.Combine(Environment.CurrentDirectory, "02-coordinate-functions.generated.svg");
 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 File.WriteAllText(outputPath, svg);
-Console.WriteLine($"PASS: verified Cartesian axes and {intervals + 1} samples of f(x) = x².");
+Console.WriteLine($"PASS: verified Cartesian axes at (0, 0) and {intervals + 1} samples of f(x) = x².");
 Console.WriteLine($"Generated: {outputPath}");
