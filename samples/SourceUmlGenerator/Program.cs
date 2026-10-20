@@ -186,7 +186,7 @@ static UmlClassDiagram ProjectUmlClass(BaseTypeDeclarationSyntax declaration)
 
     foreach (var constructor in members.OfType<ConstructorDeclarationSyntax>())
         operations.Add(new UmlMember(constructor.Identifier.ValueText,
-            constructor.Identifier.ValueText + "(" + string.Join(",\\n    ", constructor.ParameterList.Parameters.Select(parameter =>
+            constructor.Identifier.ValueText + "(" + string.Join(",\n    ", constructor.ParameterList.Parameters.Select(parameter =>
                 (parameter.Type?.ToString() ?? "var") + " " + parameter.Identifier.ValueText +
                 (parameter.Default is null ? "" : " = " + parameter.Default.Value))) + ")",
             VisibilityOf(constructor.Modifiers), constructor.Modifiers.Any(SyntaxKind.StaticKeyword)));
