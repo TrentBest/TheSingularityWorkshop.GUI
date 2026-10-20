@@ -164,3 +164,47 @@ Only after the core contracts are dependable, progressively add richer media, 2D
 **Do not reduce the vision. Reduce ambiguity.** The correct next milestone is not “implement every idea” and not “finish UML in isolation.” It is a trustworthy repository inventory that ties each intended capability to its owner, current state, evidence, dependencies and next gate. Then the broad architecture can be filled in incrementally without losing the destination or misplacing responsibilities.
 
 The current PR is a useful first vertical slice for the documentation pipeline. It is not the whole solution, a stable published diagram API, or release authorization. Keep it draft until its stated gates are complete and the integrated candidate is verified.
+
+
+## 8. Refined vision: GUI is a substantial presentation layer, not a small widget library
+
+The operating-system analogy is useful: presenting, organizing, navigating, inspecting, and interacting with information can itself be a large subsystem. **The GUI layer is allowed to be massive as a family of capabilities.** The architectural constraint is not “keep GUI small”; it is “keep each package's responsibility narrow, composable, and optional.”
+
+The package family should let a consumer install the smallest useful presentation stack for its environment:
+
+- **Core** provides the minimum platform-neutral semantic vocabulary and composition model.
+- **Adapters** add concrete manifestations such as Blazor, SVG, or WPF only when the host needs them.
+- **Specialized packages** can add diagrams, immersive editing, spatial presentation, richer input, or other presentation capabilities without making every consumer inherit those dependencies.
+- **Build-time tools** analyze source and produce models/assets without introducing compiler tooling into runtime packages.
+- **Runtime/application layers** supply the definitions, state, domain commands, and lifecycle that presentation surfaces inspect or request changes through.
+
+This means a broad GUI vision and a small dependency footprint are complementary rather than contradictory. A minimal headless consumer should not need SVG or WPF; a web consumer should not need WPF; an editor that wants rich diagrams can opt into the relevant package set. Package boundaries should be validated through dependency-graph checks and clean-consumer tests, not just described in prose.
+
+### SVG as an optional experience surface
+
+SVG is not merely a documentation export format. It can also be a presentation surface inside a consuming experience, when that experience chooses to include the SVG capability. A developer editing a definition could enter an immersive inspection mode and see the living SVG/UML view attached to that definition: the visual becomes a navigable explanation of the thing being edited, with links back to semantic identities, source locations, relationships, and applicable evidence.
+
+That possibility should remain in the architecture now, but it must be staged honestly:
+
+1. **Foundation (current direction):** stable definition/type identity, provenance links, source-derived model, deterministic SVG manifestation, accessible SVG output.
+2. **Inspectable experience:** a consuming app can associate an SVG asset/model with a definition and navigate between the definition and its visual without treating the SVG as authoritative source.
+3. **Interactive editor mode:** selection in the visual resolves to a semantic identity; commands go through the authoritative editor/domain model; validation and state changes are reflected back into the view.
+4. **Immersive presentation:** alternate layouts, viewport/navigation, spatial or multi-panel modes, and optional richer input adapters can be explored without imposing them on minimal consumers.
+
+The SVG must remain a manifestation of a canonical semantic/documentation model, not the only source of truth. If an editor allows changes, it must issue validated semantic commands against the authoritative definition; editing path geometry must not silently rewrite the meaning of a type or workflow.
+
+### Refined boundary: presentation can be broad while runtime authority stays explicit
+
+The GUI layer may coordinate presentation surfaces, navigation, selection, focus, view state, and semantic interaction requests. It may be the outer presentation host in some architectures. That does **not** automatically make it the owner of application workflow execution, bundle resolution, arbitration, or domain state. Those responsibilities must be explicitly assigned to the consuming app/runtime contract (for example, FSM_COS / AnyApp), and the GUI host should integrate with that contract rather than clone it.
+
+Accordingly, the earlier observer/manifester framing is a safe default boundary, not a restriction to passive rendering. GUI may be interactive and may offer an immersive editor; the critical distinction is between **presentation/editor interaction state** and **authoritative application/runtime state**. Document that contract before implementing host inversion.
+
+### Acceptance checks for this expanded direction
+
+- A Core-only consumer restores and runs without adapter dependencies.
+- Each adapter/package can be selected independently, and its transitive dependency graph is intentional.
+- Shared semantic behavior is tested by conformance tests; adapter-specific capability gaps are reported, not hidden.
+- A definition can reference its generated visual through stable identity/provenance rather than a hard-coded copied SVG blob.
+- The visual can be omitted entirely, loaded on demand, or presented in an immersive mode without making SVG a mandatory runtime dependency.
+- Any future editing interaction resolves to semantic identity and validated commands; the SVG is never treated as authoritative domain state.
+- Host/runtime integration states which layer owns lifecycle, execution, domain state, navigation, and view state.
