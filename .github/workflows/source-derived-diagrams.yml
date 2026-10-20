@@ -38,9 +38,10 @@ jobs:
           test -s artifacts/DataCard.uml.svg
           grep -q 'UML class diagram: DataCard' artifacts/DataCard.uml.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.uml.svg
+          cmp artifacts/DataCard.uml.svg docs/assets/uml/classes/Core/DataCard.svg
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@v7
         with:
-          name: source-derived-datacard-diagram
+          name: source-derived-gui-svg-diagrams
           path: artifacts/DataCard.*.svg
           if-no-files-found: error
