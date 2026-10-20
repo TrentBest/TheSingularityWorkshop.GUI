@@ -89,3 +89,27 @@ Do not claim “live” behavior until a host-level test proves that a model mut
 6. Add semantic UML relationships and larger model scenarios only after identity, consistency, and refresh behavior are proven.
 
 This is a complementary milestone to project-wide Roslyn/reflection UML generation. It is not a claim that the current source generator or SVG renderer already supports live subscriptions.
+
+
+## Future boundary: `GUI.SVG.Hosted` (TBD; deliberately deferred)
+
+A future `GUI.SVG.Hosted` package may be the composition boundary for a living SVG experience: the code that connects a model, its observers, a renderer, and whichever application host supplies the experience's pulse. This is a promising package hypothesis, not an established project/package decision.
+
+The exciting architectural possibility is that **AnyApp or WebApp drives the experience**. The SVG is not itself the application loop or the source of truth; it manifests state as the host's chosen lifecycle, scheduling, and interaction model advances it. Different hosts might have different launch and lifetime mechanics while sharing the same model and renderer contracts.
+
+Keep this intentionally TBD until we can answer these questions from working prototypes rather than speculation:
+
+- **Package boundary:** what belongs in GUI Core, GUI.SVG, a host adapter, and a possible `GUI.SVG.Hosted` package? Avoid a nested package merely to give an idea a name.
+- **Launch and ownership:** who creates the model, starts/stops the experience, owns cancellation, and disposes observers/renderers?
+- **Pulse and scheduling:** does AnyApp/WebApp supply ticks, events, or state revisions; does a host adapter translate those into model operations; and how are back-pressure and coalescing handled?
+- **Host contracts:** what is genuinely shared between desktop, web, console/test, and other AnyApp/WebApp manifestations, and what must remain adapter-specific?
+- **Presentation updates:** can the host replace a complete SVG snapshot first, and only later optimize to incremental DOM/SVG updates if measurements justify it?
+- **Interactions:** how do user input and accessibility actions become validated model commands without allowing the view to own domain state?
+- **Launch mechanics:** what is the smallest honest end-to-end launch proof for each intended host, without prematurely committing to a process model or framework?
+- **Verification:** what integration test demonstrates that a host pulse or command changes the model and that the hosted view then presents the corresponding revision?
+
+### Decision for now
+
+**Punt on implementing `GUI.SVG.Hosted`. Keep the concept visible and unresolved.** Continue proving the renderer-neutral model contract and a small console-driven render/refresh loop first. That work should expose the real seams needed by a hosted experience without guessing its final package layout or launch strategy.
+
+Do not add a `GUI.SVG.Hosted` project, public API, dependency, or promised launch behavior until a concrete host prototype demonstrates the responsibilities it needs. When revisited, treat this as an architectural decision with evidence and trade-offs—not as a foregone conclusion that another package must exist.
