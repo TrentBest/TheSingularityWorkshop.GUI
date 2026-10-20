@@ -11,6 +11,25 @@ const double sampleMaximum = 2;
 const double coordinateMinimum = -2;
 const double coordinateMaximum = 4;
 const int intervals = 32;
+var samples = Enumerable.Range(0, intervals + 1)
+    .Select(i =>
+    {
+        var x = sampleMinimum + (sampleMaximum - sampleMinimum) * i / intervals;
+        return (X: x, Y: x * x);
+    })
+    .ToArray();
+
+// The adapter maps coordinate-point nodes. SVG polyline geometry uses SVG's own
+// viewBox coordinates, so derive its vertices from those same mathematical samples.
+const double viewWidth = 100;
+var viewHeight = 100d * 540 / 960;
+var svgCurvePoints = string.Join(" ", samples.Select(sample =>
+{
+    var svgX = (sample.X - coordinateMinimum) / (coordinateMaximum - coordinateMinimum) * viewWidth;
+    var svgY = viewHeight - (sample.Y - coordinateMinimum) /
+        (coordinateMaximum - coordinateMinimum) * viewHeight;
+    return $"{svgX.ToString("0.###", CultureInfo.InvariantCulture)},{svgY.ToString("0.###", CultureInfo.InvariantCulture)}";
+}));
 
 var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
     .Text("Recipe 02: Cartesian coordinates and f(x) = x²")
@@ -40,12 +59,17 @@ var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
         .Property("x", "53")
         .Property("y", "5")
         .Property("font-size", "3")
-        .Property("fill", "#eef6ff"));
+        .Property("fill", "#eef6ff"))
+    .Child("svg-polyline", "function-curve", curve => curve
+        .Property("points", svgCurvePoints)
+        .Property("fill", "none")
+        .Property("stroke", "#7ee0bd")
+        .Property("stroke-width", "0.55")
+        .Property("stroke-linejoin", "round"));
 
-for (var i = 0; i <= intervals; i++)
+for (var i = 0; i < samples.Length; i++)
 {
-    var x = sampleMinimum + (sampleMaximum - sampleMinimum) * i / intervals;
-    var y = x * x;
+    var (x, y) = samples[i];
     scene.Child("coordinate-point", $"sample-{i:D2}", point => point
         .Property("x", x.ToString("R", CultureInfo.InvariantCulture))
         .Property("y", y.ToString("R", CultureInfo.InvariantCulture))
@@ -64,6 +88,8 @@ if (document.Descendants(ns + "circle").Count(e =>
     throw new InvalidOperationException("Generated SVG does not contain all expected function samples.");
 if (!document.Descendants(ns + "path").Any(e => (string?)e.Attribute("id") == "cartesian-plane-axes"))
     throw new InvalidOperationException("Generated SVG is missing the Cartesian axes.");
+if (!document.Descendants(ns + "polyline").Any(e => (string?)e.Attribute("id") == "function-curve"))
+    throw new InvalidOperationException("Generated SVG is missing the sampled function curve.");
 
 var outputPath = args.Length > 0
     ? Path.GetFullPath(args[0])
