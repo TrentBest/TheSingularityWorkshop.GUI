@@ -66,6 +66,9 @@ jobs:
           ids = {item["id"] for item in model["types"]}
           assert any(item["identity"]["metadataName"] == "DataCard" for item in model["types"])
           assert any(item["identity"]["metadataName"] == "UmlDocumentationModel" for item in model["types"])
+          kinds = {edge["kind"] for edge in model["relationships"]}
+          assert "association" in kinds, f"expected member-type associations, got {kinds}"
+          assert "dependency" in kinds, f"expected signature dependencies, got {kinds}"
           for edge in model["relationships"]:
               if edge["resolution"] == "resolved":
                   assert edge["targetTypeId"] in ids, edge
