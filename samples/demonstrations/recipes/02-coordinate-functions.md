@@ -36,7 +36,7 @@ dotnet run --project samples/demonstrations/CoordinateFunctions/CoordinateFuncti
 
 The program parses the adapter output as XML and checks the SVG root, mathematical origin and axes, all 33 base-function samples, and the four expected transformation curves before writing the artifact.
 
-**Evidence status:** the generator and recipe have been committed, but the command has not yet been executed in this work session. Do not treat the generated artifact or passing assertions as verified until the command succeeds and its output is reviewed.
+**Evidence status:** GitHub Actions run [39449342991](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39449342991) successfully executed the generator and its SVG/XML assertions, then uploaded the generated artifact as `gui-svg-coordinate-transformations`. This verifies generation and structural assertions in CI. A human visual review of the artifact is still outstanding; do not describe visual fidelity as reviewed until that step is completed.
 
 ## Interpretation
 
