@@ -9,7 +9,7 @@ Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries g
 | # | Recipe | Focus | Evidence status |
 |---|---|---|---|
 | 01 | [Primitive geometry](recipes/01-primitive-geometry.md) | Semantic nodes → basic SVG | Generator and XML assertions exist; successful execution still needs to be recorded |
-| 02 | [Coordinate systems, functions, and transforms](recipes/02-coordinate-functions.md) | Cartesian plane; base function plus vertical/horizontal translations and reflection | Generator and XML assertions committed; execution and artifact review still pending |
+| 02 | [Coordinate systems, functions, and transforms](recipes/02-coordinate-functions.md) | Cartesian plane; base function plus vertical/horizontal translations and reflection | Generator and SVG/XML assertions passed in CI; artifact generated and uploaded; visual review pending |
 | 03 | Reusable symbols and repeated entities | Define once, reuse many times | Planned |
 | 04 | [Animated scene](recipes/04-animated-scene.md) | SVG definitions and declarative motion | Existing generated gallery snapshot; regenerate and verify against source |
 | 05 | Sequential visual explanation | One step at a time or a left-to-right sequence with the current step highlighted | Planned; use SVG animation only for presentation, not as a claim of live computation |
