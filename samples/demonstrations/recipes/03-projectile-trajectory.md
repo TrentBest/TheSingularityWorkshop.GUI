@@ -21,7 +21,7 @@ dotnet run --project samples/demonstrations/ProjectileTrajectory/ProjectileTraje
 
 The consumer checks the model/schema identity, required units and coordinate frame, finite values, increasing sample times, and non-degenerate X/Z ranges. It then checks that the emitted SVG polyline matches the mapped input samples and that every input state has a matching marker.
 
-The package workflow downloads the source JSON from the pinned Physics commit, runs the consumer, and uploads the generated SVG. **Evidence status:** the integration code and workflow step are committed; successful execution in CI is still pending. Do not mark the integration verified until the workflow passes and the uploaded SVG has been visually inspected.
+The package workflow downloads the source JSON from the pinned Physics commit, runs the consumer, verifies the SVG against the input samples, and uploads the generated SVG. The complete workflow passed in [run 39453243758](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39453243758); the uploaded `gui-svg-physics-projectile-trajectory` artifact was visually inspected. The curve and all nine recorded-state markers match the source record. This verifies the Physics JSON → GUI Core scene → GUI.SVG artifact path; it does not claim that GUI.SVG executes the Physics simulation.
 
 ## Interpretation
 
