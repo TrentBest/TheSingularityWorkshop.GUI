@@ -5,13 +5,13 @@ using TheSingularityWorkshop.Workshop.Gui.Svg;
 
 // Recipe 02: derive the formulas, sampled points, and curve geometry from one model.
 // GUI.SVG manifests the semantic scene; it does not compute the mathematics itself.
-const double sampleMinimum = -1;
-const double sampleMaximum = 1;
+const double sampleMinimum = -1.5;
+const double sampleMaximum = 1.5;
 const double coordinateMinimum = -2;
 const double coordinateMaximum = 4;
-const double verticalOffset = 1;
-const double horizontalOffset = 1;
-const double verticalScale = -1;
+const double verticalOffset = 0.5;
+const double horizontalOffset = 0.5;
+const double verticalScale = -0.5;
 const int intervals = 32;
 var samples = Enumerable.Range(0, intervals + 1)
     .Select(i =>
