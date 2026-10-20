@@ -143,34 +143,44 @@ public sealed class WpfBuilderTests
         RunOnSta(() =>
         {
             var owner = new Window { Title = "Owner" };
-            owner.Show();
-            owner.Hide();
-            var contentElement = new StackPanel();
-            var background = new SolidColorBrush(Color.FromRgb(22, 33, 44));
+            try
+            {
+                owner.Show();
+                owner.Hide();
+                var contentElement = new StackPanel();
+                var background = new SolidColorBrush(Color.FromRgb(22, 33, 44));
 
-            var window = new WpfWindowBuilder()
-                .WithTitle("Workshop")
-                .WithSize(900, 600)
-                .WithContent(contentElement)
-                .OwnedBy(owner)
-                .WithStartupLocation(WindowStartupLocation.CenterOwner)
-                .WithResizeMode(ResizeMode.CanMinimize)
-                .WithWindowStyle(WindowStyle.SingleBorderWindow)
-                .WithBackground(background)
-                .ShowInTaskbar(false)
-                .Build();
+                var window = new WpfWindowBuilder()
+                    .WithTitle("Workshop")
+                    .WithSize(900, 600)
+                    .WithContent(contentElement)
+                    .OwnedBy(owner)
+                    .WithStartupLocation(WindowStartupLocation.CenterOwner)
+                    .WithResizeMode(ResizeMode.CanMinimize)
+                    .WithWindowStyle(WindowStyle.SingleBorderWindow)
+                    .WithBackground(background)
+                    .ShowInTaskbar(false)
+                    .Build();
 
-            Assert.Equal("Workshop", window.Title);
-            Assert.Equal(900, window.Width);
-            Assert.Equal(600, window.Height);
-            Assert.Same(contentElement, window.Content);
-            Assert.Same(owner, window.Owner);
-            Assert.Equal(WindowStartupLocation.CenterOwner, window.WindowStartupLocation);
-            Assert.Equal(ResizeMode.CanMinimize, window.ResizeMode);
-            Assert.Equal(WindowStyle.SingleBorderWindow, window.WindowStyle);
-            Assert.Same(background, window.Background);
-            Assert.False(window.ShowInTaskbar);
-            Assert.False(window.IsVisible);
+                Assert.Equal("Workshop", window.Title);
+                Assert.Equal(900, window.Width);
+                Assert.Equal(600, window.Height);
+                Assert.Same(contentElement, window.Content);
+                Assert.Same(owner, window.Owner);
+                Assert.Equal(WindowStartupLocation.CenterOwner, window.WindowStartupLocation);
+                Assert.Equal(ResizeMode.CanMinimize, window.ResizeMode);
+                Assert.Equal(WindowStyle.SingleBorderWindow, window.WindowStyle);
+                Assert.Same(background, window.Background);
+                Assert.False(window.ShowInTaskbar);
+                Assert.False(window.IsVisible);
+            }
+            finally
+            {
+                // The owner creates a native HWND even though the window under test
+                // is never shown. Close it on its owning STA thread to avoid leaving
+                // WPF's HwndSubclass hook alive as that thread exits.
+                owner.Close();
+            }
         });
     }
 
