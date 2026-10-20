@@ -6,14 +6,16 @@ using TheSingularityWorkshop.Workshop.Gui.Svg;
 // Recipe 02: a sampled function plotted through the real GUI.SVG adapter.
 // The mathematical samples are computed here; the adapter maps coordinate points
 // into the visible Cartesian system. No hand-authored SVG path is used.
-const double minimum = -2;
-const double maximum = 2;
+const double sampleMinimum = -2;
+const double sampleMaximum = 2;
+const double coordinateMinimum = -2;
+const double coordinateMaximum = 4;
 const int intervals = 32;
 
 var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
     .Text("Recipe 02: Cartesian coordinates and f(x) = x²")
-    .Property("minimum", "-2")
-    .Property("maximum", "2")
+    .Property("minimum", coordinateMinimum.ToString("R", CultureInfo.InvariantCulture))
+    .Property("maximum", coordinateMaximum.ToString("R", CultureInfo.InvariantCulture))
     .Property("grid", "visible")
     .Property("axes", "visible")
     .Property("origin", "visible")
@@ -42,7 +44,7 @@ var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
 
 for (var i = 0; i <= intervals; i++)
 {
-    var x = minimum + (maximum - minimum) * i / intervals;
+    var x = sampleMinimum + (sampleMaximum - sampleMinimum) * i / intervals;
     var y = x * x;
     scene.Child("coordinate-point", $"sample-{i:D2}", point => point
         .Property("x", x.ToString("R", CultureInfo.InvariantCulture))
