@@ -18,7 +18,7 @@
  @keyframes fox-visibility{0%,44%{opacity:1}50%,94%{opacity:0}100%{opacity:1}}
  .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite}
  @keyframes snooze{0%,100%{transform:translateY(0);opacity:1}50%{transform:translate(4px,-5px);opacity:.55}}
- .dog-body{transform-box:fill-box;transform-origin:center;animation:dog-stand 16s linear infinite}
+ .dog-posture{transform-box:fill-box;transform-origin:center;animation:dog-stand 16s linear infinite}
  @keyframes dog-stand{0%,35%{transform:translateY(0) scale(1)}39%,56%{transform:translateY(-8px) scale(1.12)}63%,100%{transform:translateY(0) scale(1)}}
  .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 16s linear infinite}
  @keyframes reach{0%,39%{transform:translate(0,0) scaleX(.25)}44%,55%{transform:translate(-13px,4px) scaleX(1)}61%,100%{transform:translate(0,0) scaleX(.25)}}
@@ -65,7 +65,7 @@
  <path id="grid-row-10" class="grid-line" d="M240 330L600 510"/>
  <circle class="cell-node" cx="564" cy="276" r="3.2"/><circle class="cell-node" cx="564" cy="312" r="3.2"/><circle class="cell-node" cx="636" cy="312" r="3.2"/><circle class="cell-node" cx="636" cy="348" r="3.2"/><circle class="cell-node" cx="636" cy="384" r="3.2"/>
  <polygon points="600,330 636,348 600,366 564,348" fill="#ffcf86" fill-opacity=".15" stroke="#ffcf86" stroke-width="1.4"/>
- <g id="sleeping-sheepdog" transform="translate(600 330) scale(1.05)"><use href="#dog-actor"/><g class="dog-zzz" fill="#d5e8f8" font-weight="900"><text x="28" y="-25" font-size="13">Z</text><text x="40" y="-35" font-size="10">z</text><text x="49" y="-43" font-size="8">z</text></g><g class="dog-arm"><path d="M-7 3Q-17 2 -23 7L-31 10" fill="none" stroke="#eee9dd" stroke-width="6" stroke-linecap="round"/></g></g>
+ <g id="sleeping-sheepdog" class="dog-posture" transform="translate(600 330) scale(1.05)"><use href="#dog-actor"/><g class="dog-zzz" fill="#d5e8f8" font-weight="900"><text x="28" y="-25" font-size="13">Z</text><text x="40" y="-35" font-size="10">z</text><text x="49" y="-43" font-size="8">z</text></g><g class="dog-arm"><path d="M-7 3Q-17 2 -23 7L-31 10" fill="none" stroke="#eee9dd" stroke-width="6" stroke-linecap="round"/></g></g>
  <g id="moving-fox" class="fox-route"><use href="#fox-actor"/><animateMotion dur="8s" repeatCount="indefinite" rotate="0" path="M456 258 L492 276 L528 294 L564 312 L600 330 L636 348"/></g>
  <g class="fight-cloud" id="fight-cloud"><circle cx="615" cy="335" r="18" fill="#e7d5b4"/><circle cx="636" cy="329" r="22" fill="#d7c5a5"/><circle cx="652" cy="342" r="16" fill="#e7d5b4"/><circle cx="630" cy="351" r="15" fill="#dfc9a5"/><text x="608" y="322" fill="#9f5c43" font-size="17" font-weight="900">! * ? !</text><path d="M606 330l-9-9m55 5l10-8m-24 34l6 10" stroke="#ffcf86" stroke-width="3" stroke-linecap="round"/></g>
  <g class="limp-fox" id="limp-fox" transform="translate(638 350)"><ellipse cx="0" cy="0" rx="16" ry="7" fill="url(#fox-fur)" stroke="#d96832" stroke-width="1.2"/><path d="M-9 0Q-25 7-22-5Q-17-11-9-3" fill="#f7eee0" stroke="#d77a3e" stroke-width="1.5"/><circle cx="14" cy="-1" r="7" fill="#f0a24e"/><path d="M12-7L11-14L16-8" fill="#ef8b43" stroke="#d96832" stroke-width="1"/><path d="M-4 5l-4 5m12-4l1 5" stroke="#f4b46b" stroke-width="3" stroke-linecap="round"/><path d="M11-2q2 2 4 0" fill="none" stroke="#182638" stroke-width="1.2"/></g>
