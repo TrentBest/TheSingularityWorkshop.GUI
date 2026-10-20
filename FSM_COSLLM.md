@@ -94,3 +94,15 @@ I queried GitHub Actions for GUI candidate commit `1317c31f44cb0614ed845ea18fd7c
 - Current compare after the coordination update: `work/gui-svg-source-uml-generator` is **28 commits ahead and 3 behind** GUI `development` (base now includes coordination commit `3c836977cc7a05579610e6babb6be9c45fc506e7`). It remains divergent staging work.
 
 These results verify the source-derived diagram workflow on the candidate SHA, but do not prove fixture mutation behavior, semantic relationship correctness, per-type inventory coverage, or full repository release readiness.
+
+
+## Follow-up verification — branch divergence and WPF host crash
+
+**Observed:** 2026-10-20, after coordination commit `83478d443c589b6ff705f5c6f7f48c51ae8d691c`.
+
+- Fresh compare reports `work/gui-svg-source-uml-generator` is **28 commits ahead / 4 behind** `development`, status `diverged`. The branch remains isolated staging work. [Compare](https://github.com/TrentBest/TheSingularityWorkshop.GUI/compare/development...work/gui-svg-source-uml-generator)
+- [Package GUI run 39461444806](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39461444806) has two distinct outcomes: `test-and-package` succeeded, including Core/Blazor/SVG tests, package verification, WPF build, and package artifact upload; `test-wpf` failed, so the overall workflow is **failure** and `publish_nuget` was skipped.
+- The WPF job log confirms the assembly compiled and the test runner reported 22/22 passed, but then the test host crashed and aborted with `System.NullReferenceException` in `System.Threading.Thread.get_CurrentThread()` called by `MS.Win32.HwndSubclass.SubclassWndProc`. A test summary saying 22 passed does not negate the runner crash or turn the job green.
+- The log alone does **not** establish whether the crash is an existing runner/environment issue or a regression from this candidate. Do not suppress or dismiss it without a baseline comparison or a reproducible diagnosis. No workflow was rerun or altered as part of this investigation.
+
+The source-derived diagram workflow remains green for candidate SHA `1317c31f44cb0614ed845ea18fd7cb44cf0c7950` ([run 39461444762](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39461444762)); that proves its current generation/parity checks only, not semantic UML completeness or release readiness. Next safe step is to compare the same WPF job against a known-good `development` commit/run, then separately continue explicit type targeting, source inventory, semantic relationships, and fixture mutation coverage. Do not merge, publish, alter master, delete branches, or weaken required checks without authorization.
