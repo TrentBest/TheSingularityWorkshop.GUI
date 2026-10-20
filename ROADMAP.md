@@ -50,6 +50,10 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Define validated diagram edit commands and provenance so rendered positions never become the source of truth
 - [ ] Prove one deterministic, limited model-to-code generator with explicit required fields, unsupported-model diagnostics, traceability, and compile/test evidence
 - [ ] Project a C# AST into ordered using-directive cards and a true namespace/type/member containment tree; test visibility-group ordering, expansion defaults, property details, and stable identity after visibility edits
+- [ ] Implement recursive declaration cards: namespace → types → member groups → members → signature/detail cards, including atomic modifier/type/name pills
+- [ ] Define and test the exact public-property, public-method, public-field, static-public, protected, private presentation order without losing source modifiers or signature facts
+- [ ] Build searchable type chooser with built-ins first and available user-defined/referenced types alphabetically; derive choices from the current project context
+- [ ] Route modifier/type/name edits through validated AST commands, then regenerate the projection and preserve identity/scroll the edited member into view
 - [x] Specify and test model-derived `Collapsed (n)` summaries and the Core insertion-affordance hint, including empty-region behavior
 - [ ] Render collapsed summaries and mode-gated add affordances in the living SVG/WPF/Blazor manifestations; verify view/inspect modes never expose mutation controls
 - [ ] Keep code-definition/AST semantics in the code/creation domain rather than GUI Core
