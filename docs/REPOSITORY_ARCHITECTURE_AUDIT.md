@@ -1,7 +1,7 @@
 # Repository Architecture and Completeness Audit
 
-**Review baseline:** PR #18 candidate `570baf6e4523fbfe10b6f932b2911e9490c67e52` (verified candidate snapshot; later documentation-only commits require fresh exact-head CI evidence).  
-**Exact-head evidence for this baseline:** source-derived UML workflow [#39502329073](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39502329073) and package GUI workflow [#39502328967](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39502328967) both passed on this SHA. This verifies the candidate snapshot's tested scope, not completion of the remaining UML roadmap or publication authorization.  
+**Review baseline:** PR #18 candidate `a96649ea741896f23da245db8d81f87a25ebdd2c` (verified candidate snapshot as of 2026-10-20).  
+**Exact-head evidence for this baseline:** source-derived UML workflow [#39503047782](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39503047782) and package GUI workflow [#39503047554](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39503047554) both passed on this SHA. The source workflow includes the negative regression proving the exact-build reflection gate rejects a different assembly identity. The package workflow's Linux test/package job and Windows WPF test job passed; NuGet publication was skipped. This verifies the tested scope, not completion of the remaining UML roadmap or publication authorization.  
 **Purpose:** map the repository's intended whole, identify correct ownership boundaries, separate implemented behavior from scaffolding, and sequence the missing bridges.  
 **Audit type:** architecture and repository-structure assessment based on the solution manifest, project files, current roadmap, release gates, and the source-derived UML staging work. This is not yet a declaration-by-declaration code audit of every production file.
 
