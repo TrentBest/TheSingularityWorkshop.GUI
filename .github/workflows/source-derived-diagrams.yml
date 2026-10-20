@@ -49,6 +49,8 @@ jobs:
           --repository TrentBest/TheSingularityWorkshop.GUI
           --revision "$SOURCE_REVISION"
           --configuration Release
+          --diagram-svg artifacts/DataCard.semantic-uml.svg
+          --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard
       - name: Verify project-semantic UML model contract
         run: |
           python3 - <<'PY'
@@ -115,7 +117,9 @@ jobs:
             --project "$fixture/SemanticFixture.csproj" \
             --repository TrentBest/TheSingularityWorkshop.GUI \
             --revision "$SOURCE_REVISION" \
-            --configuration Release
+            --configuration Release \
+            --diagram-svg artifacts/SemanticFixture.svg \
+            --diagram-type Fixture.Thing
           python3 - <<'PY'
           import json
           from pathlib import Path
@@ -132,7 +136,15 @@ jobs:
           assert realization["targetTypeId"] == interface["id"], realization
           assert any(edge["kind"] == "association" and edge["resolution"] == "resolved" and edge["targetTypeId"] == other["id"] for edge in edges)
           assert any(edge["kind"] == "dependency" and edge["resolution"] == "resolved" and edge["targetTypeId"] == other["id"] for edge in edges)
-          print("Validated partial generic type aggregation, resolved generic interface realization, association, and signature dependency.")
+          from xml.etree import ElementTree
+          svg = ElementTree.parse("artifacts/SemanticFixture.svg").getroot()
+          assert svg.find("{http://www.w3.org/2000/svg}title") is not None
+          assert svg.find("{http://www.w3.org/2000/svg}desc") is not None
+          svg_text = " ".join(node.text or "" for node in svg.iter("{http://www.w3.org/2000/svg}text"))
+          assert "Fixture.Other" in svg_text
+          assert "association" in svg_text
+          assert "dependency" in svg_text
+          print("Validated partial generic type aggregation, resolved generic interface realization, association, dependency, and model-to-SVG graph rendering.")
           PY
       - name: Verify canonical UML model contract
         run: |
@@ -163,6 +175,8 @@ jobs:
           grep -q 'GetCollapsedSummary' artifacts/DataCard.source-structure.svg
           grep -q 'Children' artifacts/DataCard.source-structure.svg
           test -s artifacts/DataCard.uml.svg
+          test -s artifacts/DataCard.semantic-uml.svg
+          grep -q 'Source-derived UML neighborhood:' artifacts/DataCard.semantic-uml.svg
           grep -q 'UML class diagram: DataCard' artifacts/DataCard.uml.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.uml.svg
           cmp artifacts/DataCard.uml.svg docs/assets/uml/classes/Core/DataCard.svg
@@ -170,7 +184,7 @@ jobs:
         run: python3 -m unittest discover -s scripts -p 'test_verify_svg_contract.py' -v
 
       - name: Verify SVG accessibility, geometry, IDs, and local references
-        run: python3 scripts/verify_svg_contract.py artifacts/DataCard.source-structure.svg artifacts/DataCard.uml.svg
+        run: python3 scripts/verify_svg_contract.py artifacts/DataCard.source-structure.svg artifacts/DataCard.uml.svg artifacts/DataCard.semantic-uml.svg artifacts/SemanticFixture.svg
 
       - name: Exercise source mutation, explicit type selection, and malformed-source failures
         shell: bash
