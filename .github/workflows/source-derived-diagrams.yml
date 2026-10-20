@@ -75,6 +75,65 @@ jobs:
                   assert edge["provenance"]["kind"] == "roslyn-symbol", edge
           print(f"Validated project-semantic model with {len(model['types'])} types and {len(model['relationships'])} compiler-symbol relationships.")
           PY
+      - name: Exercise partial generic semantic UML fixture
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          fixture="artifacts/semantic-fixture"
+          mkdir -p "$fixture"
+          cat > "$fixture/SemanticFixture.csproj" <<'XML'
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <TargetFramework>net8.0</TargetFramework>
+              <ImplicitUsings>enable</ImplicitUsings>
+              <Nullable>enable</Nullable>
+            </PropertyGroup>
+          </Project>
+          XML
+          cat > "$fixture/Thing.Part1.cs" <<'CS'
+          namespace Fixture;
+          public interface IThing<T> { T Get(); }
+          public partial class Thing<T> : IThing<T>
+          {
+              public Other Link { get; set; } = new();
+              public T Get() => default!;
+              public Other Convert(Other input) => input;
+          }
+          public sealed class Other { }
+          CS
+          cat > "$fixture/Thing.Part2.cs" <<'CS'
+          namespace Fixture;
+          public partial class Thing<T>
+          {
+              public Other? Another { get; set; }
+          }
+          CS
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
+          --configuration Release --
+          --project-model-json artifacts/SemanticFixture.uml-model.json
+          --project "$fixture/SemanticFixture.csproj"
+          --repository TrentBest/TheSingularityWorkshop.GUI
+          --revision "$SOURCE_REVISION"
+          --configuration Release
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          model = json.loads(Path("artifacts/SemanticFixture.uml-model.json").read_text(encoding="utf-8"))
+          types = model["types"]
+          thing = next(item for item in types if item["identity"]["metadataName"] == "Thing`1")
+          interface = next(item for item in types if item["identity"]["metadataName"] == "IThing`1")
+          other = next(item for item in types if item["identity"]["metadataName"] == "Other")
+          assert len(thing["sourceDeclarations"]) == 2, thing["sourceDeclarations"]
+          edges = model["relationships"]
+          realization = next(edge for edge in edges if edge["sourceTypeId"] == thing["id"] and edge["kind"] == "interface-realization")
+          assert realization["resolution"] == "resolved", realization
+          assert realization["targetTypeId"] == interface["id"], realization
+          assert any(edge["kind"] == "association" and edge["resolution"] == "resolved" and edge["targetTypeId"] == other["id"] for edge in edges)
+          assert any(edge["kind"] == "dependency" and edge["resolution"] == "resolved" and edge["targetTypeId"] == other["id"] for edge in edges)
+          print("Validated partial generic type aggregation, resolved generic interface realization, association, and signature dependency.")
+          PY
       - name: Verify canonical UML model contract
         run: |
           python3 - <<'PY'
