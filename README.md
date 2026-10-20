@@ -6,6 +6,8 @@
 
 GUI separates interface intent from the platform-specific work that presents it. Core owns the neutral model; each adapter owns its manifestation contract.
 
+**New here?** [Come play: see what works, explore the idea, and find a first contribution](docs/COME_PLAY.md).
+
 ```mermaid
 flowchart TD
   I[Interface intent] --> M[Neutral GUI model]
