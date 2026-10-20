@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+<title id="title">GUI.SVG 10 by 10 fox and sheepdog test plane</title>
+<desc id="desc">A regular ten by ten grid projected isometrically. A fox travels into the cell beside a sleeping sheepdog. The Zs stop, the dog stands and reaches with a paw, a cartoon fight cloud hides the tussle, then a limp fox, RIP stone and ascending harp-playing fox angel show the outcome.</desc>
+<defs>
+ <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1423"/><stop offset="1" stop-color="#1b3043"/></linearGradient>
+ <linearGradient id="plane" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1e4550"/><stop offset="1" stop-color="#142b3a"/></linearGradient>
+ <linearGradient id="fox-fur" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffc778"/><stop offset="1" stop-color="#e66b32"/></linearGradient>
+ <g id="fox-actor"><ellipse cx="0" cy="10" rx="17" ry="4" fill="#07111d" opacity=".38"/><path d="M-8 1Q-28-1-26-15Q-22-22-14-13Q-18-8-10-4L-1-3" fill="#f7eee0" stroke="#d77a3e" stroke-width="2"/><ellipse cx="0" cy="0" rx="13" ry="8" fill="url(#fox-fur)"/><path d="M5-5L11-18L21-20L27-12L20-3L10-1Z" fill="url(#fox-fur)" stroke="#d96832" stroke-width="1.5"/><path d="M11-17L10-27L17-19M20-19L27-27L26-12" fill="#ef8b43" stroke="#d96832" stroke-width="1.3"/><circle cx="21" cy="-13" r="1.5" fill="#182638"/><path d="M-5 7L-7 12M8 7L10 12" stroke="#f4b46b" stroke-width="3.5" stroke-linecap="round"/></g>
+ <g id="dog-actor"><ellipse cx="0" cy="14" rx="23" ry="5" fill="#07111d" opacity=".4"/><g class="dog-body"><path d="M-20 4Q-29-5-22-13Q-15-23-5-14Q4-24 13-14Q25-10 22 2L15 10L-16 10Z" fill="#d7d4ca" stroke="#9ba7ae" stroke-width="1.5"/><ellipse cx="-1" cy="3" rx="19" ry="12" fill="#eee9dd"/><path d="M-17 4L-20 12M-5 7L-6 13M10 6L12 12" stroke="#e5dfd2" stroke-width="4.5" stroke-linecap="round"/></g><path d="M-18-5Q-28-13-25-24Q-19-30-13-17" fill="#aaa79e" stroke="#7e898e" stroke-width="1.5"/><path d="M12-7Q27-17 34-5Q38 3 27 9L12 6Z" fill="#f7f0e3" stroke="#aab0b2" stroke-width="1.5"/><ellipse cx="25" cy="2" rx="10" ry="7" fill="#f7f0e3"/><path d="M17 0Q20-3 23 0M26 0Q29-3 32 0" fill="none" stroke="#6d625a" stroke-width="1.5"/><ellipse cx="29" cy="5" rx="3" ry="2" fill="#3d4c57"/></g>
+ <g id="tombstone"><path d="M-14 15V-7Q-14-19 0-19Q14-19 14-7V15Z" fill="#8998a7" stroke="#d1dbe4" stroke-width="1.4"/><text x="0" y="-1" fill="#182638" font-size="9" font-weight="900" text-anchor="middle">RIP</text><path d="M-5 5H5" stroke="#182638" stroke-width="1.2"/></g>
+ <g id="fox-angel"><ellipse cx="0" cy="-25" rx="10" ry="3" fill="none" stroke="#ffcf86" stroke-width="2"/><circle cx="0" cy="-17" r="6.5" fill="#fff0d5" stroke="#d6e6f2" stroke-width="1.2"/><path d="M-7-12Q-13-1-7 8L0 3L7 8Q13-1 7-12Z" fill="#e8f5ff" stroke="#a7d4ed" stroke-width="1.2"/><g class="wings" fill="#fff0d5" stroke="#ffcf86" stroke-width="1.4"><path d="M-6-8Q-21-21-22-6Q-18 3-7 2Z"/><path d="M6-8Q21-21 22-6Q18 3 7 2Z"/></g><path d="M12-6L19-2L16 7M14-3L20 2M14 1L19 6" fill="none" stroke="#ffcf86" stroke-width="1.5"/></g>
+</defs>
+<style>
+ text{font-family:ui-sans-serif,system-ui,sans-serif}
+ .grid-line{fill:none;stroke:#74a5b4;stroke-opacity:.48;stroke-width:1.2;vector-effect:non-scaling-stroke}
+ .cell-node{fill:#ffcf86;stroke:#fff0d5;stroke-width:1;opacity:.72}
+ .fox-route{animation:fox-visibility 16s linear infinite}
+ @keyframes fox-visibility{0%,44%{opacity:1}50%,94%{opacity:0}100%{opacity:1}}
+ .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite}
+ @keyframes snooze{0%,100%{transform:translateY(0);opacity:1}50%{transform:translate(4px,-5px);opacity:.55}}
+ .dog-body{transform-box:fill-box;transform-origin:center;animation:dog-stand 16s linear infinite}
+ @keyframes dog-stand{0%,35%{transform:translateY(0) scale(1)}39%,56%{transform:translateY(-8px) scale(1.12)}63%,100%{transform:translateY(0) scale(1)}}
+ .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 16s linear infinite}
+ @keyframes reach{0%,39%{transform:translate(0,0) scaleX(.25)}44%,55%{transform:translate(-13px,4px) scaleX(1)}61%,100%{transform:translate(0,0) scaleX(.25)}}
+ .dog-zzz{animation:zzz-off 16s linear infinite}
+ @keyframes zzz-off{0%,34%{opacity:1}38%,100%{opacity:0}}
+ .fight-cloud{opacity:0;animation:cloud-time 16s linear infinite}
+ @keyframes cloud-time{0%,43%{opacity:0}45%,59%{opacity:1}63%,100%{opacity:0}}
+ .limp-fox{opacity:0;animation:corpse-time 16s linear infinite}
+ @keyframes corpse-time{0%,60%{opacity:0}64%,91%{opacity:1}97%,100%{opacity:0}}
+ .rip-marker{opacity:0;animation:stone-time 16s linear infinite}
+ @keyframes stone-time{0%,63%{opacity:0}67%,94%{opacity:1}100%{opacity:0}}
+ .angel-flight{opacity:0;animation:angel-time 16s linear infinite}
+ @keyframes angel-time{0%,68%{opacity:0;transform:translate(630px,344px) scale(.45)}71%{opacity:1}88%{opacity:1;transform:translate(700px,190px) scale(1)}97%,100%{opacity:0;transform:translate(740px,115px) scale(1.05)}}
+ .wings{transform-box:fill-box;transform-origin:center;animation:wing-flap .32s ease-in-out infinite alternate}
+ @keyframes wing-flap{from{transform:scaleY(.65) rotate(-8deg)}to{transform:scaleY(1.15) rotate(8deg)}}
+ @media(prefers-reduced-motion:reduce){.fox-route,.dog-body,.dog-arm,.dog-zzz,.fight-cloud,.limp-fox,.rip-marker,.angel-flight,.wings{animation:none}.rip-marker{opacity:1}.dog-zzz{opacity:0}.limp-fox{opacity:1}.angel-flight{opacity:1}}
+</style>
+<rect width="1200" height="760" rx="24" fill="url(#background)"/>
+<text x="40" y="43" fill="#eaf2fb" font-size="24" font-weight="850" letter-spacing="1.3">THE FOX / SHEEPDOG CELL TEST</text>
+<text x="40" y="70" fill="#9fb6cc" font-size="14">GUI.SVG scene · 10 × 10 cells · regular isometric projection · one visible encounter</text>
+<g id="plane">
+ <polygon points="600,150 960,330 600,510 240,330" fill="url(#plane)" stroke="#527d8b" stroke-width="2"/>
+ <path id="grid-column-0" class="grid-line" d="M600 150L240 330"/>
+ <path id="grid-column-1" class="grid-line" d="M636 168L276 348"/>
+ <path id="grid-column-2" class="grid-line" d="M672 186L312 366"/>
+ <path id="grid-column-3" class="grid-line" d="M708 204L348 384"/>
+ <path id="grid-column-4" class="grid-line" d="M744 222L384 402"/>
+ <path id="grid-column-5" class="grid-line" d="M780 240L420 420"/>
+ <path id="grid-column-6" class="grid-line" d="M816 258L456 438"/>
+ <path id="grid-column-7" class="grid-line" d="M852 276L492 456"/>
+ <path id="grid-column-8" class="grid-line" d="M888 294L528 474"/>
+ <path id="grid-column-9" class="grid-line" d="M924 312L564 492"/>
+ <path id="grid-column-10" class="grid-line" d="M960 330L600 510"/>
+ <path id="grid-row-0" class="grid-line" d="M600 150L960 330"/>
+ <path id="grid-row-1" class="grid-line" d="M564 168L924 348"/>
+ <path id="grid-row-2" class="grid-line" d="M528 186L888 366"/>
+ <path id="grid-row-3" class="grid-line" d="M492 204L852 384"/>
+ <path id="grid-row-4" class="grid-line" d="M456 222L816 402"/>
+ <path id="grid-row-5" class="grid-line" d="M420 240L780 420"/>
+ <path id="grid-row-6" class="grid-line" d="M384 258L744 438"/>
+ <path id="grid-row-7" class="grid-line" d="M348 276L708 456"/>
+ <path id="grid-row-8" class="grid-line" d="M312 294L672 474"/>
+ <path id="grid-row-9" class="grid-line" d="M276 312L636 492"/>
+ <path id="grid-row-10" class="grid-line" d="M240 330L600 510"/>
+ <circle class="cell-node" cx="564" cy="276" r="3.2"/><circle class="cell-node" cx="564" cy="312" r="3.2"/><circle class="cell-node" cx="636" cy="312" r="3.2"/><circle class="cell-node" cx="636" cy="348" r="3.2"/><circle class="cell-node" cx="636" cy="384" r="3.2"/>
+ <polygon points="600,330 636,348 600,366 564,348" fill="#ffcf86" fill-opacity=".15" stroke="#ffcf86" stroke-width="1.4"/>
+ <g id="sleeping-sheepdog" transform="translate(600 330) scale(1.05)"><use href="#dog-actor"/><g class="dog-zzz" fill="#d5e8f8" font-weight="900"><text x="28" y="-25" font-size="13">Z</text><text x="40" y="-35" font-size="10">z</text><text x="49" y="-43" font-size="8">z</text></g><g class="dog-arm"><path d="M-7 3Q-17 2 -23 7L-31 10" fill="none" stroke="#eee9dd" stroke-width="6" stroke-linecap="round"/></g></g>
+ <g id="moving-fox" class="fox-route"><use href="#fox-actor"/><animateMotion dur="8s" repeatCount="indefinite" rotate="0" path="M456 258 L492 276 L528 294 L564 312 L600 330 L636 348"/></g>
+ <g class="fight-cloud" id="fight-cloud"><circle cx="615" cy="335" r="18" fill="#e7d5b4"/><circle cx="636" cy="329" r="22" fill="#d7c5a5"/><circle cx="652" cy="342" r="16" fill="#e7d5b4"/><circle cx="630" cy="351" r="15" fill="#dfc9a5"/><text x="608" y="322" fill="#9f5c43" font-size="17" font-weight="900">! * ? !</text><path d="M606 330l-9-9m55 5l10-8m-24 34l6 10" stroke="#ffcf86" stroke-width="3" stroke-linecap="round"/></g>
+ <g class="limp-fox" id="limp-fox" transform="translate(638 350)"><ellipse cx="0" cy="0" rx="16" ry="7" fill="url(#fox-fur)" stroke="#d96832" stroke-width="1.2"/><path d="M-9 0Q-25 7-22-5Q-17-11-9-3" fill="#f7eee0" stroke="#d77a3e" stroke-width="1.5"/><circle cx="14" cy="-1" r="7" fill="#f0a24e"/><path d="M12-7L11-14L16-8" fill="#ef8b43" stroke="#d96832" stroke-width="1"/><path d="M-4 5l-4 5m12-4l1 5" stroke="#f4b46b" stroke-width="3" stroke-linecap="round"/><path d="M11-2q2 2 4 0" fill="none" stroke="#182638" stroke-width="1.2"/></g>
+ <g class="rip-marker" id="rip-marker" transform="translate(628 367)"><use href="#tombstone"/></g>
+ <g class="angel-flight" id="angel-flight"><use href="#fox-angel"/></g>
+</g>
+<g id="legend"><rect x="40" y="590" width="1120" height="120" rx="16" fill="#172b3d" stroke="#345064"/><text x="64" y="624" fill="#dce8f3" font-size="16" font-weight="800">10 × 10 = 100 cells · orthogonal grid before projection</text><text x="64" y="652" fill="#ffcf86" font-size="15">Wake → stand → reach → fight cloud → limp fox → RIP stone → harp angel ascends</text><text x="64" y="680" fill="#9fb6cc" font-size="12">Illustrative SVG choreography, authored as a GUI.SVG scene model; not yet a live FSM_API trace.</text></g>
+</svg>
