@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-labelledby="title desc">
+  <title id="title">GUI.SVG demonstration 01: primitive geometry</title>
+  <desc id="desc">A rounded rectangle, a circle, a line, and labels on a dark background. This is a reference SVG artifact, not yet verified output from SvgGuiRenderer.</desc>
+  <rect id="background" width="960" height="540" fill="#0b1725"/>
+  <text id="heading" x="48" y="58" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700" fill="#edf4fb">01 · Primitive geometry</text>
+  <text id="subheading" x="48" y="86" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#a9bdcf">Reference artifact · adapter-generation verification pending</text>
+  <rect id="panel" x="96" y="142" width="768" height="280" rx="18" fill="#173b4c" stroke="#7ee0bd" stroke-width="3"/>
+  <circle id="marker" cx="480" cy="282" r="54" fill="#ffb86c" stroke="#fff0d8" stroke-width="3"/>
+  <path id="axis-crosshair" d="M390 282 H570 M480 192 V372" fill="none" stroke="#edf4fb" stroke-opacity=".65" stroke-width="2"/>
+  <text id="panel-label" x="120" y="176" font-family="Segoe UI, Arial, sans-serif" font-size="16" fill="#edf4fb">svg-rect</text>
+  <text id="marker-label" x="480" y="366" text-anchor="middle" font-family="Segoe UI, Arial, sans-serif" font-size="15" fill="#edf4fb">svg-circle</text>
+  <text id="footer" x="48" y="492" font-family="Segoe UI, Arial, sans-serif" font-size="14" fill="#a9bdcf">A renderable picture is the first step. Reproducible adapter output is the proof.</text>
+</svg>
