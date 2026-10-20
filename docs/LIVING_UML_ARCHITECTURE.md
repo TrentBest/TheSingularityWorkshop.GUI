@@ -119,3 +119,20 @@ The source-analysis branch now contains an initial renderer-neutral interchange 
 This is a **contract foundation**, not a complete canonical model pipeline or a supported package promise. The current Roslyn generator still projects directly into `DataCard` and the older single-class `UmlClassDiagram`; it does not yet emit `UmlDocumentationModel`, resolve project compiler symbols, render multi-node semantic connectors, or generate per-type pages/inventory. The DTOs also require stronger semantic validation and explicit normalization rules before they can be treated as a stable interchange contract. Keep FSM_COS on its interim Mermaid and keep the adoption gate open.
 
 The source-derived workflow now adds executable fixtures for changed-source output, fully qualified selection in a multi-type file, ambiguous simple-name rejection, and malformed-source fail-closed behavior. These are acceptance tests for the current syntax-only tool; they do not establish compiler-symbol relationship semantics.
+
+## Alignment with the shared Workshop documentation standard
+
+This feature follows the shared standard in FSM_COS `DOCUMENTATION_STANDARD.md`: the repository README is the short reader journey; `docs/GALLERY.md` is the visual index; `docs/SOURCE_DERIVED_UML.md` is the practical tooling guide; this document owns the pipeline architecture and acceptance gates. These documents link to one another rather than duplicating the same contract.
+
+The gallery entry is explicitly labelled as staging proof. It distinguishes the syntax-derived output that exists today from the semantic, project-wide pipeline intended by this architecture. No static SVG, DTO test, or green syntax-fixture workflow is described as proof of compiler-resolved UML.
+
+### Visual coverage for UML documentation
+
+| Document or artifact | Classification | Evidence / remaining work |
+|---|---|---|
+| `docs/GALLERY.md` | Useful visual/proof index embedded and source-linked | Identifies the current staging artifact and its limits; add generated artifact previews when canonical outputs exist. |
+| `docs/SOURCE_DERIVED_UML.md` | Visual is useful but not yet a verified canonical output | Reproduction instructions describe the current syntax-only tool; project-level semantic example remains outstanding. |
+| `docs/LIVING_UML_ARCHITECTURE.md` | Visual architecture is useful and tracked | Pipeline is currently expressed as text; replace or accompany it with a source-generated, evidence-matched architecture visual once the canonical model-to-SVG path exists. |
+| Generated class-compartment SVG | Implemented staging output; semantic correctness not established | CI validates accessibility labels and syntax-fixture behavior; compiler-symbol connectors, comprehensive bounds/overflow checks, and recorded rendered inspection remain open. |
+
+This is a focused audit of the UML feature documents, not a claim that every Markdown document in the repository has completed the shared visual-coverage review. The repository-wide documentation visual audit remains a separate task.
