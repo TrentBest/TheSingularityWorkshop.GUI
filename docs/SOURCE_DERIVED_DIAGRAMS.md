@@ -2,7 +2,9 @@
 
 > If a picture is worth a thousand words… then what is a living picture worth?
 
-The source-derived diagram path begins with C# syntax, projects declarations into GUI's renderer-neutral `DataCard` model, and manifests that model through GUI.SVG. GUI Core remains language-agnostic; C# parsing belongs to the separate source-analysis tool.
+The source-derived diagram path begins with C# syntax, projects declarations into GUI's renderer-neutral models, and manifests those models through GUI.SVG. GUI Core remains language-agnostic; C# parsing belongs to the separate source-analysis tool.
+
+The intended end state is **living UML documentation**: inventory every maintained type, generate per-type pages and class views, embed generated diagrams in articles, and regenerate/verify them when source changes. The architecture, provenance rules, reflection complement, documentation model, drift checks, and acceptance criteria are defined in [Living UML Architecture](LIVING_UML_ARCHITECTURE.md).
 
 ## First vertical slice
 
@@ -12,21 +14,24 @@ The source-derived diagram path begins with C# syntax, projects declarations int
 dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj -- src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg --type DataCard
 ```
 
-The tool now emits both the general GUI.SVG structure view and a first UML class-compartment view for the first top-level type in the source file. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. This is still not a complete semantic UML generator: base-list names are explicitly unresolved, relationships are not yet drawn as UML connectors, output is one class per invocation; `--type DataCard` selects a declaration by its simple name or fully qualified namespace/type path, and ambiguous simple names fail closed. It does not yet generate type pages or support round-trip editing.
+The tool emits a general GUI.SVG structure view and a UML class-compartment view for the selected declaration. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. This is still not a complete semantic UML generator: base-list names are unresolved, relationships are not yet drawn as UML connectors, and the output is one class per invocation. `--type DataCard` selects a declaration by its simple name or fully qualified namespace/type path; ambiguous simple names fail closed. It does not yet generate a project-wide type inventory, per-type documentation pages, compiled reflection snapshots, or round-trip editing.
 
 ## Next milestones
 
-1. Use Roslyn compilations and symbol identity to resolve base types, interfaces, field/property types, and associations across project boundaries.
-2. Resolve declarations with Roslyn compilations and render verified inheritance, interface realization, dependency/association, and multiplicity as UML connectors between class nodes.
-3. Generate one per-type Markdown page and UML SVG from the same model; verify inventory coverage and deterministic output in CI.
-4. Add fixtures that deliberately change a declaration and prove the diagram changes, and fixtures that break the source to prove generation fails closed.
-5. Add validated domain commands before offering source-edit affordances. SVG controls alone must never mutate source.
+1. Build a project/solution-level Roslyn compilation and use symbol identity to resolve base types, interfaces, generic types, and member types across project boundaries.
+2. Render semantically grounded inheritance, interface realization, dependency/association, and justified multiplicity as UML connectors between class nodes.
+3. Generate a deterministic project-wide inventory and one per-type Markdown page plus UML SVG from the same versioned documentation model.
+4. Cross-check the source model against reflection from the exact successfully built target assemblies; keep source locations and documentation comments from Roslyn.
+5. Add fixtures that change declarations and prove the model/page/SVG changes, plus malformed-source/build-failure fixtures that prove fail-closed behavior.
+6. Verify stale/missing/orphaned artifact detection, accessibility, viewBox bounds, text legibility, and deterministic output in CI.
+7. Add validated domain commands before offering source-edit affordances. SVG controls alone must never mutate source.
 
 ## Architectural boundary
 
-- C# syntax and semantic analysis live in the source-analysis tool, not GUI Core.
-- `DataCard` is a renderer-neutral presentation projection, not the authoritative source model.
-- GUI.SVG owns the SVG manifestation; the generator owns source parsing and projection.
-- Generated SVG is output. Change source or generator, then regenerate—do not hand-edit generated output as if it were authoritative.
+- C# syntax and semantic analysis live in build-time source-analysis tooling, not GUI Core.
+- Compiled reflection supplements source analysis; it does not replace it or constitute an AST.
+- The canonical documentation model is authoritative for generated pages/diagrams; `DataCard` is a renderer-neutral presentation projection, not the source model.
+- GUI.SVG owns SVG manifestation; the generator owns source parsing, semantic analysis, projection, and regeneration.
+- Generated SVG is output. Change source/model/rendering inputs, then regenerate—do not hand-edit generated output as if it were authoritative.
 
-See [Data Cards and UML](DATA_CARDS_AND_UML.md) and [Per-Type Documentation and UML Standard](CLASS_DOCUMENTATION_STANDARD.md).
+See [Data Cards and UML](DATA_CARDS_AND_UML.md), [Per-Type Documentation and UML Standard](CLASS_DOCUMENTATION_STANDARD.md), and [Living UML Architecture](LIVING_UML_ARCHITECTURE.md).
