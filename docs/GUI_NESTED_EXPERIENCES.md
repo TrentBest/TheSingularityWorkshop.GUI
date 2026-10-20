@@ -1,5 +1,8 @@
 # Nested Experiences
 
+> **Status — proposal, not current implementation (2026-10-20):** This document defines a desired recursive-experience model. The current `development` source does not contain the legacy `Gui.Hub` / `GuiHub` API described below. Treat those names and the lifecycle examples as design targets, not callable package contracts. Any future implementation must be designed and tested against the current source and preserve the boundary between GUI presentation and authoritative runtime execution.
+
+
 The GUI execution model must support recursive experience composition.
 
 A runnable experience is not necessarily a terminal experience.
@@ -33,17 +36,17 @@ The distinction should remain explicit:
 - Hub — an intrinsic GUI boundary that can host or coordinate experiences.
 - Domain purpose — something supplied by the consuming project, not by GUI Core.
 
-The GUI therefore exposes one fundamental accessor:
+The proposed API would expose one fundamental accessor:
 
 `Gui.Hub`
 
-The accessor exists whether or not an application chooses to use any hub functionality. Accessing it does not render, manifest, or impose a visual surface. The hub is simply a small, stable object with its own identity.
+In that proposal, the accessor would exist whether or not an application chooses to use any hub functionality. Accessing it does not render, manifest, or impose a visual surface. The hub is simply a small, stable object with its own identity.
 
-The intrinsic hub deliberately does **not** contain concepts such as Arcade, City, Game, Timeline, Editor, Simulation, Reality, Fiction, or other purposes. Those meanings belong to the consuming project.
+The proposed intrinsic hub would deliberately **not** contain concepts such as Arcade, City, Game, Timeline, Editor, Simulation, Reality, Fiction, or other purposes. Those meanings belong to the consuming project.
 
 A consuming project can define its own interfaces and capabilities around the intrinsic boundary. For example, an application may define an arcade-specific experience contract, while another project defines a scientific-laboratory contract. Neither requires GUI Core to know what an arcade or laboratory is.
 
-A Hub may host an Experience, and an Experience may itself expose another Hub boundary.
+The target model allows a Hub to host an Experience, and an Experience to expose another Hub boundary.
 
 Therefore the conceptual graph remains recursive: Hub -> Experience -> Hub -> Experience.
 
