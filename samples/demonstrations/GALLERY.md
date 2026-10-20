@@ -8,7 +8,7 @@ A visual index organized by the packages and repositories each example actually 
 
 ![Recipe 01: primitive geometry — a rounded panel and marker](01-primitive-geometry.svg)
 
-Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup with GUI.SVG. The image here is reference artwork; the linked recipe explains the generator and the verification still required.
+Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup with GUI.SVG. The first generated artifact passed basic XML checks but visual review found the panel clipped by the viewBox; the generator now corrects the geometry and checks stroke-aware bounds, pending a fresh CI artifact review.
 
 [**Read Recipe 01 — Primitive geometry**](recipes/01-primitive-geometry.md)
 
