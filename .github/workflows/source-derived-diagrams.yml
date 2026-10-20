@@ -26,7 +26,7 @@ jobs:
         run: >-
           dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
           --configuration Release --
-          src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg
+          src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg --type DataCard
       - name: Verify source-derived SVG contract
         shell: bash
         run: |
