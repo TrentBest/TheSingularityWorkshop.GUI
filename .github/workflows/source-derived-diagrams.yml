@@ -1,0 +1,44 @@
+name: Source-derived diagrams
+
+on:
+  push:
+    branches:
+      - development
+      - work/gui-svg-source-uml-generator
+  pull_request:
+    branches:
+      - development
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  generate-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+      - name: Generate source-derived DataCard diagram
+        run: >-
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
+          --configuration Release --
+          src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify
+      - name: Verify source-derived SVG contract
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s artifacts/DataCard.source-structure.svg
+          grep -q 'DataCard' artifacts/DataCard.source-structure.svg
+          grep -q 'GetCollapsedSummary' artifacts/DataCard.source-structure.svg
+          grep -q 'Children' artifacts/DataCard.source-structure.svg
+      - name: Upload generated source-derived diagram
+        uses: actions/upload-artifact@v7
+        with:
+          name: source-derived-datacard-diagram
+          path: artifacts/DataCard.source-structure.svg
+          if-no-files-found: error
