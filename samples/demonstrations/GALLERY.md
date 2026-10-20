@@ -12,6 +12,12 @@ Define a small semantic `GuiNode` tree and turn it into inspectable SVG markup w
 
 [**Read Recipe 01 — Primitive geometry**](recipes/01-primitive-geometry.md)
 
+### Recipe 02 — Cartesian coordinates and f(x) = x²
+
+The new generator builds a Cartesian coordinate system and computes 33 samples from the function before handing the semantic scene to GUI.SVG. Its generated artifact has not yet been executed or reviewed, so this entry links to the implementation recipe rather than presenting an unverified preview.
+
+[**Read Recipe 02 — Cartesian coordinates and sampled function**](recipes/02-coordinate-functions.md)
+
 ### Recipe 04 — Animated scene
 
 ![Animated GUI.SVG adapter gallery with a filled star following a motion path](../../docs/assets/svg-adapter-gallery.svg)
