@@ -454,7 +454,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
         // MSBuild already loaded the project; framework provenance can remain unspecified.
     }
 
-    var model = ProjectUmlModelBuilder.Build(
+    var model = SourceUmlGenerator.ProjectUmlModelBuilder.Build(
         compilation, projectPath, repository, revision, configuration, targetFramework);
     var json = UmlDocumentationModelJson.Serialize(model);
     var outputPath = Path.GetFullPath(output);
