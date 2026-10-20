@@ -61,8 +61,8 @@ SVG is generated output, not the authoritative source. Do not hand-edit generate
 
 ## What remains open
 
-- Load a solution and its in-scope project graph as a deterministic inventory, including explicit policies for project references and target frameworks.
-- Extend the new exact-build reflection check beyond type identity to member signatures, visibility/modifiers, attributes, generic constraints, and target-framework-specific surface. The current check catches missing/unexpected non-generated type identities only.
+- **Implemented and verified on PR #18 candidate `3c4f25d`:** `.github/workflows/solution-derived-uml.yml` parses the solution manifest, explicitly scopes all four maintained product projects (Core, Blazor, WPF, SVG), rejects unclassified new `src/**/*.csproj` files, and generates a provenance-checked model, inventory, and per-type Markdown pages for each project. [Exact candidate run #39507164307](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39507164307) passed. This is project inventory coverage, not yet a merged cross-project relationship graph or per-target-framework matrix.
+- **Extend exact-build reflection reconciliation across the maintained project set.** The source-derived workflow currently proves exact assembly identity/type-inventory parity for Core and includes a negative test that rejects the wrong assembly. Reconcile every supported target framework, then extend beyond type identity to member signatures, visibility/modifiers, attributes, generic constraints, and framework-specific API surfaces.
 - Render and navigate the whole project/solution graph; the current renderer focuses on one type and one-hop neighbors.
 - Improve connector routing and large-neighborhood layout; measure actual painted text bounds/overflow and record visual inspection.
 - Add committed generated-artifact drift checks for the inventory and page set; CI currently validates completeness/order and uploads the generated outputs rather than checking them into source control.
@@ -87,7 +87,7 @@ C# source + project/solution
   -> deterministic regeneration and CI drift/accessibility/geometry checks
 ```
 
-See [Living UML architecture](LIVING_UML_ARCHITECTURE.md) for the acceptance gates and [Gallery](GALLERY.md) for the current proof artifact. The FSM_COS alpha.7 UML adoption gate stays open until solution-level inventory, complete maintained-type coverage, member-level reflection reconciliation, and complete rendering/visual evidence are verified. A project-semantic Core run already emits deterministic per-type Markdown pages and an inventory for every type in that analyzed project; this is a verified vertical slice, not yet repository-wide documentation coverage.
+See [Living UML architecture](LIVING_UML_ARCHITECTURE.md) for the acceptance gates and [Gallery](GALLERY.md) for the current proof artifact. The FSM_COS alpha.7 UML adoption gate stays open. The solution-level inventory and per-type page-coverage checks are now verified for all four maintained product projects on PR #18 candidate `3c4f25d` ([run #39507164307](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39507164307)); this closes the solution-inventory gate, not the adoption gate. Remaining requirements include exact-build reflection reconciliation across the maintained project set, member-level reflection parity, full graph/navigation, rendered text-bound and visual evidence, and committed-artifact drift checks. This remains a staging tool, not a supported installable package.
 
 
 ## Installable build-time documentation package
