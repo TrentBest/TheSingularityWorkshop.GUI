@@ -75,4 +75,44 @@ public sealed class UmlDocumentationModelTests
 
         Assert.Throws<JsonException>(() => UmlDocumentationModelJson.Deserialize(json));
     }
+
+    [Fact]
+    public void Json_contract_rejects_invalid_source_spans_and_resolved_edges_to_missing_types()
+    {
+        var invalidSpanModel = new UmlDocumentationModel(
+            UmlDocumentationModelJson.CurrentSchemaVersion,
+            new UmlModelProvenance("owner/repo", "abc123", "src/Example.csproj", null, "net8.0", "Release", "syntax-only", null),
+            [new UmlDocumentedType(
+                "type:example:Example",
+                new UmlTypeIdentity("Example, Version=1.0.0.0", "Example", [], "Example", 0, "class"),
+                [new UmlSourceDeclaration("src/Example.cs", new UmlSourceSpan(-1, 10, 1, 1, 1, 11))],
+                [])],
+            []);
+
+        Assert.Throws<ArgumentException>(() => UmlDocumentationModelJson.Serialize(invalidSpanModel));
+
+        var missingTargetModel = new UmlDocumentationModel(
+            UmlDocumentationModelJson.CurrentSchemaVersion,
+            new UmlModelProvenance("owner/repo", "abc123", "src/Example.csproj", null, "net8.0", "Release", "roslyn-compilation", null),
+            [new UmlDocumentedType(
+                "type:example:Example",
+                new UmlTypeIdentity("Example, Version=1.0.0.0", "Example", [], "Example", 0, "class"),
+                [new UmlSourceDeclaration("src/Example.cs", new UmlSourceSpan(0, 10, 1, 1, 1, 11))],
+                [])],
+            [new UmlDocumentedRelationship(
+                "edge:example:inherits:missing",
+                UmlRelationshipKind.Inheritance,
+                "type:example:Example",
+                "type:external:Missing",
+                "Missing",
+                UmlRelationshipResolution.Resolved,
+                null,
+                "source-to-target",
+                "inherits",
+                null,
+                null,
+                new UmlRelationshipProvenance("compiler-symbol", "src/Example.cs", null, "Missing"))]);
+
+        Assert.Throws<ArgumentException>(() => UmlDocumentationModelJson.Serialize(missingTargetModel));
+    }
 }
