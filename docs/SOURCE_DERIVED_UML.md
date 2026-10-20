@@ -36,7 +36,8 @@ dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj --conf
   --revision <git-sha> \
   --configuration Release \
   --diagram-svg artifacts/DataCard.semantic-uml.svg \
-  --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard
+  --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard \
+  --inventory-markdown artifacts/Core.uml-inventory.md
 ```
 
 The project mode loads one `.csproj` through `MSBuildWorkspace`, requests its compiler `Compilation`, and refuses to emit a model if compiler errors are present. The optional `--diagram-svg` and `--diagram-type` arguments must be supplied together. The type selector accepts a fully qualified namespace/type name (preferred) or a unique metadata name. The graph contains the selected type and its directly connected neighbors; it is not yet a full-project layout.
@@ -47,6 +48,7 @@ The project mode loads one `.csproj` through `MSBuildWorkspace`, requests its co
 - **Syntax class SVG:** a focused single-class view. Base-list names in this path remain explicitly unresolved text.
 - **Syntax-only model:** `--model-json` with explicit repository/revision/project provenance; it emits no semantic relationships.
 - **Project-semantic model:** `--project-model-json` emits types, partial declaration spans, members, and compiler-symbol relationships.
+- **Generated type inventory:** `--inventory-markdown` emits deterministic Markdown for every model type, with a sorted index, type identity, members/signatures, source links pinned to the recorded revision, and incoming/outgoing relationship evidence. It is generated output and must not be hand-edited. It is currently one inventory document with per-type sections, not a separate Markdown file per type.
 - **Relationship extraction:** inheritance and interface realization come from Roslyn type symbols; associations come from field/property/event types; dependencies come from method return/parameter and indexer parameter types. Generic arguments are inspected so application-owned types remain visible even when common `System.*` wrappers are omitted.
 - **Focused graph SVG:** `SvgUmlDocumentationGraphRenderer` renders typed connectors for the focus type's direct neighborhood. Inheritance/realization use hollow-triangle markers; dependency/realization edges are dashed as appropriate; external/unresolved targets are labelled rather than assigned fake local IDs.
 - **CI fixture:** GUI Core project analysis plus a synthetic partial generic project verifies type aggregation, a compiler-resolved generic interface realization, association/dependency edges, model-to-SVG graph output, accessible title/description, and SVG reference validity.
@@ -61,7 +63,7 @@ SVG is generated output, not the authoritative source. Do not hand-edit generate
 - Cross-check source facts against reflection from the exact successful build output.
 - Render and navigate the whole project/solution graph; the current renderer focuses on one type and one-hop neighbors.
 - Improve connector routing and large-neighborhood layout; measure actual painted text bounds/overflow and record visual inspection.
-- Generate a deterministic inventory and a Markdown/API page for every maintained type, with source links and generated-artifact drift checks.
+- Split the generated inventory into stable per-type Markdown/API pages where useful, and add committed generated-artifact drift checks for the inventory and page set.
 - Add stronger model normalization/validation and explicit evidence for multiplicity, ownership, aggregation, or composition. A field reference alone is not ownership evidence.
 - Complete authored use-case persistence, evidence review, and lifecycle.
 - Detect all stale, orphaned, or hand-edited generated pages and artifacts.
