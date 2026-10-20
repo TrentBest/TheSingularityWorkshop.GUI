@@ -159,7 +159,7 @@ text { font-family: ui-sans-serif, system-ui, sans-serif; }
 .fox-moving { animation:fox-visibility 24s linear infinite; }
 @keyframes fox-visibility { 0%,33% { opacity:1; } 38%,97% { opacity:0; } 100% { opacity:1; } }
 @media (prefers-reduced-motion:reduce) { .dog-zzz,.dog-posture,.dog-arm,.fight-cloud,.limp-fox,.rip-stone,.fox-angel,.wings,.fox-moving { animation:none; } .dog-zzz { opacity:0; } .limp-fox,.rip-stone,.fox-angel { opacity:1; } }
-"""));;
+"""));
 
 var svg = new SvgGuiRenderer().Render(scene.Build(), 1200, 760);
 Directory.CreateDirectory(Path.GetDirectoryName(output)!);
