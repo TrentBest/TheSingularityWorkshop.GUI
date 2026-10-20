@@ -12,7 +12,7 @@ xᵢ = -2 + 4i/32
 yᵢ = f(xᵢ)
 ```
 
-The coordinate-system root defines the Cartesian range and asks GUI.SVG to draw grid, axes, origin, and bounds. Each coordinate-point stores its mathematical x and y; SvgGuiRenderer maps those values into SVG coordinates. The plotted marks therefore come from the function's computed samples, rather than from a hand-authored SVG path.
+The coordinate-system root defines the Cartesian range and asks GUI.SVG to draw grid, axes, origin, and bounds. Each coordinate-point stores its mathematical x and y; SvgGuiRenderer maps those values into SVG coordinates, while a polyline is built from the very same samples to connect them. The plotted marks and connecting curve therefore share one computed data set rather than using a hand-authored SVG path.
 
 ## Source path
 
@@ -31,7 +31,7 @@ From the repository root:
 dotnet run --project samples/demonstrations/CoordinateFunctions/CoordinateFunctions.csproj -- samples/demonstrations/02-coordinate-functions.generated.svg
 ```
 
-The program parses the adapter output as XML and checks the SVG root, the Cartesian axes, and all 33 function samples before writing the artifact.
+The program parses the adapter output as XML and checks the SVG root, the Cartesian axes, the connecting function curve, and all 33 function samples before writing the artifact.
 
 **Evidence status:** source and project files have been added; the command has not yet been executed in this work session. Do not treat the generated artifact or passing assertion as verified until the command succeeds and its output is reviewed.
 
