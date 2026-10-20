@@ -109,9 +109,10 @@ scene.Child("svg-a", "heading-link", link => link
         .Property("font-family", "sans-serif").Property("font-size", "4")
         .Property("font-weight", "700").Property("fill", "#eef6ff")));
 
-scene.Child("svg-circle", "motion-scout", scout => scout
-    .Property("cx", "12").Property("cy", "38").Property("r", "0.7")
-    .Property("fill", "#fff1ce").Property("stroke", "#0b1725").Property("stroke-width", "0.2")
+scene.Child("svg-use", "motion-scout", scout => scout
+    .Property("href", "#star-symbol")
+    .Property("x", "-1").Property("y", "-1")
+    .Property("width", "2").Property("height", "2")
     .Child("svg-animate-motion", "scout-motion", motion => motion
         .Property("dur", "5s").Property("repeatCount", "indefinite").Property("rotate", "auto")
         .Child("svg-mpath", "scout-route-reference", reference => reference.Property("href", "#orbit-path"))));
