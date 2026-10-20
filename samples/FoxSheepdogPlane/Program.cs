@@ -31,7 +31,7 @@ scene.Child("svg-text", "heading", n => n.Text("THE FOX / SHEEPDOG CELL TEST")
 scene.Child("svg-text", "subtitle", n => n.Text("GUI.SVG scene model · 10 × 10 cells · parallel grid families · one explicit encounter")
     .Property("x", "40").Property("y", "70").Property("fill", "#9fb6cc").Property("font-size", "14"));
 
-scene.Child("svg-g", "plane", plane =>
+scene.Child("svg-g", "plane-scene", plane =>
 {
     plane.Child("svg-polygon", "plane-surface", p => p.Property("points", "600,150 960,330 600,510 240,330")
         .Property("fill", "#163742").Property("stroke", "#527d8b").Property("stroke-width", "2"));
