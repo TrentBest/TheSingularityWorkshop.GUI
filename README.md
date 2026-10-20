@@ -42,7 +42,7 @@ Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md
 
 ## 🟪 05 Available documentation and theory
 
-[Start Here](docs/START_HERE.md) · [Gallery](docs/GALLERY.md) · [Repository architecture audit](docs/REPOSITORY_ARCHITECTURE_AUDIT.md) · [Source-derived UML tooling](docs/SOURCE_DERIVED_UML.md) · [Living UML architecture](docs/LIVING_UML_ARCHITECTURE.md) · [UML visual audit](docs/UML_VISUAL_AUDIT.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
+[Start Here](docs/START_HERE.md) · [Gallery](docs/GALLERY.md) · [UML source-file guides](docs/uml/README.md) · [Repository architecture audit](docs/REPOSITORY_ARCHITECTURE_AUDIT.md) · [Source-derived UML tooling](docs/SOURCE_DERIVED_UML.md) · [Living UML architecture](docs/LIVING_UML_ARCHITECTURE.md) · [UML visual audit](docs/UML_VISUAL_AUDIT.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
 
 ---
 
@@ -65,7 +65,7 @@ The repository exists to separate GUI intent from GUI manifestation. It includes
 - `tests/SVG.Tests` — SVG serialization and coordinate-mapping contract tests.
 - `tests/WPF.Tests` — Windows-native WPF renderer tests.
 - `tests/Adapter.Conformance.Tests` — initial shared semantic checks across adapters.
-- `docs` — architecture, model, adapter, testing, theory, and release documentation.
+- `docs` — architecture, model, adapter, testing, theory, release documentation, and [`docs/uml`](docs/uml/README.md) source-file guides for all maintained product `.cs` files.
 - [`ROADMAP.md`](ROADMAP.md) — engineering work required to make the neutral model durable.
 - [`docs/RELEASE_READINESS.md`](docs/RELEASE_READINESS.md) — explicit gates for the next package release.
 
