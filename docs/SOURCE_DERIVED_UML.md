@@ -87,7 +87,7 @@ C# source + project/solution
   -> deterministic regeneration and CI drift/accessibility/geometry checks
 ```
 
-See [Living UML architecture](LIVING_UML_ARCHITECTURE.md) for the acceptance gates and [Gallery](GALLERY.md) for the current proof artifact. The FSM_COS alpha.7 UML adoption gate stays open until solution-level inventory, generated per-type documentation, reflection cross-check, and complete rendering/visual evidence are verified.
+See [Living UML architecture](LIVING_UML_ARCHITECTURE.md) for the acceptance gates and [Gallery](GALLERY.md) for the current proof artifact. The FSM_COS alpha.7 UML adoption gate stays open until solution-level inventory, complete maintained-type coverage, member-level reflection reconciliation, and complete rendering/visual evidence are verified. A project-semantic Core run already emits deterministic per-type Markdown pages and an inventory for every type in that analyzed project; this is a verified vertical slice, not yet repository-wide documentation coverage.
 
 
 ## Installable build-time documentation package
@@ -126,4 +126,4 @@ Reflection is evidence about the compiled artifact, not a replacement for Roslyn
 - CI should test both enabled and disabled modes, failed builds, missing assemblies, multiple target frameworks, deterministic output, stale generated files, and reflection/source mismatches.
 - The release workflow should generate and verify documentation before packaging/publishing; publishing remains governed by the repository's separate explicit release authorization.
 
-This package/lifecycle is the target architecture, not an implemented feature yet. Current proof remains the staging CLI and focused graph renderer. The remaining gates above still apply, including solution-wide inventory, per-type Markdown generation, exact-build reflection comparison, and visual/bounds evidence.
+This package/lifecycle is the target architecture, not an implemented feature yet. Current proof remains the staging CLI and focused graph renderer. Project-semantic generation of deterministic per-type Markdown pages and an inventory is implemented and CI-checked for the analyzed Core project. The remaining gates above still apply: solution-wide inventory, repository-wide maintained-type coverage, member-level exact-build reflection reconciliation, committed generated-artifact drift checks, and visual/bounds evidence.
