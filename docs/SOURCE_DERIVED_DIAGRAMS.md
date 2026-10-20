@@ -16,17 +16,19 @@ A complementary direction is **observable diagram data**: a console app or test 
 dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj -- src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg --type DataCard
 ```
 
-The tool can also emit a provisional syntax-only documentation-model JSON snapshot with explicit repository, revision, and project provenance via `--model-json`, `--repository`, `--revision`, and `--project`. The tool emits a general GUI.SVG structure view and a UML class-compartment view for the selected declaration. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. A separate `--project-model-json` mode loads a `.csproj` with `MSBuildWorkspace` and emits compiler-symbol-based inheritance and interface-realization relationships in the versioned JSON model. This is still not a complete semantic UML generator: base-list names are unresolved, relationships are not yet drawn as UML connectors, and the output is one class per invocation. `--type DataCard` selects a declaration by its simple name or fully qualified namespace/type path; ambiguous simple names fail closed. It does not yet generate a project-wide type inventory, per-type documentation pages, compiled reflection snapshots, or round-trip editing. It also does not yet implement live model subscriptions or host-driven SVG refresh.
+The tool emits a provisional syntax-only documentation-model JSON snapshot with explicit repository, revision, and project provenance via `--model-json`, `--repository`, `--revision`, and `--project`. A separate `--project-model-json` mode loads a `.csproj` with `MSBuildWorkspace` and emits compiler-symbol-based type/member identities and relationships into the versioned model. For the focused type, the UML renderer draws typed semantic connectors for the selected type and its one-hop neighborhood; it does not yet lay out and navigate the complete project graph. The deterministic `--inventory-markdown` and `--type-pages-dir` options produce an inventory and one standalone Markdown page per analyzed type, with revision-pinned source evidence. CI verifies model contracts, page coverage/index links, source provenance, malformed-source rejection, type-selection behavior, SVG accessibility and geometry, and safe generated-page pruning. The focused syntax-only mode deliberately labels unresolved base-list references as unresolved rather than presenting them as compiler-confirmed relationships.
+
+This is still a staging vertical slice, not a complete living UML system or a supported installable package. Exact-build reflection reconciliation, solution/multi-project inventory, whole-project graph layout/navigation, comprehensive rendered text/bounds inspection, authored use-case persistence, and broad generated-artifact drift/orphan lifecycle checks remain open. Round-trip editing, live model subscriptions, and host-driven SVG refresh are also not implemented.
 
 ## Next milestones
 
-1. Build a project/solution-level Roslyn compilation and use symbol identity to resolve base types, interfaces, generic types, and member types across project boundaries.
-2. Render semantically grounded inheritance, interface realization, dependency/association, and justified multiplicity as UML connectors between class nodes.
-3. Generate a deterministic project-wide inventory and one per-type Markdown page plus UML SVG from the same versioned documentation model.
-4. Cross-check the source model against reflection from the exact successfully built target assemblies; keep source locations and documentation comments from Roslyn.
-5. Add fixtures that change declarations and prove the model/page/SVG changes, plus malformed-source/build-failure fixtures that prove fail-closed behavior.
-6. Verify stale/missing/orphaned artifact detection, accessibility, viewBox bounds, text legibility, and deterministic output in CI.
-7. Define the observable model/snapshot and mutation-notification contract; prove console-driven model changes and a host-level SVG refresh before claiming live behavior.
+1. Extend project-semantic analysis to deterministic solution/multi-project inventory, including project references, target frameworks, source roots, diagnostics, and inclusion/exclusion decisions.
+2. Reconcile compiler-symbol relationships against reflection from the exact successful build outputs for each target framework.
+3. Extend the current focused-type/one-hop connector view into normalized whole-project graph layout and navigation.
+4. Add complete rendered-text and connector-bounds checks, not only XML validity, accessibility metadata, and basic geometry assertions.
+5. Persist human-authored use-case/scenario records with explicit provenance and separation from generated model content.
+6. Expand generated-artifact drift and stale/orphan checks without overwriting authored SVGs or documentation.
+7. Define observable snapshot/revision/mutation-notification semantics and prove host-level SVG refresh before claiming live behavior.
 8. Add validated domain commands before offering source-edit affordances. SVG controls alone must never mutate source.
 
 ## Architectural boundary
