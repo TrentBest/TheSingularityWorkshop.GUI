@@ -39,6 +39,9 @@ jobs:
           grep -q 'UML class diagram: DataCard' artifacts/DataCard.uml.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.uml.svg
           cmp artifacts/DataCard.uml.svg docs/assets/uml/classes/Core/DataCard.svg
+      - name: Verify SVG accessibility, geometry, IDs, and local references
+        run: python3 scripts/verify_svg_contract.py artifacts/DataCard.source-structure.svg artifacts/DataCard.uml.svg
+
       - name: Exercise source mutation, explicit type selection, and malformed-source failures
         shell: bash
         run: |
