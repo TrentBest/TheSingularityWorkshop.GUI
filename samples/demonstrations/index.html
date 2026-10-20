@@ -32,10 +32,10 @@ a{color:#a9d9ff;text-underline-offset:3px}footer{padding:0 24px 24px}
     <a class="preview" href="01-primitive-geometry.svg" aria-label="Open primitive geometry SVG"><img src="01-primitive-geometry.svg" alt="Rounded rectangle, circle, crosshair, and labels on a dark background"></a>
     <div class="body">
       <section><h3>What it shows</h3><p>Basic shapes and text with explicit geometry, fills, strokes, and stable element IDs.</p></section>
-      <section><h3>What it proves</h3><p>The reference artifact is standalone SVG and can be rendered by a browser. It gives us a simple expected-output target.</p></section>
-      <div class="status"><strong>Verification status:</strong> reference SVG only. GUI.SVG-generated output, compilation, and automated XML assertions are still pending.</div>
+      <section><h3>What it proves</h3><p>The reference artifact is standalone SVG and can be rendered by a browser. A checked-in C# project now invokes the actual adapter and asserts that the expected rectangle and circle appear in its output.</p></section>
+      <div class="status"><strong>Verification status:</strong> reference SVG plus a checked-in generator and XML assertions. The generator has not yet been run in this session, so a passing execution is not claimed.</div>
     </div>
-    <footer><a href="01-primitive-geometry.svg">Open SVG</a> · <a href="01-primitive-geometry.md">Source/API notes and acceptance criteria</a></footer>
+    <footer><a href="01-primitive-geometry.svg">Open reference SVG</a> · <a href="PrimitiveGeometry/Program.cs">Generator source</a> · <a href="PrimitiveGeometry/README.md">Run instructions</a> · <a href="01-primitive-geometry.md">Full write-up</a></footer>
   </article>
   <article class="card">
     <div class="card-head"><div><div class="level">Level 04 · Existing capability</div><h2>Animated adapter gallery</h2></div><a href="../../docs/START_HERE.md">Read adapter guide →</a></div>
