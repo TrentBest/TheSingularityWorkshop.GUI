@@ -29,6 +29,9 @@ def main()->int:
  for project in MAINTAINED_PROJECTS:
   path=ROOT/project; slug=path.parent.name.lower(); dest=OUTPUT/slug; dest.mkdir(parents=True,exist_ok=True)
   model_path,inventory_path,pages_path=dest/"model.json",dest/"inventory.md",dest/"types"
+  restore=subprocess.run(["dotnet","restore",project,"--configuration","Release"],cwd=ROOT,check=False)
+  if restore.returncode:
+   print(f"Restore failed for {project} (exit {restore.returncode}).",file=sys.stderr); return restore.returncode or 1
   command=["dotnet","run","--project",str(GENERATOR),"--configuration","Release","--","--project-model-json",str(model_path),"--project",project,"--repository",REPOSITORY,"--revision",revision,"--configuration","Release","--inventory-markdown",str(inventory_path),"--type-pages-dir",str(pages_path)]
   print("Analyzing maintained project: "+project,flush=True)
   result=subprocess.run(command,cwd=ROOT,check=False)
