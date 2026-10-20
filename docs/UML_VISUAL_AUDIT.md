@@ -8,9 +8,9 @@ The shared FSM_COS documentation standard requires every Markdown document to be
 |---|---|---|
 | `README.md` | Existing visual plus navigation to the Gallery | The opening architecture flowchart is authored Mermaid and is conceptual; it is not source-generated UML. The README links to `docs/GALLERY.md` and the focused UML guides. |
 | `docs/GALLERY.md` | Visual/proof index | Describes the current syntax-derived staging proof and links to reproduction and architecture docs. Does not yet embed a canonical semantic graph artifact. |
-| `docs/SOURCE_DERIVED_UML.md` | Useful visual tracked as needed | The text pipeline explains the stages; a real project-level generated diagram is still needed. |
+| `docs/SOURCE_DERIVED_UML.md` | Useful visual tracked as needed | The text pipeline explains the stages; a real project-level semantic diagram is still needed. A syntax-only JSON snapshot is now emitted, but it is not a semantic graph. |
 | `docs/LIVING_UML_ARCHITECTURE.md` | Architecture visual needed and tracked | Pipeline is text-based today. Generate an evidence-backed view from the same canonical model once the semantic pipeline exists. |
-| `docs/DATA_CARDS_AND_UML.md` | Domain explanation; source-grounded visual is useful and tracked | Existing data-card vocabulary must be distinguished from source parsing and semantic UML. Add a generated artifact when the end-to-end source model exists. |
+| `docs/DATA_CARDS_AND_UML.md` | Domain explanation; source-grounded visual is useful and tracked | Existing data-card vocabulary must be distinguished from source parsing and semantic UML. Add a generated artifact when the end-to-end semantic source model exists. |
 | `samples/SourceUmlGenerator/Program.cs` output | Implemented syntax-derived SVG; not semantically authoritative | Fixture tests cover source mutation, type selection, ambiguous names, and malformed C#. `scripts/verify_svg_contract.py` checks XML parsing, title/description, finite positive viewBox dimensions, duplicate IDs, and local-reference integrity. Semantic relationships, painted text bounds, and rendered inspection remain open. |
 
 ## Required update discipline
