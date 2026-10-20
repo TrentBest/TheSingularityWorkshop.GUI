@@ -157,6 +157,25 @@ jobs:
           path: ./artifacts/02-coordinate-functions.generated.svg
           if-no-files-found: error
 
+      - name: Fetch pinned Physics projectile run record
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ./artifacts
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Physics/fc537e527a1590fbc4c18c39a4e2ad936b7e8ed3/docs/experiments/projectile-trajectory.run.json" \
+            --output ./artifacts/physics-projectile-trajectory.run.json
+
+      - name: Generate GUI.SVG projectile trajectory from Physics run record
+        run: dotnet run --project samples/demonstrations/ProjectileTrajectory/ProjectileTrajectory.csproj --configuration Release -- ./artifacts/physics-projectile-trajectory.run.json ./artifacts/03-projectile-trajectory.generated.svg
+
+      - name: Upload Physics-backed GUI.SVG projectile trajectory
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-physics-projectile-trajectory
+          path: ./artifacts/03-projectile-trajectory.generated.svg
+          if-no-files-found: error
+
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
 
