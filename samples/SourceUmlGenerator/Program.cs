@@ -364,6 +364,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     string? diagramType;
     string? inventoryMarkdown;
     string? typePagesDirectory;
+    string? reflectionAssemblyPath;
     try
     {
         projectPath = GetOption(arguments, "--project");
@@ -374,6 +375,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
         diagramType = GetOption(arguments, "--diagram-type");
         inventoryMarkdown = GetOption(arguments, "--inventory-markdown");
         typePagesDirectory = GetOption(arguments, "--type-pages-dir");
+        reflectionAssemblyPath = GetOption(arguments, "--reflection-assembly");
         output = arguments.Length > 0 && !arguments[0].StartsWith("--", StringComparison.Ordinal)
             ? arguments[0]
             : null;
@@ -469,6 +471,50 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 
     var model = SourceUmlGenerator.ProjectUmlModelBuilder.Build(
         compilation, projectPath, repository, revision, configuration, targetFramework);
+
+    if (reflectionAssemblyPath is not null)
+    {
+        var fullAssemblyPath = Path.GetFullPath(reflectionAssemblyPath);
+        if (!File.Exists(fullAssemblyPath))
+        {
+            Console.Error.WriteLine($"Reflection assembly does not exist: {fullAssemblyPath}");
+            return 2;
+        }
+
+        try
+        {
+            var reflectionAssembly = System.Reflection.Assembly.LoadFrom(fullAssemblyPath);
+            var reflectedNames = reflectionAssembly.GetTypes()
+                .Where(type => !type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), inherit: false)
+                    && !type.Name.Contains('<', StringComparison.Ordinal))
+                .Select(type => type.FullName?.Replace('+', '.') ?? type.Name)
+                .ToHashSet(StringComparer.Ordinal);
+            var sourceNames = model.Types.Select(ModelMetadataQualifiedTypeName)
+                .ToHashSet(StringComparer.Ordinal);
+            var missingFromAssembly = sourceNames.Except(reflectedNames, StringComparer.Ordinal).OrderBy(name => name, StringComparer.Ordinal).ToArray();
+            var missingFromModel = reflectedNames.Except(sourceNames, StringComparer.Ordinal).OrderBy(name => name, StringComparer.Ordinal).ToArray();
+            if (missingFromAssembly.Length > 0 || missingFromModel.Length > 0)
+            {
+                foreach (var name in missingFromAssembly)
+                    Console.Error.WriteLine($"Source model type missing from exact-build assembly: {name}");
+                foreach (var name in missingFromModel)
+                    Console.Error.WriteLine($"Compiled source type missing from semantic model: {name}");
+                return 1;
+            }
+
+            Console.WriteLine($"Exact-build reflection check passed: {sourceNames.Count} source types match {reflectionAssembly.GetName().Name}.");
+        }
+        catch (Exception exception) when (exception is System.Reflection.ReflectionTypeLoadException
+                                           or FileLoadException
+                                           or BadImageFormatException)
+        {
+            Console.Error.WriteLine($"Could not reconcile reflection assembly '{fullAssemblyPath}': {exception.Message}");
+            if (exception is System.Reflection.ReflectionTypeLoadException loadException)
+                foreach (var loaderException in loadException.LoaderExceptions.Where(item => item is not null))
+                    Console.Error.WriteLine($"  {loaderException!.Message}");
+            return 1;
+        }
+    }
 
     UmlDocumentedType? diagramFocus = null;
     if (diagramType is not null)
@@ -809,6 +855,14 @@ static string ModelQualifiedTypeName(UmlDocumentedType type)
         .Select(StripMetadataArity)
         .Append(StripMetadataArity(type.Identity.MetadataName));
     var typePath = string.Join(".", parts);
+    return string.IsNullOrWhiteSpace(type.Identity.Namespace)
+        ? typePath
+        : type.Identity.Namespace + "." + typePath;
+}
+
+static string ModelMetadataQualifiedTypeName(UmlDocumentedType type)
+{
+    var typePath = string.Join(".", type.Identity.ContainingTypes.Append(type.Identity.MetadataName));
     return string.IsNullOrWhiteSpace(type.Identity.Namespace)
         ? typePath
         : type.Identity.Namespace + "." + typePath;
