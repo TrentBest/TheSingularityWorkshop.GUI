@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - development
-      - work/gui-svg-source-uml-generator
   pull_request:
     branches:
       - development
