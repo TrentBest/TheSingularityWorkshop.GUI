@@ -25,6 +25,32 @@ INTENTIONALLY_OUTSIDE_SOLUTION = {
     "samples/demonstrations/ProjectileTrajectory/ProjectileTrajectory.csproj",
 }
 
+# Inventory ownership/status classifications. New workflow and visual files must be
+# explicitly classified here rather than silently inheriting a guessed lifecycle.
+MAINTAINED_WORKFLOWS = {
+    ".github/workflows/package.yml",
+    ".github/workflows/source-derived-diagrams.yml",
+}
+GENERATED_DRIFT_CHECKED_ASSETS = {
+    "docs/assets/svg-adapter-gallery.svg",
+    "docs/assets/uml/classes/Core/DataCard.svg",
+}
+AUTHORED_SCENE_ASSETS = {
+    "docs/assets/fox-sheepdog-10x10.svg",  # richer authored reference; generator parity remains open
+    "samples/demonstrations/01-primitive-geometry.svg",  # authored reference, not renderer output
+}
+AUTHORED_UML_ASSETS = {
+    "docs/assets/uml/classes/Core/CoordinateSystem.svg",
+    "docs/assets/uml/classes/Core/CoordinateSystemUtilities.svg",
+    "docs/assets/uml/classes/Core/GuiNode.svg",
+}
+AUTHORED_REFERENCE_IMAGES = {
+    "docs/assets/gui-engineering-boundary.jpg",
+    "docs/assets/ideal-gui-separation-of-concerns.jpg",
+    "docs/assets/repository-structure-overview.jpg",
+    "docs/assets/workshop-map-reference.jpg",
+}
+
 
 def rel(path: Path) -> str:
     return path.relative_to(ROOT).as_posix()
@@ -107,24 +133,34 @@ def main() -> int:
         and not any(part in {"bin", "obj", ".git", "packages", "TestResults"}
                     for part in p.relative_to(ROOT).parts)
     )
-    generated_uml_assets = sorted(
-        p for p in assets
-        if "uml" in Path(p).parts and ("generated" in Path(p).parts or p.endswith(".svg"))
-        and ("docs/assets/" in p or "artifacts/" in p)
+    classified_assets = (
+        GENERATED_DRIFT_CHECKED_ASSETS | AUTHORED_SCENE_ASSETS |
+        AUTHORED_UML_ASSETS | AUTHORED_REFERENCE_IMAGES
     )
-    other_assets = sorted(set(assets) - set(generated_uml_assets))
+    unknown_workflows = sorted(set(workflows) - MAINTAINED_WORKFLOWS)
+    stale_workflows = sorted(MAINTAINED_WORKFLOWS - set(workflows))
+    unknown_assets = sorted(set(assets) - classified_assets)
+    stale_assets = sorted(classified_assets - set(assets))
+    errors.extend(f"Workflow needs an explicit lifecycle classification: {p}" for p in unknown_workflows)
+    errors.extend(f"Classified workflow no longer exists; remove stale entry: {p}" for p in stale_workflows)
+    errors.extend(f"Visual asset needs an explicit lifecycle classification: {p}" for p in unknown_assets)
+    errors.extend(f"Classified visual asset no longer exists; remove stale entry: {p}" for p in stale_assets)
 
-    print(f"Repository Markdown files (excluding build/cache output): {len(markdown_docs)}")
+    print(f"Repository Markdown files (classified authored/maintained): {len(markdown_docs)}")
     for path in markdown_docs:
-        print(f"  DOC       {path}")
+        print(f"  DOC       {path} [authored-maintained]")
     print(f"GitHub Actions workflow files: {len(workflows)}")
     for path in workflows:
-        print(f"  WORKFLOW  {path}")
-    print(f"Repository visual/reference assets (excluding build/cache output): {len(assets)}")
-    for path in generated_uml_assets:
-        print(f"  UML-ASSET {path} (generated/source-derived candidate; drift policy tracked separately)")
-    for path in other_assets:
-        print(f"  ASSET     {path} (ownership/status still needs explicit classification)")
+        print(f"  WORKFLOW  {path} [maintained-automation]")
+    print(f"Repository visual/reference assets (classified): {len(assets)}")
+    for path in sorted(set(assets) & GENERATED_DRIFT_CHECKED_ASSETS):
+        print(f"  GENERATED {path} [generated; byte-for-byte drift checked in CI]")
+    for path in sorted(set(assets) & AUTHORED_SCENE_ASSETS):
+        print(f"  SCENE     {path} [authored reference; source parity tracked separately]")
+    for path in sorted(set(assets) & AUTHORED_UML_ASSETS):
+        print(f"  UML       {path} [authored source-grounded reference; CI drift check not yet wired]")
+    for path in sorted(set(assets) & AUTHORED_REFERENCE_IMAGES):
+        print(f"  IMAGE     {path} [authored reference image]")
 
     if errors:
         print("\nInventory validation FAILED:", file=sys.stderr)
@@ -133,8 +169,9 @@ def main() -> int:
         return 1
 
     print("\nInventory validation passed: project and explicit reference checks passed. "
-          "Docs, workflows, and assets are enumerated; fine-grained authored/generated/"
-          "historical classification remains open.")
+          "Repository Markdown is classified as authored-maintained; every workflow and visual "
+          "asset must match an explicit lifecycle classification. Broader generated-output "
+          "drift and orphan checks remain open.")
     return 0
 
 
