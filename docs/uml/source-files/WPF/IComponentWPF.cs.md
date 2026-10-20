@@ -10,7 +10,7 @@ Defines the WPF component contract used by the WPF panel-builder hierarchy.
 
 ## Source-grounded facts
 
-- The interface belongs to the `TheSingularityWorkshop.GUI.WPF.Abstractions` namespace; consult the source declaration for its exact members.
+- The interface declares `Id`, parent assignment/query (`SetParent`, `GetParent`), bus-style `Publish`/`Receive` methods, and `Build()` returning a WPF `FrameworkElement`.
 
 ## Declared types and generated UML evidence
 
