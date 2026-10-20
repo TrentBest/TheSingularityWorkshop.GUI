@@ -8,7 +8,21 @@ using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
 if (args.Length > 0 && string.Equals(args[0], "--project-model-json", StringComparison.Ordinal))
+{
+    try
+    {
+        // Register before JIT-compiling the project-mode method, which references
+        // MSBuildWorkspace and can otherwise load Microsoft.Build.Framework too early.
+        MSBuildLocator.RegisterDefaults();
+    }
+    catch (InvalidOperationException exception)
+    {
+        Console.Error.WriteLine($"Could not register MSBuild: {exception.Message}");
+        return 1;
+    }
+
     return await RunProjectModelMode(args.Skip(1).ToArray());
+}
 
 if (args.Length < 2)
 {
@@ -405,16 +419,6 @@ static async Task<int> RunProjectModelMode(string[] arguments)
     {
         Console.Error.WriteLine($"Project file does not exist: {projectPath}");
         return 2;
-    }
-
-    try
-    {
-        MSBuildLocator.RegisterDefaults();
-    }
-    catch (InvalidOperationException exception)
-    {
-        Console.Error.WriteLine($"Could not register MSBuild: {exception.Message}");
-        return 1;
     }
 
     using var workspace = MSBuildWorkspace.Create(new Dictionary<string, string>
