@@ -140,7 +140,17 @@ jobs:
           assert marker is not None, "generated marker circle is missing"
           assert panel.attrib.get("rx") == "5", "panel corner radius changed"
           assert marker.attrib.get("r") == "8", "marker radius changed"
-          print("Verified GUI.SVG generated primitive panel and marker.")
+          viewbox = [float(value) for value in root.attrib["viewBox"].split()]
+          assert len(viewbox) == 4, "SVG viewBox must contain four values"
+          vx, vy, vw, vh = viewbox
+          x, y = float(panel.attrib["x"]), float(panel.attrib["y"])
+          width, height = float(panel.attrib["width"]), float(panel.attrib["height"])
+          stroke = float(panel.attrib["stroke-width"])
+          assert x - stroke / 2 >= vx, "panel stroke clips past left viewBox edge"
+          assert y - stroke / 2 >= vy, "panel stroke clips past top viewBox edge"
+          assert x + width + stroke / 2 <= vx + vw, "panel stroke clips past right viewBox edge"
+          assert y + height + stroke / 2 <= vy + vh, "panel stroke clips past bottom viewBox edge"
+          print("Verified GUI.SVG primitive panel and marker, including full panel bounds.")
           PY
 
       - name: Upload GUI.SVG primitive geometry lesson
