@@ -12,7 +12,9 @@ xᵢ = -2 + 4i/32
 yᵢ = f(xᵢ)
 ```
 
-The coordinate-system root defines the Cartesian range and asks GUI.SVG to draw grid, axes, origin, and bounds. Each coordinate-point stores its mathematical x and y; SvgGuiRenderer maps those values into SVG coordinates, while a polyline is built from the very same samples to connect them. The plotted marks and connecting curve therefore share one computed data set rather than using a hand-authored SVG path.
+The coordinate-system root defines the Cartesian range [-2,4] and asks GUI.SVG to draw grid, axes, origin, and bounds. It explicitly sets both origin coordinates to zero: otherwise the renderer defaults the axes to the midpoint of the configured range, which would not represent the mathematical x=0 and y=0 axes for this asymmetric range.
+
+Each coordinate-point stores its mathematical x and y; SvgGuiRenderer maps those values into SVG coordinates, while a polyline is built from the very same samples to connect them. The plotted marks and connecting curve therefore share one computed data set rather than using a hand-authored SVG path.
 
 ## Source path
 
