@@ -7,7 +7,7 @@ using TheSingularityWorkshop.Workshop.Gui.Svg;
 
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg>]");
+    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>]");
     return 2;
 }
 
@@ -15,6 +15,18 @@ var input = Path.GetFullPath(args[0]);
 var output = Path.GetFullPath(args[1]);
 var verify = args.Skip(2).Contains("--verify", StringComparer.Ordinal);
 var umlOption = Array.IndexOf(args, "--uml");
+var typeOption = Array.IndexOf(args, "--type");
+if (typeOption >= 0 && (typeOption + 1 >= args.Length || args[typeOption + 1].StartsWith("--", StringComparison.Ordinal)))
+{
+    Console.Error.WriteLine("--type requires a type name or fully qualified namespace.type name.");
+    return 2;
+}
+var requestedType = typeOption >= 0 ? args[typeOption + 1] : null;
+if (requestedType is not null && umlOption < 0)
+{
+    Console.Error.WriteLine("--type is only valid with --uml.");
+    return 2;
+}
 if (umlOption >= 0 && (umlOption + 1 >= args.Length || args[umlOption + 1].StartsWith("--", StringComparison.Ordinal)))
 {
     Console.Error.WriteLine("--uml requires an output SVG path.");
@@ -81,12 +93,24 @@ if (verify && (cards.Count == 0 || document.Root?.Element(ns + "title") is null 
 
 if (umlOutput is not null)
 {
-    var declaration = root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
-        .Where(node => !node.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
-        .OrderBy(node => node.SpanStart).FirstOrDefault();
+    var declarations = root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
+        .OrderBy(node => node.SpanStart).ToArray();
+    var matches = requestedType is null ? Array.Empty<BaseTypeDeclarationSyntax>() : declarations.Where(node =>
+        string.Equals(node.Identifier.ValueText, requestedType, StringComparison.Ordinal) ||
+        string.Equals(DeclaredTypeName(node), requestedType, StringComparison.Ordinal)).ToArray();
+    if (matches.Length > 1)
+    {
+        Console.Error.WriteLine($"Type selection '{requestedType}' is ambiguous; use a fully qualified namespace.type name.");
+        return 2;
+    }
+    var declaration = requestedType is null
+        ? declarations.FirstOrDefault(node => !node.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
+        : matches.SingleOrDefault();
     if (declaration is null)
     {
-        Console.Error.WriteLine("UML output requires at least one top-level type declaration.");
+        Console.Error.WriteLine(requestedType is null
+            ? "UML output requires at least one top-level type declaration."
+            : $"No type matched '{requestedType}'. Use the declared type name or fully qualified namespace.type name.");
         return 1;
     }
 
@@ -251,6 +275,15 @@ static IEnumerable<MemberDeclarationSyntax> MembersOf(BaseTypeDeclarationSyntax 
         EnumDeclarationSyntax enumeration => enumeration.Members,
         _ => Enumerable.Empty<MemberDeclarationSyntax>()
     };
+
+static string DeclaredTypeName(BaseTypeDeclarationSyntax node)
+{
+    var enclosingTypes = node.Ancestors().OfType<BaseTypeDeclarationSyntax>()
+        .Reverse().Select(type => type.Identifier.ValueText).ToArray();
+    var typePath = string.Join(".", enclosingTypes.Append(node.Identifier.ValueText));
+    var ns = NamespaceOf(node);
+    return ns == "(global namespace)" ? typePath : ns + "." + typePath;
+}
 
 static string NamespaceOf(SyntaxNode node)
 {
