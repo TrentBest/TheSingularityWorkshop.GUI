@@ -245,5 +245,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: source-derived-gui-svg-diagrams
-          path: artifacts/DataCard.*.svg
+          path: |
+            artifacts/DataCard.*.svg
+            artifacts/Core.uml-inventory.md
           if-no-files-found: error
