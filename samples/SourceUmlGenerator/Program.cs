@@ -526,7 +526,8 @@ static string RenderTypeInventory(UmlDocumentationModel model)
 {
     static string Cell(string value) => value.Replace("|", "\\|", StringComparison.Ordinal)
         .Replace("\r", " ", StringComparison.Ordinal)
-        .Replace("\n", " ", StringComparison.Ordinal);
+        .Replace("\n", " ", StringComparison.Ordinal)
+        .Replace("\u0060", "'", StringComparison.Ordinal);
     static string QualifiedName(UmlDocumentedType type) => ModelQualifiedTypeName(type);
     static string SourceLink(UmlModelProvenance provenance, UmlSourceDeclaration source)
     {
@@ -618,8 +619,9 @@ static string RenderTypeInventory(UmlDocumentationModel model)
                     ? QualifiedName(otherType) : edge.TargetDisplayName;
                 var evidence = edge.Provenance.SourcePath is null
                     ? "\u0060" + Cell(edge.Provenance.Kind) + "\u0060"
-                    : SourceLink(model.Provenance, new UmlSourceDeclaration(edge.Provenance.SourcePath,
-                        edge.Provenance.Span ?? new UmlSourceSpan(0, 0, 1, 1, 1, 1)));
+                    : edge.Provenance.Span is null
+                        ? "\u0060" + Cell(edge.Provenance.SourcePath) + "\u0060"
+                        : SourceLink(model.Provenance, new UmlSourceDeclaration(edge.Provenance.SourcePath, edge.Provenance.Span));
                 builder.AppendLine("| " + (outgoing ? "outgoing" : "incoming") + " | \u0060" +
                     Cell(edge.Kind.ToString()) + "\u0060 | \u0060" + Cell(otherName) + "\u0060 | \u0060" +
                     Cell(edge.Resolution.ToString()) + "\u0060 | " + evidence + " |");
