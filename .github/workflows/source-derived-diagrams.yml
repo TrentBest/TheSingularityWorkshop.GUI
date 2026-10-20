@@ -109,13 +109,13 @@ jobs:
               public Other? Another { get; set; }
           }
           CS
-          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
-          --configuration Release --
-          --project-model-json artifacts/SemanticFixture.uml-model.json
-          --project "$fixture/SemanticFixture.csproj"
-          --repository TrentBest/TheSingularityWorkshop.GUI
-          --revision "$SOURCE_REVISION"
-          --configuration Release
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj \
+            --configuration Release -- \
+            --project-model-json artifacts/SemanticFixture.uml-model.json \
+            --project "$fixture/SemanticFixture.csproj" \
+            --repository TrentBest/TheSingularityWorkshop.GUI \
+            --revision "$SOURCE_REVISION" \
+            --configuration Release
           python3 - <<'PY'
           import json
           from pathlib import Path
