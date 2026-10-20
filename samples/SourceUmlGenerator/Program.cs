@@ -4,6 +4,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Build.Locator;
 using Microsoft.CodeAnalysis.MSBuild;
 using System.Xml.Linq;
+using System.Reflection.Metadata;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
@@ -490,26 +491,45 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 
         try
         {
-            // Load the requested file by path in its own load context. LoadFrom may
-            // unify with the generator's project-reference copy and would not prove
-            // that the explicitly selected build artifact was inspected.
-            var reflectionAssembly = System.Reflection.Assembly.LoadFile(fullAssemblyPath);
-            if (!string.Equals(Path.GetFullPath(reflectionAssembly.Location), fullAssemblyPath, StringComparison.Ordinal))
+            // Read the exact compiled PE metadata without loading its runtime dependencies.
+            // This is essential for WPF: the generator targets net8.0 and must not need
+            // the WindowsDesktop shared framework merely to inspect a net8.0-windows DLL.
+            using var assemblyStream = File.OpenRead(fullAssemblyPath);
+            using var peReader = new System.Reflection.PortableExecutable.PEReader(assemblyStream);
+            if (!peReader.HasMetadata)
             {
-                Console.Error.WriteLine($"Reflection loaded '{reflectionAssembly.Location}' instead of requested artifact '{fullAssemblyPath}'.");
-                return 1;
-            }
-            var reflectedAssemblyIdentity = reflectionAssembly.GetName().ToString();
-            if (!string.Equals(reflectedAssemblyIdentity, model.Provenance.AssemblyIdentity, StringComparison.Ordinal))
-            {
-                Console.Error.WriteLine($"Reflection assembly identity '{reflectedAssemblyIdentity}' does not match compiler model identity '{model.Provenance.AssemblyIdentity}'.");
+                Console.Error.WriteLine($"Reflection artifact '{fullAssemblyPath}' has no CLR metadata.");
                 return 1;
             }
 
-            var reflectedNames = reflectionAssembly.GetTypes()
-                .Where(type => !type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), inherit: false)
-                    && !type.Name.Contains("<", StringComparison.Ordinal))
-                .Select(type => type.FullName?.Replace('+', '.') ?? type.Name)
+            var metadata = peReader.GetMetadataReader();
+            if (!metadata.IsAssembly)
+            {
+                Console.Error.WriteLine($"Reflection artifact '{fullAssemblyPath}' is not an assembly.");
+                return 1;
+            }
+
+            var assemblyDefinition = metadata.GetAssemblyDefinition();
+            var reflectedAssemblyIdentity = new System.Reflection.AssemblyName
+            {
+                Name = metadata.GetString(assemblyDefinition.Name),
+                Version = assemblyDefinition.Version,
+                CultureName = assemblyDefinition.Culture.IsNil ? null : metadata.GetString(assemblyDefinition.Culture)
+            };
+            if (!assemblyDefinition.PublicKey.IsNil)
+                reflectedAssemblyIdentity.SetPublicKey(metadata.GetBlobBytes(assemblyDefinition.PublicKey));
+
+            var identityText = reflectedAssemblyIdentity.ToString();
+            if (!string.Equals(identityText, model.Provenance.AssemblyIdentity, StringComparison.Ordinal))
+            {
+                Console.Error.WriteLine($"Compiled assembly identity '{identityText}' does not match compiler model identity '{model.Provenance.AssemblyIdentity}'.");
+                return 1;
+            }
+
+            var reflectedNames = metadata.TypeDefinitions
+                .Select(handle => (Handle: handle, Definition: metadata.GetTypeDefinition(handle)))
+                .Where(item => !metadata.GetString(item.Definition.Name).Contains("<", StringComparison.Ordinal))
+                .Select(item => MetadataQualifiedTypeName(metadata, item.Handle))
                 .ToHashSet(StringComparer.Ordinal);
             var sourceNames = model.Types.Select(ModelMetadataQualifiedTypeName)
                 .ToHashSet(StringComparer.Ordinal);
@@ -524,16 +544,13 @@ static async Task<int> RunProjectModelMode(string[] arguments)
                 return 1;
             }
 
-            Console.WriteLine($"Exact-build reflection check passed: {sourceNames.Count} source types match {reflectionAssembly.GetName().Name}.");
+            Console.WriteLine($"Exact-build assembly metadata check passed: {sourceNames.Count} source types match {reflectedAssemblyIdentity.Name}.");
         }
-        catch (Exception exception) when (exception is System.Reflection.ReflectionTypeLoadException
-                                           or FileLoadException
-                                           or BadImageFormatException)
+        catch (Exception exception) when (exception is IOException
+                                           or BadImageFormatException
+                                           or System.Reflection.MetadataException)
         {
-            Console.Error.WriteLine($"Could not reconcile reflection assembly '{fullAssemblyPath}': {exception.Message}");
-            if (exception is System.Reflection.ReflectionTypeLoadException loadException)
-                foreach (var loaderException in loadException.LoaderExceptions.Where(item => item is not null))
-                    Console.Error.WriteLine($"  {loaderException!.Message}");
+            Console.Error.WriteLine($"Could not reconcile compiled assembly metadata '{fullAssemblyPath}': {exception.Message}");
             return 1;
         }
     }
@@ -880,6 +897,18 @@ static string ModelQualifiedTypeName(UmlDocumentedType type)
     return string.IsNullOrWhiteSpace(type.Identity.Namespace)
         ? typePath
         : type.Identity.Namespace + "." + typePath;
+}
+
+static string MetadataQualifiedTypeName(System.Reflection.Metadata.MetadataReader metadata, System.Reflection.Metadata.TypeDefinitionHandle handle)
+{
+    var type = metadata.GetTypeDefinition(handle);
+    var name = metadata.GetString(type.Name);
+    var declaringType = type.GetDeclaringType();
+    if (!declaringType.IsNil)
+        return MetadataQualifiedTypeName(metadata, declaringType);
+
+    var ns = type.Namespace.IsNil ? string.Empty : metadata.GetString(type.Namespace);
+    return string.IsNullOrEmpty(ns) ? name : ns + "." + name;
 }
 
 static string ModelMetadataQualifiedTypeName(UmlDocumentedType type)
