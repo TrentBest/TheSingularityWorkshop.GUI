@@ -7,7 +7,7 @@ var output = args.Length > 0
 
 var scene = GuiBuilder.Create("svg-scene", "gui-svg-gallery")
     .Text("GUI.SVG manifestation gallery")
-    .Property("description", "A single semantic scene demonstrating vector geometry, reusable definitions, text, transforms, and declarative SVG animation.");
+    .Property("description", "A single semantic scene demonstrating vector geometry, reusable definitions, text, transforms, and declarative SVG animation. A filled star follows the motion path to make the animated semantic entity unmistakable.");
 
 scene.Child("svg-rect", "background", node => node
     .Property("width", "100").Property("height", "56.25")
