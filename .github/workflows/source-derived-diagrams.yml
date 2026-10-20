@@ -71,6 +71,23 @@ jobs:
           assert "## TheSingularityWorkshop.Workshop.Gui.DataCard" in inventory
           assert "### Members" in inventory and "### Relationships" in inventory
           assert "Source declarations" in inventory and "sourceRevision" not in inventory
+          assert f"/blob/{provenance['sourceRevision']}/" in inventory, "source links must be revision-pinned"
+
+          def qualified_name(item):
+              identity = item["identity"]
+              strip_arity = lambda value: value.split("`", 1)[0]
+              parts = [strip_arity(value) for value in identity["containingTypes"]]
+              parts.append(strip_arity(identity["metadataName"]))
+              local_name = ".".join(parts)
+              return f"{identity['namespace']}.{local_name}" if identity["namespace"] else local_name
+
+          expected_names = sorted(qualified_name(item) for item in model["types"])
+          index_lines = [line for line in inventory.splitlines() if line.startswith("| [`")]
+          inventory_names = [line.split("[`", 1)[1].split("`]", 1)[0] for line in index_lines]
+          assert inventory_names == expected_names, "inventory index must include every type in deterministic order"
+          for type_name in expected_names:
+              assert f"## {type_name}" in inventory, f"missing per-type section: {type_name}"
+
           ids = {item["id"] for item in model["types"]}
           assert any(item["identity"]["metadataName"] == "DataCard" for item in model["types"])
           assert any(item["identity"]["metadataName"] == "UmlDocumentationModel" for item in model["types"])
