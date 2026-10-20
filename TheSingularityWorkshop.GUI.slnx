@@ -8,4 +8,6 @@
   <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
   <Project Path="tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj" />
   <Project Path="tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj" />
+  <Project Path="tests/Adapter.Conformance.Tests/TheSingularityWorkshop.GUI.Adapter.Conformance.Tests.csproj" />
+  <Project Path="tests/WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj" />
 </Solution>
