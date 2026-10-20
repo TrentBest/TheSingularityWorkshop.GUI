@@ -84,3 +84,42 @@ C# source + project/solution
 ```
 
 See [Living UML architecture](LIVING_UML_ARCHITECTURE.md) for the acceptance gates and [Gallery](GALLERY.md) for the current proof artifact. The FSM_COS alpha.7 UML adoption gate stays open until solution-level inventory, generated per-type documentation, reflection cross-check, and complete rendering/visual evidence are verified.
+
+
+## Installable build-time documentation package
+
+The intended consumer experience is an **installable documentation package**, not a runtime library dependency and not a generator that every repository must copy into its own source tree. The current `samples/SourceUmlGenerator` project proves the analysis/rendering path; it is not yet that supported package.
+
+### Consumer contract
+
+A consuming .NET project should be able to add the documentation package and opt into generation with a small, explicit MSBuild property or target. The package should provide:
+
+- A versioned command-line generator and its pinned build-time dependencies.
+- An MSBuild `.targets` file, preferably under `buildTransitive/`, with an explicit opt-in switch and configurable output directory.
+- A documented local command to regenerate and a verification mode for CI.
+- Deterministic per-type Markdown, UML SVG, inventory, and a manifest identifying the source revision, assembly identity, target framework, configuration, and generator/model versions.
+- A clear separation between generated output and authored documentation, with drift checks that never silently overwrite hand-written files.
+
+The package must not add Roslyn, MSBuild workspace, reflection discovery, or GUI.SVG dependencies to the consumer's runtime dependency graph. The runtime application should pay **zero documentation-generation cost**: no startup scanning, no reflection walk, no background documentation task, and no extra application execution path. Generation occurs only in the developer/build/release pipeline.
+
+### Build lifecycle
+
+The preferred lifecycle has two coordinated stages:
+
+1. **Build-time source analysis.** Use Roslyn and the project's actual compilation context to resolve declarations and source locations. This stage should not claim that source syntax alone proves the final assembly surface.
+2. **Post-build verification and generation.** After a successful build, inspect the exact target assembly produced for the current target framework/configuration. Reconcile reflected types and members with the source model, then generate the documentation outputs. If the build failed, the target assembly is missing, or the reflection comparison finds an unexplained mismatch, fail the documentation step rather than silently publish a misleading result.
+
+The post-build target must not invoke a second build of the same project or create a target recursion. Multi-targeted projects need one isolated generation pass per target framework, with outputs partitioned by framework or a deterministic merge policy. Referenced assemblies must be resolved from the actual build output/reference context rather than whichever same-named assembly happens to be loadable in the generator process.
+
+Reflection is evidence about the compiled artifact, not a replacement for Roslyn: reflection cannot recover comments and source spans and cannot describe edits that were not compiled. Conversely, source analysis alone can describe code that never made it into the successful artifact. The comparison is valuable precisely because the two evidence sources have different blind spots.
+
+### Package safety and adoption gates
+
+- Keep the package opt-in; installing it must not unexpectedly change normal builds or release artifacts.
+- Do not execute arbitrary project targets or load arbitrary assemblies in a privileged process without an explicit trust boundary. Prefer an isolated generator process and explicit assembly paths.
+- Define behavior for trimming, single-file deployment, generated source, source-link paths, symbols, and multi-target frameworks before claiming broad support.
+- Keep package versioning and schema compatibility explicit. Do not promise the current staging DTO as a stable public contract until normalization and compatibility tests are complete.
+- CI should test both enabled and disabled modes, failed builds, missing assemblies, multiple target frameworks, deterministic output, stale generated files, and reflection/source mismatches.
+- The release workflow should generate and verify documentation before packaging/publishing; publishing remains governed by the repository's separate explicit release authorization.
+
+This package/lifecycle is the target architecture, not an implemented feature yet. Current proof remains the staging CLI and focused graph renderer. The remaining gates above still apply, including solution-wide inventory, per-type Markdown generation, exact-build reflection comparison, and visual/bounds evidence.
