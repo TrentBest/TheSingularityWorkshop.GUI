@@ -70,7 +70,7 @@ File.WriteAllText(output, svg);
 
 The adapter serializes the tree into SVG XML. The viewer—not GUI.SVG itself—interprets supported declarative SVG animation instructions. The adapter does not run a timer, invoke FSM transitions, or decide where the star should move based on live application state.
 
-Implementation: [`SvgGuiRenderer.cs`](../../src/SVG/SvgGuiRenderer.cs) · [adapter contract](../../docs/SVG_ADAPTER.md).
+Implementation: [`SvgGuiRenderer.cs`](../../../src/SVG/SvgGuiRenderer.cs) · [adapter contract](../../../docs/SVG_ADAPTER.md).
 
 ## 5. Regenerate and verify
 
@@ -83,7 +83,7 @@ dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --config
 
 The first command writes `docs/assets/svg-adapter-gallery.svg` by default. Review the resulting diff; the generated artifact should be committed with intentional source changes. The SVG adapter documentation says CI regenerates this file and compares it byte-for-byte with the snapshot.
 
-Representative test coverage includes reusable symbols, patterns, markers and filter primitives, plus explicit SVG animation and transform nodes. See the [gallery-to-test map](../../docs/SVG_ADAPTER.md#gallery-to-test-map).
+Representative test coverage includes reusable symbols, patterns, markers and filter primitives, plus explicit SVG animation and transform nodes. See the [gallery-to-test map](../../../docs/SVG_ADAPTER.md#gallery-to-test-map).
 
 **Verification status for this documentation change:** source and the committed SVG were inspected, but the generator and tests have not been executed in this work step. Do not treat this walkthrough as a fresh passing build record.
 
