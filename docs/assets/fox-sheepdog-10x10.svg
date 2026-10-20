@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
 <title id="title">GUI.SVG 10 by 10 fox and sheepdog test plane</title>
-<desc id="desc">A regular ten by ten grid projected isometrically. A fox travels into the cell beside a sleeping sheepdog. The Zs stop, the dog stands and reaches with a paw, a cartoon fight cloud hides the tussle, then a limp fox, RIP stone and ascending harp-playing fox angel show the outcome.</desc>
+<desc id="desc">A regular ten by ten grid projected isometrically, with four scattered sleeping sheepdogs and four foxes traversing different grid axes. Each fox follows a curved jump arc over a dog on its route.</desc>
 <defs>
  <linearGradient id="background" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#0b1423"/><stop offset="1" stop-color="#1b3043"/></linearGradient>
  <linearGradient id="plane" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#1e4550"/><stop offset="1" stop-color="#142b3a"/></linearGradient>
@@ -14,30 +14,16 @@
  text{font-family:ui-sans-serif,system-ui,sans-serif}
  .grid-line{fill:none;stroke:#74a5b4;stroke-opacity:.48;stroke-width:1.2;vector-effect:non-scaling-stroke}
  .cell-node{fill:#ffcf86;stroke:#fff0d5;stroke-width:1;opacity:.72}
- .fox-route{animation:fox-visibility 24s linear infinite}
- @keyframes fox-visibility{0%,29%{opacity:1}31%,97%{opacity:0}100%{opacity:1}}
- .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite,zzz-off 24s linear infinite}
-  @keyframes zzz-off{0%,25%{opacity:1}27%,100%{opacity:0}}
+ .dog-zzz{transform-box:fill-box;transform-origin:center;animation:snooze 1.5s ease-in-out infinite}
  @keyframes snooze{0%,100%{transform:translateY(0);opacity:1}50%{transform:translate(4px,-5px);opacity:.55}}
- .dog-posture{transform-box:fill-box;transform-origin:center;animation:dog-stand 24s linear infinite}
- @keyframes dog-stand{0%,27%{translate:0 0;scale:1}32%,40%{translate:0 -8px;scale:1.12}45%,100%{translate:0 0;scale:1}}
- .dog-arm{transform-box:fill-box;transform-origin:left center;animation:reach 24s linear infinite}
- @keyframes reach{0%,29%{transform:translate(0,0) scaleX(.25)}32%,40%{transform:translate(-13px,4px) scaleX(1)}44%,100%{transform:translate(0,0) scaleX(.25)}}
- .fight-cloud{opacity:0;animation:cloud-time 24s linear infinite}
- @keyframes cloud-time{0%,34%{opacity:0}36%,45%{opacity:1}47%,100%{opacity:0}}
- .limp-fox{opacity:0;transform-box:view-box;animation:corpse-time 24s linear infinite}
- @keyframes corpse-time{0%,45%{opacity:0;transform:translateY(-12px)}46%{opacity:1;transform:translateY(-12px)}49%,91%{opacity:1;transform:translateY(0)}96%,100%{opacity:0;transform:translateY(0)}}
- .rip-marker{opacity:0;animation:stone-time 24s linear infinite}
- @keyframes stone-time{0%,49%{opacity:0}51%,94%{opacity:1}100%{opacity:0}}
- .angel-flight{opacity:0;transform-box:view-box;animation:angel-time 24s linear infinite}
- @keyframes angel-time{0%,51%{opacity:0;transform:translate(630px,344px) scale(.35)}54%{opacity:1}66%{opacity:1;transform:translate(700px,190px) scale(1)}72%,100%{opacity:0;transform:translate(740px,115px) scale(1.1)}}
- .wings{transform-box:fill-box;transform-origin:center;animation:wing-flap .32s ease-in-out infinite alternate}
- @keyframes wing-flap{from{transform:scaleY(.65) rotate(-8deg)}to{transform:scaleY(1.15) rotate(8deg)}}
- @media(prefers-reduced-motion:reduce){.fox-route,.dog-body,.dog-arm,.dog-zzz,.fight-cloud,.limp-fox,.rip-marker,.angel-flight,.wings{animation:none}.rip-marker{opacity:1}.dog-zzz{opacity:0}.limp-fox{opacity:1}.angel-flight{opacity:1}}
+ .moving-fox{animation:fox-arrive 18s linear infinite}
+ @keyframes fox-arrive{0%,3%{opacity:0}6%,90%{opacity:1}96%,100%{opacity:0}}
+ #sleeping-sheepdog,#moving-fox,#fight-cloud,#limp-fox,#rip-marker,#angel-flight{display:none}
+ @media(prefers-reduced-motion:reduce){.moving-fox,.dog-zzz{animation:none}.moving-fox{opacity:1}}
 </style>
 <rect width="1200" height="760" rx="24" fill="url(#background)"/>
 <text x="40" y="43" fill="#eaf2fb" font-size="24" font-weight="850" letter-spacing="1.3">THE FOX / SHEEPDOG CELL TEST</text>
-<text x="40" y="70" fill="#9fb6cc" font-size="14">GUI.SVG scene · 10 × 10 cells · regular isometric projection · one visible encounter</text>
+<text x="40" y="70" fill="#9fb6cc" font-size="14">GUI.SVG scene · 10 × 10 cells · scattered dogs · four crossing fox routes</text>
 <g id="plane-scene">
  <polygon points="600,150 960,330 600,510 240,330" fill="url(#plane)" stroke="#527d8b" stroke-width="2"/>
  <path id="grid-column-0" class="grid-line" d="M600 150L240 330"/>
@@ -70,6 +56,16 @@
  <g class="limp-fox" id="limp-fox" transform="translate(638 350)"><ellipse cx="0" cy="0" rx="16" ry="7" fill="url(#fox-fur)" stroke="#d96832" stroke-width="1.2"/><path d="M-9 0Q-25 7-22-5Q-17-11-9-3" fill="#f7eee0" stroke="#d77a3e" stroke-width="1.5"/><circle cx="14" cy="-1" r="7" fill="#f0a24e"/><path d="M12-7L11-14L16-8" fill="#ef8b43" stroke="#d96832" stroke-width="1"/><path d="M-4 5l-4 5m12-4l1 5" stroke="#f4b46b" stroke-width="3" stroke-linecap="round"/><path d="M11-2q2 2 4 0" fill="none" stroke="#182638" stroke-width="1.2"/></g>
  <g class="rip-marker" id="rip-marker" transform="translate(628 367)"><use href="#tombstone"/></g>
  <g class="angel-flight" id="angel-flight"><use href="#fox-angel"/></g>
+
+ <!-- Reproducible scattered dog positions; each fox route crosses one dog cell. -->
+ <g id="dog-scatter-a" transform="translate(600 258) scale(.78)"><use href="#dog-actor"/><text class="dog-zzz" x="25" y="-23" fill="#d5e8f8" font-size="11" font-weight="900">Z z z</text></g>
+ <g id="dog-scatter-b" transform="translate(708 348) scale(.78)"><use href="#dog-actor"/><text class="dog-zzz" x="25" y="-23" fill="#d5e8f8" font-size="11" font-weight="900">Z z z</text></g>
+ <g id="dog-scatter-c" transform="translate(492 348) scale(.78)"><use href="#dog-actor"/><text class="dog-zzz" x="25" y="-23" fill="#d5e8f8" font-size="11" font-weight="900">Z z z</text></g>
+ <g id="dog-scatter-d" transform="translate(600 438) scale(.78)"><use href="#dog-actor"/><text class="dog-zzz" x="25" y="-23" fill="#d5e8f8" font-size="11" font-weight="900">Z z z</text></g>
+ <g id="fox-east-west" class="moving-fox"><use href="#fox-actor"/><animateMotion path="M492 204 L564 240 Q600 160 636 276 L852 384" dur="18s" begin="0s" repeatCount="indefinite" rotate="auto" calcMode="linear"/></g>
+ <g id="fox-north-south" class="moving-fox"><use href="#fox-actor"/><animateMotion path="M888 294 L636 420 Q600 315 564 456 L528 474" dur="21s" begin="4s" repeatCount="indefinite" rotate="auto" calcMode="linear"/></g>
+ <g id="fox-cross-axis" class="moving-fox"><use href="#fox-actor"/><animateMotion path="M852 276 L744 330 Q708 230 672 366 L492 456" dur="19s" begin="8s" repeatCount="indefinite" rotate="auto" calcMode="linear"/></g>
+ <g id="fox-lower-axis" class="moving-fox"><use href="#fox-actor"/><animateMotion path="M348 276 L456 330 Q492 220 528 366 L708 456" dur="23s" begin="12s" repeatCount="indefinite" rotate="auto" calcMode="linear"/></g>
 </g>
-<g id="legend"><rect x="40" y="590" width="1120" height="120" rx="16" fill="#172b3d" stroke="#345064"/><text x="64" y="624" fill="#dce8f3" font-size="16" font-weight="800">10 × 10 = 100 cells · orthogonal grid before projection</text><text x="64" y="652" fill="#ffcf86" font-size="15">Wake → stand → reach → fight cloud → limp fox → RIP stone → harp angel ascends</text><text x="64" y="680" fill="#9fb6cc" font-size="12">Illustrative SVG choreography; the corresponding GUI.SVG scene model is maintained in samples/FoxSheepdogPlane/Program.cs, and this is not yet a live FSM_API trace.</text></g>
+<g id="legend"><rect x="40" y="590" width="1120" height="120" rx="16" fill="#172b3d" stroke="#345064"/><text x="64" y="624" fill="#dce8f3" font-size="16" font-weight="800">10 × 10 = 100 cells · four scattered sleeping dogs · four foxes on crossing axes</text><text x="64" y="652" fill="#ffcf86" font-size="15">Detect dog → jump arc → continue along a grid-aligned route</text><text x="64" y="680" fill="#9fb6cc" font-size="12">Curved SVG paths illustrate detection and jumping; this is not yet a live FSM_API or physics trace.</text></g>
 </svg>
