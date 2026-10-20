@@ -7,7 +7,7 @@ using TheSingularityWorkshop.Workshop.Gui.Svg;
 
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>]");
+    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>] [--model-json <model.json> --repository <owner/repo> --revision <sha> --project <project.csproj>]");
     return 2;
 }
 
@@ -33,6 +33,21 @@ if (umlOption >= 0 && (umlOption + 1 >= args.Length || args[umlOption + 1].Start
     return 2;
 }
 var umlOutput = umlOption >= 0 ? Path.GetFullPath(args[umlOption + 1]) : null;
+var modelJsonPath = GetOption(args, "--model-json");
+var modelRepository = GetOption(args, "--repository");
+var modelRevision = GetOption(args, "--revision");
+var modelProject = GetOption(args, "--project");
+if (modelJsonPath is not null &&
+    (string.IsNullOrWhiteSpace(modelRepository) || string.IsNullOrWhiteSpace(modelRevision) || string.IsNullOrWhiteSpace(modelProject)))
+{
+    Console.Error.WriteLine("--model-json requires --repository, --revision, and --project provenance values.");
+    return 2;
+}
+if (modelJsonPath is null && new[] { modelRepository, modelRevision, modelProject }.Any(value => value is not null))
+{
+    Console.Error.WriteLine("--repository, --revision, and --project are only valid with --model-json.");
+    return 2;
+}
 if (!File.Exists(input))
 {
     Console.Error.WriteLine($"Input source file does not exist: {input}");
@@ -304,4 +319,14 @@ static string StableId(SyntaxNode node)
     };
     var path = node.SyntaxTree.FilePath.Replace('\\', '/');
     return path + ":" + node.Kind() + ":" + identifier + ":" + node.SpanStart;
+}
+
+static string? GetOption(string[] arguments, string name)
+{
+    var index = Array.IndexOf(arguments, name);
+    if (index < 0)
+        return null;
+    if (index + 1 >= arguments.Length || arguments[index + 1].StartsWith("--", StringComparison.Ordinal))
+        throw new ArgumentException($"{name} requires a value.");
+    return arguments[index + 1];
 }
