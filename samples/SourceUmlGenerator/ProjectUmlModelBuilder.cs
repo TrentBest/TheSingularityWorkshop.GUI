@@ -138,7 +138,7 @@ internal static class ProjectUmlModelBuilder
         string projectPath)
     {
         var targetName = target.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
-        var targetIsInModel = ids.TryGetValue(target, out var targetId);
+        var targetIsInModel = ids.TryGetValue(target.OriginalDefinition, out var targetId);
         var syntax = source.DeclaringSyntaxReferences.FirstOrDefault()?.GetSyntax();
         var location = syntax is null ? null : SourceDeclaration(syntax, projectPath);
         var span = location?.Span;
