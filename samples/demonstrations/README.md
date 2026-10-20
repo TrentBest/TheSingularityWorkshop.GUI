@@ -9,7 +9,7 @@ Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries g
 | # | Recipe | Focus | Evidence status |
 |---|---|---|---|
 | 01 | [Primitive geometry](recipes/01-primitive-geometry.md) | Semantic nodes → basic SVG | Generator and XML assertions exist; successful execution still needs to be recorded |
-| 02 | [Coordinate systems, functions, and transforms](recipes/02-coordinate-functions.md) | Cartesian plane; base function plus vertical/horizontal translations and reflection | Generator and SVG/XML assertions passed in CI; artifact generated and uploaded; visual review pending |
+| 02 | [Coordinate systems, functions, and transforms](recipes/02-coordinate-functions.md) | Cartesian plane; base function plus vertical/horizontal translations and reflection | Generator and SVG/XML assertions passed in CI; artifact visually reviewed; legend layout corrected and reverified in run [39452760590](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39452760590) |
 | 03 | Reusable symbols and repeated entities | Define once, reuse many times | Planned |
 | 04 | [Animated scene](recipes/04-animated-scene.md) | SVG definitions and declarative motion | Existing generated gallery snapshot; regenerate and verify against source |
 | 05 | Sequential visual explanation | One step at a time or a left-to-right sequence with the current step highlighted | Planned; use SVG animation only for presentation, not as a claim of live computation |
@@ -18,7 +18,7 @@ Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries g
 
 | # | Recipe | Package boundary | Evidence status |
 |---|---|---|---|
-| 06 | Physics / math lesson | GUI Core + GUI.SVG + verified Physics data or API | Planned; start with a Physics-owned lesson/run record, preserve source provenance, and connect each visual step to actual values |
+| 06 | [Projectile trajectory from a recorded Physics run](recipes/03-projectile-trajectory.md) | GUI Core + GUI.SVG + Physics-owned JSON run record | Consumer and pinned-source CI step committed; first execution exposed a top-level exit-code compile error, now corrected; passing CI and SVG visual review still pending |
 | 07 | State-driven behavior trace | FSM_API + verified presentation path | Planned; requires deterministic runtime state and trace |
 | 08 | FSM_API-driven fox and sheepdog | FSM_API + GUI.SVG; Renderer/Visualize separately | Planned; must be driven by real execution, not a parallel animation timeline |
 | 09 | UML/data → textual scene → Renderer → Visualize | Actual consuming package set to be verified | Planned; no integration claim until a runnable consumer exists |
