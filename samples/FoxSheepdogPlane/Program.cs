@@ -12,7 +12,20 @@ var scene = GuiBuilder.Create("svg-scene", "fox-sheepdog-plane")
     .Property("aria-label", "Ten by ten isometric fox and sheepdog behavior test plane")
     .Property("description", "A regular orthogonal grid projected isometrically. A fox enters the cell beside a sleeping sheepdog; the dog wakes, reaches, a cartoon fight cloud hides the tussle, then a limp fox, RIP stone, and ascending harp angel show the outcome.");
 
-scene.Child("svg-rect", "sky", n => n.Property("width", "1200").Property("height", "760").Property("fill", "#0b1423"));
+scene.Child("svg-defs", "definitions", defs => defs
+    .Child("svg-linear-gradient", "background", gradient => gradient
+        .Property("x1", "0%").Property("y1", "0%").Property("x2", "100%").Property("y2", "100%")
+        .Child("svg-stop", "background-start", stop => stop.Property("offset", "0%").Property("stop-color", "#0b1423"))
+        .Child("svg-stop", "background-end", stop => stop.Property("offset", "100%").Property("stop-color", "#1b3043")))
+    .Child("svg-linear-gradient", "plane", gradient => gradient
+        .Property("x1", "0%").Property("y1", "0%").Property("x2", "100%").Property("y2", "100%")
+        .Child("svg-stop", "plane-start", stop => stop.Property("offset", "0%").Property("stop-color", "#1e4550"))
+        .Child("svg-stop", "plane-end", stop => stop.Property("offset", "100%").Property("stop-color", "#142b3a")))
+    .Child("svg-linear-gradient", "fox-fur", gradient => gradient
+        .Property("x1", "0%").Property("y1", "0%").Property("x2", "100%").Property("y2", "100%")
+        .Child("svg-stop", "fox-start", stop => stop.Property("offset", "0%").Property("stop-color", "#ffc778"))
+        .Child("svg-stop", "fox-end", stop => stop.Property("offset", "100%").Property("stop-color", "#e66b32"))));
+scene.Child("svg-rect", "sky", n => n.Property("width", "1200").Property("height", "760").Property("fill", "url(#background)"));
 scene.Child("svg-text", "heading", n => n.Text("THE FOX / SHEEPDOG CELL TEST")
     .Property("x", "40").Property("y", "42").Property("fill", "#eaf2fb").Property("font-size", "24").Property("font-weight", "800"));
 scene.Child("svg-text", "subtitle", n => n.Text("GUI.SVG scene model · 10 × 10 cells · parallel grid families · one explicit encounter")
@@ -51,8 +64,8 @@ scene.Child("svg-g", "plane", plane =>
 
     // Cell (5,5) is the sleeping sheepdog. The fox travels along row 5 and
     // reaches the adjacent cell (6,5), where the dog can reach out.
-    plane.Child("svg-rect", "dog-cell-highlight", cell => cell
-        .Property("x", "582").Property("y", "312").Property("width", "36").Property("height", "36")
+    plane.Child("svg-polygon", "dog-cell-highlight", cell => cell
+        .Property("points", "600,330 636,348 600,366 564,348")
         .Property("fill", "#ffcf86").Property("fill-opacity", "0.12").Property("stroke", "#ffcf86").Property("stroke-width", "1.5"));
 
     plane.Child("svg-g", "sleeping-dog", dog =>
@@ -113,8 +126,6 @@ scene.Child("svg-g", "plane", plane =>
         angel.Child("svg-path", "angel-wings", p => p.Property("d", "M-6 -10 Q-19 -20 -20 -7 Q-16 2 -7 2 M6 -10 Q19 -20 20 -7 Q16 2 7 2").Property("fill", "#fff0d5").Property("stroke", "#ffcf86").Property("stroke-width", "1.5"));
         angel.Child("svg-path", "angel-body", p => p.Property("d", "M-7 -9 Q-12 0 -7 8 L0 3 L7 8 Q12 0 7 -9 Z").Property("fill", "#e8f5ff").Property("stroke", "#a7d4ed").Property("stroke-width", "1"));
         angel.Child("svg-path", "angel-harp", p => p.Property("d", "M10 -5 L17 -2 L15 7 M12 -2 L17 3 M12 1 L16 6").Property("fill", "none").Property("stroke", "#ffcf86").Property("stroke-width", "1.4"));
-        angel.Child("svg-animate-motion", "angel-lift", motion => motion.Property("path", "M630 344 Q660 280 710 190").Property("dur", "4s").Property("begin", "9s").Property("repeatCount", "indefinite").Property("rotate", "0"));
-        angel.Child("svg-animate", "angel-fade", animation => animation.Property("attributeName", "opacity").Property("values", "0;1;1;0").Property("keyTimes", "0;0.1;0.8;1").Property("dur", "4s").Property("begin", "9s").Property("repeatCount", "indefinite"));
     });
 });
 
