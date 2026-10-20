@@ -487,7 +487,22 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 
         try
         {
-            var reflectionAssembly = System.Reflection.Assembly.LoadFrom(fullAssemblyPath);
+            // Load the requested file by path in its own load context. LoadFrom may
+            // unify with the generator's project-reference copy and would not prove
+            // that the explicitly selected build artifact was inspected.
+            var reflectionAssembly = System.Reflection.Assembly.LoadFile(fullAssemblyPath);
+            if (!string.Equals(Path.GetFullPath(reflectionAssembly.Location), fullAssemblyPath, StringComparison.Ordinal))
+            {
+                Console.Error.WriteLine($"Reflection loaded '{reflectionAssembly.Location}' instead of requested artifact '{fullAssemblyPath}'.");
+                return 1;
+            }
+            var reflectedAssemblyIdentity = reflectionAssembly.GetName().ToString();
+            if (!string.Equals(reflectedAssemblyIdentity, model.Provenance.AssemblyIdentity, StringComparison.Ordinal))
+            {
+                Console.Error.WriteLine($"Reflection assembly identity '{reflectedAssemblyIdentity}' does not match compiler model identity '{model.Provenance.AssemblyIdentity}'.");
+                return 1;
+            }
+
             var reflectedNames = reflectionAssembly.GetTypes()
                 .Where(type => !type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), inherit: false)
                     && !type.Name.Contains("<", StringComparison.Ordinal))
