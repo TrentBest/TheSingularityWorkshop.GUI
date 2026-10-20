@@ -12,7 +12,8 @@ permissions:
 
 jobs:
   solution-uml:
-    runs-on: ubuntu-latest
+    # Reflection.GetTypes() must be able to load the WPF assembly and WindowsDesktop references.
+    runs-on: windows-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -20,10 +21,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 8.0.x
-      - name: Generate and verify all maintained product projects
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Generate, build, and reconcile all maintained product projects
         env:
           SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: python3 scripts/generate_solution_uml.py
+        run: python scripts/generate_solution_uml.py
       - name: Upload solution-level UML inventory
         uses: actions/upload-artifact@v7
         with:
