@@ -54,6 +54,29 @@ jobs:
           --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard
           --inventory-markdown artifacts/Core.uml-inventory.md
           --type-pages-dir artifacts/Core.uml-types
+      - name: Prove exact-build reflection gate rejects the wrong assembly
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          log="artifacts/reflection-identity-mismatch.log"
+          set +e
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj \
+            --configuration Release -- \
+            --project-model-json artifacts/ReflectionIdentityMismatch.uml-model.json \
+            --project src/Core/TheSingularityWorkshop.GUI.Core.csproj \
+            --repository TrentBest/TheSingularityWorkshop.GUI \
+            --revision "$SOURCE_REVISION" \
+            --configuration Release \
+            --reflection-assembly samples/SourceUmlGenerator/bin/Release/net8.0/SourceUmlGenerator.dll \
+            > "$log" 2>&1
+          status=$?
+          set -e
+          test "$status" -ne 0 || { echo "Expected reflection identity mismatch to fail closed"; cat "$log"; exit 1; }
+          grep -q "does not match compiler model identity" "$log" || { cat "$log"; exit 1; }
+          echo "Verified a different assembly cannot satisfy the exact-build reflection gate."
+          
       - name: Verify project-semantic UML model contract
         run: |
           python3 - <<'PY'
