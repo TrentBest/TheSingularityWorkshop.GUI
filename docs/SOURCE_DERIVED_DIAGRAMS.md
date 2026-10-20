@@ -9,9 +9,7 @@ The source-derived diagram path begins with C# syntax, projects declarations int
 `samples/SourceUmlGenerator` currently projects top-level type declarations (class, struct, interface, enum, and record), nested types, delegates, and declared members into inspectable cards. Namespace identity is shown in type subtitles; this first slice does not yet build a nested namespace containment tree. It validates C# syntax before emitting SVG and verifies generated XML, accessible title/description, and unique card IDs.
 
 ```sh
-dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj -- \\
-  src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify \\
-  --uml artifacts/DataCard.uml.svg
+dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj -- src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg
 ```
 
 The tool now emits both the general GUI.SVG structure view and a first UML class-compartment view for the first top-level type in the source file. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. This is still not a complete semantic UML generator: base-list names are explicitly unresolved, relationships are not yet drawn as UML connectors, output is one class per invocation, and it does not yet generate type pages or support round-trip editing.
