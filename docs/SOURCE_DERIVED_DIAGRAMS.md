@@ -6,6 +6,8 @@ The source-derived diagram path begins with C# syntax, projects declarations int
 
 The intended end state is **living UML documentation**: inventory every maintained type, generate per-type pages and class views, embed generated diagrams in articles, and regenerate/verify them when source changes. The architecture, provenance rules, reflection complement, documentation model, drift checks, and acceptance criteria are defined in [Living UML Architecture](LIVING_UML_ARCHITECTURE.md).
 
+A complementary direction is **observable diagram data**: a console app or test driver can construct and mutate a model, while a view observes consistent revisions and re-renders. That does not make SVG itself reactive; a host must refresh the displayed SVG when the model changes. See [Observable Diagram Models and Console-Driven Views](OBSERVABLE_DIAGRAM_MODELS.md).
+
 ## First vertical slice
 
 `samples/SourceUmlGenerator` currently projects top-level type declarations (class, struct, interface, enum, and record), nested types, delegates, and declared members into inspectable cards. Namespace identity is shown in type subtitles; this first slice does not yet build a nested namespace containment tree. It validates C# syntax before emitting SVG and verifies generated XML, accessible title/description, and unique card IDs.
@@ -14,7 +16,7 @@ The intended end state is **living UML documentation**: inventory every maintain
 dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj -- src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg --type DataCard
 ```
 
-The tool emits a general GUI.SVG structure view and a UML class-compartment view for the selected declaration. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. This is still not a complete semantic UML generator: base-list names are unresolved, relationships are not yet drawn as UML connectors, and the output is one class per invocation. `--type DataCard` selects a declaration by its simple name or fully qualified namespace/type path; ambiguous simple names fail closed. It does not yet generate a project-wide type inventory, per-type documentation pages, compiled reflection snapshots, or round-trip editing.
+The tool emits a general GUI.SVG structure view and a UML class-compartment view for the selected declaration. The UML view includes fields, properties, operations, and declared base-list references, with accessible title/description. This is still not a complete semantic UML generator: base-list names are unresolved, relationships are not yet drawn as UML connectors, and the output is one class per invocation. `--type DataCard` selects a declaration by its simple name or fully qualified namespace/type path; ambiguous simple names fail closed. It does not yet generate a project-wide type inventory, per-type documentation pages, compiled reflection snapshots, or round-trip editing. It also does not yet implement live model subscriptions or host-driven SVG refresh.
 
 ## Next milestones
 
@@ -24,7 +26,8 @@ The tool emits a general GUI.SVG structure view and a UML class-compartment view
 4. Cross-check the source model against reflection from the exact successfully built target assemblies; keep source locations and documentation comments from Roslyn.
 5. Add fixtures that change declarations and prove the model/page/SVG changes, plus malformed-source/build-failure fixtures that prove fail-closed behavior.
 6. Verify stale/missing/orphaned artifact detection, accessibility, viewBox bounds, text legibility, and deterministic output in CI.
-7. Add validated domain commands before offering source-edit affordances. SVG controls alone must never mutate source.
+7. Define the observable model/snapshot and mutation-notification contract; prove console-driven model changes and a host-level SVG refresh before claiming live behavior.
+8. Add validated domain commands before offering source-edit affordances. SVG controls alone must never mutate source.
 
 ## Architectural boundary
 
@@ -32,6 +35,7 @@ The tool emits a general GUI.SVG structure view and a UML class-compartment view
 - Compiled reflection supplements source analysis; it does not replace it or constitute an AST.
 - The canonical documentation model is authoritative for generated pages/diagrams; `DataCard` is a renderer-neutral presentation projection, not the source model.
 - GUI.SVG owns SVG manifestation; the generator owns source parsing, semantic analysis, projection, and regeneration.
+- An observable model owns state and revision semantics; a renderer observes snapshots and must not become the authoritative store.
 - Generated SVG is output. Change source/model/rendering inputs, then regenerate—do not hand-edit generated output as if it were authoritative.
 
-See [Data Cards and UML](DATA_CARDS_AND_UML.md), [Per-Type Documentation and UML Standard](CLASS_DOCUMENTATION_STANDARD.md), and [Living UML Architecture](LIVING_UML_ARCHITECTURE.md).
+See [Data Cards and UML](DATA_CARDS_AND_UML.md), [Per-Type Documentation and UML Standard](CLASS_DOCUMENTATION_STANDARD.md), [Living UML Architecture](LIVING_UML_ARCHITECTURE.md), and [Observable Diagram Models](OBSERVABLE_DIAGRAM_MODELS.md).
