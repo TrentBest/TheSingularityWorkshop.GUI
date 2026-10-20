@@ -27,6 +27,37 @@ jobs:
           dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
           --configuration Release --
           src/Core/DataCard.cs artifacts/DataCard.source-structure.svg --verify --uml artifacts/DataCard.uml.svg --type DataCard
+      - name: Emit canonical syntax-only UML model
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: >-
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
+          --configuration Release --
+          src/Core/DataCard.cs artifacts/DataCard.source-structure.svg
+          --model-json artifacts/DataCard.uml-model.json
+          --repository TrentBest/TheSingularityWorkshop.GUI
+          --revision "$SOURCE_REVISION"
+          --project src/Core/TheSingularityWorkshop.GUI.Core.csproj
+      - name: Verify canonical UML model contract
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("artifacts/DataCard.uml-model.json")
+          model = json.loads(path.read_text(encoding="utf-8"))
+          assert model["schemaVersion"] == "1.0", model.get("schemaVersion")
+          provenance = model["provenance"]
+          assert provenance["repository"] == "TrentBest/TheSingularityWorkshop.GUI"
+          assert provenance["sourceRevision"], "source revision provenance is required"
+          assert provenance["projectPath"] == "src/Core/TheSingularityWorkshop.GUI.Core.csproj"
+          assert provenance["analysisMode"] == "syntax-only"
+          assert model["types"], "expected at least one documented type"
+          assert any(t["identity"]["metadataName"] == "DataCard" for t in model["types"])
+          assert model["relationships"] == [], "syntax-only mode must not assert semantic relationships"
+          print(f"Validated schema {model['schemaVersion']} with {len(model['types'])} type(s); no semantic relationships asserted.")
+          PY
+
       - name: Verify source-derived SVG contract
         shell: bash
         run: |
