@@ -10,7 +10,7 @@ Defines the WPF component-builder contract over `ICoreBuilder<FrameworkElement>`
 
 ## Source-grounded facts
 
-- This interface is the WPF-facing component-builder abstraction.
+- The interface extends `ICoreBuilder<FrameworkElement>` and adds a nullable `Parent` property used to track builder hierarchy.
 
 ## Declared types and generated UML evidence
 
