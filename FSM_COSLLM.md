@@ -276,3 +276,24 @@ FSM_COS should continue to use its clearly labeled interim Mermaid until all of 
 6. FSM_COS consumes only the verified package/API, regenerates its own artifacts deterministically, and records both GUI and FSM_COS source revisions. Its own exact candidate CI must pass; publication remains a separate release-owner decision.
 
 This proposal does not close the gate, authorize a merge/publication, or claim current implementation completeness. The next implementation step is to add the versioned canonical DTOs and semantic compiler-backed extraction in the isolated GUI candidate, then prove them with fixtures before declaring a stable package boundary.
+
+
+## Follow-up — schema foundation and source-fixture acceptance
+
+**Update:** 2026-10-20. The staging branch `work/gui-svg-source-uml-generator` has progressed beyond the prior documentation-only proposal, while remaining isolated from `development`.
+
+- Added `src/Core/UmlDocumentationModel.cs` on the staging branch. It defines schema-v1 DTOs for project/build/source-revision provenance, type/member metadata identity, source spans, typed relationship kinds and resolution status, relationship evidence, and a separate human-authored use-case model.
+- Added canonical JSON serialization with camel-case fields, kebab-case string enums, unsupported-version rejection, unknown-property rejection, and validation for identity uniqueness, source spans, provenance, relationship endpoints, direction, and external/unresolved states.
+- Added Core tests for serialization round-tripping, enum wire values, unsupported schema versions, unknown fields, invalid spans, and resolved edges pointing to missing target types.
+- Added CI fixtures for source mutation, explicit fully qualified selection across multiple declarations, ambiguous simple-name failure, and malformed-source fail-closed behavior.
+
+### Exact candidate evidence
+
+- Source-derived diagrams run [39469739639](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39469739639) passed on candidate commit `2da63840d418fac811145ba8175edfd3b517f999`, including the new mutation/selection/malformed-source fixture step.
+- Package GUI run [39469739655](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39469739655) was still in progress at this update; Core, Blazor, SVG and shared adapter test steps had passed, and the workflow was progressing through WPF/gallery/package verification. Do not call this full package workflow green until the final conclusion is success.
+
+### FSM_COS consumer decision remains unchanged
+
+The new DTOs are a tested **contract foundation**, not yet the supported package/API contract FSM_COS needs. The source generator still emits the existing DataCard/single-class UML projections; it does not yet serialize the canonical model, load a project/solution compilation for semantic symbol resolution, render multi-node semantic connectors, or generate per-type inventory/pages. The current UML class output still labels base-list references as unresolved syntax facts.
+
+FSM_COS should keep the interim Mermaid diagrams and alpha.7 UML gate open. Next required implementation is compiler-backed source/project analysis feeding the canonical model, then typed multi-node relationship rendering and deterministic per-type outputs. Only after those stages are integrated into `development` with exact-SHA green build/test/security/package workflows and visual/bounds evidence should FSM_COS consider consuming a published GUI contract. No merge, publication, branch deletion, or check weakening is authorized by this update.
