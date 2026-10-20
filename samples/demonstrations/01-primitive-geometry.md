@@ -1,6 +1,6 @@
 # 01 — Primitive geometry
 
-**Level:** 1 · **Topic:** Basic SVG manifestation · **Status:** Reference artifact exists; generation verification pending
+**Level:** 1 · **Topic:** Basic SVG manifestation · **Status:** Runnable adapter-generation proof added; execution still needs verification
 
 [Open the SVG artifact](01-primitive-geometry.svg) · [View the gallery](index.html)
 
@@ -21,6 +21,10 @@ A standalone SVG containing a background, a rounded rectangle, a circle, a line,
 - It does not prove FSM_COS composition, GPU rendering, or interoperability with another host.
 
 We must preserve these distinctions instead of treating a picture as evidence for a runtime claim.
+
+## Runnable adapter generation proof
+
+The actual source is now in [PrimitiveGeometry/Program.cs](PrimitiveGeometry/Program.cs), with project references to the repository's Core and SVG implementations. Follow [its run instructions](PrimitiveGeometry/README.md). It parses the renderer output and asserts that the expected rectangle and circle are present. This is stronger than the reference picture, but the project has not been executed in this session, so a passing run is not yet claimed.
 
 ## Adapter generation contract
 
@@ -47,7 +51,7 @@ var svg = new SvgGuiRenderer().Render(scene, width: 960, height: 540);
 File.WriteAllText("01-primitive-geometry.generated.svg", svg);
 ```
 
-This snippet follows the documented builder/renderer pattern. The next verification task is to compile it against the current project, generate the file, and compare the output to the reference (normalizing irrelevant serializer differences if needed). If the current API differs, update the example to match the implementation rather than changing the implementation to fit an unverified snippet.
+This snippet follows the documented builder/renderer pattern. The next verification task is to compile and run the checked-in proof project, then compare the generated output with the reference (normalizing irrelevant serializer differences if needed). If the current API differs, update the example to match the implementation rather than changing the implementation to fit an unverified snippet.
 
 ## Acceptance criteria
 
