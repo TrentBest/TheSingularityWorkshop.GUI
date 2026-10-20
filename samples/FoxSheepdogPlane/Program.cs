@@ -143,7 +143,7 @@ text { font-family: ui-sans-serif, system-ui, sans-serif; }
 @keyframes snooze { 0%,100% { transform: translate(0,0); opacity:1; } 50% { transform: translate(4px,-5px); opacity:.55; } }
 @keyframes zzz-off { 0%,27% { opacity:1; } 29%,100% { opacity:0; } }
 .dog-posture { transform-box: fill-box; transform-origin: center; animation: dog-stand 24s linear infinite; }
-@keyframes dog-stand { 0%,28% { transform:translateY(0) scale(1); } 31%,39% { transform:translateY(-8px) scale(1.12); } 44%,100% { transform:translateY(0) scale(1); } }
+@keyframes dog-stand { 0%,28% { translate:0 0; scale:1; } 31%,39% { translate:0 -8px; scale:1.12; } 44%,100% { translate:0 0; scale:1; } }
 .dog-arm { transform-box: fill-box; transform-origin: 0% 50%; animation: dog-reach 24s linear infinite; }
 @keyframes dog-reach { 0%,30% { transform:translate(0,0) scaleX(.2); } 32%,39% { transform:translate(-7px,4px) scaleX(1); } 43%,100% { transform:translate(0,0) scaleX(.2); } }
 .fight-cloud { opacity:0; animation:fight-cloud 24s linear infinite; }
