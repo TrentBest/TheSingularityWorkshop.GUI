@@ -1,10 +1,10 @@
 # GUI Production Type Documentation Inventory
 
-**Baseline:** `development` at commit `e5e4eac2040fbface38356ea5bba84a05ef92701` plus the source paths listed below.  
-**Scope:** Core, Blazor, SVG, and WPF production source.  
-**Initial scan:** 33 C# source files; 40 declared types detected by a source-text declaration scan. This is a reviewable baseline, not yet parser-backed CI proof; aliases, conditional compilation, generated code, and unusual declaration formatting must be accounted for by the eventual syntax-aware checker.
+**Historical baseline:** `development` at commit `e5e4eac2040fbface38356ea5bba84a05ef92701` plus the source paths listed below. This inventory is a manually assembled review snapshot, not the current repository-wide generated inventory.  
+**Scope at that baseline:** Core, Blazor, SVG, and WPF production source.  
+**Initial scan at that baseline:** 33 C# source files; 40 declared types detected by a source-text declaration scan. This was a reviewable source-text snapshot, not parser-backed CI proof; aliases, conditional compilation, generated code, and unusual declaration formatting were not exhaustively handled. Current source-derived UML CI now generates a parser/compiler-backed inventory for the Core project only; it does not yet replace or prove completeness of this historical cross-adapter inventory.
 
-Every row is currently **OPEN** until its dedicated Markdown page and embedded UML SVG have been created, source-reviewed, and validated. Page and diagram paths are reserved according to [the standard](../CLASS_DOCUMENTATION_STANDARD.md). Internal/nested types are included.
+The `OPEN` statuses below are the statuses recorded by the historical inventory review. They are not live CI status and should not be interpreted as evidence that no page or SVG has since been added. Update each row only after checking its current artifact and source evidence. Page and diagram paths are reserved according to [the standard](../CLASS_DOCUMENTATION_STANDARD.md). Internal/nested types are included.
 
 | Area | Declared type | Namespace observed in source | Source file | Dedicated page | UML SVG | Status |
 |---|---|---|---|---|---|---|
