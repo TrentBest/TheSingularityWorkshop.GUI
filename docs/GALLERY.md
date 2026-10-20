@@ -12,6 +12,14 @@ This is the repository's visual index. Each entry identifies what the artifact p
 
 **Reproduce and inspect:** follow [Source-derived UML tooling](SOURCE_DERIVED_UML.md), then read [Living UML architecture and acceptance gates](LIVING_UML_ARCHITECTURE.md).
 
+## GUI.SVG renderer guide
+
+**Artifact:** [GUI.SVG Guide](SVG_GUIDE.md) and the [Fox/Sheepdog scene model](../samples/FoxSheepdogPlane/Program.cs).
+
+**What it explains:** the current renderer's element families, coordinate-system handling, validation rules, explicit animation serialization, and accessibility/evidence limits. It distinguishes scene-authored SVG from a live runtime or physics simulation.
+
+**Evidence boundary:** the guide is source-grounded; browser-level accessibility, animation interoperability, and external-resource policy remain separate verification work.
+
 ## GUI.SVG demonstration recipes
 
 Browse the [demonstration gallery](../samples/demonstrations/GALLERY.md). Each recipe describes its input, generated artifact, verification, and evidence limits. The [demonstration index](../samples/demonstrations/README.md) tracks the progression toward runtime-backed proof.
