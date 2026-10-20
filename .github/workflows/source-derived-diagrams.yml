@@ -49,6 +49,7 @@ jobs:
           --repository TrentBest/TheSingularityWorkshop.GUI
           --revision "$SOURCE_REVISION"
           --configuration Release
+          --reflection-assembly src/Core/bin/Release/net8.0/TheSingularityWorkshop.GUI.Core.dll
           --diagram-svg artifacts/DataCard.semantic-uml.svg
           --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard
           --inventory-markdown artifacts/Core.uml-inventory.md
