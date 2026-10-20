@@ -35,6 +35,10 @@ var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
     .Text("Recipe 02: Cartesian coordinates and f(x) = x²")
     .Property("minimum", coordinateMinimum.ToString("R", CultureInfo.InvariantCulture))
     .Property("maximum", coordinateMaximum.ToString("R", CultureInfo.InvariantCulture))
+    // The renderer otherwise places both axes at the midpoint of the configured
+    // range. Explicit zero keeps the picture mathematically honest for [-2, 4].
+    .Property("origin-x", "0")
+    .Property("origin-y", "0")
     .Property("grid", "visible")
     .Property("axes", "visible")
     .Property("origin", "visible")
