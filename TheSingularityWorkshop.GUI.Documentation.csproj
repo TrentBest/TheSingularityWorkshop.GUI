@@ -10,6 +10,12 @@
     <None Include="ROADMAP.md" Link="Solution Documentation\ROADMAP.md" />
 
     <None Include="docs\ARCHITECTURE.md" Link="Documentation\ARCHITECTURE.md" />
+    <None Include="docs\REPOSITORY_ARCHITECTURE_AUDIT.md" Link="Documentation\REPOSITORY_ARCHITECTURE_AUDIT.md" />
+    <None Include="docs\SOURCE_DERIVED_UML.md" Link="Documentation\SOURCE_DERIVED_UML.md" />
+    <None Include="docs\LIVING_UML_ARCHITECTURE.md" Link="Documentation\LIVING_UML_ARCHITECTURE.md" />
+    <None Include="docs\UML_VISUAL_AUDIT.md" Link="Documentation\UML_VISUAL_AUDIT.md" />
+    <None Include="docs\DATA_CARDS_AND_UML.md" Link="Documentation\DATA_CARDS_AND_UML.md" />
+    <None Include="docs\GALLERY.md" Link="Documentation\GALLERY.md" />
     <None Include="docs\GUI_COVERAGE_SURVEY.md" Link="Documentation\GUI_COVERAGE_SURVEY.md" />
     <None Include="docs\GUI_EXECUTION_MODEL.md" Link="Documentation\GUI_EXECUTION_MODEL.md" />
     <None Include="docs\GUI_EXPRESSIVENESS.md" Link="Documentation\GUI_EXPRESSIVENESS.md" />
