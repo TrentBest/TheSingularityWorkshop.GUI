@@ -20,7 +20,7 @@ if (!File.Exists(input))
     return 2;
 }
 
-var sourceIdentity = args[0].Replace('\\\\', '/');
+var sourceIdentity = args[0].Replace('\\', '/');
 var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(input), path: sourceIdentity);
 var root = await tree.GetRootAsync();
 var diagnostics = tree.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
