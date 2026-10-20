@@ -12,7 +12,7 @@ if (args.Length > 0 && string.Equals(args[0], "--project-model-json", StringComp
 
 if (args.Length < 2)
 {
-    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>] [--model-json <model.json> --repository <owner/repo> --revision <sha> --project <project.csproj>] | --project-model-json <model.json> --project <project.csproj> --repository <owner/repo> --revision <sha> [--configuration Release --inventory-markdown <inventory.md>]");
+    Console.Error.WriteLine("Usage: SourceUmlGenerator <input.cs> <structure.svg> [--verify] [--uml <class-diagram.svg> --type <name-or-namespace.name>] [--model-json <model.json> --repository <owner/repo> --revision <sha> --project <project.csproj>] | --project-model-json <model.json> --project <project.csproj> --repository <owner/repo> --revision <sha> [--configuration Release --inventory-markdown <inventory.md> --type-pages-dir <directory>]");
     return 2;
 }
 
