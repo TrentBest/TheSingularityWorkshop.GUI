@@ -38,6 +38,40 @@ jobs:
           --repository TrentBest/TheSingularityWorkshop.GUI
           --revision "$SOURCE_REVISION"
           --project src/Core/TheSingularityWorkshop.GUI.Core.csproj
+      - name: Emit project-semantic Core UML model
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: >-
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj
+          --configuration Release --
+          --project-model-json artifacts/Core.uml-model.json
+          --project src/Core/TheSingularityWorkshop.GUI.Core.csproj
+          --repository TrentBest/TheSingularityWorkshop.GUI
+          --revision "$SOURCE_REVISION"
+          --configuration Release
+      - name: Verify project-semantic UML model contract
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          model = json.loads(Path("artifacts/Core.uml-model.json").read_text(encoding="utf-8"))
+          assert model["schemaVersion"] == "1.0", model.get("schemaVersion")
+          provenance = model["provenance"]
+          assert provenance["repository"] == "TrentBest/TheSingularityWorkshop.GUI"
+          assert provenance["sourceRevision"]
+          assert provenance["projectPath"] == "src/Core/TheSingularityWorkshop.GUI.Core.csproj"
+          assert provenance["analysisMode"] == "project-semantic"
+          assert model["types"], "expected compiled project types"
+          ids = {item["id"] for item in model["types"]}
+          assert any(item["identity"]["metadataName"] == "DataCard" for item in model["types"])
+          assert any(item["identity"]["metadataName"] == "UmlDocumentationModel" for item in model["types"])
+          for edge in model["relationships"]:
+              if edge["resolution"] == "resolved":
+                  assert edge["targetTypeId"] in ids, edge
+                  assert edge["provenance"]["kind"] == "roslyn-symbol", edge
+          print(f"Validated project-semantic model with {len(model['types'])} types and {len(model['relationships'])} compiler-symbol relationships.")
+          PY
       - name: Verify canonical UML model contract
         run: |
           python3 - <<'PY'
