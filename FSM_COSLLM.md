@@ -106,3 +106,14 @@ These results verify the source-derived diagram workflow on the candidate SHA, b
 - The log alone does **not** establish whether the crash is an existing runner/environment issue or a regression from this candidate. Do not suppress or dismiss it without a baseline comparison or a reproducible diagnosis. No workflow was rerun or altered as part of this investigation.
 
 The source-derived diagram workflow remains green for candidate SHA `1317c31f44cb0614ed845ea18fd7cb44cf0c7950` ([run 39461444762](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39461444762)); that proves its current generation/parity checks only, not semantic UML completeness or release readiness. Next safe step is to compare the same WPF job against a known-good `development` commit/run, then separately continue explicit type targeting, source inventory, semantic relationships, and fixture mutation coverage. Do not merge, publish, alter master, delete branches, or weaken required checks without authorization.
+
+## Follow-up implementation — explicit UML type targeting
+
+**Observed:** 2026-10-20. The source-derived UML staging branch now supports `--type <name-or-namespace.name>` for choosing the class diagram declaration rather than silently always selecting the first top-level type.
+
+- Generator commit: https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/580629e3175f00105803cda2eb41f0550dfef1fe
+- CI invocation commit: https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/86ccbadfab918af2b953c413c55fe72f3bb43911
+- Documentation commit: https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/2a0ca6cedfc8fe603e2a27eced52aaa8e21a3b63
+- The workflow now invokes the generator with `--type DataCard`. The available workflow-run lookup returned no run for the latest candidate SHA, so this is implementation evidence, not a passing CI claim.
+
+This is only the first missing capability closed. The generator still needs semantic symbol resolution and drawn relationships, deterministic per-type inventory/page generation, source-mutation fixtures, malformed-input tests, and rendered-artifact inspection. The candidate branch remains staging and divergent; do not treat these commits as integrated into `development` or as grounds to close the FSM_COS alpha.7 gate.
