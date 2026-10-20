@@ -13,7 +13,7 @@ The canonical interchange model in `src/Core/UmlDocumentationModel.cs` is a prov
 - The source file being analyzed.
 - GUI Core and GUI.SVG projects restored through the generator project references.
 
-The current project references Roslyn `Microsoft.CodeAnalysis.CSharp` 4.12.0. It does not yet load an MSBuild project/solution or compiler-resolve symbols.
+The tool has two distinct modes. The source-file mode uses Roslyn syntax APIs. The `--project-model-json` mode loads a `.csproj` through `MSBuildWorkspace`, obtains a compiler `Compilation`, fails closed on compilation errors, and emits a project-semantic model. It currently resolves inheritance and interface-realization relationships from Roslyn symbols; it does not yet render those relationships as multi-node SVG connectors or generate per-type pages. The project mode uses `Microsoft.CodeAnalysis.CSharp` and `Microsoft.CodeAnalysis.Workspaces.MSBuild` 4.12.0 plus `Microsoft.Build.Locator` 1.7.8.
 
 ## Current command shape
 
@@ -33,16 +33,16 @@ This is a **source-shaped command reference**, not a claim that every arbitrary 
 - **Focused class SVG:** fields, properties, operations, and explicitly unresolved declared type references.
 - **Workflow fixtures:** selection in a multi-type source file, ambiguous selection rejection, source mutation changing generated output, and malformed C# failing closed without emitting diagram output.
 - **SVG structural contract:** `scripts/verify_svg_contract.py` checks XML parseability, non-empty accessible title/description, finite positive `viewBox` dimensions, duplicate IDs, and broken local fragment/`url(#...)` references for generated workflow artifacts. It deliberately does not claim to measure rendered text overflow or replace visual inspection.
-- **Syntax-only documentation model:** emitted with `--model-json` when `--repository`, `--revision`, and `--project` provenance values are supplied. It intentionally emits no asserted relationships and records the assembly identity as `syntax-only`; this is not compiler-resolved UML.
+- **Syntax-only documentation model:** emitted with `--model-json` when `--repository`, `--revision`, and `--project` provenance values are supplied. It intentionally emits no asserted relationships and records the assembly identity as `syntax-only`.
+- **Project-semantic model:** emitted with `--project-model-json <model.json> --project <project.csproj> --repository <owner/repo> --revision <sha> [--configuration Release]`. It loads the project compilation and emits source type/member facts plus compiler-symbol-based inheritance and interface-realization relationships. CI exercises this mode against GUI Core.
 
 SVG output is a generated manifestation. The source and future canonical model remain the evidence-bearing inputs; do not hand-edit generated files as if they were authoritative.
 
 ## What the tool does not do yet
 
-- Load a `.csproj` or `.sln` into a compiler-backed semantic compilation.
-- Resolve symbols across partial/nested/generic declarations and project references.
-- Inspect the exact built assembly with reflection and compare its type surface.
-- Load a `.csproj` or `.sln` into a compiler-backed semantic compilation and emit a model enriched with resolved symbols; the current `--model-json` output is syntax-only.
+- Load an entire solution as a single inventory or cross-check the emitted source model against reflection from the exact built assembly.
+- Extract member-signature type dependencies/associations and relationship kinds beyond inheritance and interface realization.
+- Render the project-semantic model as a multi-node UML graph with typed connectors; current project mode emits JSON, not graph SVG.
 - Render a multi-type graph with semantically resolved, typed connectors.
 - Generate deterministic inventory coverage and a Markdown page for every maintained type.
 - Provide complete authored use-case persistence, evidence review, and lifecycle.
