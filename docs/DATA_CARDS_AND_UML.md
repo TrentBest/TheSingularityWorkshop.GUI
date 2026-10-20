@@ -186,3 +186,54 @@ Keep the diagram legible and scoped to the type's contract. The SVG should be em
 This is a cross-repository documentation convention. GUI provides the reusable diagram semantics, renderers, and eventual generation/validation tooling; each consuming repository remains responsible for its own domain facts and documentation pages. A repository adopting the convention should maintain a source-type-to-document coverage manifest or equivalent deterministic inventory. CI should fail on missing required type pages, missing embedded diagrams, malformed SVG, or generated diagrams that differ from current source/model output. Exceptions (for generated/private/compiler-only types or intentionally grouped declarations) must be explicit and reviewable, not silent gaps.
 
 Do not claim the convention is fully automated until an executable inventory and CI validation prove it. The immediate GUI milestone is a source-grounded, tested SVG class-diagram generator and a small fixture whose documentation image is generated and verified in CI; broad cross-repository enforcement follows after the contract is proven.
+
+## Recursive declaration cards and direct AST editing
+
+The source-code outline is not a conventional UML class box with a flat list of members. It is a recursively nested **data-card document** in which every owned declaration is itself a complete card.
+
+### Containment at every level
+
+- The **namespace** is the outer data card. Its body contains the types and nested namespaces declared within it.
+- Each **class, struct, interface, record, enum, or nested type** is a complete card inside its owning namespace/type card.
+- Each type card contains ordered member-group cards. Within those groups, every property, method, field, constructor, event, and other supported member is its own card.
+- Each member card contains its declaration/signature and, when applicable, further cards for its constituent details: parameters, return type, accessors, initializer, constraints, attributes, or implementation body. The exact child vocabulary is supplied by the source model; do not invent children a declaration does not have.
+- A declaration's signature remains visible as a meaningful data card even when its details are collapsed. The view should show the real declaration, not reduce a field to an unlabeled box.
+
+### Required presentation order
+
+Within each type, preserve this stable display order:
+
+1. Public properties
+2. Public methods
+3. Public fields
+4. Other public/static-public declaration groups, with static status visibly distinguished and their ordering defined consistently by the projection
+5. Protected declarations
+6. Private declarations
+
+Within a group, retain a deterministic order grounded in the source/model (prefer source order unless the projection explicitly defines another order). Preserve the exact language modifiers and signature even when the presentation groups related members together. In particular, do not lose `static`, `const`, `readonly`, generic parameters, overload distinctions, accessor modifiers, or nullable annotations. If the projection separates static public members into a dedicated group, it must document the exact sub-order and apply it consistently.
+
+### Atomic signature pills are still cards
+
+A small signature element can use a **pill-shaped data card** when it contains one atomic value, but it remains an individually identifiable, selectable semantic element. For example, a field declaration such as `public float f1;` contains distinct elements:
+
+- an access-modifier pill/card: `public`;
+- a type pill/card: `float`;
+- an editable name element/card: `f1`;
+- the declaration/signature card that preserves their combined meaning: `public float f1;`.
+
+Clicking the modifier pill opens the supported modifier choices. Choosing `private` requests a semantic edit against the authoritative AST/source model; only after the command validates and succeeds does the projection move the field into the private group. The refreshed view should preserve the field's stable identity and, if a group is too long to fit in the viewport, scroll it into view and center it as closely as the viewport permits. Rejected edits must leave the authoritative model and displayed grouping unchanged and provide a visible diagnostic.
+
+Clicking the type pill opens a searchable type chooser. The chooser puts supported language/runtime built-ins first in a deliberate canonical order, followed by user-defined and referenced types in alphabetical order, with namespace qualification available to disambiguate duplicate names. A search input belongs at the top. The list must be derived from the current compilation/project context, not a hard-coded list that pretends every possible type is available. Unknown or unresolved types must remain representable and diagnosable.
+
+The name element uses a text input or equivalent editing control during an edit session. It submits a rename command, observes language rules and scope collisions, and updates the authoritative AST/source model only after validation. The card body then presents the declaration's relevant detail: for a field this can include initializer and attributes; for a property, accessors and initializer; for a method, parameters, return type, constraints, attributes, and body. Keep the signature visible independently from expanded implementation detail.
+
+### Edit transaction and projection rules
+
+1. A click selects a semantic element by stable identity and opens the applicable editor/chooser.
+2. The UI submits an explicit typed command such as change accessibility, change type, rename symbol, or edit initializer.
+3. The code-domain handler validates the request against the current AST/project context, including syntax legality, name collisions, and supported type resolution.
+4. On success, the authoritative model changes and the card projection is regenerated from that model. The GUI must not independently patch a second mutable tree.
+5. The projection updates member ordering/grouping, retains identity where the language model allows it, and scrolls the edited item into view. On failure, retain the previous model/view and show the diagnostic.
+6. Tests must assert both the model change and the resulting projection/viewport intent; a visually moved card alone is not proof that the source model changed.
+
+GUI Core owns generic card hierarchy, identity, presentation, and interaction intent. It does **not** own C# parsing, symbol resolution, compilation context, or AST mutation authority. SVG can visualize this model and may express clickable affordances when hosted by an interactive application, but a standalone SVG image is not itself a trusted code editor. The host interaction bridge and validated code-domain command handler are required for edits.
