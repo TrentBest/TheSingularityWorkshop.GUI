@@ -20,7 +20,8 @@ if (!File.Exists(input))
     return 2;
 }
 
-var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(input), path: input);
+var sourceIdentity = args[0].Replace('\\\\', '/');
+var tree = CSharpSyntaxTree.ParseText(File.ReadAllText(input), path: sourceIdentity);
 var root = await tree.GetRootAsync();
 var diagnostics = tree.GetDiagnostics().Where(d => d.Severity == DiagnosticSeverity.Error).ToArray();
 if (diagnostics.Length > 0)
@@ -87,7 +88,7 @@ static DataCard ProjectType(BaseTypeDeclarationSyntax declaration)
         _ => "type"
     };
     var members = new List<DataCard>();
-    foreach (var member in declaration.Members.OrderBy(m => m.SpanStart))
+    foreach (var member in MembersOf(declaration).OrderBy(m => m.SpanStart))
     {
         var (memberKind, title, subtitle) = member switch
         {
@@ -108,7 +109,9 @@ static DataCard ProjectType(BaseTypeDeclarationSyntax declaration)
         members.Add(new DataCard(StableId(member), memberKind, title, subtitle, isExpandedByDefault: false));
     }
 
-    var nestedTypes = declaration.Members.OfType<BaseTypeDeclarationSyntax>()
+    var nestedTypes = (declaration is TypeDeclarationSyntax owner
+            ? owner.Members.OfType<BaseTypeDeclarationSyntax>()
+            : Enumerable.Empty<BaseTypeDeclarationSyntax>())
         .Select(ProjectType).ToArray();
     members.AddRange(nestedTypes);
 
@@ -124,6 +127,14 @@ static DataCard ProjectType(BaseTypeDeclarationSyntax declaration)
     return new DataCard(StableId(declaration), kind, declaration.Identifier.ValueText,
         subtitle: NamespaceOf(declaration) + " · " + header, children: members, canRequestChildInsertion: false);
 }
+
+static IEnumerable<MemberDeclarationSyntax> MembersOf(BaseTypeDeclarationSyntax declaration) =>
+    declaration switch
+    {
+        TypeDeclarationSyntax type => type.Members,
+        EnumDeclarationSyntax enumeration => enumeration.Members,
+        _ => Enumerable.Empty<MemberDeclarationSyntax>()
+    };
 
 static string NamespaceOf(SyntaxNode node)
 {
