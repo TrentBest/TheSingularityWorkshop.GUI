@@ -30,6 +30,7 @@ INTENTIONALLY_OUTSIDE_SOLUTION = {
 MAINTAINED_WORKFLOWS = {
     ".github/workflows/package.yml",
     ".github/workflows/source-derived-diagrams.yml",
+    ".github/workflows/solution-derived-uml.yml",
 }
 GENERATED_DRIFT_CHECKED_ASSETS = {
     "docs/assets/svg-adapter-gallery.svg",
