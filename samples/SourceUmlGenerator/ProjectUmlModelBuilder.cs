@@ -76,6 +76,38 @@ internal static class ProjectUmlModelBuilder
                     sourceId, implementedInterface, UmlRelationshipKind.InterfaceRealization,
                     "implements", type, ids, projectPath));
             }
+
+            foreach (var member in type.GetMembers().Where(item =>
+                         !item.IsImplicitlyDeclared && item is not INamedTypeSymbol))
+            {
+                switch (member)
+                {
+                    case IFieldSymbol field when !field.IsConst:
+                        AddMemberTypeRelationships(relationships, type, sourceId, member, field.Type,
+                            UmlRelationshipKind.Association, "field type", ids, projectPath);
+                        break;
+                    case IPropertySymbol property:
+                        AddMemberTypeRelationships(relationships, type, sourceId, member, property.Type,
+                            UmlRelationshipKind.Association, "property type", ids, projectPath);
+                        foreach (var parameter in property.Parameters)
+                            AddMemberTypeRelationships(relationships, type, sourceId, member, parameter.Type,
+                                UmlRelationshipKind.Dependency, "index parameter type", ids, projectPath);
+                        break;
+                    case IEventSymbol eventSymbol:
+                        AddMemberTypeRelationships(relationships, type, sourceId, member, eventSymbol.Type,
+                            UmlRelationshipKind.Association, "event type", ids, projectPath);
+                        break;
+                    case IMethodSymbol method when method.MethodKind is not
+                        (MethodKind.PropertyGet or MethodKind.PropertySet or MethodKind.EventAdd or MethodKind.EventRemove):
+                        if (!method.ReturnsVoid)
+                            AddMemberTypeRelationships(relationships, type, sourceId, member, method.ReturnType,
+                                UmlRelationshipKind.Dependency, "return type", ids, projectPath);
+                        foreach (var parameter in method.Parameters)
+                            AddMemberTypeRelationships(relationships, type, sourceId, member, parameter.Type,
+                                UmlRelationshipKind.Dependency, "parameter type", ids, projectPath);
+                        break;
+                }
+            }
         }
 
         return new UmlDocumentationModel(
@@ -131,6 +163,82 @@ internal static class ProjectUmlModelBuilder
                 location?.Path,
                 span,
                 target.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat)));
+    }
+
+    private static void AddMemberTypeRelationships(
+        List<UmlDocumentedRelationship> output,
+        INamedTypeSymbol source,
+        string sourceId,
+        ISymbol member,
+        ITypeSymbol referencedType,
+        UmlRelationshipKind kind,
+        string label,
+        IReadOnlyDictionary<INamedTypeSymbol, string> ids,
+        string projectPath)
+    {
+        var seenTargets = new HashSet<string>(StringComparer.Ordinal);
+        var signature = member.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat);
+        var reference = member.DeclaringSyntaxReferences.FirstOrDefault();
+        var location = reference is null ? null : SourceDeclaration(reference.GetSyntax(), projectPath);
+
+        foreach (var target in EnumerateReferencedTypes(referencedType))
+        {
+            if (target.SpecialType != SpecialType.None)
+                continue;
+            var namespaceName = target.ContainingNamespace.IsGlobalNamespace
+                ? string.Empty
+                : target.ContainingNamespace.ToDisplayString();
+            // Framework collection/async wrappers are not useful domain associations; still
+            // inspect their generic arguments so application-owned types are retained.
+            if (namespaceName == "System" || namespaceName.StartsWith("System.", StringComparison.Ordinal))
+                continue;
+
+            var targetName = target.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+            if (!seenTargets.Add(targetName))
+                continue;
+
+            var targetIsInModel = ids.TryGetValue(target, out var targetId);
+            output.Add(new UmlDocumentedRelationship(
+                sourceId + ":relationship:" + kind + ":" + signature + ":" + targetName,
+                kind,
+                sourceId,
+                targetIsInModel ? targetId : null,
+                targetName,
+                targetIsInModel ? UmlRelationshipResolution.Resolved : UmlRelationshipResolution.External,
+                targetIsInModel ? null : target.ContainingAssembly?.Identity.ToString() ?? "unknown",
+                "source-to-target",
+                label,
+                null,
+                null,
+                new UmlRelationshipProvenance(
+                    "roslyn-member-symbol",
+                    location?.Path,
+                    location?.Span,
+                    member.ToDisplayString(SymbolDisplayFormat.CSharpErrorMessageFormat))));
+        }
+    }
+
+    private static IEnumerable<INamedTypeSymbol> EnumerateReferencedTypes(ITypeSymbol type)
+    {
+        switch (type)
+        {
+            case IArrayTypeSymbol array:
+                foreach (var target in EnumerateReferencedTypes(array.ElementType))
+                    yield return target;
+                yield break;
+            case IPointerTypeSymbol pointer:
+                foreach (var target in EnumerateReferencedTypes(pointer.PointedAtType))
+                    yield return target;
+                yield break;
+            case INamedTypeSymbol named:
+                yield return named.OriginalDefinition;
+                foreach (var argument in named.TypeArguments)
+                {
+                    foreach (var target in EnumerateReferencedTypes(argument))
+                        yield return target;
+                }
+                yield break;
+        }
     }
 
     private static IEnumerable<UmlDocumentedMember> MemberRecords(
