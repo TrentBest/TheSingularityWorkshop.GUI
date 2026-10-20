@@ -1,20 +1,21 @@
-# Recipe 02 — Cartesian coordinates and a sampled function
+# Recipe 02 — Cartesian coordinates, functions, and transformations
 
-This recipe starts with GUI Core + GUI.SVG only: a semantic coordinate-system node, function samples calculated in C#, and SVG produced by the repository's actual adapter. It intentionally begins with f(x)=x²; translations and scaling belong in the next sequence once this base plot is verified.
+This recipe uses GUI Core + GUI.SVG only: a semantic coordinate-system node, mathematical samples calculated in C#, and SVG produced by the repository's actual adapter. The same 33 x-values drive the base function, vertical translation, horizontal translation, and vertical scaling/reflection.
 
 ## What the scene represents
 
-The generator samples the function over [-2,2] at 32 equal intervals, producing 33 points:
+The generator samples x over [-1,1] at 32 equal intervals, producing 33 points:
 
 ```
 f(x) = x²
-xᵢ = -2 + 4i/32
-yᵢ = f(xᵢ)
+vertical:   f(x) + C = x² + C, with C = 1
+horizontal: f(x + C) = (x + C)², with C = 1
+scale:      a f(x) = a x², with a = -1
 ```
 
-The coordinate-system root defines the Cartesian range [-2,4] and asks GUI.SVG to draw grid, axes, origin, and bounds. It explicitly sets both origin coordinates to zero: otherwise the renderer defaults the axes to the midpoint of the configured range, which would not represent the mathematical x=0 and y=0 axes for this asymmetric range.
+The base curve is shown with its sampled points. Three additional curves use the same x-values and derive their y-values directly from the parameters above. The formulas, parameter values, and curve coordinates are all generated from the same constants and sample records; the curves are not hand-drawn approximations.
 
-Each coordinate-point stores its mathematical x and y; SvgGuiRenderer maps those values into SVG coordinates, while a polyline is built from the very same samples to connect them. The plotted marks and connecting curve therefore share one computed data set rather than using a hand-authored SVG path.
+The coordinate-system root defines the range [-2,4] and asks GUI.SVG to draw grid, axes, origin, and bounds. It explicitly sets both origin coordinates to zero: otherwise the renderer defaults the axes to the midpoint of the configured range, which would not represent the mathematical x=0 and y=0 axes for this asymmetric range.
 
 ## Source path
 
@@ -33,17 +34,14 @@ From the repository root:
 dotnet run --project samples/demonstrations/CoordinateFunctions/CoordinateFunctions.csproj -- samples/demonstrations/02-coordinate-functions.generated.svg
 ```
 
-The program parses the adapter output as XML and checks the SVG root, the Cartesian axes, the connecting function curve, and all 33 function samples before writing the artifact.
+The program parses the adapter output as XML and checks the SVG root, mathematical origin and axes, all 33 base-function samples, and the four expected transformation curves before writing the artifact.
 
-**Evidence status:** source and project files have been added; the command has not yet been executed in this work session. Do not treat the generated artifact or passing assertion as verified until the command succeeds and its output is reviewed.
+**Evidence status:** the generator and recipe have been committed, but the command has not yet been executed in this work session. Do not treat the generated artifact or passing assertions as verified until the command succeeds and its output is reviewed.
 
-## Next sequence: transformations
+## Interpretation
 
-The next step should reuse the same coordinate and sampling model to compare:
+- **Vertical translation, f(x)+C:** adding C changes y-values but not x-values.
+- **Horizontal translation, f(x+C):** adding C inside the function changes the input before squaring; the parabola moves left when C is positive.
+- **Scaling/reflection, af(x):** multiplying by a scales the output; a=-1 reflects the base curve across the x-axis.
 
-- f(x)=x²
-- f(x)+C=x²+C: vertical translation
-- f(x+C)=(x+C)²: horizontal translation
-- af(x)=ax²: vertical scaling, with negative a reflecting across the x-axis
-
-A sequence can show one transformation at a time or place the stages left-to-right with the current stage highlighted. In either presentation, the formula, parameter values, and sampled points must be generated from the same function definition. This recipe does not yet claim those transformations are implemented.
+The current constants intentionally make the differences visible in one shared coordinate system. A later interactive sequence can expose one transformation at a time, but it should preserve this single-source relationship between parameters, formulas, and plotted data.
