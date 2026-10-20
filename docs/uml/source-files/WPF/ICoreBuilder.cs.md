@@ -10,7 +10,7 @@ Defines a generic builder contract whose product type allows platform-specific m
 
 ## Source-grounded facts
 
-- The generic type parameter is covariant and the interface is described in source comments as cross-platform component intent.
+- The covariant `TProduct` represents the platform-specific product. The contract exposes `Build()` and `GetBuilderId()`.
 
 ## Declared types and generated UML evidence
 
