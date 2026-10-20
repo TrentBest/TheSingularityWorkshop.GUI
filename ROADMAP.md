@@ -57,6 +57,10 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Generate an SVG living data-card diagram from a fixture shared with automated tests
 - [ ] Define the per-type documentation inventory and required page contract (purpose, source identity, embedded source-grounded SVG UML class diagram, behavior/constraints, tests, and related types)
 - [ ] Build deterministic source/model-to-SVG class-diagram generation and CI checks for missing type pages, missing diagrams, invalid SVG, and stale generated output; document explicit exceptions
+- [ ] Define the ecosystem class-diagram layout: focal type center, primitive conduits left, package/repository conduits right, direct users above, and dependencies used below
+- [ ] Centralize the brilliant high-contrast GUI.SVG palette and fixed primitive-type color mapping; recover/confirm each primitive's stable token before migrating diagrams
+- [ ] Update existing per-type SVG diagrams to the ecosystem layout without inventing unverified source relationships
+- [ ] Add source-backed relationship inventory for direct users, direct dependencies, and package/assembly provenance
 - [ ] Verify that diagram edits cross an explicit domain command/validation boundary
 
 The model must first prove that it can describe more than conventional widgets.
