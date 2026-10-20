@@ -81,6 +81,7 @@ jobs:
         run: |
           python3 - <<'PY'
           import json
+          import xml.etree.ElementTree as ET
           from pathlib import Path
 
           model = json.loads(Path("artifacts/Core.uml-model.json").read_text(encoding="utf-8"))
@@ -115,14 +116,24 @@ jobs:
 
           pages_dir = Path("artifacts/Core.uml-types")
           page_files = sorted(path for path in pages_dir.glob("*.md") if path.name != "index.md")
+          diagram_files = sorted(pages_dir.glob("*.svg"))
           assert len(page_files) == len(model["types"]), (len(page_files), len(model["types"]))
+          assert len(diagram_files) == len(model["types"]), (len(diagram_files), len(model["types"]))
           page_titles = sorted(path.read_text(encoding="utf-8").splitlines()[0][2:] for path in page_files)
           assert page_titles == expected_names, "standalone page set must cover every type exactly once"
           page_index = (pages_dir / "index.md").read_text(encoding="utf-8")
           assert page_index.startswith("# Generated UML type pages")
           assert all("(" + path.name + ")" in page_index for path in page_files), "index must link every generated page"
+          assert all("(" + path.name + ")" in page_index for path in diagram_files), "index must link every generated UML SVG"
           for page in page_files:
               page_text = page.read_text(encoding="utf-8")
+              diagram = page.with_suffix(".svg")
+              assert diagram.is_file(), f"missing UML SVG for {page.name}"
+              assert "](" + diagram.name + ")" in page_text, f"page does not embed its UML SVG: {page.name}"
+              svg_root = ET.parse(diagram).getroot()
+              svg_ns = "{http://www.w3.org/2000/svg}"
+              assert svg_root.find(svg_ns + "title") is not None, f"missing SVG title: {diagram.name}"
+              assert svg_root.find(svg_ns + "desc") is not None, f"missing SVG description: {diagram.name}"
               assert ("/blob/" + provenance["sourceRevision"] + "/") in page_text, page.name
               assert "[Back to the generated type index](index.md)" in page_text, page.name
 
