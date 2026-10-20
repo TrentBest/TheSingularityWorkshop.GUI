@@ -51,14 +51,14 @@ The actual checked-in generator constructs a root scene with a rounded rectangle
 var scene = GuiBuilder.Create("svg-scene", "scene")
     .Text("GUI.SVG demonstration 01: primitive geometry")
     .Child("svg-rect", "panel", panel => panel
-        .Property("x", "10").Property("y", "10")
-        .Property("width", "80").Property("height", "60")
+        .Property("x", "10").Property("y", "5")
+        .Property("width", "80").Property("height", "46")
         .Property("rx", "5")
         .Property("fill", "#173b4c")
         .Property("stroke", "#7ee0bd")
         .Property("stroke-width", "2"))
     .Child("svg-circle", "marker", marker => marker
-        .Property("cx", "50").Property("cy", "40")
+        .Property("cx", "50").Property("cy", "28")
         .Property("r", "8")
         .Property("fill", "#ffb86c"))
     .Build();
@@ -83,7 +83,8 @@ Source: [`SvgGuiRenderer.cs`](../../../src/SVG/SvgGuiRenderer.cs), [adapter cont
 The generator parses the returned string as XML and checks:
 - the document root is an SVG element in the SVG namespace;
 - a rectangle with ID `panel` exists;
-- a circle with ID `marker` exists.
+- a circle with ID `marker` exists;
+- the panel stroke fits completely inside the SVG `viewBox`, so the panel is not clipped by the viewport.
 
 It then writes the generated SVG to a caller-specified path, or to `01-primitive-geometry.generated.svg` in the current directory.
 
@@ -93,7 +94,7 @@ From the repository root:
 dotnet run --project samples/demonstrations/PrimitiveGeometry/PrimitiveGeometry.csproj -- samples/demonstrations/01-primitive-geometry.generated.svg
 ```
 
-A successful execution should print `PASS` and the output path. **This documentation does not claim the command has passed in the current work session.** Once executed in CI or locally, record the commit, command, and test result here and link the generated artifact. Keep the generated file distinct from the hand-authored reference SVG.
+A successful execution should print `PASS` and the output path. The generator and workflow now check the panel's stroke-aware bounds against the SVG viewBox. A prior artifact exposed a clipped panel despite passing the initial structural checks; the panel dimensions and marker position have been corrected, and the stronger bounds assertion is now part of the verification. The corrective workflow run is pending; do not consider the visual correction complete until its artifact has been inspected. Keep the generated file distinct from the hand-authored reference SVG.
 
 Project: [`PrimitiveGeometry.csproj`](../PrimitiveGeometry/PrimitiveGeometry.csproj).
 
