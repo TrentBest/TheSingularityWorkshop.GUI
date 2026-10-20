@@ -30,6 +30,19 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Renders_embedded_stylesheet_text_for_scene_choreography()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-style", "scene-style", style => style.Text(".fox { animation: travel 4s linear infinite; }"))
+            .Build();
+
+        var document = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.Equal(".fox { animation: travel 4s linear infinite; }", document.Root!.Element(svg + "style")!.Value);
+    }
+
+    [Fact]
     public void Renders_svg_primitives_and_escapes_text()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
