@@ -81,3 +81,13 @@ Use brilliant, high-contrast borders with a consistent thick stroke for focal ca
 For each diagram, document the evidence used to populate each region: source declarations/usages, project references, package metadata, or an explicit architecture contract. Direct users above and direct dependencies below are different sets; do not swap them. Use a separate label or treatment for inherited members, interface realization, package provenance, and optional/runtime relationships where relevant. If a relationship cannot be proven, omit it or label it explicitly as conceptual/unverified.
 
 This ecosystem layout supplements rather than replaces the class card's UML content. Every per-type page still needs a textual explanation, accessible SVG title/description, and a link to source and relevant tests. A diagram is not considered automatically generated or drift-free until a repeatable source/model path and CI checks establish that claim.
+
+## Recursive card structure and source editing
+
+The ecosystem class diagram is a spatial overview, while the source outline itself is a recursive card hierarchy. Do not flatten namespace/type/member ownership to satisfy the overview layout. The namespace is the outer data card; each contained type is a full card; each member group and member is a nested card; declaration signatures retain their own identifiable card, with atomic values such as access modifiers, types, and names represented as clickable pills where the host supports interaction.
+
+Use the documented declaration ordering and edit contract in [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md#recursive-declaration-cards-and-direct-ast-editing). A visibility/type/name edit is a validated domain command against the authoritative AST/source model, not a direct mutation of SVG or a renderer-owned copy. On success, regenerate the card projection, move the member to its correct group, preserve stable identity where possible, and bring the edited item into view. On failure, preserve the previous authoritative model and surface a diagnostic.
+
+The type chooser must put supported built-in types first, followed by available user-defined and referenced types alphabetically, and include search at the top. Its choices come from the current project/compilation context. GUI Core remains language-neutral; C# parsing, symbol resolution, and AST mutation belong to a separate code-domain adapter/command handler.
+
+These are intended semantics, not a claim that interactive AST editing already exists. Track implementation and fixture-based tests in the roadmap; a static SVG image cannot by itself provide the trusted edit/validation bridge.
