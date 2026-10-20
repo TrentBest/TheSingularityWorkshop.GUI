@@ -90,6 +90,30 @@ def main() -> int:
     print(f"Documentation project explicit items: {len(doc_items)}")
     print(f"Discovered C# project files: {len(all_projects)}")
 
+    # Extend the inventory beyond build projects. These categories are deliberately
+    # descriptive: they expose the maintained docs/workflows/assets that still need
+    # finer-grained authored/generated/historical ownership labels.
+    markdown_docs = sorted(rel(p) for p in ROOT.glob("docs/**/*.md") if p.is_file())
+    workflows = sorted(rel(p) for p in (ROOT / ".github" / "workflows").glob("*")
+                       if p.is_file() and p.suffix.lower() in {".yml", ".yaml"})
+    asset_suffixes = {".svg", ".png", ".jpg", ".jpeg", ".webp", ".gif"}
+    assets = sorted(rel(p) for p in ROOT.glob("docs/assets/**/*")
+                    if p.is_file() and p.suffix.lower() in asset_suffixes)
+    generated_uml_assets = sorted(p for p in assets if p.startswith("docs/assets/uml/"))
+    other_assets = sorted(set(assets) - set(generated_uml_assets))
+
+    print(f"Maintained Markdown under docs/: {len(markdown_docs)}")
+    for path in markdown_docs:
+        print(f"  DOC       {path}")
+    print(f"GitHub Actions workflow files: {len(workflows)}")
+    for path in workflows:
+        print(f"  WORKFLOW  {path}")
+    print(f"Visual/reference assets under docs/assets/: {len(assets)}")
+    for path in generated_uml_assets:
+        print(f"  UML-ASSET {path} (generated/source-derived candidate; drift policy tracked separately)")
+    for path in other_assets:
+        print(f"  ASSET     {path} (ownership/status still needs explicit classification)")
+
     if errors:
         print("\nInventory validation FAILED:", file=sys.stderr)
         for error in errors:
