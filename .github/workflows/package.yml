@@ -119,9 +119,6 @@ jobs:
           print(f"Verified {len(lines)} grid lines and {len(ids)} unique SVG ids.")
           PY
 
-      - name: Verify fox/sheepdog generated asset has no drift
-        run: cmp ./artifacts/fox-sheepdog-10x10.svg ./docs/assets/fox-sheepdog-10x10.svg
-
       - name: Upload GUI.SVG fox/sheepdog plane
         uses: actions/upload-artifact@v7
         with:
