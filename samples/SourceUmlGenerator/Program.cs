@@ -486,7 +486,7 @@ static async Task<int> RunProjectModelMode(string[] arguments)
             var reflectionAssembly = System.Reflection.Assembly.LoadFrom(fullAssemblyPath);
             var reflectedNames = reflectionAssembly.GetTypes()
                 .Where(type => !type.IsDefined(typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute), inherit: false)
-                    && !type.Name.Contains('<', StringComparison.Ordinal))
+                    && !type.Name.Contains("<", StringComparison.Ordinal))
                 .Select(type => type.FullName?.Replace('+', '.') ?? type.Name)
                 .ToHashSet(StringComparer.Ordinal);
             var sourceNames = model.Types.Select(ModelMetadataQualifiedTypeName)
