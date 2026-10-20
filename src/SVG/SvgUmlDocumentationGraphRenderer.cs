@@ -176,7 +176,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 new XAttribute("x", F(labelX)), new XAttribute("y", F(labelY)),
                 new XAttribute("text-anchor", "middle"), new XAttribute("font-size", "11"),
                 new XAttribute("fill", "#243b4a"),
-                edge.Kind.ToString().ToLowerInvariant() + " · " + edge.Label));
+                RelationshipLabel(edge.Kind) + " · " + edge.Label));
         }
 
         var nodeIndex = 0;
@@ -227,6 +227,15 @@ public sealed class SvgUmlDocumentationGraphRenderer
 
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
     }
+
+    private static string RelationshipLabel(UmlRelationshipKind kind) => kind switch
+    {
+        UmlRelationshipKind.Inheritance => "inheritance",
+        UmlRelationshipKind.InterfaceRealization => "interface realization",
+        UmlRelationshipKind.Association => "association",
+        UmlRelationshipKind.Dependency => "dependency",
+        _ => kind.ToString().ToLowerInvariant()
+    };
 
     private static GraphNode FromType(UmlDocumentedType type, bool isFocus) =>
         new(type.Id, DisplayName(type), type.Identity.Kind, type.Identity.Namespace, type.Members, isFocus, false);
