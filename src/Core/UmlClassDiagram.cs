@@ -31,8 +31,11 @@ public sealed class UmlClassDiagram
         Operations = Snapshot(operations);
         DeclaredRelationships = new ReadOnlyCollection<string>((declaredRelationships ?? Enumerable.Empty<string>())
             .Where(value => !string.IsNullOrWhiteSpace(value)).ToList());
+        var referenceSummary = DeclaredRelationships.Count == 0
+            ? "No base-list references were declared."
+            : "Declared type references: " + string.Join(", ", DeclaredRelationships) + ". These references are unresolved and are not asserted as verified relationships.";
         Description = string.IsNullOrWhiteSpace(description)
-            ? $"Source-derived UML class view for {name}. Members and declared type references are shown; unresolved references are not asserted as verified relationships."
+            ? $"Source-derived UML class view for {name}. Members are grouped by UML compartment. {referenceSummary}"
             : description;
     }
 
