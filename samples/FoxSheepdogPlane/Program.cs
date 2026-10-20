@@ -70,7 +70,7 @@ scene.Child("svg-g", "plane", plane =>
 
     plane.Child("svg-g", "sleeping-dog", dog =>
     {
-        dog.Property("transform", "translate(600 330)");
+        dog.Property("transform", "translate(600 330)").Property("class", "dog-posture");
         dog.Child("svg-ellipse", "dog-shadow", e => e.Property("cx", "0").Property("cy", "13").Property("rx", "22").Property("ry", "5").Property("fill", "#07111d").Property("opacity", "0.45"));
         dog.Child("svg-path", "dog-body", p => p.Property("d", "M-20,5 Q-29,-4 -22,-13 Q-14,-23 -5,-14 Q4,-24 13,-14 Q25,-10 22,2 L15,10 L-16,10 Z").Property("fill", "#d7d4ca").Property("stroke", "#9ba7ae").Property("stroke-width", "1.5"));
         dog.Child("svg-ellipse", "dog-muzzle", e => e.Property("cx", "17").Property("cy", "1").Property("rx", "11").Property("ry", "8").Property("fill", "#f7f0e3").Property("stroke", "#aab0b2").Property("stroke-width", "1"));
