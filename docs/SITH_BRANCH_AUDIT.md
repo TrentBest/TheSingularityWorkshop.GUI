@@ -1209,3 +1209,19 @@ A direct source comparison confirms the two `SvgGuiRenderer` implementations ser
 - Safe next step: introduce the semantic GUI renderer as an additive API (or explicitly rename the existing scene renderer/API if product design calls for that), bring over `SvgRenderOptions` and its tests into the current project structure, then run package/test/WPF checks and inspect the generated output. No code was copied in this pass because project/solution inclusion and public namespace compatibility have not yet been established.
   
 Current renderer branch comparison: 112 ahead / 559 behind; its changed-file set includes the old project/solution files, broad Core/Blazor/WPF legacy APIs, and a large package workflow delta. Keep selective reconciliation only. UML staging readiness **72%**; Sith remains **NOT CLEARED**; no branch deletion, PR lifecycle action, or publication occurred.
+
+## Operation Sith checkpoint — 2026-10-21 20:50 UTC
+
+### Additional branch-by-branch evidence
+
+- `work/gui-uml-per-file-documentation`: compared the complete `docs/DATA_CARDS_AND_UML.md` contents on the branch and current development. Every paragraph in the branch version is already present in development; the branch copy is 16,202 characters versus 30,500 on development, which contains the added diagram-family, renderer-neutral model, recursive declaration-card, and editing-contract sections. The per-file UML section is text-identical. No unique paragraph was found. Disposition: **SUPERSEDED CONTENT CANDIDATE**, pending final live PR/ref check at the owner's manual deletion checkpoint.
+- `fix/guinode-nullability-contract`: the only changed path is `src/Core/GuiNode.cs`. Development retains the nullable `TryFind(string, out GuiNode?)` contract and XML documentation, and improves traversal to iterative depth-first left-to-right search using a stack rather than the branch's recursive implementation. The branch does not add a distinct API contract beyond the current source. Disposition: **SUPERSEDED CANDIDATE**, pending final live reference check.
+- `work/gui-release-mit-wpf-scope`: confirmed the branch LICENSE blob is byte-identical to development's MIT license and its WPF project file is byte-identical to development. The branch still has eight changed paths overall, including old workflow/readiness/package metadata, so this is not a wholesale branch equivalence claim; use existing selective disposition and final ref check.
+- Newly observed `feat/mandelbrot-physics-svg` currently points to the exact same commit as development (`29c6d9615faf9f34e3ab2aebc37d15f80e768f79`), with no unique branch tip commit at this checkpoint. Record as **ZERO-DIFF AT OBSERVED HEAD**; do not delete it here, and recheck its live tip before manual cleanup.
+
+### CI and inventory refresh
+
+Development advanced to `29c6d9615faf9f34e3ab2aebc37d15f80e768f79` during this audit. Workflow [#39673687517](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39673687517) targets that exact SHA and was in progress at the time of this note. The preceding exact-head run on `914d40d`, [#39673616801](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39673616801), was also still in progress; therefore neither should be described as green yet. Workflow #39673420887 on `becbb329` completed successfully, but it is not evidence for newer heads.
+
+The live branch list now contains 19 branches total: keepers `master` and `development`, plus **17 non-keepers**. This count includes the newly observed `feat/mandelbrot-physics-svg`. The open PR set remains #8, #11, #15, #18, and #19. Branch cleanup remains **NOT CLEARED**. No branch was deleted, no PR was closed or merged by this audit pass, `master` remains untouched, and NuGet publishing remains gated.
+
