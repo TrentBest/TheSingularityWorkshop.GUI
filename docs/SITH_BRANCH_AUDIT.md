@@ -861,3 +861,18 @@ Fresh comparisons were run against the current `development` head `93db853cf5b3e
 - **`work/gui-svg-source-uml-generator`: 227 ahead / 67 behind; 86 changed files.** The content-level diff confirms unique implementation, not only generated docs: a 403-line source-derived-diagrams workflow, solution-derived workflow, source generator and project model builders, renderer-neutral UML model, SVG diagram renderers, model/renderer tests, validation scripts, generated per-source-file documentation, and visual assets. Disposition remains **PRESERVE / ACTIVE**. The latest observed PR head is `97554095656f2ef0ca94cbc4ada73848f3a953f8`; no check runs were returned for that exact head, so prior successful branch workflow runs do not establish current-head green CI. Require a new exact-head run plus deterministic regeneration and provenance/source-truth review.
 
 This sweep does not mark the audit clear. No branch deletion, PR merge/closure, or publication was performed.
+
+## Follow-up inventory refresh — 2026-10-21 20:22Z
+
+Fresh branch inventory still contains 17 branches (the two keepers plus 15 non-keepers); open PR inventory still includes #19, #18, #15, #11, and #8. No destructive actions were taken.
+
+### UML preservation cross-check
+
+- `work/gui-svg-source-uml-generator` now compares as **227 ahead / 68 behind** `development` at base `44c700610182794f8e7f3f9f68a8bb46ace31c63`. Its 86-file diff includes both source implementation (`samples/SourceUmlGenerator`, `src/Core/UmlDocumentationModel.cs`, SVG UML renderers), both source/solution UML workflows, tests, scripts, and generated per-file UML pages. Preserve the entire workstream pending selective reconciliation and exact-head validation.
+- `work/gui-uml-per-file-documentation` remains **1 ahead / 214 behind** in the latest stored comparison; the visible requirement is present in development, but its full current tip diff and live PR/reference status still need confirmation before the branch is considered redundant.
+- `work/svg-guide-current-contract` compares as **112 ahead / 535 behind**, with 59 changed files in the latest result. The unique `src/SVG/SvgGuiRenderer.cs`, `src/SVG/SvgRenderOptions.cs`, `tests/SVG.Tests/SvgGuiRendererTests.cs`, SVG guide, and `docs/examples/living-energy-vortex.svg` are real implementation/documentation candidates, not a docs-only snapshot. Hold and reconcile renderer behavior/tests before disposition. The diff is broad (Core/Blazor/WPF, workflows, docs, and tests); no wholesale merge.
+
+### CI evidence caveat
+
+Commit-status lookup for policy commit `93db853cf5b3e1c35f30ba975b3845145bcfaaa5` returned no status entries. The workflow-run lookup is explicitly limited to pull-request-triggered runs and also returned no runs for that commit; this is not proof that all GitHub Actions workflows are absent or successful. Do not label the latest audit commit CI-green without exact-SHA evidence.
+
