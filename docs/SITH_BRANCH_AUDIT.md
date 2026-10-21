@@ -1773,3 +1773,47 @@ The five remaining held branches correspond to the five open PR heads: `architec
 The current development head includes new WPF guide/audit documentation commits. Exact-head workflows are being rechecked; no green claim is carried forward from earlier SHAs. Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. NuGet publishing remains disabled by the explicit `&& false` hard stop.
 
 **Sith remains NOT CLEARED.** No branch was deleted, no PR was merged or closed, and no package was published.
+
+
+## Operation Sith — PR dispositions and owner deletion list — 2026-10-21 21:54 UTC
+
+### PR outcomes (all closed without merge)
+
+- **PR #8 — datum/interaction boundary:** closed as superseded. The current datum/interaction and architecture docs preserve the applicable boundary; the old Hub implementation and historical WPF additions are not merged.
+- **PR #11 — SVG guide:** closed as superseded. Current `SVG_GUIDE.md`, `SVG_ADAPTER.md`, and `GALLERY.md` describe the current contract and real generated output. The old branch's energy-vortex SVG has no animation elements despite describing pulsing/rotation, so it was not promoted as a living proof.
+- **PR #15 and PR #19 — NuGet publish-gate proposals:** both closed as unapproved under the owner's explicit policy that publication stays disabled until the owner declares authorization. Both proposals remove `&& false`, which would permit publication after a later manual dispatch with `publish: true`. Neither was merged. The hard stop remains in `.github/workflows/package.yml`.
+- **PR #18 — source-derived GUI.SVG/UML bridge:** remains open and draft. It still carries unique generator/model implementation, tests, generated per-type pages, and visual assets that need artifact-by-artifact reconciliation.
+
+The open-PR inventory now has **one item: PR #18**. These closures do not delete their head branches.
+
+### Manual branch deletion candidates
+
+The live branch inventory remains 20 branches: `master`, `development`, and 18 non-keepers. Seventeen non-keeper branches now have explicit redundant, superseded, or intentional-discard dispositions and are candidates for the owner's **manual deletion after the final exact-head CI and inventory recheck**:
+
+1. `architecture/datum-interaction-boundary`
+2. `feat/mandelbrot-parameter-explorer`
+3. `feat/mandelbrot-physics-svg`
+4. `feat/physics-seeded-pointset-svg`
+5. `feature/integrated-fsm-cos-hub`
+6. `feature/nested-experiences`
+7. `fix/guinode-nullability-contract`
+8. `work/gui-publish-gate-reconciled`
+9. `work/gui-release-mit-wpf-scope`
+10. `work/gui-uml-per-file-documentation`
+11. `work/gui-verify-xml-docs-in-packages`
+12. `work/gui-wpf-tests`
+13. `work/nuget-publish-gate`
+14. `work/svg-app-fsm-cos-boundary`
+15. `work/svg-guide-current-contract`
+16. `work/svg-tree-depth-guard`
+17. `work/webpage-event-builder-compatibility`
+
+**Keep for now:** `work/gui-svg-source-uml-generator` — PR #18 remains open/draft and its unique implementation/documentation is not yet fully reconciled. Do not delete this branch with the other candidates.
+
+### Final gate
+
+The keeper head before this ledger update was `1bf43072b0db9ce51abfbe904ab29bd9d7e7fbeb); its Source-derived diagrams, Package GUI, and Solution-derived UML inventory workflows were still running. This ledger update creates a new head, so the exact-head gate must be rechecked again before treating the manual deletion list as final.
+
+Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. NuGet publication remains disabled. No branch was deleted, no PR was merged, and no package was published.
+
+**Sith status: NOT CLEARED until the new keeper head's exact CI passes and the final branch/PR inventory is rechecked.**
