@@ -1693,3 +1693,31 @@ Five of the 18 non-keeper branches now have evidence-backed redundant/superseded
 Also verified that work/gui-release-mit-wpf-scope's LICENSE file is byte-identical to the current development LICENSE; the MIT license itself is not missing and needs no harvest. That branch still has distinct release/project/workflow/readiness deltas and remains held for separate review.
 
 The evidence-backed redundant/superseded count is now **9 of 18 non-keeper branches (50% disposition-ready by branch count)**: feat/mandelbrot-parameter-explorer, feat/mandelbrot-physics-svg, feat/physics-seeded-pointset-svg, fix/guinode-nullability-contract, work/gui-wpf-tests, work/svg-tree-depth-guard, work/webpage-event-builder-compatibility, work/svg-app-fsm-cos-boundary, and work/gui-uml-per-file-documentation. This is branch-disposition progress, not release readiness. The remaining nine require content reconciliation or explicit PR/policy decisions. No branch was deleted; no PR was merged/closed; no package was published.
+
+
+## Operation Sith — additional branch-content review — 2026-10-21 21:47 UTC
+
+This review used the current keeper files and exact branch file contents. It did not delete branches or change PR lifecycle state.
+
+### Newly verified superseded/redundant candidates
+
+- **`work/webpage-event-builder-compatibility`: verified redundant.** The branch's event test file has the same blob SHA as development. Its older `WorkshopGuiBuilder.cs` has no substantive lines absent from the newer documented development implementation; current development includes the same wheel/propagation behavior and a broader event-builder surface. No open PR currently targets this branch.
+- **`work/gui-uml-per-file-documentation`: verified redundant.** The branch's `docs/DATA_CARDS_AND_UML.md` is an older, shorter snapshot; all substantive nonblank branch lines are present in the expanded development version. No open PR currently targets this branch.
+- **`work/svg-tree-depth-guard`: verified superseded.** Development already has iterative depth validation, the configured depth limit, current accessibility IDs/linkage, and a parameterized `Rejects_negative_geometry_dimensions(string kind, string property)` test covering negative geometry properties. The branch renderer/docs are older. A one-off duplicate test addition was caught by xUnit1024 and removed; no test or production-code change from that attempt remains in the file. No open PR currently targets this branch.
+
+### Held for further content reconciliation
+
+- **`work/svg-app-fsm-cos-boundary`: hold.** `docs/SVG_APP_CONCEPT.md` is byte-identical to development, but its README contains substantial older prose not present line-for-line in the current README. Review those unique ideas before deciding whether to harvest any or discard the obsolete snapshot; do not delete based on the identical concept document alone.
+- **`work/gui-verify-xml-docs-in-packages`: hold.** Current development has newer package verification, but the branch contains a historical four-package archive inspection with package versions and hashes that is not verbatim in current release docs. Confirm whether that evidence is still useful or already superseded before disposing of the branch.
+- **`work/gui-release-mit-wpf-scope`: hold.** LICENSE, WPF README, and Core project file are byte-identical to development. Its remaining release/work-queue/workflow differences still require full semantic disposition; the older readiness estimate is not a current readiness claim.
+- **`architecture/datum-interaction-boundary`: hold.** Its datum-boundary note and architecture document contain unique older prose, including historical Hub and ProtocolAi discussion. Current development has shorter, more current documents. Preserve only principles that remain valid; do not restore the rejected ProtocolAi dependency or obsolete Hub ownership.
+- **`work/svg-guide-current-contract`: hold with open PR #11.** Its longer guide and historical assets differ materially from the current 37-line contract-focused guide. Reconcile valid example/recipe material and assets against current renderer behavior before closing the PR or deleting the branch.
+- **`work/gui-svg-source-uml-generator`: hold with draft PR #18.** The branch still contains unique source/model implementation, UML renderers/tests, generated per-file pages, workflows, and visual assets not present on development. The safe promotion mechanism now exists on development, but this does not make the branch's authored work redundant; reconcile by artifact, not wholesale merge.
+
+### Disposition progress
+
+Eight of the 18 non-keeper branches now have evidence-backed redundant/superseded dispositions: the three demonstration branches, `work/gui-wpf-tests`, `fix/guinode-nullability-contract`, `work/webpage-event-builder-compatibility`, `work/gui-uml-per-file-documentation`, and `work/svg-tree-depth-guard`. That is **44% disposition-ready by branch count**, not release readiness.
+
+At this checkpoint, the current package release estimate remains **70%** in `docs/NEXT_RELEASE_WORK_QUEUE.md`; the source-derived UML staging pipeline estimate remains **78%** as recorded in the prior checkpoint. The current exact-head workflows for the latest keeper commit are still running, so no new all-green claim is made here.
+
+**Sith status remains NOT CLEARED.** The five open PRs (#8, #11, #15, #18, #19) remain unresolved. NuGet publication remains disabled by the `&& false` hard stop. No branch was deleted, no PR was merged or closed, and no package was published.
