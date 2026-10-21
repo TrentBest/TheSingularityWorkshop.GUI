@@ -73,6 +73,30 @@ public sealed class WpfBuilderTests
     }
 
     [Fact]
+    public void Native_builder_crtp_preserves_derived_fluent_type()
+    {
+        RunOnSta(() =>
+        {
+            var builder = new SpecializedButtonBuilder()
+                .WithBackground(SystemColors.ControlBrush)
+                .WithMargin(new Thickness(3))
+                .WithCaption("Specialized");
+
+            Assert.IsType<SpecializedButtonBuilder>(builder);
+            Assert.Equal("Specialized", Assert.IsType<Button>(builder.Build()).Content);
+        });
+    }
+
+    private sealed class SpecializedButtonBuilder : NativeGuiBuilder<Button, SpecializedButtonBuilder>
+    {
+        public SpecializedButtonBuilder WithCaption(string caption)
+        {
+            Configure(button => button.Content = caption);
+            return this;
+        }
+    }
+
+    [Fact]
     public void Stack_builder_rebuilds_the_declared_roster_without_duplicate_children()
     {
         RunOnSta(() =>
