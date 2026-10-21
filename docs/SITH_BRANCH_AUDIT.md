@@ -416,3 +416,29 @@ Current `development` tip at audit time: `3e03d572101d2be627e97aa9407e64c3e7ec96
 - No branch was deleted and no PR was merged or closed in this pass.
 
 **Current decision: NOT CLEARED.** The newly observed WPF test-host crash is an additional blocker for describing the current development candidate as fully verified. Branch cleanup and package publication remain separate decisions.
+
+## Focused branch-source verification — 2026-10-21 19:08 UTC
+
+### `work/svg-tree-depth-guard`
+
+Re-fetched `src/SVG/SvgGuiRenderer.cs`, `tests/SVG.Tests/SvgGuiRendererTests.cs`, and `docs/SVG_ADAPTER.md` from both this branch and `development`.
+
+- Current development renderer has `MaximumTreeDepth = 256`, an iterative stack-based depth-validation pass before recursive SVG serialization, and a clear exception when a tree exceeds the limit.
+- Current development tests explicitly cover accepting a tree at the configured maximum and rejecting excessive depth before recursive serialization. The branch test file is an older, shorter snapshot and does not contain those two depth-specific tests.
+- Current development adapter documentation states the depth-limit contract and explains why validation happens before recursive serialization; the branch documentation is an older version.
+- Compare snapshot: 5 commits ahead / 438 behind, with only the adapter guide, SVG renderer, and SVG renderer tests listed as changed files.
+
+**Disposition recommendation: discard candidate after final inventory check.** Its implementation, focused regression tests, and documented contract are already present in the more current development version. No branch deletion performed.
+
+### `work/gui-verify-xml-docs-in-packages`
+
+Compared `.github/workflows/package.yml` and the release work queue on the branch against current development.
+
+- Current development already contains the step `Verify all package license, README, target framework, and XML documentation metadata`. It checks Core, Blazor, WPF, and SVG for the expected framework directory, a DLL, and a matching XML documentation file, alongside README and MIT license metadata.
+- The branch workflow is an older, substantially shorter snapshot. Its XML documentation check is not missing from development.
+- The branch's release queue/readiness files are historical snapshots. Current development has newer baseline evidence and explicit per-type documentation/UML requirements; do not restore those branch versions wholesale.
+- Compare snapshot: 4 commits ahead / 254 behind; three changed paths (workflow, next-release work queue, release readiness).
+
+**Disposition recommendation: discard candidate after final inventory check.** No unique XML-documentation gate needs to be cherry-picked based on this comparison. No branch deletion performed.
+
+These are branch-disposition recommendations, not deletion authorization. Recheck the live branch/PR inventory and any newer commits before the owner deletes candidates.
