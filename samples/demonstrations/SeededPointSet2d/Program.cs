@@ -59,7 +59,7 @@ const double plotTop = 10;
 const double plotBottom = 45;
 double MapX(double x) => plotLeft + (x - minX) / (maxX - minX) * (plotRight - plotLeft);
 double MapY(double y) => plotBottom - (y - minY) / (maxY - minY) * (plotBottom - plotTop);
-string F(double value) => value.ToString("0.######", CultureInfo.InvariantCulture);
+string F(double value) => value.ToString("0.###", CultureInfo.InvariantCulture);
 
 var scene = GuiBuilder.Create("svg-scene", "physics-seeded-point-set")
     .Text("Physics seeded 2D point set")
