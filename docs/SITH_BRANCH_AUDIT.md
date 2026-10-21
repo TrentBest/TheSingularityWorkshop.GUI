@@ -1921,3 +1921,36 @@ The live inventory was rechecked after the final disposition ledger above:
 **Decision: READY FOR THE OWNER'S MANUAL BRANCH-DELETION PASS**, based on 18/18 documented dispositions, zero open PRs, and green exact-head workflows. Recheck the live branch list and workflow/head SHA immediately before acting. Do not delete branches automatically or as part of this audit. No branches were deleted, no PRs were merged, and no package was published.
 
 Readiness remains separate from cleanup: Sith branch disposition is 100% (18/18); package release readiness is 70%; source-derived UML staging readiness is 78%. Generated per-type pages have not been promoted; this is a separate documentation feature-completion task and is not justification for copying stale generated output from a retired branch.
+
+
+## Live verification correction — 2026-10-21 22:17 UTC
+
+This section supersedes earlier live-inventory and open-PR counts above where they conflict. Verified against the GitHub API at the current `development` head `f8917adcab2d4a98eaa79de79909c3eca4282dbb`.
+
+### Exact-head CI
+
+- [Solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39685062575) — completed successfully.
+- [Source-derived diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39685062532) — completed successfully.
+- [Package GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39685062647) — completed successfully.
+
+### Current inventory and PR state
+
+- Current branch inventory: 20 branches total — `master`, `development`, and 18 non-keeper branches.
+- Current open-PR query: zero open pull requests.
+- PRs #20, #21, and #22 are closed as merged into `development`; their head branches are `feat/physics-seeded-pointset-svg`, `feat/mandelbrot-physics-svg`, and `feat/mandelbrot-parameter-explorer`. These newly present branches must still receive explicit dispositions in the branch ledger.
+- PRs #8, #11, #15, #18, and #19 are closed but not merged. Closure resolves the open-PR blocker, but does not prove unique code, tests, documentation, assets, or workflow changes were reconciled.
+- Other historical PRs #9, #10, #12, #13, #16, and #17 show as closed/merged in current API metadata. Their branch-tip diffs still require disposition where the branch inventory retains them.
+
+### Publication safety
+
+The current `.github/workflows/package.yml` on `development` still contains:
+
+```yaml
+if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}
+```
+
+The `&& false` hard stop remains intact. No package was published or publication gate changed by this verification.
+
+### Decision
+
+**NOT CLEARED FOR MANUAL BRANCH DELETION.** Exact-head CI and the open-PR blocker are clear, but the 18 non-keeper branches are not all fully reconciled. The ledger needs explicit dispositions for the three newly present feature branches and final content-level disposition of non-keeper branches associated with closed-but-unmerged PRs. No branch was deleted in this pass.
