@@ -1511,3 +1511,15 @@ Added four files from protected source UML branch to development as separate com
 These are additive renderer capabilities. Existing `SvgGuiRenderer.cs` scene/primitive renderer was not replaced. No generator or Roslyn/MSBuild dependency was added to runtime packages. The final SVG tranche commit has not yet been validated; do not call this tranche green until run **39677399910** completes.
 
 Current `development` head is `79669391f9ae9b116b90778f779613c5d1770863`. UML staging readiness stays **72% pending renderer CI, generator integration, workflow hardening, and generated-doc reconciliation**. Sith remains **NOT CLEARED**. No branch deleted, no PR lifecycle action, no package published; publish guard unchanged.
+
+
+## PR #18 current audit pass — 2026-10-21 21:17 UTC
+
+- Root cause of the historical source-derived UML workflow failure is now explicit: the workflow generated `artifacts/DataCard.uml.svg` using the syntax-only class-view renderer, then required a byte-for-byte comparison against `docs/assets/uml/classes/Core/DataCard.svg`, which is the richer ecosystem diagram with consumer/dependency context. Those are different output contracts; equality was an invalid assertion.
+- On `work/gui-svg-source-uml-generator`, the workflow no longer compares those two outputs. It validates the generated syntax view's required content and separately checks that the checked-in canonical ecosystem diagram retains its title and the documented `SvgDataCardRenderer` consumer.
+- Restored `docs/assets/uml/classes/Core/DataCard.svg` from the current `development` version (5,210 bytes) instead of the branch's 3,267-byte syntax-only replacement. This preserves the richer living-documentation diagram and avoids presenting a reduced view as an equivalent replacement.
+- Fix commits on PR #18 branch: workflow `3bd701ecace0402ca6b73219005a12572fa66a5b`; restored canonical SVG `596688d6385e01a21fb5e8c8531a96d97e82b241`.
+- **Verification still pending:** the branch head is `596688d6385e01a21fb5e8c8531a96d97e82b241`, but no new source-derived-diagrams run appeared for that head during this pass. The latest historical failure is still from `b4c68259a2df7c6f565708a529b01e62c433dae0`. Do not call PR #18 green or mergeable until its exact current head has fresh passing CI.
+- PR #18 remains draft and GitHub reports `mergeable_state=dirty`; its 229-ahead / 121-behind comparison and 86-file scope make wholesale merge inappropriate. Rebase/conflict reconciliation and scope reduction remain required after the workflow contract fix is verified.
+
+**Sith remains NOT CLEARED.** The four documented deletion candidates remain owner-only candidates. No branches or PRs were deleted or closed, and no package was published.
