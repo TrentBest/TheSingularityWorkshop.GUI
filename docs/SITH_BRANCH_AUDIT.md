@@ -1735,3 +1735,22 @@ These are evidence-backed candidates for the owner's final manual deletion list,
 **Disposition progress: 10 of 18 non-keeper branches (56%) have evidence-backed redundant/superseded dispositions.** This is a branch-audit count, not release readiness. Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. The latest development head has additional documentation commits and its exact-head workflows must be checked before calling the CI gate green.
 
 **Sith remains NOT CLEARED.** Five open PRs (#8, #11, #15, #18, #19) still require deliberate disposition. No branch was deleted, no PR was merged or closed, and NuGet publication remains disabled by the explicit `&& false` guard.
+
+
+## Operation Sith — release-scope and package-doc branches reconciled; UML docs harvested — 2026-10-21 21:50 UTC
+
+- **work/gui-release-mit-wpf-scope**: the MIT LICENSE and Core/Blazor/WPF project files are byte-identical to development; the WPF README is also identical. Its package workflow is an older, shorter snapshot missing current Physics-backed Mandelbrot artifact generation and later package/gallery checks. Its release-readiness document has no branch-only lines; the old work-queue status (74–76%) is superseded by the current 70% estimate and per-type UML hard gate. **Disposition: superseded candidate.** No unique release-scope implementation needs harvesting from this branch.
+- **work/gui-verify-xml-docs-in-packages**: its workflow has no unique lines relative to current development; development adds the parameterized Mandelbrot workflow and additional gallery/package verification. The branch-only release-readiness text is an old artifact-check note that is already preserved in the current document with the later passing run and explicit caveats. Its work queue is an older snapshot; current development includes the external-reference policy, current adapter coverage, and per-type UML gate. **Disposition: superseded candidate.**
+
+### Harvested unique GUI.SVG UML documentation from PR #18 staging branch
+
+The following authored documentation was added to development, adapted to the current implementation state rather than copied as stale historical claims:
+- [docs/GALLERY.md](GALLERY.md): evidence-grounded visual index for the real SVG adapter gallery, source-derived UML staging outputs, demonstration recipes, fox/sheepdog scene, and WPF/Blazor boundaries.
+- [docs/SOURCE_DERIVED_UML.md](SOURCE_DERIVED_UML.md): current build-time tooling guide, exact-head CI evidence, known gaps, and safe-generation rules.
+- [docs/LIVING_UML_ARCHITECTURE.md](LIVING_UML_ARCHITECTURE.md): source-to-model-to-diagram architecture, type-page contract, evidence-driven UML families, deterministic generation, and acceptance criteria.
+- [docs/BRANDING.md](BRANDING.md): GUI-specific adaptation of the shared Workshop documentation/visual-evidence standard.
+- README documentation navigation now links the gallery, UML guides, and branding standard.
+
+These documents preserve core authored intent from the source-derived UML staging branch. The branch remains held: its generator/workflow implementation differs from development, and other unique authored docs/assets and the generated per-type page set still need review. The generated pages must be regenerated from the current source rather than copied from an older branch snapshot. PR #18 remains open/draft until the remaining implementation and artifact reconciliation is deliberate.
+
+The evidence-backed redundant/superseded count is now **11 of 18 non-keeper branches (61% disposition-ready by branch count)**. In addition to the prior nine candidates, `work/gui-release-mit-wpf-scope` and `work/gui-verify-xml-docs-in-packages` are now superseded candidates. Sith remains **NOT CLEARED**: seven branches remain held for unique implementation/documentation or explicit policy/PR disposition. No branch was deleted; no PR was merged/closed; no package was published.
