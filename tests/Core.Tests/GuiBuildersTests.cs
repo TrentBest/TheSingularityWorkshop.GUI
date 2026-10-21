@@ -43,4 +43,47 @@ public sealed class GuiBuildersTests
         Assert.Equal("Hello", root.Find("child").Text);
         Assert.Single(root.Children);
     }
+
+    [Fact]
+    public void Build_handles_a_deep_builder_tree_without_recursive_materialization()
+    {
+        var root = GuiBuilders.Panel("node-0");
+        var current = root;
+
+        for (var i = 1; i <= 4096; i++)
+        {
+            var child = GuiBuilders.Panel($"node-{i}");
+            current.Child(child);
+            current = child;
+        }
+
+        var built = root.Build();
+
+        Assert.Equal("node-4096", built.Find("node-4096").Id);
+    }
+
+    [Fact]
+    public void Child_existing_node_clones_a_deep_tree_without_recursive_cloning()
+    {
+        GuiNode child = new("Text", "node-4096", "bottom");
+        for (var i = 4095; i >= 0; i--)
+            child = new GuiNode("Panel", $"node-{i}", children: new[] { child });
+
+        var root = GuiBuilders.Panel("outer").Child(child).Build();
+
+        Assert.Equal("bottom", root.Find("node-4096").Text);
+    }
+
+    [Fact]
+    public void Build_rejects_a_cyclic_builder_graph_with_a_controlled_exception()
+    {
+        var root = GuiBuilders.Panel("root");
+        var child = GuiBuilders.Panel("child");
+        root.Child(child);
+        child.Child(root);
+
+        var error = Assert.Throws<InvalidOperationException>(() => root.Build());
+
+        Assert.Contains("cannot contain itself", error.Message);
+    }
 }
