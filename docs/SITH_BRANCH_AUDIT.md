@@ -375,3 +375,22 @@ Compared `docs/SVG_ADAPTER.md` from `work/svg-tree-depth-guard` with current `de
 The latest source repair commit is `97554095656f2ef0ca94cbc4ada73848f3a953f8`. The workflow-run listing still contains runs whose actual `head_sha` is the earlier `b4c68259a2df7c6f565708a529b01e62c433dae0`, even though those runs' PR metadata now references the newer head. The newer SHA's check-runs endpoint reports zero check runs. Therefore the prior failures/successes are not evidence for the repaired commit. Do not mark the palette repair verified; trigger/await workflows for the exact SHA and inspect each run's own `head_sha`.
 
 No branches or PRs were changed by this recheck. Sith remains uncleared.
+
+
+## Exact-head workflow recheck — 2026-10-21 18:52 UTC
+
+The GitHub Actions collection for `work/gui-svg-source-uml-generator` still shows the three relevant most recent runs on `b4c68259a2df7c6f565708a529b01e62c433dae0`, not on the current PR head `97554095656f2ef0ca94cbc4ada73848f3a953f8`:
+
+- [Package GUI #39642809017](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39642809017) — failed on the old SHA.
+- [Source-derived diagrams #39642809045](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39642809045) — failed on the old SHA.
+- [Solution-derived UML inventory #39642809163](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39642809163) — passed on the old SHA.
+
+Although the run records list PR #18 metadata whose head is the newer SHA, each run's own `head_sha` is the old commit. The current SHA's check-runs endpoint returns no checks. Therefore **there is still no exact-head evidence** that the palette correction passes. The GitHub connection available for this audit supports GET-only workflow inspection; it cannot dispatch or rerun workflows. The next valid proof must come from GitHub Actions triggered for the new head (or a maintainer rerun/dispatch), then checked by each run's own `head_sha`.
+
+Fresh compare snapshots also reaffirm:
+- `work/svg-tree-depth-guard` is 5 ahead / 437 behind, with only `docs/SVG_ADAPTER.md`, `src/SVG/SvgGuiRenderer.cs`, and `tests/SVG.Tests/SvgGuiRendererTests.cs` in the compare file list. Documentation/tests are superseded; keep it on the discard-candidate list pending final source hunk review.
+- `work/gui-verify-xml-docs-in-packages` is 4 ahead / 253 behind and has three changed paths: package workflow plus release work queue/readiness docs. Its workflow is a stale snapshot; the docs are historical snapshots. Final discard is contingent on checking that its XML-doc verification behavior exists on development, not merely that PR #17 merged.
+- `work/svg-guide-current-contract` is still a very broad 112-ahead / 506-behind compare, with 59 paths previously inventoried. PR #11's current description claims docs-only, but the current branch comparison includes workflow, source, tests, package projects, WPF implementation, and architecture docs. Do not merge it as described. Its guide content is preserved separately on development; any remaining unique non-guide content must be classified before the branch can be discarded.
+- PR #18 remains open/draft; PR #8 and #11 remain open; PRs #15 and #19 remain open duplicates for the publish gate. No PR or branch state was changed.
+
+No deletion authorization is implied by these compare results.
