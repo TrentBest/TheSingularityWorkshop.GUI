@@ -566,3 +566,28 @@ The latest branch search still returns exactly 17 branches: `master`, `developme
 ### Decision
 
 **Sith status remains NOT CLEARED.** The WPF shutdown crash is a concrete blocker to calling current CI green. Continue semantic branch-by-branch reconciliation and resolve the five open PRs before issuing any deletion list. Do not enable or publish NuGet packages as part of this work.
+
+
+## Fresh branch-diff pass — 2026-10-21 19:56 UTC
+
+### Inventory and current comparison anchors
+
+- Re-ran the live branch search: the same 17 branches remain, with only `master` and `development` designated as keepers.
+- Re-ran the open-PR search: #8, #11, #15, #18, and #19 remain the known open review set. The source search for open PR #9 returned no result; because that search is not an authoritative per-number state endpoint, do not use it alone to infer PR #9's lifecycle state.
+- Fresh compare responses identify current `development` at `293f42442584d5ff88b8cb14f00cc846917e7f79` for these comparisons.
+
+### Newly checked branch dispositions
+
+| Branch | Fresh comparison | Finding | Disposition |
+|---|---|---|---|
+| `work/gui-wpf-tests` | 0 ahead / 263 behind / no changed files | Exact compare reports no branch-only commits and no file changes relative to current development. This is the strongest technically redundant branch candidate in the current inventory. | Mark as **safe-to-discard candidate**, not deleted. Verify no open PR or other unresolved reference before the owner removes it. |
+| `work/svg-app-fsm-cos-boundary` | 5 ahead / 447 behind; README +2/-2 and `docs/SVG_APP_CONCEPT.md` added relative to the merge base | The concept document is present on both refs at the same blob SHA `f98b408b2fba433017892c59182118ab6aaf47f3`. It carefully states that SVG_App is not implemented, describes FSM_COS `RuntimeAssembly` and GUI.SVG `GuiNode`/renderer as separate contracts, and proposes an assembly-inspection SVG as the first proof. Current README already links the concept. Thus this branch's apparent doc addition is already present on development; its remaining difference is a one-line README presentation change, not a unique architecture artifact. | Strong superseded candidate after confirming no open PR points to it and checking the README hunk for any desired wording. Do not merge the branch snapshot. |
+| `work/gui-release-mit-wpf-scope` | 16 ahead / 264 behind; eight changed paths | The branch still has changes to the package workflow, root license, release work queue/readiness, and Core/Blazor/WPF project metadata. This is broader than a documentation-only duplicate. Current development already includes MIT package metadata and WPF scope, but the comparison confirms real historical differences remain. | Do not discard based on branch age or file names alone. Reconcile the exact workflow/project hunks against current development, particularly package license/readme/framework/XML metadata and the deliberate `&& false` publish hard stop. |
+| `work/gui-verify-xml-docs-in-packages` | 4 ahead / 263 behind; workflow, release work queue, and readiness docs changed | The branch contains an all-four-package archive check for MIT license expression, README metadata/file, target framework, DLL, and XML docs. Current development's package workflow already has a corresponding all-four-package metadata verification step; the branch's workflow also carries an older overall snapshot and must not be merged wholesale. The readiness/queue text is older than current per-type UML gates. | Likely superseded, but retain as a discard candidate until a line-level comparison confirms the current workflow covers every assertion from the branch. Do not infer complete equivalence merely from the step name. |
+
+### Guardrails retained
+
+- No branch deletion, PR merge/closure, or package publication occurred in this pass.
+- The current development package workflow's publish job remains hard-disabled by `&& false`; this is not to be changed without explicit authorization.
+- Current source-derived UML implementation readiness remains **72%**. That percentage describes the staging UML work, not the overall package release, not Sith cleanup completion, and not authorization to merge or publish.
+- Sith remains **NOT CLEARED**. The WPF test-host shutdown crash previously recorded in this document remains an independent CI blocker until a clean Windows WPF run passes on the exact resulting development SHA.
