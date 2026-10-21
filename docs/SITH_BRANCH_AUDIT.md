@@ -828,3 +828,22 @@ Verification against current development confirms docs/SOURCE_DERIVED_DIAGRAMS.m
 Current docs/RELEASE_READINESS.md still states a **70% qualitative package release readiness** estimate, with per-type docs/UML and CI drift enforcement incomplete. The Sith audit's **72%** is only the separate source-derived UML staging estimate and should not be presented as the package release readiness percentage. The latest source-derived generator workflow exists only on the held branch at this comparison anchor; do not imply that it already runs on development.
 
 No branch was deleted and no PR lifecycle or package publication state was changed.
+
+## Owner directive: preserve all UML-related work — 2026-10-21
+
+**Policy clarification:** UML-related work is explicitly in scope to KEEP. Do not classify or delete a branch merely because its changes are documentation-only, generated diagrams, source-model code, SVG rendering, per-file/type pages, inventory, or UML CI. First preserve its unique requirement/implementation and reconcile it into the keeper branch or into a deliberately retained active workstream.
+
+### Protected UML workstreams
+
+- **`work/gui-svg-source-uml-generator` / PR #18 — ACTIVE RETAIN/RECONCILE.** Fresh compare: 227 commits ahead / 66 behind development. Preserve its unique Roslyn/MSBuild generator, renderer-neutral UML model, source-derived and solution-derived workflows, SVG renderers, per-file/type outputs, validation scripts, tests, and provenance/identity contract. Do not merge the broad branch wholesale; reconcile focused slices and require exact-head CI plus generated-output/source-truth review.
+- **`work/gui-uml-per-file-documentation` — preserve the requirement; branch disposition only after verification.** Its unique 19-line requirement for per-file/per-type UML, accurate relationships/signatures, non-type-file treatment, and future enforcement was recorded in development by commit `f5d5c836c47b2e10f2dfe4da8ecbf0ec9de282ae`. That means the content is preserved; it does not mean automated enforcement is complete. Before the branch itself is considered redundant, verify the entire branch-tip diff and confirm there is no additional UML material.
+- **UML-related work in `work/svg-guide-current-contract`, `work/gui-release-mit-wpf-scope`, and other branches:** inspect all UML/SVG diagrams, generated artifacts, model/schema changes, tests, and CI assertions as separate contributions. A branch may be stale overall while still containing material that must be harvested. Never use branch-level age or ahead/behind counts as a substitute for this content-level check.
+
+### Required disposition vocabulary
+
+- **PRESERVE / ACTIVE:** unique UML implementation remains under active development.
+- **RECONCILED:** exact requirement or implementation has been verified in `development`; branch deletion still waits for final branch/PR reference checks and the owner's manual action.
+- **HOLD:** unique content has not yet been fully inspected or integrated.
+- **VERIFIED REDUNDANT:** only after exact content/behavior comparison proves every useful UML contribution is already preserved.
+
+Until the content-level UML inventory is complete, no UML-related branch may be placed on a safe-to-discard list solely because it is old, divergent, documentation-only, or has a low ahead count. This policy does not authorize branch deletion, PR closure/merge, or publication.
