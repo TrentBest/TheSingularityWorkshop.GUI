@@ -2003,3 +2003,14 @@ The three merged sample branches (#20–#22) are cleanup candidates after a quic
 - development is a2b9a8267869da65bcf2da040658892ba0dfe270.
 - CI for this exact head is in progress: Source-derived diagrams run 39687061764; Solution-derived UML inventory run 39687061759; Package GUI run 39687061732.
 - NOT CLEARED as a blanket statement, but four low-risk branches above are practical first candidates for the owner's manual deletion review. This is intentionally a quick triage, not a demand to finish exhaustive archaeology.
+
+## Fast-path round 3 — 2026-10-21 22:34 UTC
+
+Three-round fast triage completed at the owner's requested pace.
+
+- Current `development` includes byte-identical `SeededPointSet2d/Program.cs` and recipe `05-seeded-point-set.md` compared with `feat/physics-seeded-pointset-svg`.
+- Current `development` includes byte-identical `MandelbrotEscapeTime2d/Program.cs` compared with `feat/mandelbrot-physics-svg` and byte-identical recipe `06-mandelbrot-field.md` compared with `feat/mandelbrot-parameter-explorer`.
+- Gallery/index files differ from the older branch copies; current development versions are the versions to keep. These three merged sample branches are practical deletion candidates, not ongoing work.
+- On prior head `a2b9a8267869da65bcf2da040658892ba0dfe270`, Source-derived diagrams, Solution-derived UML inventory, and Package GUI all completed successfully. The ledger-only follow-up has moved development to the current head; no claim of exact-head green is made for that later commit until its runs are checked.
+- `package.yml` still contains the `&& false` NuGet publishing hard stop.
+- Owner has explicitly prioritized current development over archival preservation. This audit does not ask for further exhaustive history review. No branches deleted by the assistant.
