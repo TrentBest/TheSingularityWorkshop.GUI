@@ -1318,3 +1318,17 @@ Sith cleanup remains **NOT CLEARED**. UML staging readiness remains **72%**. No 
 - GUI.SVG source-derived UML staging readiness: **72%**.
 - Operation Sith: **NOT CLEARED**; exact sample content and renderer/test deltas remain to reconcile.
 - No branches deleted; no PRs merged or closed; `master` untouched; NuGet publication remains gated and unauthorized.
+
+
+## Follow-up exact-content checks — 2026-10-21 20:55 UTC
+
+- `work/svg-app-fsm-cos-boundary`: `docs/SVG_APP_CONCEPT.md` is byte-identical on the branch and `development` (same blob SHA `f98b408b2fba433017892c59182118ab6aaf47f3`). This supports treating the concept document as preserved, but the branch also has a README change and PR #12 state must be checked before final deletion disposition.
+- `work/webpage-event-builder-compatibility`: `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` is byte-identical on both refs (same blob SHA `be6c179c751d8f817293f4f445584df23675afd5`). `src/Blazor/WorkshopGuiBuilder.cs` differs by only two added lines according to the compare summary, and the development copy contains XML documentation. This is a strong superseded candidate, but record final PR/reference disposition before owner deletion.
+- `fix/guinode-nullability-contract`: only `src/Core/GuiNode.cs` differs (one addition/one deletion in the current compare summary); development includes XML documentation and has a different blob. Keep as pending exact semantic review, not proven redundant by commit count.
+- `work/gui-uml-per-file-documentation`: only `docs/DATA_CARDS_AND_UML.md` differs in the compare summary (19 additions, no deletions); the current development version has a different blob and additional material. Compare the branch-only additions against the current standard before closing it out.
+- `work/gui-wpf-tests`: 0 ahead / 316 behind with no changed paths. Strong redundant candidate; still requires final PR/reference check.
+- `work/gui-release-mit-wpf-scope`: 16 ahead / 317 behind, with unique workflow, release queue/readiness, Blazor/Core/WPF project, and WPF README changes. The MIT `LICENSE` file is already byte-identical on `development` and the branch (blob SHA `65f61d17ccdee9f87d75ea2f2f26ad7b1fd34ee4`), but that does not reconcile the remaining release/scope edits. Hold.
+- `work/gui-verify-xml-docs-in-packages`: 4 ahead / 316 behind, with remaining package workflow and release-document edits. Hold pending comparison against the current release gate and queue.
+- `architecture/datum-interaction-boundary`: 62 ahead / 569 behind, with a broad legacy set of docs, builders, renderers, WPF additions, tests and workflow changes. This cannot be safely reduced to a one-line "superseded" note; it needs a deliberate capability-by-capability disposition. Keep PR #8 open pending that decision.
+
+The above comparisons are content evidence only; no PR was merged or closed, no branch deleted, and no publication workflow dispatched.
