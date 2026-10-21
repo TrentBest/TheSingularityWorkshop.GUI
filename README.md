@@ -1,6 +1,6 @@
 ![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
 
-# TheSingularityWorkshop.GUI
+# ✳️ 00 TheSingularityWorkshop.GUI
 
 > **A platform-neutral GUI engineering layer built around a recursive semantic model and platform adapters.**
 
@@ -28,7 +28,7 @@ Core provides the neutral recursive model and builder contracts. Adapters transl
 
 A neutral interface model lets one description of intent be manifested by different platform adapters. Without that boundary, application meaning becomes entangled with the widgets and APIs of whichever UI technology was chosen first.
 
-## 🔺 03 How
+## 🩵 03 How
 
 Describe interface intent in the Core model, then pass it to an adapter. The current repository contains Blazor and WPF renderers plus an SVG manifestation adapter for supported scene nodes and coordinate-system scenes. Their contracts and coverage differ: the WPF renderer has focused Windows-native tests, while the shared conformance suite is intentionally narrow. SVG output is inspectable and may use declarative SVG animation; it is not a GUI-owned animation clock or a GPU pipeline.
 
@@ -42,7 +42,7 @@ Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md
 
 ## 🟪 05 Available documentation and theory
 
-[Start Here](docs/START_HERE.md) · [Gallery](docs/GALLERY.md) · [UML source-file guides](docs/uml/README.md) · [Repository architecture audit](docs/REPOSITORY_ARCHITECTURE_AUDIT.md) · [Source-derived UML tooling](docs/SOURCE_DERIVED_UML.md) · [Living UML architecture](docs/LIVING_UML_ARCHITECTURE.md) · [UML visual audit](docs/UML_VISUAL_AUDIT.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
+[Start Here](docs/START_HERE.md) · [Gallery](docs/GALLERY.md) · [UML source-file guides](docs/uml/README.md) · [Repository architecture audit](docs/REPOSITORY_ARCHITECTURE_AUDIT.md) · [Source-derived UML tooling](docs/SOURCE_DERIVED_UML.md) · [Living UML architecture](docs/LIVING_UML_ARCHITECTURE.md) · [UML visual audit](docs/UML_VISUAL_AUDIT.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md) · [Branding](docs/BRANDING.md)
 
 ---
 
