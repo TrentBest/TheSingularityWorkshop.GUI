@@ -286,3 +286,13 @@ The first substantial section of `docs/DATA_CARDS_AND_UML.md` on `work/gui-uml-p
 ### Decision after this pass
 
 The keeper target remains exactly `master` and `development`. This pass materially narrows several branch dispositions, but it does **not** clear Sith cleanup: the two legacy experience/hub branches need an explicit keep/rebuild/discard decision; PRs #8, #11, #15, #18 and #19 remain to be dispositioned; and several remaining unique docs/workflow hunks still need exact review. No branches or PRs were deleted, closed, merged, or published in this pass.
+
+
+## Exact content comparison correction — 2026-10-21 18:26 UTC
+
+A full-content comparison resolves two previously open questions:
+
+- **`work/gui-uml-per-file-documentation` is superseded, not a unique keeper.** The branch's `docs/DATA_CARDS_AND_UML.md` is 130 lines; development's is 240 lines. The common opening section is identical, but the branch's later per-file UML section is replaced on development by a substantially expanded SVG/living-documentation and incremental implementation contract. The branch does not contain unique code/assets according to the compare. Classify the branch as intentionally discardable after current inventory recheck.
+- **`work/gui-release-mit-wpf-scope` is an older partial workflow/doc snapshot, not a candidate to merge wholesale.** Its workflow is 247 lines versus development's 396 lines and diverges around package/artifact verification; the current development workflow has additional package checks and gallery verification. Its queue/readiness documents are also older snapshots: the branch queue says 74% while development's current readiness gate says 70%, reflecting later work and the hard per-type UML gate. The root MIT license is byte-identical to development, and the WPF README is also unchanged in substance. Do not bring back the older readiness percentage or replace the newer workflow/docs. Any remaining useful project-file delta must be checked independently before branch discard.
+
+These findings narrow the disposition but do not change the global decision: **NOT CLEARED** until open PRs are explicitly resolved and all remaining branch-specific material is either reconciled or deliberately discarded.
