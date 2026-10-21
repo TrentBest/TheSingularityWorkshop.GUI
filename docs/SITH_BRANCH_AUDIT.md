@@ -1577,3 +1577,23 @@ The SVG palette contract correction is validated. Source workflow checks canonic
 Important remaining gap: generated Core type pages and diagrams are currently emitted under `artifacts/` and uploaded as workflow artifacts; they are not yet reconciled into checked-in `docs/uml/source-files/` (the current development tree has no generated source-file page set). Thus CI proves generation and artifact completeness, not committed living-documentation freshness. Next milestone is a safe, deterministic checked-in generation path or a deliberate artifact-to-docs promotion workflow, with a manifest that limits writes to generated files and preserves authored docs.
 
 UML pipeline staging readiness advances from 72% to **78%** based on the now-green end-to-end model, SVG, generator, and workflow checks; the committed living-documentation/promotion path and review of generated content remain outstanding. Sith remains **NOT CLEARED**. No branches deleted, no PR lifecycle action, no package published; NuGet publish guard unchanged.
+
+
+## Operation Sith — safe generated UML documentation promotion path added — 2026-10-21 21:36 UTC
+
+### Changes staged on development
+- `scripts/promote_source_uml.py` provides deterministic promotion from the source-workflow artifact layout into `docs/uml/source-files/`. It writes only the generated Core inventory and recognized type-page Markdown/SVG files, records a generated-file manifest, and prunes stale files only when the prior manifest owns the path.
+- `scripts/test_promote_source_uml.py` covers promotion, authored-file preservation, stale generated-file pruning, read-only drift checks, malformed/unsafe manifests, unsafe generated filenames, and missing index handling.
+- Tightened manifest validation so even a manifest entry under `Core/` cannot claim an authored filename such as `README.md`; recognized generated type files must use the generator's `TheSingularityWorkshop-` filename prefix (with `index.md` explicitly allowed).
+- The source-derived UML workflow now runs the promotion safety tests.
+- Added `.github/workflows/promote-source-uml-docs.yml`, a manually triggered promotion workflow that only runs on `development` when its required `confirm_promotion` input is true. It regenerates from the exact checked-out source, runs safety tests, and commits only `docs/uml/source-files`. It has not been dispatched; no generated-doc promotion commit has been made.
+- Added authored `docs/uml/source-files/README.md` explaining the separation between generated type pages and human-owned use cases/guides. The actual generated inventory/pages are still awaiting the deliberate promotion workflow.
+
+### Validation state
+The source-derived pipeline was green at `7cbf5959563fb90d72b2f264848eb36409ca4d36` before promotion-safety code was added. The latest coherent implementation/test commit is `51222915fd92cfb2b52661fbc6901211f1bb25f6`; exact-head Package GUI, source-derived UML, and solution inventory runs are queued/in progress:
+- **39680031105** Package GUI
+- **39680031178** Source-derived diagrams
+- **39680031051** Solution-derived UML inventory
+Do not mark promotion safety green until the exact-head source workflow completes.
+
+UML staging readiness remains **78%** pending exact-head validation and the first checked-in generated-page promotion. Sith remains **NOT CLEARED**. No branch deleted, no PR lifecycle action, no package published; NuGet publish guard unchanged.
