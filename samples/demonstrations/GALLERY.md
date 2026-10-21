@@ -41,11 +41,11 @@ The generator consumes the Physics-owned JSON run record at a pinned source comm
 [**Read Recipe 03 — Physics-backed projectile trajectory**](recipes/03-projectile-trajectory.md)
 
 
-### Recipe 06 — Mandelbrot field from Physics
+### Recipe 06 — Parameterized Mandelbrot field from Physics
 
-Physics evaluates a bounded Mandelbrot escape-time grid and exports its actual iteration counts and escape classifications; GUI.SVG consumes those records and validates every rendered cell against the recorded sample. The generated SVG and source run record are uploaded as a CI artifact, keeping the mathematical algorithm in Physics and the visual manifestation in GUI.SVG.
+Physics generates a default overview and a configurable detail window using its actual escape-time sampler; GUI.SVG consumes each versioned run record and verifies every rendered cell against the stored classification. CI uploads both records and both SVGs, so resolution, iteration cap, and complex-plane bounds can be compared without moving mathematical work into the renderer.
 
-[**Read Recipe 06 — Physics-backed Mandelbrot field**](recipes/06-mandelbrot-field.md)
+[**Read Recipe 06 — Parameterized Physics-backed Mandelbrot field**](recipes/06-mandelbrot-field.md)
 
 ## Harvested from TheSingularityWorkshop.Physics
 
