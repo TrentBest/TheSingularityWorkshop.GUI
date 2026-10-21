@@ -44,10 +44,10 @@ class SourceUmlPromotionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
             self.assertEqual([], PROMOTER.promote(source, output))
-            stale = output / "Core" / "old.svg"
+            stale = output / "Core" / "TheSingularityWorkshop-Old-Type-deadbeef.svg"
             stale.write_text("<svg/>", encoding="utf-8")
             manifest = output / PROMOTER.MANIFEST_NAME
-            manifest.write_text(manifest.read_text(encoding="utf-8") + "Core/old.svg\n", encoding="utf-8")
+            manifest.write_text(manifest.read_text(encoding="utf-8") + "Core/TheSingularityWorkshop-Old-Type-deadbeef.svg\n", encoding="utf-8")
             self.assertEqual([], PROMOTER.promote(source, output))
             self.assertFalse(stale.exists())
             self.assertTrue((output / "authored.md").exists())
@@ -79,7 +79,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
     def test_manifest_cannot_claim_authored_files(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
-            (output / PROMOTER.MANIFEST_NAME).write_text("Core/README.md\\n", encoding="utf-8")
+            (output / PROMOTER.MANIFEST_NAME).write_text("Core/README.md\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "not a recognized generated type page/diagram"):
                 PROMOTER.promote(source, output)
 
