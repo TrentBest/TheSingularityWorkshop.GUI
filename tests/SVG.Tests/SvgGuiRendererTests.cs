@@ -317,6 +317,16 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Rejects_negative_geometry_dimensions()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-circle", "invalid", circle => circle.Property("r", "-1"))
+            .Build();
+
+        Assert.Throws<ArgumentOutOfRangeException>(() => _renderer.Render(scene));
+    }
+
+    [Fact]
     public void Rejects_invalid_coordinate_range()
     {
         var scene = GuiBuilder.Create("coordinate-system", "scene")
