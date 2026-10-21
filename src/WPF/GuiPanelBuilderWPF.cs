@@ -55,6 +55,9 @@ public abstract class GuiPanelBuilderWPF<TPanel, TBuilder> : IComponentWPF
     /// <param name="parent">Parent component, or null to detach the logical relationship.</param>
     public void SetParent(IComponentWPF? parent) => _parent = parent;
 
+    /// <summary>Returns the stable identity through the shared builder contract.</summary>
+    public string GetBuilderId() => Id;
+
     /// <summary>Returns the logical parent previously assigned through <see cref="SetParent"/>.</summary>
     /// <returns>The parent component, or null when this component has no parent.</returns>
     public IComponentWPF? GetParent() => _parent;
