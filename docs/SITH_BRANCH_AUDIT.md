@@ -1021,3 +1021,15 @@ No source-generator code was merged, and PR #18 remains open.
 - The NuGet publish hard stop remains in `development`; no package was published.
 
 No branch deletion, PR merge/closure, or package publication was performed.
+
+## Correction and follow-through: Physics seeded point-set PR — 2026-10-21 20:29Z
+
+- Current branch inventory: **18 branches** (2 keepers + 16 non-keepers). PR #20 is open for `feat/physics-seeded-pointset-svg`; the branch now compares **8 ahead / 2 behind** `development`, with seven changed files. This supersedes the earlier 4-ahead/0-behind comparison.
+- Important correction to the prior note: this branch **does** change `.github/workflows/package.yml`. It checks out Physics at immutable commit `eea463a5034682b8eb149bd73013ac7dd590eb83`, runs `SeededPointSet2dExport`, runs the GUI consumer against that exact run record, and uploads both the JSON record and generated SVG. Therefore the end-to-end CI claim is backed by the branch workflow source, though it is not yet proven by a successful exact-head workflow run.
+- The sample's input checks are concrete: model/schema identity, half-open bounds, finite coordinates, count cap and consistency, stable indices, and exact comparison of emitted marker IDs and mapped coordinates to the input record. The recipe carefully avoids claiming physical simulation or a probability distribution.
+- `development`'s `samples/demonstrations/GALLERY.md` does not yet contain Recipe 05. Harvest the sample, recipe, gallery entry, HTML index link, and package workflow changes together; review the pinned Physics SHA and action references, retain the publishing hard stop, then validate the PR's actual workflow run before merge consideration.
+- The PR's workflow contains mutable major-version action tags (`actions/checkout@v4`, `actions/setup-dotnet@v4`, `actions/upload-artifact@v7`, `actions/download-artifact@v8`, `NuGet/login@v1`). Pin all actions to reviewed immutable SHAs as part of hardening; do not let this unrelated action-pinning work obscure the sample's data-provenance proof.
+- This section supersedes the earlier stale audit sentence claiming the branch diff had no workflow change. The prior 4-ahead comparison was a stale baseline; use the current comparison above.
+
+Disposition: **PRESERVE / RECONCILE; do not delete branch or merge PR until exact-head CI and workflow hardening are reviewed.**
+
