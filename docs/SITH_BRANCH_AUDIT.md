@@ -1754,3 +1754,22 @@ The following authored documentation was added to development, adapted to the cu
 These documents preserve core authored intent from the source-derived UML staging branch. The branch remains held: its generator/workflow implementation differs from development, and other unique authored docs/assets and the generated per-type page set still need review. The generated pages must be regenerated from the current source rather than copied from an older branch snapshot. PR #18 remains open/draft until the remaining implementation and artifact reconciliation is deliberate.
 
 The evidence-backed redundant/superseded count is now **11 of 18 non-keeper branches (61% disposition-ready by branch count)**. In addition to the prior nine candidates, `work/gui-release-mit-wpf-scope` and `work/gui-verify-xml-docs-in-packages` are now superseded candidates. Sith remains **NOT CLEARED**: seven branches remain held for unique implementation/documentation or explicit policy/PR disposition. No branch was deleted; no PR was merged/closed; no package was published.
+
+
+## Operation Sith — legacy experience branches and WPF guidance reconciled — 2026-10-21 21:51 UTC
+
+### Legacy experience/hub branches
+
+- **`feature/nested-experiences`: intentionally discardable legacy implementation.** The useful recursive-experience concept is preserved in [Nested Experiences](GUI_NESTED_EXPERIENCES.md), which explicitly labels the model as a proposal and states that the legacy `Gui.Hub` / `GuiHub` API is not current implementation. The branch's old Hub API and renderer/builder snapshot are not part of the current supported contract, and no open PR targets this branch.
+- **`feature/integrated-fsm-cos-hub`: intentionally discardable legacy implementation after documentation recovery.** Its old `GuiHub` composition path is not present on development. The useful WPF responsibility boundary was reauthored as [GUI.WPF Guide](WPF_GUIDE.md) and linked from the package README; the guide deliberately removes the retired Hub path, stale version/testing claims, and unsupported feature claims. [WPF Builder Pattern Audit](WPF_BUILDER_PATTERN_AUDIT.md) now records the old TreeView, pivot-grid, reflection editor, color/CRUD dialogs, and diagnostic viewer as historical candidates, not current features. No legacy code was copied wholesale; any future feature must be rebuilt against current contracts with per-type docs and Windows tests. No open PR targets this branch.
+- **`work/svg-app-fsm-cos-boundary`: superseded candidate.** The earlier temporary hold is resolved: `docs/SVG_APP_CONCEPT.md` is byte-identical to development, and the remaining README is an older framing superseded by the current README's clearer Core/adapter/host boundaries and current links. It contains no separate implementation to harvest and has no open PR.
+
+### Corrected disposition count
+
+Thirteen of 18 non-keeper branches now have evidence-backed redundant, superseded, or intentional-discard dispositions (**72% disposition-ready by branch count**). This includes the three demo branches, `work/gui-wpf-tests`, `fix/guinode-nullability-contract`, `work/webpage-event-builder-compatibility`, `work/gui-uml-per-file-documentation`, `work/svg-tree-depth-guard`, `work/svg-app-fsm-cos-boundary`, `work/gui-release-mit-wpf-scope`, `work/gui-verify-xml-docs-in-packages`, `feature/nested-experiences`, and `feature/integrated-fsm-cos-hub`.
+
+The five remaining held branches correspond to the five open PR heads: `architecture/datum-interaction-boundary` (PR #8), `work/svg-guide-current-contract` (PR #11), `work/nuget-publish-gate` (PR #15), `work/gui-svg-source-uml-generator` (PR #18), and `work/gui-publish-gate-reconciled` (PR #19). Their PRs require deliberate disposition before any associated branch can appear on the manual deletion list.
+
+The current development head includes new WPF guide/audit documentation commits. Exact-head workflows are being rechecked; no green claim is carried forward from earlier SHAs. Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. NuGet publishing remains disabled by the explicit `&& false` hard stop.
+
+**Sith remains NOT CLEARED.** No branch was deleted, no PR was merged or closed, and no package was published.
