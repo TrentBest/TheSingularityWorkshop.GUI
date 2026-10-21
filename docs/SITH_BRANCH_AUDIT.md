@@ -591,3 +591,14 @@ The latest branch search still returns exactly 17 branches: `master`, `developme
 - The current development package workflow's publish job remains hard-disabled by `&& false`; this is not to be changed without explicit authorization.
 - Current source-derived UML implementation readiness remains **72%**. That percentage describes the staging UML work, not the overall package release, not Sith cleanup completion, and not authorization to merge or publish.
 - Sith remains **NOT CLEARED**. The WPF test-host shutdown crash previously recorded in this document remains an independent CI blocker until a clean Windows WPF run passes on the exact resulting development SHA.
+
+
+## WPF HWND teardown hypothesis and targeted test cleanup — 2026-10-21 19:57 UTC
+
+The WPF test source review found a concrete lifecycle gap in `Window_builder_composes_content_and_host_options_without_showing_the_window`: it showed and hid an owner `Window`, then allowed the STA test thread to exit without closing that native window. The run log's crash in `HwndSubclass.SubclassWndProc` after all 23 tests reported passed is consistent with a stale WPF HWND/subclass receiving work as its owning thread exits, although the log does not prove this is the root cause.
+
+A narrow test-only change was committed as `6fcc53c6646b889f593438b411204717f01bab2b` (`test: close WPF owner window before STA teardown`). The test now closes the built child window and closes the shown owner in `finally` blocks, including assertion-failure paths. This preserves all 23 tests and their assertions; it does not suppress the crash or change production behavior.
+
+Exact-head Package GUI run **#39666044705** was queued on this test-only commit at 2026-10-21 19:56:59 UTC. The hypothesis is **unverified until the Windows WPF job completes**. If it still crashes, continue with dispatcher/STA ownership and native-window teardown diagnostics; do not treat a queued run as evidence of a fix.
+
+No branch was deleted, no PR was merged or closed, and the NuGet publish hard stop remains in place.
