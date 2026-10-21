@@ -1554,3 +1554,12 @@ Workflow commits:
 No exact-head generator/workflow success is claimed until these runs complete. If an earlier intermediate commit fails because later files had not yet landed, use the latest coherent head's result and investigate any persistent failure.
 
 UML staging readiness remains **72% pending final generator/workflow CI, generated-doc review, and failure correction**. Sith remains **NOT CLEARED**; no branch deletion, PR lifecycle action, or package publication. NuGet publish guard unchanged.
+
+
+## Operation Sith — source-derived SVG CI failure diagnosed and corrected — 2026-10-21 21:24 UTC
+
+Run **39678081154** and the repeated run **39678310435** failed in the source-derived workflow's SVG contract step, after generator/model/semantic fixture checks had passed. The failing step asserted literal palette values `#4f46e5`, `#ff823d`, `#f2e83d`, and stroke width 4 for the generated `DataCard.source-structure.svg`. Those expectations did not match the current `SvgDataCardRenderer` implementation, which uses stroke `#6da99b` and width `1` (source `src/SVG/SvgDataCardRenderer.cs`, blob `e913d654bb364b48f299af4ce35e67c699a59a2b`). This was a stale workflow assertion, not a model/generator compilation failure.
+
+Corrected `.github/workflows/source-derived-diagrams.yml` in commit `a4d7ec70f0b12a474123a5de0cd6fead2c3aa11b`: the generated SVG contract now checks the renderer's real stroke palette and width and comments against cross-palette hard-coding. Latest rerun has not yet completed; do not mark the source-derived workflow green until the exact-head run completes.
+
+The solution-derived inventory workflow at `efa302f53d5021344fa2689e4fc8f8ef6ffeb46a` passed run **39678310195**. Package GUI run **39678310285** at that same head has WPF tests green and the test/package job still in progress at this checkpoint. UML readiness remains **72%** pending corrected source-derived workflow and generated-doc review. Sith remains **NOT CLEARED**; no branch deleted, no PR lifecycle action, no package published, publish guard unchanged.
