@@ -46,9 +46,11 @@ These repositories are reference material only. This audit does not modify them 
 - `IComponentWPF` for WPF element manifestation, parent relationships, and message forwarding.
 - `GuiPanelBuilderWPF<TPanel,TBuilder>` for CRTP fluent composition and deferred child declarations.
 
-The CRTP base is a strong pattern and closely matches the advanced reference. But the interface split means there is not one obvious contract for a reusable WPF component builder. `NativeGuiBuilder<T>` also returns the base generic type from fluent methods, which can truncate fluent calls in subclasses.
+The CRTP panel base is a strong pattern and closely matches the advanced reference. The `NativeGuiBuilder<T>` fluent-subtype defect has now been corrected on `development`: the shared implementation is `NativeGuiBuilder<T,TBuilder>`, while `NativeGuiBuilder<T>` remains the convenient concrete self-typed form. A Windows-targeted test uses a specialized button builder to prove that native fluent operations retain the derived type.
 
-**Recommendation:** keep semantic-tree construction separate from native WPF composition. Define and document a small common WPF builder contract, then retain specialized contracts only where they express real capabilities (parenting, message bus, native visual output). Add compile-time fluent-chain tests for derived builders. Avoid forcing WPF's `FrameworkElement` or messaging concepts into Core.
+**Risk remaining:** the interface split still lacks one obvious contract for a reusable WPF component builder. `ICoreBuilder<TProduct>`/`IComponentBuilder` model native builder identity and product output, while `IComponentWPF` additionally models component parentage and message forwarding. Those differences may be legitimate capabilities, but the boundary should be explicit and tested rather than unified merely for symmetry.
+
+**Recommendation:** keep semantic-tree construction separate from native WPF composition. Document the distinct builder contracts and retain specialized contracts only where they express real capabilities (parenting, message bus, native visual output). Avoid forcing WPF's `FrameworkElement` or messaging concepts into Core. The CRTP correction is awaiting candidate-specific CI.
 
 ### P1 — Treat SVG as a renderer/manifestation boundary, not a second UI framework
 
