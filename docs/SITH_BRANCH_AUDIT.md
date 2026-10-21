@@ -342,3 +342,15 @@ PR #19's exact-head package and WPF tests passed; the publish job was skipped. T
 5. Recheck the live branch and open-PR inventories and the final development diff immediately before the all-clear.
 
 No branch deletion or PR state change was performed during this review.
+
+
+## PR #18 palette contract repair attempt — 2026-10-21 18:38 UTC
+
+On `work/gui-svg-source-uml-generator`, I aligned the two SVG renderers with the existing property-yellow contract already asserted by the SVG unit test and workflow: `#f2e83d`. The prior implementation emitted `#d6ca00` in both the DataCard renderer and UML class-diagram property divider, while the test and workflow expected `#f2e83d`. This was a genuine contract inconsistency, not a test to weaken.
+
+- `src/SVG/SvgDataCardRenderer.cs`: property-card border changed from `#d6ca00` to `#f2e83d`.
+- `src/SVG/SvgUmlClassDiagramRenderer.cs`: property-compartment divider changed from `#d6ca00` to `#f2e83d`.
+- The existing SVG unit assertion and source-derived workflow assertion already specify `#f2e83d`; no assertion was weakened.
+- Resulting PR #18 head: `97554095656f2ef0ca94cbc4ada73848f3a953f8`.
+
+The commit is now on the PR branch, but the GitHub workflow-run lookup for this exact head returned no runs at the time of checking. Therefore this is **a source-level repair attempt, not a verified fix**. Recheck CI after GitHub registers the new commit; do not claim PR #18 passes until exact-head package, source-derived diagram, and solution-derived inventory workflows all finish successfully. PR #18 remains draft and unmerged.
