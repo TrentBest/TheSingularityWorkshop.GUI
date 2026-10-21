@@ -196,3 +196,16 @@ PR #11's body describes a documentation-only scope, but the current live PR patc
 - `work/gui-svg-source-uml-generator`: PR #18 contains substantial unique infrastructure: Roslyn source analysis, renderer-neutral UML models, SVG diagram renderers, per-type docs/pages, verification scripts, and CI changes. It is a staging branch (draft, non-mergeable) and cannot be disposed of as merely decorative color changes. Audit it as a separate substantial workstream, validate generated documentation against current source revisions, and decide whether to rebuild selected slices on development or explicitly defer the feature.
 
 **Decision remains NOT CLEARED.** Creating the two missing documents repairs a real documentation gap; it does not resolve every branch, PR, CI, or generated-artifact discrepancy.
+
+
+## PR #18 current-head CI evidence — 2026-10-21 18:03 UTC
+
+The live workflow runs attached to PR #18 head `b4c68259a2df7c6f565708a529b01e62c433dae0` were inspected by job and log, not inferred from the summary status:
+
+- **Solution-derived UML inventory** run [39642809163](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39642809163): succeeded.
+- **Source-derived diagrams** run [39642809045](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39642809045): failed. Generation, syntax-only model, project-semantic model, reflection mismatch rejection, UML model validation, and the partial-generic semantic fixture all completed successfully. The failure occurred in the workflow's SVG contract grep: it requires property stroke `#f2e83d`, but the generator currently emits `#d6ca00`. Later validation and upload steps were skipped. This is a concrete contract drift between workflow expectation and renderer/test palette, not evidence that the full diagram pipeline passed.
+- **Package GUI** run [39642809017](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39642809017): `test-wpf` succeeded, but `test-and-package` failed in SVG tests. The failing test `Uml_card_palette_uses_namespace_blue_class_orange_and_property_yellow_borders` expected `#f2e83d` and received `#d6ca00`; 45 SVG tests passed and one failed. Subsequent conformance, build, gallery, package, and artifact steps were skipped. `publish_nuget` was skipped.
+- These failures point to the same semantic palette disagreement: the expected yellow must be decided once, then the renderer, tests, generated asset, and workflow assertions must agree. Do not weaken/remove the assertion just to get a green build; choose and document the intended palette and regenerate artifacts.
+- The branch is therefore **not merge-ready**. It is useful work with reproducible current-head failures, and should remain under review until the palette contract and full CI pass.
+
+This is stronger evidence than the previous qualitative “staging vertical slice” status. It does not change the global Sith decision: no branches were deleted and the open PR remains open.
