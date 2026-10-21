@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: TrentBest/TheSingularityWorkshop.Physics
-          ref: 9c2443a2516c17954e6adaa20f384c6cf3bb8f4a
+          ref: 6b7f4ca35e53ce77efd632d8c2cea6f07d9f6373
           path: ./physics-source
 
       - name: Export default Physics Mandelbrot samples
