@@ -301,3 +301,13 @@ These findings narrow the disposition but do not change the global decision: **N
 ### Release-scope branch project-file verification — 2026-10-21 18:27 UTC
 
 Fetched the Core, Blazor, and WPF project files from `work/gui-release-mit-wpf-scope` and `development`; all three are byte-identical, including package IDs, target frameworks, MIT expressions, versions, README metadata, and dependencies. The branch solution file is also older: it omits `samples/DroneConstructionVision/DroneConstructionVision.csproj`, which is present on development. The root license and WPF README are identical as already noted. Together with the older workflow and stale 74% queue estimate, this leaves no identified unique project/license content that needs porting from `work/gui-release-mit-wpf-scope`. **Disposition: intentionally discardable after a final branch/PR inventory check**; do not merge the branch.
+
+
+## Publish-gate PR verification — 2026-10-21 18:31 UTC
+
+Fresh PR inventory still shows five open PRs: #8, #11, #15, #18, and #19. Their disposition remains open; no PR was merged or closed during this pass.
+
+- **PR #19** (`work/gui-publish-gate-reconciled`, exact head `76c4393eed0320249314612d8c20fda2a5992f33`) has a successful Package GUI run [#39512573959](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39512573959). Job-level results: `test-and-package` succeeded, `test-wpf` succeeded, and `publish_nuget` was skipped. This satisfies the PR's stated CI verification without dispatching a publish workflow.
+- **PR #15** (`work/nuget-publish-gate`, exact head `b3a9695ed4e18b9727ef016eea75233efedd0a91`) has only a cancelled historical run [#39196092517](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39196092517); that is not equivalent to passing its exact head. It is the older duplicate of the same one-line intent and should not be merged in addition to PR #19.
+- Both branches remove the hard-coded `&& false` from the publication condition, but only PR #19 is based on the current development workflow and has a successful exact-head package/WPF run. The resulting condition still requires `workflow_dispatch` and `inputs.publish == true`; ordinary push/PR events cannot publish. This corrects the dead switch but **does not authorize a release**. Actual publication still requires the owner's explicit release authorization and a deliberate manual dispatch.
+- PR #19 is now technically verified for its stated CI gate. It has not been merged by this audit. Keep its branch until the maintainer chooses whether to merge this narrow correction; then discard the duplicate PR #15 branch only after its PR is explicitly closed and the final inventory is checked.
