@@ -1,0 +1,33 @@
+name: Solution-derived UML inventory
+
+on:
+  push:
+    branches: [development]
+  pull_request:
+    branches: [development]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  solution-uml:
+    # Read exact-build PE metadata without loading platform-specific runtime dependencies.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: 8.0.x
+      - name: Generate, build, and reconcile all maintained product projects
+        env:
+          SOURCE_REVISION: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: python3 scripts/generate_solution_uml.py
+      - name: Upload solution-level UML inventory
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
+        with:
+          name: solution-derived-uml-inventory
+          path: artifacts/solution-uml/
+          if-no-files-found: error
