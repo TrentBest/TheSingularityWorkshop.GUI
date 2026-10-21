@@ -930,3 +930,20 @@ The latest successful audit-documentation run before this harvest was [#39669778
 - **Publishing guard check:** `development` still has `if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}` on `publish_nuget`. This is an intentional hard stop. Neither publish-gate branch is authorized for adoption.
 
 The above are content comparisons, not branch deletions or PR decisions. The current development head's latest workflow runs were still in progress when checked: #39670075560, #39670037267, and #39669984320. Do not infer a green exact-head result from earlier successful runs.
+
+## Branch inventory and UML example refresh — 2026-10-21 20:26Z
+
+- The live branch inventory now returns **18 branches**: `master`, `development`, and 16 non-keepers. This supersedes earlier 17-branch counts. No branch was deleted.
+- The current development history includes commit `d50cdc2e0fcf98781d7b3b9792ece04eef1aa7f9` (`docs(uml): add canonical DataCard type page with UML`). This is a useful manually authored example: it identifies the authoritative source file, assembly, member visibility, responsibilities, boundaries, and verification status, while explicitly stating that one page does not prove complete per-type coverage. Preserve this as the model for the manual per-file documentation stage.
+- The source-derived UML generator branch comparison has moved to **227 ahead / 74 behind** current `development` (base `ee9b2534d16e6e06aa472961e9a35fbd44c684a2`). The changed-file list includes both UML workflows, the generator and model/renderers, tests, validation scripts, generated per-source pages, and a large set of unrelated/stale documentation and package/workflow edits. Reconcile by focused file/behavior groups; no wholesale merge.
+- A newly visible branch, `feat/physics-seeded-pointset-svg`, is **4 ahead / 0 behind** development and adds a seeded 2D point-set demonstration, its project, README, and recipe. It is directly relevant to living SVG demonstrations. Keep it as a preserve/reconcile candidate; it is not an obsolete divergent branch.
+- The latest open-PR search still surfaces #8, #11, #15, #18, and #19. Both publish-gate PRs remain unauthorized; the `&& false` hard stop stays intact. The workflow-run connector does not provide evidence of general push-triggered checks for the generator base commit, so exact-head CI remains unverified rather than green.
+
+### Next concrete reconciliation order
+
+1. Treat `docs/api/Core/DataCard.md` plus its UML SVG as the manual quality bar; keep its claims scoped to source-verifiable facts.
+2. Extract the UML model/generator implementation, renderers, tests, and workflows from `work/gui-svg-source-uml-generator` as a coherent candidate set. Check dependencies and pin actions to immutable SHAs; verify determinism and generated-artifact drift before adoption.
+3. Audit generated pages against actual source and label syntax-only relationships honestly; do not import unrelated package/release/readiness snapshots from the divergent branch.
+4. Reconcile the seeded point-set demo and `SvgGuiRenderer`/`SvgRenderOptions` work independently, preserving runnable sample recipes and tests.
+5. Only after each branch's unique payload and PR/reference disposition is recorded may the user manually delete any surplus branch.
+
