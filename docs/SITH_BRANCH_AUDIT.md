@@ -479,3 +479,14 @@ Spot-checked branch-only public APIs against the current source tree. This is no
 The current tree does contain newer `EnumControlBuilderWPF` and `NumericControlBuilderWPF`, so the branch's enum/numeric builder files may be functionally replaced despite path/name changes. That equivalence must be supported by comparing contracts/tests before closing the item.
 
 **Updated disposition:** PR #8 and PR #11 remain **preserve-and-classify**, not discard candidates yet. Do not merge wholesale. First decide the listed capabilities one by one, port only the approved useful behavior to development with tests, and then rerun the tree/PR inventory. No branch or PR state was changed.
+
+## Publish-gate duplicate review — 2026-10-21 19:14 UTC
+
+Fetched the current PR diffs and package workflow from `development`, `work/nuget-publish-gate` (PR #15), and `work/gui-publish-gate-reconciled` (PR #19).
+
+- Both PR diffs make the same one-line logical change: remove `&& false` from the `publish_nuget` job condition, leaving `github.event_name == 'workflow_dispatch' && inputs.publish == true`.
+- The current development workflow still contains `&& false`, so the publish job remains deliberately disabled even when a manual dispatch sets `publish=true`.
+- PR #19 is the more recent/reconciled proposal and GitHub reports it mergeable at the prior live check; PR #15's historical run was cancelled and does not provide passing evidence. However, #19's workflow file is still a different snapshot from current development, so recheck the actual merge diff/required checks before any future merge.
+- Removing `&& false` would change the publication guard from permanently disabled to eligible on a manual dispatch with `publish=true`. That is a release-control change, not a harmless CI cleanup.
+
+**Disposition:** treat #15 as a duplicate of #19 for review purposes, but do not close #15 or merge #19 automatically. Publishing is not authorized. Keep the current development guard unchanged until the owner explicitly approves enabling publication, and preserve the rule that readiness or green CI alone is not release authorization.
