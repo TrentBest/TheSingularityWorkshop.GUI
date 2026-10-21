@@ -719,3 +719,13 @@ The live inventory remains 17 branches: `master`, `development`, and 15 non-keep
 This pass strengthens the list of superseded candidates but does **not** clear Sith. The concept note on `work/svg-app-fsm-cos-boundary`, the Blazor event-builder compatibility change, the broad open PRs #8/#11/#18, and the legacy feature branches still require explicit reconciliation or documented discard. PRs #15 and #19 remain open and publication remains deliberately disabled.
 
 No branch was deleted, no PR was merged or closed, and no package was published. The owner remains responsible for branch deletion after the audit reaches a complete, current, evidence-backed all-clear.
+
+
+## Semantic cross-check correction — 2026-10-21 20:12 UTC
+
+A direct file-by-file recheck resolved two holds from the preceding section:
+
+- **`work/svg-app-fsm-cos-boundary`: superseded candidate.** `docs/SVG_APP_CONCEPT.md` exists on current development and is byte-for-byte identical to the branch copy (8,501 characters). The only other reported branch-tip difference is a one-line README wording change. The unique concept note is therefore preserved; no separate port is needed. PR #12 was previously reported closed/merged. Recheck live refs before owner deletion.
+- **`work/webpage-event-builder-compatibility`: superseded candidate.** The 33-line `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` is byte-for-byte identical between branch and development (1,163 characters). The branch's `WorkshopGuiBuilder.cs` has the same executable statements as development; the current development version adds XML documentation comments around the existing API. No unique event behavior or test remains to port. Recheck branch and PR references before owner deletion.
+
+These are explicit updates to the preceding fresh branch table: those two rows no longer require content reconciliation. They are not evidence that all other branches or open PRs are cleared. The latest audit-document commit has a new workflow run; do not use the earlier passing run as exact-head evidence for this correction.
