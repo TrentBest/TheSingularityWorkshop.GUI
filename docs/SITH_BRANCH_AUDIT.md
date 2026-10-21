@@ -442,3 +442,21 @@ Compared `.github/workflows/package.yml` and the release work queue on the branc
 **Disposition recommendation: discard candidate after final inventory check.** No unique XML-documentation gate needs to be cherry-picked based on this comparison. No branch deletion performed.
 
 These are branch-disposition recommendations, not deletion authorization. Recheck the live branch/PR inventory and any newer commits before the owner deletes candidates.
+
+## Broad-PR tree inventory correction — 2026-10-21 19:10 UTC
+
+A recursive Git tree comparison was run against the live `development` tree (153 files at this snapshot), `architecture/datum-interaction-boundary` (PR #8 head `43449f49607798d23c951ffd50650da268456540`), and `work/svg-guide-current-contract` (PR #11 head `01ed8175bf2971f98e7fb324885c9e79103d0fac`). This checks actual path/blob presence, not just merge-base change lists.
+
+**Correction to any earlier implication that PR #8/#11 are safe discard candidates:** they are not cleared for deletion yet. The recursive trees show paths present on the PR branches but absent from current development, including source and test files. These files may be obsolete, replaced by different APIs, or still contain behavior/design material worth preserving; path absence alone does not decide which.
+
+Examples on both branches but absent by path from development include:
+- Core: `src/Core/Gui.cs`, `src/Core/GuiHub.cs`, `src/Core/GuiKinds.cs`, `src/Core/IGuiHub.cs`, and `src/Core/ReflectionGuiBuilder.cs`.
+- WPF: `src/WPF/Abstractions/GuiBuilderWPF.cs`, `GuiContextWPF.cs`, the `Controls/*` builders for enum/numeric/pivot-grid/tree-view, WPF dialogs/factory/layout/diagnostics builders, and `src/WPF/WpfGuiHubRenderer.cs`.
+- Tests: `tests/Core.Tests/GuiHubTests.cs`, `ReflectionGuiBuilderTests.cs`, and `tests/Blazor.Tests/BlazorGuiHubRendererTests.cs`.
+- PR #11 additionally has branch-only `src/SVG/SvgRenderOptions.cs`, `docs/examples/living-energy-vortex.svg`, `docs/images/gui-svg-manifestation.svg`, and `docs/LIVING_DOCUMENTATION.md`.
+
+Many files that exist on both sides have different blob hashes, including Core/Blazor/WPF renderers/builders, SVG renderer/tests, workflow, project files, and architecture documentation. The branch versions are older/smaller in several sampled cases, but that is not proof every API or behavior has a current equivalent.
+
+**Required next step before disposal:** perform a per-path semantic disposition for the branch-only files and material behavior in changed files: (1) equivalent current type/API and tests, (2) deliberately retired behavior with rationale, (3) unique useful behavior to port, or (4) obsolete/unwanted work safe to discard. In particular, review the branch-only reflection builder, hub API, WPF control builders, and SVG render options/visual assets. Do not merge either broad PR wholesale; do not delete either branch until this inventory is closed.
+
+The existing branch/source findings for `work/svg-tree-depth-guard` and `work/gui-verify-xml-docs-in-packages` remain as recorded above. The overall Sith decision remains **NOT CLEARED**.
