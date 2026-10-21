@@ -1225,3 +1225,30 @@ Development advanced to `29c6d9615faf9f34e3ab2aebc37d15f80e768f79` during this a
 
 The live branch list now contains 19 branches total: keepers `master` and `development`, plus **17 non-keepers**. This count includes the newly observed `feat/mandelbrot-physics-svg`. The open PR set remains #8, #11, #15, #18, and #19. Branch cleanup remains **NOT CLEARED**. No branch was deleted, no PR was closed or merged by this audit pass, `master` remains untouched, and NuGet publishing remains gated.
 
+
+
+## Operation Sith follow-up — 2026-10-21 20:51 UTC
+
+### Exact-head CI evidence reconciled
+
+The previously pending workflow checks have now completed. Development candidate `29c6d9615faf9f34e3ab2aebc37d15f80e768f79` is verified by [Package GUI run #39673687517](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39673687517): `test-and-package` succeeded, `test-wpf` succeeded, and `publish_nuget` was skipped. This run exercised Core, Blazor, SVG, shared adapter conformance, WPF, gallery/sample generation and verification, package metadata, and clean-consumer restore/use checks. The preceding audit commit `914d40dda5bd45758cb3eb2b74449aaee6d61942` is also verified by [Package GUI run #39673616801](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39673616801): test/package and WPF succeeded, publication skipped.
+
+The exact-head source-derived UML and solution-inventory checks on the newer documented candidate `6888775614d90ca2aaa1dbe5664cda0b77f1cb06` passed: [Source-derived diagrams #39514400898](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39514400898), [Package GUI #39514401003](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39514401003), and [Solution-derived UML inventory #39514400942](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39514400942). These records are verified successes, but they are not proof that a later commit SHA has been tested. GitHub's combined-status endpoint returned no status contexts for these SHAs, so the run records above—not the empty status response—are the CI evidence.
+
+### Fresh branch/PR review
+
+- Live inventory recorded in the immediately preceding checkpoint: 19 branches total, 2 keepers (`master`, `development`) and 17 non-keepers; five open PRs remain: #8, #11, #15, #18, #19. Recheck live refs at the manual-deletion moment because this inventory can change.
+- `work/gui-wpf-tests`: 0 ahead / 308 behind and no changed paths in the compare result. Strong superseded candidate; retain until the final live-reference/PR check.
+- `fix/guinode-nullability-contract`: 1 ahead / 492 behind, only `src/Core/GuiNode.cs` differs. The current implementation retains the nullable `TryFind(string, out GuiNode?)` contract and uses iterative depth-first left-to-right traversal; branch change is a recursive-versus-iterative implementation difference, not a new API contract. Superseded candidate, pending final live-reference check.
+- `work/gui-uml-per-file-documentation`: 1 ahead / 241 behind; only `docs/DATA_CARDS_AND_UML.md` differs in the compare. The current development copy already contains the branch's per-file UML requirements plus additional diagram-family, renderer-neutral model, recursive declaration-card, and editing-contract sections. No unique content was found in the branch copy during the text comparison. Superseded-content candidate, pending final live-reference check.
+- `work/svg-tree-depth-guard`: 5 ahead / 492 behind, changes renderer behavior, tests, and adapter documentation. Preserve the depth-guard behavior and test intent for selective reconciliation; do not treat the branch as disposable merely because it is old.
+- `work/svg-guide-current-contract` / PR #11: 112 ahead / 561 behind, with broad historical differences across project/workflow, Core, Blazor, SVG, WPF, tests, and documentation. The PR's stated intended scope is the SVG guide, but its branch ancestry is not a clean one-file diff against current development. The semantic GUI-tree renderer on that branch is complementary to the existing SVG scene/primitive renderer and needs deliberate additive reconciliation; do not wholesale merge or discard.
+- `work/gui-svg-source-uml-generator` / PR #18 remains an open draft. Readiness remains 72%; its staging vertical slice is not release-ready. Its prior exact-head checks passed on documented candidate SHAs, but current integrated-head checks must be rerun after any further commits.
+
+### Current gates
+
+- Operation Sith: **NOT CLEARED**; no branch deletion and no PR merge/close action performed.
+- Source-derived UML staging readiness: **72%**.
+- CI: package/test and WPF are now confirmed successful on candidate `29c6d9615faf9f34e3ab2aebc37d15f80e768f79`; do not generalize that result to any later SHA without a matching run.
+- NuGet publication remains unauthorized and skipped.
+- `master` remains untouched. Final manual-deletion list requires one last live branch/PR/reference check and explicit reconciliation of implementation-bearing branches.
