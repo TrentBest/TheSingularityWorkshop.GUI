@@ -1954,3 +1954,28 @@ The `&& false` hard stop remains intact. No package was published or publication
 ### Decision
 
 **NOT CLEARED FOR MANUAL BRANCH DELETION.** Exact-head CI and the open-PR blocker are clear, but the 18 non-keeper branches are not all fully reconciled. The ledger needs explicit dispositions for the three newly present feature branches and final content-level disposition of non-keeper branches associated with closed-but-unmerged PRs. No branch was deleted in this pass.
+
+
+## Live Sith checkpoint — 2026-10-21 22:30 UTC
+
+This checkpoint supersedes stale inventory and PR-status statements above wherever they conflict. Live GitHub recheck:
+
+- `development` is at `0e279bacf5c651093f2ab21f351852cdee1e389e`; `master` remains a separate keeper.
+- Branch inventory: 20 total (2 keepers, 18 non-keepers).
+- Open pull requests: 0.
+- Exact-head validation for `development` at the commit above: Source-derived diagrams run 39685407057 = success (0e279bacf5c651093f2ab21f351852cdee1e389e); Solution-derived UML inventory run 39685407094 = success (0e279bacf5c651093f2ab21f351852cdee1e389e); Package GUI run 39685407266 = success (0e279bacf5c651093f2ab21f351852cdee1e389e).
+- The package workflow still contains the intentional `github.event_name == 'workflow_dispatch' && inputs.publish == true && false` hard stop. NuGet publishing remains disabled; no release authorization is implied.
+
+### Merged sample branches — residual comparison remains required
+
+PRs [#20](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/20), [#21](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/21), and [#22](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/22) are closed/merged. Their retained branch tips were compared against current development. All three comparisons report divergence and changed files, because the tips descend from older baselines; that count alone does not mean the implementation is missing.
+
+- #20 `feat/physics-seeded-pointset-svg` (tip `39bee41a690f63d0e2f656fdd99445976ea07594`; merge `b584b8a0e0c9bbf068c0155dc8dfadb7bd4f56c3`): contribution was a Physics-owned seeded point-set run record plus a GUI.SVG consumer, gallery/recipe, and CI artifact. Verify the current development sample and workflow still retain equivalent behavior before classifying the branch as redundant.
+- #21 `feat/mandelbrot-physics-svg` (tip `7651a7656948eb6e6fa95356091521fcdedfb368`; merge `de2cc150c5b395d273aa0b228adcb6e07fd96137`): contribution was a Physics-generated Mandelbrot run record, validating GUI.SVG consumer, gallery/recipe, and CI artifact. The current workflow has since advanced to a parameterized default/detail explorer; verify the consumer, gallery and workflow behavior together.
+- #22 `feat/mandelbrot-parameter-explorer` (tip `037ffd9604865d2651587896167dc14bed5be7b6`; merge `d5f8cbc0e8f66731f981bf4afea14e779fab7636`): adds configurable grid/bounds/iteration settings and default/detail output. The current development workflow reflects this newer shape, but verify all branch-specific recipe and consumer semantics before declaring complete.
+
+These are now confirmed merged-PR branches, not open-PR blockers; their content-level disposition is still pending. Do not treat them as deletion-cleared from merge status alone.
+
+### Gate decision
+
+**NOT CLEARED FOR MANUAL BRANCH DELETION.** The ledger still contains historical statements inconsistent with the live state; this checkpoint corrects the inventory/PR/CI facts but does not claim all 18 branch contributions are reconciled. Continue branch-by-branch content comparison, especially the broad legacy hub/datum branches, source-derived UML generator and SVG guide. The owner remains responsible for any eventual branch deletion. No branches were deleted, no PRs were changed, and no package was published.
