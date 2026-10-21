@@ -209,3 +209,36 @@ The live workflow runs attached to PR #18 head `b4c68259a2df7c6f565708a529b01e62
 - The branch is therefore **not merge-ready**. It is useful work with reproducible current-head failures, and should remain under review until the palette contract and full CI pass.
 
 This is stronger evidence than the previous qualitative “staging vertical slice” status. It does not change the global Sith decision: no branches were deleted and the open PR remains open.
+
+
+## Focused branch-diff findings — 2026-10-21 18:10 UTC
+
+### `work/svg-tree-depth-guard`: no unique renderer tests remain
+
+The current branch and `development` versions of `tests/SVG.Tests/SvgGuiRendererTests.cs` were inspected by test method name. Every test in the branch also exists on `development`. Development has additional tests for embedded stylesheet serialization, XML attribute escaping/non-ASCII text, deterministic output, malformed/non-finite geometry, blank required references, and duplicate IDs for enabled coordinate overlays. Thus the branch's previously noted +25 test lines are not unique coverage missing from development; its test file is an older subset. The branch renderer also lacks the current title/description ID linkage. This branch is now a **strong discard candidate**, pending a final tree/PR check and ensuring no other unique file exists beyond the already identified adapter-doc/renderer changes.
+
+### `work/webpage-event-builder-compatibility`: source/test contribution is already represented
+
+The branch's added `WorkshopGuiBuilderEventTests.cs` blob is exactly the same as development's, and the event builder methods `OnWheel`, `StopPropagation`, and `PreventDefault` are present in both. The branch's reported diff consists of the Blazor builder file and the 33-line event test; no distinct test behavior has been found. The development version additionally documents the event surface. This is a **strong discard candidate**, pending checking the merged PR #9 record and exact tip tree one last time.
+
+### `work/gui-wpf-tests`: redundant tip confirmed by current comparison
+
+The fresh live compare reports zero commits ahead, 238 behind, and zero changed files against development. Its current tree is therefore identical at the compared tip. This is a **strong discard candidate**; still retain the keeper branches `master` and `development` only, and do not delete anything on the user's behalf.
+
+### `work/gui-uml-per-file-documentation`: its apparent extra lines are not unique
+
+The current `docs/DATA_CARDS_AND_UML.md` content fetched from this branch and development has the same substantive text in the displayed opening section. The branch's 19-line delta must not be counted as valuable unique documentation without a complete blob comparison; the content is now present on development and PR #18 contains a larger implementation proposal. Keep it out of the merge path unless an exact remaining unique paragraph is identified.
+
+### `work/svg-app-fsm-cos-boundary`: concept doc is already merged
+
+PR #12 is closed and describes a documentation-only proposal for `SVG_App`; the concept document is present on development. Its earlier changed-file comparison found the same `docs/SVG_APP_CONCEPT.md` blob on development. Treat this branch as a **strong discard candidate** after a final current-tip comparison confirms no other unique tree content.
+
+### PR #11 description versus actual patch
+
+PR #11 remains open and says its scope is documentation-only (`docs/SVG_GUIDE.md`), yet GitHub reports 59 changed files. The new keeper-branch guide is an independently authored, current-source replacement, but that alone does not disposition the other 58 files in the PR. Continue to treat the PR as broad, unmergeable as-is, and require file-level inventory before closure or branch deletion.
+
+### Publish gate remains an explicit owner decision
+
+The two one-line publish PRs (#15 and #19) both remove the deliberate `&& false` guard. They are duplicates in intent, not candidates for automatic merge. Publishing remains disabled on development; no release authorization is implied by CI or readiness.
+
+**Sith remains NOT CLEARED.** The three strong discard candidates above are not yet a user-facing deletion list until their full tree and associated PR states are reconciled. The user remains the actor who deletes non-keeper branches.
