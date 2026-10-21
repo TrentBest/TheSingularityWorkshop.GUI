@@ -101,24 +101,45 @@ if (modelJsonPath is not null)
     Console.WriteLine($"Generated syntax-only UML model with {model.Types.Count} types and {model.Relationships.Count} asserted relationships -> {modelPath}");
 }
 
-var cards = new List<DataCard>();
+// Keep declarations grouped by their actual namespace. Namespace cards are part of
+// the source-derived containment model, not inferred from visual nesting depth.
+var namespaceTypes = new SortedDictionary<string, List<DataCard>>(StringComparer.Ordinal);
 foreach (var declaration in root.DescendantNodes().OfType<BaseTypeDeclarationSyntax>()
              .OrderBy(n => n.SpanStart))
 {
     // Nested types are projected by their owner, not as duplicate root cards.
     if (declaration.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
         continue;
-    cards.Add(ProjectType(declaration));
+    AddToNamespace(NamespaceOf(declaration), ProjectType(declaration));
 }
 
 foreach (var declaration in root.DescendantNodes().OfType<DelegateDeclarationSyntax>().OrderBy(n => n.SpanStart))
 {
     if (!declaration.Ancestors().OfType<BaseTypeDeclarationSyntax>().Any())
-        cards.Add(new DataCard(StableId(declaration), "delegate", declaration.Identifier.ValueText,
-            NamespaceOf(declaration), isExpandedByDefault: false));
+        AddToNamespace(NamespaceOf(declaration),
+            new DataCard(StableId(declaration), "delegate", declaration.Identifier.ValueText,
+                NamespaceOf(declaration), isExpandedByDefault: false));
 }
 
+var cards = namespaceTypes.Select(pair => new DataCard(
+    "namespace:" + pair.Key,
+    "namespace",
+    pair.Key,
+    subtitle: "C# namespace",
+    children: pair.Value,
+    canRequestChildInsertion: false)).ToList();
+
 var sourceName = Path.GetFileName(input);
+
+void AddToNamespace(string namespaceName, DataCard declarationCard)
+{
+    if (!namespaceTypes.TryGetValue(namespaceName, out var declarations))
+    {
+        declarations = new List<DataCard>();
+        namespaceTypes.Add(namespaceName, declarations);
+    }
+    declarations.Add(declarationCard);
+}
 var sourceCard = new DataCard("source:" + sourceName, "source-file", sourceName,
     subtitle: "C# source-derived structure", children: cards, canRequestChildInsertion: false);
 var svg = new SvgDataCardRenderer().Render(sourceCard, width: 1100);
