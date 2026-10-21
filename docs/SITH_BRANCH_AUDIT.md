@@ -947,3 +947,25 @@ The above are content comparisons, not branch deletions or PR decisions. The cur
 4. Reconcile the seeded point-set demo and `SvgGuiRenderer`/`SvgRenderOptions` work independently, preserving runnable sample recipes and tests.
 5. Only after each branch's unique payload and PR/reference disposition is recorded may the user manually delete any surplus branch.
 
+
+
+## Seeded Physics point-set demonstration discovered — 2026-10-21 20:27 UTC
+
+A fresh live branch inventory surfaced `feat/physics-seeded-pointset-svg`, which was absent from the earlier 17-branch snapshot. Current inventory is **18 branches total**: `master`, `development`, and 16 non-keepers.
+
+- Branch comparison now reports **6 ahead / 1 behind, 6 changed files** (the earlier 4-ahead/0-behind snapshot is stale because `development` advanced). Unique payload:
+  - `samples/demonstrations/SeededPointSet2d/Program.cs`
+  - `samples/demonstrations/SeededPointSet2d/README.md`
+  - `samples/demonstrations/SeededPointSet2d/SeededPointSet2d.csproj`
+  - `samples/demonstrations/recipes/05-seeded-point-set.md`
+  - updates to `samples/demonstrations/GALLERY.md` and `samples/demonstrations/index.html`.
+- The consumer parses the versioned Physics run record, validates model/schema identity, finite half-open bounds, point count, stable point indices, and each coordinate; it then verifies each emitted SVG marker ID and mapped coordinate against the input. This is a strong living-documentation example of Physics owning data generation and GUI.SVG owning manifestation.
+- The sample project references the existing GUI Core and SVG projects. However, I have not run this project locally or found exact-head CI evidence that compiles and executes it. The recipe's claim that CI also runs the Physics exporter is not supported by this branch's six-file diff (no workflow change); that sentence must be removed or backed by a separately verified workflow before the recipe is promoted.
+- The sample has not yet been copied into `development`. **Disposition: PRESERVE / harvest after correcting the unsupported CI claim and adding a reproducible validation path. Do not delete this branch.** Its gallery/index additions should be applied to current development, not wholesale-replaced from this one-commit-behind branch.
+
+## Exact-head CI confirmation — 2026-10-21 20:27 UTC
+
+- [Run #39670188386](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670188386) completed successfully on exact development SHA `ee9b2534d16e6e06aa472961e9a35fbd44c684a2`. This run is green for the existing `test-and-package` and `test-wpf` jobs; NuGet publishing remains skipped by the hard stop.
+- This result covers the audit commit at that SHA, not any later commit created by this new audit update.
+
+No branch deletion, PR merge/closure, or package publication was performed.
