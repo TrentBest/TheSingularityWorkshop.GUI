@@ -233,6 +233,7 @@ public sealed class WpfBuilderTests
 
         public string Id { get; } = Guid.NewGuid().ToString();
         public FrameworkElement? BuiltElement { get; private set; }
+        public string GetBuilderId() => Id;
 
         public void SetParent(IComponentWPF? parent) => _parent = parent;
         public IComponentWPF? GetParent() => _parent;
