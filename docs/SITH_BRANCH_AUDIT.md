@@ -768,3 +768,30 @@ The legacy branch source confirms that Gui.Hub is a lazily created process-wide 
 **Disposition:** do not merge the old hub/WPF branch family wholesale. Current docs preserve the architecture proposal and the WPF audit records which reusable patterns have been adopted. However, the specialized WPF surfaces still need an explicit product decision: intentionally retire them, or rebuild selected capabilities against current APIs with focused tests. Keep the affected branches in **HOLD** until that decision is recorded; this is not a safe-to-discard classification.
 
 No source API was added, no PR lifecycle changed, and no branch was deleted by this review.
+
+## Additional exact-content branch checks — 2026-10-21 20:15 UTC
+
+### `work/svg-app-fsm-cos-boundary`
+
+The unique concept file `docs/SVG_APP_CONCEPT.md` is already present on development with the exact same blob SHA as the branch (`f98b408b2fba433017892c59182118ab6aaf47f3`). It correctly labels SVG_App as a proposed host and separates FSM_COS composition, host interpretation, GUI Core scene construction, and SVG manifestation without claiming the bridge exists. The branch's README is an older snapshot missing current README structure, living demonstration gallery links, current platform claims, and current navigation; its conceptual link is already preserved on development. The branch comparison reports five ahead / 461 behind, with no remaining unique concept-file contribution. Disposition: **superseded candidate**, subject to final live reference check before owner deletion.
+
+### `fix/guinode-nullability-contract`
+
+The only changed path is `src/Core/GuiNode.cs`. Development already carries the nullable `TryFind(string, out GuiNode?)` contract, XML API documentation, and iterative depth-first traversal (avoiding recursion-depth failure on deeply nested trees). The branch version is an older recursive traversal and lacks the current XML docs. Its nullability contract is represented on development; no unique behavior from this one-file branch is required. Disposition: **superseded candidate**, pending final reference check.
+
+### `work/gui-wpf-tests`
+
+The branch-tip comparison is exact: zero commits ahead, 277 behind, and zero changed files. Its content is already an ancestor/snapshot of development with no unique patch. Disposition: **superseded candidate**, pending final reference check.
+
+### Legacy nested-experience / integrated-hub implementations remain on hold
+
+`feature/nested-experiences`, `feature/integrated-fsm-cos-hub`, and `architecture/datum-interaction-boundary` are not safe to classify as superseded solely because their history is old. Their branch-tip diffs contain substantial historical source and test changes, including the legacy `Gui.Hub` singleton, hub contracts/renderers, and specialized WPF builders. Current documentation deliberately marks the nested-experience/execution-host API as a proposal and says those legacy APIs are not present on development. This is an explicit architectural boundary, not proof that every specialized capability is unnecessary. Keep these branches in **HOLD / product-decision required** until the owner decides which legacy capabilities are retired versus rebuilt against the current model. Do not merge their historical snapshots wholesale and do not delete them yet.
+
+### Source-derived UML generator branch stays active
+
+`work/gui-svg-source-uml-generator` is 227 commits ahead / 63 behind with a substantial patch across Roslyn/MSBuild-based project analysis, renderer-neutral UML models, type pages, SVG relationship diagrams, generated inventories, and CI verification. This is directly aligned with the repository's desired source-derived living UML direction. PR [#18](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/18) remains the active draft. The branch needs focused code/CI review and controlled reconciliation, not a superseded label. Retain it; do not merge wholesale merely because the capability is wanted.
+
+### Current inventory and verification boundary
+
+The latest live inventory still reports 17 branches total, 15 non-keepers, and open PRs #8, #11, #15, #18, and #19. The exact-head WPF code/test fix passed run [#39666044705](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666044705). Documentation audit commits through `6e05337e324da2f467b3fb5f98c9c039ec664d10` are separate commits; the exact-head workflow [#39668518350](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39668518350) was still in progress at the time of this update. Do not claim the newest head is green until it completes. No branch deletion, PR closure/merge, or package publication is authorized by this audit.
+
