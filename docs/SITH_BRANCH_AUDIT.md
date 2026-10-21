@@ -91,3 +91,57 @@ The following comparisons were run against the current `development` tip `2c09e0
 ### Current safe-to-delete assessment
 
 `work/gui-wpf-tests` remains the only previously identified zero-ahead/no-diff candidate, and it still requires an immediate final recheck. `fix/guinode-nullability-contract` now has enough exact-diff evidence to classify as intentionally superseded, but the owner should still close/resolve its historical PR state if applicable before deleting. All other non-keeper branches remain on hold pending the listed content checks or explicit decisions to discard legacy implementation. **The Sith policy is not cleared.**
+
+
+## Live verification correction — 2026-10-21 17:50 UTC
+
+A fresh live check of the current branch tips exposed discrepancies between the prior narrative and the repository state. This section supersedes any earlier claim that the two named guide files are already present on `development`.
+
+### Verified current inventory
+
+- The branch search returned 17 branches: the two keepers (`master`, `development`) and 15 non-keeper branches.
+- The open PR search returned #8, #11, #15, #18, and #19. All five remain open; #8 and #18 are drafts. No PR was merged or closed during this check.
+- The `development` package workflow still contains `github.event_name == 'workflow_dispatch' && inputs.publish == true && false`. NuGet publication therefore remains disabled.
+- Fresh contents-API lookups for `docs/DATUM_AND_INTERACTION_BOUNDARY.md` and `docs/SVG_GUIDE.md` on `development` both returned 404. The previous section saying those documents were preserved on `development` is not supported by the live tree and must not be relied on. Their contents exist in the historical PR/branch patch, but they have not been verified as present on the keeper branch.
+
+### Rechecked branch-tip comparison results
+
+Comparisons below use `development` as base. Ahead/behind counts are GitHub comparison metadata; file lists are the reported changed files in that comparison, not a substitute for reviewing each patch.
+
+| Branch | Ahead | Behind | Current changed-file finding | Disposition |
+|---|---:|---:|---|---|
+| `work/gui-wpf-tests` | 0 | 232 | No changed files returned | Redundant-tip candidate; recheck before deletion |
+| `fix/guinode-nullability-contract` | 1 | 416 | `src/Core/GuiNode.cs` only | Likely superseded; prior iterative traversal finding still requires final source check |
+| `work/svg-app-fsm-cos-boundary` | 5 | 416 | README and `docs/SVG_APP_CONCEPT.md` | Hold until complete document/PR disposition is verified |
+| `work/webpage-event-builder-compatibility` | 3 | 479 | Blazor builder source (+2) and a 33-line event test | Hold; inspect behavior and whether test is covered elsewhere |
+| `work/svg-tree-depth-guard` | 5 | 416 | SVG adapter docs, renderer (+22/-12), tests (+25) | Hold; source delta means the earlier “behavior exists on development” statement is not enough |
+| `work/gui-uml-per-file-documentation` | 1 | 165 | `docs/DATA_CARDS_AND_UML.md` (+19 lines) | Hold; compare against current PR #18 docs before discard |
+| `work/gui-release-mit-wpf-scope` | 16 | 233 | Workflow, release docs, project files, LICENSE/WPF README | Hold; classify unique release and package changes |
+| `feature/integrated-fsm-cos-hub` | 76 | 485 | Broad docs/workflow/core/Blazor/WPF/test changes | Explicit legacy feature disposition required; do not merge wholesale |
+| `feature/nested-experiences` | 38 | 485 | Nested-experience docs, Core/Blazor/tests/workflow | Explicit legacy feature disposition required |
+| `work/gui-verify-xml-docs-in-packages` | 4 | 232 | Package workflow and release docs | Hold; its workflow still includes the deliberate publish hard stop |
+| `architecture/datum-interaction-boundary` | 62 | 485 | Broad architecture, workflow, Core/Blazor/WPF/tests plus datum note | PR #8 is not a narrow doc-only change; review individual reusable principles, do not merge wholesale |
+| `work/svg-guide-current-contract` | 112 | 485 | Broad historical changes including SVG guide and concept assets | PR #11 remains open; compare guide/assets against current implementation and PR #18 |
+| `work/nuget-publish-gate` | 1 | 233 | One workflow line | PR #15 proposes removing `&& false`; not approved |
+| `work/gui-publish-gate-reconciled` | 1 | 6 | One workflow line | PR #19 proposes the same hard-stop removal on newer history; not approved |
+
+### Open PRs — live metadata
+
+- [#8](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/8): open draft, head `43449f49607798d23c951ffd50650da268456540`, 50 changed files.
+- [#11](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/11): open, non-draft, head `01ed8175bf2971f98e7fb324885c9e79103d0fac`, 59 changed files.
+- [#15](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/15): open, non-draft, one changed file.
+- [#18](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/18): open draft, head `b4c68259a2df7c6f565708a529b01e62c433dae0`, 86 changed files. Its own description states 72% qualitative readiness and that it is a staging vertical slice, not a completed supported package; exact current-head verification is pending per the PR text.
+- [#19](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/19): open, non-draft, one changed file.
+
+PR #15 and #19 each propose the same substantive one-line change removing the hard stop. Do not apply either as a side effect of branch cleanup. A release-gate decision is separate and requires explicit owner authorization.
+
+### Next audit actions
+
+1. Recover/recreate the datum-boundary note and current-source SVG guide on `development` only after reviewing their exact contents and current implementation. Until then, update links and status statements so docs do not claim the files exist.
+2. Inspect the exact source/test hunks for the Blazor event-compatibility and SVG tree-depth branches.
+3. Compare PR #18's per-file UML docs and generated/source-derived outputs against the keeper tree; distinguish authored documentation from generated evidence.
+4. Review the unique workflow/project/release changes on the release-scope and XML-docs branches without enabling publishing.
+5. Make an explicit keep/rebuild/discard decision for both legacy hub/experience branches.
+6. Re-run branch and PR inventories at the end. Only then issue the owner-facing deletion list.
+
+**Decision remains NOT CLEARED. No branch deletion, PR merge/closure, package publish, or workflow-gate change was performed by this check.**
