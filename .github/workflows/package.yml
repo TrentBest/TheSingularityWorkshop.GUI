@@ -121,6 +121,30 @@ jobs:
         with:
           name: gui-svg-fox-sheepdog-plane
           path: ./artifacts/fox-sheepdog-10x10.svg
+
+      - name: Generate Drone Construction vision with GUI.SVG
+        run: dotnet run --project samples/DroneConstructionVision/DroneConstructionVision.csproj --configuration Release -- ./artifacts/drone-construction-vision.svg
+
+      - name: Verify generated Drone Construction vision
+        run: |
+          python - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/drone-construction-vision.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          assert root.tag.endswith("svg"), "output root is not SVG"
+          text = " ".join((node.text or "") for node in root.findall(".//svg:text", ns))
+          for phrase in ("DRONE CONSTRUCTION", "TEN EMITTERS", "SKYLANE", "SLIPSTREAM", "HOVER LANE", "not live simulation telemetry"):
+              assert phrase.lower() in text.lower(), f"missing storyboard phrase: {phrase}"
+          assert len(root.findall(".//svg:rect", ns)) >= 100, "expected a structured grid and panels"
+          print(f"Verified {path}: {len(root.findall('.//svg:rect', ns))} rectangles")
+          PY
+
+      - name: Upload Drone Construction GUI.SVG vision
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-drone-construction-vision
+          path: ./artifacts/drone-construction-vision.svg
           if-no-files-found: error
 
       - name: Generate GUI.SVG primitive geometry lesson
