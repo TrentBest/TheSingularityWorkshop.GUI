@@ -986,3 +986,38 @@ Exact-head checks at the time of this note: the latest development workflow #396
 
 Current live inventory remains **18 branches total**: `master`, `development`, and 16 non-keepers. The new branch is **PRESERVE / ACTIVE PR #20**, not a deletion candidate. Keep the prior note's caution about harvesting only after exact-head validation, but do not repeat its now-corrected claim that the branch contains no workflow change.
 
+
+
+## Source-derived UML generator: content and enforcement review — 2026-10-21 20:29 UTC
+
+Branch `work/gui-svg-source-uml-generator` remains a **preserve/reconcile** branch, not a deletion candidate. The current comparison is 227 ahead / 76 behind with 86 changed files. The semantic work is substantial and should not be discarded; the implementation still needs a safe integration plan rather than wholesale merge.
+
+### Positive, directly inspected evidence
+
+- `src/Core/UmlDocumentationModel.cs` defines a versioned neutral model with provenance, stable identities, source spans/declarations, members, typed relationships, and resolution states. Tests explicitly cover JSON round-trip, unsupported schema versions, unknown properties, invalid source spans, and resolved edges pointing at missing types.
+- The generator workflow runs both syntax-only and project-semantic generation. It checks provenance/revision pinning, exact reflection assembly identity (including a negative test using the wrong assembly), deterministic inventory ordering, and one Markdown/SVG page per modeled type.
+- `docs/uml/README.md` claims a baseline of 67 types across 37 production files and correctly says the generated per-type Markdown/SVG are CI artifacts rather than committed repository pages. That is transparent, but it means the user-requested per-`.cs` documentation is not yet a durable, browsable set of committed pages in `development`; the manual authored source-file index and CI artifact output must be reconciled into the intended long-term contract.
+- Workflow uses `actions/checkout@v4` and `actions/setup-dotnet@v4`, not immutable action commit SHAs. This fails the repository's stated CI-hardening goal; pin reviewed actions to full SHAs and retain readable version comments before adopting this workflow.
+- The workflow produces artifacts under `artifacts/` and currently does not show a repository-diff/regeneration gate for committed UML pages. Decide explicitly whether generated pages are committed or CI artifacts; do not silently claim both.
+- Exact-head PR #18 remains open/draft. Its head SHA must receive a fresh successful workflow run after any reconciliation; prior historical run IDs are not proof for the current head.
+
+### Integration gate for PR #18
+
+1. Preserve the renderer-neutral model and tests, source-span/provenance contract, typed relationship semantics, and source-derived SVG renderers.
+2. Pin all third-party GitHub Actions by immutable SHA.
+3. Make source identity and source revision explicit; keep generated output deterministic and fail closed on invalid provenance/reflection identity.
+4. Decide whether per-file companion Markdown and focused class SVGs are committed to `docs/UML` or generated as a clearly linked CI artifact; user expectation is browsable per-`.cs` documentation, not artifact-only output.
+5. Ensure generator coverage matches current production files and tests, and avoid treating generated source structure as human-authored use cases.
+6. Run exact-head CI plus regeneration-twice/diff-stability verification; inspect SVG output for meaningful readable diagrams, not just existence.
+
+No source-generator code was merged, and PR #18 remains open.
+
+## Branch inventory / workflow status refresh — 2026-10-21 20:29 UTC
+
+- Live branch inventory remains **18 branches** (2 keepers + 16 non-keepers).
+- Open PRs remain six: the Physics seeded-point-set demonstration; PR #19 and #15 publish-gate proposals; PR #18 source-derived UML; PR #11 SVG guide/current contract; PR #8 datum/interaction boundary.
+- Latest audit-commit workflow [run #39670539036](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670539036) is **still in progress** at `Pack WPF`; `test-wpf` has passed. Do not call this commit green yet.
+- Earlier [run #39670436736](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670436736) succeeded on SHA `725990b8a009ca3a505c59a9f0c75db7d200a4ba`, but it predates the current audit commit.
+- The NuGet publish hard stop remains in `development`; no package was published.
+
+No branch deletion, PR merge/closure, or package publication was performed.
