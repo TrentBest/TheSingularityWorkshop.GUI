@@ -5,7 +5,7 @@ namespace TheSingularityWorkshop.GUI.Core.Tests;
 public sealed class GuiBuildersTests
 {
     [Fact]
-    public void Factories_build_a_nested_platform_neutral_tree()
+    public void Factories_compose_a_nested_platform_neutral_tree()
     {
         var root = GuiBuilders.Panel("root")
             .Property("background", "#020711")
@@ -35,7 +35,7 @@ public sealed class GuiBuildersTests
     }
 
     [Fact]
-    public void Child_accepts_existing_node_without_sharing_mutable_builder_state()
+    public void Child_accepts_existing_node_as_an_independent_snapshot()
     {
         var child = GuiBuilders.Text("child", "Hello").Build();
         var root = GuiBuilders.Panel("root").Child(child).Build();
@@ -85,5 +85,15 @@ public sealed class GuiBuildersTests
         var error = Assert.Throws<InvalidOperationException>(() => root.Build());
 
         Assert.Contains("cannot contain itself", error.Message);
+    }
+
+    [Fact]
+    public void Factory_and_direct_builder_share_the_same_fluent_type()
+    {
+        GuiBuilder fromFactory = GuiBuilders.Panel("factory");
+        GuiBuilder direct = GuiBuilder.Create("Panel", "direct");
+
+        Assert.Equal("factory", fromFactory.Build().Id);
+        Assert.Equal("direct", direct.Build().Id);
     }
 }
