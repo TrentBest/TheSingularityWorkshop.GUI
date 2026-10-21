@@ -1132,3 +1132,24 @@ Refreshed comparison of `work/webpage-event-builder-compatibility` against `deve
 `work/svg-app-fsm-cos-boundary` comparison refreshed to 5 ahead / 486 behind with only README and `docs/SVG_APP_CONCEPT.md` in the changed-file list. The concept document is identical to development; the README's one-line replacement is an older description, while development has the current five-section README and updated living-gallery links. This branch's unique useful documentation appears superseded, subject to final PR/reference check.
 
 No destructive action taken. Sith remains **NOT CLEARED**; UML staging readiness **72%**. Audit commit CI remains unverified unless exact-head evidence is returned.
+
+## Live checkpoint — 2026-10-21 20:41 UTC
+
+### Exact-head CI refresh
+
+The latest observed development head is `5b28dbc383e9dd2cf189f32f01803d3266f7612b`, commit title `docs: refine event-builder and SVG boundary dispositions`. Workflow [#39672434343](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39672434343) targets that exact SHA. At this checkpoint `test-wpf` has passed and `test-and-package` is still in progress. Do not call the current head green until that second required job completes successfully. The previous head `f7d258ea93bcca6b95471049f52255c2b98de46c` did pass both required jobs in run #39672122985; publishing was skipped.
+
+### Nested experience / integrated hub branches remain HOLD
+
+Fresh live comparisons against current development:
+- `feature/nested-experiences`: 38 ahead / 556 behind, 16 changed paths. Includes meaningful proposed design and source/test changes: `Gui.Hub`, `GuiHub`, `IGuiHub`, Blazor builder/renderer changes, a hub test, package/workflow edits, and `docs/GUI_NESTED_EXPERIENCES.md`.
+- `feature/integrated-fsm-cos-hub`: 76 ahead / 556 behind, 47 changed paths. Includes the same nested-experience concept plus broader Core/Blazor/WPF builder and renderer implementations, numerous WPF builders, tests, and architecture/readiness documents.
+
+Both branches contain the same nested-experience design document (blob `30b6355822e6a4262efe92422a24e6929b8db958`). The source/test changes are not merely documentation duplicates. Treat both as **PRESERVE / OWNER DECISION REQUIRED**, not superseded deletion candidates, until the hub/experience direction is explicitly selected and unique implementation/tests are either reconciled or intentionally retired. Do not wholesale-merge either branch: both are substantially behind current development and carry broad historical workflow/documentation changes.
+
+### Source-derived UML PR #18 CI provenance
+
+PR #18 head remains `97554095656f2ef0ca94cbc4ada73848f3a953f8`, 86 changed files. The branch's latest workflow runs returned by the live branch query are older than this head (most recent listed successful run is #39642809163 on `b4c68259a2df7c6f565708a529b01e62c433dae0`). No exact-head check records were returned for `9755409`; status remains **UNVERIFIED**, not green. Preserve the branch for focused review/reconciliation.
+
+Current branch inventory remains 18 branches total: keepers `master` and `development`, plus 16 non-keepers. The merged Physics feature branch remains in the inventory for the owner's final manual reference/deletion checkpoint. No branch was deleted; no PR was closed or merged by this audit pass; `master` remains untouched; NuGet publish remains gated. Sith is **NOT CLEARED**.
+
