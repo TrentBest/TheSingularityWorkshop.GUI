@@ -242,3 +242,17 @@ PR #11 remains open and says its scope is documentation-only (`docs/SVG_GUIDE.md
 The two one-line publish PRs (#15 and #19) both remove the deliberate `&& false` guard. They are duplicates in intent, not candidates for automatic merge. Publishing remains disabled on development; no release authorization is implied by CI or readiness.
 
 **Sith remains NOT CLEARED.** The three strong discard candidates above are not yet a user-facing deletion list until their full tree and associated PR states are reconciled. The user remains the actor who deletes non-keeper branches.
+
+
+## Final candidate recheck — 2026-10-21 18:10 UTC
+
+Live comparisons were rerun after the previous audit commit, using the then-current `development` tip `e0769dc9b44984263b42ad0b4857f7953b669b37` as the compare base:
+
+- `work/gui-wpf-tests`: 0 ahead, 239 behind, zero changed files. This is the clearest redundant-tip candidate.
+- `work/webpage-event-builder-compatibility`: 3 ahead, 486 behind, only `src/Blazor/WorkshopGuiBuilder.cs` and `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` reported. PR #9 is confirmed merged (merge commit `40f759123aa906f63f94351a025f3ada9d313f65`). The test blob is identical to development and the event methods exist on both; the remaining branch source differences are not a reason to preserve the branch without identifying a unique behavior.
+- `work/svg-app-fsm-cos-boundary`: 5 ahead, 423 behind; only README and `docs/SVG_APP_CONCEPT.md` appear in the compare. PR #12 is confirmed merged (merge commit `73f24c106bd32f2f944f5a9425211b7065396145`). Concept content is already on development.
+- `work/svg-tree-depth-guard`: 5 ahead, 423 behind; its only reported files are `docs/SVG_ADAPTER.md`, `src/SVG/SvgGuiRenderer.cs`, and `tests/SVG.Tests/SvgGuiRendererTests.cs`. Test-method inventory confirms every branch test exists on development; development has additional tests and newer title/description accessibility linkage. No unique test needs porting from this branch.
+- `fix/guinode-nullability-contract`: 1 ahead, 423 behind, only `src/Core/GuiNode.cs` reported. The iterative traversal on development supersedes the branch's older implementation; keep this as a final source-level confirmation item, not a merge candidate.
+- PR #17 is confirmed merged (merge commit `4bd42c78b95ba9f3834eb3b137aa710cd8f1dc3f`), but that does not by itself prove its branch's remaining release docs/workflow are identical to development.
+
+These comparisons strengthen the discard cases, but this document is still not an all-clear: the remaining divergent branches and all open PRs require disposition, including PR #18's failed checks and the unresolved deliberate publish hard stop. No branch deletion is performed by the assistant.
