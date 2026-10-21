@@ -729,3 +729,28 @@ A direct file-by-file recheck resolved two holds from the preceding section:
 - **`work/webpage-event-builder-compatibility`: superseded candidate.** The 33-line `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` is byte-for-byte identical between branch and development (1,163 characters). The branch's `WorkshopGuiBuilder.cs` has the same executable statements as development; the current development version adds XML documentation comments around the existing API. No unique event behavior or test remains to port. Recheck branch and PR references before owner deletion.
 
 These are explicit updates to the preceding fresh branch table: those two rows no longer require content reconciliation. They are not evidence that all other branches or open PRs are cleared. The latest audit-document commit has a new workflow run; do not use the earlier passing run as exact-head evidence for this correction.
+
+## Live inventory and semantic refresh — 2026-10-21 20:15 UTC
+
+### Exact current anchors
+
+- Fresh branch search and pagination return **17 total branches**: the two keeper branches (master, development) and 15 non-keepers.
+- The current development comparison anchor is 3901b2ffd43d93b20aa054090ea30d4479fb4fe5 (the base SHA returned by fresh branch comparisons).
+- The package workflow still contains the explicit && false hard stop on publish_nuget; do not remove it without explicit user authorization.
+- The commit-workflow lookup for the queried development SHA returned no PR-triggered workflow records. That endpoint is PR-triggered-only and therefore is **not** evidence that all workflow runs are absent or that the newest audit commit passed CI. Require exact-head checks for the actual current development SHA before calling it green.
+
+### Newly refreshed dispositions
+
+- **work/gui-wpf-tests** — fresh compare: **0 ahead / 273 behind / no changed files** against current development. Branch-specific PR search returned no matching PR. This is a strong **safe-to-discard candidate**; still do not delete it on the assistant's authority, and recheck the complete branch/PR inventory immediately before owner deletion.
+- **fix/guinode-nullability-contract** — fresh source comparison disproves a simple nullability-only description. The branch's GuiNode.TryFind recursively calls child TryFind; current development uses an explicit stack to preserve depth-first, left-to-right order without recursive call-stack growth, and has XML documentation for the public contract. Current development therefore contains a material robustness improvement plus documentation absent from the branch. The branch has only one commit ahead and 456 behind in the prior live compare, with no branch-specific PR returned by search. Disposition: **superseded candidate**, not a source to merge or port.
+- **work/svg-app-fsm-cos-boundary** — fresh compare: **5 ahead / 456 behind**. docs/SVG_APP_CONCEPT.md has the same blob SHA on both refs (f98b408b2fba433017892c59182118ab6aaf47f3); it is already preserved on development and clearly marks SVG_App as a concept, not implemented software. The remaining README variation is from a stale branch snapshot. Disposition: **superseded candidate**, pending the owner's final live-reference check.
+- **work/svg-tree-depth-guard** — fresh compare: **5 ahead / 457 behind**. Previously documented source/test review found its depth guard and test behavior represented in current development, with broader current adapter documentation and additional edge/error tests. PR #10 is closed and merged. Disposition remains **intentionally superseded candidate**; no wholesale merge.
+- **work/nuget-publish-gate** — fresh compare: **1 ahead / 274 behind**, with only the workflow's one-line publish-gate change. It duplicates the logical change in PR #15/#19: removing the hard stop. Disposition remains **HOLD** until the user explicitly chooses and authorizes a canonical gate change. Do not enable publication.
+- **work/gui-release-mit-wpf-scope** — refreshed compare now reads **16 ahead / 273 behind**. The earlier exact-file reconciliation stands: current package project metadata and release gates cover its contribution; do not merge the stale branch snapshot. Mark **superseded candidate**, subject to final owner-side reference check.
+- **work/gui-verify-xml-docs-in-packages** — refreshed compare now reads **4 ahead / 272 behind**. The earlier exact workflow inspection established the all-four-package archive assertions are already byte-identical in development; the older queue/readiness text is superseded. PR #17 is closed and merged. Mark **superseded candidate**, subject to final owner-side reference check.
+
+### Clearance and readiness
+
+The current candidate list is more precise, but Sith is still **NOT CLEARED**. The broad open PRs #8 and #11 remain on hold; PR #18 remains active draft/reconcile; PRs #15 and #19 remain held because they propose removing the deliberate publication hard stop. The legacy hub/nested-experience branches still require explicit semantic discard/rebuild decisions. No branch was deleted, no PR was merged or closed, and no package was published.
+
+Source-derived UML staging readiness remains **72%**. This is not overall package release readiness or Sith completion. Exact-head CI on the latest development SHA must be confirmed independently before claiming the latest audit is green.
