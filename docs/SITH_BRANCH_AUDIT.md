@@ -1090,3 +1090,15 @@ A fresh comparison of `work/svg-guide-current-contract` against `development` sh
 - Branch-only implementation files (including older Blazor/WPF builders, hub/reflection surfaces, and SVG tests) still require a deliberate capability-by-capability disposition; their existence is not evidence those APIs were ported. Conversely, their age/divergence does not justify preserving the entire branch as a keeper.
 
 Disposition: **HOLD / HARVEST AND VERIFY**. Current guide appears to supersede the branch's guide, but do not call the whole branch manually deletable until the remaining unique implementation/docs/assets and workflow changes are reconciled. Current keeper package workflow run [#39671906125](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39671906125) was still running at this checkpoint; it is not yet exact-head green evidence for the latest audit update.
+
+
+## Content-equivalence spot checks — 2026-10-21 20:38 UTC
+
+Additional file-level checks refine the candidate list:
+
+- `work/gui-uml-per-file-documentation`: `docs/DATA_CARDS_AND_UML.md` is **not byte-identical** to development (branch blob `9974b59d70679ac1d9174539df539ba609c4a41d`, development blob `e8a5164eba4e2d121f505fd8fc9f79272392579e`; 16,202 versus 30,500 characters). Do not discard until the older file's unique requirements are compared and any still-relevant material is preserved. This confirms that the one-commit branch cannot be called redundant from commit count alone.
+- `work/svg-tree-depth-guard`: `src/SVG/SvgGuiRenderer.cs` and `tests/SVG.Tests/SvgGuiRendererTests.cs` are **not byte-identical** to development (renderer blobs `b9bca133c0541f838e7d47a61163df4d17a41155` vs `88262776417a8d4138556e256c85386cbafba682`; test blobs `ea8b9621b538513182bae5951ad0836023c9604c` vs `5d8a323c61e8eaef4835861d7f2ae305bb462047`). Keep it on the reconciliation list until the depth guard and any branch-only test intent are reviewed, despite the small ahead count.
+- `work/svg-app-fsm-cos-boundary`: `docs/SVG_APP_CONCEPT.md` is byte-identical on both refs (blob `f98b408b2fba433017892c59182118ab6aaf47f3`). This file itself needs no further harvesting; still verify the branch's README hunk and PR/reference state before final branch disposition.
+- `work/webpage-event-builder-compatibility`: `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` is byte-identical on both refs (blob `be6c179c751d8f817293f4f445584df23675afd5`). The builder source still differs and must be compared before disposition.
+- Audit commit `fe4ec10a7d739d9432d4aba5894c521be25754e7` currently has no individual status records and no PR-triggered workflow runs returned by the connector; CI is **unverified**, not green.
+- Sith remains **NOT CLEARED**. UML staging readiness remains **72%**. No branch deletion, PR closure/merge, or package publication was performed.
