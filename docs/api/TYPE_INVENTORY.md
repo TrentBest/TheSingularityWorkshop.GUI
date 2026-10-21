@@ -1,8 +1,8 @@
 # GUI Production Type Documentation Inventory
 
-**Baseline:** `development` at commit `e5e4eac2040fbface38356ea5bba84a05ef92701` plus the source paths listed below.  
+**Baseline:** `development` at commit `c1afcdb282c99cdb59fc9c90d6c0833ae0d09d41`.  
 **Scope:** Core, Blazor, SVG, and WPF production source.  
-**Initial scan:** 33 C# source files; 40 declared types detected by a source-text declaration scan. This is a reviewable baseline, not yet parser-backed CI proof; aliases, conditional compilation, generated code, and unusual declaration formatting must be accounted for by the eventual syntax-aware checker.
+**Follow-up scan:** 33 C# source files; 39 declared types detected by a source-text declaration scan after consolidating the Core builder API. This remains a reviewable source-text inventory, not parser-backed CI proof; aliases, conditional compilation, generated code, and unusual declaration formatting must be accounted for by a syntax-aware checker.
 
 Every row is currently **OPEN** until its dedicated Markdown page and embedded UML SVG have been created, source-reviewed, and validated. Page and diagram paths are reserved according to [the standard](../CLASS_DOCUMENTATION_STANDARD.md). Internal/nested types are included.
 
@@ -21,7 +21,6 @@ Every row is currently **OPEN** until its dedicated Markdown page and embedded U
 | Core | `GuiBuilder` | `TheSingularityWorkshop.Workshop.Gui` | [`src/Core/GuiBuilder.cs`](../../src/Core/GuiBuilder.cs) | `docs/api/Core/GuiBuilder.md` | `docs/assets/uml/classes/Core/GuiBuilder.svg` | OPEN |
 | Core | `NodeBuilder` | `TheSingularityWorkshop.Workshop.Gui` | [`src/Core/GuiBuilder.cs`](../../src/Core/GuiBuilder.cs) | `docs/api/Core/NodeBuilder.md` | `docs/assets/uml/classes/Core/NodeBuilder.svg` | OPEN |
 | Core | `GuiBuilders` | `TheSingularityWorkshop.Workshop.Gui` | [`src/Core/GuiBuilders.cs`](../../src/Core/GuiBuilders.cs) | `docs/api/Core/GuiBuilders.md` | `docs/assets/uml/classes/Core/GuiBuilders.svg` | OPEN |
-| Core | `GuiNodeBuilder` | `TheSingularityWorkshop.Workshop.Gui` | [`src/Core/GuiBuilders.cs`](../../src/Core/GuiBuilders.cs) | `docs/api/Core/GuiNodeBuilder.md` | `docs/assets/uml/classes/Core/GuiNodeBuilder.svg` | OPEN |
 | Core | `GuiNode` | `TheSingularityWorkshop.Workshop.Gui` | [`src/Core/GuiNode.cs`](../../src/Core/GuiNode.cs) | `docs/api/Core/GuiNode.md` | `docs/assets/uml/classes/Core/GuiNode.svg` | IN REVIEW (awaiting clean documentation CI) |
 | SVG | `SvgDataCardRenderer` | `TheSingularityWorkshop.Workshop.Gui.Svg` | [`src/SVG/SvgDataCardRenderer.cs`](../../src/SVG/SvgDataCardRenderer.cs) | `docs/api/SVG/SvgDataCardRenderer.md` | `docs/assets/uml/classes/SVG/SvgDataCardRenderer.svg` | OPEN |
 | SVG | `SvgGuiRenderer` | `TheSingularityWorkshop.Workshop.Gui.Svg` | [`src/SVG/SvgGuiRenderer.cs`](../../src/SVG/SvgGuiRenderer.cs) | `docs/api/SVG/SvgGuiRenderer.md` | `docs/assets/uml/classes/SVG/SvgGuiRenderer.svg` | OPEN |
