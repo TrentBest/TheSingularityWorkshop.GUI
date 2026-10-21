@@ -145,3 +145,21 @@ PR #15 and #19 each propose the same substantive one-line change removing the ha
 6. Re-run branch and PR inventories at the end. Only then issue the owner-facing deletion list.
 
 **Decision remains NOT CLEARED. No branch deletion, PR merge/closure, package publish, or workflow-gate change was performed by this check.**
+
+
+## Source/test reconciliation follow-up — 2026-10-21
+
+### Blazor event-compatibility branch
+
+- `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` on both `development` and `work/webpage-event-builder-compatibility` has the exact same blob SHA: `be6c179c751d8f817293f4f445584df23675afd5`. The event test is therefore already present byte-for-byte on development.
+- The branch version of `src/Blazor/WorkshopGuiBuilder.cs` has blob SHA `e464e2ec815c1cfd090f29ac965e320782fe0d99`; development's file is `02c7f344eb814081e38b4935e6a75b1a3f8cbb4d`. Inspection confirms the relevant `OnWheel` and `StopPropagation` implementations exist on both; the current development version adds XML documentation and also has a `PreventDefault` API in the surrounding event-builder surface.
+- **Revised disposition:** likely discardable as an obsolete branch tip, because its event behavior and exact test are already on development. Before final all-clear, check the rest of its three-commit branch diff for any other changed files and confirm PR #9's final state; do not preserve the branch solely for the wheel/propagation test.
+
+### SVG depth-guard branch
+
+- The branch's `src/SVG/SvgGuiRenderer.cs` blob SHA is `b9bca133c0541f838e7d47a61163df4d17a41155`; development's is `88262776417a8d4138556e256c85386cbafba682`.
+- Both versions include the 256-depth constant and iterative `ValidateUniqueIds` prevalidation. Development additionally assigns stable `gui-svg-title` / `gui-svg-description` IDs and `aria-labelledby` linkage; the branch version emits a title without the current ID linkage. The branch renderer is therefore older in at least this accessibility contract, not a candidate to restore wholesale.
+- The branch test file has unique additions (25 lines in the compare), while the current development test file differs substantially in content. The added assertions must be reviewed individually; existing shared behavior does not mean every branch test is redundant.
+- **Revised disposition:** retain only as a source for potential missing regression cases; do not merge or copy the older renderer. After extracting/adding any valuable tests to development and verifying them on the keeper branch, the old branch can be classified as intentionally discardable.
+
+These findings narrow two branches but do not satisfy the global all-clear criteria. The remaining branch and PR inventory must still be reconciled and rechecked.
