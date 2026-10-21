@@ -847,3 +847,17 @@ No branch was deleted and no PR lifecycle or package publication state was chang
 - **VERIFIED REDUNDANT:** only after exact content/behavior comparison proves every useful UML contribution is already preserved.
 
 Until the content-level UML inventory is complete, no UML-related branch may be placed on a safe-to-discard list solely because it is old, divergent, documentation-only, or has a low ahead count. This policy does not authorize branch deletion, PR closure/merge, or publication.
+
+
+## UML/SVG content-level sweep — 2026-10-21 20:21 UTC
+
+Fresh comparisons were run against the current `development` head `93db853cf5b3e1c35f30ba975b3845145bcfaaa5`; these counts are snapshots and will change as work lands.
+
+- **`work/gui-uml-per-file-documentation`: 1 ahead / 214 behind; one changed file, `docs/DATA_CARDS_AND_UML.md` (+19 lines).** This branch's visible unique change is the per-file/per-type UML requirement already recorded in development. Disposition: **RECONCILED requirement; HOLD branch deletion** until the complete tip diff and live PR/reference check confirm there is no additional content.
+- **`work/svg-guide-current-contract`: 112 ahead / 534 behind; 59 changed files.** The diff includes actual SVG renderer implementation and tests (`src/SVG/SvgGuiRenderer.cs`, `SvgRenderOptions.cs`, `tests/SVG.Tests/SvgGuiRendererTests.cs`), SVG guide/docs, concept artwork, and workflow changes. This is not just stale prose. Disposition: **HOLD / content harvest required**; compare each unique renderer behavior and test against development before calling this branch redundant.
+- **`work/svg-tree-depth-guard`: 5 ahead / 465 behind; 3 changed files** across renderer, tests and `docs/SVG_ADAPTER.md`. The previously recorded iterative prevalidation/depth guard and duplicate-ID checks are present in current development; retain this as a superseded candidate only after the entire current branch-tip diff and tests are checked against the keeper implementation.
+- **`work/gui-release-mit-wpf-scope`: 16 ahead / 282 behind; 8 changed files.** The filtered diff contains package workflow and WPF README changes but no UML/SVG/diagram path. Keep its release/license/WPF-scope disposition separate from the UML inventory.
+- **`work/gui-verify-xml-docs-in-packages`: 4 ahead / 281 behind; 3 changed files, with its workflow change already compared against the stronger current package assertions.** No UML/SVG path appears in this comparison.
+- **`work/gui-svg-source-uml-generator`: 227 ahead / 67 behind; 86 changed files.** The content-level diff confirms unique implementation, not only generated docs: a 403-line source-derived-diagrams workflow, solution-derived workflow, source generator and project model builders, renderer-neutral UML model, SVG diagram renderers, model/renderer tests, validation scripts, generated per-source-file documentation, and visual assets. Disposition remains **PRESERVE / ACTIVE**. The latest observed PR head is `97554095656f2ef0ca94cbc4ada73848f3a953f8`; no check runs were returned for that exact head, so prior successful branch workflow runs do not establish current-head green CI. Require a new exact-head run plus deterministic regeneration and provenance/source-truth review.
+
+This sweep does not mark the audit clear. No branch deletion, PR merge/closure, or publication was performed.
