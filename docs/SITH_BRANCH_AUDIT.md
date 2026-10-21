@@ -1252,3 +1252,17 @@ The exact-head source-derived UML and solution-inventory checks on the newer doc
 - CI: package/test and WPF are now confirmed successful on candidate `29c6d9615faf9f34e3ab2aebc37d15f80e768f79`; do not generalize that result to any later SHA without a matching run.
 - NuGet publication remains unauthorized and skipped.
 - `master` remains untouched. Final manual-deletion list requires one last live branch/PR/reference check and explicit reconciliation of implementation-bearing branches.
+
+
+## Additive semantic GUI SVG renderer landed on development — 2026-10-21 20:51 UTC
+
+Implemented an additive reconciliation step rather than overwriting the existing SVG scene renderer. Three new files are now on `development`:
+- `src/SVG/SemanticGuiSvgRenderer.cs` (212 lines; source blob `5c97058ac28cd973a99b268904bcdd39c2e65575`): a distinct `SemanticGuiSvgRenderer` API in namespace `TheSingularityWorkshop.GUI.SVG`, based on the protected semantic-tree renderer. Existing `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` remains unchanged.
+- `src/SVG/SemanticGuiSvgRenderOptions.cs` (distinct options type; blob `e9ea3bff9f4252b3cb6acb6a8db8a57677dafec9`).
+- `tests/SVG.Tests/SemanticGuiSvgRendererTests.cs` (198 lines; blob `4a94173e8d2ff32de22255d9d6db5881a5763898`), adapted from the renderer branch tests with 12 Fact/Theory test methods covering accessibility/text escaping, nesting/order, panel bounds, row/horizontal layout, dense rows, canonical node kinds, invalid dimensions/background, null roots, and excessive depth.
+
+Files were committed sequentially on `development`: renderer `4d4f32d69733aa9f5e5c1501c6521eb8e3ecfa61`, options `07ccffa54ce5e1f8c07e7cfe973f8f2bf647db37`, tests `998d4d07e66cf31a310f8914c5b5854ffbfda092`. This is an **additive source-level integration**, not a verified successful build yet. The connector returned no commit status records and no PR-triggered workflow runs for test commit `998d4d07e66cf31a310f8914c5b5854ffbfda092`; CI must be checked through repository Actions or a suitable run listing. No build/test success claim is made.
+  
+The original 538-line SVG scene renderer remains untouched. This change resolves the architectural collision by giving the semantic GUI-tree renderer a separate public class while sharing the current SVG project and its Core reference. Before calling the integration complete, inspect the actual workflow result and resolve any compile/test failures; also inspect test behavior against current Core node/property semantics.
+  
+Sith cleanup remains **NOT CLEARED**; UML staging readiness remains **72%**. No branch deletion, PR merge/closure, package publication, or NuGet publish-guard modification occurred.
