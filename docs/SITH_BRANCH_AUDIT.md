@@ -667,3 +667,14 @@ The live files endpoints confirm that both PR #15 and PR #19 change only the sam
 ### Current decision
 
 The branch inventory is still 17 total branches (15 non-keepers) and the open-PR set remains #8, #11, #15, #18, #19. The newly added per-file UML requirement is now present in development, but no automated coverage enforcement is claimed. The WPF owner-window cleanup passed both Windows WPF and Linux package/test jobs on its exact code/test head; later documentation commits have their own CI in progress. Sith remains **NOT CLEARED**. No branch was deleted, no PR was merged or closed, and NuGet publication remains disabled.
+
+
+## Release/MIT/WPF scope branch reconciliation — 2026-10-21
+
+Fresh comparison of `work/gui-release-mit-wpf-scope` against current `development` reports 16 commits ahead / 267 behind and eight changed paths. Exact file inspection now narrows the substantive contribution:
+
+- `LICENSE`, Core/Blazor/WPF project files, and `src/WPF/README.md` are byte-identical between the branch and development.
+- The branch's package workflow has an older, separately named “Verify all package license and README metadata” step. Current development's all-four-package verification step already performs those checks and additionally verifies target framework, DLL, and XML documentation entries.
+- The branch's release queue/readiness prose is older and shorter. Its historical 74% readiness statement and historical CI links are not current candidate evidence; current development has the more extensive release gates and updated blockers.
+
+No unique MIT license or WPF package metadata change remains to be ported from this branch based on the inspected files. Disposition: **superseded candidate**, subject to one final live branch/reference check before the owner deletes it. Do not merge the historical branch snapshot. This is a branch disposition only; current release readiness remains separate and the NuGet publish hard stop remains unchanged.
