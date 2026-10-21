@@ -80,6 +80,32 @@ public sealed class SvgDataCardRendererTests
     }
 
     [Fact]
+    public void Uml_card_palette_uses_light_tints_and_dark_text()
+    {
+        var root = new DataCard("namespace", "namespace", "Example",
+            children:
+            [
+                new DataCard("class", "class", "SampleClass",
+                    children: [new DataCard("property", "property", "Name")])
+            ]);
+
+        var document = XDocument.Parse(new SvgDataCardRenderer().Render(root));
+        var cards = document.Descendants(Svg + "g")
+            .ToDictionary(element => (string)element.Attribute("data-card-id")!);
+
+        var namespaceRect = cards["namespace"].Element(Svg + "rect")!;
+        var classRect = cards["class"].Element(Svg + "rect")!;
+        var propertyRect = cards["property"].Element(Svg + "rect")!;
+
+        Assert.Equal("#eef0ff", (string)namespaceRect.Attribute("fill")!);
+        Assert.Equal("#fff0e5", (string)classRect.Attribute("fill")!);
+        Assert.Equal("#fffde0", (string)propertyRect.Attribute("fill")!);
+        Assert.Equal("#20205c", (string)cards["namespace"].Element(Svg + "text")!.Attribute("fill")!);
+        Assert.Equal("#6b2e0c", (string)cards["class"].Element(Svg + "text")!.Attribute("fill")!);
+        Assert.Equal("#514d00", (string)cards["property"].Element(Svg + "text")!.Attribute("fill")!);
+    }
+
+    [Fact]
     public void Empty_region_has_no_collapsed_summary_and_add_affordance_is_edit_and_capability_gated()
     {
         var card = new DataCard("empty", "region", "Empty region",
