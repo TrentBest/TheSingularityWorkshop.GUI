@@ -256,3 +256,33 @@ Live comparisons were rerun after the previous audit commit, using the then-curr
 - PR #17 is confirmed merged (merge commit `4bd42c78b95ba9f3834eb3b137aa710cd8f1dc3f`), but that does not by itself prove its branch's remaining release docs/workflow are identical to development.
 
 These comparisons strengthen the discard cases, but this document is still not an all-clear: the remaining divergent branches and all open PRs require disposition, including PR #18's failed checks and the unresolved deliberate publish hard stop. No branch deletion is performed by the assistant.
+
+
+## Focused branch reconciliation pass — 2026-10-21 18:25 UTC
+
+Live branch-tip comparisons were repeated against `development`. These findings supersede older statements in this audit where the exact changed-file comparison differs.
+
+| Branch | Compare result | Finding | Disposition |
+|---|---:|---|---|
+| `work/gui-release-mit-wpf-scope` | 16 ahead / 247 behind; 8 changed files | The MIT `LICENSE` is byte-identical to development, as is the WPF README. The branch still carries distinct package workflow and project-file edits plus release-readiness/work-queue wording. Do not discard until those remaining edits are reviewed against the current workflow and release docs. | Hold for targeted diff review; no wholesale merge. |
+| `work/gui-verify-xml-docs-in-packages` | 4 ahead / 246 behind; workflow and two release docs | Its workflow does not enable publishing: the development workflow has the same publish hard stop. The branch's remaining value is limited to workflow/doc deltas; PR #17 being merged does not prove this branch tip is wholly redundant. | Review the exact workflow/doc hunks, then discard if superseded. Never use it to authorize publication. |
+| `feature/integrated-fsm-cos-hub` | 76 ahead / 499 behind; 40+ changed paths | Broad legacy hub/API and renderer implementation, tests, WPF controls, workflow, and docs remain different. This is not a small patch to transplant. Current architecture puts runtime lifecycle in the consuming host and keeps hub/runtime proposals distinct from the GUI semantic tree. | Owner-level design decision: intentionally discard legacy implementation or define a small capability to rebuild against current contracts. No wholesale merge. |
+| `feature/nested-experiences` | 38 ahead / 499 behind; 16 changed paths | Carries the legacy recursive experience/hub contract, related Core/Blazor API changes, tests, workflow and docs. The concept is not equivalent to an implemented current GUI runtime contract; current documentation treats such lifecycle as host-owned/proposal-level. | Explicitly decide discard vs rebuild a host-owned experience contract. No wholesale merge. |
+| `work/gui-uml-per-file-documentation` | 1 ahead / 179 behind; only `docs/DATA_CARDS_AND_UML.md` reported changed | The opening substantive content fetched from branch and development is identical. No unique implementation or asset was reported by the compare. Verify full blob equality or the remaining 19-line delta before calling it redundant. | Near-redundant candidate; one final full-content check required. |
+| `work/gui-wpf-tests` | Previously 0 ahead / 0 changed files | Strong redundant-tip candidate, but branch inventory and compare must be rechecked immediately before deletion. | Candidate only; not a global all-clear. |
+| `fix/guinode-nullability-contract` | Prior exact source review found only an obsolete `GuiNode.cs` variant | Development's iterative traversal and documentation supersede the branch implementation. | Intentionally discardable after checking historical PR disposition and current inventory. |
+| `work/webpage-event-builder-compatibility` | Prior compare found the event behavior/test represented on development; PR #9 merged | The branch is behind development and does not currently justify preserving its old tip. | Intentionally discardable after current-tip recheck. |
+| `work/svg-app-fsm-cos-boundary` | Prior compare found only README and `docs/SVG_APP_CONCEPT.md`; PR #12 merged | Contribution is reported represented in development. | Intentionally discardable after current-tip recheck. |
+| `work/svg-tree-depth-guard` | Prior exact test inventory found every branch test method on development; development renderer includes stronger accessibility and validation behavior | No missing test method identified; the old renderer is superseded. Remaining doc diff should be checked for any unique factual content. | Likely intentionally discardable after documentation diff check. |
+
+### Current package-workflow comparison
+
+The fetched `.github/workflows/package.yml` content on `work/gui-release-mit-wpf-scope` and `development` is identical for the reviewed opening section; both retain the deliberate `&& false` publish hard stop. Therefore this branch's workflow delta reported by GitHub is elsewhere in the file or in workflow structure not shown by the opening excerpt, and must be inspected as a full diff before a disposition. Do not infer that the workflow is identical from this partial comparison.
+
+### UML guide overlap check
+
+The first substantial section of `docs/DATA_CARDS_AND_UML.md` on `work/gui-uml-per-file-documentation` and `development` is identical. The compare reports a 19-line delta, so the exact remainder still requires comparison; the branch is not yet certified redundant.
+
+### Decision after this pass
+
+The keeper target remains exactly `master` and `development`. This pass materially narrows several branch dispositions, but it does **not** clear Sith cleanup: the two legacy experience/hub branches need an explicit keep/rebuild/discard decision; PRs #8, #11, #15, #18 and #19 remain to be dispositioned; and several remaining unique docs/workflow hunks still need exact review. No branches or PRs were deleted, closed, merged, or published in this pass.
