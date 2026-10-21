@@ -408,6 +408,9 @@ jobs:
           grep -q 'Authored file' "$unsafe_name/authored.md"
           echo "Verified stale page/diagram pruning, preservation of authored Markdown, and fail-closed path/name manifest handling."
 
+      - name: Test safe source-UML documentation promotion
+        run: python3 scripts/test_promote_source_uml.py
+
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
