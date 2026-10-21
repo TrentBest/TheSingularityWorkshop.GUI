@@ -36,6 +36,10 @@ p{margin:0;color:var(--muted)}a{color:#a9d9ff;text-underline-offset:3px}footer{p
     <a class="preview" href="../../docs/assets/svg-adapter-gallery.svg" aria-label="Open animated SVG gallery"><img src="../../docs/assets/svg-adapter-gallery.svg" alt="GUI.SVG gallery with vector geometry, reusable definitions, and a moving filled star"></a>
     <div class="body"><p>Explore reusable SVG definitions, filters, and declarative animation, including a filled star moving along a referenced path. Viewer-driven animation is not an FSM_API clock or a GPU-rendering claim.</p></div>
   </article>
+  <article class="card">
+    <div class="card-head"><div><div class="level">Recipe 05 · Physics data</div><h2>Seeded point set from Physics</h2></div><a href="recipes/05-seeded-point-set.md">Read the recipe →</a></div>
+    <div class="body"><p>Physics owns the deterministic point generation and exports a versioned run record. GUI.SVG consumes that record and verifies each rendered marker against the original coordinates; it does not regenerate the points. The generated SVG is attached as a CI artifact so the source-data hand-off can be inspected.</p></div>
+  </article>
 </main>
 </body>
 </html>

@@ -27,6 +27,12 @@ Explore reusable SVG definitions, filters, and declarative animation, including 
 [**Read Recipe 04 — Animated scene**](recipes/04-animated-scene.md)
 
 ## GUI Core + GUI.SVG + Physics run data
+### Recipe 05 — Seeded point set from Physics
+
+Physics generates a bounded, seeded point set and exports its actual coordinates into a versioned JSON run record; GUI.SVG consumes that record without regenerating the points. The consumer verifies the record identity, count, bounds, and every rendered marker against the source data, so the image is a manifestation of Physics output rather than a mock-up.
+
+[**Read Recipe 05 — Physics seeded point set**](recipes/05-seeded-point-set.md)
+
 
 ### Recipe 03 — Projectile trajectory from a recorded Physics run
 
