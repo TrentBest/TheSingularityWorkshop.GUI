@@ -1399,3 +1399,39 @@ Run links: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/
 Live inventory remains **20 branches** with `master` and `development` as keepers and 18 non-keeper refs awaiting reconciliation/deletion decision. PR #18 source UML remains open and draft, head `97554095656f2ef0ca94cbc4ada73848f3a953f8`, and GitHub currently reports `mergeable=false`. This is an explicit conflict gate: do not merge it wholesale. Reconcile the unique source-model/generator/render/test/workflow package against development in bounded units and verify each unit before any merge decision. The source UML workflow still uses mutable `actions/checkout@v4` and `actions/setup-dotnet@v4`; immutable SHA pinning remains a hardening item. Exact-head CI for PR #18 remains unverified.
 
 UML staging readiness remains **72%**; Sith remains **NOT CLEARED**. No branch deleted by assistant, no PR lifecycle action by assistant, no package published, and NuGet publish guard unchanged. Next step is a concrete file-level conflict/reconciliation plan for PR #18, plus a reference/commit ledger for the 18 non-keeper branches.
+
+
+## Live branch inventory after Physics-backed Mandelbrot work — 2026-10-21 21:10 UTC
+
+This section supersedes older branch-count snapshots above. Live GitHub inventory was re-read against keeper `development` tip `0e7a4174ec6190da16b8e4d66afd7c42c4927f24` and `master` tip `aec383436cee216cfdc118de136a92980e5caef0`.
+
+- **Current inventory:** 20 branches total: the two keepers plus 18 non-keeper branches.
+- **Open PRs:** #8, #11, #15, #18, and #19. PR #18 remains the substantial source-derived UML workstream. PRs #15 and #19 both propose removing the publish hard stop; neither is approved. The package workflow still keeps NuGet publishing disabled.
+- **Recently reconciled visual-data branches:** PR #20 (Physics seeded-point set), #21 (Physics Mandelbrot SVG consumer), and #22 (parameterized Mandelbrot overview/detail) are merged. Their branch tips still appear ahead/diverged in a three-dot comparison because squash merges and continued development change the comparison base; the merged PR plus passing current-head CI are the relevant evidence. Do not interpret those stale branch-tip diffs as unmerged work without checking the merge commits and current keeper tree.
+
+### Owner-facing deletion candidates — not deleted by the agent
+
+These are the strongest current candidates for the owner's final manual deletion pass, after one last inventory/PR recheck:
+
+| Branch | Live comparison to development | Evidence | Owner action |
+|---|---|---|---|
+| `work/gui-wpf-tests` | 0 ahead, 323 behind, no changed files | Tip is fully behind development and contributes no diff according to GitHub compare | Candidate for deletion after final recheck |
+| `feat/mandelbrot-parameter-explorer` | 5 ahead, 3 behind; files overlap Recipe 06/gallery/workflow | PR #22 merged; its output generation and rendering workflow passed CI run [39675376487](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675376487); source pin points to merged Physics commit | Candidate for deletion after confirming merged PR and that all four paths are present on development |
+| `feat/mandelbrot-physics-svg` | 8 ahead, 16 behind; files overlap Mandelbrot consumer/workflow/docs | PR #21 merged; end-to-end run [39674244301](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39674244301) passed | Candidate for deletion after confirming merged PR and current paths |
+| `feat/physics-seeded-pointset-svg` | 9 ahead, 35 behind; files overlap seeded-point consumer/workflow/docs | PR #20 merged; end-to-end run [39670789022](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670789022) passed | Candidate for deletion after confirming merged PR and current paths |
+
+**These are candidates, not a blanket all-clear.** The agent has not deleted branches and will not do so.
+
+### Remaining non-keeper disposition
+
+- `work/gui-svg-source-uml-generator` — keep while auditing/rebuilding its useful source-derived UML infrastructure; PR #18 is open/draft, 227 commits ahead and 109 behind by compare metadata. Do not merge wholesale: the old CI failure documented above must be corrected at its exact current head, and the source/docs must be validated against current development.
+- `architecture/datum-interaction-boundary`, `feature/integrated-fsm-cos-hub`, `feature/nested-experiences`, and `work/svg-guide-current-contract` — highly divergent historical branches (38–112 commits ahead, 576 behind); their broad diffs include obsolete implementation/workflow changes. Preserve the architectural principles already reconstructed on development, inspect any remaining unique assets, then explicitly mark the obsolete implementation discardable. Do not merge these branch tips wholesale.
+- `work/gui-publish-gate-reconciled` and `work/nuget-publish-gate` — keep only as PR evidence until #15/#19 are explicitly resolved. Do not remove the `&& false` publish hard stop.
+- `work/gui-release-mit-wpf-scope` and `work/gui-verify-xml-docs-in-packages` — closed/merged PR histories, but branch comparisons still show workflow, project, and release-document deltas. Compare each changed hunk with current release docs and package workflow before disposition.
+- `work/gui-uml-per-file-documentation` — one documentation-file delta remains; compare it with the current source-derived UML proposal before disposition.
+- `fix/guinode-nullability-contract`, `work/svg-app-fsm-cos-boundary`, `work/svg-tree-depth-guard`, and `work/webpage-event-builder-compatibility` — older merged PR branches whose source/docs are superseded in part, but their complete unique patches are not all proven redundant. Transfer any missing regression assertions or concept notes, then mark discardable.
+- `work/svg-guide-current-contract` and PR #11 require special care: PR #11's patch is much broader than its title suggests. Do not merge wholesale; current-source guide content has already been reconstructed on development.
+
+### Current decision
+
+**Sith policy remains NOT CLEARED.** Four branches are now identified as the strongest manual-deletion candidates, while the source-derived UML work and unresolved PRs remain blockers. No branches or PRs were deleted/closed in this pass; no package was published; no publish-gate change was made.
