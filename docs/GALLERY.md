@@ -52,6 +52,10 @@ The repository also contains a WPF renderer and Blazor render-fragment builders,
 
 **Reproduce:** [WPF renderer source](../src/WPF/WpfGuiRenderer.cs) · [Blazor builder source](../src/Blazor/WorkshopGuiBuilder.cs) · [tests](../tests)
 
+## Authored visual concepts
+
+The [SVG visual concepts index](visual-concepts/README.md) preserves two hand-authored exploratory illustrations: the semantic GUI boundary and an energy-vortex motif. They are clearly labelled concept art and are not evidence that SvgGuiRenderer generated them or that the framework runs a live simulation.
+
 ## Audit and release boundary
 
 - [Operation Sith branch audit](SITH_BRANCH_AUDIT.md) records reconciliation evidence and keeper-branch policy.
