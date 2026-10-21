@@ -969,3 +969,20 @@ A fresh live branch inventory surfaced `feat/physics-seeded-pointset-svg`, which
 - This result covers the audit commit at that SHA, not any later commit created by this new audit update.
 
 No branch deletion, PR merge/closure, or package publication was performed.
+
+## Seeded Physics point-set branch — live PR reconciliation correction — 2026-10-21 20:29 UTC
+
+The previous subsection above was written from an earlier snapshot and is now superseded where noted. Live PR #20 is open (not merged): [feat: render Physics seeded point-set records in GUI.SVG](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/20), head `f2f9de5b323ebc9adafd19bf9e7315c341f4f789`, base development `725990b8a009ca3a505c59a9f0c75db7d200a4ba`. Current comparison is **7 ahead / 2 behind, 7 changed files**. The prior 6-ahead/1-behind, six-file count and “no workflow change” statement are stale.
+
+The current PR adds the package workflow steps to check out Physics at immutable source commit `879a25e19879eaee782d9588f06ba76420b23215`, run its exporter, feed the generated record to the GUI.SVG consumer, and upload the record plus SVG as an artifact. This directly addresses the earlier concern that CI did not exercise the cross-repository data path. The recipe claim that CI runs the exporter is now supported by the PR diff, but remains **unverified until the exact PR head workflow succeeds**.
+
+Review items before adoption:
+- The new workflow steps currently use `actions/checkout@v4` and `actions/upload-artifact@v7` tags rather than immutable action commit SHAs. Reconcile with the repository's action-pinning hardening policy before merging.
+- The source checkout itself is pinned to the immutable Physics commit above; do not describe the source revision as floating.
+- The consumer validates record identity/schema, bounds, finite coordinates, count, stable indices, and each SVG marker's ID and mapped coordinates. Confirm malformed/missing properties, empty point sets, and maximum supported point count are handled by executable tests, not documentation alone.
+- The PR is seven commits ahead and two behind development; review the two behind commits for workflow conflicts before any merge decision. No merge is authorized here.
+
+Exact-head checks at the time of this note: the latest development workflow #39670539036 and PR-head workflow #39670565537 were still in progress; their `test-wpf` jobs had passed while `test-and-package` remained in progress. Neither run is yet evidence of a completed green pipeline.
+
+Current live inventory remains **18 branches total**: `master`, `development`, and 16 non-keepers. The new branch is **PRESERVE / ACTIVE PR #20**, not a deletion candidate. Keep the prior note's caution about harvesting only after exact-head validation, but do not repeat its now-corrected claim that the branch contains no workflow change.
+
