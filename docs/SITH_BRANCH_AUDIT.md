@@ -1041,3 +1041,11 @@ The initial end-to-end run failed twice on consecutive PR heads:
 
 This is a real validation failure, not a flaky infrastructure issue proven by available evidence. The generated artifact upload and package jobs are skipped after the consumer exits nonzero. Do not describe the data-to-SVG proof as working until a later exact-head run passes. Investigate the emitted SVG's actual marker attributes and numeric normalization rather than weakening/removing the per-marker verification. Keep PR #20 open and preserve its branch; do not merge or delete it.
 
+## PR #20 final CI and merge correction — 2026-10-21 20:33 UTC
+
+Correction to the 20:31 failure note above: the two failures were real on heads `f2f9de5` and `f3e23a1`, but the later exact PR head `39bee41a690f63d0e2f656fdd99445976ea07594` **passed both required jobs** in [run #39670789022](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670789022): `test-and-package` and `test-wpf` succeeded; `publish_nuget` was skipped. The final fix changed the SVG numeric formatter to use `0.###`, matching the renderer's emitted coordinate precision; the per-marker identity/coordinate assertions remain enabled. Thus the exact-head data-to-SVG proof is validated, rather than merely documented.
+
+PR #20 was subsequently merged by repository owner TrentBest at 2026-10-21 20:32:53Z, merge commit `b584b8a0e0c9bbf068c0155dc8dfadb7bd4f56c3`. The merge commit's post-merge development workflow [#39671256858](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39671256858) was still in progress at this checkpoint (both `test-and-package` and `test-wpf` running). Therefore PR-head CI is green, but **post-merge development CI is not yet confirmed green**. Keep the branch in the live inventory until the final Sith inventory/manual deletion checkpoint; do not delete it automatically.
+
+Action pinning remains a separate hardening item: the new workflow steps use major-version tags for checkout/upload actions, while the Physics source itself is pinned to a specific commit. This does not invalidate the successful functional proof, but it remains an outstanding workflow-hardening concern.
+
