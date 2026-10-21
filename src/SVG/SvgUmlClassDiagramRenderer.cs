@@ -124,7 +124,7 @@ public sealed class SvgUmlClassDiagramRenderer
         svg.Add(new XElement(Svg + "line",
             new XAttribute("x1", F(x)), new XAttribute("y1", F(y)),
             new XAttribute("x2", F(x + width)), new XAttribute("y2", F(y)),
-            new XAttribute("stroke", title == "Properties" ? "#d6ca00" : title == "Fields" ? "#4a90e2" : title == "Operations" ? "#2e9d70" : "#ff823d"), new XAttribute("stroke-width", "4")));
+            new XAttribute("stroke", title == "Properties" ? "#f2e83d" : title == "Fields" ? "#4a90e2" : title == "Operations" ? "#2e9d70" : "#ff823d"), new XAttribute("stroke-width", "4")));
         svg.Add(Text(x + Padding, y + 18, title, title == "Properties" ? "#514d00" : title == "Fields" ? "#173c66" : title == "Operations" ? "#15563c" : "#6b2e0c", "13", "700"));
         return y + SectionHeadingHeight;
     }
