@@ -1563,3 +1563,17 @@ Run **39678081154** and the repeated run **39678310435** failed in the source-de
 Corrected `.github/workflows/source-derived-diagrams.yml` in commit `a4d7ec70f0b12a474123a5de0cd6fead2c3aa11b`: the generated SVG contract now checks the renderer's real stroke palette and width and comments against cross-palette hard-coding. Latest rerun has not yet completed; do not mark the source-derived workflow green until the exact-head run completes.
 
 The solution-derived inventory workflow at `efa302f53d5021344fa2689e4fc8f8ef6ffeb46a` passed run **39678310195**. Package GUI run **39678310285** at that same head has WPF tests green and the test/package job still in progress at this checkpoint. UML readiness remains **72%** pending corrected source-derived workflow and generated-doc review. Sith remains **NOT CLEARED**; no branch deleted, no PR lifecycle action, no package published, publish guard unchanged.
+
+
+## Operation Sith — corrected UML pipeline fully green — 2026-10-21 21:27 UTC
+
+Exact same SHA `a4d7ec70f0b12a474123a5de0cd6fead2c3aa11b` is now green across all three workflows:
+- Source-derived diagrams: run **39678538046**, success — https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39678538046
+- Solution-derived UML inventory: run **39678538008**, success — https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39678538008
+- Package GUI: run **39678538070**, success; `test-and-package` and `test-wpf` passed; `publish_nuget` skipped — https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39678538070
+
+The SVG palette contract correction is validated. Source workflow checks canonical schema/provenance, project-semantic type inventory and per-type pages, exact-build reflection identity rejection, partial generic declarations, explicit target selection/ambiguity, source mutation, malformed-source fail-closed behavior, generated-page pruning safety, SVG accessibility/geometry/IDs/local references, and verifier edge cases. Solution inventory workflow builds/reconciles maintained projects and passes. Workflow actions remain pinned to immutable SHAs.
+
+Important remaining gap: generated Core type pages and diagrams are currently emitted under `artifacts/` and uploaded as workflow artifacts; they are not yet reconciled into checked-in `docs/uml/source-files/` (the current development tree has no generated source-file page set). Thus CI proves generation and artifact completeness, not committed living-documentation freshness. Next milestone is a safe, deterministic checked-in generation path or a deliberate artifact-to-docs promotion workflow, with a manifest that limits writes to generated files and preserves authored docs.
+
+UML pipeline staging readiness advances from 72% to **78%** based on the now-green end-to-end model, SVG, generator, and workflow checks; the committed living-documentation/promotion path and review of generated content remain outstanding. Sith remains **NOT CLEARED**. No branches deleted, no PR lifecycle action, no package published; NuGet publish guard unchanged.
