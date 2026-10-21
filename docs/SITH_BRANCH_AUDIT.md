@@ -1386,3 +1386,16 @@ Fresh path checks against current `development` establish that these source-UML 
 This confirms the UML branch is not just redundant documentation. It contains a new renderer-neutral model and source-derived generator pipeline that must be selectively reconciled as a coherent feature. Keep PR #18 and branch protected. Current PR #18 head `97554095656f2ef0ca94cbc4ada73848f3a953f8` remains open, with no Actions run for that exact SHA returned. The workflow is configured for `push` on `development` and `pull_request` targeting `development`; verify the PR checks directly and/or use a non-destructive validation PR update only if needed—do not merge merely to trigger CI.
 
 Latest branch count remains 20 (18 non-keepers). UML staging readiness remains **72%**; Sith **NOT CLEARED**. No branch deletion, PR lifecycle action, or package publication. Publish guard unchanged.
+
+
+## Operation Sith — post-merge verification and UML conflict gate — 2026-10-21 21:09 UTC
+
+PR #22 (`feat/mandelbrot-parameter-explorer`) has now been merged by repository owner at merge commit `d5f8cbc0e8f66731f981bf4afea14e779fab7636` (merged 2026-10-21 21:04 UTC). The source branch still exists at `037ffd9604865d2651587896167dc14bed5be7b6`; it is not deleted here. Both the merge commit and the following audit commit are green:
+- Merge commit CI run **39675698298**: success.
+- Development audit commit `0e7a4174ec6190da16b8e4d66afd7c42c4927f24`, run **39675731827**: success.
+- Earlier audit commit `dfcdfb7e255cef7a1bd883381086b0d00b66d29e`, run **39675439529**: success.
+Run links: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675698298 and https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675731827.
+
+Live inventory remains **20 branches** with `master` and `development` as keepers and 18 non-keeper refs awaiting reconciliation/deletion decision. PR #18 source UML remains open and draft, head `97554095656f2ef0ca94cbc4ada73848f3a953f8`, and GitHub currently reports `mergeable=false`. This is an explicit conflict gate: do not merge it wholesale. Reconcile the unique source-model/generator/render/test/workflow package against development in bounded units and verify each unit before any merge decision. The source UML workflow still uses mutable `actions/checkout@v4` and `actions/setup-dotnet@v4`; immutable SHA pinning remains a hardening item. Exact-head CI for PR #18 remains unverified.
+
+UML staging readiness remains **72%**; Sith remains **NOT CLEARED**. No branch deleted by assistant, no PR lifecycle action by assistant, no package published, and NuGet publish guard unchanged. Next step is a concrete file-level conflict/reconciliation plan for PR #18, plus a reference/commit ledger for the 18 non-keeper branches.
