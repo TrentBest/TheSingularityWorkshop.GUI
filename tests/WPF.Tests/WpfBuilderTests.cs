@@ -117,6 +117,8 @@ public sealed class WpfBuilderTests
             Assert.Equal(2, secondBuild.Children.Count);
             Assert.Equal("First", Assert.IsType<Button>(secondBuild.Children[0]).Content);
             Assert.Equal("Second", Assert.IsType<TextBlock>(secondBuild.Children[1]).Text);
+            ICoreBuilder<FrameworkElement> commonContract = builder;
+            Assert.Equal(builder.Id, commonContract.GetBuilderId());
         });
     }
 
