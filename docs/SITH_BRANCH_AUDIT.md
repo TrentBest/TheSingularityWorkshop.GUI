@@ -1343,3 +1343,20 @@ Compared `docs/DATA_CARDS_AND_UML.md` on `development` (30,500 chars, blob `e8a5
 UML branch current recorded PR head `97554095656f2ef0ca94cbc4ada73848f3a953f8` still has no Actions run returned for that exact SHA. The latest successful `solution-uml` run is historical at `b4c68259a2df7c6f565708a529b01e62c433dae0`; do not describe the current UML head as green. PR #18 remains open. No branch deletions or PR lifecycle actions.
 
 UML staging readiness remains **72%**; Sith is **NOT CLEARED**. Next: inspect the source-generator branch's unique implementation and reconcile the UML workflow at current development, then refresh branch/PR references and produce the manual-deletion ledger. Publish guard remains unchanged.
+
+
+## Refreshed Sith inventory and PR/reference gate — 2026-10-21 20:59 UTC
+
+Live branch enumeration now shows **19 branches** (target 2; 17 non-keepers). Compared all 17 non-keeper branches against current `development`; the base has advanced and counts differ from prior checkpoints. Key current comparisons:
+- `work/gui-svg-source-uml-generator`: 227 ahead / 105 behind, still protected. Its 989-line generator, 318-line project-semantic builder, 142-line syntax-only builder, 308-line provenance-rich UML model, renderers, tests, generated type pages, and two workflows are unique implementation. No wholesale merge; selectively reconcile as a coherent generator/model/render/test/workflow unit. Workflow still uses mutable action tags.
+- `work/gui-uml-per-file-documentation`: 1 ahead / 252 behind; only changed path remains `docs/DATA_CARDS_AND_UML.md`, whose core per-file coverage section was already found identical in development. No unique code path identified so far; keep until branch-only commit and file hunk are fully accounted for.
+- `work/svg-guide-current-contract`: 112 ahead / 572 behind; semantic GUI renderer was reconciled additively into development and passed Package GUI + WPF CI on implementation commit `998d4d07e66cf31a310f8914c5b5854ffbfda092`. Do not delete yet: branch-only commit/reference review still required.
+- `work/svg-tree-depth-guard`: 5 ahead / 503 behind; renderer/test files differ from development and require targeted behavior-equivalence check before disposition.
+- `work/gui-wpf-tests`: 0 ahead / 319 behind and no changed paths; strongest branch deletion candidate, but do not delete. Check refs/PR metadata and include it in manual ledger.
+- `work/webpage-event-builder-compatibility`: 3 ahead / 566 behind; event test file was previously byte-identical to development and builder difference appeared XML docs only; confirm all unique commits/refs before listing as safe.
+- `work/svg-app-fsm-cos-boundary`: 5 ahead / 503 behind; concept doc was previously byte-identical, README superseded; check branch-only commit/refs.
+- Publish-gate branches `work/gui-publish-gate-reconciled` and `work/nuget-publish-gate` remain HOLD; no change to the `&& false` publish guard without explicit user authorization.
+- Legacy hub/nested-experience branches remain HOLD for product disposition because they contain unique API/UI implementation not represented merely by docs.
+- New branch `feat/mandelbrot-physics-svg` is now present: 8 ahead / 12 behind, with sample, gallery, and workflow changes. PR #21 is closed; branch ref remains and must be reconciled before cleanup. Current API reports merged_at `2026-10-21T20:55:17Z`, so closure alone is not treated as merge evidence.
+  
+Current development head: `d284c00c58acf2dbab572dfd27647da55e2aa281`. Source UML branch head `97554095656f2ef0ca94cbc4ada73848f3a953f8` still has no Actions workflow run returned for that exact SHA. No branches deleted. Sith remains **NOT CLEARED**; UML staging readiness **72%**; publication guard untouched. Next, review UML branch's unique model schema and generator output contract against current development, then build a reference-checked deletion ledger rather than deleting.
