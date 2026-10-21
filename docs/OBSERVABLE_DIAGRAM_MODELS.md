@@ -45,6 +45,37 @@ Before calling a visualization live or reactive, define and test:
 
 For console-driven experiments, the console is a driver, not an authority bypass. Commands must be validated against the owning model. A rendered transition is not evidence that a real runtime transition occurred unless the source is an actual trace or observed state.
 
+## How a live SVG view would refresh
+
+An SVG string or file is a snapshot, not a reactive object by itself. A future host could subscribe to committed model revisions, project a consistent snapshot into diagram data, render new SVG, and replace or update the displayed document. A web host may update a DOM subtree; a desktop host may replace an image/document; a console test may render snapshots to files and compare them. These are host choices, not responsibilities of GUI Core.
+
+Keep three layers separate:
+
+- **Model:** meaning, identity, values, constraints, revisions, and provenance.
+- **Projection/layout:** UML semantics, grouping, coordinates, connectors, and bounds.
+- **Manifestation/host:** SVG XML, browser DOM, desktop presentation, and refresh lifecycle.
+
+The same driven model should eventually be usable by a visual view, textual diagnostics, and tests without making any renderer the owner of the data.
+
+## Console driver: proposed proof sequence
+
+A small console driver could exercise the same public model contract as a consuming application:
+
+1. Create a small model with several types and relationships; render revision 0.
+2. Add, rename, and remove a type through validated model commands.
+3. Add/remove a relationship and change a member signature.
+4. Render selected revisions and verify that only expected semantic data changed.
+5. Apply a deterministic seeded sequence of mutations to stress identity, layout, and rendering.
+6. Test empty/large models, long names, duplicate IDs, invalid relationships, rejected commands, rapid updates, and observer disposal.
+
+The proof must assert model invariants and report failures; emitting an SVG alone is not success. A model mutation must change the expected revision, rejected commands must leave the authoritative model unchanged, and a host-level test must eventually prove that the displayed/inspectable view refreshes to the newest committed revision. These are proposed acceptance tests, not claims that a general reactive API already exists.
+
+## Future boundary: `GUI.SVG.Hosted` (TBD)
+
+A future `GUI.SVG.Hosted` package is only a package hypothesis. The architectural idea is that **AnyApp or WebApp drives the experience** while the SVG view observes model state; the SVG itself is not the application loop or source of truth. A host may supply ticks, events, or state revisions, while a host adapter translates them into validated model operations.
+
+**Decision for now: defer implementation.** Do not add a `GUI.SVG.Hosted` project, public API, dependency, or promised launch behavior until a concrete host prototype proves the required boundaries. First prove the renderer-neutral model/snapshot contract and a small console-driven render/refresh loop. Then use the working host evidence to decide package boundaries, lifecycle/cancellation ownership, update/coalescing behavior, interaction commands, and the smallest honest end-to-end proof.
+
 ## Current implementation versus proposal
 
 Current GUI Core provides a recursive semantic GuiNode tree and builders. GUI.SVG serializes a tree snapshot into SVG. The source-derived UML tool can produce documentation models and focused diagram output at build time. The general-purpose observable-model/subscription mechanism described above is not yet a GUI Core contract.
