@@ -637,3 +637,14 @@ PR [#10](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/10) is con
 ### Current gate
 
 The latest verified code/test head `6fcc53c6646b889f593438b411204717f01bab2b` passed both Windows WPF and Linux package/test jobs in run [#39666044705](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666044705). The follow-up audit documentation is a separate commit and must be judged by its own exact-head workflow. The live inventory still contains 15 non-keeper branches and five open PRs (#8, #11, #15, #18, #19); no branch deletion or publication is authorized by these dispositions. Sith remains **NOT CLEARED** until every remaining branch and open PR has a documented final disposition and the owner rechecks the inventory immediately before cleanup.
+
+## Correction: PR #11 is a broad historical patch, not a guide-only change — 2026-10-21
+
+The live PR endpoint for [#11](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/11) reports **59 changed files and 112 commits**. Its actual patch includes the package workflow, root README and NuGet README, solution/project changes, Core and Blazor source, SVG and WPF implementations, tests, architecture/implementation/adapter docs, and the new `docs/SVG_GUIDE.md`. Therefore, PR #11 must not be treated as merely a guide-file overlap with PR #18 or closed based only on the current guide's greater length. The branch is deeply history-diverged (112 ahead / 521 behind in the branch-tip comparison), and the patch must be triaged by changed file and semantic contract. **Keep PR #11 and its head branch on hold; do not merge wholesale and do not delete it yet.** The title is not a reliable description of the patch's full scope.
+
+## Per-file UML requirement reconciled from `work/gui-uml-per-file-documentation` — 2026-10-21
+
+A branch-tip comparison found one unique file change on `work/gui-uml-per-file-documentation`: 19 added lines in `docs/DATA_CARDS_AND_UML.md`, defining per-file/per-type UML coverage, required source-accurate relationships and signatures, Mermaid `classDiagram` as the default portable source, explicit treatment of non-type files, and future CI enforcement. This requirement was missing from current development, so it has now been reconciled into `docs/DATA_CARDS_AND_UML.md` in commit `f5d5c836c47b2e10f2dfe4da8ecbf0ec9de282ae`. The branch's unique content is therefore represented on development; classify it as a **superseded candidate**, pending a final branch/reference check before owner deletion. This change records the documentation gate; it does not claim automatic per-file UML generation or enforcement already exists.
+
+The current `development` head is now subject to fresh CI after the documentation changes. The last verified code/test head `6fcc53c6646b889f593438b411204717f01bab2b` passed both Windows WPF and Linux package/test jobs, but that success is not a substitute for checking the newest documentation commit's workflow.
+
