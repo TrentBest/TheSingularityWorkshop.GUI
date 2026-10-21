@@ -536,3 +536,8 @@ The legacy hub/reflection family remains an unresolved product decision, not a b
 ### Decision
 
 **Sith status remains NOT CLEARED.** This pass performed read-only source/compare/inventory checks and updated only this audit document. No branches were deleted, no PRs were merged or closed, and NuGet publication remains disabled. The next meaningful gate is to finish the hunk-level test review for the SVG depth-guard branch and record an explicit rebuild/discard decision for the legacy hub/reflection/specialized-WPF contract family.
+
+
+### SVG depth-guard test-name reconciliation — 2026-10-21 19:53 UTC
+
+The test source was fetched from both current `development` and `work/svg-tree-depth-guard` and test method names were compared. Every test method present on the older branch also exists on development, including `Rejects_negative_geometry_dimensions`, `Accepts_tree_at_the_configured_maximum_depth`, and `Rejects_excessive_tree_depth_before_recursive_svg_serialization`. Development additionally has six methods absent from the branch: embedded stylesheet rendering, XML/non-ASCII escaping, deterministic repeated rendering, malformed/non-finite numeric rejection, blank required-reference rejection, and duplicate IDs with enabled coordinate overlays. Therefore the branch adds no uniquely named regression test method at this snapshot; it remains older in both renderer accessibility linkage and test breadth. This supports classifying `work/svg-tree-depth-guard` as intentionally superseded after confirming the live PR/branch inventory again, rather than porting tests based solely on the branch's raw added-line count.
