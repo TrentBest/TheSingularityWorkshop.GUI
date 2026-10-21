@@ -28,6 +28,12 @@ This audit compares the WPF adapter in this repository with existing WPF builder
 - Do not confuse window chrome or a fluent WPF-specific construction API with cross-adapter parity. The WPF renderer remains a projection of the platform-neutral GUI model.
 - Do not promise interaction, accessibility, command/event wiring, persistence, or full layout parity until those contracts are implemented and tested.
 
+## Historical branch candidates not yet adopted
+
+An older `feature/integrated-fsm-cos-hub` branch also contained TreeView and pivot-grid builders, reflection-driven editing, color-picker and CRUD-style dialogs, and a diagnostic log viewer. These are **historical candidates, not current GUI.WPF contracts**: their implementations and tests are not in the current development tree, and the old branch also carries the retired `GuiHub` composition path. Do not report these features as implemented or copy the old code wholesale.
+
+If any of these capabilities become a priority, reintroduce them individually behind the current WPF builder contracts, with per-type documentation and focused Windows tests. In particular, arbitrary-object reflection needs explicit member-selection rules, depth/cycle protection, and tests for indexers, read-only properties, and side-effecting getters. Application-specific log viewers and CRUD/color dialogs should remain consumer examples unless a genuinely reusable, dependency-free contract is established.
+
 ## Next WPF work
 
 - [x] Add STA tests for native defaults and fluent overrides.
