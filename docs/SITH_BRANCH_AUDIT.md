@@ -490,3 +490,16 @@ Fetched the current PR diffs and package workflow from `development`, `work/nuge
 - Removing `&& false` would change the publication guard from permanently disabled to eligible on a manual dispatch with `publish=true`. That is a release-control change, not a harmless CI cleanup.
 
 **Disposition:** treat #15 as a duplicate of #19 for review purposes, but do not close #15 or merge #19 automatically. Publishing is not authorized. Keep the current development guard unchanged until the owner explicitly approves enabling publication, and preserve the rule that readiness or green CI alone is not release authorization.
+
+## Remaining branch-tree triage — 2026-10-21 19:16 UTC
+
+Recursive tree snapshots compared the following live branch refs against `development` (153 blob paths at the time of the query). These are path/blob inventories, not semantic proof of equivalence.
+
+- `feature/integrated-fsm-cos-hub` (99 paths): 25 paths absent from development. It shares the same older hub/reflection/WPF-specialty source family identified under PR #8, including `GuiHub`, `ReflectionGuiBuilder`, WPF TreeView/PivotGrid/CRUD/log-viewer/factory APIs, plus older docs and tests. Treat as a related preservation audit, not a separate automatic deletion candidate.
+- `feature/nested-experiences` (77 paths): 5 paths absent from development: `NuGetReadme.md`, `src/Core/Gui.cs`, `src/Core/GuiHub.cs`, `src/Core/IGuiHub.cs`, and `tests/Core.Tests/GuiHubTests.cs`. These overlap the hub feature family and need an explicit retirement/equivalence decision.
+- `work/svg-app-fsm-cos-boundary` (82 paths) and `work/webpage-event-builder-compatibility` (72 paths): no path-only additions versus development in this tree snapshot, but many existing paths have different blob contents. Their source/workflow/test diffs still require semantic review before deletion; “no branch-only path” does not prove every behavior is preserved.
+- `work/gui-publish-gate-reconciled` (147 paths): no branch-only paths, six changed paths in the current tree comparison, including the package workflow, solution, nested-experience docs, and a DataCard API/UML page/diagram. Its one-line publish-gate change is documented above, but the changed DataCard documentation/diagram and solution diff should be reconciled before any closure/discard decision.
+- `work/nuget-publish-gate` (104 paths): no branch-only paths; many files differ because it is an older snapshot. Its one-line publish-guard change is documented above. Do not merge its broad historical snapshot.
+- `work/gui-wpf-tests` (105 paths), `work/gui-release-mit-wpf-scope` (105 paths), `work/gui-uml-per-file-documentation` (113 paths), and `fix/guinode-nullability-contract` (81 paths): no path-only additions versus development in these snapshots. This supports the prior redundant/superseded assessments, but final disposition still requires checking each branch's exact current diff/PR relationship and retaining the known unique behavior already identified in the audit.
+
+**Disposition rule remains unchanged:** only `master` and `development` are keepers, but a non-keeper is not safe to delete until its branch-specific code, tests, workflow, docs, and assets have an explicit preserved/retired/port decision. No branch or PR state was changed by this triage.
