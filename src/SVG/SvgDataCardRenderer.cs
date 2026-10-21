@@ -100,7 +100,7 @@ public sealed class SvgDataCardRenderer
         group.Add(new XElement(Svg + "text",
             new XAttribute("x", F(x + 10)),
             new XAttribute("y", F(y + 21)),
-            new XAttribute("fill", "#f0f6fb"),
+            new XAttribute("fill", palette.Text),
             new XAttribute("font-weight", "600"),
             headerText));
 
@@ -108,7 +108,7 @@ public sealed class SvgDataCardRenderer
             group.Add(new XElement(Svg + "text",
                 new XAttribute("x", F(x + 10)),
                 new XAttribute("y", F(y + HeaderHeight + 12)),
-                new XAttribute("fill", "#b7c8d5"),
+                new XAttribute("fill", palette.Text),
                 card.Subtitle));
 
         if (editMode && card.CanRequestChildInsertion)
@@ -141,17 +141,18 @@ public sealed class SvgDataCardRenderer
 
     // UML containment uses semantic roles rather than depth-only styling.
     // Namespace, type, and member cards keep their identity at every nesting level.
-    private static (string Fill, string Stroke, string StrokeWidth) PaletteFor(string kind) =>
+    private static (string Fill, string Stroke, string StrokeWidth, string Text) PaletteFor(string kind) =>
         kind.ToLowerInvariant() switch
         {
-            "namespace" => ("#ffffff", "#4f46e5", "4"),
+            // Pastel fills are deliberately paired with dark text for legibility.
+            "namespace" => ("#eef0ff", "#4f46e5", "4", "#20205c"),
             "class" or "record" or "struct" or "interface" or "enum" or "type" =>
-                ("#fffaf5", "#ff823d", "4"),
-            "property" => ("#fffef0", "#f2e83d", "4"),
-            "field" => ("#f4f9ff", "#4a90e2", "3"),
-            "method" or "constructor" or "event" => ("#f4fff8", "#2e9d70", "3"),
-            "source-file" => ("#ffffff", "#64748b", "2"),
-            _ => ("#ffffff", "#94a3b8", "2")
+                ("#fff0e5", "#ff823d", "4", "#6b2e0c"),
+            "property" => ("#fffde0", "#d6ca00", "4", "#514d00"),
+            "field" => ("#eaf4ff", "#4a90e2", "3", "#173c66"),
+            "method" or "constructor" or "event" => ("#e9fbf1", "#2e9d70", "3", "#15563c"),
+            "source-file" => ("#f1f5f9", "#64748b", "2", "#334155"),
+            _ => ("#f8fafc", "#94a3b8", "2", "#334155")
         };
 
     private static bool IsExpanded(DataCard card, IReadOnlyDictionary<string, bool>? state) =>
