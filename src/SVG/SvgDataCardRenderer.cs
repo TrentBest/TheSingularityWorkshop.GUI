@@ -148,7 +148,7 @@ public sealed class SvgDataCardRenderer
             "namespace" => ("#eef0ff", "#4f46e5", "4", "#20205c"),
             "class" or "record" or "struct" or "interface" or "enum" or "type" =>
                 ("#fff0e5", "#ff823d", "4", "#6b2e0c"),
-            "property" => ("#fffde0", "#d6ca00", "4", "#514d00"),
+            "property" => ("#fffde0", "#f2e83d", "4", "#514d00"),
             "field" => ("#eaf4ff", "#4a90e2", "3", "#173c66"),
             "method" or "constructor" or "event" => ("#e9fbf1", "#2e9d70", "3", "#15563c"),
             "source-file" => ("#f1f5f9", "#64748b", "2", "#334155"),
