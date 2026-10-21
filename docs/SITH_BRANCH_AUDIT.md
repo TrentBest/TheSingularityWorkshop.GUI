@@ -811,3 +811,20 @@ Re-read the current PR diffs rather than relying on their titles:
 - The newer audit-only commit `6e05337e324da2f467b3fb5f98c9c039ec664d10` is running as [run #39668518350](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39668518350) at the time of this entry. Its own result is not yet known.
 
 No PR state changed. No merge, branch deletion or publication was performed.
+
+## Source-derived UML generator branch — do not discard — 2026-10-21
+
+Fresh comparison against development at 6e05337e324da2f467b3fb5f98c9c039ec664d10 shows work/gui-svg-source-uml-generator at **227 commits ahead / 63 behind**. Its unique contribution is substantial and must not be treated like a stale one-file branch:
+
+- Adds samples/SourceUmlGenerator, including syntax-only and MSBuild/Roslyn project-semantic modes.
+- Adds a renderer-neutral UmlDocumentationModel with source/revision provenance, identities, source spans, typed relationships/resolution states, and compiler-symbol provenance.
+- Adds .github/workflows/source-derived-diagrams.yml with syntax-mode and project-semantic model generation plus a wrong-assembly identity rejection check.
+- Adds SOURCE_DERIVED_UML.md, SOURCE_DERIVED_DIAGRAMS.md, per-source-type pages, inventory and visual audit docs, model/rendering code, and generator tests.
+
+Verification against current development confirms docs/SOURCE_DERIVED_DIAGRAMS.md and .github/workflows/source-derived-diagrams.yml are not present at those paths on development. Therefore this branch is **HOLD — unique implementation/reconciliation required**, not safe to discard. The branch also includes broad historical changes and is 63 commits behind, so do not merge the whole branch blindly. Reconcile the generator/model/workflow and validated documentation as a focused PR or selective port, then run its exact-head workflow and inspect the generated artifacts. Preserve the branch until that reconciliation is complete.
+
+### Readiness metric distinction
+
+Current docs/RELEASE_READINESS.md still states a **70% qualitative package release readiness** estimate, with per-type docs/UML and CI drift enforcement incomplete. The Sith audit's **72%** is only the separate source-derived UML staging estimate and should not be presented as the package release readiness percentage. The latest source-derived generator workflow exists only on the held branch at this comparison anchor; do not imply that it already runs on development.
+
+No branch was deleted and no PR lifecycle or package publication state was changed.
