@@ -1,0 +1,67 @@
+name: Promote source-derived UML documentation
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm_promotion:
+        description: "Confirm committing regenerated Core UML pages to development"
+        required: true
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  promote:
+    if: ${{ github.ref == 'refs/heads/development' && inputs.confirm_promotion == true }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout development
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: development
+      - name: Setup .NET
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
+        with:
+          dotnet-version: 8.0.x
+      - name: Build the source project
+        run: dotnet build src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release
+      - name: Generate project-semantic UML documentation
+        env:
+          SOURCE_REVISION: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts
+          dotnet run --project samples/SourceUmlGenerator/SourceUmlGenerator.csproj \
+            --configuration Release -- \
+            --project-model-json artifacts/Core.uml-model.json \
+            --project src/Core/TheSingularityWorkshop.GUI.Core.csproj \
+            --repository TrentBest/TheSingularityWorkshop.GUI \
+            --revision "$SOURCE_REVISION" \
+            --configuration Release \
+            --reflection-assembly src/Core/bin/Release/net8.0/TheSingularityWorkshop.GUI.Core.dll \
+            --diagram-svg artifacts/DataCard.semantic-uml.svg \
+            --diagram-type TheSingularityWorkshop.Workshop.Gui.DataCard \
+            --inventory-markdown artifacts/Core.uml-inventory.md \
+            --type-pages-dir artifacts/Core.uml-types
+      - name: Test and promote only manifest-owned generated files
+        run: |
+          set -euo pipefail
+          python3 scripts/test_promote_source_uml.py
+          python3 scripts/promote_source_uml.py --input-dir artifacts --output-dir docs/uml/source-files
+          git diff --check
+      - name: Commit generated living documentation
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/uml/source-files
+          if git diff --cached --quiet; then
+            echo "Generated UML documentation is already current."
+            exit 0
+          fi
+          git commit -m "docs(uml): refresh generated Core type pages"
+          git push origin HEAD:development
