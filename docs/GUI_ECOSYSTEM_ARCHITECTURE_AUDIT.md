@@ -48,9 +48,9 @@ These repositories are reference material only. This audit does not modify them 
 
 The CRTP panel base is a strong pattern and closely matches the advanced reference. The `NativeGuiBuilder<T>` fluent-subtype defect has now been corrected on `development`: the shared implementation is `NativeGuiBuilder<T,TBuilder>`, while `NativeGuiBuilder<T>` remains the convenient concrete self-typed form. A Windows-targeted test uses a specialized button builder to prove that native fluent operations retain the derived type.
 
-**Risk remaining:** the interface split still lacks one obvious contract for a reusable WPF component builder. `ICoreBuilder<TProduct>`/`IComponentBuilder` model native builder identity and product output, while `IComponentWPF` additionally models component parentage and message forwarding. Those differences may be legitimate capabilities, but the boundary should be explicit and tested rather than unified merely for symmetry.
+**Correction made on development:** `IComponentWPF` now extends the common `ICoreBuilder<FrameworkElement>` contract, so composable WPF components and native element builders share the same build/identity contract. `GuiPanelBuilderWPF` maps its stable component `Id` to `GetBuilderId()`. The additional `SetParent`/`GetParent` and `Publish`/`Receive` methods remain capabilities of composable components rather than being imposed on every native element builder. A regression assertion verifies that a panel builder can be consumed through the shared contract and returns its stable identity.
 
-**Recommendation:** keep semantic-tree construction separate from native WPF composition. Document the distinct builder contracts and retain specialized contracts only where they express real capabilities (parenting, message bus, native visual output). Avoid forcing WPF's `FrameworkElement` or messaging concepts into Core. The CRTP correction is awaiting candidate-specific CI.
+**Boundary retained intentionally:** `IComponentBuilder` adds a generic host-parent reference for native builders; `IComponentWPF` adds typed component-tree parenting and message forwarding. These remain distinct because their semantics differ. The CRTP correction and shared identity contract are awaiting candidate-specific CI.
 
 ### P1 — Treat SVG as a renderer/manifestation boundary, not a second UI framework
 
