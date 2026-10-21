@@ -1435,3 +1435,33 @@ These are the strongest current candidates for the owner's final manual deletion
 ### Current decision
 
 **Sith policy remains NOT CLEARED.** Four branches are now identified as the strongest manual-deletion candidates, while the source-derived UML work and unresolved PRs remain blockers. No branches or PRs were deleted/closed in this pass; no package was published; no publish-gate change was made.
+
+
+## Operation Sith — UML reconciliation order and merged-branch refresh — 2026-10-21 21:11 UTC
+
+Fresh branch/PR inventory confirms 20 refs total, with only `master` and `development` intended as keepers. PR #21 (`feat/mandelbrot-physics-svg`) is now confirmed merged at `7651a7656948eb6e6fa95356091521fcdedfb368` (2026-10-21 20:55:17Z), and PR #22 was merged at `d5f8cbc0e8f66731f981bf4afea14e779fab7636` (21:04Z). Their source branches remain present for the user’s manual cleanup ledger. This supersedes older audit wording that described PR #21 as closed but not merged.
+
+### Source-UML reconciliation — bounded order, no wholesale merge
+
+PR #18 currently changes 80+ files and the source branch is 111 commits ahead / 227 behind development; it is heavily diverged. Treat these as separate units and only proceed once each is internally coherent:
+1. **Core model contract**: `UmlDocumentationModel.cs`, `UmlClassDiagram.cs`, and `UmlDocumentationModelTests.cs`. The Core SDK project uses default compile inclusion and the model namespace matches the current Core root namespace; still add/validate tests in the actual current test project layout before claiming integration.
+2. **SVG rendering contract**: `SvgUmlClassDiagramRenderer.cs`, related SVG tests, and the graph renderer only after checking their dependency surface against current `src/SVG`. Do not replace the existing 538-line scene renderer.
+3. **Generator**: `SourceUmlGenerator.csproj`, `Program.cs`, `ProjectUmlModelBuilder.cs`, `SyntaxOnlyUmlModelBuilder.cs`; keep Roslyn/MSBuild packages isolated to the generator project, not runtime Core/SVG packages.
+4. **Workflow + fixture tests**: `source-derived-diagrams.yml`, `solution-derived-uml.yml`, repository inventory and SVG-contract scripts. Before adopting, pin GitHub Actions to immutable SHAs and ensure workflow paths/solution names match current development. Run source fixtures for duplicate type names, malformed syntax, mutation invalidation, selected target type, generated output determinism, and repository inventory.
+5. **Generated documentation**: companion `.cs.md` cards, per-class SVG, type inventory, diagrams and gallery. Regenerate from current development source only after code/model/workflow contracts are stable; do not copy stale generated snapshots wholesale.
+
+PR #18 is still open/draft, its exact head `97554095656f2ef0ca94cbc4ada73848f3a953f8` has no verified exact-head workflow run, and GitHub reported mergeability false on the latest PR metadata. Thus no source-UML implementation is claimed integrated by this checkpoint. Readiness remains **72%**.
+
+### Open publish-gate PRs — protected
+
+PR #19 (`work/gui-publish-gate-reconciled`) and PR #15 (`work/nuget-publish-gate`) remain open and specifically attempt to honor the NuGet publish input. The current `&& false` guard is intentionally untouched; both branches remain HOLD until the user explicitly authorizes a publishing-policy change.
+
+Current `development` recent workflow snapshots:
+- Run 39676612260 — SHA `78b59de2ef46e2b1890c32e44067affc4bb219c1`, status `in_progress`, conclusion `pending`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39676612260
+- Run 39676501597 — SHA `be91f6f67d6cdd56a79246887701b5e73e94c859`, status `completed`, conclusion `success`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39676501597
+- Run 39675731827 — SHA `0e7a4174ec6190da16b8e4d66afd7c42c4927f24`, status `completed`, conclusion `success`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675731827
+- Run 39675698298 — SHA `d5f8cbc0e8f66731f981bf4afea14e779fab7636`, status `completed`, conclusion `success`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675698298
+- Run 39675439529 — SHA `dfcdfb7e255cef7a1bd883381086b0d00b66d29e`, status `completed`, conclusion `success`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675439529
+- Run 39675034015 — SHA `4387a3b2ab618d01033719b95338410d0fa74ab5`, status `completed`, conclusion `success`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675034015
+
+Sith remains **NOT CLEARED**. No branches deleted, no PRs merged/closed by the assistant, and no package published.
