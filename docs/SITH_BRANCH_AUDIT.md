@@ -163,3 +163,36 @@ PR #15 and #19 each propose the same substantive one-line change removing the ha
 - **Revised disposition:** retain only as a source for potential missing regression cases; do not merge or copy the older renderer. After extracting/adding any valuable tests to development and verifying them on the keeper branch, the old branch can be classified as intentionally discardable.
 
 These findings narrow two branches but do not satisfy the global all-clear criteria. The remaining branch and PR inventory must still be reconciled and rechecked.
+
+
+## Documentation recovery and PR-scope correction — 2026-10-21 17:53 UTC
+
+### Recovered missing keeper-branch documents
+
+The two guide paths previously reported missing on `development` have now been created as fresh, implementation-aware documents (not copied verbatim from stale branch snapshots):
+
+- `docs/SVG_GUIDE.md` commit `79f0875ef11c6ec3e2a074532a238078181cfe35`. It points to the current `docs/SVG_ADAPTER.md` contract, records the source's depth/accessibility behavior, and explicitly distinguishes generated output, source-derived diagrams, concepts, and runtime captures. It makes no unsupported claim that a workflow or package release passed.
+- `docs/DATUM_AND_INTERACTION_BOUNDARY.md` commit `a448f1bdc8cd248dce01458f3f0bd1cc20f58e2b`. It records datum ownership and the presentation/adapter/renderer boundary while labeling the input/output package and protocol integrations as proposals, not implemented features.
+
+The architecture document on `development` already links to the datum-boundary path; that link now resolves. The SVG guide should be checked against the repository's documentation index and README during the final docs-link pass.
+
+### Correction: PR #11 is not documentation-only in its current patch
+
+PR #11's body describes a documentation-only scope, but the current live PR patch contains 59 changed files, including the package workflow, solution/project inventory, source code, tests, SVG assets, and source-derived UML generator. This mismatch is material. Do not accept its summary as a reliable scope statement and do not merge it wholesale. The useful guide content can be reviewed separately against the new keeper-branch `docs/SVG_GUIDE.md` and the current renderer source.
+
+### Current branch disposition updates
+
+- `work/webpage-event-builder-compatibility`: likely discard after a full changed-file inventory confirms there are no other unique files. Its event test is identical on development and its old source surface is superseded by the current documented implementation.
+- `work/svg-tree-depth-guard`: likely discard after any useful unique regression assertions are transferred to development and verified. Do not restore the old renderer; development has the newer accessibility linkage.
+- `work/gui-wpf-tests`: redundant-tip candidate (zero ahead, no changed files reported); final live comparison is still required.
+- `fix/guinode-nullability-contract`: likely superseded by the current iterative traversal; final source and full branch-diff checks remain required.
+- `work/svg-app-fsm-cos-boundary`: likely redundant for the concept document but not cleared until the complete PR and remaining branch file list are checked.
+- `work/gui-uml-per-file-documentation`: its only reported changed file adds 19 lines to `docs/DATA_CARDS_AND_UML.md`. Compare those lines to the more extensive source-derived UML documentation on PR #18; do not assume identical purpose or freshness.
+- `work/gui-release-mit-wpf-scope` and `work/gui-verify-xml-docs-in-packages`: retain as evidence sources until their unique release-checklist/workflow intent is reconciled with current `docs/RELEASE_READINESS.md` and `docs/NEXT_RELEASE_WORK_QUEUE.md`. Neither branch authorizes enabling publish.
+- `feature/integrated-fsm-cos-hub` and `feature/nested-experiences`: both are highly divergent, with unique implementation, tests, docs, and workflow changes. Their old hub/nested-experience APIs should not be restored wholesale. Decide whether to explicitly abandon those designs or selectively rebuild any required capability against the current architecture.
+- `architecture/datum-interaction-boundary`: the architectural principle has now been captured in a new keeper-branch document. PR #8 remains broad (50 files) and draft; compare any remaining unique principle or test before closing/discarding the branch.
+- `work/svg-guide-current-contract`: PR #11's patch is much broader than its title/body claim. The keeper branch now has a fresh current-source guide, but unique non-guide changes in the branch/PR still need inventory before it can be discarded.
+- `work/nuget-publish-gate` and `work/gui-publish-gate-reconciled`: both propose removing the deliberate publish hard stop. Do not merge either and do not enable publishing absent explicit authorization.
+- `work/gui-svg-source-uml-generator`: PR #18 contains substantial unique infrastructure: Roslyn source analysis, renderer-neutral UML models, SVG diagram renderers, per-type docs/pages, verification scripts, and CI changes. It is a staging branch (draft, non-mergeable) and cannot be disposed of as merely decorative color changes. Audit it as a separate substantial workstream, validate generated documentation against current source revisions, and decide whether to rebuild selected slices on development or explicitly defer the feature.
+
+**Decision remains NOT CLEARED.** Creating the two missing documents repairs a real documentation gap; it does not resolve every branch, PR, CI, or generated-artifact discrepancy.
