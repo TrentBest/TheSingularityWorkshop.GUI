@@ -1332,3 +1332,14 @@ Sith cleanup remains **NOT CLEARED**. UML staging readiness remains **72%**. No 
 - `architecture/datum-interaction-boundary`: 62 ahead / 569 behind, with a broad legacy set of docs, builders, renderers, WPF additions, tests and workflow changes. This cannot be safely reduced to a one-line "superseded" note; it needs a deliberate capability-by-capability disposition. Keep PR #8 open pending that decision.
 
 The above comparisons are content evidence only; no PR was merged or closed, no branch deleted, and no publication workflow dispatched.
+
+
+## Operation Sith checkpoint — current development CI and UML contract comparison — 2026-10-21 20:57 UTC
+
+Verified latest `development` head `3e83e59cd3007c2ab9cf7619ca38481ed3bd2b7c`: Package GUI run **39674484872** completed successfully (https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39674484872). Jobs: `test-and-package` success, `test-wpf` success, `publish_nuget` skipped. This verifies the latest audited development state at that SHA.
+
+Compared `docs/DATA_CARDS_AND_UML.md` on `development` (30,500 chars, blob `e8a5164eba4e2d121f505fd8fc9f79272392579e`) with `work/gui-uml-per-file-documentation` (16,202 chars, blob `9974b59d70679ac1d9174539df539ba609c4a41d`). The per-file documentation and UML coverage section is identical. Development contains additional material not present on the branch, including the per-type documentation contract (embedded source-generated SVG class diagram, purpose/source identity/behavior/examples, coverage manifest and CI acceptance) and UML beyond source-code structure (sequence/use-case/activity/state-machine/component/deployment semantics, model→diagram→validated artifact, provenance, deterministic generation and edit validation). This is positive evidence that the branch's documentation contract has already been harvested into development; the branch is not justified by that document alone. Its remaining source/generator/test changes still require review and must be preserved if unique.
+
+UML branch current recorded PR head `97554095656f2ef0ca94cbc4ada73848f3a953f8` still has no Actions run returned for that exact SHA. The latest successful `solution-uml` run is historical at `b4c68259a2df7c6f565708a529b01e62c433dae0`; do not describe the current UML head as green. PR #18 remains open. No branch deletions or PR lifecycle actions.
+
+UML staging readiness remains **72%**; Sith is **NOT CLEARED**. Next: inspect the source-generator branch's unique implementation and reconcile the UML workflow at current development, then refresh branch/PR references and produce the manual-deletion ledger. Publish guard remains unchanged.
