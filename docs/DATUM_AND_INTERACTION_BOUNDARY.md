@@ -55,3 +55,41 @@ Stable protocol identities may be useful for addressing semantic actions across 
 The current Core architecture is a recursive `GuiNode` tree with identity, kind, optional text/source, semantic properties, and children. Platform adapters own native manifestation. Do not infer from this note that a complete semantic interaction vocabulary, device abstraction, universal data-binding model, or AI execution pathway already exists.
 
 See [GUI Architecture](ARCHITECTURE.md), [GUI Model](GUI_MODEL.md), and [Platform Adapters](PLATFORM_ADAPTERS.md) for the implementation-facing contracts.
+
+## Concrete examples preserved from the architecture review
+
+The following examples make the ownership boundary more concrete; they are explanatory models, not claims that the corresponding APIs or packages already exist.
+
+### Example: a rendered horse
+
+- The horse and its authoritative state remain application-owned datum.
+- Lines, curves, polygons, meshes, and textures are possible manifestations.
+- Labels, displayed weight, dimensions, placement, sizing, selection, and interaction semantics describe how the GUI presents and exposes that datum.
+- A user edit becomes a semantic request to the owning application or host; the GUI does not become the owner of the horse's state.
+
+This example is deliberately platform-neutral: the same semantic presentation may be manifested as browser content, desktop controls, vectors, or 3D geometry.
+
+### Presentation, manifestation, and rendering
+
+Keep three responsibilities distinct:
+
+`semantic presentation -> platform manifestation -> rendering`
+
+For example, “show this object at this placement and display its weight” is a presentation request. An adapter maps that request into a platform-specific representation. The renderer produces the target platform's pixels, vectors, meshes, or native controls. Neither the adapter nor renderer should redefine the meaning or ownership of the datum.
+
+### Physical input is not semantic intent
+
+Keyboard, mouse, touch, controller, hand tracking, gaze, voice, accessibility devices, automation, and another software agent may all originate an equivalent semantic interaction. The conceptual flow is:
+
+`physical/device observation -> input boundary -> semantic interaction -> GUI target -> domain request`
+
+GUI consumes semantic interaction; it does not own physical device abstractions. An input/output package has been discussed as a possible future boundary, but no package name or API is frozen by this document.
+
+### Common Core and capability bridges
+
+Treat the common Core as the meaningful intersection of capabilities across supported platforms, not the union of everything any one platform can do. A semantic capability shared by only a subset of platforms may belong in an explicit bridge with implementations for those platforms, rather than being forced into Core or duplicated with inconsistent meaning. The exact capability sets and bridge contracts must be established from real implementations and conformance tests.
+
+### Protocol identities do not grant execution authority
+
+Stable semantic identities may help software clients address actions such as activate, select, focus, navigate, cancel, submit, drag, transform, or inspect. Those examples are application/domain vocabulary, not a universal GUI enum. A protocol identity can identify intent; it does not authorize or execute it. The consuming host remains responsible for validation, policy, authorization, and execution. No ProtocolAi dependency is introduced into GUI.Core by this architectural note.
+
