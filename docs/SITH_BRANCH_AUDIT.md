@@ -354,3 +354,24 @@ On `work/gui-svg-source-uml-generator`, I aligned the two SVG renderers with the
 - Resulting PR #18 head: `97554095656f2ef0ca94cbc4ada73848f3a953f8`.
 
 The commit is now on the PR branch, but the GitHub workflow-run lookup for this exact head returned no runs at the time of checking. Therefore this is **a source-level repair attempt, not a verified fix**. Recheck CI after GitHub registers the new commit; do not claim PR #18 passes until exact-head package, source-derived diagram, and solution-derived inventory workflows all finish successfully. PR #18 remains draft and unmerged.
+
+
+## Final focused recheck — 2026-10-21 18:41 UTC
+
+### SVG depth-guard branch documentation resolved
+
+Compared `docs/SVG_ADAPTER.md` from `work/svg-tree-depth-guard` with current `development`. The branch copy is an older contract document; development adds the external-reference/URL policy and a more explicit trust/security boundary, plus capability evidence for the fox/sheepdog scene (what is generated, what is declarative animation, and what is *not* a live FSM/physics/input/sound integration), reproducible verification commands, and a gallery-to-test map. These are not missing branch-only contributions; the current development copy is the more complete version. The branch's source and test changes also appear superseded by development's iterative depth validation and expanded tests. **Disposition recommendation: discard the branch after the final inventory check.**
+
+### Other current compare snapshots
+
+- `work/gui-wpf-tests`: exact compare reports 0 commits ahead and 0 changed files; current development already contains its content. Strong discard candidate.
+- `work/gui-uml-per-file-documentation`: 1 commit ahead / 185 behind; its sole changed file is `docs/DATA_CARDS_AND_UML.md`, but the development copy is the expanded version. Strong discard candidate.
+- `work/gui-release-mit-wpf-scope`: 16 commits ahead / 253 behind and 8 changed paths in the compare summary. Previous byte-level project checks established Core/Blazor/WPF project files, LICENSE, and WPF README as identical; remaining differences are workflow and release tracking files that are older than current development. Strong discard candidate, no wholesale merge.
+- `fix/guinode-nullability-contract`: one ahead / 436 behind, with only the obsolete `src/Core/GuiNode.cs` change in the compare file list. Current development's traversal/docs implementation supersedes it. Strong discard candidate.
+- `work/svg-tree-depth-guard`: 5 ahead / 436 behind with `docs/SVG_ADAPTER.md`, `src/SVG/SvgGuiRenderer.cs`, and `tests/SVG.Tests/SvgGuiRendererTests.cs` listed as changed relative to its merge base. Documentation and test behavior were compared against current development; current development has the stronger contract and broader tests. Final code-diff review remains part of the deletion checklist.
+
+### PR #18 status clarification
+
+The latest source repair commit is `97554095656f2ef0ca94cbc4ada73848f3a953f8`. The workflow-run listing still contains runs whose actual `head_sha` is the earlier `b4c68259a2df7c6f565708a529b01e62c433dae0`, even though those runs' PR metadata now references the newer head. The newer SHA's check-runs endpoint reports zero check runs. Therefore the prior failures/successes are not evidence for the repaired commit. Do not mark the palette repair verified; trigger/await workflows for the exact SHA and inspect each run's own `head_sha`.
+
+No branches or PRs were changed by this recheck. Sith remains uncleared.
