@@ -1033,3 +1033,11 @@ No branch deletion, PR merge/closure, or package publication was performed.
 
 Disposition: **PRESERVE / RECONCILE; do not delete branch or merge PR until exact-head CI and workflow hardening are reviewed.**
 
+## PR #20 exact-head CI failure observed — 2026-10-21 20:31 UTC
+
+The initial end-to-end run failed twice on consecutive PR heads:
+- [Run #39670565537](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670565537), head `f2f9de5b323ebc9adafd19bf9e7315c341f4f789`: Physics exporter succeeded and emitted 128 points, but GUI consumer failed at `Program.cs:116` with `SVG marker 0 does not match the corresponding Physics record point.`
+- [Run #39670716083](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670716083), head `f3e23a1687938b4cc81a550a59dd2c314dea523c`: same failure at the same assertion after exporter success. WPF tests passed on both runs. The current PR head has advanced again to `39bee41a690f63d0e2f656fdd99445976ea07594`; its run [#39670789022](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39670789022) was still in progress at this checkpoint, with WPF passed and `test-and-package` in progress.
+
+This is a real validation failure, not a flaky infrastructure issue proven by available evidence. The generated artifact upload and package jobs are skipped after the consumer exits nonzero. Do not describe the data-to-SVG proof as working until a later exact-head run passes. Investigate the emitted SVG's actual marker attributes and numeric normalization rather than weakening/removing the per-marker verification. Keep PR #20 open and preserve its branch; do not merge or delete it.
+
