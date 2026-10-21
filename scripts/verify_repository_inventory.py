@@ -29,6 +29,7 @@ INTENTIONALLY_OUTSIDE_SOLUTION = {
 # explicitly classified here rather than silently inheriting a guessed lifecycle.
 MAINTAINED_WORKFLOWS = {
     ".github/workflows/package.yml",
+    ".github/workflows/promote-source-uml-docs.yml",
     ".github/workflows/source-derived-diagrams.yml",
     ".github/workflows/solution-derived-uml.yml",
 }
