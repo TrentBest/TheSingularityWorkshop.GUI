@@ -11,9 +11,9 @@
 
 ## UML class diagram
 
-![UML class diagram for DataCard](../../assets/uml/classes/Core/DataCard.svg)
+![UML ecosystem class diagram for DataCard](../../assets/uml/classes/Core/DataCard.svg)
 
-The diagram shows the fields, constructor, properties, and collapsed-summary operation declared by the source. The class declares no base class or implemented interface. The child relationship is an ordered containment relation.
+The ecosystem view places the verified direct consumer `SvgDataCardRenderer` above the focal type, constructor input types at left, implementation dependencies below, and .NET base-library provenance at right. Spatial position and labels communicate the roles; the diagram intentionally avoids decorative relationship lines. The focus card lists the source-declared field, constructor, properties, and method. It declares no base class or implemented interface.
 
 ## Constructor and invariants
 
@@ -31,12 +31,13 @@ The constructor requires nonblank `id`, `kind`, and `title`; violations throw `A
 ## Relationships and boundaries
 
 - A card can contain zero or more child `DataCard` instances.
-- The SVG adapter type `SvgDataCardRenderer` consumes the card hierarchy to produce a static SVG manifestation; its dedicated type page is still pending.
+- `SvgDataCardRenderer` directly consumes the card hierarchy and produces a static SVG manifestation; its dedicated type page is still pending.
 - The type does not parse source code, execute edits, own live UI state, or depend on an SVG/WPF renderer.
+- The insertion flag is a presentation hint only; it does not grant mutation authority.
 
 ## Verification
 
-Use [`DataCardTests.cs`](../../../tests/Core.Tests/DataCardTests.cs) as the focused contract suite when changing constructor validation, child snapshots, or collapsed summaries. SVG manifestation behavior is covered separately by [`SvgDataCardRendererTests.cs`](../../../tests/SVG.Tests/SvgDataCardRendererTests.cs).
+Use [`DataCardTests.cs`](../../../tests/Core.Tests/DataCardTests.cs) as the focused contract suite when changing constructor validation, child snapshots, or collapsed summaries. SVG manifestation behavior is covered separately by [`SvgDataCardRendererTests.cs`](../../../tests/SVG.Tests/SvgDataCardRendererTests.cs). The SVG is manually maintained today; no generator or CI drift check is claimed by this page.
 
 ## Related documentation
 
