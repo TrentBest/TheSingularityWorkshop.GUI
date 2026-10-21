@@ -1655,3 +1655,29 @@ Comparisons against `development` were refreshed for every non-keeper branch. Th
 ### Decision
 
 **Sith status remains NOT CLEARED.** Exact-head UML/package/inventory CI is green and current inventory is now recorded, but the remaining unique content and five open PRs require deliberate disposition. No branch was deleted; no PR was merged/closed; no package was published. Current audit progress is not release readiness. The qualitative UML staging readiness estimate remains 78% until the checked-in generated-page promotion is executed and reviewed.
+
+
+## Operation Sith — demonstration branch and publication-gate semantic review — 2026-10-21 21:44 UTC
+
+### Demonstration branches: implementation is already on development
+
+Reviewed the actual gallery/recipe files and current source/project tree, not just ahead/behind counts:
+
+- `feat/mandelbrot-parameter-explorer`: its live tree is content-identical to `development` except for this audit document. The gallery and parameterized recipe match the current keeper versions. **Disposition: verified redundant candidate.**
+- `feat/mandelbrot-physics-svg`: its Mandelbrot sample source/project already match the keeper implementation, but its gallery and recipe describe the earlier fixed/default field. `development` has the stronger parameterized overview/detail workflow and the matching current recipe. **Disposition: superseded by development; no source change needs harvesting.**
+- `feat/physics-seeded-pointset-svg`: its seeded-point-set sample source/project and recipe are already represented on `development`; its catalog predates the parameterized Mandelbrot recipe. **Disposition: superseded by development; no source change needs harvesting.**
+
+These three branches have no currently open PR associated with them. They can be included among the owner-deletion candidates after the final global inventory and CI gate; no branch has been deleted.
+
+### Old WPF test branch and GuiNode nullability branch
+
+- `work/gui-wpf-tests` has zero commits ahead of development and no changed files in the current compare. Its tip is an old ancestor, not an independent unmerged WPF test contribution. **Disposition: verified redundant candidate.**
+- `fix/guinode-nullability-contract` changes `GuiNode.TryFind` from recursive traversal to recursive traversal with no XML docs, while current `development` has documented iterative depth-first traversal with reverse stack insertion preserving left-to-right order. The branch implementation is superseded. **Disposition: superseded candidate.** No open PR currently uses this head branch.
+
+### Publish-gate branches: explicit safety decision
+
+Inspected the exact `publish_nuget` condition on both PR heads. Both `work/gui-publish-gate-reconciled` (PR #19) and `work/nuget-publish-gate` (PR #15) remove the current `&& false` hard stop, leaving only `workflow_dispatch` plus `inputs.publish == true`. That would make a manual dispatch with the publish input enabled capable of publishing to NuGet. The keeper branch intentionally blocks that path. **Neither PR is approved for merging under the current owner instruction.** Preserve the `&& false` guard; do not treat CI success, a boolean input, or a branch's title as authorization. The PRs remain open pending explicit disposition, and their branches remain held until the owner resolves them.
+
+### Updated disposition count
+
+Five of the 18 non-keeper branches now have evidence-backed redundant/superseded dispositions: the three demonstration branches above, `work/gui-wpf-tests`, and `fix/guinode-nullability-contract`. This is **28% disposition-ready by branch count**, not a release-readiness percentage. Thirteen non-keeper branches remain for content review or explicit PR/policy disposition. Sith remains **NOT CLEARED**; no branch deletion, PR merge/close, or package publication occurred.
