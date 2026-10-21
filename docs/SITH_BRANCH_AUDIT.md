@@ -795,3 +795,19 @@ The branch-tip comparison is exact: zero commits ahead, 277 behind, and zero cha
 
 The latest live inventory still reports 17 branches total, 15 non-keepers, and open PRs #8, #11, #15, #18, and #19. The exact-head WPF code/test fix passed run [#39666044705](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666044705). Documentation audit commits through `6e05337e324da2f467b3fb5f98c9c039ec664d10` are separate commits; the exact-head workflow [#39668518350](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39668518350) was still in progress at the time of this update. Do not claim the newest head is green until it completes. No branch deletion, PR closure/merge, or package publication is authorized by this audit.
 
+
+
+## Open PR snapshot comparison — 2026-10-21 20:15 UTC
+
+Re-read the current PR diffs rather than relying on their titles:
+
+- **PR #8** (`architecture/datum-interaction-boundary`) proposes a broad historical CI redesign alongside its datum/human-bridge architecture. Its workflow has separate Core/Blazor/WPF packaging jobs and hard-disabled NuGet jobs, but its WPF lane only builds and packs; it explicitly says WPF tests will be added once the test project exists. Current development already has a dedicated `test-wpf` lane, so the PR workflow is not a drop-in replacement. Keep the PR open/held while extracting the small architecture contract; do not merge the historical snapshot wholesale.
+- **PR #11** (`work/svg-guide-current-contract`) is also a historical repository snapshot, not a narrow guide fix. Its workflow introduces an SVG build/test/package lane and hard-disabled publishing jobs, but its WPF lane likewise stops at build/pack rather than running the current WPF test suite. Current development has newer renderer behavior, tests and package checks. Review the guide's claims against current renderer/tests and port only verified corrections; do not replace current CI with the old workflow.
+- **PR #18** (`work/gui-svg-source-uml-generator`) is the substantive source-derived UML effort. Its additions include source and solution-derived inventory workflows, compiler/reflection identity checks, syntax/project-semantic model generation, generated SVG diagrams and test scripts. This is valuable but is not cleared for merge solely because it has breadth or generated output. Require exact-head CI, determinism/reproducibility checks, source-span/provenance validation, and review of generated artifacts and schema compatibility against the repository's documentation standard.
+
+### CI checkpoint
+
+- [Run #39668384128](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39668384128), SHA `67f91b255d04bf5a499e3e4a6e67db9fcbec2add`, completed successfully: `test-and-package` and `test-wpf` passed; `publish_nuget` was skipped.
+- The newer audit-only commit `6e05337e324da2f467b3fb5f98c9c039ec664d10` is running as [run #39668518350](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39668518350) at the time of this entry. Its own result is not yet known.
+
+No PR state changed. No merge, branch deletion or publication was performed.
