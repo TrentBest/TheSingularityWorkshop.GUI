@@ -69,22 +69,80 @@ public sealed class GuiNodeBuilder
         return this;
     }
 
-    /// <summary>Builds and returns the configured GUI node or render fragment.</summary>
-    public GuiNode Build() => new(
-        _kind, _id, _text, _source, _properties,
-        _children.ConvertAll(child => child.Build()));
+    /// <summary>
+    /// Builds the configured tree iteratively so deeply nested input does not consume
+    /// the process call stack. A cyclic builder graph is rejected with a controlled error.
+    /// </summary>
+    public GuiNode Build()
+    {
+        var built = new Dictionary<GuiNodeBuilder, GuiNode>();
+        var active = new HashSet<GuiNodeBuilder>();
+        var pending = new Stack<(GuiNodeBuilder Builder, bool Expanded)>();
+        pending.Push((this, false));
+
+        while (pending.Count > 0)
+        {
+            var (builder, expanded) = pending.Pop();
+            if (expanded)
+            {
+                var children = new List<GuiNode>(builder._children.Count);
+                foreach (var child in builder._children)
+                    children.Add(built[child]);
+
+                built[builder] = new GuiNode(
+                    builder._kind, builder._id, builder._text, builder._source,
+                    builder._properties, children);
+                active.Remove(builder);
+                continue;
+            }
+
+            if (active.Contains(builder))
+                throw new InvalidOperationException("A GUI builder cannot contain itself, directly or indirectly.");
+
+            if (built.ContainsKey(builder))
+                continue;
+
+            active.Add(builder);
+            pending.Push((builder, true));
+            for (var i = builder._children.Count - 1; i >= 0; i--)
+                pending.Push((builder._children[i], false));
+        }
+
+        return built[this];
+    }
 
     private static GuiNodeBuilder FromNode(GuiNode node)
     {
-        var builder = new GuiNodeBuilder(node.Kind, node.Id)
+        var clones = new Dictionary<GuiNode, GuiNodeBuilder>();
+        var pending = new Stack<(GuiNode Node, bool Expanded)>();
+        pending.Push((node, false));
+
+        while (pending.Count > 0)
         {
-            _text = node.Text,
-            _source = node.Source
-        };
-        foreach (var property in node.Properties)
-            builder._properties.Add(property.Key, property.Value);
-        foreach (var child in node.Children)
-            builder._children.Add(FromNode(child));
-        return builder;
+            var (current, expanded) = pending.Pop();
+            if (expanded)
+            {
+                var builder = new GuiNodeBuilder(current.Kind, current.Id)
+                {
+                    _text = current.Text,
+                    _source = current.Source
+                };
+                foreach (var property in current.Properties)
+                    builder._properties.Add(property.Key, property.Value);
+                foreach (var child in current.Children)
+                    builder._children.Add(clones[child]);
+                clones[current] = builder;
+                continue;
+            }
+
+            if (clones.ContainsKey(current))
+                continue;
+
+            pending.Push((current, true));
+            for (var i = current.Children.Count - 1; i >= 0; i--)
+                pending.Push((current.Children[i], false));
+        }
+
+        return clones[node];
     }
 }
