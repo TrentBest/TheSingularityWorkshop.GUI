@@ -1371,3 +1371,18 @@ Latest development audit commit `4387a3b2ab618d01033719b95338410d0fa74ab5` is ve
 Source-derived UML branch remains protected. Its latest known branch head is still `97554095656f2ef0ca94cbc4ada73848f3a953f8`; no Actions run exists for that exact SHA. Latest branch workflow runs remain historical at `b4c68259a2df7c6f565708a529b01e62c433dae0`; the current PR head is not verified green. Workflow uses mutable action tags, a hardening item after functional reconciliation.
 
 Sith remains **NOT CLEARED**; UML staging readiness **72%**; no branches deleted, no PR merged/closed by assistant, and no packages published. Continue checking PR #22 CI, reconciling source-derived UML model/generator as a coherent unit, and producing the reference-checked manual deletion ledger. Keep the NuGet `&& false` guard untouched.
+
+
+## Operation Sith — source UML gap verified; Mandelbrot PR CI green — 2026-10-21 21:04 UTC
+
+PR #22 (`feat/mandelbrot-parameter-explorer`, exact head `037ffd9604865d2651587896167dc14bed5be7b6`) is now verified green on Package GUI run **39675376487**: `test-and-package` success, `test-wpf` success, `publish_nuget` skipped. Run: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675376487. PR #22 remains open; no merge action taken.
+
+Fresh path checks against current `development` establish that these source-UML branch files do **not** currently exist at those paths on development:
+- `src/Core/UmlDocumentationModel.cs` (branch blob `77c09297f6ce770b09f8e86b0f3848920bb6ebf6`, 309 lines, with identity, provenance, source spans, explicit relationship-resolution evidence, use-case evidence/review/ownership records, and JSON serialization model).
+- `src/Core/UmlClassDiagram.cs` (branch blob `2c193df5f65f0bfdddbf9f660c42d8249186f15c`, 58 lines).
+- `src/SVG/SvgUmlClassDiagramRenderer.cs` (branch blob `f32109ef265f7f8afab20db0f954f75e2a093673`, 142 lines).
+- `.github/workflows/source-derived-diagrams.yml` (branch blob `96c64a01b1a63a154e24da91055fbaee894a2f24`, 404 lines; syntax-only and project-semantic model generation, exact-build reflection identity rejection, generated inventory/type pages, and validation).
+
+This confirms the UML branch is not just redundant documentation. It contains a new renderer-neutral model and source-derived generator pipeline that must be selectively reconciled as a coherent feature. Keep PR #18 and branch protected. Current PR #18 head `97554095656f2ef0ca94cbc4ada73848f3a953f8` remains open, with no Actions run for that exact SHA returned. The workflow is configured for `push` on `development` and `pull_request` targeting `development`; verify the PR checks directly and/or use a non-destructive validation PR update only if needed—do not merge merely to trigger CI.
+
+Latest branch count remains 20 (18 non-keepers). UML staging readiness remains **72%**; Sith **NOT CLEARED**. No branch deletion, PR lifecycle action, or package publication. Publish guard unchanged.
