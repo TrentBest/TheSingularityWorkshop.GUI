@@ -1049,3 +1049,13 @@ PR #20 was subsequently merged by repository owner TrentBest at 2026-10-21 20:32
 
 Action pinning remains a separate hardening item: the new workflow steps use major-version tags for checkout/upload actions, while the Physics source itself is pinned to a specific commit. This does not invalidate the successful functional proof, but it remains an outstanding workflow-hardening concern.
 
+
+
+## PR #20 post-merge verification — 2026-10-21 20:35 UTC
+
+- Confirmed post-merge development workflow [#39671256858](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39671256858): `test-and-package` **success**, `test-wpf` **success**, and `publish_nuget` **skipped**.
+- The end-to-end seeded-point-set chain completed in that run: pinned Physics checkout, real Physics exporter, GUI.SVG consumer validation, and artifact upload all succeeded. The renderer's per-marker identity/coordinate checks remain enabled.
+- The merged PR is [#20](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/20), merge commit `b584b8a0e0c9bbf068c0155dc8dfadb7bd4f56c3). A combined commit status query returned no individual status records; the workflow job results above are the actual evidence for this run.
+- The old feature branch still appears in the branch inventory and currently compares as 9 commits ahead / 8 behind `development`, with seven changed paths in the compare result. Because PR #20 is merged, this stale/diverged branch is now a cleanup candidate, **not an automatic deletion**: before manual deletion, verify that no post-merge branch-only commits contain work not represented by the merged PR.
+- Remaining workflow-hardening item: pin mutable GitHub Action tags to immutable SHAs in the keeper workflow. The successful functional run does not resolve that hardening task.
+- Sith remains **NOT CLEARED**. UML staging readiness remains 72%; no branch was deleted, no other PR was merged/closed, and package publication remains unauthorized.
