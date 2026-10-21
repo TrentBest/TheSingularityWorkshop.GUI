@@ -237,6 +237,28 @@ jobs:
           path: ./artifacts/03-projectile-trajectory.generated.svg
           if-no-files-found: error
 
+      - name: Checkout pinned Physics source for seeded point-set run record
+        uses: actions/checkout@v4
+        with:
+          repository: TrentBest/TheSingularityWorkshop.Physics
+          ref: 879a25e19879eaee782d9588f06ba76420b23215
+          path: ./artifacts/physics-source
+
+      - name: Export actual Physics seeded point-set run record
+        run: dotnet run --project ./artifacts/physics-source/samples/SeededPointSet2dExport/SeededPointSet2dExport.csproj --configuration Release -- ./artifacts/physics-seeded-point-set-2d.run.json
+
+      - name: Render and verify Physics seeded point-set with GUI.SVG
+        run: dotnet run --project samples/demonstrations/SeededPointSet2d/SeededPointSet2d.csproj --configuration Release -- ./artifacts/physics-seeded-point-set-2d.run.json ./artifacts/05-seeded-point-set.generated.svg
+
+      - name: Upload Physics-backed GUI.SVG seeded point set
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-physics-seeded-point-set
+          path: |
+            ./artifacts/physics-seeded-point-set-2d.run.json
+            ./artifacts/05-seeded-point-set.generated.svg
+          if-no-files-found: error
+
       - name: Pack Core
         run: dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
 
