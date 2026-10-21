@@ -311,3 +311,34 @@ Fresh PR inventory still shows five open PRs: #8, #11, #15, #18, and #19. Their 
 - **PR #15** (`work/nuget-publish-gate`, exact head `b3a9695ed4e18b9727ef016eea75233efedd0a91`) has only a cancelled historical run [#39196092517](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39196092517); that is not equivalent to passing its exact head. It is the older duplicate of the same one-line intent and should not be merged in addition to PR #19.
 - Both branches remove the hard-coded `&& false` from the publication condition, but only PR #19 is based on the current development workflow and has a successful exact-head package/WPF run. The resulting condition still requires `workflow_dispatch` and `inputs.publish == true`; ordinary push/PR events cannot publish. This corrects the dead switch but **does not authorize a release**. Actual publication still requires the owner's explicit release authorization and a deliberate manual dispatch.
 - PR #19 is now technically verified for its stated CI gate. It has not been merged by this audit. Keep its branch until the maintainer chooses whether to merge this narrow correction; then discard the duplicate PR #15 branch only after its PR is explicitly closed and the final inventory is checked.
+
+
+## Open PR patch-scope review — 2026-10-21 18:33 UTC
+
+Reviewed the actual patch content for PRs #8, #11, and #18 (not just their titles/descriptions).
+
+### PR #8 — Datum/interaction boundary (50-file draft)
+
+The draft is not a docs-only architecture note. Its package workflow redesign adds separate Core/Blazor/WPF build and package lanes, coverage upload that fails the job if Codecov fails, and multiple NuGet.org publish jobs. Those publish jobs retain `&& false`, so they remain disabled in that snapshot. It also adds a large `NuGetReadme.md`, broad README/package metadata changes, and multiple code/test/diagram changes. The architecture principle has now been recorded in the development-branch boundary document, but that does not imply the rest of this patch is represented or safe. **Disposition: do not merge wholesale.** Continue a file-by-file inventory of any genuinely unique tests/behavior, and treat workflow/package modernization as a separate reviewed change. Verify all action references and the current package matrix before any workflow hunk is adopted.
+
+### PR #11 — SVG guide current contract (59-file draft)
+
+The patch is also not documentation-only. In addition to its guide and README content, it reworks the package workflow, introduces separate SVG packaging/coverage and WPF lanes, modifies project/repository inventory and verification scripts, and changes source/tests/assets. The SVG guide has since been independently recreated on development against the current adapter contract. Therefore PR #11's description understates its scope, and neither its workflow nor its implementation should be merged as a unit. **Disposition: do not merge wholesale.** Compare each non-guide file to current development, identify any still-missing tests or behavior, and port only validated deltas.
+
+### PR #18 — source-derived UML
+
+The draft contains distinct source analysis, project-semantic/reflection verification, per-type Markdown/SVG generation, solution-level inventory, and CI workflows. These are substantive and are not represented merely by the manually created `docs/UML` convention. However, the exact-head CI failure documented above is a real palette contract mismatch, so the PR remains not merge-ready. **Disposition: retain as the active workstream; fix the yellow-border contract consistently across renderer, tests, workflow assertions, and generated examples, then rerun the exact-head workflows.** Do not close/discard this branch until the implementation is either validated and deliberately integrated or the same capabilities are rebuilt on development.
+
+### PRs #15 and #19 — publish gate
+
+PR #19's exact-head package and WPF tests passed; the publish job was skipped. The patch's purpose is to remove the hard-coded false condition, restoring the intended manual-dispatch plus explicit `publish: true` gate. This is a CI-mechanism correction, not release approval. Since the repository owner has not asked for a package release, no publish workflow was dispatched. The older duplicate PR #15 should be closed as superseded once the owner accepts PR #19; it must not be merged alongside #19.
+
+### Required work before Sith clearance
+
+1. Finish non-guide changed-file comparisons for PRs #8 and #11, then explicitly choose selective port or deliberate discard for every unique behavior/test.
+2. Resolve PR #18's palette mismatch and re-run its exact-head workflows, or deliberately rebuild its unique source-UML capabilities on development before discarding its branch.
+3. Obtain a maintainer decision on PR #19's narrow publish-gate correction; close duplicate #15 only after that decision.
+4. Make an explicit discard-or-rebuild decision for the legacy `feature/integrated-fsm-cos-hub` and `feature/nested-experiences` designs.
+5. Recheck the live branch and open-PR inventories and the final development diff immediately before the all-clear.
+
+No branch deletion or PR state change was performed during this review.
