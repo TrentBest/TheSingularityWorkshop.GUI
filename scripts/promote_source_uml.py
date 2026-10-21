@@ -56,6 +56,8 @@ def read_manifest(output_dir: Path) -> set[str]:
             raise ValueError(f"manifest entry outside the generated Core scope: {entry}")
         if candidate.suffix.lower() not in SAFE_SUFFIXES:
             raise ValueError(f"manifest entry is not a generated Markdown/SVG file: {entry}")
+        if entry.startswith("Core/") and candidate.name != "index.md" and not candidate.name.startswith("TheSingularityWorkshop-"):
+            raise ValueError(f"manifest entry is not a recognized generated type page/diagram: {entry}")
         entries.add(entry)
     return entries
 
