@@ -40,6 +40,10 @@ p{margin:0;color:var(--muted)}a{color:#a9d9ff;text-underline-offset:3px}footer{p
     <div class="card-head"><div><div class="level">Recipe 05 · Physics data</div><h2>Seeded point set from Physics</h2></div><a href="recipes/05-seeded-point-set.md">Read the recipe →</a></div>
     <div class="body"><p>Physics owns the deterministic point generation and exports a versioned run record. GUI.SVG consumes that record and verifies each rendered marker against the original coordinates; it does not regenerate the points. The generated SVG is attached as a CI artifact so the source-data hand-off can be inspected.</p></div>
   </article>
+  <article class="card">
+    <div class="card-head"><div><div class="level">Recipe 06 · Physics mathematics</div><h2>Mandelbrot field from Physics</h2></div><a href="recipes/06-mandelbrot-field.md">Read the recipe →</a></div>
+    <div class="body"><p>Physics computes a bounded escape-time field and exports each sample's coordinates, iteration count, and escape classification. GUI.SVG validates the run record and renders one cell per recorded sample without recomputing the fractal; CI uploads both source data and SVG for inspection.</p></div>
+  </article>
 </main>
 </body>
 </html>
