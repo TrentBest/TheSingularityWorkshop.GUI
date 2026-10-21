@@ -60,11 +60,11 @@ public sealed class SvgUmlClassDiagramRenderer
         svg.Add(new XElement(Svg + "rect",
             new XAttribute("x", F(x)), new XAttribute("y", F(y)),
             new XAttribute("width", F(panelWidth)), new XAttribute("height", F(HeaderHeight)),
-            new XAttribute("rx", "6"), new XAttribute("fill", "#172b3a")));
+            new XAttribute("rx", "6"), new XAttribute("fill", "#8c3b14")));
         svg.Add(new XElement(Svg + "rect",
             new XAttribute("x", F(x)), new XAttribute("y", F(y + HeaderHeight - 8)),
             new XAttribute("width", F(panelWidth)), new XAttribute("height", "8"),
-            new XAttribute("fill", "#172b3a")));
+            new XAttribute("fill", "#8c3b14")));
 
         var heading = string.IsNullOrWhiteSpace(model.Namespace) ? model.Name : model.Namespace + "." + model.Name;
         svg.Add(Text(x + panelWidth / 2, y + 25, $"«{model.Kind}»", "#b7c8d5", "12", "normal", "middle"));
@@ -124,8 +124,8 @@ public sealed class SvgUmlClassDiagramRenderer
         svg.Add(new XElement(Svg + "line",
             new XAttribute("x1", F(x)), new XAttribute("y1", F(y)),
             new XAttribute("x2", F(x + width)), new XAttribute("y2", F(y)),
-            new XAttribute("stroke", "#397d75"), new XAttribute("stroke-width", "1.2")));
-        svg.Add(Text(x + Padding, y + 18, title, "#172b3a", "13", "700"));
+            new XAttribute("stroke", title == "Properties" ? "#f2e83d" : title == "Fields" ? "#4a90e2" : title == "Operations" ? "#2e9d70" : "#ff823d"), new XAttribute("stroke-width", "3")));
+        svg.Add(Text(x + Padding, y + 18, title, title == "Properties" ? "#766f00" : "#8c3b14", "13", "700"));
         return y + SectionHeadingHeight;
     }
 
