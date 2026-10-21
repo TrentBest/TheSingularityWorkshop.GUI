@@ -1197,3 +1197,15 @@ A fresh live branch query still returns **18 branches**: `master`, `development`
 - Exact-head CI: the previous checkpoint's latest known development run was still in progress. This refresh did not obtain authoritative run records for the newer commit heads, so do not claim the current head is green.
 - NuGet publication: remains unauthorized and must stay skipped.
 - No branch was deleted; no PR was merged or closed; `master` remains untouched.
+
+
+## Architectural distinction clarified — 2026-10-21 20:49 UTC
+
+A direct source comparison confirms the two `SvgGuiRenderer` implementations serve **different purposes** and must not be treated as a simple replacement:
+
+- Current `development` `src/SVG/SvgGuiRenderer.cs` (blob `88262776417a8d4138556e256c85386cbafba682`, namespace `TheSingularityWorkshop.Workshop.Gui.Svg`, 538 lines) is a rich **SVG scene/primitive renderer**: coordinate systems and points, SVG shapes, paths, gradients, filters, links, metadata, animations, presentation attributes, duplicate-ID checks, and numeric/coordinate validation. It does not render the canonical GUI controls such as Button, Panel, TextBox, Toggle, or Warning as semantic UI.
+- `work/svg-guide-current-contract` `src/SVG/SvgGuiRenderer.cs` (blob `a3ab8dea9254091050a352a5fe811ff46c732322`, namespace `TheSingularityWorkshop.GUI.SVG`, 212 lines) is a **semantic GUI-tree renderer**. It manifests canonical GUI controls and containers, supports vertical layout plus Row/Horizontal Stack, accessible title/description, safe background validation, XML escaping, and a 64-level depth limit. Its options are in a separate `SvgRenderOptions` type (branch blob `8e8c7d4e64de053695edf9793b9fb24bf6ffbbb4`) and it has a focused 198-line test suite (branch blob `aeaae82c56b5f09143983a8687877eeb2212a47b`).
+- These are complementary layers, not competing versions. The intended reconciliation should retain both renderer roles with explicit names/namespaces and focused tests. Do **not** overwrite the existing 538-line scene renderer with the 212-line GUI renderer, and do not wholesale merge the renderer branch's old solution/project/package workflow. Its dedicated SVG project/test project structure must be reconciled deliberately with current solution organization first.
+- Safe next step: introduce the semantic GUI renderer as an additive API (or explicitly rename the existing scene renderer/API if product design calls for that), bring over `SvgRenderOptions` and its tests into the current project structure, then run package/test/WPF checks and inspect the generated output. No code was copied in this pass because project/solution inclusion and public namespace compatibility have not yet been established.
+  
+Current renderer branch comparison: 112 ahead / 559 behind; its changed-file set includes the old project/solution files, broad Core/Blazor/WPF legacy APIs, and a large package workflow delta. Keep selective reconciliation only. UML staging readiness **72%**; Sith remains **NOT CLEARED**; no branch deletion, PR lifecycle action, or publication occurred.
