@@ -754,3 +754,17 @@ These are explicit updates to the preceding fresh branch table: those two rows n
 The current candidate list is more precise, but Sith is still **NOT CLEARED**. The broad open PRs #8 and #11 remain on hold; PR #18 remains active draft/reconcile; PRs #15 and #19 remain held because they propose removing the deliberate publication hard stop. The legacy hub/nested-experience branches still require explicit semantic discard/rebuild decisions. No branch was deleted, no PR was merged or closed, and no package was published.
 
 Source-derived UML staging readiness remains **72%**. This is not overall package release readiness or Sith completion. Exact-head CI on the latest development SHA must be confirmed independently before claiming the latest audit is green.
+
+## Legacy hub and WPF builder family — semantic boundary check — 2026-10-21
+
+Three current development documents clarify how to handle the legacy branch family without confusing design intent with shipped API:
+
+- docs/GUI_NESTED_EXPERIENCES.md explicitly labels nested experiences as a proposal and says current development does not contain the legacy Gui.Hub / GuiHub API.
+- docs/GUI_EXECUTION_MODEL.md explicitly labels the execution-host architecture as proposed, not a completed runtime contract.
+- docs/WPF_BUILDER_PATTERN_AUDIT.md is a transfer plan, not a mandate to port the historical builders. It records current implementations for native defaults, repeatable panel construction, a separate WpfWindowBuilder, and typed numeric/enum controls. It specifically rejects blindly importing arbitrary-object reflection, app-specific resource dictionaries, and external application/service dependencies.
+
+The legacy branch source confirms that Gui.Hub is a lazily created process-wide singleton, while the old WPF branch includes specialized stable-key TreeView selection/expansion callbacks and separate PivotGrid, CRUD, log-viewer, multi-panel, tabbed-panel, color-picker, and reflective builder surfaces. Those are not all equivalent to current GuiNode renderers/builders, and their absence must not be misreported as successful feature parity.
+
+**Disposition:** do not merge the old hub/WPF branch family wholesale. Current docs preserve the architecture proposal and the WPF audit records which reusable patterns have been adopted. However, the specialized WPF surfaces still need an explicit product decision: intentionally retire them, or rebuild selected capabilities against current APIs with focused tests. Keep the affected branches in **HOLD** until that decision is recorded; this is not a safe-to-discard classification.
+
+No source API was added, no PR lifecycle changed, and no branch was deleted by this review.
