@@ -63,10 +63,11 @@
   <text x="1061" y="263" text-anchor="middle" class="heading">RUNTIME</text>
   <text x="966" y="303">.NET base libraries</text>
   <text x="966" y="333" class="small">System</text>
-  <text x="966" y="357" class="small">System.Collections.ObjectModel</text>
-  <text x="966" y="381" class="small">System.Linq</text>
-  <text x="966" y="427" class="muted">Framework types,</text>
-  <text x="966" y="447" class="muted">not NuGet dependencies</text>
+  <text x="966" y="357" class="small">System.Collections.</text>
+  <text x="966" y="378" class="small">ObjectModel</text>
+  <text x="966" y="402" class="small">System.Linq</text>
+  <text x="966" y="435" class="muted">Framework types,</text>
+  <text x="966" y="455" class="muted">not NuGet dependencies</text>
 
   <rect x="286" y="790" width="628" height="88" rx="12" class="deps"/>
   <text x="600" y="819" text-anchor="middle" class="heading">IMPLEMENTATION DEPENDENCIES · BELOW</text>
