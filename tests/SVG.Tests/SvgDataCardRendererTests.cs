@@ -57,6 +57,29 @@ public sealed class SvgDataCardRendererTests
     }
 
     [Fact]
+    public void Uml_card_palette_uses_namespace_blue_class_orange_and_property_yellow_borders()
+    {
+        var root = new DataCard("namespace", "namespace", "Example",
+            children:
+            [
+                new DataCard("class", "class", "SampleClass",
+                    children:
+                    [
+                        new DataCard("property", "property", "Name")
+                    ])
+            ]);
+
+        var document = XDocument.Parse(new SvgDataCardRenderer().Render(root));
+        var cards = document.Descendants(Svg + "g")
+            .ToDictionary(element => (string)element.Attribute("data-card-id")!);
+
+        Assert.Equal("#4f46e5", (string)cards["namespace"].Element(Svg + "rect")!.Attribute("stroke")!);
+        Assert.Equal("4", (string)cards["namespace"].Element(Svg + "rect")!.Attribute("stroke-width")!);
+        Assert.Equal("#ff823d", (string)cards["class"].Element(Svg + "rect")!.Attribute("stroke")!);
+        Assert.Equal("#f2e83d", (string)cards["property"].Element(Svg + "rect")!.Attribute("stroke")!);
+    }
+
+    [Fact]
     public void Empty_region_has_no_collapsed_summary_and_add_affordance_is_edit_and_capability_gated()
     {
         var card = new DataCard("empty", "region", "Empty region",
