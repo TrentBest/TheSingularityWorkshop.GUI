@@ -264,9 +264,20 @@ jobs:
           # The generated syntax class view and the authored canonical ecosystem diagram
           # have different contracts/layouts. Validate the generated SVG structurally above;
           # do not overwrite or byte-compare it with the richer checked-in ecosystem diagram.
-          test -s docs/assets/uml/classes/Core/DataCard.svg
-          grep -q 'UML ecosystem class diagram: DataCard' docs/assets/uml/classes/Core/DataCard.svg
-          grep -q 'direct consumer SvgDataCardRenderer' docs/assets/uml/classes/Core/DataCard.svg
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          from pathlib import Path
+
+          path = Path("docs/assets/uml/classes/Core/DataCard.svg")
+          assert path.is_file() and path.stat().st_size > 0, "canonical ecosystem diagram is missing"
+          root = ET.parse(path).getroot()
+          ns = "{http://www.w3.org/2000/svg}"
+          title = root.find(ns + "title")
+          desc = root.find(ns + "desc")
+          assert title is not None and title.text == "UML ecosystem class diagram: DataCard", "unexpected canonical diagram title"
+          assert desc is not None and "SvgDataCardRenderer" in (desc.text or ""), "canonical diagram must retain its documented consumer"
+          print("Validated the canonical DataCard ecosystem diagram independently of generated syntax/semantic views.")
+          PY
       - name: Test SVG contract validator failure cases
         run: python3 -m unittest discover -s scripts -p 'test_verify_svg_contract.py' -v
 
