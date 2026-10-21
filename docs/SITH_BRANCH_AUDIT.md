@@ -1465,3 +1465,14 @@ Current `development` recent workflow snapshots:
 - Run 39675034015 — SHA `4387a3b2ab618d01033719b95338410d0fa74ab5`, status `completed`, conclusion `success`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39675034015
 
 Sith remains **NOT CLEARED**. No branches deleted, no PRs merged/closed by the assistant, and no package published.
+
+
+## Follow-up verification — 2026-10-21 21:12 UTC
+
+- The branch-ledger commit passed workflow run [39676612260](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39676612260): `test-and-package` succeeded and `test-wpf` succeeded. `publish_nuget` was skipped. This confirms the ledger update itself did not break the current development build; it does not clear Sith.
+- Live branch count remains 20 (18 non-keepers); the two keeper refs remain `master` and `development`. No branch or PR was deleted or closed.
+- PR #18 remains draft and should not be merged wholesale. Latest inspected head: `97554095656f2ef0ca94cbc4ada73848f3a953f8`. Its last discoverable source-derived-diagram run was older commit `b4c68259a2df7c6f565708a529b01e62c433dae0`, where the semantic fixture checks passed but the final generated-SVG contract step failed at byte-for-byte comparison of generated `DataCard.uml.svg` with the checked-in `docs/assets/uml/classes/Core/DataCard.svg`. The solution-derived UML inventory workflow passed at that same older commit. This is a specific reproducibility/stale-artifact issue to retest at the current head, not evidence that the semantic fixture itself failed.
+- PR #18 adds a substantial generator/model/rendering system (Roslyn syntax and semantic modes, source provenance, typed relationships, renderer-neutral UML model, focused SVG graph, and tests) but its diff also bundles broad unrelated documentation/architecture and workflow changes. Keep it open while the current head is tested and the source-derived artifacts are reconciled; split or trim unrelated changes before considering merge.
+- Next audit action: obtain a fresh CI run for PR #18's current head; if no run is triggered, rerun the workflow or push a minimal evidence-based fix on its branch. Verify the generated SVG and checked-in canonical artifact are identical from the same source revision. Do not merge until the exact current head is green and the unrelated scope is reconciled.
+
+**Decision unchanged: Sith NOT CLEARED.** The four prior branch candidates remain owner-only deletion candidates, subject to a final live check.
