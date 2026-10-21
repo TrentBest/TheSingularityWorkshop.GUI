@@ -648,3 +648,22 @@ A branch-tip comparison found one unique file change on `work/gui-uml-per-file-d
 
 The current `development` head is now subject to fresh CI after the documentation changes. The last verified code/test head `6fcc53c6646b889f593438b411204717f01bab2b` passed both Windows WPF and Linux package/test jobs, but that success is not a substitute for checking the newest documentation commit's workflow.
 
+
+
+## Open-PR patch-scope review — 2026-10-21
+
+### PR #8 — datum/interaction boundary
+
+The live PR files endpoint shows this is not an architecture-note-only patch. It changes the package workflow, root README, roadmap, architecture docs, adds datum/interaction and nested-experience docs, adds implementation-status/adapter docs, and includes substantial Core, Blazor, and WPF source/test changes (including GUI Hub and native builder surfaces). Those paths overlap older historical implementation families and current development has since evolved, but the patch still contains a large semantic surface. Keep PR [#8](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/8) in **hold/reconcile**; extract and compare individual contracts rather than merging the branch wholesale or closing it based on the PR title.
+
+### PR #18 — source-derived GUI.SVG diagrams
+
+PR [#18](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/18) remains an open draft with a substantial but focused set of changes: source/solution-derived UML workflows, generator/model code, per-file UML pages, diagram assets, and inventory/contract verification scripts. It is relevant to the new per-file UML gate, but its proposed generator and verification workflow must be audited against actual source truth, path coverage, determinism, and current CI before promotion. Keep it as **active retain/reconcile**; do not mark release-ready or merge it solely because it addresses a desired capability.
+
+### PRs #15 and #19 — duplicate publish-gate proposals
+
+The live files endpoints confirm that both PR #15 and PR #19 change only the same logical condition: removing `&& false` from the `publish_nuget` job's `if` expression. The branch-tip comparisons are history-diverged, but each actual PR patch is one line. Neither change is authorized by branch cleanup or readiness work. Current development deliberately retains the hard stop; publication remains disabled. Keep the hard stop unchanged and preserve the PRs until the owner explicitly chooses a canonical proposal and authorizes any release-gate change. Do not merge either automatically.
+
+### Current decision
+
+The branch inventory is still 17 total branches (15 non-keepers) and the open-PR set remains #8, #11, #15, #18, #19. The newly added per-file UML requirement is now present in development, but no automated coverage enforcement is claimed. The WPF owner-window cleanup passed both Windows WPF and Linux package/test jobs on its exact code/test head; later documentation commits have their own CI in progress. Sith remains **NOT CLEARED**. No branch was deleted, no PR was merged or closed, and NuGet publication remains disabled.
