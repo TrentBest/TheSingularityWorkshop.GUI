@@ -599,6 +599,22 @@ The WPF test source review found a concrete lifecycle gap in `Window_builder_com
 
 A narrow test-only change was committed as `6fcc53c6646b889f593438b411204717f01bab2b` (`test: close WPF owner window before STA teardown`). The test now closes the built child window and closes the shown owner in `finally` blocks, including assertion-failure paths. This preserves all 23 tests and their assertions; it does not suppress the crash or change production behavior.
 
-Exact-head Package GUI run **#39666044705** was queued on this test-only commit at 2026-10-21 19:56:59 UTC. The hypothesis is **unverified until the Windows WPF job completes**. If it still crashes, continue with dispatcher/STA ownership and native-window teardown diagnostics; do not treat a queued run as evidence of a fix.
+Exact-head Package GUI run [#39666044705](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666044705) completed successfully on this test-only commit. Both `test-wpf` and `test-and-package` passed; `publish_nuget` was skipped. This is direct evidence that the cleanup change removed the observed CI failure on this exact head. It supports the HWND/STA teardown hypothesis but does not prove it is the only possible cause. Keep the fix and retain the WPF tests; do not suppress process exit or remove coverage.
 
 No branch was deleted, no PR was merged or closed, and the NuGet publish hard stop remains in place.
+
+
+## Event-builder compatibility branch: exact source reconciliation — 2026-10-21
+
+A fresh three-way branch-tip comparison for `work/webpage-event-builder-compatibility` against current `development` reports 3 commits ahead, 513 behind, with only two changed paths:
+
+- `src/Blazor/WorkshopGuiBuilder.cs`: two added lines relative to the comparison base.
+- `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs`: a 33-line test file added relative to the comparison base.
+
+The current `development` `ElementBuilder` already exposes both `OnWheel(Action<WheelEventArgs>)` and `StopPropagation(string eventName = "onclick")`, and creates their attributes through `EventCallback.Factory.Create`. Therefore, the branch's apparent API contribution is already represented on development. Its added test checks that the `onwheel` frame value is an `Action<WheelEventArgs>`, whereas the production method explicitly creates an `EventCallback<WheelEventArgs>`; that assertion does not match the implementation contract and should not be copied verbatim. A future regression test should assert the actual EventCallback type or invoke/inspect its delegate through supported APIs.
+
+PR [#9](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/9) is confirmed **closed and merged** (merged 2026-10-13). This establishes the PR lifecycle, not that the branch tip is worth retaining. Disposition: **intentionally superseded candidate**; do not merge the stale branch snapshot. The owner should still recheck the live branch/PR references before deleting the branch.
+
+## Exact-head WPF CI correction — 2026-10-21
+
+The preceding section's queued status is superseded by the completed result for run #39666044705: both Windows `test-wpf` and Linux `test-and-package` succeeded on `6fcc53c6646b889f593438b411204717f01bab2b`; the NuGet publish job was skipped. This clears the recorded WPF CI blocker for that exact code/test head. A subsequent documentation-only audit commit will require its own workflow run; no publication or branch deletion is implied.
