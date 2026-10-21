@@ -1289,3 +1289,17 @@ Sith cleanup remains **NOT CLEARED**; UML staging readiness remains **72%**. No 
 - GUI.SVG source-derived UML staging readiness: **72%**; not release-ready.
 - Operation Sith: **NOT CLEARED**. The new Mandelbrot branch and several other branches still need exact content reconciliation. No branch deleted, no PR merged or closed, `master` untouched, and NuGet publication remains unauthorized and gated.
 - The latest source/test additions to `development` require exact-SHA CI evidence before claiming successful verification. Historical successful workflow runs apply only to their recorded SHAs.
+
+
+## Verified CI for additive semantic GUI SVG renderer — 2026-10-21 20:54 UTC
+
+Exact-head Actions lookup found push-triggered run **39674052207** for commit `998d4d07e66cf31a310f8914c5b5854ffbfda092`, workflow `Package GUI`, completed with conclusion **success**: https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39674052207
+
+Verified jobs:
+- `test-and-package`: success, job https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39674052207/job/119479137425. Explicit steps passed: restore SVG, Test SVG, build WPF adapter, gallery generation and validation, package all four adapters, package metadata checks, and clean consumer restore/use.
+- `test-wpf`: success, job https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39674052207/job/119479137702.
+- `publish_nuget`: skipped (expected; no publication).
+
+This verifies the new `SemanticGuiSvgRenderer`, options, and tests as part of the package workflow on that exact commit. It does not mean later audit-only commits have CI verified. Next verification must inspect the latest `development` commit's workflow after the audit update, and the separate UML workstream still needs current-head CI verification.
+
+Sith cleanup remains **NOT CLEARED**. UML staging readiness remains **72%**. No branch deletions, PR lifecycle changes, or package publication.
