@@ -892,3 +892,22 @@ The full branch comparisons show these are not safe-to-delete branches merely be
 - [Run #39669555915](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39669555915) completed successfully on `44c700610182794f8e7f3f9f68a8bb46ace31c63`: `test-and-package` passed, `test-wpf` passed, and `publish_nuget` was skipped.
 
 No branch deletion, PR merge/closure, or package publication was performed.
+
+## Follow-up implementation review — 2026-10-21 20:23Z
+
+### Source-derived UML branch: actionable workflow review
+
+- The generator branch's workflow `source-derived-diagrams.yml` uses mutable action tags (`actions/checkout@v4`, `actions/setup-dotnet@v4`). This conflicts with the repository-wide hardening target to pin GitHub Actions to immutable commit SHAs. Pinning and reviewing the action versions is a required reconciliation task, not a reason to discard the UML generator.
+- The workflow has meaningful verification beyond diagram rendering: it builds syntax-only and project-semantic models, checks exact-build reflection identity rejection, validates schema/provenance and deterministic type inventories, and requires one generated Markdown page and SVG per discovered type. Review this gate and its generated artifacts on the exact PR head before accepting it.
+- Exact source review confirms the generator's docs describe schema v1 as a **staging interchange contract**, not a supported package API; syntax-only mode does not claim semantic relationships. Preserve those boundaries when porting or revising docs.
+
+### SVG renderer branch: concrete unique implementation
+
+- `work/svg-guide-current-contract` adds `SvgRenderOptions` (accessible title/description, dimensions, optional background, positive-dimension validation, constrained color validation) and a deterministic `SvgGuiRenderer` that serializes the current `GuiNode` semantic tree, encodes text/attributes, emits accessibility metadata, and rejects tree depth beyond 64. Tests exercise escaping, nested ordering, container layout, and additional renderer behavior.
+- These files are absent from `development` at the latest comparison and are not safe to label redundant. However, the branch is 112 ahead / 537 behind and changes 56 files across core, Blazor, WPF, SVG, package workflow, tests, and docs. Preserve as a selective port/rebuild workstream; do not merge wholesale or copy isolated files without their dependencies and tests.
+- The source-derived UML branch is a separate workstream. Keep UML model identity/provenance and SVG runtime-renderer behavior distinct in both documentation and reconciliation.
+
+### Current audit guardrail
+
+Neither workstream is cleared for branch deletion. No branches or PRs were modified. The latest audit commit's status remains unverified; absence of reported status entries is not a passing result.
+
