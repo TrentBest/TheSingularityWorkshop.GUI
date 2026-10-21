@@ -19,9 +19,9 @@ class SourceUmlPromotionTests(unittest.TestCase):
         types = source / "Core.uml-types"
         types.mkdir(parents=True)
         (source / "Core.uml-inventory.md").write_text("# Generated UML type inventory\n", encoding="utf-8")
-        (types / "index.md").write_text("# Generated UML type pages\n(page.md)\n(page.svg)\n", encoding="utf-8")
-        (types / "page.md").write_text("# Fixture.Type\n\n[diagram](page.svg)\n", encoding="utf-8")
-        (types / "page.svg").write_text(
+        (types / "index.md").write_text("# Generated UML type pages\n(TheSingularityWorkshop-Fixture-Type-deadbeef.md)\n(TheSingularityWorkshop-Fixture-Type-deadbeef.svg)\n", encoding="utf-8")
+        (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text("# Fixture.Type\n\n[diagram](TheSingularityWorkshop-Fixture-Type-deadbeef.svg)\n", encoding="utf-8")
+        (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").write_text(
             '<svg xmlns="http://www.w3.org/2000/svg"><title>Fixture.Type</title><desc>Fixture</desc></svg>',
             encoding="utf-8",
         )
@@ -35,8 +35,8 @@ class SourceUmlPromotionTests(unittest.TestCase):
             source, output = self.fixture(Path(temporary))
             self.assertEqual([], PROMOTER.promote(source, output))
             self.assertTrue((output / "Core.uml-inventory.md").is_file())
-            self.assertTrue((output / "Core" / "page.md").is_file())
-            self.assertTrue((output / "Core" / "page.svg").is_file())
+            self.assertTrue((output / "Core" / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").is_file())
+            self.assertTrue((output / "Core" / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").is_file())
             self.assertTrue((output / "Core" / "index.md").is_file())
             self.assertEqual("# Authored file\n", (output / "authored.md").read_text(encoding="utf-8"))
 
@@ -56,7 +56,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
             self.assertEqual([], PROMOTER.promote(source, output))
-            target = output / "Core" / "page.md"
+            target = output / "Core" / "TheSingularityWorkshop-Fixture-Type-deadbeef.md"
             target.write_text("# Edited by hand\n", encoding="utf-8")
             errors = PROMOTER.promote(source, output, check=True)
             self.assertTrue(any("stale or missing" in error for error in errors))
@@ -74,6 +74,13 @@ class SourceUmlPromotionTests(unittest.TestCase):
             source, output = self.fixture(Path(temporary))
             (source / "Core.uml-types" / "unexpected.txt").write_text("not UML", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "non-generated filename"):
+                PROMOTER.promote(source, output)
+
+    def test_manifest_cannot_claim_authored_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            source, output = self.fixture(Path(temporary))
+            (output / PROMOTER.MANIFEST_NAME).write_text("Core/README.md\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "not a recognized generated type page/diagram"):
                 PROMOTER.promote(source, output)
 
     def test_rejects_missing_index(self) -> None:
