@@ -86,15 +86,16 @@ public sealed class SvgDataCardRenderer
             new XAttribute("role", "group"),
             new XAttribute("aria-label", headerText));
 
+        var palette = PaletteFor(card.Kind);
         group.Add(new XElement(Svg + "rect",
             new XAttribute("x", F(x)),
             new XAttribute("y", F(y)),
             new XAttribute("width", F(cardWidth)),
             new XAttribute("height", F(HeaderHeight)),
-            new XAttribute("rx", "5"),
-            new XAttribute("fill", depth == 0 ? "#172b3a" : "#203746"),
-            new XAttribute("stroke", "#6da99b"),
-            new XAttribute("stroke-width", "1")));
+            new XAttribute("rx", "2"),
+            new XAttribute("fill", palette.Fill),
+            new XAttribute("stroke", palette.Stroke),
+            new XAttribute("stroke-width", palette.StrokeWidth)));
 
         group.Add(new XElement(Svg + "text",
             new XAttribute("x", F(x + 10)),
@@ -137,6 +138,21 @@ public sealed class SvgDataCardRenderer
 
         return nextY;
     }
+
+    // UML containment uses semantic roles rather than depth-only styling.
+    // Namespace, type, and member cards keep their identity at every nesting level.
+    private static (string Fill, string Stroke, string StrokeWidth) PaletteFor(string kind) =>
+        kind.ToLowerInvariant() switch
+        {
+            "namespace" => ("#ffffff", "#4f46e5", "4"),
+            "class" or "record" or "struct" or "interface" or "enum" or "type" =>
+                ("#fffaf5", "#ff823d", "4"),
+            "property" => ("#fffef0", "#f2e83d", "4"),
+            "field" => ("#f4f9ff", "#4a90e2", "3"),
+            "method" or "constructor" or "event" => ("#f4fff8", "#2e9d70", "3"),
+            "source-file" => ("#ffffff", "#64748b", "2"),
+            _ => ("#ffffff", "#94a3b8", "2")
+        };
 
     private static bool IsExpanded(DataCard card, IReadOnlyDictionary<string, bool>? state) =>
         state is not null && state.TryGetValue(card.Id, out var expanded)
