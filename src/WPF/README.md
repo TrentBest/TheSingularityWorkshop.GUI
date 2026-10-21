@@ -2,6 +2,8 @@
 
 The WPF project provides WPF-specific GUI construction and rendering support for the shared GUI model.
 
+See the [GUI.WPF Guide](../../docs/WPF_GUIDE.md) for the current semantic boundary, native-builder surface, verification scope, and known limitations.
+
 ## What it is
 
 - A Windows Presentation Foundation adapter project targeting `net8.0-windows`.
