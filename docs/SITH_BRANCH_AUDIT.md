@@ -1835,3 +1835,37 @@ The live branch inventory is still 20 branches, with only `master` and `developm
 Package release readiness remains **70%**. Source-derived UML staging readiness remains **78%**. NuGet publishing remains disabled by the explicit `&& false` hard stop.
 
 **Sith remains NOT CLEARED until the new ledger commit's exact-head CI passes and the branch/PR inventory is rechecked.** No branch was deleted, no PR was merged, and no package was published.
+
+
+## Operation Sith — live correction after current WPF and UML documentation reconciliation — 2026-10-21 22:05 UTC
+
+### PR dispositions and live keeper state
+
+- PR #15 and PR #19 are **closed, not merged**. Both proposed removing the current package workflow's `&& false` publication hard stop. Their closure comments record the owner policy: a dispatch boolean is not a substitute for explicit owner authorization. Their branches remain present for the owner's later manual deletion.
+- PR #8 is **closed, not merged**. The datum/presentation ownership principle is preserved in current development documentation; the historical `GuiHub`/`IGuiHub` lifecycle is not adopted because consuming hosts retain runtime lifecycle and domain execution.
+- PR #11 is **closed, not merged**. The current SVG guide/adapter contract supersedes the older branch snapshot. Its two unique SVG concepts have been preserved as explicitly authored concept art under `docs/assets/concepts/`.
+- PR #18 remains the only open PR and remains draft: [Build the source-derived GUI.SVG diagram bridge](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/18).
+
+### Current source-derived branch comparison
+
+The current development files `samples/SourceUmlGenerator/Program.cs` and `samples/SourceUmlGenerator/ProjectUmlModelBuilder.cs` are byte-identical to the PR #18 branch versions. The branch workflow files are older: development has immutable action SHAs, the corrected renderer-grounded SVG contract, canonical diagram validation, and promotion-safety tests. Therefore, do not merge the source branch wholesale or cherry-pick the already-integrated generator implementation.
+
+The unique authored documentation from that branch has been reconciled into current development: GUI Gallery, Source-derived UML tooling guide, Living UML architecture, Branding, Living Documentation, Observable Diagram Models, UML Visual Audit, the UML directory index, and the two concept SVGs plus their evidence-labelled index. The old repository architecture audit is preserved as `docs/archive/REPOSITORY_ARCHITECTURE_AUDIT_2026-10-20.md` with an explicit historical-snapshot warning. `docs/SOURCE_DERIVED_DIAGRAMS.md` is redundant with the current source-derived guide, observable-model guide, and living UML architecture; it may be intentionally discarded.
+
+Generated per-type Markdown/SVG pages from PR #18 were **not** copied: they were generated from an older branch snapshot and can be stale for current source. Development contains the safe promotion script, tests, and a manually triggered promotion workflow, but the promotion workflow has not been dispatched. The current keeper tree still contains only the authored README under `docs/uml/source-files/`, not the generated per-type page set. This is the remaining meaningful reconciliation gate for PR #18.
+
+### Legacy GUIHub/WPF branches
+
+The live development tree now contains the supported native WPF builder subset (layout/window, numeric and enum controls) and tests, with the transfer decision recorded in `docs/WPF_BUILDER_PATTERN_AUDIT.md`. The older branches' alternative builder class names are not independent current APIs. Their remaining unique code is the old GUIHub/IGuiHub wrapper, Blazor/WPF hub renderers/tests, and a reflection-driven Core builder; the current architecture explicitly does not adopt this runtime lifecycle or arbitrary-object reflection surface. The durable architectural principles are preserved in current documentation, and the non-adopted historical implementation is explicitly classified as obsolete rather than merged wholesale.
+
+Accordingly, these branches are evidence-backed superseded candidates: `architecture/datum-interaction-boundary` (PR #8 closed), `feature/integrated-fsm-cos-hub`, `feature/nested-experiences`, and `work/svg-guide-current-contract` (PR #11 closed). The older SVG options wrapper is not a current API; its convenience concerns are covered by the current renderer contract and are not a reason to merge its older renderer snapshot.
+
+### Updated disposition and readiness percentages
+
+Seventeen of the 18 non-keeper branches now have documented redundant/superseded/intentional-discard dispositions (**94% disposition-ready by branch count**). The sole held branch is `work/gui-svg-source-uml-generator`, pending a current-source generated-page promotion and review. This is not release readiness.
+
+- **Sith branch disposition:** 94% (17/18 surplus branches have evidence-backed dispositions; final owner deletion remains pending).
+- **Package release readiness:** 70% per `docs/RELEASE_READINESS.md` and `docs/NEXT_RELEASE_WORK_QUEUE.md`.
+- **Source-derived UML staging readiness:** 78% per the prior evidence checkpoint; generated pages still need promotion/review and committed drift enforcement.
+
+The latest verified all-green baseline before the most recent documentation-only additions is commit `5d003d864758` (Package GUI run 39680522235, Source-derived diagrams run 39680522114, Solution-derived UML inventory run 39680522333). Later documentation commits have triggered fresh workflows; verify the exact latest head before claiming the new head is green. NuGet publication remains disabled; no package was published and no surplus branch was deleted.
