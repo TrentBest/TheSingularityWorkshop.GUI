@@ -541,3 +541,28 @@ The legacy hub/reflection family remains an unresolved product decision, not a b
 ### SVG depth-guard test-name reconciliation — 2026-10-21 19:53 UTC
 
 The test source was fetched from both current `development` and `work/svg-tree-depth-guard` and test method names were compared. Every test method present on the older branch also exists on development, including `Rejects_negative_geometry_dimensions`, `Accepts_tree_at_the_configured_maximum_depth`, and `Rejects_excessive_tree_depth_before_recursive_svg_serialization`. Development additionally has six methods absent from the branch: embedded stylesheet rendering, XML/non-ASCII escaping, deterministic repeated rendering, malformed/non-finite numeric rejection, blank required-reference rejection, and duplicate IDs with enabled coordinate overlays. Therefore the branch adds no uniquely named regression test method at this snapshot; it remains older in both renderer accessibility linkage and test breadth. This supports classifying `work/svg-tree-depth-guard` as intentionally superseded after confirming the live PR/branch inventory again, rather than porting tests based solely on the branch's raw added-line count.
+
+
+## Exact-head WPF shutdown failure and inventory refresh — 2026-10-21
+
+### WPF CI evidence
+
+The live [Package GUI run #39656628688](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39656628688) targets development SHA `3e03d572101d2be627e97aa9407e64c3e7ec9627`. Its jobs are:
+
+- `test-and-package`: **success**
+- `test-wpf`: **failure**
+- `publish_nuget`: **skipped**
+
+The Windows WPF job successfully restored and built Core, WPF, and the WPF test project. The test runner reported 23 passed, 0 failed, 0 skipped, then aborted because the test-host process crashed with an unhandled `NullReferenceException` in `System.Threading.Thread.get_CurrentThread()` called by `MS.Win32.HwndSubclass.SubclassWndProc`. The step exited with code 1. Therefore this is a failed CI run; the 23 reported test successes do not make the job green.
+
+The available log establishes that the crash occurs after the test runner's passing-test summary and during/around WPF native-window message handling or teardown. It does **not** identify which test/window owns the subclass or prove a particular fix. The next code investigation should inspect dispatcher/STA ownership, window lifetime, event/subclass cleanup, and test fixture disposal; reproduce locally or on a diagnostic CI commit, then require a clean Windows run on the exact resulting development SHA. Do not paper over this with unconditional success, a swallowed process exit, or by removing WPF coverage. The current log alone is insufficient to prescribe a safe source change.
+
+The WPF build also emits CS1591 warnings for public WPF types and members. These warnings are not the cause identified by the log, but remain documentation quality debt and should be tracked separately from the crash.
+
+### Live cleanup inventory refresh
+
+The latest branch search still returns exactly 17 branches: `master`, `development`, and 15 non-keepers. The open-PR search still returns #8, #11, #15, #18, and #19. The Package GUI run's NuGet job was skipped. No branch was deleted, no PR was merged or closed, and the publish hard stop was not changed.
+
+### Decision
+
+**Sith status remains NOT CLEARED.** The WPF shutdown crash is a concrete blocker to calling current CI green. Continue semantic branch-by-branch reconciliation and resolve the five open PRs before issuing any deletion list. Do not enable or publish NuGet packages as part of this work.
