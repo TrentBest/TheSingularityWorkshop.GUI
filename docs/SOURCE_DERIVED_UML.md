@@ -127,3 +127,15 @@ Reflection is evidence about the compiled artifact, not a replacement for Roslyn
 - The release workflow should generate and verify documentation before packaging/publishing; publishing remains governed by the repository's separate explicit release authorization.
 
 This package/lifecycle is the target architecture, not an implemented feature yet. Current proof remains the staging CLI and focused graph renderer. Project-semantic generation of deterministic per-type Markdown pages and an inventory is implemented and CI-checked for the analyzed Core project. The remaining gates above still apply: solution-wide inventory, repository-wide maintained-type coverage, member-level exact-build reflection reconciliation, committed generated-artifact drift checks, and visual/bounds evidence.
+
+
+## Distinct SVG contracts
+
+The generator emits multiple SVGs for different audiences; they are not interchangeable canonical files:
+
+- `DataCard.source-structure.svg` is the source-declaration structure view.
+- `DataCard.uml.svg` is the focused syntax-only class view for the selected source type.
+- `DataCard.semantic-uml.svg` is the compiler-semantic neighborhood graph, with resolved type relationships.
+- `docs/assets/uml/classes/Core/DataCard.svg` is the authored ecosystem diagram. It includes the class in its documented dependency/consumer context and is maintained as a separate living-documentation artifact.
+
+CI validates each generated view's own contract and the authored ecosystem diagram's required identity/context. It must not require byte equality between the focused syntax class view and the authored ecosystem diagram. If a generator is intentionally promoted to regenerate the ecosystem diagram, that needs an explicit layout/contract migration and reviewed output update—not a silent overwrite.
