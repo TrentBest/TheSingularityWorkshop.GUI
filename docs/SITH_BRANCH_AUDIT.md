@@ -503,3 +503,36 @@ Recursive tree snapshots compared the following live branch refs against `develo
 - `work/gui-wpf-tests` (105 paths), `work/gui-release-mit-wpf-scope` (105 paths), `work/gui-uml-per-file-documentation` (113 paths), and `fix/guinode-nullability-contract` (81 paths): no path-only additions versus development in these snapshots. This supports the prior redundant/superseded assessments, but final disposition still requires checking each branch's exact current diff/PR relationship and retaining the known unique behavior already identified in the audit.
 
 **Disposition rule remains unchanged:** only `master` and `development` are keepers, but a non-keeper is not safe to delete until its branch-specific code, tests, workflow, docs, and assets have an explicit preserved/retired/port decision. No branch or PR state was changed by this triage.
+
+
+## Live focused audit pass — 2026-10-21 19:52 UTC
+
+### Fresh keeper/branch/PR inventory
+
+- Live branch search returned **17 branches**: the two keepers `master` and `development`, plus 15 non-keepers. The names still match the inventory above.
+- Live open-PR search returned **#8, #11, #15, #18, and #19**. All five remain open; #8 and #18 are drafts. No branch, PR, or release state was changed in this pass.
+- The current `development` package workflow blob is `526aea54700c3617822825a90bbd9f9ec5ae7eea`. Its publish condition remains `github.event_name == 'workflow_dispatch' && inputs.publish == true && false`; NuGet publication is still deliberately disabled.
+- Current qualitative release readiness remains **72%** per the source-derived UML staging status. This is not release-ready and is not a merge or publication authorization.
+
+### Exact branch comparisons refreshed against current development
+
+| Branch | Ahead / behind | Changed files in live compare | Current interpretation |
+|---|---:|---|---|
+| `work/webpage-event-builder-compatibility` | 3 / 507 | `src/Blazor/WorkshopGuiBuilder.cs` (+2), `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` (+33) | Both event-handler implementations and the event test were fetched for direct comparison. The test file has the same blob SHA on both refs (`be6c179c751d8f817293f4f445584df23675afd5`); the branch's builder lacks current XML documentation and the current surrounding `PreventDefault` documentation/API is already on development. The branch's two added source lines are the existing `OnWheel` and `StopPropagation` members, not a unique feature. Strong intentionally-discardable candidate after PR #9's state is checked and the current inventory is repeated. |
+| `work/svg-tree-depth-guard` | 5 / 444 | `docs/SVG_ADAPTER.md` (+11/-2), `src/SVG/SvgGuiRenderer.cs` (+22/-12), `tests/SVG.Tests/SvgGuiRendererTests.cs` (+25) | Current development has the 256-depth guard and iterative unique-ID validation, plus title/description IDs and `aria-labelledby` accessibility linkage missing from the older branch renderer. Do not copy the renderer wholesale. The unique test additions still need a hunk-level check before deciding whether any regression assertion should be ported. |
+| `feature/integrated-fsm-cos-hub` | 76 / 513 | Broad workflow, README/docs, Core, Blazor, WPF, and tests; includes new `GuiHub`, `IGuiHub`, `GuiKinds`, `Gui`, reflection and specialized WPF builder files | This is a legacy feature snapshot, not a safe merge unit. No current type-level equivalence has been demonstrated for the old hub/root contract, reflection projection, or all specialized WPF builders. Explicitly decide whether to rebuild selected contracts with current APIs/tests or intentionally discard the legacy architecture. |
+| `work/gui-publish-gate-reconciled` | 1 / 34 | `.github/workflows/package.yml` only (+1/-1) | The proposed one-line change removes `&& false`. This is a release-control change and remains unauthorized. Keep the current development hard stop. |
+
+### Architecture preservation note
+
+The legacy hub/reflection family remains an unresolved product decision, not a branch-cleanup technicality:
+
+- `ReflectionGuiBuilder.Create(object model)` projects arbitrary public object models into `GuiNode`; the current explicit builder API has not been shown to provide the same reflection projection contract.
+- `GuiHub`, `IGuiHub`, `Gui`, and `GuiKinds` add stable-ID/root/hub abstractions that are not the same API as renderers consuming `GuiNode` directly.
+- The legacy WPF branch contains TreeView, PivotGrid, CRUD, log-viewer, factory, multi-panel/tabbed and reflective builder surfaces. Some enum/numeric controls have newer equivalents on development, but the remaining specialized behavior has not been proven equivalent.
+- PR #11's current description says it is documentation-only at `docs/SVG_GUIDE.md`; the branch comparison history is highly divergent, so review the actual PR patch, not the whole branch snapshot. Do not merge the branch wholesale.
+- PR #18's UML/source-derived generator remains draft. Previously reported passing runs only prove the SHAs named by those runs; exact-head CI and remaining implementation gates are still required.
+
+### Decision
+
+**Sith status remains NOT CLEARED.** This pass performed read-only source/compare/inventory checks and updated only this audit document. No branches were deleted, no PRs were merged or closed, and NuGet publication remains disabled. The next meaningful gate is to finish the hunk-level test review for the SVG depth-guard branch and record an explicit rebuild/discard decision for the legacy hub/reflection/specialized-WPF contract family.
