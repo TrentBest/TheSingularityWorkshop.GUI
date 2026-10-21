@@ -1170,3 +1170,30 @@ Current branch inventory remains 18 branches total: keepers `master` and `develo
 ### Status and next action
 - Current branch inventory remains 18: keepers `master` and `development`, plus 16 non-keepers. The merged Physics branch remains present for the owner's manual checkpoint.
 - Cleanup remains **NOT CLEARED**. UML staging readiness **72%**. No branch deletion, PR lifecycle action, or package publication occurred in this pass. Audit commit CI is unverified unless exact-head status/workflow evidence is obtained.
+
+
+## Live reconciliation refresh — 2026-10-21 20:48 UTC
+
+### Branch inventory and PR state
+
+A fresh live branch query still returns **18 branches**: `master`, `development`, and 16 non-keepers. A fresh open-PR query returns the same five open PRs: #8, #11, #15, #18, and #19. PR #20 remains merged; its source branch remains present. No branches or PRs were changed during this refresh.
+
+### Refreshed comparisons against development
+
+- `work/gui-wpf-tests`: 0 ahead / 305 behind, no changed files in the compare result. Strongest redundant-content candidate, but retain as a candidate only until final reference/PR check; deletion remains the maintainer's decision.
+- `work/svg-app-fsm-cos-boundary`: 5 ahead / 489 behind; changed paths are `README.md` and `docs/SVG_APP_CONCEPT.md`. Prior review found the concept file byte-identical and the README superseded. Final reference/PR check still required.
+- `work/svg-tree-depth-guard`: 5 ahead / 489 behind; changed paths include `src/SVG/SvgGuiRenderer.cs`, `tests/SVG.Tests/SvgGuiRendererTests.cs`, and `docs/SVG_ADAPTER.md`. Implementation and tests differ from development; preserve for focused behavior/test-intent review.
+- `work/webpage-event-builder-compatibility`: 3 ahead / 552 behind; changed paths are the Blazor builder and its event tests. Prior content review found the test already represented in development and source differences limited to XML documentation. Candidate for superseded disposition after final PR/reference check.
+- `feat/physics-seeded-pointset-svg`: 9 ahead / 17 behind; seven sample/workflow/gallery paths remain in its compare result. The sample is merged and functionally verified on development, but the divergent branch still requires branch-only commit review.
+- `work/gui-uml-per-file-documentation`: 1 ahead / 238 behind; `docs/DATA_CARDS_AND_UML.md` remains the unique changed path and is not byte-identical to development. Preserve its requirements until explicitly reconciled.
+- `architecture/datum-interaction-boundary`: 62 ahead / 558 behind with broad Core, Blazor, WPF, tests, workflows, and architecture-doc changes. Hold for explicit capability-level disposition; do not wholesale merge or discard.
+- `work/nuget-publish-gate`: 1 ahead / 306 behind, workflow-only change. Preserve only pending PR/reference disposition because PR #15 remains open and #19 is the current-history reconciliation.
+- `work/gui-publish-gate-reconciled`: 1 ahead / 79 behind, workflow-only change. PR #19 remains open; do not discard its history until exact-head verification and PR disposition are clear.
+
+### Current gates
+
+- Branch cleanup: **NOT CLEARED**.
+- Source-derived UML staging readiness: **72%**; PR #18 remains open/draft and is not release-ready.
+- Exact-head CI: the previous checkpoint's latest known development run was still in progress. This refresh did not obtain authoritative run records for the newer commit heads, so do not claim the current head is green.
+- NuGet publication: remains unauthorized and must stay skipped.
+- No branch was deleted; no PR was merged or closed; `master` remains untouched.
