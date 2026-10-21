@@ -34,6 +34,28 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: Checkout pinned Physics source for Mandelbrot run record
+        uses: actions/checkout@v4
+        with:
+          repository: TrentBest/TheSingularityWorkshop.Physics
+          ref: cbddc68b7e7a06e31d8b43e43088b5ebf173114a
+          path: ./physics-source
+
+      - name: Export actual Physics Mandelbrot samples
+        run: dotnet run --project ./physics-source/samples/MandelbrotEscapeTime2dExport/MandelbrotEscapeTime2dExport.csproj --configuration Release -- ./artifacts/mandelbrot-escape-time-2d.run.json
+
+      - name: Render and verify Physics Mandelbrot samples with GUI.SVG
+        run: dotnet run --project samples/demonstrations/MandelbrotEscapeTime2d/MandelbrotEscapeTime2d.csproj --configuration Release -- ./artifacts/mandelbrot-escape-time-2d.run.json ./artifacts/06-mandelbrot.generated.svg
+
+      - name: Upload Physics-backed GUI.SVG Mandelbrot field
+        uses: actions/upload-artifact@v7
+        with:
+          name: gui-svg-physics-mandelbrot-field
+          path: |
+            ./artifacts/mandelbrot-escape-time-2d.run.json
+            ./artifacts/06-mandelbrot.generated.svg
+          if-no-files-found: error
+
       - name: Restore Core
         run: dotnet restore src/Core/TheSingularityWorkshop.GUI.Core.csproj
 
