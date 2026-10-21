@@ -247,6 +247,13 @@ jobs:
           grep -q 'DataCard' artifacts/DataCard.source-structure.svg
           grep -q 'GetCollapsedSummary' artifacts/DataCard.source-structure.svg
           grep -q 'Children' artifacts/DataCard.source-structure.svg
+          # Source declarations must be grouped beneath explicit namespace cards;
+          # color identity is semantic, not inferred from nesting depth.
+          grep -q 'namespace:' artifacts/DataCard.source-structure.svg
+          grep -q 'stroke="#4f46e5"' artifacts/DataCard.source-structure.svg
+          grep -q 'stroke="#ff823d"' artifacts/DataCard.source-structure.svg
+          grep -q 'stroke="#f2e83d"' artifacts/DataCard.source-structure.svg
+          grep -q 'stroke-width="4"' artifacts/DataCard.source-structure.svg
           test -s artifacts/DataCard.uml.svg
           test -s artifacts/DataCard.semantic-uml.svg
           test -s artifacts/Core.uml-inventory.md
