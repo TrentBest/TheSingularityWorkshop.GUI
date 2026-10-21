@@ -618,3 +618,22 @@ PR [#9](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/9) is confi
 ## Exact-head WPF CI correction — 2026-10-21
 
 The preceding section's queued status is superseded by the completed result for run #39666044705: both Windows `test-wpf` and Linux `test-and-package` succeeded on `6fcc53c6646b889f593438b411204717f01bab2b`; the NuGet publish job was skipped. This clears the recorded WPF CI blocker for that exact code/test head. A subsequent documentation-only audit commit will require its own workflow run; no publication or branch deletion is implied.
+
+
+## Additional superseded-branch decisions — 2026-10-21
+
+### `work/gui-verify-xml-docs-in-packages` / PR #17
+
+A fresh comparison against current `development` reports 4 commits ahead and 266 behind, with changes only to `.github/workflows/package.yml`, `docs/NEXT_RELEASE_WORK_QUEUE.md`, and `docs/RELEASE_READINESS.md`. The all-four-package verification step for MIT license expression, README metadata/file, target framework, assembly, and XML documentation is byte-for-byte identical between the two workflow files. Both workflow versions also retain the `&& false` publish hard stop. Current development's release queue and readiness document are substantially more extensive and include newer candidate gates, including per-type UML coverage, so the branch's older prose does not replace current guidance.
+
+PR [#17](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/17) is confirmed closed and merged (2026-10-19). Disposition: **intentionally superseded candidate**; do not merge the stale branch snapshot. Recheck live references before the owner deletes it.
+
+### `work/svg-tree-depth-guard` / PR #10
+
+The current `docs/SVG_ADAPTER.md` is 16,580 characters versus 8,420 on the branch and contains the newer manifestation vocabulary and broader current adapter contract. The current renderer already uses iterative tree prevalidation, a 256-edge depth guard, and duplicate-ID validation. The earlier method-name reconciliation found every test method on the branch represented on development, while development has six additional renderer tests for stylesheet rendering, XML/non-ASCII escaping, deterministic output, malformed/non-finite values, blank required references, and duplicate IDs with coordinate overlays.
+
+PR [#10](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/10) is confirmed closed and merged (2026-10-16). Taken together, current implementation, broader tests, updated adapter guide, and PR lifecycle support disposition as an **intentionally superseded candidate**. This does not imply that its branch tip is byte-identical to development; it means the reviewed behavior and documentation contribution are represented by the newer development state. Recheck branch references before owner deletion.
+
+### Current gate
+
+The latest verified code/test head `6fcc53c6646b889f593438b411204717f01bab2b` passed both Windows WPF and Linux package/test jobs in run [#39666044705](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666044705). The follow-up audit documentation is a separate commit and must be judged by its own exact-head workflow. The live inventory still contains 15 non-keeper branches and five open PRs (#8, #11, #15, #18, #19); no branch deletion or publication is authorized by these dispositions. Sith remains **NOT CLEARED** until every remaining branch and open PR has a documented final disposition and the owner rechecks the inventory immediately before cleanup.
