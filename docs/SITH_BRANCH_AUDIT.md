@@ -1494,3 +1494,20 @@ Do not claim the tranche passes until the exact-head run completes. If any inter
 The model is renderer-neutral and contains no Roslyn/MSBuild dependency; generator packages remain outside runtime Core. This tranche does not yet include SVG renderer, generator, workflows, generated docs, or the rest of PR #18. Existing SVG scene renderer is unchanged. PR #18 remains open/draft; no merge attempted.
 
 Latest confirmed audit run for prior commit `ee117608563ba84d288e952a1400bfa98f33cdc9` passed (run **39676792886**). Current model tranche readiness remains **72% pending CI and downstream integration**; Sith **NOT CLEARED**. No branches deleted, no PR lifecycle actions, no package published; NuGet publish guard unchanged.
+
+
+## Operation Sith — UML model tranche passed; SVG renderer tranche staged — 2026-10-21 21:17 UTC
+
+### Verified Core tranche
+The exact final Core/model-test commit `f0913272ab79862899cde4ddc0f10b404589e3c4` passed run **39677047123**: `test-and-package` success, `test-wpf` success, `publish_nuget` skipped. The earlier model-only and diagram commits also passed runs **39677003849** and **39677025582**. This confirms the three reconciled Core files compile and the model schema tests pass in the current solution.
+
+### SVG renderer tranche — exact-head validation pending
+Added four files from protected source UML branch to development as separate commits:
+- `src/SVG/SvgUmlClassDiagramRenderer.cs` — `ef81e255830a1657985c9aea7c5a06a604c5fb91`; run **39677377065** in progress.
+- `src/SVG/SvgUmlDocumentationGraphRenderer.cs` — `0a3b0a3372913dab2fba99c7ea84520e5b4d573e`; run **39677383625** in progress.
+- `tests/SVG.Tests/SvgUmlClassDiagramRendererTests.cs` — `0897a3b2ba7b7aba2d32799646ea429f919e8485`; run **39677392141** in progress.
+- `tests/SVG.Tests/SvgUmlDocumentationGraphRendererTests.cs` — `79669391f9ae9b116b90778f779613c5d1770863`; run **39677399910** queued.
+
+These are additive renderer capabilities. Existing `SvgGuiRenderer.cs` scene/primitive renderer was not replaced. No generator or Roslyn/MSBuild dependency was added to runtime packages. The final SVG tranche commit has not yet been validated; do not call this tranche green until run **39677399910** completes.
+
+Current `development` head is `79669391f9ae9b116b90778f779613c5d1770863`. UML staging readiness stays **72% pending renderer CI, generator integration, workflow hardening, and generated-doc reconciliation**. Sith remains **NOT CLEARED**. No branch deleted, no PR lifecycle action, no package published; publish guard unchanged.
