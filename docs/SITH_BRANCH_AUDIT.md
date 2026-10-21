@@ -1523,3 +1523,34 @@ Current `development` head is `79669391f9ae9b116b90778f779613c5d1770863`. UML st
 - PR #18 remains draft and GitHub reports `mergeable_state=dirty`; its 229-ahead / 121-behind comparison and 86-file scope make wholesale merge inappropriate. Rebase/conflict reconciliation and scope reduction remain required after the workflow contract fix is verified.
 
 **Sith remains NOT CLEARED.** The four documented deletion candidates remain owner-only candidates. No branches or PRs were deleted or closed, and no package was published.
+
+
+## Operation Sith — source generator and SHA-pinned UML workflows staged — 2026-10-21 21:21 UTC
+
+### SVG tranche result
+All four SVG renderer tranche commits passed exact-head Package GUI workflows:
+- `ef81e255830a1657985c9aea7c5a06a604c5fb91`, run **39677377065** — success.
+- `0a3b0a3372913dab2fba99c7ea84520e5b4d573e`, run **39677383625** — success.
+- `0897a3b2ba7b7aba2d32799646ea429f919e8485`, run **39677392141** — success.
+- `79669391f9ae9b116b90778f779613c5d1770863`, run **39677399910** — success.
+Each had `test-and-package` and `test-wpf` success; `publish_nuget` skipped.
+
+### Generator integration
+Added isolated `samples/SourceUmlGenerator` project and its `Program.cs`, `ProjectUmlModelBuilder.cs`, and `SyntaxOnlyUmlModelBuilder.cs`. Roslyn/MSBuild packages are confined to this generator project; Core/SVG runtime dependencies remain unchanged.
+- Project file commit `f237c804fd4e69c939b8afe3c4ea4a79137cc147`, run **39677787378** — Package GUI success.
+- Project semantic builder commit `b5b7f7a22030e706cfc03692705b7109aeac0a51`, run **39677807079** — in progress at checkpoint.
+- Syntax builder commit `ef8f12fc12b77ee6c1cb6819d02f856d511596f6`, run **39677820359** — in progress.
+- CLI commit `3deaf44b3be392e283d9bd8de8c7efd9dea72128`, run **39677836760** — in progress.
+
+### Workflow and validation assets
+The repository already had the inventory generator, SVG contract verifier, and documentation-link checker; they were verified identical to the protected branch, so no duplicate copies were made. Added the SVG verifier edge-case tests and repository inventory validation script. Added both UML workflows to development with immutable action commit pins:
+- checkout `11d5960a326750d5838078e36cf38b85af677262`
+- setup-dotnet `67a3573c9a986a3f9c594539f4ab511d57bb3ce9`
+- upload-artifact `cf430e030ddbb5b0abf93d22962f4752f3646cd9`
+
+Workflow commits:
+- `.github/workflows/source-derived-diagrams.yml` commit `c2c1f7c1d845f09fd890b67f570178929c0acd44`; source-derived workflow run **39678019666** in progress and run **39678019990** queued.
+- `.github/workflows/solution-derived-uml.yml` commit `0904d51328fe44d07a0fe60b1d01aaa2620082ce`; workflow runs **39678028017** and **39678028039** queued.
+No exact-head generator/workflow success is claimed until these runs complete. If an earlier intermediate commit fails because later files had not yet landed, use the latest coherent head's result and investigate any persistent failure.
+
+UML staging readiness remains **72% pending final generator/workflow CI, generated-doc review, and failure correction**. Sith remains **NOT CLEARED**; no branch deletion, PR lifecycle action, or package publication. NuGet publish guard unchanged.
