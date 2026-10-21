@@ -115,16 +115,14 @@ if (document.Root?.Name != ns + "svg")
 
 var cells = document.Descendants(ns + "rect")
     .Where(element => ((string?)element.Attribute("id"))?.StartsWith("mandelbrot-cell-", StringComparison.Ordinal) == true)
-    .OrderBy(element => (string?)element.Attribute("id"), StringComparer.Ordinal)
-    .ToArray();
-if (cells.Length != samples.Length)
-    throw new InvalidOperationException($"Expected {samples.Length} rendered cells, got {cells.Length}.");
+    .ToDictionary(element => (string)element.Attribute("id")!, StringComparer.Ordinal);
+if (cells.Count != samples.Length)
+    throw new InvalidOperationException($"Expected {samples.Length} rendered cells, got {cells.Count}.");
 
 foreach (var sample in samples)
 {
     var id = $"mandelbrot-cell-{sample.Row:D3}-{sample.Column:D3}";
-    var cell = cells.SingleOrDefault(element => (string?)element.Attribute("id") == id);
-    if (cell is null ||
+    if (!cells.TryGetValue(id, out var cell) ||
         (string?)cell.Attribute("x") != F(plotLeft + sample.Column * cellWidth) ||
         (string?)cell.Attribute("y") != F(plotTop + sample.Row * cellHeight) ||
         (string?)cell.Attribute("fill") != CellColor(sample))
