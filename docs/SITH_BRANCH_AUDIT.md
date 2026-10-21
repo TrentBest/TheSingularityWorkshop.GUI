@@ -1817,3 +1817,21 @@ The keeper head before this ledger update was `1bf43072b0db9ce51abfbe904ab29bd9d
 Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. NuGet publication remains disabled. No branch was deleted, no PR was merged, and no package was published.
 
 **Sith status: NOT CLEARED until the new keeper head's exact CI passes and the final branch/PR inventory is rechecked.**
+
+
+## Operation Sith — exact-head verification and final inventory checkpoint — 2026-10-21 21:55 UTC
+
+The live `development` head `d5fea15e5ed20d39d1da76fe79c95553057586b3` passed all three workflows on that exact SHA:
+- Source-derived diagrams: [run 39682463735](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39682463735) — success.
+- Package GUI: [run 39682463809](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39682463809) — success; WPF tests passed and `publish_nuget` was skipped.
+- Solution-derived UML inventory: [run 39682463836](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39682463836) — success.
+
+The source-derived artifact contains the current Core semantic inventory (32 types, 124 relationships) and per-type Markdown/SVG outputs. The manual promotion workflow has **not** been dispatched; the generated per-type pages are still not committed under `docs/uml/source-files/Core/`. The promotion workflow is deliberately manual and commits only generated documentation. This remains the principal open PR #18 reconciliation gap; do not copy old generated pages from its branch as a substitute for current-source output.
+
+The live branch inventory is still 20 branches, with only `master` and `development` as keepers. PR #8, #11, #15, and #19 are closed without merge; PR #18 is the only open PR and remains draft. No branch has been deleted. The 17 branches listed above are candidates for the owner's manual deletion after a final inventory recheck; retain `work/gui-svg-source-uml-generator` until the generated documentation promotion and remaining branch-specific artifacts are reconciled.
+
+**Correction to earlier pending-gate notes:** the exact-head CI gate did pass on `d5fea15e5ed20d39d1da76fe79c95553057586b3`. This ledger update creates a new development head, so CI must be rechecked on the resulting commit before finalizing the manual deletion list.
+
+Package release readiness remains **70%**. Source-derived UML staging readiness remains **78%**. NuGet publishing remains disabled by the explicit `&& false` hard stop.
+
+**Sith remains NOT CLEARED until the new ledger commit's exact-head CI passes and the branch/PR inventory is rechecked.** No branch was deleted, no PR was merged, and no package was published.
