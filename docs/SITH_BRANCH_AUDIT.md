@@ -1102,3 +1102,24 @@ Additional file-level checks refine the candidate list:
 - `work/webpage-event-builder-compatibility`: `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` is byte-identical on both refs (blob `be6c179c751d8f817293f4f445584df23675afd5`). The builder source still differs and must be compared before disposition.
 - Audit commit `fe4ec10a7d739d9432d4aba5894c521be25754e7` currently has no individual status records and no PR-triggered workflow runs returned by the connector; CI is **unverified**, not green.
 - Sith remains **NOT CLEARED**. UML staging readiness remains **72%**. No branch deletion, PR closure/merge, or package publication was performed.
+
+## Follow-up checkpoint — 2026-10-21 20:38 UTC
+
+### Post-merge Physics proof is green
+
+The merge commit `b584b8a0e0c9bbf068c0155dc8dfadb7bd4f56c3` has completed its post-merge workflow successfully: [run #39671256858](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39671256858) reports `test-and-package` and `test-wpf` succeeded; `publish_nuget` was skipped. The exact PR-head run #39670789022 also passed both required jobs. The seeded point-set feature is therefore validated on both PR head and merge commit. Its branch `feat/physics-seeded-pointset-svg` remains in the live branch inventory; this ledger does not delete it.
+
+### WebPage event-builder compatibility branch — content comparison completed
+
+Live comparison of `work/webpage-event-builder-compatibility` against development: **3 commits ahead / 548 behind, 2 changed files**. The test file `tests/Blazor.Tests/WorkshopGuiBuilderEventTests.cs` is byte-identical on both refs (blob `be6c179c751d8f817293f4f445584df23675afd5`). The only source-file difference in `src/Blazor/WorkshopGuiBuilder.cs` is XML documentation comments on `WorkshopGui` and `ElementBuilder`; the public methods and implementation body are otherwise identical. This is a **superseded candidate** for source/test content, subject to a final branch/PR/reference check at the manual cleanup checkpoint. No unique runtime behavior or unique test is visible in the current diff.
+
+### Current exact-head CI caution
+
+Development has advanced again to `98de63fc6738e157d0d7e697d809e23363e09d0a` while this audit was running. The latest workflow run visible at the checkpoint, [#39671995083](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39671995083), targets earlier head `f4e58be9181c91077bfb507ae79a937092da752d` and is still in progress; its WPF and test/package jobs were both running. Therefore this is **not yet exact-head CI evidence for `98de63f`**. The most recent completed green development workflow before these newer documentation commits is #39671660534 on `cb373cbdbebeff68a294a867ddf168fdf738983c`. Treat newer-head CI as pending until a workflow for the actual current head completes.
+
+### Source-derived UML PR #18
+
+PR #18 remains open and draft, with 86 changed files and head `97554095656f2ef0ca94cbc4ada73848f3a953f8`. The GitHub check-runs endpoint currently returns no individual check records for that exact head, so its CI status is **unverified**, not green. Preserve/reconcile the branch; do not infer readiness from the size of the implementation or from unrelated development CI.
+
+No branch was deleted, no PR was closed or merged by this audit pass, `master` remains untouched, and NuGet publishing remains gated.
+
