@@ -1681,3 +1681,15 @@ Inspected the exact `publish_nuget` condition on both PR heads. Both `work/gui-p
 ### Updated disposition count
 
 Five of the 18 non-keeper branches now have evidence-backed redundant/superseded dispositions: the three demonstration branches above, `work/gui-wpf-tests`, and `fix/guinode-nullability-contract`. This is **28% disposition-ready by branch count**, not a release-readiness percentage. Thirteen non-keeper branches remain for content review or explicit PR/policy disposition. Sith remains **NOT CLEARED**; no branch deletion, PR merge/close, or package publication occurred.
+
+
+## Operation Sith — second exact-diff disposition pass — 2026-10-21 21:47 UTC
+
+- **work/svg-tree-depth-guard**: the branch renderer predates the current accessibility title/description IDs and embedded-style support. Its negative-dimension test is covered more broadly by current development theory tests (circle, ellipse, rectangle, line stroke width, and coordinate-point radius). Its shorter SVG adapter guide is superseded by the expanded current guide, including external-reference safety boundaries, actual capability limits, evidence mapping, and regeneration caveats. **Disposition: superseded candidate.**
+- **work/webpage-event-builder-compatibility**: its event test file is byte-identical to the current development test file. The branch's WorkshopGuiBuilder.cs has the same implementation methods but lacks the XML API documentation now present on development. **Disposition: superseded candidate.**
+- **work/svg-app-fsm-cos-boundary**: docs/SVG_APP_CONCEPT.md is byte-identical to the current development file. Its remaining README delta is an older framing superseded by the current README's documented adapter boundaries and links. **Disposition: superseded candidate.**
+- **work/gui-uml-per-file-documentation**: the branch's docs/DATA_CARDS_AND_UML.md is a shorter historical version of the current development document. The current file includes source/domain/projection/generator boundaries, diagram-family model facts, a narrow vertical-slice plan, and code-generation safety requirements absent from the branch snapshot. **Disposition: superseded candidate.**
+
+Also verified that work/gui-release-mit-wpf-scope's LICENSE file is byte-identical to the current development LICENSE; the MIT license itself is not missing and needs no harvest. That branch still has distinct release/project/workflow/readiness deltas and remains held for separate review.
+
+The evidence-backed redundant/superseded count is now **9 of 18 non-keeper branches (50% disposition-ready by branch count)**: feat/mandelbrot-parameter-explorer, feat/mandelbrot-physics-svg, feat/physics-seeded-pointset-svg, fix/guinode-nullability-contract, work/gui-wpf-tests, work/svg-tree-depth-guard, work/webpage-event-builder-compatibility, work/svg-app-fsm-cos-boundary, and work/gui-uml-per-file-documentation. This is branch-disposition progress, not release readiness. The remaining nine require content reconciliation or explicit PR/policy decisions. No branch was deleted; no PR was merged/closed; no package was published.
