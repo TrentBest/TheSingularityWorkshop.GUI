@@ -237,3 +237,23 @@ The name element uses a text input or equivalent editing control during an edit 
 6. Tests must assert both the model change and the resulting projection/viewport intent; a visually moved card alone is not proof that the source model changed.
 
 GUI Core owns generic card hierarchy, identity, presentation, and interaction intent. It does **not** own C# parsing, symbol resolution, compilation context, or AST mutation authority. SVG can visualize this model and may express clickable affordances when hosted by an interactive application, but a standalone SVG image is not itself a trusted code editor. The host interaction bridge and validated code-domain command handler are required for edits.
+
+## Per-file documentation and UML coverage
+
+Every documented implementation file that declares a class, interface, struct, record, or enum must include a **source-accurate UML class diagram** in its corresponding documentation page. If a file declares multiple types, the page must cover each declared type; do not omit helper, nested, or internal types merely because they are not public API. If a repository uses one documentation page per type rather than per source file, each type page must carry its own diagram and link to related types.
+
+Each diagram should, where applicable, show:
+
+- the fully qualified type name and kind (class, interface, struct, record, or enum);
+- inheritance and implemented interfaces;
+- meaningful fields, properties, constructors, and methods, including parameter and return types;
+- visibility and static/abstract/virtual distinctions where they affect the contract;
+- associations, containment, dependencies, and multiplicities only when supported by source evidence;
+- cross-file relationships with links to the related type documentation.
+
+Use Mermaid `classDiagram` in Markdown as the portable, reviewable source representation unless the documentation system establishes a stronger repository-wide format. A diagram may omit private implementation detail for readability only when the page explicitly identifies the view as a simplified overview; the detailed class page must still make the omitted contract inspectable. Do not invent relationships from naming or intended architecture.
+
+The diagram must be derived from the current source definition and updated in the same change as a relevant source-contract change. It must not become a second manually maintained source of truth. Where practical, generate diagrams from the same syntax/AST-backed model used by the GUI data-card projection. Until such generation exists, review each diagram against the source and test that referenced type/member names exist. A diagram-generation or documentation check should eventually fail CI for stale or missing diagrams.
+
+For files that do not declare a type (for example, extension-only or utility files), document the actual unit and its dependencies with the appropriate diagram or a short explicit “class diagram not applicable” rationale; do not add a misleading empty UML diagram. Generated code and test fixtures should follow their repository-specific documentation policy, but must not be silently counted as complete coverage.
+
