@@ -911,3 +911,11 @@ No branch deletion, PR merge/closure, or package publication was performed.
 
 Neither workstream is cleared for branch deletion. No branches or PRs were modified. The latest audit commit's status remains unverified; absence of reported status entries is not a passing result.
 
+## Architecture branch content harvested without importing legacy implementation — 2026-10-21
+
+The unique explanatory material in `architecture/datum-interaction-boundary` has now been reconciled into current `docs/DATUM_AND_INTERACTION_BOUNDARY.md` (commit `3aa9e4398463aebd9e6a79585ad3c3106cca13d0`). Preserved examples include the rendered-horse datum/manifestation distinction; semantic presentation → platform manifestation → rendering; physical device observations → semantic interaction → domain request; the intersection/bridge rule for common Core capabilities; and the distinction between protocol identity and execution authority. The added section explicitly labels these as explanatory models, freezes no proposed package name/API, and states that no ProtocolAi dependency is introduced into GUI.Core.
+
+This is a **content harvest, not a branch merge**. The branch's existing safety qualifications remain authoritative: no new physical-input package is created by this note, stable identities do not grant execution authority, and implementation claims must be verified against current source. The remaining historical source/test changes on `architecture/datum-interaction-boundary` are still subject to separate reconciliation; the branch is not cleared for deletion solely because the examples were preserved.
+
+The latest successful audit-documentation run before this harvest was [#39669778202](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39669778202), which passed on commit `1b108174d1fc1dce2ec3739ef14104b58a0f9534`. That success does not cover this new documentation commit. A fresh exact-head workflow must complete before claiming the current head is green.
+
