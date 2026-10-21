@@ -1360,3 +1360,14 @@ Live branch enumeration now shows **19 branches** (target 2; 17 non-keepers). Co
 - New branch `feat/mandelbrot-physics-svg` is now present: 8 ahead / 12 behind, with sample, gallery, and workflow changes. PR #21 is closed; branch ref remains and must be reconciled before cleanup. Current API reports merged_at `2026-10-21T20:55:17Z`, so closure alone is not treated as merge evidence.
   
 Current development head: `d284c00c58acf2dbab572dfd27647da55e2aa281`. Source UML branch head `97554095656f2ef0ca94cbc4ada73848f3a953f8` still has no Actions workflow run returned for that exact SHA. No branches deleted. Sith remains **NOT CLEARED**; UML staging readiness **72%**; publication guard untouched. Next, review UML branch's unique model schema and generator output contract against current development, then build a reference-checked deletion ledger rather than deleting.
+
+
+## Operation Sith checkpoint — new Mandelbrot PR and CI refreshed — 2026-10-21 21:02 UTC
+
+Live branch list now contains **20 branches**: keepers `master` and `development`, plus **18 non-keepers** requiring reconciliation/reference review. The new branch `feat/mandelbrot-parameter-explorer` (head `037ffd9604865d2651587896167dc14bed5be7b6`) has open PR **#22** to `development`: https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/22. It adds configurable Mandelbrot detail records alongside the overview, with pinned Physics source `6b7f4ca35e53ce77efd632d8c2cea6f07d9f6373`, recipe/gallery updates, and package workflow changes. Its exact-head Package GUI run **39675376487** was queued at 21:01:47Z when checked; no pass/fail conclusion available yet. Do not treat it as green until the run completes. Review workflow edits carefully; Actions still use mutable `actions/checkout@v4` and no publish-gate change is authorized.
+
+Latest development audit commit `4387a3b2ab618d01033719b95338410d0fa74ab5` is verified green: run **39675034015**, with `test-and-package` and `test-wpf` success and `publish_nuget` skipped. This confirms the audit checkpoint, not PR #22.
+
+Source-derived UML branch remains protected. Its latest known branch head is still `97554095656f2ef0ca94cbc4ada73848f3a953f8`; no Actions run exists for that exact SHA. Latest branch workflow runs remain historical at `b4c68259a2df7c6f565708a529b01e62c433dae0`; the current PR head is not verified green. Workflow uses mutable action tags, a hardening item after functional reconciliation.
+
+Sith remains **NOT CLEARED**; UML staging readiness **72%**; no branches deleted, no PR merged/closed by assistant, and no packages published. Continue checking PR #22 CI, reconciling source-derived UML model/generator as a coherent unit, and producing the reference-checked manual deletion ledger. Keep the NuGet `&& false` guard untouched.
