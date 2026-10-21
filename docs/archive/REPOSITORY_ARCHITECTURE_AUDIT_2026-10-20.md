@@ -1,4 +1,4 @@
-> **Historical audit snapshot — 2026-10-20.** This document records PR #18 candidate 1471b9aa90db1ad0de9ec2653f8422dbe5fa16d0 and its historical workflow evidence. It is preserved for provenance, not as current repository status. For current facts use [Operation Sith](../SITH_BRANCH_AUDIT.md), [release readiness](../RELEASE_READINESS.md), [source-derived UML tooling](../SOURCE_DERIVED_UML.md), and [the UML visual audit](../UML_VISUAL_AUDIT.md). Re-check current code and exact-head workflows before acting on any statement below.
+> **Historical audit snapshot — 2026-10-20.** This document records PR #18 candidate 1471b9aa90db1ad0de9ec2653f8422dbe5fa16d0 and its historical workflow evidence. It is preserved for provenance, not as current repository status. For current facts use [Operation Sith](../../SITH_BRANCH_AUDIT.md), [release readiness](../../RELEASE_READINESS.md), [source-derived UML tooling](../../SOURCE_DERIVED_UML.md), and [the UML visual audit](../../UML_VISUAL_AUDIT.md). Re-check current code and exact-head workflows before acting on any statement below.
 
 # Historical Repository Architecture and Completeness Audit
 
