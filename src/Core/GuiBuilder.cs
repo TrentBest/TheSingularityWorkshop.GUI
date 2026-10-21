@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace TheSingularityWorkshop.Workshop.Gui;
 
-/// <summary>Builds a platform-neutral semantic GUI node tree.</summary>
+/// <summary>
+/// Fluent, platform-neutral builder for a semantic GUI tree. Child builders compose
+/// recursively; Build creates an immutable snapshot without recursive traversal.
+/// </summary>
 public sealed class GuiBuilder
 {
     private readonly NodeBuilder _root;
@@ -27,23 +30,39 @@ public sealed class GuiBuilder
         return this;
     }
 
-    /// <summary>Adds a child node and configures it with a fluent callback.</summary>
+    /// <summary>Adds and configures a child using a fluent callback.</summary>
     public GuiBuilder Child(string kind, string id, Action<GuiBuilder>? configure = null)
     {
-        var child = new NodeBuilder(kind, id);
-        var builder = new GuiBuilder(child);
-        configure?.Invoke(builder);
-        _root.Children.Add(child);
+        var child = new GuiBuilder(new NodeBuilder(kind, id));
+        configure?.Invoke(child);
+        _root.Children.Add(child._root);
+        return this;
+    }
+
+    /// <summary>Adds another builder as a recursively composed child.</summary>
+    public GuiBuilder Child(GuiBuilder child)
+    {
+        ArgumentNullException.ThrowIfNull(child);
+        _root.Children.Add(child._root);
+        return this;
+    }
+
+    /// <summary>Adds an existing immutable node as a child snapshot.</summary>
+    public GuiBuilder Child(GuiNode child)
+    {
+        ArgumentNullException.ThrowIfNull(child);
+        _root.Children.Add(FromNode(child));
         return this;
     }
 
     /// <summary>
-    /// Builds a snapshot of the configured tree without recursive materialization,
-    /// so deeply nested builder input cannot exhaust the process call stack.
+    /// Builds an immutable snapshot iteratively. Cyclic builder composition is rejected
+    /// with a controlled exception rather than overflowing the process call stack.
     /// </summary>
     public GuiNode Build()
     {
         var built = new Dictionary<NodeBuilder, GuiNode>();
+        var active = new HashSet<NodeBuilder>();
         var pending = new Stack<(NodeBuilder Builder, bool Expanded)>();
         pending.Push((_root, false));
 
@@ -59,12 +78,17 @@ public sealed class GuiBuilder
                 built[builder] = new GuiNode(
                     builder.Kind, builder.Id, builder.Text, builder.Source,
                     builder.Properties, children);
+                active.Remove(builder);
                 continue;
             }
+
+            if (active.Contains(builder))
+                throw new InvalidOperationException("A GUI builder cannot contain itself, directly or indirectly.");
 
             if (built.ContainsKey(builder))
                 continue;
 
+            active.Add(builder);
             pending.Push((builder, true));
             for (var i = builder.Children.Count - 1; i >= 0; i--)
                 pending.Push((builder.Children[i], false));
@@ -73,9 +97,51 @@ public sealed class GuiBuilder
         return built[_root];
     }
 
+    private static NodeBuilder FromNode(GuiNode node)
+    {
+        var clones = new Dictionary<GuiNode, NodeBuilder>();
+        var pending = new Stack<(GuiNode Node, bool Expanded)>();
+        pending.Push((node, false));
+
+        while (pending.Count > 0)
+        {
+            var (current, expanded) = pending.Pop();
+            if (expanded)
+            {
+                var builder = new NodeBuilder(current.Kind, current.Id)
+                {
+                    Text = current.Text,
+                    Source = current.Source
+                };
+                foreach (var property in current.Properties)
+                    builder.Properties.Add(property.Key, property.Value);
+                foreach (var child in current.Children)
+                    builder.Children.Add(clones[child]);
+                clones[current] = builder;
+                continue;
+            }
+
+            if (clones.ContainsKey(current))
+                continue;
+
+            pending.Push((current, true));
+            for (var i = current.Children.Count - 1; i >= 0; i--)
+                pending.Push((current.Children[i], false));
+        }
+
+        return clones[node];
+    }
+
     private sealed class NodeBuilder
     {
-        public NodeBuilder(string kind, string id) { Kind = kind; Id = id; }
+        public NodeBuilder(string kind, string id)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(kind);
+            ArgumentException.ThrowIfNullOrWhiteSpace(id);
+            Kind = kind;
+            Id = id;
+        }
+
         public string Kind { get; }
         public string Id { get; }
         public string? Text { get; set; }
