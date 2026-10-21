@@ -1476,3 +1476,21 @@ Sith remains **NOT CLEARED**. No branches deleted, no PRs merged/closed by the a
 - Next audit action: obtain a fresh CI run for PR #18's current head; if no run is triggered, rerun the workflow or push a minimal evidence-based fix on its branch. Verify the generated SVG and checked-in canonical artifact are identical from the same source revision. Do not merge until the exact current head is green and the unrelated scope is reconciled.
 
 **Decision unchanged: Sith NOT CLEARED.** The four prior branch candidates remain owner-only deletion candidates, subject to a final live check.
+
+
+## Operation Sith — first bounded UML model tranche committed to development — 2026-10-21 21:14 UTC
+
+Made a deliberately narrow source-UML integration tranche directly on `development`, without merging PR #18:
+- `src/Core/UmlDocumentationModel.cs` copied from protected UML branch blob `77c09297f6ce770b09f8e86b0f3848920bb6ebf6`; commit `c4974e7725303bbb7edb6fba665a8b56a0dd44e5`.
+- `src/Core/UmlClassDiagram.cs` copied from branch blob `2c193df5f65f0bfdddbf9f660c42d8249186f15c`; commit `d93569ed5bbae74d7c3a7b0e4450a413dc7750e9`.
+- `tests/Core.Tests/UmlDocumentationModelTests.cs` copied from branch blob `00d921003213fd0e63c94d9b30e517facad99ed3`; commit `f0913272ab79862899cde4ddc0f10b404589e3c4`.
+
+These files are source-reconciled, not yet considered validated. Development runs are active:
+- Run **39677003849** at model commit `c4974e7...`: in progress.
+- Run **39677025582** at diagram commit `d93569e...`: in progress.
+- Run **39677047123** at test commit `f091327...`: queued.
+Do not claim the tranche passes until the exact-head run completes. If any intermediate run fails due to the intentionally staged commit sequence, evaluate the final commit run as authoritative and fix genuine compile/test errors.
+
+The model is renderer-neutral and contains no Roslyn/MSBuild dependency; generator packages remain outside runtime Core. This tranche does not yet include SVG renderer, generator, workflows, generated docs, or the rest of PR #18. Existing SVG scene renderer is unchanged. PR #18 remains open/draft; no merge attempted.
+
+Latest confirmed audit run for prior commit `ee117608563ba84d288e952a1400bfa98f33cdc9` passed (run **39676792886**). Current model tranche readiness remains **72% pending CI and downstream integration**; Sith **NOT CLEARED**. No branches deleted, no PR lifecycle actions, no package published; NuGet publish guard unchanged.
