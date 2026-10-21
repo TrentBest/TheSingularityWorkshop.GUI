@@ -1597,3 +1597,61 @@ The source-derived pipeline was green at `7cbf5959563fb90d72b2f264848eb36409ca4d
 Do not mark promotion safety green until the exact-head source workflow completes.
 
 UML staging readiness remains **78%** pending exact-head validation and the first checked-in generated-page promotion. Sith remains **NOT CLEARED**. No branch deleted, no PR lifecycle action, no package published; NuGet publish guard unchanged.
+
+
+## Live Operation Sith checkpoint — refreshed branch inventory and UML CI — 2026-10-21 21:42 UTC
+
+This checkpoint supersedes earlier branch-count statements above where they conflict with the live inventory. The current `development` tip is `5d003d864758` (full SHA begins `5d003d864758`). Exact-head workflows are all green:
+- Source-derived diagrams: run [39680522114](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39680522114), success.
+- Package GUI: run [39680522235](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39680522235), success.
+- Solution-derived UML inventory: run [39680522333](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39680522333), success.
+
+### Fresh branch inventory
+
+The live GitHub branch inventory now contains 20 branches: keepers `master` and `development`, plus these 18 non-keepers requiring final disposition:
+
+1. `architecture/datum-interaction-boundary`
+2. `feat/mandelbrot-parameter-explorer`
+3. `feat/mandelbrot-physics-svg`
+4. `feat/physics-seeded-pointset-svg`
+5. `feature/integrated-fsm-cos-hub`
+6. `feature/nested-experiences`
+7. `fix/guinode-nullability-contract`
+8. `work/gui-publish-gate-reconciled`
+9. `work/gui-release-mit-wpf-scope`
+10. `work/gui-svg-source-uml-generator`
+11. `work/gui-uml-per-file-documentation`
+12. `work/gui-verify-xml-docs-in-packages`
+13. `work/gui-wpf-tests`
+14. `work/nuget-publish-gate`
+15. `work/svg-app-fsm-cos-boundary`
+16. `work/svg-guide-current-contract`
+17. `work/svg-tree-depth-guard`
+18. `work/webpage-event-builder-compatibility`
+
+### Fresh PR state and publication guard
+
+Open PRs remain #8 (`architecture/datum-interaction-boundary), #11 (`work/svg-guide-current-contract`), #15 (`work/nuget-publish-gate`), #18 (`work/gui-svg-source-uml-generator`), and #19 (`work/gui-publish-gate-reconciled`). PR #8 and #18 remain drafts. These PRs must be deliberately resolved before their head branches are deleted. No PR was merged or closed in this checkpoint.
+
+The current `.github/workflows/package.yml` publication hard stop remains an explicit constraint: NuGet publishing is disabled by the `&& false` guard. Do not merge or select a publish-gate change that enables publication without the owner's explicit authorization. Passing Package GUI CI is not publication authorization.
+
+### New branch-tip comparison findings
+
+Comparisons against `development` were refreshed for every non-keeper branch. The three newer demonstration branches do not contain branch-only source files: the Mandelbrot and seeded-point-set sample implementations/project files exist on `development`; remaining differences are package workflow and/or gallery/index/recipe documentation. Their documentation/workflow deltas still need semantic comparison before classification as redundant or discardable.
+
+- `feat/mandelbrot-parameter-explorer`: 5 commits ahead / 42 behind; comparison reports only `samples/demonstrations/GALLERY.md`, `samples/demonstrations/index.html`, `samples/demonstrations/recipes/06-mandelbrot-field.md`, package workflow, and this audit file as differing. Sample source is already present on `development`.
+- `feat/mandelbrot-physics-svg`: 8 ahead / 55 behind; source/project paths exist on `development`; workflow, gallery, index, and recipe text differ.
+- `feat/physics-seeded-pointset-svg`: 9 ahead / 74 behind; source/project paths exist on `development`; workflow and demonstration catalog/recipe text differ.
+- `work/gui-wpf-tests`: 0 ahead / 362 behind and no compare-diff files; its tip is an old ancestor. It is a redundant candidate, but not yet a final deletion authorization.
+- `fix/guinode-nullability-contract`: 1 ahead / 546 behind; only `src/Core/GuiNode.cs` appears in the branch-tip comparison. The old change is superseded by the current iterative traversal/XML documentation; final PR/history disposition remains part of the checklist.
+- `work/gui-publish-gate-reconciled` and `work/nuget-publish-gate`: each reports a one-file change to `.github/workflows/package.yml`, but their histories differ substantially. Review the exact one-line patch and PR intent; preserve the current hard stop until explicit authorization.
+- `work/gui-svg-source-uml-generator`: 230 ahead / 148 behind; the source-derived UML effort still has meaningful branch-only authored docs, source-file UML pages, workflows, scripts, and assets. Its promotion path has progressed on `development`, but compare/reconcile each unique artifact and the draft PR #18 before closing or deleting it.
+- `work/svg-tree-depth-guard`: 5 ahead / 546 behind; its renderer/test/docs delta remains unreviewed at hunk level.
+- `work/webpage-event-builder-compatibility`: 3 ahead / 609 behind; builder source and event test remain unique deltas requiring semantic review.
+- `work/svg-app-fsm-cos-boundary`: 5 ahead / 546 behind; README and concept document remain the reported differences; verify content and PR disposition.
+- `work/gui-release-mit-wpf-scope` and `work/gui-verify-xml-docs-in-packages`: release/license/project/workflow documentation deltas remain to be compared with current release policy and readiness docs.
+- `architecture/datum-interaction-boundary`, `feature/integrated-fsm-cos-hub`, `feature/nested-experiences`, and `work/svg-guide-current-contract` are deeply divergent legacy snapshots. Their full code/doc/workflow deltas are not safe to dismiss by ahead/behind counts alone; preserve/reconcile useful authored content and explicitly disposition obsolete implementation.
+
+### Decision
+
+**Sith status remains NOT CLEARED.** Exact-head UML/package/inventory CI is green and current inventory is now recorded, but the remaining unique content and five open PRs require deliberate disposition. No branch was deleted; no PR was merged/closed; no package was published. Current audit progress is not release readiness. The qualitative UML staging readiness estimate remains 78% until the checked-in generated-page promotion is executed and reviewed.
