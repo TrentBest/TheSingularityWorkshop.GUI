@@ -678,3 +678,45 @@ Fresh comparison of `work/gui-release-mit-wpf-scope` against current `developmen
 - The branch's release queue/readiness prose is older and shorter. Its historical 74% readiness statement and historical CI links are not current candidate evidence; current development has the more extensive release gates and updated blockers.
 
 No unique MIT license or WPF package metadata change remains to be ported from this branch based on the inspected files. Disposition: **superseded candidate**, subject to one final live branch/reference check before the owner deletes it. Do not merge the historical branch snapshot. This is a branch disposition only; current release readiness remains separate and the NuGet publish hard stop remains unchanged.
+
+
+## Live recheck after WPF shutdown fix — 2026-10-21 20:11 UTC
+
+This section is based on a fresh branch comparison against `development` at `24c9da30a4a0967dd22bf714fdaf40626f4613c9`, the current live branch inventory, open-PR search, and completed GitHub Actions jobs. It supersedes earlier counts where the base moved.
+
+### Exact-head CI
+
+- Code/test commit `6fcc53c6646b889f593438b411204717f01bab2b`: [Package GUI run #39666044705](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666044705) completed successfully. Both `test-and-package` and `test-wpf` succeeded; `publish_nuget` was skipped.
+- Follow-up audit commit `9c7461a8ec8946b153b6a75ba24c8a9e96057b9f`: [Package GUI run #39666083948](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666083948) completed successfully. Both test jobs succeeded; `publish_nuget` was skipped.
+- Later development documentation commit `24c9da30a4a0967dd22bf714fdaf40626f4613c9`: [Package GUI run #39666894240](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39666894240) completed successfully.
+- The Windows test job success supports the targeted WPF test cleanup; it does not prove the crash's root cause beyond doubt or clear the branch audit.
+- The live package workflow still contains `&& false` in the NuGet publish condition. Publishing remains disabled.
+
+### Fresh branch inventory and dispositions
+
+The live inventory remains 17 branches: `master`, `development`, and 15 non-keepers. Open PRs remain #8, #11, #15, #18, and #19.
+
+| Non-keeper branch | Fresh comparison / evidence | Current disposition |
+|---|---|---|
+| `work/gui-wpf-tests` | Exact comparison: 0 commits ahead, 272 behind, no changed files relative to current development. | **Verified-redundant candidate.** Recheck its ref and PR references immediately before owner deletion. |
+| `fix/guinode-nullability-contract` | 1 commit ahead; only `src/Core/GuiNode.cs` differs. Development uses the newer iterative traversal and has current XML docs. | **Superseded candidate.** Final ref/PR-reference check before deletion. |
+| `work/gui-uml-per-file-documentation` | 1 commit ahead; its only unique change is the 19-line per-file UML requirement already reconciled into `docs/DATA_CARDS_AND_UML.md` in `f5d5c836c47b2e10f2dfe4da8ecbf0ec9de282ae`. | **Superseded candidate.** Final ref check before deletion; no claim of automated enforcement. |
+| `work/gui-release-mit-wpf-scope` | 16 commits ahead; inspected LICENSE, package project metadata, WPF README, workflow and release prose are either byte-identical to current development or superseded by stronger current checks/docs. | **Superseded candidate.** Final ref check before deletion. |
+| `work/gui-verify-xml-docs-in-packages` | 4 commits ahead; all-four-package metadata verification step is identical to current development's step, which checks additional metadata. Branch release prose is older; publish hard stop remains. PR #17 is closed/merged. | **Superseded candidate.** Final ref check before deletion. |
+| `work/svg-tree-depth-guard` | 5 commits ahead; current renderer has iterative prevalidation, depth guard and duplicate-ID checks; current tests/guide are newer and broader. PR #10 is closed/merged. | **Intentionally superseded candidate** based on reviewed behavior/docs/tests; final ref check before deletion. |
+| `work/svg-app-fsm-cos-boundary` | 5 commits ahead; branch adds `docs/SVG_APP_CONCEPT.md` (132 lines) and a README wording change. The concept document was not found on current development in the earlier live contents check. | **HOLD.** Preserve/reconcile the unique concept note or record an explicit discard rationale before deletion; a merged PR label is not enough. |
+| `work/webpage-event-builder-compatibility` | 3 commits ahead; unique changes are two lines in `WorkshopGuiBuilder.cs` and a 33-line event test. | **HOLD.** Inspect semantics and establish whether current development covers the compatibility behavior. |
+| `work/gui-uml-per-file-documentation` | See reconciled requirement above; its source diff is one docs file only. | No additional implementation contribution identified. |
+| `work/gui-publish-gate-reconciled` and `work/nuget-publish-gate` | Each actual branch patch is one workflow-line change proposing to remove the same `&& false` hard stop; histories diverge, but the logical patch duplicates. | **HOLD.** Both PRs #19 and #15 remain open. Do not merge or enable publication as part of Sith. Owner must explicitly choose a canonical proposal and authorize gate changes. |
+| `work/gui-svg-source-uml-generator` | PR #18 remains open/draft. Its broad unique work includes source/solution-derived UML model and SVG renderers, generated per-file diagrams, tests and verification scripts. | **ACTIVE RETAIN/RECONCILE.** Do not merge wholesale; verify source truth, coverage, determinism, generated assets and exact-head CI. |
+| `work/gui-uml-per-file-documentation` | Its sole 19-line requirement is on development now. | Superseded as stated above. |
+| `work/svg-guide-current-contract` | PR #11 is a broad historical patch (59 files, 112 commits), not merely a guide. It includes workflow, docs, source, tests, and assets. | **HOLD.** Review each unique semantic contract; do not merge wholesale or discard based on title. |
+| `architecture/datum-interaction-boundary` | PR #8's branch is a broad, deeply diverged snapshot including workflow, docs, Core/Blazor/WPF implementation and tests, not just the datum note. | **HOLD.** Extract reusable architecture principles and compare implementation/test changes individually; do not merge wholesale. |
+| `feature/integrated-fsm-cos-hub` | 76 commits ahead, broadly overlaps legacy hub, Core/Blazor/WPF and tests. | **HOLD for explicit disposition.** Current host-owned lifecycle direction conflicts with parts of this older hub approach; inspect whether any unique contracts/tests need preservation, then record discard/rebuild decisions. |
+| `feature/nested-experiences` | 38 commits ahead, with unique nested-experience docs and broad Core/Blazor changes. | **HOLD for explicit disposition.** Compare useful contract/documentation against the current host-owned lifecycle direction; no wholesale merge. |
+
+### Current clearance decision
+
+This pass strengthens the list of superseded candidates but does **not** clear Sith. The concept note on `work/svg-app-fsm-cos-boundary`, the Blazor event-builder compatibility change, the broad open PRs #8/#11/#18, and the legacy feature branches still require explicit reconciliation or documented discard. PRs #15 and #19 remain open and publication remains deliberately disabled.
+
+No branch was deleted, no PR was merged or closed, and no package was published. The owner remains responsible for branch deletion after the audit reaches a complete, current, evidence-backed all-clear.
