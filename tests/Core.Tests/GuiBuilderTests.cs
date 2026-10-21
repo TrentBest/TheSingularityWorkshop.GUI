@@ -76,12 +76,7 @@ public sealed class GuiBuilderTests
         const int depth = 4096;
 
         for (var i = depth - 1; i >= 0; i--)
-        {
-            root = new GuiNode(
-                "Panel",
-                $"node-{i}",
-                children: root is null ? null : new[] { root });
-        }
+            root = new GuiNode("Panel", $"node-{i}", children: root is null ? null : new[] { root });
 
         Assert.NotNull(root);
         Assert.True(root!.TryFind($"node-{depth - 1}", out var found));
@@ -98,5 +93,25 @@ public sealed class GuiBuilderTests
         var exception = Assert.Throws<InvalidOperationException>(() => root.Find("missing"));
 
         Assert.Contains("missing", exception.Message);
+    }
+
+    [Fact]
+    public void Build_preserves_order_for_deep_callback_composition()
+    {
+        const int depth = 256;
+        var root = GuiBuilder.Create("Panel", "root");
+
+        void AddDepth(GuiBuilder parent, int level)
+        {
+            if (level == depth)
+                return;
+
+            parent.Child("Panel", $"child-{level}", child => AddDepth(child, level + 1));
+        }
+
+        AddDepth(root, 0);
+        var built = root.Build();
+
+        Assert.Equal($"child-{depth - 1}", built.Find($"child-{depth - 1}").Id);
     }
 }
