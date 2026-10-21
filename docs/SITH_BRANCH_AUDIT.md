@@ -1721,3 +1721,17 @@ Eight of the 18 non-keeper branches now have evidence-backed redundant/supersede
 At this checkpoint, the current package release estimate remains **70%** in `docs/NEXT_RELEASE_WORK_QUEUE.md`; the source-derived UML staging pipeline estimate remains **78%** as recorded in the prior checkpoint. The current exact-head workflows for the latest keeper commit are still running, so no new all-green claim is made here.
 
 **Sith status remains NOT CLEARED.** The five open PRs (#8, #11, #15, #18, #19) remain unresolved. NuGet publication remains disabled by the `&& false` hard stop. No branch was deleted, no PR was merged or closed, and no package was published.
+
+
+## Operation Sith — release-scope branch supersession verified — 2026-10-21 21:48 UTC
+
+Two additional non-keeper branches have been compared against the live keeper files:
+
+- **`work/gui-release-mit-wpf-scope`: superseded candidate.** `LICENSE`, `src/WPF/README.md`, `src/Core/TheSingularityWorkshop.GUI.Core.csproj`, and the branch's release-readiness content are already represented on development. Its package workflow lines are a subset of the current, newer workflow. Its remaining work-queue differences are an older 74% estimate and earlier snapshots of blockers now present in the current 70% queue; no unique implementation or current decision was identified. No open PR currently targets this branch.
+- **`work/gui-verify-xml-docs-in-packages`: superseded candidate.** Its workflow is an older subset of the current package workflow. Its four-package archive inspection, including artifact and package hashes, is already preserved in `docs/RELEASE_READINESS.md` and `docs/NEXT_RELEASE_WORK_QUEUE.md` on development. Its 76% estimate is stale; current readiness is 70%. The branch adds no missing implementation or required release decision. No open PR currently targets this branch.
+
+These are evidence-backed candidates for the owner's final manual deletion list, subject to the final global inventory and exact-head CI gate. The other held branches remain held as stated above.
+
+**Disposition progress: 10 of 18 non-keeper branches (56%) have evidence-backed redundant/superseded dispositions.** This is a branch-audit count, not release readiness. Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. The latest development head has additional documentation commits and its exact-head workflows must be checked before calling the CI gate green.
+
+**Sith remains NOT CLEARED.** Five open PRs (#8, #11, #15, #18, #19) still require deliberate disposition. No branch was deleted, no PR was merged or closed, and NuGet publication remains disabled by the explicit `&& false` guard.
