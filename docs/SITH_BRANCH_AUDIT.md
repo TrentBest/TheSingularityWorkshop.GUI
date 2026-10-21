@@ -394,3 +394,25 @@ Fresh compare snapshots also reaffirm:
 - PR #18 remains open/draft; PR #8 and #11 remain open; PRs #15 and #19 remain open duplicates for the publish gate. No PR or branch state was changed.
 
 No deletion authorization is implied by these compare results.
+
+## Live CI and final-recheck update — 2026-10-21 19:06 UTC
+
+Current `development` tip at audit time: `3e03d572101d2be627e97aa9407e64c3e7ec9627`.
+
+### Exact-head package workflow result
+
+- [Package GUI run 39656628688](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39656628688) ran on the exact current development SHA above and **failed**.
+- `test-and-package` passed.
+- `publish_nuget` was skipped as intended; `.github/workflows/package.yml` still contains the deliberate `&& false` hard stop.
+- `test-wpf` failed because the test host crashed during WPF shutdown. The log says all 23 WPF tests passed, then the test run was aborted by an unhandled `System.NullReferenceException` in `System.Threading.Thread.get_CurrentThread()` called from `MS.Win32.HwndSubclass.SubclassWndProc`. The job exited 1. This is **not** a green WPF verification: investigate STA thread/dispatcher/window teardown and obtain a clean exact-head run before claiming CI is green.
+- The current run does not authorize publication. Do not rerun a publish-enabled dispatch.
+
+### Branch-tip recheck
+
+- Live branch inventory remains 17 branches: `master`, `development`, and 15 non-keepers.
+- `work/gui-wpf-tests` is exactly the current development commit `3e03d572101d2be627e97aa9407e64c3e7ec9627` as its branch head, with zero commits ahead and no changed files in the comparison. It is the strongest verified-redundant candidate, but this audit remains not-cleared until all remaining branch/PR dispositions are complete.
+- `fix/guinode-nullability-contract` is 1 commit ahead / 438 behind and differs only in `src/Core/GuiNode.cs`; current development supersedes that one-line change with iterative traversal and XML documentation. It is a strong intentionally-discard candidate, subject to the final open-PR/state check before owner deletion.
+- Open PRs #8, #11, #15, #18, and #19 remain unresolved at this check. PR #15 and #19 still represent competing publish-gate proposals; #18's current source-derived UML head still lacks exact-head workflow evidence as documented above.
+- No branch was deleted and no PR was merged or closed in this pass.
+
+**Current decision: NOT CLEARED.** The newly observed WPF test-host crash is an additional blocker for describing the current development candidate as fully verified. Branch cleanup and package publication remain separate decisions.
