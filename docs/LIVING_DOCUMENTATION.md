@@ -8,6 +8,7 @@ A living picture must be honest about its evidence. It may be a conceptual anima
 
 - **FSM_COS assembly:** Show a crane lifting one component into position, attaching it, and then collecting the next. The sequence should communicate the manifest-driven assembly order and the responsibility of each component. If the image is illustrative, say so; if it is driven by actual manifest or runtime data, identify that source.
 - **Finite-state-machine transition:** Highlight the current state with a gentle breathing pulse. Show the relevant condition or conditions being evaluated, then the current state's exit action, the transition, and the next state becoming current. Represent lifecycle flags accurately: for example, do not show the new state's `HasEntered` flag as true until the implementation actually sets it. The sequence should be grounded in source and tests whenever it claims to demonstrate FSM_API behavior.
+- **Gestures and joints:** When teaching a movement, show the movement rather than relying on a label or a still pose. If a joint is the subject, show how it moves through the gesture, which neighboring joints or body segments participate, and how the pose changes over time. Use a clear view, slow playback or step-through frames where helpful, and narration that names the action while explaining what the learner should notice. Separate measured or implemented biomechanics from simplified teaching models; a useful simplification should clarify the motion without pretending the body is a rigid machine.
 - **Quantities and scale:** Use counts, proportional sizes, grouped objects, axes, or small multiples to make magnitudes and differences legible. Label units, denominators, sample sizes, and whether values are measured, calculated, illustrative, or hypothetical. A thousand items should look meaningfully different from ten; do not use decorative motion as a substitute for scale.
 - **Architecture and data flow:** Show which component supplies data, which component transforms it, and which component presents it. Animate only the relationships or steps that help explain the contract.
 
@@ -15,6 +16,7 @@ A living picture must be honest about its evidence. It may be a conceptual anima
 
 - **Truth before spectacle.** Clearly distinguish implemented behavior, proposals, and authored concepts. An illustrative SVG is not proof of renderer output.
 - **Motion has a purpose.** Animate meaningful transitions or relationships; avoid motion that adds no information.
+- **Teach, do not gatekeep.** Treat the picture as a way to help a newcomer acquire knowledge that an expert may take for granted. Explain terms, reveal intermediate steps, and let learners inspect or replay the process instead of assuming prior instruction.
 - **Narration explains causality.** Spoken or written narration should describe the current step, what caused it, and what changes next. Do not rely on color, movement, or sound alone to communicate essential meaning.
 - **Respect reduced motion.** Animated examples should provide a reduced-motion fallback.
 - **Accessibility is part of the artifact.** Give meaningful SVGs titles and descriptions, preserve readable contrast, and verify local references.
@@ -36,6 +38,8 @@ A living picture must be honest about its evidence. It may be a conceptual anima
 - [ ] Planned capabilities are separated from implemented behavior.
 - [ ] Generated output is not presented as runtime proof unless it came from the actual framework path.
 - [ ] Quantities identify units and distinguish measured data from illustrative values.
+- [ ] Movement demonstrations show the relevant motion and joint relationships over time, with appropriate simplifications identified.
+- [ ] A learner without prior subject knowledge can follow the explanation without needing an expert to fill in critical gaps.
 - [ ] Relevant implementation and test evidence is linked.
 
 Not every page needs a repeated decorative SVG. The goal is to make complex behavior legible without adding noise or implying unsupported behavior.
