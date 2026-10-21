@@ -1266,3 +1266,26 @@ Files were committed sequentially on `development`: renderer `4d4f32d69733aa9f5e
 The original 538-line SVG scene renderer remains untouched. This change resolves the architectural collision by giving the semantic GUI-tree renderer a separate public class while sharing the current SVG project and its Core reference. Before calling the integration complete, inspect the actual workflow result and resolve any compile/test failures; also inspect test behavior against current Core node/property semantics.
   
 Sith cleanup remains **NOT CLEARED**; UML staging readiness remains **72%**. No branch deletion, PR merge/closure, package publication, or NuGet publish-guard modification occurred.
+
+
+## Operation Sith live refresh — 2026-10-21 20:52 UTC
+
+### Live inventory and new branch disposition
+
+- Refreshed GitHub branch inventory: **19 branches** — keepers `master` and `development`, plus 17 non-keepers. The branch search returned all 19 entries; no additional page remained. The five open PRs remain #8, #11, #15, #18, and #19. No branch/PR lifecycle action was taken.
+- The prior ledger did not explicitly disposition `feat/mandelbrot-physics-svg`. Current compare against `development` is 5 commits ahead / 5 behind and identifies five branch-only paths: package workflow edits, gallery update, the `MandelbrotEscapeTime2d` sample project and implementation, and recipe 06. **Preserve/reconcile the sample's unique content before any manual branch deletion.** The recipe describes a real cross-repository run-record handoff: GUI consumes recorded escape classifications and renders cells; it does not recompute the algorithm. Its stated evidence boundary correctly says this is a finite mathematical field, not a physical simulation or GPU renderer. This branch is not a deletion candidate yet.
+- Rechecked `feat/physics-seeded-pointset-svg`: 9 ahead / 24 behind, with seven unique paths covering the exporter/consumer sample, gallery/index, recipe 05, and package workflow. The recipe is present on `development`, but the current compare still reports branch-only sample/workflow paths. Treat the existing sample as functionally integrated per earlier evidence, but reconcile the remaining exact branch-only changes before calling the branch disposable.
+- Rechecked `work/svg-tree-depth-guard`: 5 ahead / 496 behind; its unique paths remain the semantic SVG renderer, tests, and adapter documentation. The additive semantic GUI-tree renderer and tests have now landed on `development` as a distinct API from the existing scene renderer, but this branch still requires a path-by-path reconciliation check before disposal; a broad behind count is not proof of redundancy.
+- Rechecked `work/svg-guide-current-contract`: 112 ahead / 565 behind, with wide historical changes across the package/workflow, adapters, tests, and docs. It remains unsafe to merge wholesale or discard wholesale. PR #11 is still open.
+- Rechecked likely superseded branches at the current development base: `work/gui-wpf-tests` is 0 ahead / 312 behind with no changed paths; `fix/guinode-nullability-contract` is 1 ahead / 496 behind with only `src/Core/GuiNode.cs`; `work/gui-uml-per-file-documentation` is 1 ahead / 245 behind with only `docs/DATA_CARDS_AND_UML.md`. These remain potential manual-deletion candidates only after final PR/reference check and confirmation that the newer development content is the intended disposition.
+- `work/svg-app-fsm-cos-boundary` is 5 ahead / 496 behind and retains a branch-only concept document; although prior review says the concept has been preserved on development, verify exact content equality before deletion. `work/webpage-event-builder-compatibility` is 3 ahead / 559 behind and still compares as two paths; verify both source and test deltas rather than assuming the branch is cleanly superseded.
+- `work/nuget-publish-gate` (1 ahead / 313 behind) and `work/gui-publish-gate-reconciled` (1 ahead / 86 behind) remain tied to open PRs #15 and #19. Keep pending explicit PR disposition; do not dispatch a publishing workflow with `publish: true`.
+- Other live branches requiring explicit disposition remain `architecture/datum-interaction-boundary`, `feature/integrated-fsm-cos-hub`, `feature/nested-experiences`, `work/gui-release-mit-wpf-scope`, and `work/gui-verify-xml-docs-in-packages`. Legacy hub/nested-experience branches may be intentionally rejected, but the ledger must say so explicitly rather than implying their contents were merged.
+
+### Current safety state
+
+- Branch count: **19 total / 2 keepers / 17 non-keepers** (refreshed 2026-10-21 20:52 UTC).
+- Open PRs: **#8, #11, #15, #18, #19**.
+- GUI.SVG source-derived UML staging readiness: **72%**; not release-ready.
+- Operation Sith: **NOT CLEARED**. The new Mandelbrot branch and several other branches still need exact content reconciliation. No branch deleted, no PR merged or closed, `master` untouched, and NuGet publication remains unauthorized and gated.
+- The latest source/test additions to `development` require exact-SHA CI evidence before claiming successful verification. Historical successful workflow runs apply only to their recorded SHAs.
