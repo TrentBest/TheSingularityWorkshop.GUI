@@ -241,7 +241,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: TrentBest/TheSingularityWorkshop.Physics
-          ref: 879a25e19879eaee782d9588f06ba76420b23215
+          ref: eea463a5034682b8eb149bd73013ac7dd590eb83
           path: ./artifacts/physics-source
 
       - name: Export actual Physics seeded point-set run record
