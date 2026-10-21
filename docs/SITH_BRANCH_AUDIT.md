@@ -1869,3 +1869,37 @@ Seventeen of the 18 non-keeper branches now have documented redundant/superseded
 - **Source-derived UML staging readiness:** 78% per the prior evidence checkpoint; generated pages still need promotion/review and committed drift enforcement.
 
 The latest verified all-green baseline before the most recent documentation-only additions is commit `5d003d864758` (Package GUI run 39680522235, Source-derived diagrams run 39680522114, Solution-derived UML inventory run 39680522333). Later documentation commits have triggered fresh workflows; verify the exact latest head before claiming the new head is green. NuGet publication remains disabled; no package was published and no surplus branch was deleted.
+
+
+## Operation Sith — final branch disposition ledger — 2026-10-21 22:12 UTC
+
+### Final live inventory and PR state
+
+The fresh live inventory contains exactly 20 branches: keepers `master` and `development`, plus 18 non-keepers listed below. The fresh open-PR query returns **zero open PRs**. PRs #8, #11, #15, #18, and #19 are closed and none was merged. No branch was deleted.
+
+### All 18 non-keeper branches have a documented disposition
+
+The owner may now include all 18 in one manual deletion pass after the final exact-head CI check:
+
+1. `architecture/datum-interaction-boundary` — superseded; durable datum/presentation principle preserved, old Hub lifecycle rejected.
+2. `feat/mandelbrot-parameter-explorer` — verified redundant; current source and parameterized recipe match development.
+3. `feat/mandelbrot-physics-svg` — superseded by the current parameterized Mandelbrot demonstration.
+4. `feat/physics-seeded-pointset-svg` — implementation/recipe represented on development; old gallery snapshot superseded.
+5. `feature/integrated-fsm-cos-hub` — old Hub/reflection lifecycle intentionally not adopted; current WPF-native builder subset is separately reconciled.
+6. `feature/nested-experiences` — legacy Hub implementation intentionally not adopted; conceptual nesting is retained as a proposal, not a Core runtime API.
+7. `fix/guinode-nullability-contract` — recursive implementation superseded by documented iterative depth-first traversal.
+8. `work/gui-publish-gate-reconciled` — intentionally discardable; PR #19 closed without merge because it removes the explicit NuGet publication hard stop.
+9. `work/gui-release-mit-wpf-scope` — superseded by current package projects, license, workflow, and release checklist.
+10. `work/gui-svg-source-uml-generator` — generator source is byte-identical to development; its workflow is older; authored docs/assets were harvested or archived. Old generated pages were intentionally not copied because they can be stale and are reproducible from the keeper source. The safe promotion workflow remains on development as a separate feature-completion task.
+11. `work/gui-uml-per-file-documentation` — historical, shorter UML policy text superseded by the current documentation standard.
+12. `work/gui-verify-xml-docs-in-packages` — older package workflow/release-doc snapshot superseded by current development.
+13. `work/gui-wpf-tests` — zero commits ahead and no changed files versus development; verified redundant.
+14. `work/nuget-publish-gate` — intentionally discardable; PR #15 closed without merge because it removes the explicit NuGet publication hard stop.
+15. `work/svg-app-fsm-cos-boundary` — concept doc identical to current development; remaining README delta is obsolete.
+16. `work/svg-guide-current-contract` — old SVG renderer/options and guide snapshot superseded; concept assets and valid explanatory intent preserved; PR #11 closed without merge.
+17. `work/svg-tree-depth-guard` — older renderer/test/guide snapshot superseded by current accessibility, depth, validation, and test coverage.
+18. `work/webpage-event-builder-compatibility` — event test identical to development and source behavior superseded by the documented current builder implementation.
+
+**Branch disposition is 100% complete (18/18).** This is not release readiness. Package release readiness remains **70%**; source-derived UML staging readiness remains **78%**. The per-type generated page set has not yet been promoted into the keeper tree; it can be regenerated from development via the manual promotion workflow and is not a reason to retain stale generated output from an old branch.
+
+The NuGet publish condition on development remains `github.event_name == 'workflow_dispatch' && inputs.publish == true && false`. No package was published. No surplus branch was deleted. The final remaining gate before telling the owner the list is ready for manual deletion is successful exact-head Package GUI, Source-derived diagrams, and Solution-derived UML inventory workflows for this ledger commit.
