@@ -34,26 +34,34 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Checkout pinned Physics source for Mandelbrot run record
+      - name: Checkout pinned Physics source for parameterized Mandelbrot records
         uses: actions/checkout@v4
         with:
           repository: TrentBest/TheSingularityWorkshop.Physics
-          ref: d061043f31bbfab9d70862a038ef1980cca39145
+          ref: 9c2443a2516c17954e6adaa20f384c6cf3bb8f4a
           path: ./physics-source
 
-      - name: Export actual Physics Mandelbrot samples
-        run: dotnet run --project ./physics-source/samples/MandelbrotEscapeTime2dExport/MandelbrotEscapeTime2dExport.csproj --configuration Release -- ./artifacts/mandelbrot-escape-time-2d.run.json
+      - name: Export default Physics Mandelbrot samples
+        run: dotnet run --project ./physics-source/samples/MandelbrotEscapeTime2dExport/MandelbrotEscapeTime2dExport.csproj --configuration Release -- ./artifacts/mandelbrot-default.run.json
 
-      - name: Render and verify Physics Mandelbrot samples with GUI.SVG
-        run: dotnet run --project samples/demonstrations/MandelbrotEscapeTime2d/MandelbrotEscapeTime2d.csproj --configuration Release -- ./artifacts/mandelbrot-escape-time-2d.run.json ./artifacts/06-mandelbrot.generated.svg
+      - name: Export parameterized Physics Mandelbrot detail window
+        run: dotnet run --project ./physics-source/samples/MandelbrotEscapeTime2dExport/MandelbrotEscapeTime2dExport.csproj --configuration Release -- ./artifacts/mandelbrot-detail.run.json 120 80 160 -0.9 -0.35 -0.2 0.35
 
-      - name: Upload Physics-backed GUI.SVG Mandelbrot field
+      - name: Render and verify default Physics Mandelbrot samples
+        run: dotnet run --project samples/demonstrations/MandelbrotEscapeTime2d/MandelbrotEscapeTime2d.csproj --configuration Release -- ./artifacts/mandelbrot-default.run.json ./artifacts/06-mandelbrot-default.generated.svg
+
+      - name: Render and verify parameterized Physics Mandelbrot samples
+        run: dotnet run --project samples/demonstrations/MandelbrotEscapeTime2d/MandelbrotEscapeTime2d.csproj --configuration Release -- ./artifacts/mandelbrot-detail.run.json ./artifacts/06-mandelbrot-detail.generated.svg
+
+      - name: Upload Physics-backed GUI.SVG Mandelbrot explorer outputs
         uses: actions/upload-artifact@v7
         with:
-          name: gui-svg-physics-mandelbrot-field
+          name: gui-svg-physics-mandelbrot-explorer
           path: |
-            ./artifacts/mandelbrot-escape-time-2d.run.json
-            ./artifacts/06-mandelbrot.generated.svg
+            ./artifacts/mandelbrot-default.run.json
+            ./artifacts/06-mandelbrot-default.generated.svg
+            ./artifacts/mandelbrot-detail.run.json
+            ./artifacts/06-mandelbrot-detail.generated.svg
           if-no-files-found: error
 
       - name: Restore Core
