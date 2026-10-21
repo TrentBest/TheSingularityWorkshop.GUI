@@ -1303,3 +1303,18 @@ Verified jobs:
 This verifies the new `SemanticGuiSvgRenderer`, options, and tests as part of the package workflow on that exact commit. It does not mean later audit-only commits have CI verified. Next verification must inspect the latest `development` commit's workflow after the audit update, and the separate UML workstream still needs current-head CI verification.
 
 Sith cleanup remains **NOT CLEARED**. UML staging readiness remains **72%**. No branch deletions, PR lifecycle changes, or package publication.
+
+
+## Follow-up verification — 2026-10-21 20:54 UTC
+
+- Live branch inventory still returns **19 branches**: `master`, `development`, and 17 non-keepers. No branch or PR lifecycle action was taken.
+- `work/svg-tree-depth-guard` remains 5 ahead / 498 behind. Its renderer file is present on both refs, but the branch and `development` are not byte-identical; the test file also differs. Treat this as **not yet proven redundant** until the branch-only changes are compared semantically with the current implementation and tests. Exact-SHA CI status for semantic renderer test commit `998d4d07e66cf31a310f8914c5b5854ffbfda092` returned no status contexts and no PR-triggered workflow runs through the available endpoints. This is **unknown**, not a pass or a failure.
+- `feat/physics-seeded-pointset-svg` is 9 ahead / 26 behind. The consumer project and `Program.cs` are still branch-only, while recipe 05 is present byte-identically on `development`. Preserve/reconcile the sample, package workflow and gallery/index additions; do not mark the branch redundant yet.
+- `feat/mandelbrot-physics-svg` is 8 ahead / 7 behind at the current base. Its consumer project, implementation, and recipe 06 are absent from `development` (recipe fetch on `development` returned 404); preserve/reconcile this unique demonstration before any branch deletion. The implementation consumes recorded Physics samples and checks output cell count/identity; the recipe explicitly limits the claim to a finite mathematical field, not a physical simulation or GPU renderer.
+- Audit commit `045419f73ed6c53837bd4f7b5a92bf03a915466a` has no status contexts through the combined-status endpoint. Do not claim CI passed for that audit commit. Historical green runs remain valid only for their exact recorded SHAs.
+
+### Safety state after this pass
+
+- GUI.SVG source-derived UML staging readiness: **72%**.
+- Operation Sith: **NOT CLEARED**; exact sample content and renderer/test deltas remain to reconcile.
+- No branches deleted; no PRs merged or closed; `master` untouched; NuGet publication remains gated and unauthorized.
