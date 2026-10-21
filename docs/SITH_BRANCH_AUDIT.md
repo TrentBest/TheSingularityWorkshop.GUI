@@ -1153,3 +1153,20 @@ PR #18 head remains `97554095656f2ef0ca94cbc4ada73848f3a953f8`, 86 changed files
 
 Current branch inventory remains 18 branches total: keepers `master` and `development`, plus 16 non-keepers. The merged Physics feature branch remains in the inventory for the owner's final manual reference/deletion checkpoint. No branch was deleted; no PR was closed or merged by this audit pass; `master` remains untouched; NuGet publish remains gated. Sith is **NOT CLEARED**.
 
+
+
+## UML + SVG implementation preservation review — 2026-10-21 20:47 UTC
+
+### Source-derived UML workstream
+- Current compare against `development`: `work/gui-svg-source-uml-generator` is 227 commits ahead / 90 behind. Its changed paths include the 403-line source-derived workflow, 33-line solution inventory workflow, the Roslyn/project-semantic and syntax-only builders, renderer-neutral UML model, SVG UML renderers, generator scripts, validation tests, and a substantial per-source-file UML documentation set. Keep this as a protected workstream; do not wholesale merge it because the branch also contains broad unrelated README, package/workflow, and legacy API changes.
+- The source-derived workflow currently references mutable action tags `actions/checkout@v4` and `actions/setup-dotnet@v4`; pinning those to immutable commit SHAs is still a hardening item. It also exercises an intentional reflection-identity mismatch and generates canonical syntax-only/project-semantic model outputs. Treat the JSON artifact as staging interchange only, not as the public product contract.
+- The UML branch's latest exact-head CI evidence remains unverified: the audit records branch head `97554095656f2ef0ca94cbc4ada73848f3a953f8`, while the most recent successful workflow result is for older commit `b4c68259a2df7c6f565708a529b01e62c433dae0`. Do not claim current head green. UML staging readiness remains 72%.
+
+### SVG renderer implementation
+- `work/svg-guide-current-contract` is 112 commits ahead / 557 behind `development`. Its focused implementation adds `SvgGuiRenderer` (212 lines), `SvgRenderOptions` (36 lines), and `SvgGuiRendererTests` (198 lines), but the branch also changes package workflow and has unrelated drift. Selective port/reimplementation is the safe path.
+- The renderer implementation includes SVG title/description accessibility, XML text/attribute encoding, deterministic child order, layout handling for Row/Stack/Panel-like nodes, safe dimension/background validation, and bounded recursive rendering. The test suite covers accessibility/encoding, nested order, container outlines, row/horizontal stack layout, dense-row bounds, invalid options, and depth/error cases. These are concrete renderer behaviors, not static concept art; retain them as the behavior checklist when reconciling.
+- The renderer branch's `.github/workflows/package.yml` has a large workflow delta (+174/-16 in the compare), so do not transplant that file wholesale. Preserve the current explicit NuGet publish hard stop; no publishing-gate changes are authorized.
+
+### Status and next action
+- Current branch inventory remains 18: keepers `master` and `development`, plus 16 non-keepers. The merged Physics branch remains present for the owner's manual checkpoint.
+- Cleanup remains **NOT CLEARED**. UML staging readiness **72%**. No branch deletion, PR lifecycle action, or package publication occurred in this pass. Audit commit CI is unverified unless exact-head status/workflow evidence is obtained.
