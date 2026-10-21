@@ -1979,3 +1979,27 @@ These are now confirmed merged-PR branches, not open-PR blockers; their content-
 ### Gate decision
 
 **NOT CLEARED FOR MANUAL BRANCH DELETION.** The ledger still contains historical statements inconsistent with the live state; this checkpoint corrects the inventory/PR/CI facts but does not claim all 18 branch contributions are reconciled. Continue branch-by-branch content comparison, especially the broad legacy hub/datum branches, source-derived UML generator and SVG guide. The owner remains responsible for any eventual branch deletion. No branches were deleted, no PRs were changed, and no package was published.
+
+## Fast-path triage — 2026-10-21 22:32 UTC
+
+Owner clarified that current development momentum takes priority over retaining unused historical work. This is a fast-path triage, not a requirement to preserve every branch-only artifact. Prefer current development as source of truth; only stop deletion for a concrete missing behavior, test, sample, or documentation item that is still in scope.
+
+### Low-risk candidates for owner deletion review
+
+- work/gui-wpf-tests — compare reports 0 ahead / 0 changed files against current development; redundant branch tip.
+- fix/guinode-nullability-contract — sole branch-only line adds an extra null guard to GuiNode.Find. Treat current source as authoritative; this old one-line change is not a reason to hold all cleanup unless the owner specifically wants that guard.
+- work/webpage-event-builder-compatibility — PR #9 merged; current builder has OnKeyDown/OnMouseEnter, and the test-file blob matches development. Candidate redundant.
+- work/svg-tree-depth-guard — current SvgGuiRenderer already contains MaximumTreeDepth and current tests include the configured maximum-depth case. Candidate for deletion if there is no need to retain the extra SVG adapter documentation/test changes.
+
+### Keep the pace; don't turn cleanup into a preservation project
+
+The other 14 branches are not automatically valuable merely because they contain diffs. For broad legacy branches, if a branch is not an active direction and its intended capability is already represented on development, classify it as superseded and move on. Do not revive closed PRs #8, #11, #15, #18, or #19 merely to harvest work. Never take the publish-gate changes from #15/#19 or work/gui-publish-gate-reconciled / work/nuget-publish-gate; the && false NuGet publishing hard stop remains mandatory until the owner explicitly authorizes release.
+
+The three merged sample branches (#20–#22) are cleanup candidates after a quick check that the live gallery, recipe, generated run record, and workflow artifact are present on development. Their merged PRs are not blockers; do not spend time preserving old branch history when current samples already serve the active direction.
+
+### Current gate
+
+- Live branch inventory at this check: 20 total, 2 keepers, 18 non-keepers.
+- development is a2b9a8267869da65bcf2da040658892ba0dfe270.
+- CI for this exact head is in progress: Source-derived diagrams run 39687061764; Solution-derived UML inventory run 39687061759; Package GUI run 39687061732.
+- NOT CLEARED as a blanket statement, but four low-risk branches above are practical first candidates for the owner's manual deletion review. This is intentionally a quick triage, not a demand to finish exhaustive archaeology.
