@@ -34,15 +34,15 @@ public sealed class SharedAdapterConformanceTests
 
         var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
         XNamespace svg = "http://www.w3.org/2000/svg";
-        var svgIds = svgDocument.Descendants()
+        var svgIds = svgDocument.Root!.DescendantsAndSelf()
             .Where(element => element.Name.LocalName != "title" && element.Name.LocalName != "desc")
             .Select(element => (string?)element.Attribute("id"))
             .Where(id => id is not null)
             .Cast<string>()
             .ToArray();
-        var svgRoot = svgDocument.Descendants(svg + "g")
-            .Single(element => (string?)element.Attribute("id") == "root");
-        var svgRootChildIds = svgRoot.Elements()
+        var svgRoot = svgDocument.Root!;
+        var svgRootGroup = svgRoot.Elements(svg + "g").Single();
+        var svgRootChildIds = svgRootGroup.Elements()
             .Select(element => (string?)element.Attribute("id"))
             .Where(id => id is not null)
             .Cast<string>()
@@ -89,8 +89,7 @@ public sealed class SharedAdapterConformanceTests
         var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
         XNamespace svg = "http://www.w3.org/2000/svg";
         var svgRoot = svgDocument.Root!;
-        var svgNode = svgDocument.Descendants(svg + "g")
-            .Single(element => (string?)element.Attribute("id") == "property-surface");
+        var svgNode = svgRoot;
 
         Assert.Equal("sample-class", blazorAttributes["class"]);
         Assert.Equal("prototype-only", blazorAttributes["data-note"]);
@@ -123,7 +122,7 @@ public sealed class SharedAdapterConformanceTests
             .ToArray();
 
         var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
-        var svgIds = svgDocument.Descendants()
+        var svgIds = svgDocument.Root!.DescendantsAndSelf()
             .Where(element => element.Name.LocalName != "title" && element.Name.LocalName != "desc")
             .Select(element => (string?)element.Attribute("id"))
             .Where(id => id is not null)
