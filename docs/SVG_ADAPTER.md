@@ -82,7 +82,7 @@ The coordinate-system builder supplies a shared minimum/maximum range and can op
 
 ## Accessibility and output
 
-The root document receives a `role` and `aria-label`, plus a `title`. Set `description` on the root node to emit an SVG `desc`. Individual images can provide descriptive text. Text content is XML-escaped. The renderer validates output dimensions, coordinate ranges, finite numeric properties, non-negative radii/dimensions, unique node IDs (including synthesized coordinate overlays), and a maximum tree depth of 256. Tree-depth validation is iterative and runs before recursive serialization, so an excessively deep scene is rejected with a clear exception instead of exhausting the call stack.
+The root document receives a `role` and `aria-label`, plus a `title`. Set `description` on the root node to emit an SVG `desc`. Individual images can provide descriptive text. Text content is XML-escaped. The renderer preserves each node's identity as an SVG `id`, including the root scene on the `<svg>` element. It validates output dimensions, coordinate ranges, finite numeric properties, non-negative radii/dimensions, unique node IDs (including synthesized coordinate overlays), and a maximum tree depth of 256. Tree-depth validation is iterative and runs before recursive serialization, so an excessively deep scene is rejected with a clear exception instead of exhausting the call stack.
 
 ## Trust and security boundary
 
