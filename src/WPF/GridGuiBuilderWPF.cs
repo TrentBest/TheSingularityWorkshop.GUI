@@ -212,7 +212,7 @@ namespace TheSingularityWorkshop.GUI.WPF.Layouts
         /// <returns>This builder, for fluent configuration.</returns>
         public GridGuiBuilderWPF PlaceComponent(int row, int col, IComponentWPF component)
         {
-            component.SetParent(this);
+            RegisterChildComponent(component);
             _placements.Add(new ComponentPlacement { Row = row, Col = col, Component = component });
             _childBuilders.Add(component);
             return this;
