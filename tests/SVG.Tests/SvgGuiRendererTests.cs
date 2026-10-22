@@ -567,4 +567,19 @@ public sealed class SvgGuiRendererTests
         Assert.Equal("marker", (string?)document.Descendants(svg + "circle").Single().Attribute("id"));
     }
 
+    [Theory]
+    [InlineData("gui-svg-title")]
+    [InlineData("gui-svg-description")]
+    public void Rejects_node_ids_that_collide_with_generated_accessibility_ids(string reservedId)
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Property("description", "Scene description.")
+            .Child("svg-circle", reservedId, marker => marker.Property("r", "4"))
+            .Build();
+
+        var error = Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+
+        Assert.Contains(reservedId, error.Message);
+    }
+
 }
