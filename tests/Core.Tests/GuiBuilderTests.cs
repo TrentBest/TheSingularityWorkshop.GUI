@@ -135,4 +135,52 @@ public sealed class GuiBuilderTests
 
         Assert.Equal($"child-{depth - 1}", built.Find($"child-{depth - 1}").Id);
     }
+
+    [Fact]
+    public void Direct_node_constructor_rejects_blank_kind_and_id()
+    {
+        Assert.Throws<ArgumentException>(() => new GuiNode("", "valid-id"));
+        Assert.Throws<ArgumentException>(() => new GuiNode(" ", "valid-id"));
+        Assert.Throws<ArgumentException>(() => new GuiNode("Panel", ""));
+        Assert.Throws<ArgumentException>(() => new GuiNode("Panel", " "));
+    }
+
+    [Fact]
+    public void Direct_node_constructor_snapshots_child_sequence()
+    {
+        var suppliedChildren = new List<GuiNode> { new("Text", "first") };
+        var node = new GuiNode("Panel", "root", children: suppliedChildren);
+        suppliedChildren.Add(new GuiNode("Text", "later"));
+
+        Assert.Single(node.Children);
+        Assert.Equal("first", node.Children[0].Id);
+    }
+
+    [Fact]
+    public void Lookup_returns_first_duplicate_id_in_depth_first_left_to_right_order()
+    {
+        var left = new GuiNode("Panel", "branch-left", children: new[]
+        {
+            new GuiNode("Text", "duplicate", text: "left descendant")
+        });
+        var right = new GuiNode("Panel", "branch-right", children: new[]
+        {
+            new GuiNode("Text", "duplicate", text: "right descendant")
+        });
+        var root = new GuiNode("Panel", "root", children: new[] { left, right });
+
+        Assert.Equal("left descendant", root.Find("duplicate").Text);
+    }
+
+    [Fact]
+    public void Lookup_rejects_blank_identifiers()
+    {
+        var node = new GuiNode("Panel", "root");
+
+        Assert.Throws<ArgumentException>(() => node.Find(""));
+        Assert.Throws<ArgumentException>(() => node.Find(" "));
+        Assert.Throws<ArgumentException>(() => node.TryFind("", out _));
+        Assert.Throws<ArgumentException>(() => node.TryFind(" ", out _));
+    }
+
 }
