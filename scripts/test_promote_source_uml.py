@@ -76,6 +76,13 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "non-generated filename"):
                 PROMOTER.promote(source, output)
 
+    def test_rejects_single_backslash_in_generated_name(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            source, output = self.fixture(Path(temporary))
+            (source / "Core.uml-types" / r"bad\\name.md").write_text("# Unsafe path\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unsafe generated filename"):
+                PROMOTER.promote(source, output)
+
     def test_manifest_cannot_claim_authored_files(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
