@@ -23,6 +23,10 @@ def _collect_types(types_dir: Path, prefix: str, outputs: dict[str, bytes]) -> N
     for path in sorted(types_dir.iterdir(), key=lambda item: item.name):
         if path.is_symlink() or not path.is_file():
             raise ValueError(f"non-regular generated entry is not allowed: {path.name}")
+        # The Roslyn generator maintains this private manifest to prune only its
+        # own previous output. It is staging metadata, not a consumer-facing page.
+        if path.name == ".source-uml-generated-files":
+            continue
         if path.suffix.lower() not in SAFE_SUFFIXES or path.name in {"", ".", ".."}:
             raise ValueError(f"unsafe path or non-generated filename: {path.name}")
         if Path(path.name).name != path.name or "/" in path.name or "\\" in path.name:
