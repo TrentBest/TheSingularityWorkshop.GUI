@@ -9,7 +9,7 @@ This directory separates generated source-file/type documentation from authored 
 - [Living UML architecture](../LIVING_UML_ARCHITECTURE.md) defines the normalized model, provenance, renderer-neutral diagrams, and adoption gates.
 - [UML visual audit](../UML_VISUAL_AUDIT.md) tracks the visual-evidence gaps.
 
-The current keeper tree contains the authored source-files README but not yet the generated per-type Markdown/SVG page set. Workflow artifacts prove generation on their exact source commit; they are not a substitute for checked-in pages or a generated-artifact drift check.
+The keeper tree contains a small, manually authored first vertical slice under `docs/api/` and focused authored diagrams such as `docs/uml/GuiBuilderUML.md`. The complete source-generated per-type Markdown/SVG set is still produced as workflow artifacts rather than committed and freshness-checked in the keeper tree. Workflow artifacts prove generation only for their exact source commit; they do not satisfy the full per-type coverage gate.
 
 ## Ownership rules
 
