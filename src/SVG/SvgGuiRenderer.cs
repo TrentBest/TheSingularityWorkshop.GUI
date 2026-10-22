@@ -46,6 +46,7 @@ public sealed class SvgGuiRenderer
             ? "gui-svg-title gui-svg-description"
             : "gui-svg-title";
         var svg = new XElement(Svg + "svg",
+            new XAttribute("id", root.Id),
             new XAttribute("width", width),
             new XAttribute("height", height),
             new XAttribute("viewBox", Value(root, "viewBox", $"0 0 100 {F(viewHeight)}")),
