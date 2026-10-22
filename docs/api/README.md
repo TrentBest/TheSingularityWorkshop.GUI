@@ -11,7 +11,7 @@ This is the entry point for source-grounded per-type documentation and UML class
 - [DataCard](Core/DataCard.md) — immutable card model, child snapshot, collapsed-summary contract, and its source-grounded UML SVG.
 - [CoordinateSystem](Core/CoordinateSystem.md) — readonly coordinate-space value, validation/pass-through operations, and its source-grounded UML SVG.
 - [CoordinateSystemUtilities](Core/CoordinateSystemUtilities.md) — clamping, range mapping, distance calculation, and source-grounded UML SVG.
-- [GuiNode](Core/GuiNode.md) — immutable GUI tree node, snapshot contract, and iterative lookup behavior.
+- [GuiNode](Core/GuiNode.md) — immutable GUI tree node, snapshot contract, and iterative lookup behavior.\n- [GuiBuilder](Core/GuiBuilder.md) — recursive semantic builder, immutable output contract, and host-neutral command identity.
 
 ## Coverage policy
 
