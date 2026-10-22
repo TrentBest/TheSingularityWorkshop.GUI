@@ -6,7 +6,7 @@
 
 ## Target-centered neighborhood
 
-![Workshop target-centered UML neighborhood for GuiBuilder](../assets/uml/GuiBuilderUML.svg)
+![Workshop target-centered UML neighborhood for GuiBuilder](../assets/uml/classes/Core/GuiBuilder.svg)
 
 The focal `GuiBuilder` is centered. Verified direct consumers appear above it; the immutable `GuiNode` result and private nested `NodeBuilder` construction state appear below; .NET base-library references appear to the right. The diagram uses the Workshop's recursive card language and labeled type-conduit stubs. Matching semantic type identities share a palette token, and receiving stubs are rotated 180 degrees. Text labels and type IDs reinforce color.
 
