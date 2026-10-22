@@ -1,0 +1,21 @@
+# Generated UML type pages
+
+> Generated output. Do not edit by hand; regenerate from the source model.
+
+- Repository: `TrentBest/TheSingularityWorkshop.GUI`
+- Revision: [`a25acf387b1e24b6dba0a927e763c0b55c8b9b3e`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a25acf387b1e24b6dba0a927e763c0b55c8b9b3e)
+- Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
+- Types: 9
+
+| Type | Kind | Members | Relationships | Page | UML SVG |
+|---|---|---:|---:|---|---|
+| `TheSingularityWorkshop.GUI.SVG.SemanticGuiSvgRenderOptions` | `record` | 17 | 2 | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.md](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.md) | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.svg](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.svg) |
+| `TheSingularityWorkshop.GUI.SVG.SemanticGuiSvgRenderer` | `class` | 6 | 5 | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.md](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.md) | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.svg](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgDataCardRenderer` | `class` | 13 | 4 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `class` | 15 | 13 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange` | `record-struct` | 4 | 4 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlClassDiagramRenderer` | `class` | 12 | 2 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-aad146e7b8.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-aad146e7b8.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-aad146e7b8.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-aad146e7b8.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `class` | 19 | 9 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode` | `record` | 8 | 6 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition` | `record` | 3 | 1 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.svg) |
+
