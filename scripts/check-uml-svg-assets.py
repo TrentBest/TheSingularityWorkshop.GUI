@@ -58,8 +58,9 @@ def validate(path: Path) -> list[str]:
                     and parts[1] == "TheSingularityWorkshop.GUI"
                     and parts[2] == "blob"
                     and re.fullmatch(r"[0-9a-fA-F]{40}", parts[3]) is not None
-                    and all(segment not in {".", ".."} for segment in map(unquote, parts[4:]))
-                    and (not parsed.fragment or re.fullmatch(r"L[1-9][0-9]*", parsed.fragment) is not None)
+                    and not parsed.query
+                    and all(segment not in {"", ".", ".."} for segment in map(unquote, parts[4:]))
+                    and re.fullmatch(r"L[1-9][0-9]*", parsed.fragment) is not None
                 )
                 if pinned_github_source:
                     continue

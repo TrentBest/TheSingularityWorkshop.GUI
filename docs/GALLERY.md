@@ -24,7 +24,7 @@ The build-time generator has a syntax-only path and a compiler-backed project-se
 
 **Boundary:** this is a staging vertical slice, not complete solution-wide living UML. The committed tree currently contains the authored README under docs/uml/source-files, not the generated per-type page set. The promotion workflow is manual and has not been dispatched. Do not claim committed-artifact freshness or full project/solution graph coverage yet.
 
-**CI evidence (2026-10-22):** [Package GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39842181766) · [source-derived diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39842181566) · [solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39842181661). All three passed on implementation commit [5b813a9](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/5b813a907e81b38c9423e1de21f23fa4319dc9ce); NuGet publication was skipped.
+**CI evidence (2026-10-22):** [Package GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39843352488) · [source-derived diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39843352517) · [solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39843352626). All three passed on implementation commit [fdef14c](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/fdef14cb93430fa2678f5f117bf48d97554bedcd); NuGet publication was skipped.
 
 ## GUI.SVG demonstration recipes
 
