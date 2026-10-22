@@ -54,22 +54,10 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
-    public void Renderer_does_not_execute_semantic_command_when_no_dispatcher_is_supplied()
+    public void Renderer_rejects_null_command_dispatcher()
     {
-        RunOnSta(() =>
-        {
-            var dispatched = false;
-            var node = GuiBuilders.Button("create-scene", "Create Scene")
-                .WithOnClick("storybuilder.scene.create")
-                .Build();
-
-            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(node));
-            button.Click += (_, _) => dispatched = true;
-            button.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
-
-            // The test's own observer fires, but no host command is implicitly invoked by the renderer.
-            Assert.True(dispatched);
-        });
+        RunOnSta(() => Assert.Throws<ArgumentNullException>(() =>
+            WpfGuiRenderer.Render(new GuiNode("Button", "action"), null!)));
     }
 
     [Fact]
