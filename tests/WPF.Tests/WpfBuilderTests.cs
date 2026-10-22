@@ -198,6 +198,52 @@ public sealed class WpfBuilderTests
     }
 
     [Fact]
+    public void Canvas_builder_rejects_duplicate_raw_element_placements()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "Only once" };
+            var builder = new CanvasGuiBuilderWPF(new GuiConfiguration()).PlaceAt(element, 1, 2);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => builder.PlaceAt(element, 3, 4));
+
+            Assert.Contains("already registered", exception.Message);
+            Assert.Single(Assert.IsType<Canvas>(builder.Build()).Children);
+        });
+    }
+
+    [Fact]
+    public void Canvas_builder_rejects_elements_already_attached_to_another_parent()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "Owned" };
+            var existingParent = new StackPanel();
+            existingParent.Children.Add(element);
+
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+                new CanvasGuiBuilderWPF(new GuiConfiguration()).PlaceAt(element, 10, 20));
+
+            Assert.Contains("already belongs", exception.Message);
+            Assert.Same(existingParent, VisualTreeHelper.GetParent(element));
+            Assert.Same(element, existingParent.Children[0]);
+        });
+    }
+
+    [Fact]
+    public void Canvas_builder_rejects_placing_itself_as_a_child()
+    {
+        RunOnSta(() =>
+        {
+            var builder = new CanvasGuiBuilderWPF(new GuiConfiguration());
+
+            var exception = Assert.Throws<InvalidOperationException>(() => builder.PlaceAt(builder.Root, 0, 0));
+
+            Assert.Contains("cannot place itself", exception.Message);
+        });
+    }
+
+    [Fact]
     public void Window_builder_composes_content_and_host_options_without_showing_the_window()
     {
         RunOnSta(() =>
