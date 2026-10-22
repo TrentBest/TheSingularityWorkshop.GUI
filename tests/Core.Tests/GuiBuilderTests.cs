@@ -23,6 +23,27 @@ public sealed class GuiBuilderTests
     }
 
     [Fact]
+    public void WithOnClick_records_a_stable_command_identity()
+    {
+        var node = GuiBuilders.Button("create-scene", "Create Scene")
+            .WithOnClick("storybuilder.scene.create")
+            .Build();
+
+        Assert.Equal("storybuilder.scene.create", node.Properties["onClickCommand"]);
+        Assert.Equal("Create Scene", node.Text);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData(" ")]
+    public void WithOnClick_rejects_blank_command_identity(string commandId)
+    {
+        var builder = GuiBuilders.Button("create-scene", "Create Scene");
+
+        Assert.Throws<ArgumentException>(() => builder.WithOnClick(commandId));
+    }
+
+    [Fact]
     public void Built_node_is_snapshot_of_builder_state()
     {
         var builder = GuiBuilder.Create("Panel", "root").Text("Before");
