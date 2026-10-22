@@ -163,6 +163,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
             .ThenBy(group => group.Key.Target, StringComparer.Ordinal);
 
         var renderedPorts = new HashSet<string>(StringComparer.Ordinal);
+        var typePorts = new List<XElement>();
         foreach (var group in edgeGroups)
         {
             var edge = group.First();
@@ -254,10 +255,10 @@ public sealed class SvgUmlDocumentationGraphRenderer
 
             var sourcePortKey = $"source:{sourceId}:{typeIdentity}:{F(sourcePortX)}:{F(sourcePortY)}";
             if (renderedPorts.Add(sourcePortKey))
-                AddTypePort(svg, sourceId, typeIdentity, sourcePortX, sourcePortY, isReceiving: false);
+                typePorts.Add(CreateTypePort(sourceId, typeIdentity, sourcePortX, sourcePortY, isReceiving: false));
             var targetPortKey = $"target:{targetId}:{typeIdentity}:{F(targetPortX)}:{F(targetPortY)}";
             if (renderedPorts.Add(targetPortKey))
-                AddTypePort(svg, targetId, typeIdentity, targetPortX, targetPortY, isReceiving: true);
+                typePorts.Add(CreateTypePort(targetId, typeIdentity, targetPortX, targetPortY, isReceiving: true));
         }
 
         var nodeIndex = 0;
@@ -310,6 +311,10 @@ public sealed class SvgUmlDocumentationGraphRenderer
             svg.Add(group);
         }
 
+        // Ports are drawn last so the colored stubs remain visible over card borders.
+        foreach (var port in typePorts)
+            svg.Add(port);
+
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
     }
 
@@ -328,22 +333,20 @@ public sealed class SvgUmlDocumentationGraphRenderer
         return TypePalette[hash % (uint)TypePalette.Length];
     }
 
-    private static void AddTypePort(XElement svg, string ownerId, string typeIdentity, double x, double y, bool isReceiving)
-    {
-        var group = new XElement(Svg + "g",
+    private static XElement CreateTypePort(string ownerId, string typeIdentity, double x, double y, bool isReceiving) =>
+        new(Svg + "g",
             new XAttribute("data-owner-type-id", ownerId),
             new XAttribute("data-type-id", typeIdentity),
             new XAttribute("transform", isReceiving ? $"rotate(180 {F(x)} {F(y)})" : "rotate(0)"),
             new XElement(Svg + "title", $"Type conduit for {typeIdentity}; " +
                 (isReceiving ? "receiving endpoint, rotated 180 degrees." : "source endpoint.")),
-            new XElement(Svg + "line",
-                new XAttribute("x1", F(x - 8)), new XAttribute("y1", F(y)),
-                new XAttribute("x2", F(x + 8)), new XAttribute("y2", F(y)),
+            new XElement(Svg + "path",
+                new XAttribute("d", $"M {F(x - 8)} {F(y - 4)} L {F(x + 8)} {F(y - 4)} L {F(x + 8)} {F(y + 4)}"),
+                new XAttribute("fill", "none"),
                 new XAttribute("stroke", TypeColor(typeIdentity)),
                 new XAttribute("stroke-width", "5"),
-                new XAttribute("stroke-linecap", "round")));
-        svg.Add(group);
-    }
+                new XAttribute("stroke-linecap", "round"),
+                new XAttribute("stroke-linejoin", "round")));
 
     private static string RelationshipLabel(UmlRelationshipKind kind) => kind switch
     {
