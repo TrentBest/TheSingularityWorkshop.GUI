@@ -171,6 +171,11 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 types.mkdir(parents=True)
                 (project_dir / "inventory.md").write_text(f"# {project} inventory\\n", encoding="utf-8")
                 (types / "index.md").write_text("# Generated types\\n", encoding="utf-8")
+                (types / ".source-uml-generated-files").write_text(
+                    "TheSingularityWorkshop-Fixture-Type-deadbeef.md\\n"
+                    "TheSingularityWorkshop-Fixture-Type-deadbeef.svg\\n",
+                    encoding="utf-8",
+                )
                 (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text(
                     "# Fixture\\n[diagram](TheSingularityWorkshop-Fixture-Type-deadbeef.svg)\\n", encoding="utf-8")
                 (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").write_text(
@@ -182,6 +187,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 self.assertTrue((output / project / "inventory.md").is_file())
                 self.assertTrue((output / project / "index.md").is_file())
                 self.assertTrue((output / project / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").is_file())
+                self.assertFalse((output / project / ".source-uml-generated-files").exists())
             self.assertEqual("# Authored gallery\\n", authored.read_text(encoding="utf-8"))
             self.assertEqual([], PROMOTER.promote(source, output, check=True))
 
