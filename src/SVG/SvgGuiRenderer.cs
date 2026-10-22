@@ -470,6 +470,16 @@ public sealed class SvgGuiRenderer
                 pending.Push((child, depth + 1));
         }
 
+        // The root document always emits a title id, and optionally a description id.
+        // Reserve those generated ids so user nodes cannot create ambiguous SVG references.
+        if (!ids.Add("gui-svg-title"))
+            throw new ArgumentException("SVG node id 'gui-svg-title' conflicts with the generated accessibility title id.", nameof(root));
+
+        if (root.Properties.TryGetValue("description", out var description) &&
+            !string.IsNullOrWhiteSpace(description) &&
+            !ids.Add("gui-svg-description"))
+            throw new ArgumentException("SVG node id 'gui-svg-description' conflicts with the generated accessibility description id.", nameof(root));
+
         // Coordinate-system overlays create real SVG elements with synthesized ids.
         if (root.Kind == "coordinate-system")
         {
