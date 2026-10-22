@@ -25,6 +25,9 @@ public abstract class GuiPanelBuilderWPF<TPanel, TBuilder> : IComponentWPF
     /// <summary>Deferred actions that create and attach the panel's direct children during <see cref="Build"/>.</summary>
     protected readonly List<Action> _definitionRoster = new();
 
+    // Components are single-owner because Build() returns their actual WPF element instances.
+    private readonly List<IComponentWPF> _registeredComponents = new();
+
     // Type-safe cast loop that returns the actual terminal subclass instance
     /// <summary>Returns this instance as the concrete builder type for fluent chaining.</summary>
     protected TBuilder Actual => (TBuilder)this;
@@ -93,10 +96,28 @@ public abstract class GuiPanelBuilderWPF<TPanel, TBuilder> : IComponentWPF
     {
         if (component != null)
         {
-            component.SetParent(this);
+            RegisterChildComponent(component);
             _definitionRoster.Add(() => Root.Children.Add(component.Build()));
         }
         return Actual;
+    }
+
+    /// <summary>Claims a component for this builder before its element is mounted into the visual tree.</summary>
+    /// <remarks>A component produces a stable element instance, so it cannot safely belong to two parents or appear twice.</remarks>
+    /// <param name="component">Component to register as a child.</param>
+    protected void RegisterChildComponent(IComponentWPF component)
+    {
+        ArgumentNullException.ThrowIfNull(component);
+
+        if (_registeredComponents.Exists(existing => ReferenceEquals(existing, component)))
+            throw new InvalidOperationException($"Component '{component.Id}' is already registered with builder '{Id}'. A WPF component can only be mounted once per parent.");
+
+        var currentParent = component.GetParent();
+        if (currentParent != null && !ReferenceEquals(currentParent, this))
+            throw new InvalidOperationException($"Component '{component.Id}' already belongs to builder '{currentParent.Id}' and cannot be reparented to '{Id}'. Create a new component instance for each visual parent.");
+
+        _registeredComponents.Add(component);
+        component.SetParent(this);
     }
 
     /// <summary>Recreates the panel's direct children from the queued definitions and returns the root panel.</summary>
