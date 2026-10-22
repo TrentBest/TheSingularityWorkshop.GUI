@@ -48,7 +48,21 @@ def collect_generated(input_dir: Path) -> dict[str, bytes]:
     if solution_index.is_file() and any((input_dir / slug / "types").is_dir() for slug in PROJECTS):
         if solution_index.is_symlink():
             raise ValueError(f"missing or unsafe generated solution inventory: {solution_index}")
-        outputs["index.md"] = solution_index.read_bytes()
+        # The generator artifact uses lowercase project slugs and a nested
+        # "types/" directory. Promotion intentionally flattens each type set into
+        # its package directory, so rewrite the solution index links to the exact
+        # committed paths instead of publishing links that only work in the artifact.
+        index_content = solution_index.read_text(encoding="utf-8")
+        for slug, project in PROJECTS.items():
+            index_content = index_content.replace(
+                f"[{slug}/inventory.md]({slug}/inventory.md)",
+                f"[{project} inventory]({project}/inventory.md)",
+            )
+            index_content = index_content.replace(
+                f"[{slug}/types/index.md]({slug}/types/index.md)",
+                f"[{project} type pages]({project}/index.md)",
+            )
+        outputs["index.md"] = index_content.encode("utf-8")
         for slug, project in PROJECTS.items():
             project_dir = input_dir / slug
             if project_dir.is_symlink() or not project_dir.is_dir():

@@ -160,7 +160,14 @@ class SourceUmlPromotionTests(unittest.TestCase):
             root = Path(temporary)
             source = root / "solution-uml"
             source.mkdir()
-            (source / "index.md").write_text("# Solution inventory\\n", encoding="utf-8")
+            (source / "index.md").write_text(
+                "# Solution inventory\\n"
+                "[core/inventory.md](core/inventory.md) [core/types/index.md](core/types/index.md)\\n"
+                "[blazor/inventory.md](blazor/inventory.md) [blazor/types/index.md](blazor/types/index.md)\\n"
+                "[wpf/inventory.md](wpf/inventory.md) [wpf/types/index.md](wpf/types/index.md)\\n"
+                "[svg/inventory.md](svg/inventory.md) [svg/types/index.md](svg/types/index.md)\\n",
+                encoding="utf-8",
+            )
             output = root / "docs" / "source-files"
             output.mkdir(parents=True)
             authored = output / "Gallery.md"
@@ -189,6 +196,12 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 self.assertTrue((output / project / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").is_file())
                 self.assertFalse((output / project / ".source-uml-generated-files").exists())
             self.assertEqual("# Authored gallery\\n", authored.read_text(encoding="utf-8"))
+            promoted_index = (output / "index.md").read_text(encoding="utf-8")
+            for project in ("Core", "Blazor", "WPF", "SVG"):
+                self.assertIn(f"[{project} inventory]({project}/inventory.md)", promoted_index)
+                self.assertIn(f"[{project} type pages]({project}/index.md)", promoted_index)
+                self.assertTrue((output / project / "inventory.md").is_file())
+                self.assertTrue((output / project / "index.md").is_file())
             self.assertEqual([], PROMOTER.promote(source, output, check=True))
 
     def test_rejects_symlinked_solution_inventory(self) -> None:
