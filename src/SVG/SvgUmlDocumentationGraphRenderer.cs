@@ -155,6 +155,12 @@ public sealed class SvgUmlDocumentationGraphRenderer
                     new XElement(Svg + "path", new XAttribute("d", "M0,0 L12,6 L0,12 z"),
                         new XAttribute("fill", "#ffffff"), new XAttribute("stroke", "#397d75"), new XAttribute("stroke-width", "1.2")))));
 
+        // An opaque canvas keeps relationship labels readable in dark-mode hosts and image previews.
+        svg.Add(new XElement(Svg + "rect",
+            new XAttribute("x", "0"), new XAttribute("y", "0"),
+            new XAttribute("width", F(canvasWidth)), new XAttribute("height", F(canvasHeight)),
+            new XAttribute("fill", "#ffffff"), new XAttribute("data-canvas-background", "true")));
+
         var edgeGroups = edges.GroupBy(edge => new
             {
                 Source = edge.SourceTypeId,
