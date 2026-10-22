@@ -110,7 +110,6 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 PROMOTER.promote(source, output)
             self.assertEqual("# Do not overwrite\n", sentinel.read_text(encoding="utf-8"))
 
-
     def test_rejects_symlinked_output_root(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -120,7 +119,6 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "output directory must not be a symlink"):
                 PROMOTER.promote(source, alias)
             self.assertTrue((output / "authored.md").is_file())
-
 
     def test_rejects_symlinked_parent_of_output_root(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -197,6 +195,30 @@ class SourceUmlPromotionTests(unittest.TestCase):
             (output / PROMOTER.MANIFEST_NAME).write_text("Gallery.md\\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "outside recognized generated UML scope"):
                 PROMOTER.promote(source, output)
+
+    def test_manifest_rejects_nested_generated_looking_path_before_pruning(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            (source / "index.md").write_text("# Solution inventory\n", encoding="utf-8")
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\n", encoding="utf-8")
+                (types / "index.md").write_text("# Generated types\n", encoding="utf-8")
+                (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text("# Fixture\n", encoding="utf-8")
+            output = root / "docs"
+            nested = output / "Core" / "authored"
+            nested.mkdir(parents=True)
+            authored = nested / "TheSingularityWorkshop-Authored-Note-deadbeef.md"
+            authored.write_text("# Human-authored note\n", encoding="utf-8")
+            (output / PROMOTER.MANIFEST_NAME).write_text(
+                "Core/authored/TheSingularityWorkshop-Authored-Note-deadbeef.md\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "outside recognized generated UML scope"):
+                PROMOTER.promote(source, output)
+            self.assertEqual("# Human-authored note\n", authored.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
