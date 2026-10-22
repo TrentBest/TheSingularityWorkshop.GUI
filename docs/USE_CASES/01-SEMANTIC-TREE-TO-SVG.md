@@ -58,4 +58,4 @@ The consumer receives a string containing an SVG document that can be saved, ins
 
 ## What this proves—and does not prove
 
-It proves the intended, minimal path from a Core semantic tree to SVG output when run against the package versions in the workflow. It does not prove full adapter parity, safe navigation to external resources, interactive hosting, complete SVG vocabulary coverage, or successful consumption of a yet-to-be-selected release candidate.
+It proves the intended, minimal path from a Core semantic tree to SVG output when run against the package versions in the workflow. The explicit renderer vocabulary now has representative executable coverage and a published test map; this smoke example does not prove every property combination, identical behavior across viewers, safe navigation to external resources, interactive hosting, or successful consumption of a yet-to-be-selected release candidate.
