@@ -14,7 +14,7 @@ The current generator is a staging tool under samples/SourceUmlGenerator. It is 
 2. **Project-semantic analysis:** loads the configured project through MSBuild/Roslyn and fails closed on compilation errors. Compiler symbols provide evidence for inheritance, interface realization, member associations, and signature dependencies.
 3. **Normalized documentation model:** carries type/member identities, source spans, repository/revision/project provenance, typed relationships, and resolution/evidence details. It must not be mislabeled as a Roslyn AST when it is a normalized model snapshot.
 4. **Focused UML rendering:** projects a selected type and its direct relationship neighborhood into SVG. It is not yet a full-project or solution-wide graph layout.
-5. **Inventory and per-type pages:** can be generated as workflow artifacts. A safe promotion script and manually triggered promotion workflow exist, but the generated page set has not yet been promoted into the keeper branch.
+5. **Inventory and per-type pages:** the four-project inventory is generated and safely promoted into `docs/uml/source-files`. Source/project/generator changes on `development` trigger regeneration, exact-build validation, manifest-owned promotion, a drift check, and a commit of the generated pages. Manual dispatch remains available for explicit refreshes.
 6. **Validation:** exercises syntax mutations and malformed input, partial/generic declarations, project-semantic relationships, exact-build type-identity checks, SVG accessibility metadata, unique IDs, local references, and inventory coverage.
 
 ## Reproduce and inspect
@@ -24,23 +24,23 @@ The current generator is a staging tool under samples/SourceUmlGenerator. It is 
 - [Solution-derived inventory workflow](../.github/workflows/solution-derived-uml.yml)
 - [SVG contract verifier](../scripts/verify_svg_contract.py)
 - [Promotion safety tests](../scripts/test_promote_source_uml.py)
-- [Manual promotion workflow](../.github/workflows/promote-source-uml-docs.yml)
+- [Automatic/manual promotion workflow](../.github/workflows/promote-source-uml-docs.yml)
 
 Use the documented CLI options in the generator source/help output. Do not treat generated artifacts as authoritative source or edit generated pages as if they were hand-authored documents.
 
 ## Current evidence and limits
 
-**Latest verified implementation baseline (2026-10-22):** [Package GUI run 39848592119](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39848592119), [Source-derived diagrams run 39848592087](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39848592087), and [Solution-derived UML inventory run 39848592242](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39848592242) passed on commit [`b29886d`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/b29886d749670ae3b6a814776b122e5c7eb049d3). The package workflow passed Core, Blazor, SVG, and WPF tests; the publish job was skipped. The subsequent Gallery link-only commit [`c79b5d9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c79b5d903357d7c23eb429730dd34c4912555348) is being checked by current-head CI; until those runs complete, `b29886d` remains the last verified baseline.
+**Latest verified implementation and promotion evidence (2026-10-22):** [Package GUI run 39862353055](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39862353055), [Source-derived diagrams run 39862352908](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39862352908), and [Solution-derived UML inventory run 39862352980](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39862352980) passed on implementation commit [`a25acf3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/a25acf387b1e24b6dba0a927e763c0b55c8b9b3e). The promotion workflow also passed in [run 39862352900](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39862352900) and committed the generated set at [`14b442f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/14b442f36b35465464c6ecd0a9589bffa277a5f0). NuGet publication remained skipped.
 
-The solution inventory reports 69 types and produced 69 Markdown pages plus 69 SVGs across Core (31), Blazor (6), SVG (9), and WPF (23). The generated neighborhood SVG was rendered and reviewed: cards are collapsed to kind/name plus namespace/member-count context; consumers are above the focus, dependencies below, external references to the right, relationship labels are concise, assembly provenance is shown for external nodes, and the focal card is vertically centered. Source-backed cards link to a revision-pinned source declaration and line. These generated pages remain workflow artifacts rather than a committed complete page set.
+The committed solution inventory reports 69 types across Core (31), Blazor (6), SVG (9), and WPF (23), with 69 Markdown pages and 69 SVGs now present in `docs/uml/source-files`. The generated neighborhood SVG was rendered and reviewed: cards are collapsed to kind/name plus namespace/member-count context; consumers are above the focus, dependencies below, external references to the right, relationship labels are concise, assembly provenance is shown for external nodes, and the focal card is vertically centered. Source-backed cards link to a revision-pinned source declaration and line. The pages remain source-derived technical inventory and do not replace human-authored use-case pages.
 
 Open gaps:
 
-- The complete generated per-type Markdown/SVG set is not yet committed in canonical `docs/api/generated/<Area>` and `docs/assets/uml/classes/<Area>` locations.
+- The generated set is committed under `docs/uml/source-files`; the final consumer-facing canonical page layout (`docs/api/...` with the associated `docs/assets/uml/classes/...` assets) remains to be reconciled with the generated inventory path.
 - The per-type pages still need companion `<TypeName>UML.md` pages with human-authored use cases; the generator cannot infer actor intent from source alone.
 - The focused graph is not a full project/solution graph; it shows one-hop relationships only.
 - Exact-build reflection comparison currently covers type identity, not complete member/API parity.
-- Committed generated-artifact drift checks and promotion/review of the generated set remain incomplete.
+- Automatic regeneration, manifest-owned promotion, and drift checking are implemented and passed in the promotion run; a source change that affects the model triggers a refreshed generated commit. Human review of semantic relationships and the final canonical layout remain separate.
 - The generator is not yet an installable build-time package with a stable consumer contract.
 
 ## Safety rules
