@@ -25,7 +25,7 @@ def _collect_types(types_dir: Path, prefix: str, outputs: dict[str, bytes]) -> N
             raise ValueError(f"non-regular generated entry is not allowed: {path.name}")
         if path.suffix.lower() not in SAFE_SUFFIXES or path.name in {"", ".", ".."}:
             raise ValueError(f"unsafe path or non-generated filename: {path.name}")
-        if Path(path.name).name != path.name or "/" in path.name or "\\\\" in path.name:
+        if Path(path.name).name != path.name or "/" in path.name or "\\" in path.name:
             raise ValueError(f"unsafe generated filename: {path.name}")
         outputs[f"{prefix}/{path.name}"] = path.read_bytes()
     if f"{prefix}/index.md" not in outputs:
