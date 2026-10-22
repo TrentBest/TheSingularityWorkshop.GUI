@@ -77,9 +77,13 @@ def read_manifest(output_dir: Path) -> set[str]:
             raise ValueError(f"unsafe path in generated-file manifest: {entry}")
         allowed = entry == LEGACY_INVENTORY or entry == "index.md"
         allowed = allowed or entry in {f"{name}/inventory.md" for name in PROJECTS.values()}
-        for project in PROJECTS.values():
-            if entry.startswith(f"{project}/") and candidate.suffix.lower() in SAFE_SUFFIXES:
-                allowed = allowed or candidate.name == "index.md" or candidate.name.startswith("TheSingularityWorkshop-")
+        # Generated type pages/diagrams are direct children of a package directory.
+        # Do not let a manifest claim nested authored content as generated.
+        if len(candidate.parts) == 2 and candidate.parts[0] in PROJECTS.values():
+            allowed = allowed or (
+                candidate.suffix.lower() in SAFE_SUFFIXES
+                and (candidate.name == "index.md" or candidate.name.startswith("TheSingularityWorkshop-"))
+            )
         if not allowed or candidate.suffix.lower() not in SAFE_SUFFIXES:
             raise ValueError(f"manifest entry is outside recognized generated UML scope: {entry}")
         entries.add(entry)
