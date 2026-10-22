@@ -206,7 +206,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
                     new XAttribute("d", $"M {F(startX)} {F(startY)} C {F(loopX)} {F(startY)}, {F(loopX)} {F(endY)}, {F(endX)} {F(endY)}"),
                     new XAttribute("fill", "none"), new XAttribute("stroke", stroke),
                     new XAttribute("stroke-width", "2"), new XAttribute("marker-end", marker));
-                labelX = loopX;
+                labelX = loopX + 55;
                 labelY = sourcePosition.Y + 68;
                 sourcePortX = sourcePosition.X + NodeWidth;
                 sourcePortY = sourcePosition.Y + 62;
@@ -254,9 +254,11 @@ public sealed class SvgUmlDocumentationGraphRenderer
             }
 
             svg.Add(connector);
-            var labels = group.Select(item => RelationshipLabel(item.Kind) + " · " + item.Label)
+            // The diagram is a neighborhood map: show relationship kinds here and preserve
+            // member-specific labels in the generated Markdown relationship table.
+            var labels = group.Select(item => RelationshipLabel(item.Kind))
                 .Distinct(StringComparer.Ordinal).ToArray();
-            var relationshipText = string.Join(" ; ", labels);
+            var relationshipText = isSelf ? "self-reference" : string.Join(" / ", labels);
             svg.Add(new XElement(Svg + "text",
                 new XAttribute("x", F(labelX)), new XAttribute("y", F(labelY)),
                 new XAttribute("text-anchor", "middle"), new XAttribute("font-size", "11"),
@@ -300,23 +302,17 @@ public sealed class SvgUmlDocumentationGraphRenderer
                     new XAttribute("font-size", "10"), new XAttribute("fill", node.IsFocus ? "#b7c8d5" : "#506779"),
                     node.Namespace));
 
-            var members = node.Members.Take(4).ToArray();
-            for (var index = 0; index < members.Length; index++)
-            {
-                var member = members[index];
-                var signature = member.Signature.Length > 39 ? member.Signature[..36] + "…" : member.Signature;
-                group.Add(new XElement(Svg + "text",
-                    new XAttribute("x", F(position.X + 14)),
-                    new XAttribute("y", F(position.Y + 91 + index * 20)),
-                    new XAttribute("font-size", "11"),
-                    new XAttribute("fill", node.IsFocus ? "#f0f6fb" : "#243b4a"),
-                    member.Kind + ": " + signature));
-            }
-            if (node.Members.Count > members.Length)
-                group.Add(new XElement(Svg + "text",
-                    new XAttribute("x", F(position.X + 14)), new XAttribute("y", F(position.Y + 176)),
-                    new XAttribute("font-size", "11"), new XAttribute("fill", headerText),
-                    $"+{node.Members.Count - members.Length} more members"));
+            var summary = node.IsExternal
+                ? "External reference · see relationship evidence"
+                : node.Members.Count == 0
+                    ? "No declared members"
+                    : $"{node.Members.Count} declared members · see type page";
+            group.Add(new XElement(Svg + "text",
+                new XAttribute("x", F(position.X + 14)),
+                new XAttribute("y", F(position.Y + 101)),
+                new XAttribute("font-size", "12"),
+                new XAttribute("fill", node.IsFocus ? "#f0f6fb" : "#243b4a"),
+                summary));
             svg.Add(group);
         }
 
