@@ -24,18 +24,18 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
 
       - name: Check repository-local documentation links
         run: python3 scripts/check-doc-links.py
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           dotnet-version: 8.0.x
 
       - name: Checkout pinned Physics source for parameterized Mandelbrot records
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
           repository: TrentBest/TheSingularityWorkshop.Physics
           ref: 6b7f4ca35e53ce77efd632d8c2cea6f07d9f6373
@@ -54,7 +54,7 @@ jobs:
         run: dotnet run --project samples/demonstrations/MandelbrotEscapeTime2d/MandelbrotEscapeTime2d.csproj --configuration Release -- ./artifacts/mandelbrot-detail.run.json ./artifacts/06-mandelbrot-detail.generated.svg
 
       - name: Upload Physics-backed GUI.SVG Mandelbrot explorer outputs
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-physics-mandelbrot-explorer
           path: |
@@ -121,7 +121,7 @@ jobs:
           cmp "$gallery" ./docs/assets/svg-adapter-gallery.svg
 
       - name: Upload GUI.SVG feature gallery
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-feature-gallery
           path: ./artifacts/svg-adapter-gallery.svg
@@ -147,7 +147,7 @@ jobs:
           PY
 
       - name: Upload GUI.SVG fox/sheepdog plane
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-fox-sheepdog-plane
           path: ./artifacts/fox-sheepdog-10x10.svg
@@ -171,7 +171,7 @@ jobs:
           PY
 
       - name: Upload Drone Construction GUI.SVG vision
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-drone-construction-vision
           path: ./artifacts/drone-construction-vision.svg
@@ -208,7 +208,7 @@ jobs:
           PY
 
       - name: Upload GUI.SVG primitive geometry lesson
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-primitive-geometry
           path: ./artifacts/01-primitive-geometry.generated.svg
@@ -242,7 +242,7 @@ jobs:
           PY
 
       - name: Upload GUI.SVG coordinate transformations lesson
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-coordinate-transformations
           path: ./artifacts/02-coordinate-functions.generated.svg
@@ -261,14 +261,14 @@ jobs:
         run: dotnet run --project samples/demonstrations/ProjectileTrajectory/ProjectileTrajectory.csproj --configuration Release -- ./artifacts/physics-projectile-trajectory.run.json ./artifacts/03-projectile-trajectory.generated.svg
 
       - name: Upload Physics-backed GUI.SVG projectile trajectory
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-physics-projectile-trajectory
           path: ./artifacts/03-projectile-trajectory.generated.svg
           if-no-files-found: error
 
       - name: Checkout pinned Physics source for seeded point-set run record
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
         with:
           repository: TrentBest/TheSingularityWorkshop.Physics
           ref: eea463a5034682b8eb149bd73013ac7dd590eb83
@@ -281,7 +281,7 @@ jobs:
         run: dotnet run --project samples/demonstrations/SeededPointSet2d/SeededPointSet2d.csproj --configuration Release -- ./artifacts/physics-seeded-point-set-2d.run.json ./artifacts/05-seeded-point-set.generated.svg
 
       - name: Upload Physics-backed GUI.SVG seeded point set
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-svg-physics-seeded-point-set
           path: |
@@ -400,7 +400,7 @@ jobs:
           dotnet restore ./artifacts/gui-clean-consumer/Consumer.csproj --source ./packages --source https://api.nuget.org/v3/index.json
           dotnet run --project ./artifacts/gui-clean-consumer/Consumer.csproj --configuration Release --no-restore
       - name: Upload NuGet package artifacts
-        uses: actions/upload-artifact@v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: gui-nuget-packages
           path: ./packages/*.nupkg
@@ -411,10 +411,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.2.2
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # v4.3.1
         with:
           dotnet-version: 8.0.x
 
@@ -432,13 +432,13 @@ jobs:
       id-token: write
     steps:
       - name: Download NuGet package artifacts
-        uses: actions/download-artifact@v8
+        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
         with:
           name: gui-nuget-packages
           path: ./packages
 
       - name: Authenticate with NuGet Trusted Publishing
-        uses: NuGet/login@v1
+        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1.2.0
         id: login
         with:
           user: TheSingularityWorkshop
