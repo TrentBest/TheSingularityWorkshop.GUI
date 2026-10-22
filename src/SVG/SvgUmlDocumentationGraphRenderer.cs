@@ -53,7 +53,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 var externalId = "external:" + (edge.TargetAssemblyIdentity ?? "unresolved") + ":" + edge.TargetDisplayName;
                 graphNodes.TryAdd(externalId, new GraphNode(
                     externalId, edge.TargetDisplayName, edge.Resolution == UmlRelationshipResolution.External ? "external type" : "unresolved type",
-                    string.Empty, Array.Empty<UmlDocumentedMember>(), false, true));
+                    AssemblyLabel(edge.TargetAssemblyIdentity), Array.Empty<UmlDocumentedMember>(), false, true));
             }
         }
 
@@ -374,6 +374,15 @@ public sealed class SvgUmlDocumentationGraphRenderer
         var name = node.Name;
         var lastDot = name.LastIndexOf('.');
         return lastDot < 0 ? name : name[(lastDot + 1)..];
+    }
+
+    private static string AssemblyLabel(string? assemblyIdentity)
+    {
+        if (string.IsNullOrWhiteSpace(assemblyIdentity))
+            return "Assembly unresolved";
+        var comma = assemblyIdentity.IndexOf(',');
+        var simpleName = comma < 0 ? assemblyIdentity : assemblyIdentity[..comma];
+        return "Assembly: " + simpleName;
     }
 
     private static string DisplayName(UmlDocumentedType type)
