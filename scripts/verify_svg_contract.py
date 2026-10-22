@@ -11,6 +11,7 @@ import sys
 from collections import Counter
 import xml.etree.ElementTree as ET
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 SVG_NS = "{http://www.w3.org/2000/svg}"
 XLINK_HREF = "{http://www.w3.org/1999/xlink}href"
@@ -24,6 +25,24 @@ SOURCE_LINK = re.compile(
 def is_allowed_source_link(target: str) -> bool:
     """Allow only revision-pinned links to source in this repository."""
     return SOURCE_LINK.fullmatch(target) is not None
+
+
+def is_pinned_source_href(target: str) -> bool:
+    parsed = urlsplit(target)
+    if parsed.scheme != "https" or parsed.netloc != "github.com":
+        return False
+    parts = parsed.path.strip("/").split("/")
+    if (
+        len(parts) < 5
+        or parts[0] != "TrentBest"
+        or parts[1] != "TheSingularityWorkshop.GUI"
+        or parts[2] != "blob"
+        or re.fullmatch(r"[0-9a-fA-F]{40}", parts[3]) is None
+    ):
+        return False
+    if any(segment in {"", ".", ".."} for segment in map(unquote, parts[4:])):
+        return False
+    return not parsed.fragment or re.fullmatch(r"L[1-9][0-9]*", parsed.fragment) is not None
 
 
 def verify(path: Path) -> list[str]:
