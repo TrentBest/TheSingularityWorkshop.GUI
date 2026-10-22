@@ -16,20 +16,9 @@ from urllib.parse import unquote, urlsplit
 SVG_NS = "{http://www.w3.org/2000/svg}"
 XLINK_HREF = "{http://www.w3.org/1999/xlink}href"
 URL_REFERENCE = re.compile(r"url\(#([^)]*)\)")
-SOURCE_LINK = re.compile(
-    r"https://github\.com/TrentBest/TheSingularityWorkshop\.GUI/blob/[0-9a-f]{40}/"
-    r"[A-Za-z0-9._~%/-]+#L[1-9][0-9]*"
-)
-
-
-def is_allowed_source_link(target: str) -> bool:
-    """Allow only revision-pinned links to source in this repository."""
-    return SOURCE_LINK.fullmatch(target) is not None
-
-
 def is_pinned_source_href(target: str) -> bool:
     parsed = urlsplit(target)
-    if parsed.scheme != "https" or parsed.netloc != "github.com":
+    if parsed.scheme != "https" or parsed.netloc != "github.com" or parsed.query:
         return False
     parts = parsed.path.strip("/").split("/")
     if (
@@ -42,7 +31,7 @@ def is_pinned_source_href(target: str) -> bool:
         return False
     if any(segment in {"", ".", ".."} for segment in map(unquote, parts[4:])):
         return False
-    return not parsed.fragment or re.fullmatch(r"L[1-9][0-9]*", parsed.fragment) is not None
+    return re.fullmatch(r"L[1-9][0-9]*", parsed.fragment) is not None
 
 
 def verify(path: Path) -> list[str]:
@@ -84,7 +73,7 @@ def verify(path: Path) -> list[str]:
             if target.startswith("#") and len(target) > 1:
                 pass  # Resolved after collecting all IDs.
             elif (target and attribute_name in element.attrib and
-                  not target.startswith("data:") and not is_allowed_source_link(target)):
+                  not target.startswith("data:") and not is_pinned_source_href(target)):
                 errors.append(f"{path}: non-local {attribute_name} reference is not allowed: {target}")
         for attribute_value in element.attrib.values():
             for target in URL_REFERENCE.findall(attribute_value):
