@@ -213,7 +213,9 @@ jobs:
           assert svg.find("{http://www.w3.org/2000/svg}title") is not None
           assert svg.find("{http://www.w3.org/2000/svg}desc") is not None
           svg_text = " ".join(node.text or "" for node in svg.iter("{http://www.w3.org/2000/svg}text"))
-          assert "Fixture.Other" in svg_text
+          svg_titles = " ".join(node.text or "" for node in svg.iter("{http://www.w3.org/2000/svg}title"))
+          assert "Fixture.Other" in svg_titles, "full type identity must remain accessible"
+          assert "Fixture" in svg_text and "Other" in svg_text, "collapsed cards show namespace and short type name"
           assert "association" in svg_text
           assert "dependency" in svg_text
           assert "interface realization" in svg_text
