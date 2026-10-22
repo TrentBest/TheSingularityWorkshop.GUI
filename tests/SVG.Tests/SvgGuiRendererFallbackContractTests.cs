@@ -26,8 +26,8 @@ public sealed class SvgGuiRendererFallbackContractTests
         var document = XDocument.Parse(new SvgGuiRenderer().Render(tree));
         XNamespace svg = "http://www.w3.org/2000/svg";
 
-        var fallback = document.Descendants(svg + "g")
-            .Single(element => (string?)element.Attribute("id") == "custom-widget");
+        Assert.Equal("custom-widget", (string?)document.Root!.Attribute("id"));
+        var fallback = document.Root.Elements(svg + "g").Single();
 
         Assert.Equal("Widget label", fallback.Element(svg + "title")?.Value);
         Assert.Equal(
