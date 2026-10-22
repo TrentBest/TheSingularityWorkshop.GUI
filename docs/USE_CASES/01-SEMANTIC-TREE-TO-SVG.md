@@ -19,6 +19,9 @@ Construct a small interface description without depending on a native widget tre
 ## Main path
 
 ```csharp
+using System;
+using System.Linq;
+using System.Xml.Linq;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
@@ -30,12 +33,19 @@ var scene = GuiBuilder.Create("svg-scene", "scene")
     .Build();
 
 var svg = new SvgGuiRenderer().Render(scene);
+var document = XDocument.Parse(svg);
+XNamespace svgNamespace = "http://www.w3.org/2000/svg";
+var marker = document.Descendants(svgNamespace + "circle").SingleOrDefault();
 
-if (!svg.Contains("<svg", StringComparison.Ordinal))
-    throw new InvalidOperationException("SVG output was not produced.");
+if (document.Root?.Name != svgNamespace + "svg" ||
+    marker is null ||
+    (string?)marker.Attribute("r") != "4")
+{
+    throw new InvalidOperationException("SVG output did not preserve the requested marker.");
+}
 ```
 
-This example follows the package-consumer smoke path recorded in the repository's package workflow. It constructs a semantic tree, renders it, and checks that the result is an SVG document. It is a minimal smoke example, not a complete visual-correctness assertion.
+This example constructs a semantic tree, renders it, parses the result as XML, and verifies both the SVG root and a requested circle attribute. It is a structural smoke assertion, not a complete visual-correctness or cross-viewer assertion.
 
 ## Expected result
 
