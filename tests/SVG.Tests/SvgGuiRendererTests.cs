@@ -266,6 +266,69 @@ public sealed class SvgGuiRendererTests
     }
 
     [Fact]
+    public void Emits_svg_title_switch_and_radial_gradient_nodes()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-title", "named-title", title => title.Text("Named scene title"))
+            .Child("svg-switch", "alternate", alternate => alternate
+                .Child("svg-g", "fallback-group", group => group
+                    .Child("svg-circle", "fallback-marker", circle => circle.Property("r", "3"))))
+            .Child("svg-defs", "defs", defs => defs
+                .Child("svg-radial-gradient", "radial", gradient => gradient
+                    .Property("cx", "50%").Property("cy", "50%").Property("r", "50%")
+                    .Property("fx", "35%").Property("fy", "35%")
+                    .Child("svg-stop", "radial-start", stop => stop.Property("offset", "0%").Property("stop-color", "#ffffff"))
+                    .Child("svg-stop", "radial-end", stop => stop.Property("offset", "100%").Property("stop-color", "#000000"))))
+            .Build();
+
+        var doc = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.Contains(doc.Descendants(svg + "title"), title => title.Value == "Named scene title");
+        Assert.Equal("alternate", (string?)doc.Descendants(svg + "switch").Single().Attribute("id"));
+        Assert.Equal("fallback-marker", (string?)doc.Descendants(svg + "circle").Single().Attribute("id"));
+        Assert.Equal("50%", (string?)doc.Descendants(svg + "radialGradient").Single().Attribute("r"));
+        Assert.Equal("35%", (string?)doc.Descendants(svg + "radialGradient").Single().Attribute("fx"));
+        Assert.Equal(2, doc.Descendants(svg + "radialGradient").Single().Elements(svg + "stop").Count());
+    }
+
+    [Fact]
+    public void Emits_color_matrix_blend_flood_composite_tile_and_all_channel_functions()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Child("svg-filter", "filter", filter => filter
+                .Child("svg-fe-color-matrix", "matrix", matrix => matrix
+                    .Property("type", "saturate").Property("values", "0.5"))
+                .Child("svg-fe-blend", "blend", blend => blend
+                    .Property("in", "SourceGraphic").Property("in2", "texture").Property("mode", "multiply"))
+                .Child("svg-fe-flood", "flood", flood => flood
+                    .Property("flood-color", "#7ee0bd").Property("flood-opacity", "0.4"))
+                .Child("svg-fe-composite", "composite", composite => composite
+                    .Property("in", "SourceGraphic").Property("in2", "flood").Property("operator", "in"))
+                .Child("svg-fe-tile", "tile", tile => tile.Property("in", "SourceGraphic"))
+                .Child("svg-fe-component-transfer", "transfer", transfer => transfer
+                    .Child("svg-fe-func-r", "red", channel => channel.Property("type", "linear").Property("slope", "1"))
+                    .Child("svg-fe-func-g", "green", channel => channel.Property("type", "linear").Property("slope", "0.9"))
+                    .Child("svg-fe-func-b", "blue", channel => channel.Property("type", "linear").Property("slope", "0.8"))
+                    .Child("svg-fe-func-a", "alpha", channel => channel.Property("type", "identity"))))
+            .Build();
+
+        var doc = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.Equal("saturate", (string?)doc.Descendants(svg + "feColorMatrix").Single().Attribute("type"));
+        Assert.Equal("0.5", (string?)doc.Descendants(svg + "feColorMatrix").Single().Attribute("values"));
+        Assert.Equal("multiply", (string?)doc.Descendants(svg + "feBlend").Single().Attribute("mode"));
+        Assert.Equal("#7ee0bd", (string?)doc.Descendants(svg + "feFlood").Single().Attribute("flood-color"));
+        Assert.Equal("in", (string?)doc.Descendants(svg + "feComposite").Single().Attribute("operator"));
+        Assert.Equal("SourceGraphic", (string?)doc.Descendants(svg + "feTile").Single().Attribute("in"));
+        Assert.Equal("linear", (string?)doc.Descendants(svg + "feFuncR").Single().Attribute("type"));
+        Assert.Equal("0.9", (string?)doc.Descendants(svg + "feFuncG").Single().Attribute("slope"));
+        Assert.Equal("0.8", (string?)doc.Descendants(svg + "feFuncB").Single().Attribute("slope"));
+        Assert.Equal("identity", (string?)doc.Descendants(svg + "feFuncA").Single().Attribute("type"));
+    }
+
+    [Fact]
     public void Emits_extended_filter_primitives_and_lighting_sources()
     {
         var scene = GuiBuilder.Create("svg-scene", "scene")
