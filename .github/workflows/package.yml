@@ -441,7 +441,7 @@ jobs:
           if (-not $corePackage -or -not $wpfPackage) { throw "Core or WPF package archive is missing." }
           $coreVersion = $corePackage.BaseName.Substring("TheSingularityWorkshop.GUI.Core.".Length)
           $wpfVersion = $wpfPackage.BaseName.Substring("TheSingularityWorkshop.GUI.WPF.".Length)
-          @"
+          $projectContent = @"
           <Project Sdk="Microsoft.NET.Sdk">
             <PropertyGroup>
               <OutputType>Exe</OutputType>
@@ -455,8 +455,9 @@ jobs:
               <PackageReference Include="TheSingularityWorkshop.GUI.WPF" Version="$wpfVersion" />
             </ItemGroup>
           </Project>
-          "@ | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Consumer.csproj
-          @"
+          "@
+          $projectContent | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Consumer.csproj
+          $programContent = @"
           using System;
           using System.Windows;
           using System.Windows.Controls;
@@ -478,7 +479,8 @@ jobs:
                   return 0;
               }
           }
-          "@ | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Program.cs
+          "@
+          $programContent | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Program.cs
           dotnet restore ./artifacts/wpf-package-consumer/Consumer.csproj --source ./packages --source https://api.nuget.org/v3/index.json
           if ($LASTEXITCODE -ne 0) { throw "WPF package-only consumer restore failed." }
           dotnet run --project ./artifacts/wpf-package-consumer/Consumer.csproj --configuration Release --no-restore
