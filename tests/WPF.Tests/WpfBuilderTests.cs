@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -273,6 +274,17 @@ public sealed class WpfBuilderTests
             Assert.Contains("already belongs", exception.Message);
             Assert.Same(existingParent, VisualTreeHelper.GetParent(element));
         });
+    }
+
+    [Fact]
+    public void Grid_compatibility_proxy_does_not_expose_a_child_mutation_path()
+    {
+        var proxyType = typeof(GridGuiBuilderWPF).GetNestedType("CompatibilityElementProxy", BindingFlags.NonPublic);
+        Assert.NotNull(proxyType);
+
+        var childProperty = proxyType!.GetProperty("Child", BindingFlags.Instance | BindingFlags.Public);
+        Assert.NotNull(childProperty);
+        Assert.False(childProperty!.CanWrite);
     }
 
     [Fact]
