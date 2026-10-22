@@ -344,6 +344,48 @@ public sealed class WpfBuilderTests
         });
     }
 
+    [Theory]
+    [InlineData(-1, 0, "row")]
+    [InlineData(0, -1, "column")]
+    [InlineData(1, 0, "row")]
+    [InlineData(0, 1, "column")]
+    public void Grid_builder_rejects_component_placements_outside_declared_logical_tracks(
+        int row, int column, string dimension)
+    {
+        RunOnSta(() =>
+        {
+            // Placement may be declared first; validation happens against the completed
+            // track configuration at Build time.
+            var builder = new GridGuiBuilderWPF("invalid-placement")
+                .PlaceComponent(row, column, new TestComponent())
+                .AddColumnTrack(1, GridUnitType.Star)
+                .AddRowTrack(1, GridUnitType.Star);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => builder.Build());
+
+            Assert.Contains(dimension, exception.Message);
+            Assert.Contains(row.ToString(), exception.Message);
+            Assert.Contains(column.ToString(), exception.Message);
+        });
+    }
+
+    [Fact]
+    public void Grid_builder_rejects_placements_when_no_logical_tracks_are_declared()
+    {
+        RunOnSta(() =>
+        {
+            var builder = new GridGuiBuilderWPF("no-tracks")
+                .PlaceComponent(0, 0, new TestComponent());
+
+            var exception = Assert.Throws<InvalidOperationException>(() => builder.Build());
+
+            Assert.Contains("row", exception.Message);
+            Assert.Contains("column", exception.Message);
+            Assert.Empty(Assert.IsType<Grid>(builder.Root).ColumnDefinitions);
+            Assert.Empty(Assert.IsType<Grid>(builder.Root).RowDefinitions);
+        });
+    }
+
     [Fact]
     public void Grid_compatibility_proxy_does_not_expose_a_child_mutation_path()
     {
