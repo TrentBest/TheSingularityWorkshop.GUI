@@ -64,6 +64,12 @@ A GUI can represent subjects through independent views, viewports, and cameras. 
 
 [Read the chapter](THEORY/06_SPATIAL_REPRESENTATION.md)
 
+### 7. Evidence and Boundaries in Semantic GUI Systems
+
+Theory claims should be tied to implementation, tests, and consumer evidence without treating those as interchangeable. This chapter defines the evidence discipline and states what the current adapter split does—and does not—establish.
+
+[Read the chapter](THEORY/07-EVIDENCE-AND-BOUNDARIES.md)
+
 ## Textbook intent
 
 The chapters are written as reusable conceptual material rather than as marketing copy.
