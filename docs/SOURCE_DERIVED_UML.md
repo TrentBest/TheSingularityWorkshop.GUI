@@ -30,19 +30,18 @@ Use the documented CLI options in the generator source/help output. Do not treat
 
 ## Current evidence and limits
 
-**Latest verified implementation baseline (2026-10-22):** [Package GUI run 39719153668](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39719153668), [Source-derived diagrams run 39719153678](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39719153678), and [Solution-derived UML inventory run 39719153725](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39719153725) passed on source commit [`645573f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/645573fce4c843a94953abbee11e46240b9f1378). The solution inventory reports 69 types and produced 69 Markdown pages plus 69 SVGs across the four maintained projects. These remain artifacts, not a committed complete page set.
+**Latest verified implementation baseline (2026-10-22):** [Package GUI run 39842181766](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39842181766), [Source-derived diagrams run 39842181566](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39842181566), and [Solution-derived UML inventory run 39842181661](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39842181661) passed on source commit [`5b813a9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/5b813a907e81b38c9423e1de21f23fa4319dc9ce). The package workflow passed Core, Blazor, SVG, and WPF tests; the publish job was skipped. The action-pin check, committed UML SVG safety/accessibility check, and Markdown link check passed as well.
 
-Since that baseline, development contains a custom target-centered layout update for the SVG UML neighborhood renderer, assertions for consumer/target/dependency/external placement and receiving ports, an authored GuiBuilder neighborhood SVG and type page, and immutable action pins plus a pin-check script. **Those newer changes have not yet been verified by a fresh workflow run.** Do not call the renderer change or the package workflow green on the newer head until the current code and workflow are tested and the rendered diagrams are visually reviewed.
+The solution inventory reports 69 types and produced 69 Markdown pages plus 69 SVGs across Core (31), Blazor (6), SVG (9), and WPF (23). The generated neighborhood SVG was rendered and reviewed: cards are collapsed to kind/name plus namespace/member-count context; consumers are above the focus, dependencies below, external references to the right, relationship labels are concise, assembly provenance is shown for external nodes, and the focal card is vertically centered. These generated pages remain workflow artifacts rather than a committed complete page set.
 
 Open gaps:
 
-- The complete generated per-type Markdown/SVG set is not yet committed in canonical `docs/api` and `docs/assets/uml/classes` locations; the current manual first slice is not full coverage.
-- The per-type pages still need reviewed companion `<TypeName>UML.md` pages with human-authored use cases; the generator cannot infer actor intent from source alone.
-- The manual promotion workflow has not been dispatched.
+- The complete generated per-type Markdown/SVG set is not yet committed in canonical `docs/api/generated/<Area>` and `docs/assets/uml/classes/<Area>` locations.
+- The per-type pages still need companion `<TypeName>UML.md` pages with human-authored use cases; the generator cannot infer actor intent from source alone.
+- Generated SVG cards still need revision-pinned source links, with a safe allowlist in the SVG asset validator.
+- The focused graph is not a full project/solution graph; it shows one-hop relationships only.
 - Exact-build reflection comparison currently covers type identity, not complete member/API parity.
-- The focused graph is not a full project/solution graph; the new target-centered layout and port rendering still require CI and visual review.
-- SVG structure checks do not prove that all painted text fits or that every browser renders every feature identically.
-- Committed generated-artifact drift checks and visual inspection evidence remain incomplete.
+- Committed generated-artifact drift checks and promotion/review of the generated set remain incomplete.
 - The generator is not yet an installable build-time package with a stable consumer contract.
 
 ## Safety rules
