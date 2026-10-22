@@ -27,6 +27,8 @@ def _collect_types(types_dir: Path, prefix: str, outputs: dict[str, bytes]) -> N
             raise ValueError(f"unsafe path or non-generated filename: {path.name}")
         if Path(path.name).name != path.name or "/" in path.name or "\\" in path.name:
             raise ValueError(f"unsafe generated filename: {path.name}")
+        if path.name != "index.md" and not path.name.startswith("TheSingularityWorkshop-"):
+            raise ValueError(f"unsafe generated filename: {path.name}")
         outputs[f"{prefix}/{path.name}"] = path.read_bytes()
     if f"{prefix}/index.md" not in outputs:
         raise ValueError(f"generated type set is missing {prefix}/index.md")
