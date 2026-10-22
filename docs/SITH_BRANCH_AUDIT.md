@@ -2014,3 +2014,19 @@ Three-round fast triage completed at the owner's requested pace.
 - On prior head `a2b9a8267869da65bcf2da040658892ba0dfe270`, Source-derived diagrams, Solution-derived UML inventory, and Package GUI all completed successfully. The ledger-only follow-up has moved development to the current head; no claim of exact-head green is made for that later commit until its runs are checked.
 - `package.yml` still contains the `&& false` NuGet publishing hard stop.
 - Owner has explicitly prioritized current development over archival preservation. This audit does not ask for further exhaustive history review. No branches deleted by the assistant.
+
+## Live inventory correction — 2026-10-22
+
+This checkpoint supersedes earlier branch-count and open-PR statements above where they conflict. Fresh GitHub API reads at the current development tip `8db9570cec7a5c7500d26f4aa5e01e4d62b65c09` show:
+
+- **Branch inventory: 2 total** — `master` and `development`. No non-keeper branches are currently listed. This audit did not delete any branches; the current inventory simply reflects the live remote state.
+- **Historical PRs #8, #11, #15, #18, and #19 are closed without merge.** Their historical head refs are not in the current branch inventory. Closing a PR and removing its branch does not itself prove that every unique contribution was reconciled; the historical PR patches remain available for targeted follow-up if a concrete missing behavior is identified.
+- Current-head validation at `8db9570cec7a5c7500d26f4aa5e01e4d62b65c09`:
+  - [Source-derived diagrams — run 39711470891](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39711470891): success.
+  - [Solution-derived UML inventory — run 39711470609](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39711470609): success.
+  - [Package GUI — run 39711470605](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39711470605): in progress at the time of this check; exact-head package verification is not yet complete.
+- The package workflow still includes `github.event_name == 'workflow_dispatch' && inputs.publish == true && false`. NuGet publication remains hard-disabled. No package was published or release authorized in this pass.
+
+### Current decision
+
+**Keeper branch inventory is compliant (2/2).** There are no surplus branches to present for manual deletion in the current remote inventory. Do not reinterpret this inventory fact as proof that every closed, unmerged PR contribution was preserved, nor reopen historical work without a concrete gap. The historical release-readiness estimate of 70% is not recalculated here; branch-count cleanup and documentation indexing do not establish release readiness. No branch was deleted by the assistant, no PR was merged or reopened, and no package was published.
