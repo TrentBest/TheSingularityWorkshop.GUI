@@ -30,6 +30,17 @@ public sealed class GuiBuilder
         return this;
     }
 
+    /// <summary>
+    /// Declares the stable, host-neutral command identity dispatched when this node is activated.
+    /// The host must explicitly map the command to an allowed operation; this does not execute it.
+    /// </summary>
+    public GuiBuilder WithOnClick(string commandId)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(commandId);
+        _root.Properties["onClickCommand"] = commandId;
+        return this;
+    }
+
     /// <summary>Adds and configures a child using a fluent callback.</summary>
     public GuiBuilder Child(string kind, string id, Action<GuiBuilder>? configure = null)
     {
