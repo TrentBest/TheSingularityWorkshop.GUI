@@ -77,7 +77,7 @@ def read_manifest(output_dir: Path) -> set[str]:
         allowed = allowed or entry in {f"{name}/inventory.md" for name in PROJECTS.values()}
         for project in PROJECTS.values():
             if entry.startswith(f"{project}/") and candidate.suffix.lower() in SAFE_SUFFIXES:
-                allowed = candidate.name == "index.md" or candidate.name.startswith("TheSingularityWorkshop-")
+                allowed = allowed or candidate.name == "index.md" or candidate.name.startswith("TheSingularityWorkshop-")
         if not allowed or candidate.suffix.lower() not in SAFE_SUFFIXES:
             raise ValueError(f"manifest entry is outside recognized generated UML scope: {entry}")
         entries.add(entry)
