@@ -42,6 +42,8 @@ def collect_generated(input_dir: Path) -> dict[str, bytes]:
         outputs["index.md"] = (input_dir / "index.md").read_bytes()
         for slug, project in PROJECTS.items():
             project_dir = input_dir / slug
+            if project_dir.is_symlink() or not project_dir.is_dir():
+                raise ValueError(f"missing or unsafe generated project directory: {project_dir}")
             inventory = project_dir / "inventory.md"
             if not inventory.is_file() or inventory.is_symlink():
                 raise ValueError(f"missing or unsafe generated inventory: {inventory}")
