@@ -162,6 +162,13 @@ class SourceUmlPromotionTests(unittest.TestCase):
             source = root / "solution-uml"
             source.mkdir()
             (source / "index.md").write_text("# inventory\\n", encoding="utf-8")
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\\n", encoding="utf-8")
+                (types / "index.md").write_text("# Generated types\\n", encoding="utf-8")
+                (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text("# Fixture\\n", encoding="utf-8")
             output = root / "docs"
             output.mkdir()
             (output / PROMOTER.MANIFEST_NAME).write_text("Gallery.md\\n", encoding="utf-8")
