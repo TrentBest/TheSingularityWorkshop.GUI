@@ -1,0 +1,48 @@
+name: Documentation quality
+
+on:
+  push:
+    branches: [development]
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "scripts/check-doc-links.py"
+      - "scripts/check-uml-svg-assets.py"
+      - "scripts/check-workflow-action-pins.py"
+      - "scripts/verify_svg_contract.py"
+      - "scripts/test_verify_svg_contract.py"
+      - ".github/workflows/documentation-quality.yml"
+  pull_request:
+    branches: [development]
+    paths:
+      - "README.md"
+      - "docs/**"
+      - "scripts/check-doc-links.py"
+      - "scripts/check-uml-svg-assets.py"
+      - "scripts/check-workflow-action-pins.py"
+      - "scripts/verify_svg_contract.py"
+      - "scripts/test_verify_svg_contract.py"
+      - ".github/workflows/documentation-quality.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # pinned commit SHA
+
+      - name: Check workflow action references are immutable
+        run: python3 scripts/check-workflow-action-pins.py
+
+      - name: Check repository-local Markdown links
+        run: python3 scripts/check-doc-links.py
+
+      - name: Check committed UML SVG assets
+        run: python3 scripts/check-uml-svg-assets.py
+
+      - name: Test generated SVG safety contract
+        run: python3 scripts/test_verify_svg_contract.py
