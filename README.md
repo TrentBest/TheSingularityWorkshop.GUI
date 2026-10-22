@@ -34,7 +34,7 @@ Describe interface intent in the Core model, then pass it to an adapter. The cur
 
 ## 🟢 04 See it in a minute
 
-Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), then build and run the tests for the adapter you intend to use.
+Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), browse the [committed type inventory and source-derived UML](docs/uml/source-files/index.md), then build and run the tests for the adapter you intend to use.
 
 ## SVG demonstration samples
 
