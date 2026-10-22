@@ -86,8 +86,9 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Contains("Fixture.B", text);
         Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("global::System.IO.Stream", StringComparison.Ordinal));
         Assert.Contains(document.Descendants(Svg + "text"), label => label.Value == "Assembly: System.Runtime");
-        Assert.Contains("association · property type", text);
-        Assert.Contains("dependency · parameter type stream", text);
+        Assert.Contains("association", text);
+        Assert.Contains("dependency", text);
+        Assert.Contains("declared members · see type page", text);
 
         var ids = document.Descendants().Attributes("id").Select(attribute => attribute.Value).ToArray();
         Assert.Equal(ids.Length, ids.Distinct(StringComparer.Ordinal).Count());
