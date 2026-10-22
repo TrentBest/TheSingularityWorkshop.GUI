@@ -244,6 +244,38 @@ public sealed class WpfBuilderTests
     }
 
     [Fact]
+    public void Dock_builder_rejects_duplicate_raw_element_registration()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "Docked once" };
+            var builder = new DockGuiPanelBuilderWPF(new GuiConfiguration()).AddDocked(element, Dock.Left);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => builder.AddDocked(element, Dock.Right));
+
+            Assert.Contains("already registered", exception.Message);
+            Assert.Single(Assert.IsType<DockPanel>(builder.Build()).Children);
+        });
+    }
+
+    [Fact]
+    public void Dock_builder_rejects_elements_already_attached_to_another_parent()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "Owned" };
+            var existingParent = new StackPanel();
+            existingParent.Children.Add(element);
+
+            var exception = Assert.Throws<InvalidOperationException>(() =>
+                new DockGuiPanelBuilderWPF(new GuiConfiguration()).AddDocked(element, Dock.Top));
+
+            Assert.Contains("already belongs", exception.Message);
+            Assert.Same(existingParent, VisualTreeHelper.GetParent(element));
+        });
+    }
+
+    [Fact]
     public void Window_builder_composes_content_and_host_options_without_showing_the_window()
     {
         RunOnSta(() =>
