@@ -119,7 +119,7 @@ def main() -> int:
                         help="fail if promoted files differ; do not write or prune")
     args = parser.parse_args()
     try:
-        errors = promote(args.input_dir.resolve(), args.output_dir.resolve(), args.check)
+        errors = promote(args.input_dir.resolve(), args.output_dir, args.check)
     except (OSError, ValueError) as exc:
         print(f"ERROR: source UML promotion failed closed: {exc}", file=sys.stderr)
         return 1
