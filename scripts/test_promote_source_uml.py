@@ -104,5 +104,16 @@ class SourceUmlPromotionTests(unittest.TestCase):
             self.assertEqual("# Do not overwrite\n", sentinel.read_text(encoding="utf-8"))
 
 
+    def test_rejects_symlinked_output_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, output = self.fixture(root)
+            alias = root / "source-files-link"
+            alias.symlink_to(output, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, "output directory must not be a symlink"):
+                PROMOTER.promote(source, alias)
+            self.assertTrue((output / "authored.md").is_file())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
