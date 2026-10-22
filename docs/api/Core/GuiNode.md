@@ -66,7 +66,7 @@ This builds a small immutable tree and finds the button by its ID. In an applica
 
 ## Verification status
 
-The focused test file for `GuiNode` is not yet mapped in this documentation inventory. The existing [`GuiBuilderTests.cs`](../../../tests/Core.Tests/GuiBuilderTests.cs) exercises builder-produced node behavior, but it should not be treated as proof of every direct-constructor contract listed here. Add or map direct tests for property/child snapshots, duplicate-ID traversal order, invalid lookup IDs, absent IDs, and deep trees before marking this type fully verified.
+Direct-node regression coverage lives in [`GuiBuilderTests.cs`](../../../tests/Core.Tests/GuiBuilderTests.cs), alongside builder tests. The suite now explicitly checks blank kind/ID rejection, child-sequence snapshotting, duplicate-ID depth-first left-to-right lookup, and rejection of blank lookup identifiers. It also covers property snapshots, absent IDs, and iterative lookup over a deep tree. These are source-aligned regression assertions; they do not independently prove renderer behavior or replace a successful CI run for the exact commit.
 
 ## Related documentation
 
