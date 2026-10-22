@@ -161,6 +161,26 @@ class SourceUmlPromotionTests(unittest.TestCase):
             self.assertEqual("# Authored gallery\\n", authored.read_text(encoding="utf-8"))
             self.assertEqual([], PROMOTER.promote(source, output, check=True))
 
+    def test_rejects_symlinked_solution_inventory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            external_index = root / "external-index.md"
+            external_index.write_text("# External inventory\\n", encoding="utf-8")
+            (source / "index.md").symlink_to(external_index)
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\\n", encoding="utf-8")
+                (types / "index.md").write_text("# Types\\n", encoding="utf-8")
+            output = root / "docs"
+            output.mkdir()
+            with self.assertRaisesRegex(ValueError, "unsafe generated solution inventory"):
+                PROMOTER.promote(source, output)
+            self.assertFalse((output / "index.md").exists())
+
     def test_rejects_symlinked_generated_project_directory(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
