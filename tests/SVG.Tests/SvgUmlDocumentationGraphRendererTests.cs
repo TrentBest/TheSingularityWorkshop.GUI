@@ -106,6 +106,9 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.True(focusY < dependencyY, "dependencies used by the focus must appear below it");
         Assert.True(focusX > 100, "the focus should be centered within the available neighborhood, not pinned to the left");
         Assert.True(externalX > focusX, "external/platform references must appear to the right");
+        var focusCenterY = focusY + double.Parse((string)nodeGroups["type:Fixture:A"].Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture) / 2;
+        var canvasHeight = double.Parse((string)document.Root!.Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture);
+        Assert.InRange(Math.Abs(focusCenterY - canvasHeight / 2), 0, 1);
         Assert.Contains(document.Descendants(Svg + "g"), group =>
             ((string?)group.Attribute("data-type-id")) == "type:Fixture:A" &&
             ((string?)group.Attribute("transform"))?.StartsWith("rotate(180", StringComparison.Ordinal) == true);
