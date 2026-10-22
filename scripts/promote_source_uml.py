@@ -117,6 +117,19 @@ def promote(input_dir: Path, output_dir: Path, check: bool = False) -> list[str]
     previous = read_manifest(output_dir)
     current = set(generated)
     errors: list[str] = []
+
+    # Validate all destinations before writing anything. An existing file that
+    # is not owned by the previous manifest may be human-authored, even when its
+    # name resembles a generated artifact; never silently clobber it.
+    for relative in sorted(current):
+        target = output_dir / relative
+        if target.is_symlink():
+            errors.append(f"refusing to overwrite symlink: {relative}")
+        elif target.exists() and relative not in previous:
+            errors.append(f"refusing to overwrite untracked file: {relative}")
+    if errors:
+        return errors
+
     for relative, content in sorted(generated.items()):
         target = output_dir / relative
         if target.is_symlink():
