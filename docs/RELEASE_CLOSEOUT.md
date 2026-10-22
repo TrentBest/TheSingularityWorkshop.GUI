@@ -1,64 +1,48 @@
 # GUI Release Closeout
 
-**Purpose:** turn the current development state into one reviewable release candidate without expanding scope or confusing implementation evidence with release approval.
+**Purpose:** finish the GUI family's substantive implementation, user-facing documentation, and theory work without expanding scope or confusing evidence with approval.
 
-**Current readiness:** 80% (qualitative gate estimate; see [Release Readiness](RELEASE_READINESS.md) for the evidence and remaining gates). **Publication remains disabled.** This document does not authorize publishing.
+**Current readiness:** 80% (qualitative engineering estimate, not a test pass percentage). **Publication remains disabled.** This is an Alpha family; package-version differences are not an implementation or documentation blocker.
 
 ## Release scope
 
-The next package family contains:
-
 - `TheSingularityWorkshop.GUI.Core` — platform-neutral semantic model and builders.
 - `TheSingularityWorkshop.GUI.Blazor` — Blazor manifestation.
-- `TheSingularityWorkshop.GUI.SVG` — SVG artifact manifestation.
-- `TheSingularityWorkshop.GUI.WPF` — initial Windows-native renderer/builders, with no claim of parity.
+- `TheSingularityWorkshop.GUI.SVG` — SVG artifact manifestation; the newest family member.
+- `TheSingularityWorkshop.GUI.WPF` — initial Windows-native renderer/builders; no claim of parity.
 
-The intended target framework currently shown by package artifacts is .NET 8; WPF is Windows-targeted. The owner must decide the release channel and exact versions because project declarations and previously published versions do not currently align.
+## Verified implementation evidence
 
-## Evidence already available
+On development commit [`31f48f3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/31f48f30625cd6d7a18b5e41169d7972fd5e2765), the Package GUI, Source-derived diagrams, Solution-derived UML inventory, and Documentation quality workflows passed. The package workflow exercised Core, Blazor, SVG, shared consumer, and Windows WPF tests. It produced four archives; their metadata and contents were inspected, and WPF archive-only consumption passed.
 
-On development commit [`31f48f3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/31f48f30625cd6d7a18b5e41169d7972fd5e2765), these workflows passed:
+The SVG vocabulary-to-test audit has representative executable assertions for all 60 explicit renderer mappings, verified by [Package GUI run 39864841258](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39864841258).
 
-- [Package GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597646)
-- [Source-derived diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597714)
-- [Solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597699)
-- [Documentation quality](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597680)
+[PR #34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) adds the root SVG identity contract and collision protection for generated accessibility IDs. Its latest exact-head run [39868057414](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39868057414) passed all four workflows. This is a concrete implementation improvement; the PR remains open and unmerged.
 
-The package workflow exercised Core, Blazor, SVG, shared consumer, and Windows WPF tests. It produced four packages whose metadata and contents were inspected. The WPF workflow also restored and ran a consumer using packed Core/WPF archives. The SVG vocabulary-to-test audit is now closed: all 60 explicit renderer mappings have representative assertions and a documented test map, verified by [Package GUI run 39864841258](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39864841258). These are valuable implementation baselines, **not** validation of the release candidate that has yet to be selected.
+[PR #32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32) adds the semantic-tree-to-SVG use case, this closeout, and the evidence-boundary theory chapter. Its four workflows passed on its recorded head. These PRs remain unmerged; no branch cleanup or publication has been performed.
 
-## Remaining hard gates, in execution order
+## Remaining substantive work
 
-1. **Owner decision — release channel and versions.** Reconcile declared versions with public NuGet versions. Do not silently publish stable versions or invent a version alignment.
-2. **Freeze candidate.** Record one commit and branch after the version decision. All evidence below must correspond to that exact commit.
-3. **Complete user-facing documentation.** Keep the README concise and package-oriented. Provide a runnable first example, link to the SVG use case, state per-adapter limitations, and keep theory in its own track. Source-derived type inventory is useful reference material but is not a substitute for human-authored use cases.
-4. **Finish the remaining behavioral audit.** The explicit SVG node vocabulary now maps to executable tests; the open work is broader malformed/hostile-input coverage, depth/resource-exhaustion boundaries, external-reference threat handling, and adapter-specific unsupported behavior. Record supported/unsupported/unverified per adapter; do not infer parity.
-5. **Candidate package verification.** Pack all four packages from the frozen candidate. Inspect IDs, versions, target frameworks, dependency groups, readmes, XML docs, license and repository metadata, and unintended files. Record filenames and hashes.
-6. **Archive-only consumers.** Restore and run minimal consumers from the candidate archives—not project references—for Core/Blazor/SVG and Windows Core/WPF. Verify the documented SVG use case from the packed package.
-7. **Downstream proof.** Test WebPage against the candidate Blazor package version. A prior green run using existing published versions is not candidate integration proof.
-8. **Documentation consistency and CI.** Run documentation link checks, generated SVG gallery drift checks, source-derived inventory promotion/drift checks, Linux package tests, and Windows WPF tests. Resolve release-relevant failures.
-9. **Review and approval.** Record known limitations and any explicitly accepted exceptions. Obtain owner approval for the exact package IDs and versions.
-10. **Publish only after approval.** Keep the workflow's publish gate disabled until the explicit decision. After publishing, verify each exact package/version on NuGet.org.
+1. **Human-facing documentation:** finish purpose, invariants, failure behavior, verified relationships, and representative usage for maintained production types. The 69 compiler-backed type pages and 69 UML diagrams are a technical inventory, not a replacement for useful human-authored explanations. Prioritize public entry points and types a consumer must understand first.
+2. **Behavioral boundaries:** finish targeted malformed-input, duplicate-ID, excessive-depth/resource-use, and external-reference tests where those boundaries are part of current behavior. State clearly what each adapter supports, rejects, or has not verified. Do not imply adapter parity.
+3. **Real consumer proof:** retain clean archive-only consumers and verify the documented Core-to-SVG path from packaged artifacts. Test the Blazor adapter in the relevant downstream host when a candidate archive is available; source-project integration alone is not archive evidence.
+4. **Documentation and theory consistency:** keep README, package-facing guides, use cases, adapter contracts, UML, and theory aligned with what code and tests actually prove. Update theory when evidence changes, not to inflate a checklist.
+5. **Exact-candidate verification:** once the substantive work is complete, run the full CI matrix and inspect the exact candidate archives. Record the commit and evidence so the result is reproducible.
 
-## Explicit non-goals for this release
+## Explicit non-goals
 
-Do not block this package release on GPU/Vulkan/WebGPU implementation, full adapter parity, a GUI-owned animation runtime, a universal interaction/lifecycle system, or interactive AST editing. These are future architecture directions unless present in code and covered by tests. Do not describe reference images or static SVGs as working interactive features.
+Do not block this Alpha closeout on package-version alignment, GPU/Vulkan/WebGPU implementation, full adapter parity, a GUI-owned animation runtime, a universal interaction/lifecycle system, or interactive AST editing. Those are not substitutes for the implementation and documentation work above. Do not describe reference images or static SVGs as working interactive features.
 
-## Theory update rule
+## Theory: claim only what the evidence supports
 
-The theory is an engineering argument, not a feature checklist. Update it only when implementation or evidence changes the argument:
+- **Supported now:** a platform-neutral semantic tree is separated from distinct Blazor, SVG, and WPF manifestation paths.
+- **Supported narrowly:** tests establish selected rendering and serialization behavior for the covered vocabulary and inputs.
+- **Not established:** universal representational compatibility, complete semantic parity, authorization of external resources, a GUI-owned execution/lifecycle system, or GPU rendering.
+- **Rule:** each substantial claim must point to the implementation boundary and relevant test/consumer evidence. Otherwise mark it as unverified or future direction.
 
-- **Supported now:** a platform-neutral semantic tree is separated from distinct Blazor, SVG, and WPF manifestation code paths.
-- **Supported narrowly:** current tests demonstrate selected rendering and serialization behavior for the covered vocabulary.
-- **Not yet established:** universal representational compatibility, complete semantic parity, safe authorization of external resources, a GUI-owned execution/lifecycle system, and GPU rendering.
-- **Validation method:** each stronger claim must link to an implementation, a test that asserts the claim, and the adapter/target scope. Otherwise label it as a hypothesis or future direction.
+## Closeout record
 
-## Release decision record
-
-- Candidate branch: pending
-- Candidate commit: pending
-- Release channel and versions: owner decision required
-- Package archive hashes: pending for selected candidate
-- CI run URLs: pending for selected candidate
-- WebPage candidate-version result: pending
-- Known limitations accepted: pending review
-- Publication approval: **not granted**
+- Implementation change: [PR #34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) — open, unmerged; exact-head CI green.
+- Documentation/theory change: [PR #32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32) — open, unmerged; recorded CI green.
+- Remaining focus: human-authored type/use-case documentation, targeted behavior boundaries, exact-candidate consumer evidence, and consistency.
+- Publication approval: **not granted**.
