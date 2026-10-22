@@ -162,6 +162,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
             .OrderBy(group => group.Key.Source, StringComparer.Ordinal)
             .ThenBy(group => group.Key.Target, StringComparer.Ordinal);
 
+        var renderedPorts = new HashSet<string>(StringComparer.Ordinal);
         foreach (var group in edgeGroups)
         {
             var edge = group.First();
@@ -251,8 +252,12 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 new XAttribute("text-anchor", "middle"), new XAttribute("font-size", "11"),
                 new XAttribute("fill", "#243b4a"), relationshipText));
 
-            AddTypePort(svg, sourceId, typeIdentity, sourcePortX, sourcePortY, isReceiving: false);
-            AddTypePort(svg, targetId, typeIdentity, targetPortX, targetPortY, isReceiving: true);
+            var sourcePortKey = $"source:{sourceId}:{typeIdentity}:{F(sourcePortX)}:{F(sourcePortY)}";
+            if (renderedPorts.Add(sourcePortKey))
+                AddTypePort(svg, sourceId, typeIdentity, sourcePortX, sourcePortY, isReceiving: false);
+            var targetPortKey = $"target:{targetId}:{typeIdentity}:{F(targetPortX)}:{F(targetPortY)}";
+            if (renderedPorts.Add(targetPortKey))
+                AddTypePort(svg, targetId, typeIdentity, targetPortX, targetPortY, isReceiving: true);
         }
 
         var nodeIndex = 0;
