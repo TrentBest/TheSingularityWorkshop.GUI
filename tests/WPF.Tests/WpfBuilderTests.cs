@@ -380,6 +380,22 @@ public sealed class WpfBuilderTests
             var exception = Assert.Throws<InvalidOperationException>(() => builder.Build());
 
             Assert.Contains("row", exception.Message);
+            Assert.Empty(Assert.IsType<Grid>(builder.Root).ColumnDefinitions);
+            Assert.Empty(Assert.IsType<Grid>(builder.Root).RowDefinitions);
+        });
+    }
+
+    [Fact]
+    public void Grid_builder_rejects_column_placement_when_no_column_tracks_are_declared()
+    {
+        RunOnSta(() =>
+        {
+            var builder = new GridGuiBuilderWPF("no-columns")
+                .AddRowTrack(1, GridUnitType.Star)
+                .PlaceComponent(0, 0, new TestComponent());
+
+            var exception = Assert.Throws<InvalidOperationException>(() => builder.Build());
+
             Assert.Contains("column", exception.Message);
             Assert.Empty(Assert.IsType<Grid>(builder.Root).ColumnDefinitions);
             Assert.Empty(Assert.IsType<Grid>(builder.Root).RowDefinitions);
