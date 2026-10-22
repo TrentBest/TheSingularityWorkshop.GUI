@@ -553,4 +553,18 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("synthesized coordinate overlay", error.Message);
     }
 
+    [Fact]
+    public void Preserves_root_node_identity_as_the_svg_document_id()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "workshop-scene")
+            .Child("svg-circle", "marker", marker => marker.Property("r", "4"))
+            .Build();
+
+        var document = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.Equal("workshop-scene", (string?)document.Root!.Attribute("id"));
+        Assert.Equal("marker", (string?)document.Descendants(svg + "circle").Single().Attribute("id"));
+    }
+
 }
