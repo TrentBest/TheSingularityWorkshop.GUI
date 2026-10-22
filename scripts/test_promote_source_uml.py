@@ -40,6 +40,22 @@ class SourceUmlPromotionTests(unittest.TestCase):
             self.assertTrue((output / "Core" / "index.md").is_file())
             self.assertEqual("# Authored file\n", (output / "authored.md").read_text(encoding="utf-8"))
 
+    def test_refuses_to_overwrite_untracked_generated_looking_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, output = self.fixture(root)
+            core = output / "Core"
+            core.mkdir()
+            collision = core / "TheSingularityWorkshop-Fixture-Type-deadbeef.md"
+            collision.write_text("# Human-authored content\n", encoding="utf-8")
+
+            errors = PROMOTER.promote(source, output)
+
+            self.assertTrue(any("refusing to overwrite untracked file" in error for error in errors))
+            self.assertEqual("# Human-authored content\n", collision.read_text(encoding="utf-8"))
+            self.assertFalse((output / "Core.uml-inventory.md").exists())
+            self.assertFalse((output / PROMOTER.MANIFEST_NAME).exists())
+
     def test_prunes_only_stale_files_named_in_previous_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
@@ -76,12 +92,27 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "non-generated filename"):
                 PROMOTER.promote(source, output)
 
+    def test_rejects_unrecognized_markdown_filename(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            source, output = self.fixture(Path(temporary))
+            (source / "Core.uml-types" / "AuthoredNote.md").write_text("# Not generated UML\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unsafe generated filename"):
+                PROMOTER.promote(source, output)
+            self.assertFalse((output / "Core" / "AuthoredNote.md").exists())
+
+    def test_rejects_single_backslash_in_generated_name(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            source, output = self.fixture(Path(temporary))
+            (source / "Core.uml-types" / r"bad\name.md").write_text("# Unsafe path\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unsafe generated filename"):
+                PROMOTER.promote(source, output)
+
     def test_manifest_cannot_claim_authored_files(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
             (output / PROMOTER.MANIFEST_NAME).write_text("Core/README.md\n", encoding="utf-8")
-            with self.assertRaisesRegex(ValueError, "not a recognized generated type page/diagram"):
-                PROMOTER.promote(source, output)
+            with self.assertRaisesRegex(ValueError, "outside recognized generated UML scope"):
+                PROMOTER.read_manifest(output)
 
     def test_rejects_missing_index(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -103,7 +134,6 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 PROMOTER.promote(source, output)
             self.assertEqual("# Do not overwrite\n", sentinel.read_text(encoding="utf-8"))
 
-
     def test_rejects_symlinked_output_root(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -113,7 +143,6 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "output directory must not be a symlink"):
                 PROMOTER.promote(source, alias)
             self.assertTrue((output / "authored.md").is_file())
-
 
     def test_rejects_symlinked_parent_of_output_root(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
@@ -125,6 +154,115 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "must not traverse a symlinked parent"):
                 PROMOTER.promote(source, aliased_output)
             self.assertTrue((output / "authored.md").is_file())
+
+    def test_promotes_all_four_projects_and_preserves_authored_files(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            (source / "index.md").write_text("# Solution inventory\\n", encoding="utf-8")
+            output = root / "docs" / "source-files"
+            output.mkdir(parents=True)
+            authored = output / "Gallery.md"
+            authored.write_text("# Authored gallery\\n", encoding="utf-8")
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\\n", encoding="utf-8")
+                (types / "index.md").write_text("# Generated types\\n", encoding="utf-8")
+                (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text(
+                    "# Fixture\\n[diagram](TheSingularityWorkshop-Fixture-Type-deadbeef.svg)\\n", encoding="utf-8")
+                (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").write_text(
+                    '<svg xmlns="http://www.w3.org/2000/svg"><title>Fixture</title><desc>Fixture</desc></svg>',
+                    encoding="utf-8")
+            self.assertEqual([], PROMOTER.promote(source, output))
+            self.assertTrue((output / "index.md").is_file())
+            for project in ("Core", "Blazor", "WPF", "SVG"):
+                self.assertTrue((output / project / "inventory.md").is_file())
+                self.assertTrue((output / project / "index.md").is_file())
+                self.assertTrue((output / project / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").is_file())
+            self.assertEqual("# Authored gallery\\n", authored.read_text(encoding="utf-8"))
+            self.assertEqual([], PROMOTER.promote(source, output, check=True))
+
+    def test_rejects_symlinked_solution_inventory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            external_index = root / "external-index.md"
+            external_index.write_text("# External inventory\\n", encoding="utf-8")
+            (source / "index.md").symlink_to(external_index)
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\\n", encoding="utf-8")
+                (types / "index.md").write_text("# Types\\n", encoding="utf-8")
+            output = root / "docs"
+            output.mkdir()
+            with self.assertRaisesRegex(ValueError, "unsafe generated solution inventory"):
+                PROMOTER.promote(source, output)
+            self.assertFalse((output / "index.md").exists())
+
+    def test_rejects_symlinked_generated_project_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            (source / "index.md").write_text("# inventory\n", encoding="utf-8")
+            external = root / "external-core"
+            (external / "types").mkdir(parents=True)
+            (external / "inventory.md").write_text("# External inventory\n", encoding="utf-8")
+            (external / "types" / "index.md").write_text("# Types\n", encoding="utf-8")
+            (source / "core").symlink_to(external, target_is_directory=True)
+            output = root / "docs"
+            output.mkdir()
+            with self.assertRaisesRegex(ValueError, "unsafe generated project directory"):
+                PROMOTER.promote(source, output)
+
+    def test_four_project_manifest_rejects_authored_paths(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            (source / "index.md").write_text("# inventory\\n", encoding="utf-8")
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\\n", encoding="utf-8")
+                (types / "index.md").write_text("# Generated types\\n", encoding="utf-8")
+                (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text("# Fixture\\n", encoding="utf-8")
+            output = root / "docs"
+            output.mkdir()
+            (output / PROMOTER.MANIFEST_NAME).write_text("Gallery.md\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "outside recognized generated UML scope"):
+                PROMOTER.promote(source, output)
+
+    def test_manifest_rejects_nested_generated_looking_path_before_pruning(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            (source / "index.md").write_text("# Solution inventory\n", encoding="utf-8")
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+                project_dir = source / slug
+                types = project_dir / "types"
+                types.mkdir(parents=True)
+                (project_dir / "inventory.md").write_text(f"# {project} inventory\n", encoding="utf-8")
+                (types / "index.md").write_text("# Generated types\n", encoding="utf-8")
+                (types / "TheSingularityWorkshop-Fixture-Type-deadbeef.md").write_text("# Fixture\n", encoding="utf-8")
+            output = root / "docs"
+            nested = output / "Core" / "authored"
+            nested.mkdir(parents=True)
+            authored = nested / "TheSingularityWorkshop-Authored-Note-deadbeef.md"
+            authored.write_text("# Human-authored note\n", encoding="utf-8")
+            (output / PROMOTER.MANIFEST_NAME).write_text(
+                "Core/authored/TheSingularityWorkshop-Authored-Note-deadbeef.md\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "outside recognized generated UML scope"):
+                PROMOTER.promote(source, output)
+            self.assertEqual("# Human-authored note\n", authored.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
