@@ -18,7 +18,7 @@ The package workflow runs the actual SvgGallery sample through SvgGuiRenderer, c
 
 **Artifact:** outputs from the [Source-derived diagrams workflow](../.github/workflows/source-derived-diagrams.yml).
 
-The build-time generator has a syntax-only path and a compiler-backed project-semantic path, with a renderer-neutral documentation model and a focused relationship-neighborhood SVG. CI verifies fixtures and generated artifacts, but generated per-type pages are still workflow artifacts rather than a committed, regenerated documentation set.
+The build-time generator has a syntax-only path and a compiler-backed project-semantic path, with a renderer-neutral documentation model and a focused relationship-neighborhood SVG. The solution-derived inventory workflow generated 69 type pages and 69 SVGs across Core (31), Blazor (6), SVG (9), and WPF (23) at its verified source revision. These remain workflow artifacts rather than a committed, regenerated documentation set.
 
 **Reproduce:** [Source-derived UML tooling](SOURCE_DERIVED_UML.md) · [living UML architecture and acceptance gates](LIVING_UML_ARCHITECTURE.md) · [generator source](../samples/SourceUmlGenerator/Program.cs)
 
