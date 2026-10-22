@@ -219,6 +219,10 @@ jobs:
           assert "association" in svg_text
           assert "dependency" in svg_text
           assert "interface realization" in svg_text
+          svg_links = [node.attrib.get("href", "") for node in svg.iter() if node.attrib.get("href")]
+          assert any(link.startswith(
+              f"https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/{provenance['sourceRevision']}/"
+          ) for link in svg_links), "SVG cards must link to revision-pinned source declarations"
           print("Validated partial generic type aggregation, resolved generic interface realization, association, dependency, and model-to-SVG graph rendering.")
           PY
       - name: Verify canonical UML model contract
