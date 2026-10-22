@@ -8,6 +8,16 @@ Version/channel alignment, candidate selection, candidate-specific archive inspe
 
 **Publication:** Publishing remains disabled during readiness work. Keep the `publish_nuget` job gated until the candidate is reviewed and publishing is explicitly approved. The earlier 87% estimate reflected the previous release scope; the newly adopted per-type documentation/UML gate materially expands required work, so the current estimate is reset to 70% until source inventory, pages, diagrams, and CI enforcement are demonstrated.
 
+# GUI Next-Release Work Queue
+
+This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
+
+**Current development head:** `d6d8b0287f94c492c7a04778e137c95c4267c46b` (documentation-standard alignment and immutable workflow-action pins). **Estimated readiness: 70%.** This remains a qualitative estimate, not a test score. The next package-family scope is Core, Blazor, SVG, and WPF; SVG is a centerpiece, not a reason to skip package-family validation.
+
+**Latest green implementation evidence:** on source commit [`645573f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/645573fce4c843a94953abbee11e46240b9f1378), [Package GUI run 39719153668](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39719153668) passed `test-and-package` and Windows `test-wpf`; `publish_nuget` was skipped. [Source-derived diagrams run 39719153678](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39719153678) and [solution-derived UML inventory run 39719153725](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39719153725) also passed on that source commit. These are valid implementation evidence for that exact commit, not proof for the newer action-pin commit: the GitHub Actions workflow has not yet been observed running after its immutable SHA references were updated.
+
+**Remaining release blockers:** per-type documentation and target-centered UML coverage across all maintained Core, Blazor, SVG, and WPF declarations; parser-backed inventory/drift enforcement and committed generated-output freshness; version/channel alignment; selected-candidate archive inspection; archive-only consumer verification; broader hostile-input tests and SVG vocabulary-to-test audit; candidate-version WebPage/Blazor integration; and final owner approval. No release candidate has been selected, and publication remains disabled.
+
 ## Definition of a substantial next release
 
 The broader current-surface audit is tracked in [GUI Surface Coverage Audit](GUI_SURFACE_COVERAGE_AUDIT.md). It distinguishes current adapters from future candidates and turns cross-renderer semantics, interactions/accessibility, SVG boundaries, package integrity, and potential additional adapters into explicit review items. This audit is a planning artifact; it does not mark those gaps as closed.
