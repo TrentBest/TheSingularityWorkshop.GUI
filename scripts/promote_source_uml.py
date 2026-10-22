@@ -38,8 +38,11 @@ def collect_generated(input_dir: Path) -> dict[str, bytes]:
     outputs: dict[str, bytes] = {}
     # Preferred layout is the four-project solution inventory produced by
     # scripts/generate_solution_uml.py: <slug>/inventory.md and <slug>/types/*.
-    if (input_dir / "index.md").is_file() and any((input_dir / slug / "types").is_dir() for slug in PROJECTS):
-        outputs["index.md"] = (input_dir / "index.md").read_bytes()
+    solution_index = input_dir / "index.md"
+    if solution_index.is_file() and any((input_dir / slug / "types").is_dir() for slug in PROJECTS):
+        if solution_index.is_symlink():
+            raise ValueError(f"missing or unsafe generated solution inventory: {solution_index}")
+        outputs["index.md"] = solution_index.read_bytes()
         for slug, project in PROJECTS.items():
             project_dir = input_dir / slug
             if project_dir.is_symlink() or not project_dir.is_dir():
