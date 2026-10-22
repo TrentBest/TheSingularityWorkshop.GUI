@@ -9,9 +9,9 @@
 
 | Project | Types | Compiler-symbol relationships | Inventory | Type pages |
 |---|---:|---:|---|---|
-| `src/Core/TheSingularityWorkshop.GUI.Core.csproj` | 31 | 119 | [core/inventory.md](core/inventory.md) | [core/types/index.md](core/types/index.md) |
-| `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj` | 6 | 69 | [blazor/inventory.md](blazor/inventory.md) | [blazor/types/index.md](blazor/types/index.md) |
-| `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj` | 23 | 67 | [wpf/inventory.md](wpf/inventory.md) | [wpf/types/index.md](wpf/types/index.md) |
-| `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj` | 9 | 39 | [svg/inventory.md](svg/inventory.md) | [svg/types/index.md](svg/types/index.md) |
+| `src/Core/TheSingularityWorkshop.GUI.Core.csproj` | 31 | 119 | [Core inventory](Core/inventory.md) | [Core type pages](Core/index.md) |
+| `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj` | 6 | 69 | [Blazor inventory](Blazor/inventory.md) | [Blazor type pages](Blazor/index.md) |
+| `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj` | 23 | 67 | [WPF inventory](WPF/inventory.md) | [WPF type pages](WPF/index.md) |
+| `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj` | 9 | 39 | [SVG inventory](SVG/inventory.md) | [SVG type pages](SVG/index.md) |
 
 **Coverage:** 4/4 maintained product projects analyzed, built, and reconciled successfully.
