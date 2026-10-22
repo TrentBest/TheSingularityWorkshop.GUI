@@ -19,14 +19,27 @@ public static class WpfGuiRenderer
 {
     private const int MaximumTreeDepth = 256;
 
+    /// <summary>Renders a semantic tree without binding host commands.</summary>
     public static FrameworkElement Render(GuiNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateTree(node);
-        return RenderValidated(node);
+        return RenderValidated(node, commandDispatcher: null);
     }
 
-    private static FrameworkElement RenderValidated(GuiNode node)
+    /// <summary>
+    /// Renders a semantic tree and routes declared activation commands to the supplied host dispatcher.
+    /// The dispatcher is responsible for explicit command allow-listing and domain authorization.
+    /// </summary>
+    public static FrameworkElement Render(GuiNode node, Action<string> commandDispatcher)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+        ArgumentNullException.ThrowIfNull(commandDispatcher);
+        ValidateTree(node);
+        return RenderValidated(node, commandDispatcher);
+    }
+
+    private static FrameworkElement RenderValidated(GuiNode node, Action<string>? commandDispatcher)
     {
         FrameworkElement element = node.Kind switch
         {
@@ -41,13 +54,21 @@ public static class WpfGuiRenderer
 
         ApplyProperties(element, node);
 
+        if (element is Button actionableButton
+            && commandDispatcher is not null
+            && node.Properties.TryGetValue("onClickCommand", out var commandId)
+            && !string.IsNullOrWhiteSpace(commandId))
+        {
+            actionableButton.Click += (_, _) => commandDispatcher(commandId);
+        }
+
         if (node.Children.Count > 0)
         {
             var childrenHost = GetChildrenHost(element);
             if (childrenHost is not null)
             {
                 foreach (var child in node.Children)
-                    childrenHost.Children.Add(RenderValidated(child));
+                    childrenHost.Children.Add(RenderValidated(child, commandDispatcher));
             }
             else if (element is Button button)
             {
@@ -55,7 +76,7 @@ public static class WpfGuiRenderer
                 if (button.Content is string text && !string.IsNullOrEmpty(text))
                     content.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.Wrap });
                 foreach (var child in node.Children)
-                    content.Children.Add(RenderValidated(child));
+                    content.Children.Add(RenderValidated(child, commandDispatcher));
                 button.Content = content;
             }
         }
