@@ -29,6 +29,9 @@ jobs:
       - name: Check workflow action references are immutable
         run: python3 scripts/check-workflow-action-pins.py
 
+      - name: Check documentation UML SVG assets
+        run: python3 scripts/check-uml-svg-assets.py
+
       - name: Check repository-local documentation links
         run: python3 scripts/check-doc-links.py
 
