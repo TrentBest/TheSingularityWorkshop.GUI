@@ -123,6 +123,40 @@ public sealed class WpfBuilderTests
     }
 
     [Fact]
+    public void Panel_builder_rejects_duplicate_component_registration()
+    {
+        RunOnSta(() =>
+        {
+            var child = new TestComponent();
+            var parent = new StackGuiPanelBuilderWPF(new GuiConfiguration()).AddComponent(child);
+
+            var exception = Assert.Throws<InvalidOperationException>(() => parent.AddComponent(child));
+
+            Assert.Contains("already registered", exception.Message);
+            Assert.Same(parent, child.GetParent());
+            Assert.Single(Assert.IsType<StackPanel>(parent.Build()).Children);
+        });
+    }
+
+    [Fact]
+    public void Panel_builder_rejects_reparenting_a_component_to_a_different_visual_parent()
+    {
+        RunOnSta(() =>
+        {
+            var child = new TestComponent();
+            var firstParent = new StackGuiPanelBuilderWPF(new GuiConfiguration()).AddComponent(child);
+            var secondParent = new StackGuiPanelBuilderWPF(new GuiConfiguration());
+
+            var exception = Assert.Throws<InvalidOperationException>(() => secondParent.AddComponent(child));
+
+            Assert.Contains("cannot be reparented", exception.Message);
+            Assert.Same(firstParent, child.GetParent());
+            Assert.Single(Assert.IsType<StackPanel>(firstParent.Build()).Children);
+            Assert.Empty(Assert.IsType<StackPanel>(secondParent.Build()).Children);
+        });
+    }
+
+    [Fact]
     public void Grid_builder_maps_logical_tracks_and_propagates_parent_to_placed_components()
     {
         RunOnSta(() =>
