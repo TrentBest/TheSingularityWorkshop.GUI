@@ -104,6 +104,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             .Element(Svg + "rect")!.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture);
         Assert.True(consumerY < focusY, "verified consumers must appear above the focus");
         Assert.True(focusY < dependencyY, "dependencies used by the focus must appear below it");
+        Assert.True(focusX > 100, "the focus should be centered within the available neighborhood, not pinned to the left");
         Assert.True(externalX > focusX, "external/platform references must appear to the right");
         Assert.Contains(document.Descendants(Svg + "g"), group =>
             ((string?)group.Attribute("data-type-id")) == "type:Fixture:A" &&
