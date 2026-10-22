@@ -219,6 +219,10 @@ namespace TheSingularityWorkshop.GUI.WPF.Layouts
         /// <returns>The root grid after its definitions and generated elements are updated.</returns>
         public override FrameworkElement Build()
         {
+            // Validate the complete deferred layout before mutating the mounted root.
+            // Callers may declare placements before they finish declaring tracks.
+            ValidatePlacements();
+
             Root.ColumnDefinitions.Clear();
             Root.RowDefinitions.Clear();
 
@@ -284,6 +288,25 @@ namespace TheSingularityWorkshop.GUI.WPF.Layouts
             }
 
             return Root;
+        }
+
+        private void ValidatePlacements()
+        {
+            foreach (var placement in _placements)
+            {
+                ValidateLogicalIndex("row", placement.Row, _rows.Count);
+                ValidateLogicalIndex("column", placement.Col, _columns.Count);
+            }
+        }
+
+        private static void ValidateLogicalIndex(string dimension, int logicalIndex, int trackCount)
+        {
+            if (logicalIndex < 0 || logicalIndex >= trackCount)
+            {
+                throw new InvalidOperationException(
+                    $"Grid component {dimension} index {logicalIndex} is outside the declared logical track range [0, {trackCount}). " +
+                    $"Declare at least {logicalIndex + 1} {dimension} track(s) before building the grid.");
+            }
         }
 
         private int CalculateActualIndex(List<GridDimensionDefinition> source, int logicalIndex)
