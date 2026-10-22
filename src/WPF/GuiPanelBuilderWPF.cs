@@ -27,6 +27,7 @@ public abstract class GuiPanelBuilderWPF<TPanel, TBuilder> : IComponentWPF
 
     // Components are single-owner because Build() returns their actual WPF element instances.
     private readonly List<IComponentWPF> _registeredComponents = new();
+    private readonly List<UIElement> _registeredRawElements = new();
 
     // Type-safe cast loop that returns the actual terminal subclass instance
     /// <summary>Returns this instance as the concrete builder type for fluent chaining.</summary>
@@ -118,6 +119,26 @@ public abstract class GuiPanelBuilderWPF<TPanel, TBuilder> : IComponentWPF
 
         _registeredComponents.Add(component);
         component.SetParent(this);
+    }
+
+    /// <summary>Claims an externally-created WPF element for one placement in this panel.</summary>
+    /// <remarks>Raw elements are not cloned; an element must be unattached and cannot be registered twice.</remarks>
+    /// <param name="element">Element to register.</param>
+    protected void RegisterRawElement(UIElement element)
+    {
+        ArgumentNullException.ThrowIfNull(element);
+
+        if (ReferenceEquals(element, Root))
+            throw new InvalidOperationException("A panel cannot place itself as a child.");
+
+        if (System.Windows.Media.VisualTreeHelper.GetParent(element) is not null ||
+            System.Windows.LogicalTreeHelper.GetParent(element) is not null)
+            throw new InvalidOperationException("The UIElement already belongs to a visual or logical parent. Supply an unattached element.");
+
+        if (_registeredRawElements.Exists(existing => ReferenceEquals(existing, element)))
+            throw new InvalidOperationException("The same UIElement is already registered with this panel. Create a distinct element for each placement.");
+
+        _registeredRawElements.Add(element);
     }
 
     /// <summary>Recreates the panel's direct children from the queued definitions and returns the root panel.</summary>
