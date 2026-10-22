@@ -116,16 +116,13 @@ namespace TheSingularityWorkshop.GUI.WPF.Layouts
                 set { /* Intercepted smoothly */ }
             }
 
-            /// <summary>Gets the first grid child, or replaces all children with the assigned element.</summary>
-            public UIElement? Child
-            {
-                get => _grid.Children.Count > 0 ? _grid.Children[0] : null;
-                set
-                {
-                    _grid.Children.Clear();
-                    if (value != null) _grid.Children.Add(value);
-                }
-            }
+            /// <summary>Gets the first currently mounted grid child, if any.</summary>
+            /// <remarks>
+            /// This is intentionally read-only. Mutating the visual tree directly bypasses the builder's
+            /// deferred definitions, component ownership checks, and repeatable-build contract. Use the
+            /// grid builder's declarative composition methods to add children.
+            /// </remarks>
+            public UIElement? Child => _grid.Children.Count > 0 ? _grid.Children[0] : null;
 
             /// <summary>Begins an animation on the underlying grid.</summary>
             /// <param name="dp">Dependency property to animate.</param>
