@@ -23,6 +23,11 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             new UmlTypeIdentity("Fixture", "Fixture", [], "B", 0, "class"),
             [new UmlSourceDeclaration("Fixture/B.cs", new UmlSourceSpan(0, 12, 1, 1, 1, 13))],
             []);
+        var consumer = new UmlDocumentedType(
+            "type:Fixture:Consumer",
+            new UmlTypeIdentity("Fixture", "Fixture", [], "Consumer", 0, "class"),
+            [new UmlSourceDeclaration("Fixture/Consumer.cs", new UmlSourceSpan(0, 16, 1, 1, 1, 17))],
+            []);
         var external = new UmlDocumentedRelationship(
             "edge:A:external",
             UmlRelationshipKind.Dependency,
@@ -39,7 +44,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         var model = new UmlDocumentationModel(
             "1.0",
             new UmlModelProvenance("owner/repo", "abc123", "Fixture/Fixture.csproj", "Fixture", "net8.0", "Release", "project-semantic", null),
-            [a, b],
+            [a, b, consumer],
             [
                 new UmlDocumentedRelationship(
                     "edge:A:B",
@@ -54,12 +59,26 @@ public sealed class SvgUmlDocumentationGraphRendererTests
                     null,
                     null,
                     new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "Fixture.B Link")),
-                external
+                external,
+                new UmlDocumentedRelationship(
+                    "edge:consumer:A",
+                    UmlRelationshipKind.Dependency,
+                    consumer.Id,
+                    a.Id,
+                    "global::Fixture.A",
+                    UmlRelationshipResolution.Resolved,
+                    null,
+                    "source-to-target",
+                    "constructor parameter",
+                    null,
+                    null,
+                    new UmlRelationshipProvenance("roslyn-member-symbol", "Fixture/Consumer.cs",
+                        new UmlSourceSpan(0, 16, 1, 1, 1, 17), "Consumer(A target)"))
             ]);
 
         var document = XDocument.Parse(new SvgUmlDocumentationGraphRenderer().Render(model, a.Id));
         Assert.Equal("Source-derived UML neighborhood: Fixture.A", document.Root!.Element(Svg + "title")!.Value);
-        Assert.Contains("3 type nodes and 2 typed relationships", document.Root.Element(Svg + "desc")!.Value);
+        Assert.Contains("4 type nodes and 3 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains("Fixture.B", text);
         Assert.Contains("global::System.IO.Stream", text);
@@ -70,6 +89,29 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Equal(ids.Length, ids.Distinct(StringComparer.Ordinal).Count());
         Assert.Contains(document.Descendants(Svg + "line"), line =>
             ((string?)line.Attribute("marker-end")) == "url(#uml-arrow)");
+
+        var nodeGroups = document.Descendants(Svg + "g")
+            .Where(group => ((string?)group.Attribute("id"))?.StartsWith("uml-node-", StringComparison.Ordinal) == true)
+            .ToDictionary(group => (string)group.Attribute("data-type-id")!,
+                group => group.Element(Svg + "rect")!, StringComparer.Ordinal);
+        var consumerY = double.Parse((string)nodeGroups["type:Fixture:Consumer"].Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
+        var focusY = double.Parse((string)nodeGroups["type:Fixture:A"].Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
+        var dependencyY = double.Parse((string)nodeGroups["type:Fixture:B"].Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
+        var focusX = double.Parse((string)nodeGroups["type:Fixture:A"].Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture);
+        var externalX = double.Parse((string)document.Descendants(Svg + "g")
+            .Where(group => ((string?)group.Attribute("id"))?.StartsWith("uml-node-", StringComparison.Ordinal) == true)
+            .Single(group => group.Element(Svg + "title")!.Value.StartsWith("global::System.IO.Stream", StringComparison.Ordinal))
+            .Element(Svg + "rect")!.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture);
+        Assert.True(consumerY < focusY, "verified consumers must appear above the focus");
+        Assert.True(focusY < dependencyY, "dependencies used by the focus must appear below it");
+        Assert.True(externalX > focusX, "external/platform references must appear to the right");
+        Assert.Contains(document.Descendants(Svg + "g"), group =>
+            ((string?)group.Attribute("data-type-id")) == "type:Fixture:A" &&
+            ((string?)group.Attribute("transform"))?.StartsWith("rotate(180", StringComparison.Ordinal) == true);
+        Assert.Contains(document.Descendants(Svg + "g"), group =>
+            group.Attribute("data-type-id") is not null &&
+            group.Attribute("data-owner-type-id") is not null &&
+            group.Element(Svg + "title")?.Value.Contains("Type conduit", StringComparison.Ordinal) == true);
     }
 
     [Fact]
