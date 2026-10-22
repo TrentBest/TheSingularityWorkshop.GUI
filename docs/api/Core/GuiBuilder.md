@@ -58,6 +58,6 @@ The focused test suite covers recursive tree construction, stable command identi
 ## Related types
 
 - [`GuiNode`](GuiNode.md) — immutable semantic output.
-- [`GuiBuilders`](GuiBuilders.md) — convenience factory methods.
-- [`CoordinateSystemGuiBuilder`](CoordinateSystemGuiBuilder.md) — domain-specific builder that delegates to `GuiBuilder`.
+- [`GuiBuilders` source](../../../src/Core/GuiBuilders.cs) — convenience factory methods; its dedicated type page remains open.
+- [`CoordinateSystemGuiBuilder` source](../../../src/Core/CoordinateSystemGuiBuilder.cs) — domain-specific builder that delegates to `GuiBuilder`; its dedicated type page remains open.
 - [Per-Type Documentation and UML Standard](../../CLASS_DOCUMENTATION_STANDARD.md)
