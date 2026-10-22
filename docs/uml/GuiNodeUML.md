@@ -53,7 +53,7 @@ The focal type is `GuiNode`. Its direct structural relationship is an ordered co
 - **Owns:** node identity, kind, optional text/source values, a string-to-string property snapshot, ordered child snapshot, and depth-first lookup.
 - **Does not own:** rendering, layout calculation, live UI state, event dispatch, command authorization, animation, or framework-specific objects.
 - **Verified source facts:** constructor validation, snapshot creation, read-only public properties, iterative depth-first lookup, and missing-node behavior are visible in the linked source.
-- **Verification gap:** a dedicated direct `GuiNode` test suite has not yet been mapped. See the verification section in the [type page](../api/Core/GuiNode.md); do not interpret this use-case description as test evidence.
+- **Test evidence:** direct-node regression assertions are maintained in [`GuiBuilderTests.cs`](../../tests/Core.Tests/GuiBuilderTests.cs), covering constructor validation, child snapshots, duplicate-ID traversal order, blank lookup identifiers, property snapshots, absent IDs, and deep-tree lookup. These assertions are not a substitute for a passing CI run on the exact commit, and they do not establish renderer behavior.
 
 ## Relationship semantics
 
