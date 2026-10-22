@@ -330,7 +330,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
         uint hash = 2166136261;
         foreach (var character in identity)
             hash = (hash ^ character) * 16777619;
-        return TypePalette[hash % (uint)TypePalette.Length];
+        return TypePalette[(int)(hash % (uint)TypePalette.Length)];
     }
 
     private static XElement CreateTypePort(string ownerId, string typeIdentity, double x, double y, bool isReceiving) =>
