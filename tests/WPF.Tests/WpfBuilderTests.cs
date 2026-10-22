@@ -277,6 +277,74 @@ public sealed class WpfBuilderTests
     }
 
     [Fact]
+    public void Canvas_builder_rebuilds_raw_element_roster_without_duplicate_children()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "Stable canvas child" };
+            var builder = new CanvasGuiBuilderWPF(new GuiConfiguration()).PlaceAt(element, 12, 24);
+
+            var first = Assert.IsType<Canvas>(builder.Build());
+            var second = Assert.IsType<Canvas>(builder.Build());
+
+            Assert.Same(first, second);
+            Assert.Single(second.Children);
+            Assert.Same(element, second.Children[0]);
+            Assert.Equal(12, Canvas.GetLeft(element));
+            Assert.Equal(24, Canvas.GetTop(element));
+        });
+    }
+
+    [Fact]
+    public void Dock_builder_rebuilds_raw_element_roster_without_duplicate_children()
+    {
+        RunOnSta(() =>
+        {
+            var element = new TextBlock { Text = "Stable dock child" };
+            var builder = new DockGuiPanelBuilderWPF(new GuiConfiguration()).AddDocked(element, Dock.Right);
+
+            var first = Assert.IsType<DockPanel>(builder.Build());
+            var second = Assert.IsType<DockPanel>(builder.Build());
+
+            Assert.Same(first, second);
+            Assert.Single(second.Children);
+            Assert.Same(element, second.Children[0]);
+            Assert.Equal(Dock.Right, DockPanel.GetDock(element));
+        });
+    }
+
+    [Fact]
+    public void Grid_builder_rebuilds_splitters_and_component_placements_without_duplicates()
+    {
+        RunOnSta(() =>
+        {
+            var child = new TestComponent();
+            var builder = new GridGuiBuilderWPF("repeatable-layout")
+                .AddColumnTrack(1, GridUnitType.Star, isResizable: true)
+                .AddColumnTrack(2, GridUnitType.Star)
+                .AddRowTrack(1, GridUnitType.Star, isResizable: true)
+                .AddRowTrack(3, GridUnitType.Star)
+                .PlaceComponent(1, 1, child);
+
+            var first = Assert.IsType<Grid>(builder.Build());
+            var firstSplitterCount = first.Children.OfType<GridSplitter>().Count();
+            var firstChild = child.BuiltElement;
+            var second = Assert.IsType<Grid>(builder.Build());
+
+            Assert.Same(first, second);
+            Assert.Equal(3, second.ColumnDefinitions.Count);
+            Assert.Equal(3, second.RowDefinitions.Count);
+            Assert.Equal(2, firstSplitterCount);
+            Assert.Equal(2, second.Children.OfType<GridSplitter>().Count());
+            Assert.Equal(3, second.Children.Count);
+            Assert.Same(firstChild, child.BuiltElement);
+            Assert.Contains(firstChild, second.Children.Cast<UIElement>());
+            Assert.Equal(2, Grid.GetColumn(firstChild!));
+            Assert.Equal(2, Grid.GetRow(firstChild!));
+        });
+    }
+
+    [Fact]
     public void Grid_compatibility_proxy_does_not_expose_a_child_mutation_path()
     {
         var proxyType = typeof(GridGuiBuilderWPF).GetNestedType("CompatibilityElementProxy", BindingFlags.NonPublic);
