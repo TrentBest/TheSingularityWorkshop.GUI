@@ -81,7 +81,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
             source, output = self.fixture(Path(temporary))
             (output / PROMOTER.MANIFEST_NAME).write_text("Core/README.md\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "outside recognized generated UML scope"):
-                PROMOTER.promote(source, output)
+                PROMOTER.read_manifest(output)
 
     def test_rejects_missing_index(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
