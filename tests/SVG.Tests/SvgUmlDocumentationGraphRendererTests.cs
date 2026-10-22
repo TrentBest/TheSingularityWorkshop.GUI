@@ -81,7 +81,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Contains("4 type nodes and 3 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains("Fixture.B", text);
-        Assert.Contains("global::System.IO.Stream", text);
+        Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("global::System.IO.Stream", StringComparison.Ordinal));
         Assert.Contains("association · property type", text);
         Assert.Contains("dependency · parameter type stream", text);
 
