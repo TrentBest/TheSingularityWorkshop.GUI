@@ -83,7 +83,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             ((string?)rect.Attribute("fill")) == "#ffffff");
         Assert.Contains("4 type nodes and 3 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
-        Assert.Contains("Fixture.B", text);
+        Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("Fixture.B", StringComparison.Ordinal));
         Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("global::System.IO.Stream", StringComparison.Ordinal));
         Assert.Contains(document.Descendants(Svg + "text"), label => label.Value == "Assembly: System.Runtime");
         Assert.Contains("association", text);
