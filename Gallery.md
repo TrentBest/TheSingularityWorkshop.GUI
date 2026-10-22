@@ -7,7 +7,7 @@ The Singularity Workshop GUI explores a portable semantic description of interfa
 **What it demonstrates:** a semantic GUI model can be represented independently of a native widget tree, then manifested as SVG.
 
 - Start with the [repository README](README.md) for the semantic-model boundary and a minimal builder example.
-- Inspect the [SVG manifestation example](docs/images/gui-svg-manifestation.svg).
+- Inspect the [generated SVG adapter feature gallery](docs/assets/svg-adapter-gallery.svg), which is produced from the runnable sample and checked against the renderer output in CI.
 - SVG is an artifact/manifestation path; it should not be described as a full browser interaction host unless an implementation and test prove that behavior.
 
 ## 02 — Core builders
@@ -58,7 +58,7 @@ Typed properties, portable capability negotiation, and a common cross-renderer i
 ## Deeper documentation
 
 - [README — package overview and first example](README.md)
-- [SVG manifestation illustration](docs/images/gui-svg-manifestation.svg)
+- [Generated SVG adapter feature gallery](docs/assets/svg-adapter-gallery.svg)
 - [Package workflow](.github/workflows/package.yml)
 
 ## Gallery maintenance rule
