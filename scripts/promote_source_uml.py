@@ -72,6 +72,11 @@ def write_atomic(path: Path, content: bytes) -> None:
 
 def promote(input_dir: Path, output_dir: Path, check: bool = False) -> list[str]:
     generated = collect_generated(input_dir)
+    if output_dir.is_symlink():
+        raise ValueError("generated documentation output directory must not be a symlink")
+    core_dir = output_dir / "Core"
+    if core_dir.is_symlink():
+        raise ValueError("generated Core output directory must not be a symlink")
     previous = read_manifest(output_dir)
     current = set(generated)
     errors: list[str] = []
