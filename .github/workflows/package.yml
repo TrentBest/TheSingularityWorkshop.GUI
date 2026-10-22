@@ -481,7 +481,8 @@ jobs:
           }
           "@
           $programContent | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Program.cs
-          dotnet restore ./artifacts/wpf-package-consumer/Consumer.csproj --source ./packages --source https://api.nuget.org/v3/index.json
+          $packageSource = (Resolve-Path ./packages).Path
+          dotnet restore ./artifacts/wpf-package-consumer/Consumer.csproj --source "$packageSource;https://api.nuget.org/v3/index.json"
           if ($LASTEXITCODE -ne 0) { throw "WPF package-only consumer restore failed." }
           dotnet run --project ./artifacts/wpf-package-consumer/Consumer.csproj --configuration Release --no-restore
           if ($LASTEXITCODE -ne 0) { throw "WPF package-only consumer failed." }
