@@ -26,6 +26,7 @@ public class DockGuiPanelBuilderWPF : GuiPanelBuilderWPF<DockPanel, DockGuiPanel
     /// <returns>This builder, for fluent configuration.</returns>
     public DockGuiPanelBuilderWPF AddDocked(UIElement element, Dock edge)
     {
+        RegisterRawElement(element);
         _definitionRoster.Add(() => {
             DockPanel.SetDock(element, edge);
             Root.Children.Add(element);
