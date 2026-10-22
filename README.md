@@ -34,7 +34,7 @@ Describe interface intent in the Core model, then pass it to an adapter. The cur
 
 ## 🟢 04 See it in a minute
 
-Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), browse the [committed type inventory and source-derived UML](docs/uml/source-files/index.md), then build and run the tests for the adapter you intend to use.
+Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), and follow the [semantic-tree-to-SVG use case](docs/USE_CASES/01-SEMANTIC-TREE-TO-SVG.md). The [committed type inventory and source-derived UML](docs/uml/source-files/index.md) is a deeper technical reference; build and test the adapter you intend to use.
 
 ## SVG demonstration samples
 
@@ -42,7 +42,7 @@ Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md
 
 ## 🟪 05 Documentation and theory
 
-[Visual Gallery](docs/GALLERY.md) · [Start Here](docs/START_HERE.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Source-derived UML](docs/SOURCE_DERIVED_UML.md) · [Generated Type Inventory](docs/uml/source-files/index.md) · [Living UML Architecture](docs/LIVING_UML_ARCHITECTURE.md) · [Per-Type Documentation and UML Standard](docs/CLASS_DOCUMENTATION_STANDARD.md) · [Branding Standard](docs/BRANDING.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
+[Visual Gallery](docs/GALLERY.md) · [Start Here](docs/START_HERE.md) · [Release Closeout](docs/RELEASE_CLOSEOUT.md) · [Verified SVG Use Case](docs/USE_CASES/01-SEMANTIC-TREE-TO-SVG.md) · [Architecture](docs/ARCHITECTURE.md) · [GUI Model](docs/GUI_MODEL.md) · [Platform Adapters](docs/PLATFORM_ADAPTERS.md) · [SVG Adapter](docs/SVG_ADAPTER.md) · [Source-derived UML](docs/SOURCE_DERIVED_UML.md) · [Generated Type Inventory](docs/uml/source-files/index.md) · [Living UML Architecture](docs/LIVING_UML_ARCHITECTURE.md) · [Per-Type Documentation and UML Standard](docs/CLASS_DOCUMENTATION_STANDARD.md) · [Branding Standard](docs/BRANDING.md) · [Testing](docs/TESTING.md) · [Roadmap](ROADMAP.md) · [Release Readiness](docs/RELEASE_READINESS.md) · [Theory Guide](docs/THEORY_GUIDE.md)
 
 ---
 
