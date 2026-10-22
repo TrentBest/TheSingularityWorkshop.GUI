@@ -16,7 +16,7 @@ It expresses **what a UI node means**, not how WPF, Blazor, SVG, or another plat
 
 ## Target-centered UML
 
-![Workshop target-centered UML neighborhood for GuiBuilder](../../assets/uml/GuiBuilderUML.svg)
+![Workshop target-centered UML neighborhood for GuiBuilder](../../assets/uml/classes/Core/GuiBuilder.svg)
 
 The focal `GuiBuilder` card is centered. Direct consumers are above; the immutable result and private construction helper are below; .NET base-library references are to the right. Colored type-conduit stubs identify semantic type identities and label their endpoints. This is a manually authored, source-reviewed **static** SVG, not an interactive diagram or a runtime trace.
 
