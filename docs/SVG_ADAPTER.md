@@ -154,6 +154,22 @@ dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --config
 The first command exercises the sample's actual builder-to-renderer path and rewrites the default SVG asset. Review the diff after running it: a large diff is evidence that the hand-maintained asset and builder output had drifted, not a reason to hide the difference. The second command verifies the adapter's existing serialization contract; it does not substitute for visually checking the animated scene in a target browser.
 
 
+## Vocabulary-to-test audit
+
+The renderer has explicit mappings for the node kinds listed below. The named tests assert serialized SVG structure and selected attributes; they do **not** prove identical visual or runtime behavior across browsers and SVG viewers.
+
+| Implemented node kinds | Executable coverage |
+|---|---|
+| Root and coordinates: `svg-scene`, `svg`, `coordinate-system`, `coordinate-point` | `Renders_coordinate_system_and_maps_cartesian_y_up_to_svg_y_down`, `Rejects_invalid_coordinate_range`, `Rejects_coordinate_ranges_whose_finite_endpoints_overflow_the_span`, `Rejects_collisions_with_synthesized_coordinate_overlay_ids` |
+| Primitive geometry and text: `svg-circle`, `svg-ellipse`, `svg-line`, `svg-rect`, `svg-polyline`, `svg-polygon`, `svg-path`, `svg-text`, `text`, `svg-tspan` | `Renders_svg_primitives_and_escapes_text`, `Renders_geometry_and_transform_properties_for_composed_scenes`, `Emits_image_text_spans_and_accessible_description`, `Rejects_negative_geometry_dimensions` |
+| Containers, styling, navigation, and metadata: `svg-g`, `svg-switch`, `svg-title`, `svg-desc`, `svg-metadata`, `svg-view`, `svg-style`, `svg-a`, `svg-image` | `Renders_embedded_stylesheet_text_for_scene_choreography`, `Emits_navigable_svg_links_and_semantic_metadata_nodes`, `Emits_svg_title_switch_and_radial_gradient_nodes`, `Emits_image_text_spans_and_accessible_description`, `Rejects_svg_links_without_a_destination` |
+| Definitions and reuse: `svg-defs`, `svg-linear-gradient`, `svg-radial-gradient`, `svg-stop`, `svg-clip-path`, `svg-mask`, `svg-symbol`, `svg-use`, `svg-pattern`, `svg-marker` | `Emits_definitions_gradients_clips_and_masks`, `Renders_reusable_symbols_patterns_markers_and_filter_primitives`, `Emits_svg_title_switch_and_radial_gradient_nodes` |
+| Filter primitives: `svg-filter`, `svg-fe-gaussian-blur`, `svg-fe-offset`, `svg-fe-color-matrix`, `svg-fe-blend`, `svg-fe-flood`, `svg-fe-composite`, `svg-fe-turbulence`, `svg-fe-displacement-map`, `svg-fe-morphology`, `svg-fe-tile`, `svg-fe-convolve-matrix`, `svg-fe-component-transfer`, `svg-fe-func-r`, `svg-fe-func-g`, `svg-fe-func-b`, `svg-fe-func-a`, `svg-fe-diffuse-lighting`, `svg-fe-specular-lighting`, `svg-fe-distant-light`, `svg-fe-point-light`, `svg-fe-spot-light`, `svg-fe-image`, `svg-fe-merge`, `svg-fe-merge-node` | `Renders_reusable_symbols_patterns_markers_and_filter_primitives`, `Emits_extended_filter_primitives_and_lighting_sources`, `Emits_color_matrix_blend_flood_composite_tile_and_all_channel_functions` |
+| Declarative animation and motion references: `svg-animate`, `svg-animate-transform`, `svg-animate-motion`, `svg-set`, `svg-mpath` | `Emits_explicit_svg_animation_and_transform_nodes_from_gui_model` |
+| Serialization and safety boundaries | `Escapes_xml_attribute_values_and_preserves_non_ascii_text`, `Rendering_the_same_scene_twice_produces_identical_bytes`, `Rejects_non_finite_or_malformed_numeric_geometry_properties`, `Rejects_blank_required_reference_properties`, `Rejects_duplicate_node_ids_before_emitting_ambiguous_svg_references`, `Rejects_duplicate_ids_for_any_enabled_coordinate_overlay`, `Rejects_excessive_tree_depth_before_recursive_svg_serialization`, `Rejects_non_positive_surface_dimensions` |
+
+The two focused vocabulary tests were added because the prior suite did not explicitly mention radial gradients, switch/title nodes, color-matrix/blend/flood/composite/tile filters, or the green/blue/alpha component-transfer functions. Future changes to the switch mapping or the documented vocabulary must update this table and the corresponding assertions. The external-reference policy remains intentionally **not** an allow-list: serialization tests are not security-sanitizer tests.
+
 ## Gallery-to-test map
 
 The generated gallery is a runnable integration example, not evidence that every SVG viewer supports every feature. Use this map to trace visible constructions to the sample source and representative serializer tests.
