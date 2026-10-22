@@ -40,6 +40,22 @@ class SourceUmlPromotionTests(unittest.TestCase):
             self.assertTrue((output / "Core" / "index.md").is_file())
             self.assertEqual("# Authored file\n", (output / "authored.md").read_text(encoding="utf-8"))
 
+    def test_refuses_to_overwrite_untracked_generated_looking_file(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, output = self.fixture(root)
+            core = output / "Core"
+            core.mkdir()
+            collision = core / "TheSingularityWorkshop-Fixture-Type-deadbeef.md"
+            collision.write_text("# Human-authored content\n", encoding="utf-8")
+
+            errors = PROMOTER.promote(source, output)
+
+            self.assertTrue(any("refusing to overwrite untracked file" in error for error in errors))
+            self.assertEqual("# Human-authored content\n", collision.read_text(encoding="utf-8"))
+            self.assertFalse((output / "Core.uml-inventory.md").exists())
+            self.assertFalse((output / PROMOTER.MANIFEST_NAME).exists())
+
     def test_prunes_only_stale_files_named_in_previous_manifest(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
