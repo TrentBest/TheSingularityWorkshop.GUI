@@ -290,7 +290,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 new XElement(Svg + "text",
                     new XAttribute("x", F(position.X + 14)), new XAttribute("y", F(position.Y + 65)),
                     new XAttribute("font-size", "10"), new XAttribute("fill", node.IsFocus ? "#b7c8d5" : "#506779"),
-                    node.Namespace);
+                    node.Namespace));
 
             var members = node.Members.Take(4).ToArray();
             for (var index = 0; index < members.Length; index++)
