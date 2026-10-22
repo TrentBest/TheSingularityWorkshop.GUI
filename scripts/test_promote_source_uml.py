@@ -76,6 +76,14 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "non-generated filename"):
                 PROMOTER.promote(source, output)
 
+    def test_rejects_unrecognized_markdown_filename(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            source, output = self.fixture(Path(temporary))
+            (source / "Core.uml-types" / "AuthoredNote.md").write_text("# Not generated UML\\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "unsafe generated filename"):
+                PROMOTER.promote(source, output)
+            self.assertFalse((output / "Core" / "AuthoredNote.md").exists())
+
     def test_rejects_single_backslash_in_generated_name(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             source, output = self.fixture(Path(temporary))
