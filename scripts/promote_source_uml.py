@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Safely promote generated Core UML artifacts without touching authored docs."""
+"""Safely promote generated source-derived UML artifacts without touching authored docs."""
 from __future__ import annotations
 import argparse
 import os
@@ -9,32 +9,53 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 MANIFEST_NAME = ".generated-source-uml-files.txt"
-INVENTORY_NAME = "Core.uml-inventory.md"
-TYPE_DIR_NAME = "Core.uml-types"
-OUTPUT_DIR = ROOT / "docs" / "uml" / "source-files"
 SAFE_SUFFIXES = {".md", ".svg"}
+# Keep this allowlist aligned with scripts/generate_solution_uml.py. Never discover
+# arbitrary directories as publishable documentation.
+PROJECTS = {"core": "Core", "blazor": "Blazor", "wpf": "WPF", "svg": "SVG"}
+LEGACY_INVENTORY = "Core.uml-inventory.md"
+LEGACY_TYPES = "Core.uml-types"
 
 
-def collect_generated(input_dir: Path) -> dict[str, bytes]:
-    inventory = input_dir / INVENTORY_NAME
-    types_dir = input_dir / TYPE_DIR_NAME
-    if not inventory.is_file() or inventory.is_symlink():
-        raise ValueError(f"missing or unsafe generated inventory: {inventory}")
+def _collect_types(types_dir: Path, prefix: str, outputs: dict[str, bytes]) -> None:
     if not types_dir.is_dir() or types_dir.is_symlink():
         raise ValueError(f"missing or unsafe generated type directory: {types_dir}")
-    outputs: dict[str, bytes] = {INVENTORY_NAME: inventory.read_bytes()}
     for path in sorted(types_dir.iterdir(), key=lambda item: item.name):
         if path.is_symlink() or not path.is_file():
             raise ValueError(f"non-regular generated entry is not allowed: {path.name}")
         if path.suffix.lower() not in SAFE_SUFFIXES or path.name in {"", ".", ".."}:
             raise ValueError(f"unsafe path or non-generated filename: {path.name}")
-        if Path(path.name).name != path.name or "/" in path.name or "\\" in path.name:
+        if Path(path.name).name != path.name or "/" in path.name or "\\\\" in path.name:
             raise ValueError(f"unsafe generated filename: {path.name}")
-        outputs[f"Core/{path.name}"] = path.read_bytes()
-    if "Core/index.md" not in outputs:
-        raise ValueError("generated type set is missing Core/index.md")
-    if not any(name.startswith("Core/") and name.endswith(".md") for name in outputs):
-        raise ValueError("generated type set contains no Markdown pages")
+        outputs[f"{prefix}/{path.name}"] = path.read_bytes()
+    if f"{prefix}/index.md" not in outputs:
+        raise ValueError(f"generated type set is missing {prefix}/index.md")
+    if not any(name.startswith(f"{prefix}/") and name.endswith(".md") for name in outputs):
+        raise ValueError(f"generated type set contains no Markdown pages for {prefix}")
+
+
+def collect_generated(input_dir: Path) -> dict[str, bytes]:
+    outputs: dict[str, bytes] = {}
+    # Preferred layout is the four-project solution inventory produced by
+    # scripts/generate_solution_uml.py: <slug>/inventory.md and <slug>/types/*.
+    if (input_dir / "index.md").is_file() and any((input_dir / slug / "types").is_dir() for slug in PROJECTS):
+        outputs["index.md"] = (input_dir / "index.md").read_bytes()
+        for slug, project in PROJECTS.items():
+            project_dir = input_dir / slug
+            inventory = project_dir / "inventory.md"
+            if not inventory.is_file() or inventory.is_symlink():
+                raise ValueError(f"missing or unsafe generated inventory: {inventory}")
+            outputs[f"{project}/inventory.md"] = inventory.read_bytes()
+            _collect_types(project_dir / "types", project, outputs)
+        return outputs
+
+    # Backwards-compatible Core-only input used by the older manual workflow.
+    inventory = input_dir / LEGACY_INVENTORY
+    types_dir = input_dir / LEGACY_TYPES
+    if not inventory.is_file() or inventory.is_symlink():
+        raise ValueError(f"missing or unsafe generated inventory: {inventory}")
+    outputs[LEGACY_INVENTORY] = inventory.read_bytes()
+    _collect_types(types_dir, "Core", outputs)
     return outputs
 
 
@@ -52,12 +73,13 @@ def read_manifest(output_dir: Path) -> set[str]:
         candidate = Path(entry)
         if candidate.is_absolute() or ".." in candidate.parts or candidate.as_posix() != entry:
             raise ValueError(f"unsafe path in generated-file manifest: {entry}")
-        if entry != INVENTORY_NAME and not entry.startswith("Core/"):
-            raise ValueError(f"manifest entry outside the generated Core scope: {entry}")
-        if candidate.suffix.lower() not in SAFE_SUFFIXES:
-            raise ValueError(f"manifest entry is not a generated Markdown/SVG file: {entry}")
-        if entry.startswith("Core/") and candidate.name != "index.md" and not candidate.name.startswith("TheSingularityWorkshop-"):
-            raise ValueError(f"manifest entry is not a recognized generated type page/diagram: {entry}")
+        allowed = entry == LEGACY_INVENTORY or entry == "index.md"
+        allowed = allowed or entry in {f"{name}/inventory.md" for name in PROJECTS.values()}
+        for project in PROJECTS.values():
+            if entry.startswith(f"{project}/") and candidate.suffix.lower() in SAFE_SUFFIXES:
+                allowed = candidate.name == "index.md" or candidate.name.startswith("TheSingularityWorkshop-")
+        if not allowed or candidate.suffix.lower() not in SAFE_SUFFIXES:
+            raise ValueError(f"manifest entry is outside recognized generated UML scope: {entry}")
         entries.add(entry)
     return entries
 
@@ -77,9 +99,10 @@ def promote(input_dir: Path, output_dir: Path, check: bool = False) -> list[str]
         raise ValueError("generated documentation output path must not traverse a symlinked parent")
     if output_dir.is_symlink():
         raise ValueError("generated documentation output directory must not be a symlink")
-    core_dir = output_dir / "Core"
-    if core_dir.is_symlink():
-        raise ValueError("generated Core output directory must not be a symlink")
+    for project in PROJECTS.values():
+        target = output_dir / project
+        if target.is_symlink():
+            raise ValueError(f"generated {project} output directory must not be a symlink")
     previous = read_manifest(output_dir)
     current = set(generated)
     errors: list[str] = []
@@ -117,9 +140,8 @@ def promote(input_dir: Path, output_dir: Path, check: bool = False) -> list[str]
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--input-dir", type=Path, default=ROOT / "artifacts")
-    parser.add_argument("--output-dir", type=Path, default=OUTPUT_DIR)
-    parser.add_argument("--check", action="store_true",
-                        help="fail if promoted files differ; do not write or prune")
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "docs" / "uml" / "source-files")
+    parser.add_argument("--check", action="store_true", help="fail if promoted files differ; do not write or prune")
     args = parser.parse_args()
     try:
         errors = promote(args.input_dir.resolve(), args.output_dir, args.check)
@@ -131,7 +153,7 @@ def main() -> int:
             print(f"ERROR: {error}", file=sys.stderr)
         return 1
     print("Source UML promotion check passed." if args.check else
-          "Promoted generated Core UML files; authored/untracked files were preserved.")
+          "Promoted generated UML files; authored/untracked files were preserved.")
     return 0
 
 
