@@ -87,7 +87,11 @@ public sealed class SvgUmlDocumentationGraphRenderer
             canvasWidth += 70;
         var focusX = Margin + (centralWidth - NodeWidth) / 2;
         var consumerRows = consumers.Length == 0 ? 0 : (consumers.Length + columns - 1) / columns;
-        var focusY = Margin + (consumerRows == 0 ? 0 : consumerRows * (NodeHeight + VerticalGap));
+        var dependencyRows = dependencies.Length == 0 ? 0 : (dependencies.Length + columns - 1) / columns;
+        // Reserve symmetric neighborhood rows so the focal card stays vertically centered,
+        // even when this particular type has no consumers or no dependencies.
+        var layoutRows = Math.Max(1, Math.Max(consumerRows, dependencyRows));
+        var focusY = Margin + layoutRows * (NodeHeight + VerticalGap);
         var positions = new Dictionary<string, NodePosition>(StringComparer.Ordinal)
         {
             [focus.Id] = new NodePosition(focusX, focusY)
@@ -108,19 +112,17 @@ public sealed class SvgUmlDocumentationGraphRenderer
             }
         }
 
-        PlaceRows(consumers, Margin);
+        PlaceRows(consumers, Margin + (layoutRows - consumerRows) * (NodeHeight + VerticalGap));
         PlaceRows(dependencies, focusY + NodeHeight + VerticalGap);
         var externalX = Margin + centralWidth + HorizontalGap;
+        var externalHeight = externalNodes.Length == 0 ? 0 : externalNodes.Length * NodeHeight + (externalNodes.Length - 1) * VerticalGap;
+        var externalStartY = externalNodes.Length == 0 ? focusY : Math.Max(Margin, focusY + NodeHeight / 2 - externalHeight / 2);
         for (var index = 0; index < externalNodes.Length; index++)
-            positions[externalNodes[index].Id] = new NodePosition(externalX, focusY + index * (NodeHeight + VerticalGap));
+            positions[externalNodes[index].Id] = new NodePosition(externalX, externalStartY + index * (NodeHeight + VerticalGap));
 
-        var dependencyRows = dependencies.Length == 0 ? 0 : (dependencies.Length + columns - 1) / columns;
-        var bottom = focusY + NodeHeight;
-        if (dependencyRows > 0)
-            bottom = Math.Max(bottom, focusY + NodeHeight + VerticalGap +
-                (dependencyRows - 1) * (NodeHeight + VerticalGap) + NodeHeight);
+        var bottom = focusY + NodeHeight + VerticalGap + (layoutRows - 1) * (NodeHeight + VerticalGap) + NodeHeight;
         if (externalNodes.Length > 0)
-            bottom = Math.Max(bottom, focusY + (externalNodes.Length - 1) * (NodeHeight + VerticalGap) + NodeHeight);
+            bottom = Math.Max(bottom, externalStartY + externalHeight);
         var canvasHeight = bottom + Margin + (hasSelfEdge ? 55 : 0);
 
         var title = "Source-derived UML neighborhood: " + DisplayName(focus);
