@@ -435,7 +435,7 @@ public sealed class WpfBuilderTests
         public void Receive(string topic, object payload) { }
         public FrameworkElement Build()
         {
-            BuiltElement = new Border();
+            BuiltElement ??= new Border();
             return BuiltElement;
         }
     }
