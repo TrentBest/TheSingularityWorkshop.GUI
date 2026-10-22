@@ -115,5 +115,17 @@ class SourceUmlPromotionTests(unittest.TestCase):
             self.assertTrue((output / "authored.md").is_file())
 
 
+    def test_rejects_symlinked_parent_of_output_root(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, output = self.fixture(root)
+            parent = root / "parent-link"
+            parent.symlink_to(output.parent, target_is_directory=True)
+            aliased_output = parent / output.name
+            with self.assertRaisesRegex(ValueError, "must not traverse a symlinked parent"):
+                PROMOTER.promote(source, aliased_output)
+            self.assertTrue((output / "authored.md").is_file())
+
+
 if __name__ == "__main__":
     unittest.main(verbosity=2)
