@@ -2,7 +2,7 @@
 
 **Review date:** 2026-10-21  
 **Review baseline:** `development` at `2c6e9b6c1517d9a5fda9609f50ab987d3f7ed816`  
-**Follow-up:** canonical Core builder consolidation committed on `development` at `c1afcdb282c99cdb59fc9c90d6c0833ae0d09d41`; validation is pending CI.  
+**Follow-up:** canonical Core builder consolidation and the shared WPF build/identity contract are committed on `development`; candidate-specific CI evidence is recorded in the repository Actions history.  
 **Scope:** Core semantic model/builders, WPF builder hierarchy, Blazor builders, SVG adapter, conformance tests, and the read-only legacy references in SingularityWarehouse and RevitFamilyManagerBuilders.
 
 This is a source-level architecture review, not a release approval or a claim that every behavior has been exercised locally.
@@ -85,13 +85,15 @@ This is a **capability gap**, not proof that every one of these features belongs
 
 **Recommendation:** define the common invariant subset (identity, child order, text, source, selected semantic properties, and defined fallback behavior) and run a common fixture through Blazor, SVG, and WPF in the Windows CI lane. Keep adapter-specific expectations separate rather than pretending every native behavior is identical.
 
-### P2 — Clarify native builder lifecycle and repeatability
+### P2 — Native builder lifecycle and component ownership
 
-**Observed:** `NativeGuiBuilder<T>` allocates one WPF element at builder construction and returns that same element from `Build()`. The panel builder instead clears/repopulates its existing root from a deferred definition roster on each build.
+**Contract confirmed in source and tests:** `NativeGuiBuilder<T,TBuilder>.Build()` returns the same native element instance on every call. `GuiPanelBuilderWPF<TPanel,TBuilder>.Build()` returns the same root panel and clears/repopulates its direct children from the deferred roster on each call. This is repeatable reconstruction of a builder-owned tree, not a fresh-tree factory.
 
-**Risk:** callers may assume `Build()` always creates a fresh visual tree. Reusing a native element already attached to another parent can violate WPF visual-parent rules; repeated builds may also retain mutable state by design.
+**Correction made on development:** panel composition now registers each `IComponentWPF` child before queuing its mount. Registration rejects the same component being added twice to one builder and rejects a component whose logical parent is another builder. Grid placements use the same ownership guard as ordinary panel composition, closing the separate path that previously bypassed the rule. The controlled failure tells callers to create a distinct component instance for each visual parent rather than letting WPF fail later while attaching an already-parented element.
 
-**Recommendation:** document the lifecycle explicitly and test it. Choose deliberately between single-use/same-instance builders and factories that produce fresh elements. Avoid silently changing identity semantics, since consumers may rely on the current behavior.
+**Intentional boundary:** `CanvasGuiBuilderWPF.PlaceAt(UIElement,...)` accepts a raw element, not a component, so its element ownership is not covered by the component-parent contract yet. A future adapter-wide ownership policy should cover raw-element APIs consistently. The current correction prevents duplicate/reparented component registrations; it does not claim that arbitrary externally-mutated WPF visual trees are fully policed.
+
+**Verification:** new Windows-targeted regression tests cover duplicate registration and cross-parent rejection while retaining the existing repeated-build behavior. Candidate CI must pass before this finding is considered verified.
 
 ### P2 — Recalculate release readiness against the current commit
 
