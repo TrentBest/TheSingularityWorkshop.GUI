@@ -2,7 +2,7 @@
 
 **Purpose:** turn the current development state into one reviewable release candidate without expanding scope or confusing implementation evidence with release approval.
 
-**Current readiness:** 78% (qualitative gate estimate; see [Release Readiness](RELEASE_READINESS.md) for the evidence and remaining gates). **Publication remains disabled.** This document does not authorize publishing.
+**Current readiness:** 80% (qualitative gate estimate; see [Release Readiness](RELEASE_READINESS.md) for the evidence and remaining gates). **Publication remains disabled.** This document does not authorize publishing.
 
 ## Release scope
 
@@ -24,14 +24,14 @@ On development commit [`31f48f3`](https://github.com/TrentBest/TheSingularityWor
 - [Solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597699)
 - [Documentation quality](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597680)
 
-The package workflow exercised Core, Blazor, SVG, shared consumer, and Windows WPF tests. It produced four packages whose metadata and contents were inspected. The WPF workflow also restored and ran a consumer using packed Core/WPF archives. These are valuable implementation baselines, **not** validation of the release candidate that has yet to be selected.
+The package workflow exercised Core, Blazor, SVG, shared consumer, and Windows WPF tests. It produced four packages whose metadata and contents were inspected. The WPF workflow also restored and ran a consumer using packed Core/WPF archives. The SVG vocabulary-to-test audit is now closed: all 60 explicit renderer mappings have representative assertions and a documented test map, verified by [Package GUI run 39864841258](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39864841258). These are valuable implementation baselines, **not** validation of the release candidate that has yet to be selected.
 
 ## Remaining hard gates, in execution order
 
 1. **Owner decision — release channel and versions.** Reconcile declared versions with public NuGet versions. Do not silently publish stable versions or invent a version alignment.
 2. **Freeze candidate.** Record one commit and branch after the version decision. All evidence below must correspond to that exact commit.
 3. **Complete user-facing documentation.** Keep the README concise and package-oriented. Provide a runnable first example, link to the SVG use case, state per-adapter limitations, and keep theory in its own track. Source-derived type inventory is useful reference material but is not a substitute for human-authored use cases.
-4. **Close the behavioral audit.** Map the actual public node/property vocabulary to tests. Prioritize malformed/hostile input, depth and size limits, duplicate identities, SVG attribute escaping, external references, and unsupported-node behavior. Record supported/unsupported/unverified per adapter; do not infer parity.
+4. **Finish the remaining behavioral audit.** The explicit SVG node vocabulary now maps to executable tests; the open work is broader malformed/hostile-input coverage, depth/resource-exhaustion boundaries, external-reference threat handling, and adapter-specific unsupported behavior. Record supported/unsupported/unverified per adapter; do not infer parity.
 5. **Candidate package verification.** Pack all four packages from the frozen candidate. Inspect IDs, versions, target frameworks, dependency groups, readmes, XML docs, license and repository metadata, and unintended files. Record filenames and hashes.
 6. **Archive-only consumers.** Restore and run minimal consumers from the candidate archives—not project references—for Core/Blazor/SVG and Windows Core/WPF. Verify the documented SVG use case from the packed package.
 7. **Downstream proof.** Test WebPage against the candidate Blazor package version. A prior green run using existing published versions is not candidate integration proof.
