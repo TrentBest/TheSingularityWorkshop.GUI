@@ -72,6 +72,9 @@ def write_atomic(path: Path, content: bytes) -> None:
 
 def promote(input_dir: Path, output_dir: Path, check: bool = False) -> list[str]:
     generated = collect_generated(input_dir)
+    absolute_output = output_dir.absolute()
+    if any(parent.is_symlink() for parent in absolute_output.parents):
+        raise ValueError("generated documentation output path must not traverse a symlinked parent")
     if output_dir.is_symlink():
         raise ValueError("generated documentation output directory must not be a symlink")
     core_dir = output_dir / "Core"
