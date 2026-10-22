@@ -13,9 +13,9 @@ public sealed class SvgUmlDocumentationGraphRenderer
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
     private const double Margin = 28;
     private const double NodeWidth = 310;
-    private const double NodeHeight = 190;
+    private const double NodeHeight = 150;
     private const double HorizontalGap = 84;
-    private const double VerticalGap = 140;
+    private const double VerticalGap = 105;
 
     /// <summary>Renders one type and its directly connected semantic neighbors as an accessible SVG graph.</summary>
     public string Render(UmlDocumentationModel model, string focusTypeId, int width = 1200)
