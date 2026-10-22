@@ -73,14 +73,14 @@ public sealed class SvgGuiRenderer
         }
         else
         {
-            svg.Add(RenderNode(root, null));
+            svg.Add(RenderNode(root, null, isDocumentRoot: true));
         }
 
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg)
             .ToString(SaveOptions.DisableFormatting);
     }
 
-    private static XElement RenderNode(GuiNode node, CoordinateRange? coordinates)
+    private static XElement RenderNode(GuiNode node, CoordinateRange? coordinates, bool isDocumentRoot = false)
     {
         XElement element;
         switch (node.Kind)
@@ -372,7 +372,7 @@ public sealed class SvgGuiRenderer
                 break;
         }
 
-        element.SetAttributeValue("id", node.Id);
+        if (!isDocumentRoot) element.SetAttributeValue("id", node.Id);
         AddPresentationAttributes(element, node);
         foreach (var child in node.Children)
             element.Add(RenderNode(child, coordinates));
