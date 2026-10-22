@@ -59,6 +59,19 @@ class SvgContractTests(unittest.TestCase):
         errors = self.verify_text(SVG.format('<rect style="fill:url(#)"/>'))
         self.assertTrue(any("empty local URL reference" in e for e in errors))
 
+    def test_revision_pinned_repository_source_href_is_allowed(self) -> None:
+        revision = "a" * 40
+        source = (
+            "https://github.com/TrentBest/TheSingularityWorkshop.GUI/"
+            f"blob/{revision}/src/Core/DataCard.cs#L12"
+        )
+        self.assertEqual([], self.verify_text(SVG.format(f'<a href="{source}"><text>Source</text></a>')))
+
+    def test_unpinned_github_source_href_is_rejected(self) -> None:
+        source = "https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/src/Core/DataCard.cs#L12"
+        self.assertTrue(any("non-local href" in e for e in self.verify_text(
+            SVG.format(f'<a href="{source}"><text>Source</text></a>'))))
+
     def test_external_href_is_rejected_but_data_href_is_allowed(self) -> None:
         self.assertTrue(any("non-local href" in e for e in self.verify_text(
             SVG.format('<image href="https://example.invalid/image.svg"/>'))))
