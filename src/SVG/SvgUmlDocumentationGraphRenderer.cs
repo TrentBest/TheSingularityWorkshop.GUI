@@ -313,7 +313,15 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 new XAttribute("font-size", "12"),
                 new XAttribute("fill", node.IsFocus ? "#f0f6fb" : "#243b4a"),
                 summary));
-            svg.Add(group);
+            var sourceType = types.TryGetValue(node.Id, out var declaredType) ? declaredType : null;
+            var sourceHref = sourceType is null ? null : SourceHref(model, sourceType);
+            if (sourceHref is null)
+                svg.Add(group);
+            else
+                svg.Add(new XElement(Svg + "a",
+                    new XAttribute("href", sourceHref),
+                    new XAttribute("aria-label", "Open source for " + DisplayName(node)),
+                    group));
         }
 
         // Ports are drawn last so the colored stubs remain visible over card borders.
@@ -379,6 +387,36 @@ public sealed class SvgUmlDocumentationGraphRenderer
         var comma = assemblyIdentity.IndexOf(',');
         var simpleName = comma < 0 ? assemblyIdentity : assemblyIdentity[..comma];
         return "Assembly: " + simpleName;
+    }
+
+    private static string? SourceHref(UmlDocumentationModel model, UmlDocumentedType type)
+    {
+        var repositoryParts = model.Provenance.Repository.Split('/');
+        if (repositoryParts.Length != 2 ||
+            repositoryParts.Any(part => part.Length == 0 || part.Any(character =>
+                !(char.IsAsciiLetterOrDigit(character) || character is '-' or '_' or '.'))))
+            return null;
+
+        var revision = model.Provenance.SourceRevision;
+        if (revision.Length != 40 || revision.Any(character => !Uri.IsHexDigit(character)))
+            return null;
+
+        var declaration = type.SourceDeclarations
+            .OrderBy(item => item.Path, StringComparer.Ordinal)
+            .ThenBy(item => item.Span.StartLine)
+            .FirstOrDefault();
+        if (declaration is null)
+            return null;
+
+        var path = declaration.Path.Replace('\\', '/');
+        var segments = path.Split('/');
+        if (path.StartsWith('/', StringComparison.Ordinal) ||
+            segments.Any(segment => segment.Length == 0 || segment is "." or ".."))
+            return null;
+
+        var escapedPath = string.Join("/", segments.Select(Uri.EscapeDataString));
+        var line = Math.Max(1, declaration.Span.StartLine);
+        return $"https://github.com/{repositoryParts[0]}/{repositoryParts[1]}/blob/{revision}/{escapedPath}#L{line}";
     }
 
     private static string DisplayName(UmlDocumentedType type)

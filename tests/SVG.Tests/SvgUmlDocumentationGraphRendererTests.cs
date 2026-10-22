@@ -43,7 +43,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "A.Open(Stream stream)"));
         var model = new UmlDocumentationModel(
             "1.0",
-            new UmlModelProvenance("owner/repo", "abc123", "Fixture/Fixture.csproj", "Fixture", "net8.0", "Release", "project-semantic", null),
+            new UmlModelProvenance("TrentBest/TheSingularityWorkshop.GUI", "0123456789abcdef0123456789abcdef01234567", "Fixture/Fixture.csproj", "Fixture", "net8.0", "Release", "project-semantic", null),
             [a, b, consumer],
             [
                 new UmlDocumentedRelationship(
@@ -84,6 +84,10 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Contains("4 type nodes and 3 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("Fixture.B", StringComparison.Ordinal));
+        Assert.Contains(document.Descendants(Svg + "a"), link =>
+            ((string?)link.Attribute("href"))?.Contains(
+                "/blob/0123456789abcdef0123456789abcdef01234567/Fixture/A.cs#L1",
+                StringComparison.Ordinal) == true);
         Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("global::System.IO.Stream", StringComparison.Ordinal));
         Assert.Contains(document.Descendants(Svg + "text"), label => label.Value == "Assembly: System.Runtime");
         Assert.Contains("association", text);

@@ -2,9 +2,10 @@
 """Validate committed Workshop UML SVGs for accessibility and safe local links."""
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import unquote, urlsplit
 from xml.etree import ElementTree as ET
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -48,7 +49,21 @@ def validate(path: Path) -> list[str]:
                 continue
             parsed = urlsplit(value)
             if parsed.scheme or parsed.netloc or value.startswith("//"):
-                errors.append(f"{relative}: external SVG link is forbidden: {value}")
+                parts = parsed.path.strip("/").split("/")
+                pinned_github_source = (
+                    parsed.scheme == "https"
+                    and parsed.netloc == "github.com"
+                    and len(parts) >= 5
+                    and parts[0] == "TrentBest"
+                    and parts[1] == "TheSingularityWorkshop.GUI"
+                    and parts[2] == "blob"
+                    and re.fullmatch(r"[0-9a-fA-F]{40}", parts[3]) is not None
+                    and all(segment not in {".", ".."} for segment in map(unquote, parts[4:]))
+                    and (not parsed.fragment or re.fullmatch(r"L[1-9][0-9]*", parsed.fragment) is not None)
+                )
+                if pinned_github_source:
+                    continue
+                errors.append(f"{relative}: external SVG link is not an approved revision-pinned source link: {value}")
                 continue
             target = (path.parent / parsed.path).resolve()
             if ROOT.resolve() not in target.parents:
