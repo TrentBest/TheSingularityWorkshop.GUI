@@ -46,6 +46,7 @@ public sealed class SvgGuiRenderer
             ? "gui-svg-title gui-svg-description"
             : "gui-svg-title";
         var svg = new XElement(Svg + "svg",
+            new XAttribute("id", root.Id),
             new XAttribute("width", width),
             new XAttribute("height", height),
             new XAttribute("viewBox", Value(root, "viewBox", $"0 0 100 {F(viewHeight)}")),
@@ -72,14 +73,14 @@ public sealed class SvgGuiRenderer
         }
         else
         {
-            svg.Add(RenderNode(root, null));
+            svg.Add(RenderNode(root, null, isDocumentRoot: true));
         }
 
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg)
             .ToString(SaveOptions.DisableFormatting);
     }
 
-    private static XElement RenderNode(GuiNode node, CoordinateRange? coordinates)
+    private static XElement RenderNode(GuiNode node, CoordinateRange? coordinates, bool isDocumentRoot = false)
     {
         XElement element;
         switch (node.Kind)
@@ -371,7 +372,7 @@ public sealed class SvgGuiRenderer
                 break;
         }
 
-        element.SetAttributeValue("id", node.Id);
+        if (!isDocumentRoot) element.SetAttributeValue("id", node.Id);
         AddPresentationAttributes(element, node);
         foreach (var child in node.Children)
             element.Add(RenderNode(child, coordinates));
@@ -468,6 +469,16 @@ public sealed class SvgGuiRenderer
             foreach (var child in node.Children)
                 pending.Push((child, depth + 1));
         }
+
+        // The root document always emits a title id, and optionally a description id.
+        // Reserve those generated ids so user nodes cannot create ambiguous SVG references.
+        if (!ids.Add("gui-svg-title"))
+            throw new ArgumentException("SVG node id 'gui-svg-title' conflicts with the generated accessibility title id.", nameof(root));
+
+        if (root.Properties.TryGetValue("description", out var description) &&
+            !string.IsNullOrWhiteSpace(description) &&
+            !ids.Add("gui-svg-description"))
+            throw new ArgumentException("SVG node id 'gui-svg-description' conflicts with the generated accessibility description id.", nameof(root));
 
         // Coordinate-system overlays create real SVG elements with synthesized ids.
         if (root.Kind == "coordinate-system")
