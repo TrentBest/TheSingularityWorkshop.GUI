@@ -1,6 +1,21 @@
 name: Promote source-derived UML documentation
 
 on:
+  push:
+    branches:
+      - development
+    paths:
+      - ".github/workflows/promote-source-uml-docs.yml"
+      - "scripts/generate_solution_uml.py"
+      - "scripts/promote_source_uml.py"
+      - "scripts/test_promote_source_uml.py"
+      - "samples/SourceUmlGenerator/**"
+      - "src/Core/**"
+      - "src/Blazor/**"
+      - "src/SVG/**"
+      - "src/WPF/**"
+      - "*.sln"
+      - "**/*.csproj"
   workflow_dispatch:
     inputs:
       confirm_promotion:
@@ -14,7 +29,7 @@ permissions:
 
 jobs:
   promote:
-    if: ${{ github.ref == 'refs/heads/development' && inputs.confirm_promotion == true }}
+    if: ${{ github.ref == 'refs/heads/development' && (github.event_name == 'push' || inputs.confirm_promotion == true) }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
