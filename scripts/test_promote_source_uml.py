@@ -163,6 +163,22 @@ class SourceUmlPromotionTests(unittest.TestCase):
             self.assertEqual("# Authored gallery\\n", authored.read_text(encoding="utf-8"))
             self.assertEqual([], PROMOTER.promote(source, output, check=True))
 
+    def test_rejects_symlinked_generated_project_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source = root / "solution-uml"
+            source.mkdir()
+            (source / "index.md").write_text("# inventory\n", encoding="utf-8")
+            external = root / "external-core"
+            (external / "types").mkdir(parents=True)
+            (external / "inventory.md").write_text("# External inventory\n", encoding="utf-8")
+            (external / "types" / "index.md").write_text("# Types\n", encoding="utf-8")
+            (source / "core").symlink_to(external, target_is_directory=True)
+            output = root / "docs"
+            output.mkdir()
+            with self.assertRaisesRegex(ValueError, "unsafe generated project directory"):
+                PROMOTER.promote(source, output)
+
     def test_four_project_manifest_rejects_authored_paths(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
