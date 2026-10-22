@@ -482,6 +482,7 @@ jobs:
           "@
           $programContent | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Program.cs
           $packageSource = (Resolve-Path ./packages).Path
+          # Restore exclusively from packed Core/WPF archives: this proves the consumer has no repository project references or external package-feed fallback.
           dotnet restore ./artifacts/wpf-package-consumer/Consumer.csproj --source $packageSource
           if ($LASTEXITCODE -ne 0) { throw "WPF package-only consumer restore failed." }
           dotnet run --project ./artifacts/wpf-package-consumer/Consumer.csproj --configuration Release --no-restore
