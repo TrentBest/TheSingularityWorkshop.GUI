@@ -410,7 +410,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
 
         var path = declaration.Path.Replace('\\', '/');
         var segments = path.Split('/');
-        if (path.StartsWith('/', StringComparison.Ordinal) ||
+        if (path.StartsWith("/", StringComparison.Ordinal) ||
             segments.Any(segment => segment.Length == 0 || segment is "." or ".."))
             return null;
 
