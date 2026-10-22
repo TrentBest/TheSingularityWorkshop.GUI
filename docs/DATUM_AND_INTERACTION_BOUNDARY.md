@@ -52,7 +52,7 @@ Stable protocol identities may be useful for addressing semantic actions across 
 
 ## Current implementation versus direction
 
-The current Core architecture is a recursive `GuiNode` tree with identity, kind, optional text/source, semantic properties, and children. Platform adapters own native manifestation. Do not infer from this note that a complete semantic interaction vocabulary, device abstraction, universal data-binding model, or AI execution pathway already exists.
+The current Core architecture is a recursive `GuiNode` tree with identity, kind, optional text/source, semantic properties, and children. The fluent `GuiBuilder.WithOnClick(commandId)` records a stable command identity in the `onClickCommand` node property. The WPF adapter's `WpfGuiRenderer.Render(node, commandDispatcher)` binds that identity to a supplied host dispatcher; the one-argument renderer remains unbound. The dispatcher is a host boundary, not an authorization system: hosts must map only known command IDs to permitted operations. This is a first interaction slice, not a complete semantic interaction vocabulary, device abstraction, universal data-binding model, or AI execution pathway.
 
 See [GUI Architecture](ARCHITECTURE.md), [GUI Model](GUI_MODEL.md), and [Platform Adapters](PLATFORM_ADAPTERS.md) for the implementation-facing contracts.
 
