@@ -72,12 +72,22 @@ class SvgContractTests(unittest.TestCase):
         self.assertTrue(any("non-local href" in e for e in self.verify_text(
             SVG.format(f'<a href="{source}"><text>Source</text></a>'))))
 
-    def test_external_href_is_rejected_but_data_href_is_allowed(self) -> None:
-        self.assertTrue(any("non-local href" in e for e in self.verify_text(
-            SVG.format('<image href="https://example.invalid/image.svg"/>'))))
-        self.assertEqual([], self.verify_text(SVG.format(
-            '<image href="data:image/svg+xml;base64,PHN2Zy8+"/>' )))
+    def test_revision_pinned_github_source_href_is_allowed(self) -> None:
+        source = "https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0123456789abcdef0123456789abcdef01234567/src/Core/DataCard.cs#L12"
+        self.assertEqual([], self.verify_text(SVG.format(f'<a href="{source}"><text>DataCard</text></a>')))
 
+    def test_mutable_or_unapproved_external_href_is_rejected(self) -> None:
+        for href in (
+            "https://example.invalid/image.svg",
+            "https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/src/Core/DataCard.cs",
+            "https://github.com/another/repo/blob/0123456789abcdef0123456789abcdef01234567/src/DataCard.cs",
+            "http://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0123456789abcdef0123456789abcdef01234567/src/DataCard.cs",
+        ):
+            with self.subTest(href=href):
+                self.assertTrue(any("non-local" in e for e in self.verify_text(
+                    SVG.format(f'<image href="{href}"/>'))))
+        self.assertEqual([], self.verify_text(SVG.format(
+            '<image href="data:image/svg+xml;base64,PHN2Zy8+"/>')))
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
