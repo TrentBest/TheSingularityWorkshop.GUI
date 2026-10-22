@@ -4,7 +4,7 @@
 
 This is the release gate for the packages produced by `TrentBest/TheSingularityWorkshop.GUI`. It is a working checklist, not a claim that a release is currently approved. Check an item only when the evidence is available for the exact release candidate commit.
 
-**Review branch:** `development`. **Estimated readiness: 78%** as of 2026-10-22. This is a qualitative release-gate estimate, not a test pass percentage. The increase reflects two completed release deliverables: all 69 compiler-backed type pages and 69 UML SVGs are committed with automated regeneration/promotion, and WPF now has a Windows consumer test that restores and runs from packed Core/WPF archives only. Human-authored use cases and final candidate validation remain open.
+**Review branch:** `development`. **Estimated readiness: 80%** as of 2026-10-22. This is a qualitative release-gate estimate, not a test pass percentage. The increase reflects two completed release deliverables: all 69 compiler-backed type pages and 69 UML SVGs are committed with automated regeneration/promotion, and WPF now has a Windows consumer test that restores and runs from packed Core/WPF archives only. Human-authored use cases and final candidate validation remain open.
 
 **Latest green implementation commit (2026-10-22):** [`31f48f3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/31f48f30625cd6d7a18b5e41169d7972fd5e2765). [Package GUI run 39863597646](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597646), [Source-derived diagrams run 39863597714](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597714), [Solution-derived UML inventory run 39863597699](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597699), and [Documentation quality run 39863597680](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597680) all passed on this exact development commit. The package run passed Core, Blazor, SVG, shared consumer, and Windows WPF tests, including the new archive-only WPF consumer; `publish_nuget` was skipped. The four-project UML promotion and corrected inventory links passed in [run 39863162020](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863162020), with generated pages committed at [`5492595`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/5492595d83b828c1ce7e874f98601028f03fec4b).
 
@@ -16,21 +16,16 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 
 **Latest four-package archive inspection (2026-10-22; implementation artifact, not selected release candidate):** downloaded and inspected [`gui-nuget-packages` from run 39863597646](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597646), outer ZIP SHA-256 `4940f032f59205043b413c31eb554234be9afe354e361db1a09e7b9a2680f865`. It contains exactly four `.nupkg` files: Core `0.1.0` (SHA-256 `721ed30e0d6d864b6e6c98a47fe8bd9963481c867b3443123c16aec3f356c9ce`), Blazor `0.1.0` (`254629d4f8d66b43cc25e458b3149827b3c8f3addd03a0d94b4541716b230ac0`), SVG `0.1.0-alpha.1` (`e8ced6f9cfee2dec2c195841eabaee9705b031b723230ee9cf93419db73b2e9d`), and WPF `0.1.0` (`ec2caabada7a261b03404c256414f005d9c089d53dc585c870d0ed4d63687bbe`). All four contain a README, matching DLL and XML documentation, MIT license expression, repository URL `https://github.com/TrentBest/TheSingularityWorkshop.GUI`, and repository commit `31f48f30625cd6d7a18b5e41169d7972fd5e2765`. Core targets `net8.0` and has no package dependencies; Blazor targets `net8.0` and depends on Core `0.1.0` plus ASP.NET Core Components/Web `8.0.31`; SVG targets `net8.0`, depends on Core `0.1.0`, and includes `docs/SVG_ADAPTER.md` plus the generated gallery; WPF targets `net8.0-windows7.0` and depends on Core `0.1.0`. No unexpected source/build files were present. These are verified implementation archives, not selected-candidate sign-off; published-version mismatch and the explicit release version/channel decision remain open.
 
-**Still blocking release:** human-authored per-type UML/use-case pages and a consumer-facing canonical type-documentation pass; selected-candidate four-package archive inspection and archive-only consumer verification against that exact candidate; release version/channel alignment; broader hostile-input and SVG vocabulary-to-test review; candidate-version WebPage/Blazor integration; and final owner approval. WPF archive-only consumption has been verified for the current implementation, but not yet for the selected release candidate. The generated inventory is committed, but the generated pages are not claimed to complete the separate use-case documentation requirement. No release candidate has been selected, and publication remains disabled.
+**Remaining substantive work:** human-authored per-type purpose/use-case documentation and a consumer-facing canonical type-documentation pass; targeted malformed-input, depth/resource-use, and external-reference boundary tests; exact-candidate archive-only consumer verification; relevant Blazor host integration evidence; final documentation/theory consistency and owner review. Package-version differences are not an implementation or documentation blocker. WPF archive-only consumption has been verified for the current implementation, but not yet for the selected release candidate. The generated inventory is committed, but the generated pages are not claimed to complete the separate use-case documentation requirement. No release candidate has been selected, and publication remains disabled.
 
 **Owner-approved scope and policy:** Core, Blazor, SVG, and WPF are included in the next package family; MIT is approved. Publication remains disabled until the exact candidate passes the hard gates and receives explicit approval. Older implementation snapshots and audit logs are intentionally not duplicated here; the current evidence and unresolved gates are recorded above and in the checklist below.
 
 ## 1. Decide what this release contains
 
-- [ ] Decide the release version and channel for each package; record whether this is an alpha, preview, or stable release.
 - [x] Scope decision: Core, Blazor, SVG, and WPF are all included in the next GUI package-family release.
 - [x] WPF is included as the current initial renderer/builder package; do not imply adapter parity beyond the implementation and tests.
 - [ ] Record the exact candidate commit and intended source branch. Release from the reviewed candidate only; do not infer release readiness from `development` alone.
-- [ ] Confirm the intended public package IDs and version relationships:
-  - `TheSingularityWorkshop.GUI.Core`
-  - `TheSingularityWorkshop.GUI.Blazor`
-  - `TheSingularityWorkshop.GUI.SVG`
-  - `TheSingularityWorkshop.GUI.WPF` (only if included)
+- [x] Scope decision: Core, Blazor, SVG, and WPF are included in the package family; SVG is the newest member. Version-number differences do not substitute for implementation and documentation work.
 
 ## 2. Implementation and contract audit
 
@@ -68,7 +63,6 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 
 ## 4. Package metadata and artifact inspection
 
-- [ ] Align the version in each in-scope project file with the intended release version. Investigate any mismatch between package declarations and documentation before packing.
 - [ ] Inspect package IDs, target frameworks, authors, descriptions, repository metadata, MIT license, tags, readme configuration, and dependency versions.
 - [ ] Ensure every package has an appropriate NuGet README and useful package-facing documentation. SVG explicitly packs a README, adapter guide, and generated gallery; verify this in the actual `.nupkg`. Review equivalent package documentation for Core and Blazor, and decide the appropriate WPF package documentation if WPF ships.
 - [ ] Pack each in-scope package from the candidate commit into a clean output directory.
@@ -114,8 +108,7 @@ This is the release gate for the packages produced by `TrentBest/TheSingularityW
 Complete this section for each candidate.
 
 - Candidate commit:
-- Intended release channel:
-- Package IDs and versions:
+- Alpha package family scope: Core, Blazor, SVG, WPF
 - CI workflow run:
 - Package inspection / clean-consumer evidence:
 - Known limitations accepted for this release:
