@@ -78,9 +78,10 @@ public sealed class SvgUmlDocumentationGraphRenderer
         dependencies = dependencies.Concat(otherNeighbors).ToArray();
 
         var columns = Math.Max(1, Math.Min(3, Math.Max(consumers.Length, dependencies.Length)));
-        var centralWidth = Math.Max(NodeWidth, columns * NodeWidth + (columns - 1) * HorizontalGap);
-        var canvasWidth = Math.Max(width, Margin * 2 + centralWidth +
-            (externalNodes.Length == 0 ? 0 : HorizontalGap + NodeWidth));
+        var externalColumnWidth = externalNodes.Length == 0 ? 0 : HorizontalGap + NodeWidth;
+        var minimumCentralWidth = Math.Max(NodeWidth, width - Margin * 2 - externalColumnWidth);
+        var centralWidth = Math.Max(minimumCentralWidth, columns * NodeWidth + (columns - 1) * HorizontalGap);
+        var canvasWidth = Margin * 2 + centralWidth + externalColumnWidth;
         var hasSelfEdge = edges.Any(edge => edge.SourceTypeId == focusTypeId && edge.TargetTypeId == focusTypeId);
         if (hasSelfEdge)
             canvasWidth += 70;
