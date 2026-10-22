@@ -90,6 +90,19 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "missing Core/index.md"):
                 PROMOTER.promote(source, output)
 
+    def test_rejects_symlinked_core_output_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            source, output = self.fixture(root)
+            external = root / "external"
+            external.mkdir()
+            sentinel = external / "TheSingularityWorkshop-Fixture-Type-deadbeef.md"
+            sentinel.write_text("# Do not overwrite\\n", encoding="utf-8")
+            (output / "Core").symlink_to(external, target_is_directory=True)
+            with self.assertRaisesRegex(ValueError, "Core output directory must not be a symlink"):
+                PROMOTER.promote(source, output)
+            self.assertEqual("# Do not overwrite\\n", sentinel.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
