@@ -427,6 +427,63 @@ jobs:
       - name: Test WPF renderer
         run: dotnet test tests/WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj --configuration Release
 
+      - name: Pack Core and WPF for archive-only consumer verification
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          New-Item -ItemType Directory -Force -Path ./packages, ./artifacts/wpf-package-consumer | Out-Null
+          dotnet pack src/Core/TheSingularityWorkshop.GUI.Core.csproj --configuration Release --output ./packages
+          if ($LASTEXITCODE -ne 0) { throw "Core package creation failed." }
+          dotnet pack src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release -p:EnableWindowsTargeting=true --output ./packages
+          if ($LASTEXITCODE -ne 0) { throw "WPF package creation failed." }
+          $corePackage = Get-ChildItem ./packages/TheSingularityWorkshop.GUI.Core.*.nupkg | Select-Object -First 1
+          $wpfPackage = Get-ChildItem ./packages/TheSingularityWorkshop.GUI.WPF.*.nupkg | Select-Object -First 1
+          if (-not $corePackage -or -not $wpfPackage) { throw "Core or WPF package archive is missing." }
+          $coreVersion = $corePackage.BaseName.Substring("TheSingularityWorkshop.GUI.Core.".Length)
+          $wpfVersion = $wpfPackage.BaseName.Substring("TheSingularityWorkshop.GUI.WPF.".Length)
+          @"
+          <Project Sdk="Microsoft.NET.Sdk">
+            <PropertyGroup>
+              <OutputType>Exe</OutputType>
+              <TargetFramework>net8.0-windows</TargetFramework>
+              <UseWPF>true</UseWPF>
+              <ImplicitUsings>enable</ImplicitUsings>
+              <Nullable>enable</Nullable>
+            </PropertyGroup>
+            <ItemGroup>
+              <PackageReference Include="TheSingularityWorkshop.GUI.Core" Version="$coreVersion" />
+              <PackageReference Include="TheSingularityWorkshop.GUI.WPF" Version="$wpfVersion" />
+            </ItemGroup>
+          </Project>
+          "@ | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Consumer.csproj
+          @"
+          using System;
+          using System.Windows;
+          using System.Windows.Controls;
+          using TheSingularityWorkshop.Workshop.Gui;
+          using TheSingularityWorkshop.GUI.WPF;
+
+          internal static class Program
+          {
+              [STAThread]
+              private static int Main()
+              {
+                  var tree = GuiBuilder.Create("Panel", "root")
+                      .Child("Button", "save", button => button.Text("Save"))
+                      .Build();
+                  var rendered = WpfGuiRenderer.Render(tree);
+                  if (rendered is not Border)
+                      throw new InvalidOperationException("WPF package did not render the root panel as a Border.");
+                  Console.WriteLine("WPF archive-only consumer passed.");
+                  return 0;
+              }
+          }
+          "@ | Set-Content -Encoding utf8 ./artifacts/wpf-package-consumer/Program.cs
+          dotnet restore ./artifacts/wpf-package-consumer/Consumer.csproj --source ./packages --source https://api.nuget.org/v3/index.json
+          if ($LASTEXITCODE -ne 0) { throw "WPF package-only consumer restore failed." }
+          dotnet run --project ./artifacts/wpf-package-consumer/Consumer.csproj --configuration Release --no-restore
+          if ($LASTEXITCODE -ne 0) { throw "WPF package-only consumer failed." }
+
   publish_nuget:
     needs:
       - test-and-package
