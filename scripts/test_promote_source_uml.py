@@ -97,11 +97,11 @@ class SourceUmlPromotionTests(unittest.TestCase):
             external = root / "external"
             external.mkdir()
             sentinel = external / "TheSingularityWorkshop-Fixture-Type-deadbeef.md"
-            sentinel.write_text("# Do not overwrite\\n", encoding="utf-8")
+            sentinel.write_text("# Do not overwrite\n", encoding="utf-8")
             (output / "Core").symlink_to(external, target_is_directory=True)
             with self.assertRaisesRegex(ValueError, "Core output directory must not be a symlink"):
                 PROMOTER.promote(source, output)
-            self.assertEqual("# Do not overwrite\\n", sentinel.read_text(encoding="utf-8"))
+            self.assertEqual("# Do not overwrite\n", sentinel.read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":
