@@ -38,6 +38,19 @@ The evidence confirms a general-purpose tree, not a typed chart contract:
 
 This is a bounded source inspection, not a claim that no chart-like experiment exists anywhere in every branch or external consumer. Capability labels are **not implemented in inspected paths** or **not established by inspected evidence**; adapter parity must not be inferred from drawing primitives.
 
+## Project-reference and solution evidence
+
+Inspected the project files and solution manifest on `development`:
+
+- `src/Core/TheSingularityWorkshop.GUI.Core.csproj` has no explicit `ProjectReference` or `PackageReference`; this supports the current Core package's dependency-light boundary at the project-file level (it does not prove the absence of every transitive SDK/runtime dependency).
+- `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj` references Core and the `Microsoft.AspNetCore.Components` and `Microsoft.AspNetCore.Components.Web` packages (both version `8.0.31`).
+- `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj` references Core and has no explicit package references.
+- `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj` references Core and targets `net8.0-windows` with `UseWPF=true`; it has no explicit package references in the inspected project file.
+- `tests/Adapter.Conformance.Tests/TheSingularityWorkshop.GUI.Adapter.Conformance.Tests.csproj` references Core, Blazor, and SVG. It does **not** reference WPF in the inspected file, so this project alone cannot substantiate shared WPF conformance.
+- `TheSingularityWorkshop.GUI.slnx` lists Core, Blazor, WPF, SVG, documentation, one sample, and Core/Blazor/SVG test projects. It does **not** list the adapter-conformance test project or the WPF test project in the inspected solution manifest. Their existence and whether CI invokes them independently must be checked in the relevant workflow before treating them as covered by a solution-level run.
+
+The project-reference shape is therefore a star around Core for the three adapters, not a chain between adapters. This is useful evidence for either future chart option: any optional chart semantic package should depend on Core only when it genuinely needs tree integration, and adapters should depend on the chart contract only if they implement that contract. This is a project-file audit, not a full transitive package-lock or workflow-execution audit.
+
 ## Decision drivers
 
 1. Chart meaning and data interpretation must be independent of how a renderer draws them.
@@ -147,8 +160,9 @@ Charting is future-surface work, not a hidden prerequisite for the current four-
 
 ## Acceptance criteria for the next implementation proposal
 
-- [x] Inspect Core tree/builder public shape, Blazor/SVG/WPF renderer mappings, and existing shared conformance tests (bounded inspection documented above). Project-reference/dependency graph inspection remains to be completed.
-- [x] Record an initial chart capability matrix from inspected source. Full project-reference/dependency graph still needs verification.
+- [x] Inspect Core tree/builder public shape, Blazor/SVG/WPF renderer mappings, and existing shared conformance tests (bounded inspection documented above).
+- [x] Record an initial chart capability matrix from inspected source.
+- [x] Inspect direct project references, adapter package references, and the solution manifest; record the observed graph and its limits.
 - [ ] Confirm the actual consumer and its minimum chart requirements.
 - [ ] Choose option A or B with evidence and record the decision above.
 - [ ] Define typed bar-chart data semantics and invalid-data behavior.
