@@ -11,7 +11,7 @@
 
 ![Target-centered UML class diagram for GuiNode](../assets/uml/classes/Core/GuiNode.svg)
 
-The focal type is `GuiNode`. Its direct structural relationship is an ordered collection of child `GuiNode` instances. The constructor snapshots input properties and children; the public surface exposes immutable values and lookup operations. The class declares no base class or implemented interface.
+The focal type is `GuiNode`. Its direct structural relationship is an ordered collection of child `GuiNode` instances. The constructor snapshots input properties and children, rejects null child entries, and the public surface exposes immutable values and lookup operations. The class declares no base class or implemented interface.
 
 ## Use cases
 
@@ -52,8 +52,8 @@ The focal type is `GuiNode`. Its direct structural relationship is an ordered co
 
 - **Owns:** node identity, kind, optional text/source values, a string-to-string property snapshot, ordered child snapshot, and depth-first lookup.
 - **Does not own:** rendering, layout calculation, live UI state, event dispatch, command authorization, animation, or framework-specific objects.
-- **Verified source facts:** constructor validation, snapshot creation, read-only public properties, iterative depth-first lookup, and missing-node behavior are visible in the linked source.
-- **Test evidence:** direct-node regression assertions are maintained in [`GuiBuilderTests.cs`](../../tests/Core.Tests/GuiBuilderTests.cs), covering constructor validation, child snapshots, duplicate-ID traversal order, blank lookup identifiers, property snapshots, absent IDs, and deep-tree lookup. These assertions are not a substitute for a passing CI run on the exact commit, and they do not establish renderer behavior.
+- **Verified source facts:** constructor validation (including null child-entry rejection), snapshot creation, read-only public properties, iterative depth-first lookup, and missing-node behavior are visible in the linked source.
+- **Test evidence:** direct-node regression assertions are maintained in [`GuiBuilderTests.cs`](../../tests/Core.Tests/GuiBuilderTests.cs), covering constructor validation, null child-entry rejection, child snapshots, duplicate-ID traversal order, blank lookup identifiers, property snapshots, absent IDs, and deep-tree lookup. These assertions are not a substitute for a passing CI run on the exact commit, and they do not establish renderer behavior.
 
 ## Relationship semantics
 
