@@ -53,7 +53,7 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 - [x] **Embed each type's UML class-diagram SVG on its page** with source-derived relationships and accessible output. The remaining review is to validate semantics against the maintained contracts and tests, not to recreate the existing inventory.
 - [x] **Add a central type inventory/index and CI drift checks** so maintained types have a page and diagram; generated promotion/drift verification passed in [run 39862352900](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39862352900). Keep any future failures actionable and source-grounded.
 - [ ] **Review diagram semantics against human-authored contracts and tests**; generated inventory/promotion is complete, but source-derived structure alone does not prove runtime behavior.
-- [ ] Inspect all candidate package archives and dependency graphs; ensure package versions and Blazor-to-Core dependencies agree.
+- [ ] Inspect all candidate package archives and dependency graphs; verify actual package contents and dependency edges. Package-version differences are not a blocker by themselves.
 - [x] Wire WPF into the package workflow and verify its package README, tags, repository metadata, MIT license expression, and archive README presence in [workflow run 39863597646](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597646). The same run passed the clean Core/Blazor/SVG consumer smoke test and Windows WPF tests; `publish_nuget` was skipped.
 - [x] **Verify WPF from its packed archive, not a project reference:** the Windows lane packs Core/WPF, restores a fresh `net8.0-windows` consumer using only the local `.nupkg` folder, calls `WpfGuiRenderer.Render`, and passes in [run 39863597646](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39863597646) on implementation commit [`31f48f3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/31f48f30625cd6d7a18b5e41169d7972fd5e2765). Repeat this against the selected release candidate before final approval.
 - [ ] Confirm Core remains platform-neutral and has no accidental UI-framework dependency.
@@ -79,10 +79,11 @@ SVG is a valid release centerpiece, but the release should deliver a dependable 
 
 ## Current blockers / owner decisions
 
-1. Release channel and per-package versions, including dependency version alignment.
-2. Select the exact candidate commit and source branch.
-3. Inspect the candidate four-package archive set and run clean-consumer verification against those exact versions.
-4. Candidate-version WebPage integration.
-5. Complete the remaining SVG hostile-input regression coverage and candidate sign-off; the external-reference serialization policy is documented, but the renderer intentionally does not sanitize or allow-list URLs.\n6. Complete per-type documentation and UML SVG coverage across all four in-scope packages, with a source-derived inventory and CI enforcement.
+1. Select the exact candidate commit on `development` and record the exact package artifacts produced from it.
+2. Inspect the candidate four-package archive set and run clean-consumer verification against those exact artifacts.
+3. Candidate-version WebPage integration and the relevant Blazor host path.
+4. Complete targeted SVG malformed-input, excessive-depth/resource-use, and external-reference boundary tests; document that SVG serialization does not sanitize or allow-list external URLs.
+5. Complete human-authored contracts/use cases and final docs/theory consistency review.
+6. Run the full release gate on the exact candidate and record the decision. Publication remains gated on explicit approval.
 
 These are intentionally explicit blockers rather than decisions an implementation agent should silently make. Update the readiness percentage only when evidence changes; checked boxes alone do not equal release readiness.
