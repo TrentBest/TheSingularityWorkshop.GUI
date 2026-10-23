@@ -13,9 +13,9 @@
 
 ## UML class diagram
 
-![Compiler-derived class neighborhood for CoordinateSystemGuiBuilder](../../assets/uml/source-files/TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder.svg)
+![Compiler-derived class neighborhood for CoordinateSystemGuiBuilder](../../uml/source-files/Core/TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder-2858320f16.svg)
 
-The source-derived diagram is a structural reference. The relationship that matters at runtime is explicit in the implementation: this builder owns a `GuiBuilder` and retains the `CoordinateSystem` used to map points.
+The source-derived diagram is a structural reference. The runtime relationship is explicit in the implementation: this builder owns a `GuiBuilder` and retains the `CoordinateSystem` used to map points.
 
 ## Contract and behavior
 

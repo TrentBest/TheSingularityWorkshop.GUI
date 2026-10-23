@@ -9,11 +9,11 @@
 
 ## Purpose and boundary
 
-This type supplies small, framework-neutral numeric helpers for mapping coordinate values between ranges, clamping values, and calculating Euclidean distance. It has no instance state and does not know about pixels, renderers, GUI nodes, or screen coordinate conventions.
+This type supplies framework-neutral numeric helpers for mapping coordinate values between ranges, clamping values, and calculating Euclidean distance. It has no instance state and does not know about pixels, renderers, GUI nodes, or screen coordinate conventions.
 
 ## UML class diagram
 
-![Compiler-derived class neighborhood for CoordinateSystemUtilities](../../assets/uml/source-files/TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities.svg)
+![Compiler-derived class neighborhood for CoordinateSystemUtilities](../../uml/source-files/Core/TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities-f821ba6eab.svg)
 
 The diagram represents source structure. The public API consists of four static operations; the finite-range validation helper is private implementation detail.
 
