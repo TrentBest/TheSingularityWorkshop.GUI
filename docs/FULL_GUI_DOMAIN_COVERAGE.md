@@ -1,0 +1,70 @@
+# Full GUI Domain Coverage Map
+
+**Purpose:** maintain one evidence-oriented map from the Workshop's expansive GUI domain to implemented contracts, adapter manifestations, tests, and documentation. This is an engineering control document, not a claim that every domain capability is shipped.
+
+**Review branch:** `docs/full-gui-domain-coverage-2026-10-23`, based on `development`.  
+**Package-family readiness:** 80% as last recorded in [Release Readiness](RELEASE_READINESS.md); this domain map does not change that estimate.
+
+## Governing boundary
+
+The GUI is the extrinsic observation and interaction boundary around an experience. It does not own the experience manifest, domain state, or FSM lifecycle. A manifest describes the experience's MicroBundles/configuration; runtime composition belongs to FSM_COS; GUI observes, accepts semantic input, and manifests a view through an adapter.
+
+The shared Workshop standard is [FSM_COS Documentation Standard](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/development/DOCUMENTATION_STANDARD.md), supplemented by [FSM_COS Living UML and Data-Card Visual Standard](https://github.com/TrentBest/TheSingularityWorkshop.FSM_COS/blob/development/docs/UML_VISUAL_STYLE.md) and this repository's [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md). Each implementation claim must point to source and executable evidence. A concept being specified is not the same as a supported API.
+
+## Status vocabulary
+
+- **Implemented / tested** — the contract exists in source and the named behavior has executable coverage.
+- **Implemented / partial evidence** — code exists, but scope or hostile/boundary behavior is not fully verified.
+- **Specified** — the intended semantic distinction is documented; implementation is not implied.
+- **Proposed** — contract, API, or runtime behavior still needs a decision and tests.
+- **Unverified** — source or integration must be inspected before a reliable status can be assigned.
+- **Not in this package** — the responsibility belongs to a host, FSM_COS, a domain adapter, or another package.
+
+## Domain-to-evidence matrix
+
+| Domain | Intended responsibility | Current evidence/status | Required closure evidence |
+|---|---|---|---|
+| Neutral recursive model | Represent GUI intent without binding Core to a platform | Core `GuiNode` / builders exist; Core test project and generated type inventory exist. Full platform-neutral dependency/API audit remains open. | Public API inventory, dependency audit, invariants and invalid-input tests, consumer example from packed Core package. |
+| Composition and identity | Parent/child containment, stable node identity, sibling order | Recursive model and builder examples exist. SVG root identity fix is in open PR #34; don't treat it as part of `development` until merged. | Cross-adapter tree/order/identity matrix; duplicate and generated-ID collision tests; explicit null/invalid-node policy. |
+| Properties and styling | Typed or documented semantic properties, text, color, size, layout | Current string/property vocabulary is represented in adapters; no claim of universal typed property parity. | Source-derived property inventory; supported/unsupported/unverified mapping by adapter; valid, malformed, missing, and out-of-range tests. |
+| Input intent and interaction | Activate, select, cancel, navigate, point, drag, zoom, rotate, text input, gesture, gaze, voice | Device-independent input intent is specified in [GUI Expressiveness](GUI_EXPRESSIVENESS.md); do not assume a common event/action runtime is implemented. | Define semantic event/action contracts; distinguish command request from domain mutation; test keyboard/pointer and host-mediated actions in real hosts. |
+| State observation | Show domain/runtime state without making the renderer authoritative | Extrinsic observation boundary is documented in [Ideal GUI](IDEAL_GUI.md) and [GUI Lifecycle](GUI_LIFECYCLE.md). | Host-backed example with a real source of state; prove update propagation and that GUI state does not become domain state. |
+| 2D spatial representation | Surface, region, element, viewport, transforms, layers, focus and selection | Domain is specified in [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md); coordinate primitives exist, but the full semantic transform/identity contract remains proposed. | Contract for coordinate spaces, transform composition/inversion/invalid values, identity across movement, and deterministic adapter mappings. |
+| 3D and immersive representation | Volume, camera, projection, depth, occlusion, world-space controls | Vocabulary and desired domain are documented; not a claim of a shipped 3D renderer or GPU pipeline. | Separate semantic model from graphics API; define camera/projection/visibility contracts; executable reference scene and adapter-specific capability tests. |
+| Expressive media | Images, geometry, paths, symbols, charts, animation, video, audio-linked visualization, particles, noise/static and empty space | [GUI Expressiveness](GUI_EXPRESSIVENESS.md) defines the open representation space. SVG has explicit serialization vocabulary and generated gallery; SVG is not a general media engine. | For each media family, record Core representation, adapter support, output limitations, resource policy, test fixture, and runnable recipe. |
+| SVG manifestation | Portable vector output for supported nodes/scenes | SVG adapter, generated gallery and vocabulary-to-test map exist. Host/viewer behavior and destination authorization are not proven by XML serialization tests. | Candidate archive-only consumer; malformed/hostile input regression tests; clear external-reference policy; deterministic generated-gallery check. |
+| Blazor manifestation | Render semantic model in a browser-hosted .NET component | Adapter and component tests exist. Candidate-version real consumer/WebPage integration remains open. | Minimal host renders reusable semantic builders from the selected packed package; assert actual output/interaction rather than merely restore/compile. |
+| WPF manifestation | Translate supported semantic model into Windows-native controls | Initial renderer/builders and Windows tests exist; this is not full adapter parity. | Candidate archive-only consumer on Windows; record unsupported properties, lifecycle behavior, and native-only differences. |
+| Shared adapter conformance | Identify shared invariants without forcing pixel parity | Initial shared conformance project exists; broader matrix remains open in [Surface Coverage Audit](GUI_SURFACE_COVERAGE_AUDIT.md). | Every contract row names shared test, adapter-specific result, and explicit N/A/unsupported/unverified status. |
+| Data cards and source-derived UML | Explain source structure and relationships with recursive, accessible cards | Compiler-backed inventory and SVGs exist for 69 types. Authored purpose/use-case documentation remains incomplete; static SVGs are not interactive. | Per-type companion, focused `[TypeName]UML.md`, source-grounded use cases, accessible text fallback, stale/missing-output CI failure fixtures. |
+| Interactive diagram editing | Edit an authoritative domain/AST through validated commands, not by mutating an SVG projection | Specified in [Data Cards and UML](DATA_CARDS_AND_UML.md); not a completed interactive AST editor. | Authoritative model, command authorization/validation, failure diagnostics, stable selection, regeneration and round-trip tests. |
+| Execution host and lifecycle | Resolve/execute an experience, route input/data, suspend/resume/dispose | [GUI Execution Model](GUI_EXECUTION_MODEL.md) is explicitly proposed. This is not currently a GUI package runtime contract. | Define ownership across WebApp/AnyApp/FSM_COS; do not duplicate FSM_COS lifecycle; prove with an actual host integration before claiming implementation. |
+| Manifest integration | Keep experience composition/configuration separate from GUI implementation | Boundary is specified in [Manifest Boundary](MANIFEST_BOUNDARY.md); manifest loading is not implied by a GUI renderer package. | End-to-end fixture from manifest to FSM_COS composition to observable GUI output, with invalid manifest/dependency failure tests in the host integration repo. |
+| Package/consumer integrity | Ensure each package works without repository-only source and includes accurate docs | Core, Blazor, SVG and WPF are in release scope; recorded package workflow evidence exists, but exact candidate/version decision is open. | Select versions/channel, inspect all candidate archives, run clean archive-only consumers and candidate WebPage integration, retain exact commit/run evidence. |
+
+## Required implementation order
+
+This sequence is designed to make progress without confusing architectural ambition with shipped support.
+
+1. **Close the package contract.** Complete the per-adapter behavior matrix and source/API audit. Fix correctness and hostile-input gaps that affect the currently advertised API.
+2. **Close consumer documentation.** Finish authored per-type contracts and companion UML/use cases; keep generated source structure distinct from human-authored use cases and runtime evidence.
+3. **Prove the package boundary.** Test the actual packed archives in clean consumers; prove Blazor in a real host and WPF on Windows. Keep NuGet publication gated.
+4. **Turn specified semantics into small executable contracts.** Prioritize identity, coordinate transforms, semantic input, accessibility/focus, and lifecycle only when a clear owner and consumer exist.
+5. **Expand manifestations by capability, not by label.** SVG, Blazor, WPF, and any future GPU/WebGPU/Vulkan adapter each get a support matrix and representative runnable proof. A new adapter must not silently promise parity.
+6. **Integrate with FSM_COS/WebApp.** FSM_COS owns experience composition; WebApp owns web hosting/inputs; GUI owns semantic visualization/interaction representation. Verify the end-to-end route in those repositories without creating a second runtime meaning inside GUI.
+
+## Documentation acceptance contract
+
+For each maintained production type, the Workshop standard requires:
+
+- A companion Markdown page identifying the user moniker, purpose, source, responsibility/non-goals, relevant contract and failure behavior.
+- A focused `docs/uml/[TypeName]UML.md` neighborhood diagram page with a **Use cases** section, grounded consumers above, target centered, dependencies below, and verified package references to the right.
+- A source-derived UML SVG with provenance and accessible title/description, plus text explanation. Generated output is regenerated, not hand-edited.
+- Tests and usage links that support the claims; unknown behavior is explicitly marked rather than inferred.
+- CI coverage inventory and deliberate negative tests proving missing documentation/diagrams fail.
+
+Use the exact shared palette and nested data-card rules in the FSM_COS standard. Keep source structure, use-case intent, and captured runtime behavior as separate evidence classes.
+
+## Release evidence rule
+
+The readiness percentage changes only when implementation or documentation work is backed by evidence on a named commit. Do not increase the existing 80% estimate because this map exists. Update [Release Readiness](RELEASE_READINESS.md), [Next-Release Work Queue](NEXT_RELEASE_WORK_QUEUE.md), and [Surface Coverage Audit](GUI_SURFACE_COVERAGE_AUDIT.md) when a gate actually closes, and include exact workflow links. Publication, merge, deployment, and branch deletion remain separate authorized actions.
