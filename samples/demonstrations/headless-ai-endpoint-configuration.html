@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>HeadlessAi · Endpoint configuration</title>
+<style>
+:root{color-scheme:dark;--bg:#08111e;--panel:#111f30;--panel2:#172a40;--line:#3a526d;--ink:#f2f7ff;--muted:#bacbde;--cyan:#64e8ee;--gold:#ffd166;--green:#83edb4;--red:#ff9a9a}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -15%,#1b405b 0,transparent 54%),var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif}
+header{padding:30px clamp(18px,4vw,54px) 24px;border-bottom:1px solid var(--line)}.eyebrow{font-size:.76rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);font-weight:850}h1{font-size:clamp(2rem,4vw,3rem);line-height:1.08;margin:.45rem 0}p{color:var(--muted);margin:.45rem 0}.stamp{display:inline-block;border:1px solid var(--gold);color:var(--gold);padding:6px 10px;border-radius:7px;font-size:.77rem;font-weight:850;letter-spacing:.05em}
+main{max-width:1240px;margin:auto;padding:24px clamp(14px,3vw,36px) 52px}.layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(300px,.75fr);gap:16px}.panel{background:linear-gradient(145deg,#14253a,#0e1928);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.head{padding:16px 20px;border-bottom:1px solid var(--line)}h2{font-size:1.15rem;margin:0}.body{padding:20px;display:grid;gap:16px}.field{display:grid;gap:6px}label{font-weight:750}.help{font-size:.85rem;color:var(--muted)}input,select{width:100%;min-height:44px;background:#081522;color:var(--ink);border:1px solid #58728e;border-radius:8px;padding:10px 12px;font:inherit}input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px}.buttons{display:flex;gap:10px;flex-wrap:wrap}button{font:inherit;font-weight:800;color:var(--ink);background:#1c3048;border:1px solid #607c9b;border-radius:8px;padding:10px 14px;cursor:pointer}.primary{background:#124650;border-color:var(--cyan)}button:hover{border-color:var(--cyan)}.status{border-left:4px solid var(--gold);background:#2b2a25;border-radius:5px;padding:12px}.status strong{color:var(--gold)}.status.good{border-color:var(--green);background:#102c28}.status.good strong{color:var(--green)}.status.bad{border-color:var(--red);background:#321d25}.status.bad strong{color:var(--red)}.summary{display:grid;gap:0}.row{padding:11px 0;border-bottom:1px solid #2e435a;display:grid;grid-template-columns:115px 1fr;gap:12px}.row:last-child{border-bottom:0}.row dt{color:var(--muted)}.row dd{margin:0;overflow-wrap:anywhere;font-weight:650}.chain{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.step{border:1px solid var(--line);border-radius:9px;padding:12px;background:#0d1a29}.step b{display:block;color:var(--cyan);font-size:.9rem}.step span{display:block;color:var(--muted);font-size:.8rem;margin-top:4px}.notice{border:1px solid var(--line);border-radius:10px;padding:14px;background:#0a1726}.notice strong{display:block;margin-bottom:4px}.foot{font-size:.86rem;border-top:1px solid var(--line);padding-top:14px;margin-top:6px}a{color:#a9dcff}@media(max-width:850px){.layout{grid-template-columns:1fr}.chain{grid-template-columns:repeat(2,1fr)}}@media(max-width:520px){.twocol{grid-template-columns:1fr}.row{grid-template-columns:95px 1fr}}
+</style>
+</head>
+<body>
+<header><div class="eyebrow">The Singularity Workshop · HeadlessAi</div><h1>Configure an LLM endpoint</h1><p>Choose the actual HTTP API and its protocol. A model is reached through a documented endpoint—not by posting a prompt to its public chat website.</p><span class="stamp">LOCAL CONFIGURATION DRAFT · NO REQUEST SENT</span></header>
+<main>
+<div class="layout">
+<section class="panel">
+<div class="head"><h2>Endpoint profile</h2><p>These fields mirror HeadlessAi's profile and adapter boundary.</p></div>
+<div class="body">
+<div class="field"><label for="profile">Profile name</label><input id="profile" value="workshop-assistant" autocomplete="off"><span class="help">A local identifier for this endpoint configuration.</span></div>
+<div class="field"><label for="protocol">Protocol adapter</label><select id="protocol"><option value="openai">OpenAI Responses API</option><option value="gemini">Google Gemini generateContent</option><option value="anthropic">Anthropic Messages API</option><option value="custom">Custom JSON adapter</option><option value="raw">Raw text endpoint</option></select><span class="help">Protocol determines request and response shape; changing only the URL is not enough.</span></div>
+<div class="field"><label for="endpoint">HTTPS API endpoint URL</label><input id="endpoint" type="url" value="https://api.openai.com/v1/responses" spellcheck="false" autocomplete="url"><span class="help">Use the provider's documented API endpoint. For a trusted local test server, HTTP must be explicitly enabled by the host.</span></div>
+<div class="field"><label for="model">Model identifier</label><input id="model" value="" placeholder="Enter a model available to your provider" autocomplete="off"><span class="help">A provider-specific setting, not a universal HeadlessAi model type.</span></div>
+<div class="twocol">
+<div class="field"><label for="timeout">Timeout (seconds)</label><input id="timeout" type="number" min="1" max="600" value="100"></div>
+<div class="field"><label for="limit">Response limit (MiB)</label><input id="limit" type="number" min="1" max="32" value="4"></div>
+</div>
+<div class="notice"><strong>Authentication stays with the host</strong><p>Use a server-side secret provider or environment variable, such as <code>OPENAI_API_KEY</code>. Do not paste keys into this page, store them in browser storage, or commit them to source control.</p></div>
+<div class="buttons"><button class="primary" id="validate">Validate configuration</button><button id="reset">Reset example</button><button id="copy" disabled>Copy C# profile scaffold</button></div>
+<div id="status" class="status" role="status" aria-live="polite"><strong>Not validated</strong><p>Validation checks the draft only. It does not connect to the endpoint or prove credentials work.</p></div>
+</div>
+</section>
+<aside class="panel">
+<div class="head"><h2>Connection architecture</h2><p>What a real request will do once hosted wiring exists.</p></div>
+<div class="body">
+<div class="chain">
+<div class="step"><b>01 · Host</b><span>Owns intent and permissions</span></div>
+<div class="step"><b>02 · Profile</b><span>Endpoint + bounded settings</span></div>
+<div class="step"><b>03 · Adapter</b><span>Builds protocol request</span></div>
+<div class="step"><b>04 · Agent</b><span>HTTP send + normalized result</span></div>
+</div>
+<dl class="summary">
+<div class="row"><dt>Profile</dt><dd id="sProfile">workshop-assistant</dd></div>
+<div class="row"><dt>Protocol</dt><dd id="sProtocol">OpenAI Responses API</dd></div>
+<div class="row"><dt>Endpoint</dt><dd id="sEndpoint">https://api.openai.com/v1/responses</dd></div>
+<div class="row"><dt>Model</dt><dd id="sModel">Not set</dd></div>
+<div class="row"><dt>Timeout</dt><dd id="sTimeout">100 seconds</dd></div>
+<div class="row"><dt>Response cap</dt><dd id="sLimit">4 MiB</dd></div>
+</dl>
+<div class="notice"><strong>Why chatgpt.com is different</strong><p><code>https://chatgpt.com</code> is the consumer website, not the documented OpenAI Responses API endpoint. Use <code>https://api.openai.com/v1/responses</code> with the matching adapter and server-side API credentials.</p><p><a href="https://platform.openai.com/docs/api-reference/responses/create">OpenAI Responses API reference ↗</a></p></div>
+<p class="foot">Source-grounded boundary: <a href="https://github.com/TrentBest/TheSingularityWorkshop.HeadlessAi/blob/development/docs/usage.md">HeadlessAi usage guide</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.HeadlessAi/blob/development/src/TheSingularityWorkshop.HeadlessAi/HeadlessAiProfile.cs">HeadlessAiProfile</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.HeadlessAi/blob/development/src/TheSingularityWorkshop.HeadlessAi/HeadlessAiAgent.cs">HeadlessAiAgent</a>.</p>
+</div>
+</aside>
+</div>
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const protocols={openai:"OpenAI Responses API",gemini:"Google Gemini generateContent",anthropic:"Anthropic Messages API",custom:"Custom JSON adapter",raw:"Raw text endpoint"};
+const defaults={openai:"https://api.openai.com/v1/responses",gemini:"",anthropic:"",custom:"",raw:""};
+function sync(){const p=$("protocol").value;$("sProfile").textContent=$("profile").value.trim()||"Not set";$("sProtocol").textContent=protocols[p];$("sEndpoint").textContent=$("endpoint").value.trim()||"Not set";$("sModel").textContent=$("model").value.trim()||"Not set";$("sTimeout").textContent=$("timeout").value+" seconds";$("sLimit").textContent=$("limit").value+" MiB";$("copy").disabled=true}
+["profile","protocol","endpoint","model","timeout","limit"].forEach(id=>$(id).addEventListener("input",sync));
+$("protocol").addEventListener("change",()=>{const v=$("protocol").value;if(defaults[v])$("endpoint").value=defaults[v];sync()});
+$("validate").addEventListener("click",()=>{sync();const s=$("status");const url=$("endpoint").value.trim();let parsed;try{parsed=new URL(url)}catch{parsed=null}let problem="";if(!$("profile").value.trim())problem="Give the profile a name.";else if(!parsed||!parsed.hostname)problem="Enter a valid absolute endpoint URL.";else if(parsed.protocol!=="https:")problem="HTTPS is required in this draft. A trusted local HTTP endpoint requires explicit host-side opt-in.";else if(parsed.hostname==="chatgpt.com"||parsed.hostname.endsWith(".chatgpt.com"))problem="This is the ChatGPT website, not the documented API endpoint. Choose an API URL and matching adapter.";else if(!$("model").value.trim()&&$("protocol").value!=="raw")problem="Enter the model identifier required by this selected protocol.";else if(!Number.isInteger(+$("timeout").value)||+$("timeout").value<1||+$("timeout").value>600)problem="Timeout must be a whole number from 1 to 600 seconds.";else if(!Number.isInteger(+$("limit").value)||+$("limit").value<1||+$("limit").value>32)problem="Response limit must be a whole number from 1 to 32 MiB.";if(problem){s.className="status bad";s.innerHTML="<strong>Configuration needs attention</strong><p></p>";s.querySelector("p").textContent=problem;$("copy").disabled=true;return}s.className="status good";s.innerHTML="<strong>Draft is structurally valid</strong><p>This only validates fields in this browser. No HTTP request was sent; endpoint reachability, authentication, permissions, and response parsing remain untested.</p>";$("copy").disabled=false});
+$("copy").addEventListener("click",()=>{const p=$("protocol").value;const endpoint=$("endpoint").value.trim();const id=$("profile").value.trim();const model=$("model").value.trim();const timeout=+$("timeout").value;const max=+$("limit").value*1024*1024;const adapter={openai:"new OpenAiResponsesAdapter()",gemini:"new GeminiGenerateContentAdapter()",anthropic:"new AnthropicMessagesAdapter()",custom:"/* supply a documented JsonHeadlessAiAdapter */",raw:"new RawTextHeadlessAiAdapter()"}[p];const settings=model?'new Dictionary<string, string> { ["model"] = "'+model.replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'" }':"null";const code='var profile = new HeadlessAiProfile(\n    id: "'+id.replace(/"/g,'\\"')+'",\n    endpoint: new Uri("'+endpoint+'"),\n    timeout: TimeSpan.FromSeconds('+timeout+'),\n    settings: '+settings+',\n    maxResponseBytes: '+max+');\n\n// Construct the matching adapter and use a host-owned HttpClient.\n// Resolve credentials via a server-side header provider; never hardcode keys.\nvar template = new HeadlessAiAgentTemplate(profile, '+adapter+');';navigator.clipboard.writeText(code).then(()=>{const s=$("status");s.className="status good";s.innerHTML="<strong>C# scaffold copied</strong><p>Review the generated code and confirm the selected adapter type against the actual package API before compiling. No network request was sent.</p>"}).catch(()=>{const s=$("status");s.className="status bad";s.innerHTML="<strong>Clipboard unavailable</strong><p>Allow clipboard access or copy the values from the profile summary manually.</p>"})});
+$("reset").addEventListener("click",()=>{$("profile").value="workshop-assistant";$("protocol").value="openai";$("endpoint").value="https://api.openai.com/v1/responses";$("model").value="";$("timeout").value="100";$("limit").value="4";$("status").className="status";$("status").innerHTML="<strong>Not validated</strong><p>Validation checks the draft only. It does not connect to the endpoint or prove credentials work.</p>";sync()});
+sync();
+</script>
+</body>
+</html>
