@@ -553,4 +553,17 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("synthesized coordinate overlay", error.Message);
     }
 
+    [Fact]
+    public void Rejects_scene_with_more_than_the_maximum_node_count_before_serialization()
+    {
+        var builder = GuiBuilder.Create("svg-scene", "scene");
+        for (var i = 0; i < 100_000; i++)
+            builder = builder.Child("svg-circle", $"marker-{i}");
+
+        var scene = builder.Build();
+        var error = Assert.Throws<InvalidOperationException>(() => _renderer.Render(scene));
+
+        Assert.Contains("maximum node count (100000)", error.Message);
+    }
+
 }

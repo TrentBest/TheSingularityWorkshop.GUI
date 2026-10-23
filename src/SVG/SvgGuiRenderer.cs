@@ -13,6 +13,7 @@ namespace TheSingularityWorkshop.Workshop.Gui.Svg;
 public sealed class SvgGuiRenderer
 {
     private const int MaximumTreeDepth = 256;
+    private const int MaximumTreeNodes = 100_000;
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
 
     private static readonly string[] PresentationAttributes =
@@ -447,6 +448,7 @@ public sealed class SvgGuiRenderer
     private static void ValidateUniqueIds(GuiNode root)
     {
         var ids = new HashSet<string>(StringComparer.Ordinal);
+        var visitedNodes = 0;
         var pending = new Stack<(GuiNode Node, int Depth)>();
         pending.Push((root, 0));
 
@@ -456,6 +458,11 @@ public sealed class SvgGuiRenderer
         while (pending.Count > 0)
         {
             var (node, depth) = pending.Pop();
+            visitedNodes++;
+            if (visitedNodes > MaximumTreeNodes)
+                throw new InvalidOperationException(
+                    $"GUI tree exceeds the SVG renderer's maximum node count ({MaximumTreeNodes}).");
+
             if (depth > MaximumTreeDepth)
                 throw new InvalidOperationException(
                     $"GUI tree exceeds the SVG renderer's maximum depth ({MaximumTreeDepth}).");
