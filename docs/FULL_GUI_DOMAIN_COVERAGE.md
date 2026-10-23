@@ -32,6 +32,7 @@ The shared Workshop standard is [FSM_COS Documentation Standard](https://github.
 | 2D spatial representation | Surface, region, element, viewport, transforms, layers, focus and selection | Domain is specified in [GUI Spatial Domain](GUI_SPATIAL_DOMAIN.md); coordinate primitives exist, but the full semantic transform/identity contract remains proposed. | Contract for coordinate spaces, transform composition/inversion/invalid values, identity across movement, and deterministic adapter mappings. |
 | 3D and immersive representation | Volume, camera, projection, depth, occlusion, world-space controls | Vocabulary and desired domain are documented; not a claim of a shipped 3D renderer or GPU pipeline. | Separate semantic model from graphics API; define camera/projection/visibility contracts; executable reference scene and adapter-specific capability tests. |
 | Expressive media | Images, geometry, paths, symbols, charts, animation, video, audio-linked visualization, particles, noise/static and empty space | [GUI Expressiveness](GUI_EXPRESSIVENESS.md) defines the open representation space. SVG has explicit serialization vocabulary and generated gallery; SVG is not a general media engine. | For each media family, record Core representation, adapter support, output limitations, resource policy, test fixture, and runnable recipe. |
+| Data visualization and charting | Express quantitative data as bars, lines, areas, points, distributions, proportions, ranges, and time series without embedding renderer-specific drawing instructions in the data contract | **Proposed domain expansion.** No chart API or chart package is asserted by this map. Existing SVG/Blazor/WPF support must be inspected before claiming native chart support. | Define renderer-neutral chart semantics and data validation first; then implement one vertical slice and prove each adapter's support/limits with shared fixtures, accessibility text, and runnable examples. |
 | SVG manifestation | Portable vector output for supported nodes/scenes | SVG adapter, generated gallery and vocabulary-to-test map exist. Host/viewer behavior and destination authorization are not proven by XML serialization tests. | Candidate archive-only consumer; malformed/hostile input regression tests; clear external-reference policy; deterministic generated-gallery check. |
 | Blazor manifestation | Render semantic model in a browser-hosted .NET component | Adapter and component tests exist. Candidate-version real consumer/WebPage integration remains open. | Minimal host renders reusable semantic builders from the selected packed package; assert actual output/interaction rather than merely restore/compile. |
 | WPF manifestation | Translate supported semantic model into Windows-native controls | Initial renderer/builders and Windows tests exist; this is not full adapter parity. | Candidate archive-only consumer on Windows; record unsupported properties, lifecycle behavior, and native-only differences. |
@@ -68,3 +69,37 @@ Use the exact shared palette and nested data-card rules in the FSM_COS standard.
 ## Release evidence rule
 
 The readiness percentage changes only when implementation or documentation work is backed by evidence on a named commit. Do not increase the existing 80% estimate because this map exists. Update [Release Readiness](RELEASE_READINESS.md), [Next-Release Work Queue](NEXT_RELEASE_WORK_QUEUE.md), and [Surface Coverage Audit](GUI_SURFACE_COVERAGE_AUDIT.md) when a gate actually closes, and include exact workflow links. Publication, merge, deployment, and branch deletion remain separate authorized actions.
+
+
+## Charting and quantitative visualization: proposed contract
+
+Charts are a first-class GUI domain, not merely a collection of renderer-specific widgets. The shared model should describe **what the data means and how it should be interpreted**; each renderer decides how to manifest that meaning within its documented capabilities.
+
+### Initial chart families
+
+- **Categorical comparison:** vertical/horizontal bar and grouped/stacked bar charts.
+- **Trends:** line and area charts, including time-series axes and missing samples.
+- **Proportions:** pie and donut charts, with explicit rules for negative values, zero totals, and categories too small to label.
+- **Relationships and distributions:** scatter plots, histograms, and related point/bin representations.
+- **Ranges and status:** range/band charts and gauges only after their semantics are specified.
+
+This is a scope vocabulary, **not a claim that these chart types already exist in Core or any adapter**. Start with a small, testable subset—bar, line, and pie/donut—rather than trying to implement every family at once.
+
+### Architectural recommendation
+
+1. **Core semantic contract first.** Model chart kind, series, data points, category/time/numeric axes, labels, units, legends, value formatting, missing values, and accessibility descriptions. Validate malformed data and unsupported combinations deterministically. Keep Core independent of WPF, Blazor, SVG, JavaScript chart libraries, and graphics APIs.
+2. **Separate data from appearance.** Keep values and series identity distinct from colors, typography, gridlines, labels, and layout hints. Define defaults and precedence; avoid turning arbitrary renderer property strings into the only chart contract.
+3. **Adapter capability is explicit.** An adapter can support a chart natively, translate a limited subset, or report it unsupported. Do not silently flatten semantic distinctions or claim parity because the same model compiles.
+4. **Package split follows dependency evidence.** Do not create `Core.Charts` or `WPF.Charts` solely because the names sound tidy. First determine whether the chart model is a coherent extension of Core or a separately versioned optional package. If a WPF-specific implementation adds value, keep it in a WPF adapter package and reuse the neutral model. SVG and Blazor should consume the same contract where feasible.
+5. **One vertical slice proves the architecture.** Add a representative bar chart with deterministic data; test valid and invalid inputs, labels/units, empty data, missing values, ordering, and accessible textual summary. Render it through at least one existing adapter, then add SVG/Blazor/WPF support based on actual adapter boundaries.
+6. **Avoid accidental data semantics.** Specify aggregation, sorting, normalization, stacking, and time-zone treatment only when the chart contract requires them. A renderer should not invent domain calculations or mutate the source data.
+
+### Charting acceptance evidence
+
+A chart capability is considered implemented only when its source contract, tests, adapter mapping, and runnable example agree. Each chart family should record: supported data shapes; axis and value rules; empty/invalid behavior; accessibility fallback; interactive behavior (hover, selection, zoom, keyboard navigation) if implemented; renderer limitations; and package/consumer evidence. Static gallery imagery alone is not sufficient.
+
+## Cross-repository integration as a CiAi opportunity
+
+The same contract-first approach can make repository integration more systematic. A future CiAi integration workflow could consume explicit, versioned capability metadata from each repository: package identity and version, public contract, dependency direction, supported adapters, compatibility constraints, sample/consumer entry points, test evidence, and known limitations. It could then propose an integration plan and generate a verification matrix across repositories.
+
+This should be an **evidence-producing assistant, not an authority that guesses compatibility**. It must distinguish declared capability from observed test results, link claims to source/CI evidence, flag version conflicts, and ask for human approval before changing dependencies, merging, publishing, or deploying. Begin with a small machine-readable capability manifest and a CI check that verifies its package names and links against the repository; do not make every repository depend on a new central service to get started.
