@@ -35,8 +35,11 @@ public sealed class GuiNode
                 properties ?? new Dictionary<string, string>(),
                 StringComparer.Ordinal));
 
-        _children = new ReadOnlyCollection<GuiNode>(
-            (children ?? Enumerable.Empty<GuiNode>()).ToList());
+        var childSnapshot = (children ?? Enumerable.Empty<GuiNode>()).ToList();
+        if (childSnapshot.Any(child => child is null))
+            throw new ArgumentException("GUI node children cannot contain null entries.", nameof(children));
+
+        _children = new ReadOnlyCollection<GuiNode>(childSnapshot);
     }
 
     /// <summary>Gets the renderer-neutral kind identifier for this node.</summary>

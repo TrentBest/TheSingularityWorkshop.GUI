@@ -183,4 +183,42 @@ public sealed class GuiBuilderTests
         Assert.Throws<ArgumentException>(() => node.TryFind(" ", out _));
     }
 
+
+    [Fact]
+    public void Build_rejects_a_builder_containing_itself()
+    {
+        var root = GuiBuilder.Create("Panel", "root");
+        root.Child(root);
+
+        var exception = Assert.Throws<InvalidOperationException>(() => root.Build());
+
+        Assert.Contains("cannot contain itself", exception.Message);
+    }
+
+    [Fact]
+    public void Build_rejects_indirect_builder_cycles()
+    {
+        var root = GuiBuilder.Create("Panel", "root");
+        var child = GuiBuilder.Create("Panel", "child");
+        root.Child(child);
+        child.Child(root);
+
+        var exception = Assert.Throws<InvalidOperationException>(() => root.Build());
+
+        Assert.Contains("cannot contain itself", exception.Message);
+    }
+
+
+    [Fact]
+    public void Direct_node_constructor_rejects_null_child_entries()
+    {
+        var children = new GuiNode[] { new("Text", "valid"), null! };
+
+        var exception = Assert.Throws<ArgumentException>(
+            () => new GuiNode("Panel", "root", children: children));
+
+        Assert.Contains("cannot contain null entries", exception.Message);
+        Assert.Equal("children", exception.ParamName);
+    }
+
 }
