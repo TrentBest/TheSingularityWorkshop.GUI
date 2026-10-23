@@ -3,7 +3,7 @@
 - **Status:** Proposed; owner decision required before public API implementation
 - **Date:** 2026-10-23
 - **Scope:** GUI.Core, GUI.Blazor, GUI.SVG, GUI.WPF and shared adapter-conformance tests
-- **Related work:** [Full GUI Domain Coverage](../FULL_GUI_DOMAIN_COVERAGE.md), [GUI Surface Coverage Audit](../GUI_SURFACE_COVERAGE_AUDIT.md), [Issue #42](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/42)
+- **Related work:** [Full GUI Domain Coverage](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/docs/full-gui-domain-coverage-2026-10-23/docs/FULL_GUI_DOMAIN_COVERAGE.md), [GUI Surface Coverage Audit](../GUI_SURFACE_COVERAGE_AUDIT.md), [Issue #42](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/42)
 
 ## Context
 
@@ -118,7 +118,7 @@ Do not create `Core.Charts` or `WPF.Charts` simply to mirror names. A WPF-specif
 
 ## Release boundary
 
-Charting is future-surface work, not a hidden prerequisite for the current four-package release. Do not change package versions, promise chart support in release notes, merge this proposal, or publish packages based on this ADR alone. Current release readiness remains tracked separately in [Release Readiness](RELEASE_READINESS.md) and the [Next-Release Work Queue](NEXT_RELEASE_WORK_QUEUE.md).
+Charting is future-surface work, not a hidden prerequisite for the current four-package release. Do not change package versions, promise chart support in release notes, merge this proposal, or publish packages based on this ADR alone. Current release readiness remains tracked separately in [Release Readiness](../RELEASE_READINESS.md) and the [Next-Release Work Queue](../NEXT_RELEASE_WORK_QUEUE.md).
 
 ## Acceptance criteria for the next implementation proposal
 
