@@ -13,6 +13,31 @@ The adapters deliberately own their platform manifestations: Blazor maps nodes t
 
 The design must preserve GUI's role as the semantic boundary without making Core depend on a particular renderer, UI framework, charting library, or platform.
 
+## Source inspection: current capability evidence
+
+Inspected on `development` at the time of this proposal: `src/Core/GuiNode.cs`, `src/Core/GuiBuilder.cs`, `src/Blazor/BlazorGuiRenderer.cs`, `src/SVG/SvgGuiRenderer.cs`, `src/WPF/WpfGuiRenderer.cs`, and `tests/Adapter.Conformance.Tests/SharedAdapterConformanceTests.cs`.
+
+The evidence confirms a general-purpose tree, not a typed chart contract:
+
+- `GuiNode` stores `Kind`, `Id`, optional `Text`/`Source`, string-to-string `Properties`, and ordered `Children`. It has no numeric series, category, axis, range, unit, or missing-value model.
+- `GuiBuilder.Property(name, value)` accepts strings; `WithOnClick` records a host-neutral command identity. Neither provides chart-specific data semantics.
+- Blazor's observed built-in kind mapping is `Panel` → `div`, `Button` → `button`, `Image` → `img`, `Text` → `span`, `Warning` → `aside`; unknown kinds become `div`. This is not a chart renderer.
+- WPF's observed built-in mapping is `Button`, `Text`, `Column`, `Panel`, `Warning`, and `Image`; unknown kinds become a content panel. This is not a chart renderer.
+- SVG has explicit primitives such as `svg-line`, `svg-rect`, `svg-circle`, `svg-polyline`, and `svg-polygon`, plus coordinate-oriented vocabulary. Those primitives can draw marks, but the inspected code does not define quantitative chart semantics, series/category association, axis policy, or a chart-level accessible data alternative.
+- Existing shared adapter-conformance tests cover tree identity, order, text, duplicate IDs, depth limits, and some property differences. The inspected shared fixture is a button/status tree, not a chart fixture.
+
+### Evidence-based chart capability matrix
+
+| Surface | What source inspection establishes | Chart semantic contract status |
+|---|---|---|
+| Core | Renderer-neutral tree; properties are strings; children ordered | No typed chart model observed |
+| Blazor | Generic node-to-HTML-element mapping | No chart kind or chart-specific mapping observed |
+| SVG | SVG drawing primitives and coordinate vocabulary | Drawing primitives exist; chart semantics not established |
+| WPF | Generic nodes mapped to native WPF controls | No chart kind or chart-specific mapping observed |
+| Shared conformance tests | Common tree invariants tested across Blazor and SVG | No shared chart fixture or chart conformance observed |
+
+This is a bounded source inspection, not a claim that no chart-like experiment exists anywhere in every branch or external consumer. Capability labels are **not implemented in inspected paths** or **not established by inspected evidence**; adapter parity must not be inferred from drawing primitives.
+
 ## Decision drivers
 
 1. Chart meaning and data interpretation must be independent of how a renderer draws them.
@@ -122,8 +147,8 @@ Charting is future-surface work, not a hidden prerequisite for the current four-
 
 ## Acceptance criteria for the next implementation proposal
 
-- [ ] Inspect Core public API and project references, all adapter kind mappings, and existing shared conformance tests.
-- [ ] Record the dependency graph and a supported/unsupported/unverified chart capability matrix.
+- [x] Inspect Core tree/builder public shape, Blazor/SVG/WPF renderer mappings, and existing shared conformance tests (bounded inspection documented above). Project-reference/dependency graph inspection remains to be completed.
+- [x] Record an initial chart capability matrix from inspected source. Full project-reference/dependency graph still needs verification.
 - [ ] Confirm the actual consumer and its minimum chart requirements.
 - [ ] Choose option A or B with evidence and record the decision above.
 - [ ] Define typed bar-chart data semantics and invalid-data behavior.
