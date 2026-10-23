@@ -1,37 +1,42 @@
 # CoordinateSystemUtilities
 
+**Author:** Trent Best  
 **Fully qualified name:** `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities`  
 **Kind:** static class  
 **Assembly:** `TheSingularityWorkshop.GUI.Core`  
-**Source:** [`CoordinateSystemUtilities.cs`](../../../src/Core/CoordinateSystemUtilities.cs)
+**Source:** [`CoordinateSystemUtilities.cs`](../../../src/Core/CoordinateSystemUtilities.cs)  
+**Tests:** [Core tests](../../../tests/Core.Tests)
 
-## Responsibility
+## Purpose and boundary
 
-`CoordinateSystemUtilities` provides framework-neutral numeric helpers for clamping coordinates, mapping between an arbitrary range and the normalized 0–100 interval, and calculating Euclidean distance. It is a stateless utility; it does not own a coordinate system instance or perform rendering.
+This type supplies small, framework-neutral numeric helpers for mapping coordinate values between ranges, clamping values, and calculating Euclidean distance. It has no instance state and does not know about pixels, renderers, GUI nodes, or screen coordinate conventions.
 
 ## UML class diagram
 
-![UML class diagram for CoordinateSystemUtilities](../../assets/uml/classes/Core/CoordinateSystemUtilities.svg)
+![Compiler-derived class neighborhood for CoordinateSystemUtilities](../../assets/uml/source-files/TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities.svg)
 
-The diagram lists all four public static operations and the private range-validation helper. There is no inheritance or interface realization declared in the source.
+The diagram represents source structure. The public API consists of four static operations; the finite-range validation helper is private implementation detail.
 
-## Operations and constraints
+## Operations and failure behavior
 
-- `Clamp(value, minimum = 0, maximum = 100)` clamps to the inclusive supplied bounds. It throws `ArgumentException` if `minimum > maximum` and `ArgumentOutOfRangeException` if `value` is not finite. Equal bounds are allowed.
-- `Normalize(value, minimum, maximum)` maps the input range to 0–100 using a linear formula. Both endpoints must be finite and `minimum < maximum`; the input value must be finite.
-- `Denormalize(normalized, minimum, maximum)` maps a normalized 0–100 value to the supplied range. It validates the same endpoint constraints and requires the normalized value to be finite; it does not require that value to lie within 0–100.
-- `Distance(x1, y1, x2, y2)` returns the Euclidean distance using the square root of the squared coordinate differences. The method does not explicitly validate inputs, so non-finite inputs can propagate to its result.
+- `Clamp(value, minimum, maximum)` requires `minimum <= maximum` and a finite value, then clamps inclusively. An inverted range throws `ArgumentException`; a non-finite value throws `ArgumentOutOfRangeException`.
+- `Normalize(value, minimum, maximum)` maps the source range linearly to 0–100. Both endpoints must be finite and `minimum < maximum`; the value must be finite. The input value is not clamped to the source range.
+- `Denormalize(normalized, minimum, maximum)` maps a 0–100-space value to the destination range. It applies the same finite, strictly increasing range requirement, and does not clamp the normalized input to 0–100.
+- `Distance(x1, y1, x2, y2)` returns Euclidean distance using the square root of the sum of squared deltas. It does not perform finite-value or range validation.
 
-## Relationship to coordinate-space modeling
+## Use case
 
-`CoordinateSystem` provides configured bounds and pass-through coordinate validation; this utility class provides independent mapping and geometric calculations. Neither type depends on a GUI renderer.
+Normalize a domain value before placing it in a normalized GUI coordinate space, then reverse the mapping when a consumer needs the domain value back:
 
-## Verification status
+```csharp
+double position = CoordinateSystemUtilities.Normalize(value, domainMinimum, domainMaximum);
+double restored = CoordinateSystemUtilities.Denormalize(position, domainMinimum, domainMaximum);
+```
 
-This page and its SVG were reviewed against [the source declaration](../../../src/Core/CoordinateSystemUtilities.cs). Parser-backed inventory drift detection and generated-SVG freshness checks remain pending; this is source-reviewed manual documentation, not generated output.
+For finite values and a valid nonzero source range, this is a linear mapping. Values outside the source range map outside 0–100 because normalization does not clamp.
 
 ## Related types
 
-- `CoordinateSystem` — configured coordinate-space value; page available in [the type index](CoordinateSystem.md).
-- `CoordinateSystemGuiBuilder` — semantic GUI projection; page pending.
-- [Per-Type Documentation and UML Standard](../../CLASS_DOCUMENTATION_STANDARD.md)
+- [`CoordinateSystem`](CoordinateSystem.md) — range-aware coordinate value type.
+- [`CoordinateSystemGuiBuilder`](CoordinateSystemGuiBuilder.md) — projects coordinates into a semantic GUI tree.
+- [Class documentation standard](../../CLASS_DOCUMENTATION_STANDARD.md)
