@@ -2,7 +2,7 @@
 
 **Author:** Trent Best  
 **Source:** [`DataCard.cs`](DataCard.cs)  
-**Public API page:** [`docs/api/Core/DataCard.md`](../../../docs/api/Core/DataCard.md)  
+**Public API page:** [`docs/api/Core/DataCard.md`](../../docs/api/Core/DataCard.md)  
 **UML and use cases:** [`DataCardUML.md`](../../docs/uml/DataCardUML.md)
 
 ## Purpose
