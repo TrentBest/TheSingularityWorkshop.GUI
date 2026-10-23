@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CiAi · Inter-repository Control Room</title>
+<style>
+:root{color-scheme:dark;--bg:#09111f;--panel:#111e31;--panel2:#172840;--line:#36506d;--ink:#f4f7fc;--muted:#b9c8dc;--cyan:#61e5ef;--gold:#ffd166;--green:#83edb4;--red:#ff9292}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 48% -20%,#1c4161 0,transparent 55%),var(--bg);color:var(--ink);font:16px/1.5 system-ui,-apple-system,Segoe UI,sans-serif}
+header{padding:28px clamp(18px,4vw,52px) 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap}
+.eyebrow{color:var(--cyan);font-weight:800;letter-spacing:.16em;text-transform:uppercase;font-size:.76rem}h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.05;margin:.4rem 0}p{margin:.4rem 0;color:var(--muted)}.stamp{border:1px solid var(--gold);color:var(--gold);padding:8px 12px;border-radius:8px;font-weight:800;font-size:.78rem}
+main{padding:22px clamp(14px,3vw,40px) 40px;max-width:1600px;margin:auto}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.toolbar button,.action{font:inherit;font-weight:750;color:var(--ink);background:#1a2b43;border:1px solid #4b6584;border-radius:8px;padding:9px 13px;cursor:pointer}.toolbar button[aria-pressed=true],.action.primary{background:#164652;border-color:var(--cyan)}button:hover{border-color:var(--cyan)}button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.layout{display:grid;grid-template-columns:minmax(0,1.8fr) minmax(280px,.85fr);gap:16px}.panel{background:linear-gradient(145deg,#14243a,#0e192a);border:1px solid var(--line);border-radius:14px;overflow:hidden;min-width:0}.panel-head{padding:14px 18px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center}.panel-head h2{font-size:1rem;margin:0}.panel-head span{font-size:.78rem;color:var(--muted)}
+svg{display:block;width:100%;height:auto;min-height:360px}.edge{fill:none;stroke:#56718f;stroke-width:2.3;opacity:.85}.edge.provides{stroke:var(--cyan)}.edge.consumes{stroke:var(--gold);stroke-dasharray:7 5}.edge.reports{stroke:var(--green);stroke-dasharray:2 5}.edge.hidden{display:none}.node{cursor:pointer}.node rect{fill:#172a42;stroke:#7290b2;stroke-width:1.7;rx:12}.node text{fill:#f5f8ff;font-weight:800;font-size:14px;text-anchor:middle;pointer-events:none}.node .sub{fill:#c5d5e8;font-size:10.5px;font-weight:550}.node.selected rect{stroke:var(--gold);stroke-width:3.5;fill:#25364d}.node:focus rect{stroke:var(--cyan);stroke-width:3.5}.node .dot{fill:var(--green);stroke:#09111f;stroke-width:2}.hub rect{fill:#123843;stroke:var(--cyan);stroke-width:2.5}.legend{display:flex;gap:14px;flex-wrap:wrap;padding:12px 18px;color:var(--muted);font-size:.82rem;border-top:1px solid var(--line)}.key{display:inline-flex;align-items:center;gap:6px}.line{width:22px;height:3px;background:var(--cyan)}.line.dash{background:repeating-linear-gradient(90deg,var(--gold) 0 5px,transparent 5px 9px)}.line.green{background:repeating-linear-gradient(90deg,var(--green) 0 2px,transparent 2px 5px)}
+.detail{padding:18px}.detail h2{font-size:1.35rem;margin:.1rem 0}.tag{display:inline-block;border:1px solid #5d7899;border-radius:6px;padding:3px 7px;font-size:.76rem;color:#d7e7f9;margin:8px 5px 8px 0}.detail dl{display:grid;grid-template-columns:100px 1fr;gap:8px;margin:18px 0}.detail dt{color:var(--muted)}.detail dd{margin:0;overflow-wrap:anywhere}.status{border-left:4px solid var(--gold);background:#2a2b28;padding:10px 12px;border-radius:4px;margin:14px 0}.status strong{color:var(--gold)}.detail .action{width:100%;margin-top:8px}.detail .action:disabled{opacity:.6;cursor:default}
+.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:16px 0}.metric{border:1px solid var(--line);background:#101d2e;border-radius:10px;padding:13px}.metric strong{display:block;font-size:1.55rem;color:var(--cyan)}.metric span{font-size:.78rem;color:var(--muted)}.footnote{margin-top:14px;border-top:1px solid var(--line);padding-top:14px;font-size:.85rem}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}svg{min-height:280px}}@media(prefers-reduced-motion:no-preference){.node rect{transition:fill .15s,stroke .15s}.edge{transition:opacity .2s}}
+</style>
+</head>
+<body>
+<header><div><div class="eyebrow">The Singularity Workshop · CiAi concept lab</div><h1>Inter-repository control room</h1><p>See who supplies what, who depends on whom, and where an LLM's work fits.</p></div><div class="stamp">OFFLINE FIXTURE · NO LIVE DISPATCH</div></header>
+<main>
+<div class="toolbar" role="group" aria-label="Relationship filters">
+<button data-filter="all" aria-pressed="true">All relationships</button><button data-filter="provides" aria-pressed="false">Supplies</button><button data-filter="consumes" aria-pressed="false">Consumes / requests</button><button data-filter="reports" aria-pressed="false">Results / evidence</button><button id="reset">Reset view</button>
+</div>
+<div class="metrics" aria-label="Fixture summary"><div class="metric"><strong>6</strong><span>repositories in view</span></div><div class="metric"><strong>5</strong><span>specialist Cogs</span></div><div class="metric"><strong>3</strong><span>relationship families</span></div><div class="metric"><strong id="metricState">0</strong><span>simulated assignments</span></div></div>
+<div class="layout">
+<section class="panel" aria-label="Repository relationship graph">
+<div class="panel-head"><h2>Capability topology</h2><span>Choose a node to inspect it</span></div>
+<svg id="graph" viewBox="0 0 850 560" role="img" aria-labelledby="graphTitle graphDesc">
+<title id="graphTitle">CiAi and five specialist repository roles</title><desc id="graphDesc">CiAi coordinates the repository catalog, outbound requests, correlated results, deterministic policy, and GUI projection. Lines are conceptual fixture relationships, not live connections.</desc>
+<defs><marker id="arrowC" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#61e5ef"/></marker><marker id="arrowG" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffd166"/></marker><marker id="arrowR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#83edb4"/></marker></defs>
+<g id="edges">
+<path class="edge provides" data-kind="provides" d="M410 205 L190 135" marker-end="url(#arrowC)"/>
+<path class="edge consumes" data-kind="consumes" d="M215 155 L355 225" marker-end="url(#arrowG)"/>
+<path class="edge provides" data-kind="provides" d="M440 205 L650 135" marker-end="url(#arrowC)"/>
+<path class="edge reports" data-kind="reports" d="M630 155 L485 225" marker-end="url(#arrowR)"/>
+<path class="edge provides" data-kind="provides" d="M390 265 L195 330" marker-end="url(#arrowC)"/>
+<path class="edge consumes" data-kind="consumes" d="M220 350 L355 275" marker-end="url(#arrowG)"/>
+<path class="edge provides" data-kind="provides" d="M460 265 L650 330" marker-end="url(#arrowC)"/>
+<path class="edge reports" data-kind="reports" d="M625 350 L485 275" marker-end="url(#arrowR)"/>
+<path class="edge consumes" data-kind="consumes" d="M410 305 L410 405" marker-end="url(#arrowG)"/>
+<path class="edge reports" data-kind="reports" d="M445 405 L445 305" marker-end="url(#arrowR)"/>
+<path class="edge provides" data-kind="provides" d="M190 155 Q80 250 160 315" marker-end="url(#arrowC)"/>
+<path class="edge reports" data-kind="reports" d="M650 155 Q765 250 690 315" marker-end="url(#arrowR)"/>
+</g>
+<g class="node" data-node="CogA" tabindex="0" role="button" aria-label="Inspect CogA Repository Catalog" transform="translate(55 55)"><rect width="205" height="100"/><circle class="dot" cx="184" cy="18" r="6"/><text x="102" y="34">CogA · Catalog</text><text class="sub" x="102" y="57">Who provides what?</text><text class="sub" x="102" y="75">Repository identities</text></g>
+<g class="node" data-node="CogB" tabindex="0" role="button" aria-label="Inspect CogB Outbound Request" transform="translate(590 55)"><rect width="205" height="100"/><circle class="dot" cx="184" cy="18" r="6"/><text x="102" y="34">CogB · Request</text><text class="sub" x="102" y="57">Intent → typed envelope</text><text class="sub" x="102" y="75">Dispatch seam / fake first</text></g>
+<g class="node hub selected" data-node="CiAi" tabindex="0" role="button" aria-label="Inspect CiAi coordinator" transform="translate(320 205)"><rect width="210" height="100"/><circle class="dot" cx="188" cy="18" r="6"/><text x="105" y="36">CiAi · Coordinator</text><text class="sub" x="105" y="59">Validate · correlate · report</text><text class="sub" x="105" y="78">Policy-bounded operations</text></g>
+<g class="node" data-node="CogC" tabindex="0" role="button" aria-label="Inspect CogC Result Correlation" transform="translate(55 315)"><rect width="205" height="100"/><circle class="dot" cx="184" cy="18" r="6"/><text x="102" y="34">CogC · Results</text><text class="sub" x="102" y="57">Correlation + evidence</text><text class="sub" x="102" y="75">Reject stale / forged facts</text></g>
+<g class="node" data-node="CogD" tabindex="0" role="button" aria-label="Inspect CogD Policy Gate" transform="translate(590 315)"><rect width="205" height="100"/><circle class="dot" cx="184" cy="18" r="6"/><text x="102" y="34">CogD · Policy</text><text class="sub" x="102" y="57">Vocabulary + authorization</text><text class="sub" x="102" y="75">Unknown is not permission</text></g>
+<g class="node" data-node="CogE" tabindex="0" role="button" aria-label="Inspect CogE GUI Projection" transform="translate(320 430)"><rect width="210" height="90"/><circle class="dot" cx="188" cy="18" r="6"/><text x="105" y="34">CogE · Projection</text><text class="sub" x="105" y="56">Readable graph + states</text><text class="sub" x="105" y="73">Evidence, never invented</text></g>
+</svg>
+<div class="legend"><span class="key"><i class="line"></i>Supplies a capability</span><span class="key"><i class="line dash"></i>Consumes / requests</span><span class="key"><i class="line green"></i>Reports results / evidence</span></div>
+</section>
+<aside class="panel" aria-live="polite" aria-atomic="true">
+<div class="panel-head"><h2>Repository inspector</h2><span id="selectionCount">Selected: CiAi</span></div>
+<div class="detail"><div class="eyebrow" id="detailType">Integration owner</div><h2 id="detailName">CiAi</h2><div id="detailTags"><span class="tag">Coordinator</span><span class="tag">Policy boundary</span></div><p id="detailSummary">Owns integration contracts and validates that a returned result matches the intended repository, request, run, commit, and evidence.</p>
+<dl><dt>Provides</dt><dd id="detailProvides">Typed contracts, orchestration boundary</dd><dt>Must not</dt><dd id="detailMustNot">Treat a dispatch as success; publish without owner approval</dd><dt>State</dt><dd id="detailStatus">Concept only — no live status connected</dd></dl>
+<div class="status"><strong>Safe-by-design demo</strong><div id="statusMessage">Buttons below only change this local fixture. They do not contact GitHub or start workflows.</div></div>
+<button class="action primary" id="assign">Simulate assigning an LLM</button><button class="action" id="inspectEvidence">Show evidence contract</button>
+<p class="footnote" id="activity" role="status">No simulated actions yet.</p></div>
+</aside>
+</div>
+<p class="footnote">This is the first visual spike: the topology and interaction model are executable, but every node, edge, and state is fixture data. Next step is to replace this fixture with CogA's typed catalog and then verified CiAi workflow evidence—without allowing the UI to invent readiness.</p>
+</main>
+<script>
+const nodes={
+CiAi:{type:"Integration owner",tags:["Coordinator","Policy boundary"],summary:"Owns integration contracts and validates that a returned result matches the intended repository, request, run, commit, and evidence.",provides:"Typed contracts, orchestration boundary",mustNot:"Treat a dispatch as success; publish without owner approval"},
+CogA:{type:"Catalog provider",tags:["Provider","Repository model"],summary:"Defines repository identities, capabilities, and directed typed relationships. It is the source of topology intent, not a GitHub client.",provides:"Repository and relationship catalog",mustNot:"Call GitHub APIs, dispatch workflows, or render GUI"},
+CogB:{type:"Request sender",tags:["Request sender","Dispatch seam"],summary:"Turns an approved intent into a bounded, typed request and dispatches through an explicit adapter. The first implementation should use a fake.",provides:"Request envelope and dispatch abstraction",mustNot:"Accept arbitrary LLM commands, broad tokens, or unapproved live dispatch"},
+CogC:{type:"Result receiver",tags:["Result receiver","Evidence validation"],summary:"Correlates outcomes to the original request and verifies repository, run, SHA, conclusion, and evidence identity.",provides:"Typed result and correlation validation",mustNot:"Accept duplicate, stale, mismatched, or unknown evidence as success"},
+CogD:{type:"Policy authority",tags:["Vocabulary","Authorization"],summary:"Uses deterministic vocabulary and host-owned policy to decide whether a recognized operation is allowed.",provides:"Stable operation identities and policy decisions",mustNot:"Infer permissions from unknown words or put credentials/networking into ProtocolAi"},
+CogE:{type:"Presentation adapter",tags:["GUI projection","Accessible states"],summary:"Projects the catalog and verified result states into a renderer-neutral graph that GUI.SVG or GUI.Blazor can display.",provides:"Accessible topology projection and evidence links",mustNot:"Invent backend state or bypass authorization"}
+};
+let selected="CiAi", assignments=0;
+const $=id=>document.getElementById(id);
+function choose(id){selected=id;document.querySelectorAll(".node").forEach(n=>n.classList.toggle("selected",n.dataset.node===id));const d=nodes[id];$("selectionCount").textContent="Selected: "+id;$("detailType").textContent=d.type;$("detailName").textContent=id;$("detailTags").innerHTML=d.tags.map(t=>'<span class="tag">'+t+'</span>').join("");$("detailSummary").textContent=d.summary;$("detailProvides").textContent=d.provides;$("detailMustNot").textContent=d.mustNot;$("detailStatus").textContent="Concept only — no live status connected";$("statusMessage").textContent="Buttons below only change this local fixture. They do not contact GitHub or start workflows."}
+document.querySelectorAll(".node").forEach(n=>{n.addEventListener("click",()=>choose(n.dataset.node));n.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(n.dataset.node)}})});
+document.querySelectorAll("[data-filter]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));document.querySelectorAll(".edge").forEach(e=>e.classList.toggle("hidden",b.dataset.filter!=="all"&&e.dataset.kind!==b.dataset.filter))}));
+$("assign").addEventListener("click",()=>{assignments++;$("metricState").textContent=assignments;$("activity").textContent="Fixture event "+assignments+": LLM assignment queued for "+selected+". No external operation occurred.";$("detailStatus").textContent="Simulated assignment queued (local only)";$("statusMessage").textContent="Local simulation only. A real assignment would require an explicit agent identity, task contract, target branch, and permission check."});
+$("inspectEvidence").addEventListener("click",()=>{$("activity").textContent="Evidence contract: request ID + target repository + workflow run ID + head SHA + conclusion + canonical evidence URL must all correlate.";});
+$("reset").addEventListener("click",()=>{document.querySelectorAll("[data-filter]").forEach(x=>x.setAttribute("aria-pressed",String(x.dataset.filter==="all")));document.querySelectorAll(".edge").forEach(e=>e.classList.remove("hidden"));assignments=0;$("metricState").textContent="0";$("activity").textContent="Fixture reset. No simulated actions remain.";choose("CiAi")});
+</script>
+</body></html>
