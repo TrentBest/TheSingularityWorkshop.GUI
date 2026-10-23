@@ -1,63 +1,50 @@
 # GuiBuilder
 
-**Author:** Trent Best  
-**Fully qualified name:** `TheSingularityWorkshop.Workshop.Gui.GuiBuilder`  
-**Kind:** sealed class  
-**Assembly/package:** `TheSingularityWorkshop.GUI.Core`  
-**Target framework:** .NET 8  
-**Source:** [`src/Core/GuiBuilder.cs`](../../../src/Core/GuiBuilder.cs)  
-**Focused tests:** [`tests/Core.Tests/GuiBuilderTests.cs`](../../../tests/Core.Tests/GuiBuilderTests.cs)
+**Type:** `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` — sealed class  
+**Package:** `TheSingularityWorkshop.GUI.Core`  
+**Source:** [src/Core/GuiBuilder.cs](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/src/Core/GuiBuilder.cs)
 
-## Purpose
+![Compiler-derived UML neighborhood for GuiBuilder](../../uml/source-files/Core/TheSingularityWorkshop-Workshop-Gui-GuiBuilder-415898c6b3.svg)
 
-`GuiBuilder` is the fluent, platform-neutral builder for a recursive semantic GUI tree. It collects node identity, kind, optional text/resource information, string-valued properties, and ordered child builders, then produces an immutable `GuiNode` snapshot.
+## Purpose and boundary
 
-It expresses **what a UI node means**, not how WPF, Blazor, SVG, or another platform renders it. Domain state, command authorization, rendering clocks, and platform-specific controls remain outside Core.
+`GuiBuilder` assembles a mutable, fluent description of a renderer-neutral GUI tree and produces an immutable `GuiNode` snapshot. It describes interface intent; it does not render the tree, own an event loop, or execute application commands.
 
-## Target-centered UML
-
-![Workshop target-centered UML neighborhood for GuiBuilder](../../assets/uml/classes/Core/GuiBuilder.svg)
-
-The focal `GuiBuilder` card is centered. Direct consumers are above; the immutable result and private construction helper are below; .NET base-library references are to the right. Colored type-conduit stubs identify semantic type identities and label their endpoints. This is a manually authored, source-reviewed **static** SVG, not an interactive diagram or a runtime trace.
-
-See the companion [GuiBuilder UML and use cases](../../uml/GuiBuilderUML.md).
-
-## Public contract
-
-- `Create(kind, id)` creates a builder with a root kind and stable identifier. Blank values are rejected by the private `NodeBuilder` constructor.
-- `Text(text)` records text content; `Image(source)` records a resource reference.
-- `Property(name, value)` records a string-valued property. A blank property name throws `ArgumentException`; a null value throws `ArgumentNullException`.
-- `WithOnClick(commandId)` records the stable command identity in the `onClickCommand` property. It does not execute the command, resolve a method by reflection, or grant permission to perform the operation.
-- `Child(kind, id, configure)` creates and appends a child builder; the optional callback configures it before composition.
-- `Child(GuiBuilder)` composes another builder's internal construction node; null is rejected.
-- `Child(GuiNode)` copies an existing immutable node into the mutable construction model; null is rejected.
-- `Build()` returns an immutable `GuiNode` snapshot. Its iterative traversal preserves child order and rejects cyclic builder composition with `InvalidOperationException` instead of relying on unbounded recursive calls.
-
-## Important boundaries
-
-- The builder is mutable during construction; a previously built `GuiNode` is a snapshot and does not change when the builder is subsequently modified.
-- `NodeBuilder` is private implementation detail, not a public extension point.
-- The builder does not render, schedule animation, own a UI event loop, dispatch commands, or authorize domain actions.
-- Core's semantic command declaration is inert until a consuming host explicitly maps an allowed command ID to a host-owned operation.
-- The diagram's user/dependency relationships describe source structure and documented usage, not call timing or observed runtime execution.
-
-## Usage
+## Example
 
 ```csharp
-var node = GuiBuilders.Button("create-scene", "Create Scene")
-    .WithOnClick("storybuilder.scene.create")
+using TheSingularityWorkshop.Workshop.Gui;
+
+var scene = GuiBuilder.Create("svg-scene", "scene")
+    .Child("svg-circle", "marker", marker => marker
+        .Property("cx", "50").Property("cy", "50").Property("r", "4"))
+    .Child("svg-text", "label", label => label.Text("Status")
+        .Property("x", "5").Property("y", "12"))
     .Build();
 ```
 
-The result contains a `Button` node with the stable identifier `create-scene`, text `Create Scene`, and property `onClickCommand = storybuilder.scene.create`. A host must still validate that command ID before performing any operation.
+The `svg-*` kinds are selected by the consumer; Core does not itself define their rendering semantics.
 
-## Verification
+## Behavior and invariants
 
-The focused test suite covers recursive tree construction, stable command identity, blank command rejection, immutable snapshot behavior, node property snapshots, missing-node lookup, and deep-tree traversal. See [`GuiBuilderTests.cs`](../../../tests/Core.Tests/GuiBuilderTests.cs).
+- `Create(kind, id)` requires nonblank kind and ID values.
+- `Text`, `Image`, `Property`, and `WithOnClick` configure the root. Properties are string-valued and use ordinal key comparison.
+- `Child(kind, id, configure)` appends a configured child in declaration order. Other overloads compose an existing builder or node.
+- `Build()` uses an explicit stack to create the snapshot without recursive traversal. Direct or indirect builder cycles cause `InvalidOperationException`.
+- The built `GuiNode` snapshots properties and children; later builder edits do not mutate earlier snapshots.
+- `WithOnClick(commandId)` stores a stable command identifier only. The host must map it to an allowed operation; Core does not dispatch or execute it.
 
-## Related types
+## Failure modes and constraints
 
-- [`GuiNode`](GuiNode.md) — immutable semantic output.
-- [`GuiBuilders` source](../../../src/Core/GuiBuilders.cs) — convenience factory methods; its dedicated type page remains open.
-- [`CoordinateSystemGuiBuilder` source](../../../src/Core/CoordinateSystemGuiBuilder.cs) — domain-specific builder that delegates to `GuiBuilder`; its dedicated type page remains open.
-- [Per-Type Documentation and UML Standard](../../CLASS_DOCUMENTATION_STANDARD.md)
+Blank kind/ID, blank property names, null property values, null child arguments, and blank command IDs are rejected by argument validation. Cycle detection occurs at build time because cycles can be introduced through composition. Core does not enforce tree-wide unique IDs; adapters may impose stricter requirements (GUI.SVG rejects duplicate IDs).
+
+## Relationships and evidence
+
+- Produces [`GuiNode`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/src/Core/GuiNode.cs).
+- Composed by [`CoordinateSystemGuiBuilder`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/src/Core/CoordinateSystemGuiBuilder.cs).
+- Convenience factories: [`GuiBuilders`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/src/Core/GuiBuilders.cs).
+- Verification: [Core tests](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/tests/Core.Tests) and [SVG renderer tests](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/tests/SVG.Tests/SvgGuiRendererTests.cs).
+
+## UML text fallback
+
+`GuiBuilder` owns a private root builder, offers fluent configuration and child composition, and creates immutable `GuiNode` snapshots. Coordinate-aware construction composes it; renderer adapters consume its output. The embedded diagram is compiler-derived, while the purpose and behavioral contract above are human-authored.
