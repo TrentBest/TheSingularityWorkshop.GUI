@@ -11,8 +11,13 @@ const double maximum = 10;
 const double step = 3;
 var trace = new List<(double Value, string State)>();
 
+// Reject invalid configuration before handing the context to FSM_API.
+ExpectOutOfRange(() => _ = new OscillatorContext("bad-bounds", 2, 2, 1), "minimum == maximum");
+ExpectOutOfRange(() => _ = new OscillatorContext("bad-step", 0, 10, 0), "zero step");
+ExpectOutOfRange(() => _ = new OscillatorContext("negative-step", 0, 10, -1), "negative step");
+
 // The FSM owns motion. The renderer below only draws the state it receives.
-var context = new OscillatorContext(minimum, maximum, step);
+var context = new OscillatorContext("main-oscillator", minimum, maximum, step);
 FSM_API.Create.CreateFiniteStateMachine(fsmName, processRate: -1, processingGroup: group)
     .State("Forward",
         onEnter: null,
@@ -44,7 +49,7 @@ for (var i = 0; i < expectedValues.Length; i++)
 
 // Exercise a step larger than the entire range: it must clamp to the far endpoint,
 // reverse, then clamp back to the near endpoint rather than wrapping or getting stuck.
-var largeStepContext = new OscillatorContext(0, 2, 5);
+var largeStepContext = new OscillatorContext("large-step-oscillator", 0, 2, 5);
 const string largeGroup = "OscillatorLargeStep";
 const string largeName = "LargeStepOscillator";
 FSM_API.Create.CreateFiniteStateMachine(largeName, processRate: -1, processingGroup: largeGroup)
@@ -112,8 +117,9 @@ var outputPath = args.Length > 0
 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 File.WriteAllText(outputPath, svg);
 Console.WriteLine("PASS: FSM_API trace verified forward/reverse motion, both endpoints, repeated travel, and oversized-step clamping.");
+Console.WriteLine("PASS: invalid bounds and non-positive steps are rejected.");
 Console.WriteLine("Trace: " + string.Join(" → ", trace.Select(p => $"{p.Value:0.###} ({p.State})")));
-Console.WriteLine($"PASS: GUI.SVG generated and XML-validated the curve and current-state marker.");
+Console.WriteLine("PASS: GUI.SVG generated and XML-validated the curve and current-state marker.");
 Console.WriteLine($"Generated: {outputPath}");
 
 static void Advance(OscillatorContext context, int direction)
@@ -122,11 +128,40 @@ static void Advance(OscillatorContext context, int direction)
     context.Value = Math.Clamp(proposed, context.Minimum, context.Maximum);
 }
 
-sealed class OscillatorContext(double minimum, double maximum, double stepMagnitude) : IStateContext
+static void ExpectOutOfRange(Action action, string scenario)
 {
-    public double Minimum { get; } = minimum;
-    public double Maximum { get; } = maximum;
-    public double StepMagnitude { get; } = stepMagnitude;
-    public double Value { get; set; } = minimum;
+    try
+    {
+        action();
+    }
+    catch (ArgumentOutOfRangeException)
+    {
+        return;
+    }
+
+    throw new InvalidOperationException($"Invalid oscillator configuration was accepted: {scenario}.");
+}
+
+sealed class OscillatorContext : IStateContext
+{
+    public OscillatorContext(string name, double minimum, double maximum, double stepMagnitude)
+    {
+        if (!double.IsFinite(minimum) || !double.IsFinite(maximum) || minimum >= maximum)
+            throw new ArgumentOutOfRangeException(nameof(minimum), "Oscillator bounds must be finite and minimum must be less than maximum.");
+        if (!double.IsFinite(stepMagnitude) || stepMagnitude <= 0)
+            throw new ArgumentOutOfRangeException(nameof(stepMagnitude), "Step magnitude must be finite and greater than zero.");
+
+        Name = name;
+        Minimum = minimum;
+        Maximum = maximum;
+        StepMagnitude = stepMagnitude;
+        Value = minimum;
+    }
+
+    public string Name { get; set; }
+    public double Minimum { get; }
+    public double Maximum { get; }
+    public double StepMagnitude { get; }
+    public double Value { get; set; }
     public bool IsValid { get; set; } = true;
 }
