@@ -19,7 +19,7 @@ Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries g
 | # | Recipe | Package boundary | Evidence status |
 |---|---|---|---|
 | 06 | [Projectile trajectory from a recorded Physics run](recipes/03-projectile-trajectory.md) | GUI Core + GUI.SVG + Physics-owned JSON run record | Full workflow passed in [run 39453243758](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39453243758); SVG artifact visually reviewed; all nine plotted markers match the pinned Physics record |
-| 07 | State-driven behavior trace | FSM_API + verified presentation path | Planned; requires deterministic runtime state and trace |
+| 07 | [FSM-driven bounded oscillator](recipes/07-fsm-driven-oscillator.md) | FSM_API state transitions → sampled function → GUI.SVG | Runnable sample and trace/XML self-checks added; CI execution and visual artifact review pending |
 | 08 | FSM_API-driven fox and sheepdog | FSM_API + GUI.SVG; Renderer/Visualize separately | Planned; must be driven by real execution, not a parallel animation timeline |
 | 09 | UML/data → textual scene → Renderer → Visualize | Actual consuming package set to be verified | Planned; no integration claim until a runnable consumer exists |
 

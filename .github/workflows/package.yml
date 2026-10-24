@@ -254,6 +254,31 @@ jobs:
           path: ./artifacts/02-coordinate-functions.generated.svg
           if-no-files-found: error
 
+      - name: Run FSM-driven bounded oscillator proof
+        run: dotnet run --project samples/demonstrations/FsmDrivenOscillator/FsmDrivenOscillator.csproj --configuration Release -- ./artifacts/07-fsm-driven-oscillator.generated.svg
+
+      - name: Verify generated FSM-driven oscillator SVG
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/07-fsm-driven-oscillator.generated.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          assert root.tag == "{http://www.w3.org/2000/svg}svg", "output is not SVG"
+          assert root.find(".//svg:polyline[@id='sine-curve']", ns) is not None, "sampled sine curve is missing"
+          assert root.find(".//svg:circle[@id='current-marker']", ns) is not None, "runtime-state marker is missing"
+          text = " ".join(node.text or "" for node in root.findall(".//svg:text", ns))
+          assert "x = 10" in text and "Reverse" in text, "final marker label does not reflect the final FSM state"
+          print("Verified the FSM-driven oscillator curve, marker, and final state label.")
+          PY
+
+      - name: Upload FSM-driven bounded oscillator proof
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # pinned commit SHA
+        with:
+          name: gui-svg-fsm-driven-oscillator
+          path: ./artifacts/07-fsm-driven-oscillator.generated.svg
+          if-no-files-found: error
+
       - name: Fetch pinned Physics projectile run record
         shell: bash
         run: |
