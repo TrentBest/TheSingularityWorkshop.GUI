@@ -191,9 +191,6 @@ public static class WpfGuiRenderer
                 case "isEnabled":
                     if (bool.TryParse(value, out var isEnabled)) element.IsEnabled = isEnabled;
                     break;
-                case "isEnabled":
-                    if (bool.TryParse(value, out var isEnabled)) element.IsEnabled = isEnabled;
-                    break;
                 case "horizontalAlignment":
                     if (Enum.TryParse<HorizontalAlignment>(value, true, out var horizontal)) element.HorizontalAlignment = horizontal;
                     break;
