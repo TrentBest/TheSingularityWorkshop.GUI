@@ -116,6 +116,33 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_resolves_live_host_resources_for_background_and_foreground()
+    {
+        RunOnSta(() =>
+        {
+            var node = new GuiNode(
+                "Button",
+                "themed-action",
+                text: "Run",
+                properties: new Dictionary<string, string>
+                {
+                    ["background"] = "resource:ArchitectPanelBrush",
+                    ["foreground"] = "resource:ArchitectAccentBrush"
+                });
+            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(node));
+            button.Resources["ArchitectPanelBrush"] = new SolidColorBrush(Color.FromRgb(0x12, 0x34, 0x56));
+            button.Resources["ArchitectAccentBrush"] = new SolidColorBrush(Color.FromRgb(0x65, 0x43, 0x21));
+
+            Assert.Equal(Color.FromRgb(0x12, 0x34, 0x56), Assert.IsType<SolidColorBrush>(button.Background).Color);
+            Assert.Equal(Color.FromRgb(0x65, 0x43, 0x21), Assert.IsType<SolidColorBrush>(button.Foreground).Color);
+
+            // A later host resource update must flow through the DynamicResource reference.
+            button.Resources["ArchitectAccentBrush"] = new SolidColorBrush(Color.FromRgb(0xAA, 0xBB, 0xCC));
+            Assert.Equal(Color.FromRgb(0xAA, 0xBB, 0xCC), Assert.IsType<SolidColorBrush>(button.Foreground).Color);
+        });
+    }
+
+    [Fact]
     public void Renderer_allows_negative_margin_but_rejects_negative_padding()
     {
         RunOnSta(() =>
