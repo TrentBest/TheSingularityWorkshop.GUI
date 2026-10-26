@@ -202,7 +202,12 @@ public static class WpfGuiRenderer
                     }
                     break;
                 case "foreground":
-                    if (TryBrush(value, out var foreground))
+                    if (TryResourceKey(value, out var foregroundKey))
+                    {
+                        if (element is Control resourceControl) resourceControl.SetResourceReference(Control.ForegroundProperty, foregroundKey);
+                        else if (element is TextBlock resourceTextBlock) resourceTextBlock.SetResourceReference(TextBlock.ForegroundProperty, foregroundKey);
+                    }
+                    else if (TryBrush(value, out var foreground))
                     {
                         if (element is Control foregroundControl) foregroundControl.Foreground = foreground;
                         else if (element is TextBlock foregroundTextBlock) foregroundTextBlock.Foreground = foreground;
@@ -273,6 +278,17 @@ public static class WpfGuiRenderer
         {
             return false;
         }
+    }
+
+    // resource: requests live WPF resource lookup instead of a one-time literal brush.
+    // This allows host themes to flow through the renderer without coupling GUI.Core to WPF.
+    private static bool TryResourceKey(string value, out string resourceKey)
+    {
+        const string prefix = "resource:";
+        resourceKey = string.Empty;
+        if (!value.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) return false;
+        resourceKey = value[prefix.Length..].Trim();
+        return resourceKey.Length > 0;
     }
 
     private static bool TryBrush(string value, out Brush brush)
