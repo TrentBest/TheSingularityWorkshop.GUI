@@ -190,10 +190,15 @@ public static class WpfGuiRenderer
                     break;
                 case "tooltip": element.ToolTip = value; break;
                 case "background":
-                    if (TryBrush(value, out var background))
+                    if (TryResourceKey(value, out var backgroundKey))
+                    {
+                        if (element is Control resourceControl) resourceControl.SetResourceReference(Control.BackgroundProperty, backgroundKey);
+                        else if (element is Border resourceBorder) resourceBorder.SetResourceReference(Border.BackgroundProperty, backgroundKey);
+                    }
+                    else if (TryBrush(value, out var background))
                     {
                         if (element is Control backgroundControl) backgroundControl.Background = background;
-                        else if (element is Border b) b.Background = background;
+                        else if (element is Border backgroundBorder) backgroundBorder.Background = background;
                     }
                     break;
                 case "foreground":
