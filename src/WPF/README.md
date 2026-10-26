@@ -16,6 +16,23 @@ The WPF renderer is an initial implementation, not a claim of complete parity wi
 
 Features outside that tested surface—including broader property mapping, accessibility, interaction/event behavior, and complete cross-adapter parity—must be treated as unverified until implementation and tests demonstrate them.
 
+## Host theme resources
+
+`WpfGuiRenderer` accepts `resource:ResourceKey` values for the `background` and `foreground` properties. It applies WPF dynamic resource references instead of converting those values to fixed brushes. The host can therefore supply theme resources (including Architect's existing palette) and update them without moving theme ownership into GUI.Core. Literal brush values such as `#FF336699` remain supported. Resource keys must be provided by the host application; missing keys are a host configuration issue, not silently replaced with a library-owned theme.
+
+Example semantic node:
+
+```csharp
+var status = GuiBuilder.Create("Panel", "status-panel")
+    .Property("background", "resource:PanelBackgroundColor")
+    .Child("Text", "status-title", text => text
+        .Text("SYSTEM STATUS")
+        .Property("foreground", "resource:AccentColor"))
+    .Build();
+
+var view = WpfGuiRenderer.Render(status);
+```
+
 ## Builder reuse audit
 
 The existing Workshop WPF builder repositories were reviewed for reusable patterns. See [WPF Builder Pattern Audit](../../docs/WPF_BUILDER_PATTERN_AUDIT.md) for the source references, transferable ideas, and explicit boundaries between the neutral-model renderer and optional WPF-specific builders. This audit does not imply that legacy window chrome, reflection-driven editing, or application-specific services are implemented here.

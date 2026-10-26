@@ -6,6 +6,32 @@
 
 `GuiBuilder` is the fluent, platform-neutral builder for an immutable `GuiNode` tree. It expresses presentation structure and stable interaction intent without depending on WPF, Blazor, AnyApp, or a domain package.
 
+## Layout composition
+
+Use semantic `Row` and `Column` nodes to describe horizontal and vertical composition. The WPF adapter renders `Row` as a horizontal `StackPanel`; the optional `orientation` property accepts WPF-compatible `Horizontal` or `Vertical` values when a host needs to override the default.
+
+```csharp
+var toolbar = GuiBuilder.Create("Row", "scene-toolbar")
+    .Child("Button", "save", button => button.Text("Save"))
+    .Child("Button", "cancel", button => button.Text("Cancel"))
+    .Build();
+```
+
+Layout kinds describe structure only. Spacing, sizing, and theme properties remain renderer-adapter contracts; GUI.Core does not reference platform UI types.
+
+## Presentation state
+
+Use the string-valued `isEnabled` property to express whether a rendered control should appear and behave as enabled in the current view:
+
+```csharp
+var unavailable = GuiBuilder.Create("Button", "publish")
+    .Text("Publish")
+    .Property("isEnabled", "false")
+    .Build();
+```
+
+The WPF renderer maps valid `true`/`false` values to the native control's enabled state. This is presentation state, not authorization: a host must still validate every requested operation at its execution boundary.
+
 ## Interaction contract
 
 Use `WithOnClick(commandId)` to declare the command identity associated with activating a node:

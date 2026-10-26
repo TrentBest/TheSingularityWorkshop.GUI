@@ -556,10 +556,11 @@ static async Task<int> RunProjectModelMode(string[] arguments)
                 return 1;
             }
 
+            // Compiler-generated nested implementation types can have a plain leaf name
+            // while their declaring type is <PrivateImplementationDetails>; filter the full name.
             var reflectedNames = metadata.TypeDefinitions
-                .Select(handle => (Handle: handle, Definition: metadata.GetTypeDefinition(handle)))
-                .Where(item => !metadata.GetString(item.Definition.Name).Contains("<", StringComparison.Ordinal))
-                .Select(item => MetadataQualifiedTypeName(metadata, item.Handle))
+                .Select(handle => MetadataQualifiedTypeName(metadata, handle))
+                .Where(name => !name.Contains("<", StringComparison.Ordinal))
                 .ToHashSet(StringComparer.Ordinal);
             var sourceNames = model.Types.Select(ModelMetadataQualifiedTypeName)
                 .ToHashSet(StringComparer.Ordinal);
