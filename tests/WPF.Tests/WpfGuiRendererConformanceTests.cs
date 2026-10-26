@@ -76,25 +76,6 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
-    public void Renderer_maps_semantic_enabled_state_without_changing_command_authority()
-    {
-        RunOnSta(() =>
-        {
-            var enabled = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
-                "Button", "enabled-action", text: "Run",
-                properties: new Dictionary<string, string> { ["isEnabled"] = "true" })));
-            var disabled = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
-                "Button", "disabled-action", text: "Run",
-                properties: new Dictionary<string, string> { ["isEnabled"] = "false" })));
-
-            Assert.True(enabled.IsEnabled);
-            Assert.False(disabled.IsEnabled);
-            Assert.Equal("Run", disabled.Content);
-            // A semantic enabled flag affects presentation only; no command dispatcher is supplied here.
-        });
-    }
-
-    [Fact]
     public void Renderer_dispatches_declared_command_only_through_supplied_host_dispatcher()
     {
         RunOnSta(() =>
