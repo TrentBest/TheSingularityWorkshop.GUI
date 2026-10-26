@@ -46,6 +46,7 @@ public static class WpfGuiRenderer
             "Button" => new Button { Content = node.Text ?? string.Empty },
             "Text" => new TextBlock { Text = node.Text ?? string.Empty, TextWrapping = TextWrapping.Wrap },
             "Column" => new StackPanel { Orientation = Orientation.Vertical },
+            "Row" => new StackPanel { Orientation = Orientation.Horizontal },
             "Panel" => new Border { Child = new StackPanel { Orientation = Orientation.Vertical } },
             "Warning" => CreateWarning(node.Text),
             "Image" => CreateImage(node.Source),
@@ -181,6 +182,11 @@ public static class WpfGuiRenderer
                         if (element is Control control) control.Padding = padding;
                         else if (element is Border border) border.Padding = padding;
                     }
+                    break;
+                case "orientation":
+                    if (element is StackPanel orientationPanel
+                        && Enum.TryParse<Orientation>(value, true, out var orientation))
+                        orientationPanel.Orientation = orientation;
                     break;
                 case "horizontalAlignment":
                     if (Enum.TryParse<HorizontalAlignment>(value, true, out var horizontal)) element.HorizontalAlignment = horizontal;
