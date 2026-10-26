@@ -18,7 +18,7 @@ GUI is the boundary where semantic intent becomes something a person can inspect
 ## Shared Workshop identity
 
 - Place the animated Workshop moniker at the top of Markdown documents, before the title, using the canonical shared asset.
-- Use a consistent, linkable text footer where appropriate. Identity, tagline, and navigation must remain readable text and real links rather than being baked into an image.
+- Use the canonical static avatar as the closing Markdown footer image, sourced from [FSM_API's branding asset](https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png). Keep identity, tagline, and navigation as readable text and real links rather than baking them into an image. Animated moniker artwork belongs at the top; it does not replace the canonical footer avatar.
 - Keep the README reader journey where relevant: identity, a useful visual, What, Why, How, See it in a minute, and Documentation and theory.
 - Treat visual markers as redundant cues. Heading text carries the meaning too; never rely on color alone.
 - Keep deep-document titles focused. Shared branding frames the explanation rather than replacing it with boilerplate.
@@ -42,9 +42,10 @@ Every visual should answer: **What am I looking at? What does it demonstrate? Wh
 
 Keep navigation relevant to the destination document and verify every link on the target branch.
 
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center">
   <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
-    <img src="https://raw.githubusercontent.com/TrentBest/WebPage/development/TheSingularityWorkshop/wwwroot/Images/TheSingularityWorkshopLivingAvatar.svg" alt="The Singularity Workshop living avatar" width="96" />
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" />
   </a><br />
   <strong>The Singularity Workshop · GUI</strong><br />
   <em>Making software meaning visible to people.</em><br />
