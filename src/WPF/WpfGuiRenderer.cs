@@ -188,6 +188,9 @@ public static class WpfGuiRenderer
                         && Enum.TryParse<Orientation>(value, true, out var orientation))
                         orientationPanel.Orientation = orientation;
                     break;
+                case "isEnabled":
+                    if (bool.TryParse(value, out var isEnabled)) element.IsEnabled = isEnabled;
+                    break;
                 case "horizontalAlignment":
                     if (Enum.TryParse<HorizontalAlignment>(value, true, out var horizontal)) element.HorizontalAlignment = horizontal;
                     break;
