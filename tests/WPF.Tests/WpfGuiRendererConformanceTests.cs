@@ -37,6 +37,26 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_supports_horizontal_rows_and_explicit_orientation()
+    {
+        RunOnSta(() =>
+        {
+            var root = GuiBuilder.Create("Row", "toolbar")
+                .Property("orientation", "Horizontal")
+                .Child("Button", "save", button => button.Text("Save"))
+                .Child("Button", "cancel", button => button.Text("Cancel"))
+                .Build();
+
+            var row = Assert.IsType<StackPanel>(WpfGuiRenderer.Render(root));
+            Assert.Equal(Orientation.Horizontal, row.Orientation);
+            Assert.Equal(2, row.Children.Count);
+            Assert.Equal("Save", Assert.IsType<Button>(row.Children[0]).Content);
+            Assert.Equal("Cancel", Assert.IsType<Button>(row.Children[1]).Content);
+            Assert.Equal("toolbar", WpfGuiIdentity.GetNodeId(row));
+        });
+    }
+
+    [Fact]
     public void Renderer_dispatches_declared_command_only_through_supplied_host_dispatcher()
     {
         RunOnSta(() =>
