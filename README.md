@@ -215,11 +215,12 @@ See [Ideal GUI](docs/IDEAL_GUI.md), [GUI Taxonomy](docs/GUI_TAXONOMY.md), [Manif
 
 ---
 
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center">
-  <a href="https://github.com/TrentBest/WebPage" aria-label="Visit The Singularity Workshop">
-    <img src="https://raw.githubusercontent.com/TrentBest/WebPage/development/TheSingularityWorkshop/wwwroot/Images/TheSingularityWorkshopLivingAvatar.svg" alt="The Singularity Workshop living avatar — a digital vortex of information converging on its central eye" width="112" />
+  <a href="https://github.com/TrentBest" aria-label="Visit The Singularity Workshop on GitHub">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" />
   </a><br />
   <strong>The Singularity Workshop</strong><br />
   <em>Forging Software for the Singularity.</em><br />
-  <a href="https://github.com/TrentBest">GitHub</a> · <a href="https://github.com/TrentBest/WebPage">Workshop</a>
+  <a href="https://github.com/TrentBest">GitHub</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">GUI repository</a>
 </p>
