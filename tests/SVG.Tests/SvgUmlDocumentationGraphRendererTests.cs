@@ -61,6 +61,19 @@ public sealed class SvgUmlDocumentationGraphRendererTests
                     new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "Fixture.B Link")),
                 external,
                 new UmlDocumentedRelationship(
+                    "edge:A:self",
+                    UmlRelationshipKind.Association,
+                    a.Id,
+                    a.Id,
+                    "global::Fixture.A",
+                    UmlRelationshipResolution.Resolved,
+                    null,
+                    "source-to-target",
+                    "self-reference",
+                    null,
+                    null,
+                    new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "A.Link -> A")),
+                new UmlDocumentedRelationship(
                     "edge:consumer:A",
                     UmlRelationshipKind.Dependency,
                     consumer.Id,
@@ -81,7 +94,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Contains(document.Root.Elements(Svg + "rect"), rect =>
             ((string?)rect.Attribute("data-canvas-background")) == "true" &&
             ((string?)rect.Attribute("fill")) == "#ffffff");
-        Assert.Contains("4 type nodes and 3 typed relationships", document.Root.Element(Svg + "desc")!.Value);
+        Assert.Contains("4 type nodes and 4 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("Fixture.B", StringComparison.Ordinal));
         Assert.Contains(document.Descendants(Svg + "a"), link =>
@@ -98,6 +111,21 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Equal(ids.Length, ids.Distinct(StringComparer.Ordinal).Count());
         Assert.Contains(document.Descendants(Svg + "line"), line =>
             ((string?)line.Attribute("marker-end")) == "url(#uml-arrow)");
+
+        var focusRect = nodeGroupsForSelfEdge(document, "type:Fixture:A");
+        var focusCardX = double.Parse((string)focusRect.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture);
+        var focusCardWidth = double.Parse((string)focusRect.Attribute("width")!, System.Globalization.CultureInfo.InvariantCulture);
+        var selfLoop = Assert.Single(document.Descendants(Svg + "path"), path =>
+            ((string?)path.Attribute("d"))?.StartsWith("M ", StringComparison.Ordinal) == true &&
+            ((string?)path.Attribute("marker-end")) == "url(#uml-arrow)" &&
+            ((string?)path.Attribute("d"))?.Contains(" C ", StringComparison.Ordinal) == true);
+        var pathData = (string)selfLoop.Attribute("d")!;
+        var coordinates = System.Text.RegularExpressions.Regex.Matches(pathData, @"-?\d+(?:\.\d+)?")
+            .Select(match => double.Parse(match.Value, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
+        Assert.Equal(focusCardX + focusCardWidth, coordinates[0], precision: 2);
+        Assert.Equal(focusCardX + focusCardWidth, coordinates[^2], precision: 2);
+        Assert.True(coordinates[4] > focusCardX + focusCardWidth,
+            "the self-reference loop must route outside the focus card rather than through its interior");
 
         var nodeGroups = document.Descendants(Svg + "g")
             .Where(group => ((string?)group.Attribute("id"))?.StartsWith("uml-node-", StringComparison.Ordinal) == true)
@@ -126,6 +154,12 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             group.Attribute("data-owner-type-id") is not null &&
             group.Element(Svg + "title")?.Value.Contains("Type conduit", StringComparison.Ordinal) == true);
     }
+
+    private static XElement nodeGroupsForSelfEdge(XDocument document, string typeId) =>
+        document.Descendants(Svg + "g")
+            .Where(group => ((string?)group.Attribute("id"))?.StartsWith("uml-node-", StringComparison.Ordinal) == true)
+            .Single(group => ((string?)group.Attribute("data-type-id")) == typeId)
+            .Element(Svg + "rect")!;
 
     [Fact]
     public void Rejects_unknown_focus_type_id()
