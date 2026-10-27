@@ -93,7 +93,7 @@ public sealed class SvgUmlClassDiagramRenderer
     private static double GroupHeight(IReadOnlyList<UmlMember> members, string stroke)
     {
         var groups = AccessibilityGroups(members);
-        var height = Padding;
+        var height = GroupHeaderHeight + Gap + Padding;
         foreach (var group in groups)
             height += GroupHeaderHeight + group.Members.Sum(member => MemberHeight(member)) + Gap;
         return Math.Max(GroupHeaderHeight + LineHeight + Padding, height);
