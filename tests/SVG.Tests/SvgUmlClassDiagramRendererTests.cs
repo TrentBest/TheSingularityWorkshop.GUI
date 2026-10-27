@@ -58,6 +58,42 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.True(Contains(cards["type-container"], cards["member-category method"]));
         Assert.True(Contains(cards["type-container"], cards["member-category field"]));
 
+        // Assert every nested visibility card is inside its category, and every member card
+        // is inside both its visibility card and category. This catches overflow that a
+        // namespace/type-only containment check would miss.
+        var allRects = document.Descendants(Svg + "rect").ToArray();
+        var categoryRects = allRects
+            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category", StringComparison.Ordinal) == true)
+            .ToArray();
+        var visibilityRects = allRects
+            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("accessibility-group", StringComparison.Ordinal) == true)
+            .ToArray();
+        var memberRects = allRects
+            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member ", StringComparison.Ordinal) == true)
+            .ToArray();
+
+        foreach (var visibility in visibilityRects)
+        {
+            var category = categoryRects.Single(candidate =>
+                Contains(candidate, visibility) &&
+                (string)candidate.Attribute("data-card-kind")! switch
+                {
+                    "member-category property" => ((string)visibility.Attribute("data-card-kind")!).Contains("property", StringComparison.Ordinal),
+                    "member-category method" => ((string)visibility.Attribute("data-card-kind")!).Contains("method", StringComparison.Ordinal),
+                    "member-category field" => ((string)visibility.Attribute("data-card-kind")!).Contains("field", StringComparison.Ordinal),
+                    _ => false
+                });
+            Assert.True(Contains(category, visibility));
+        }
+
+        foreach (var member in memberRects)
+        {
+            var visibility = visibilityRects.Single(candidate => Contains(candidate, member));
+            var category = categoryRects.Single(candidate => Contains(candidate, visibility));
+            Assert.True(Contains(visibility, member));
+            Assert.True(Contains(category, member));
+        }
+
         var categories = document.Descendants(Svg + "rect")
             .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category", StringComparison.Ordinal) == true)
             .Select(element => (string)element.Attribute("data-card-kind")!)
