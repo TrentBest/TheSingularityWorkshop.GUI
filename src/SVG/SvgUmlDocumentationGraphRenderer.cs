@@ -123,7 +123,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
         var bottom = focusY + NodeHeight + VerticalGap + (layoutRows - 1) * (NodeHeight + VerticalGap) + NodeHeight;
         if (externalNodes.Length > 0)
             bottom = Math.Max(bottom, externalStartY + externalHeight);
-        var canvasHeight = bottom + Margin + (hasSelfEdge ? 55 : 0);
+        var canvasHeight = bottom + Margin;
 
         var title = "Source-derived UML neighborhood: " + DisplayName(focus);
         var description = $"Compiler-model neighborhood for {DisplayName(focus)}. " +
