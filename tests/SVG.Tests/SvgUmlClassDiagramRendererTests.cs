@@ -34,6 +34,7 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Equal("UML class diagram: DataCard", document.Root!.Element(Svg + "title")!.Value);
         var description = document.Root.Element(Svg + "desc")!.Value;
         Assert.Contains("Static nested-card view", description);
+        Assert.Contains("Public, Protected, Private, then Internal / other order", description);
         Assert.Contains("source-declared association candidate", description);
 
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
