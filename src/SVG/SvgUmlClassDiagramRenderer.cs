@@ -50,7 +50,7 @@ public sealed class SvgUmlClassDiagramRenderer
             ? 0
             : GroupHeaderHeight + model.DeclaredRelationships.Count * LineHeight + Gap;
         var categoryHeight = sections.Sum(section => GroupHeight(section.Members, section.Stroke)) +
-            Gap * (sections.Length - 1);
+            Gap * sections.Length;
         var typeCardHeight = Padding * 2 + HeaderHeight + Gap + categoryHeight + relationshipHeight;
         var height = Top * 2 + typeCardHeight;
 
