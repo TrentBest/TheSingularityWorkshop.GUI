@@ -65,7 +65,7 @@ public sealed class SvgUmlClassDiagramRenderer
             new XAttribute("font-size", "14"),
             new XElement(Svg + "title", new XAttribute("id", "uml-title"), $"UML class diagram: {model.Name}"),
             new XElement(Svg + "desc", new XAttribute("id", "uml-desc"),
-                $"{model.Description} Static nested-card view. Member categories are ordered Properties, Methods, Fields; each is grouped by exact accessibility in Public, Protected, Private order. All represented signatures are visible in this SVG."));
+                $"{model.Description} Static nested-card view. Member categories are ordered Properties, Methods, Fields; accessibility groups appear in Public, Protected, Private, then Internal / other order when populated. All represented signatures are visible in this SVG."));
 
         var x = Left;
         var y = Top;
