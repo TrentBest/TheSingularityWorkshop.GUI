@@ -19,7 +19,7 @@ public sealed class SvgUmlClassDiagramRendererTests
             fields:
             [
                 new UmlMember("_children", "_children : ReadOnlyCollection<DataCard>", "private"),
-                new UmlMember("Cache", "Cache : int", "internal", isStatic: true)
+                new UmlMember("Cache", "Cache : int", "internal", IsStatic: true)
             ],
             properties: [new UmlMember("Id", "Id : string {get}", "public")],
             operations:
