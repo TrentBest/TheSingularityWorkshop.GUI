@@ -197,8 +197,10 @@ public sealed class SvgUmlDocumentationGraphRenderer
             double targetPortY;
             if (isSelf)
             {
-                var startX = sourcePosition.X + NodeWidth - 42;
-                var endX = sourcePosition.X + NodeWidth - 42;
+                // Route the loop from the card edge, not through its interior. Keep these
+                // coordinates aligned with the source/target type ports recorded below.
+                var startX = sourcePosition.X + NodeWidth;
+                var endX = sourcePosition.X + NodeWidth;
                 var startY = sourcePosition.Y + 36;
                 var endY = sourcePosition.Y + 92;
                 var loopX = sourcePosition.X + NodeWidth + 52;
