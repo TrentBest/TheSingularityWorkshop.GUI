@@ -46,9 +46,13 @@ public sealed class SvgUmlClassDiagramRenderer
             (Title: "Methods", Kind: "method", Stroke: MethodStroke, Members: model.Operations),
             (Title: "Fields", Kind: "field", Stroke: FieldStroke, Members: model.Fields)
         };
-        var height = Top * 2 + HeaderHeight + sections.Sum(section =>
-            GroupHeight(section.Members, section.Stroke)) +
-            (model.DeclaredRelationships.Count == 0 ? 0 : GroupHeaderHeight + model.DeclaredRelationships.Count * LineHeight + Padding);
+        var relationshipHeight = model.DeclaredRelationships.Count == 0
+            ? 0
+            : GroupHeaderHeight + model.DeclaredRelationships.Count * LineHeight + Gap;
+        var categoryHeight = sections.Sum(section => GroupHeight(section.Members, section.Stroke)) +
+            Gap * (sections.Length - 1);
+        var typeCardHeight = Padding * 2 + HeaderHeight + Gap + categoryHeight + relationshipHeight;
+        var height = Top * 2 + typeCardHeight;
 
         var svg = new XElement(Svg + "svg",
             new XAttribute("xmlns", Svg.NamespaceName),
@@ -66,23 +70,28 @@ public sealed class SvgUmlClassDiagramRenderer
         var x = Left;
         var y = Top;
         var panelWidth = width - Left * 2;
-        AddCard(svg, x, y, panelWidth, HeaderHeight, TypeStroke, "#fff0e5", "type-card", "4");
-        svg.Add(Text(x + Padding, y + 21, $"«{model.Kind}»", "#6b2e0c", "12", "normal"));
+        AddCard(svg, x, y, panelWidth, typeCardHeight, TypeStroke, "#fff0e5", "type-container", "4");
+
+        var contentX = x + Padding;
+        var contentWidth = panelWidth - Padding * 2;
+        var headerY = y + Padding;
+        AddCard(svg, contentX, headerY, contentWidth, HeaderHeight, TypeStroke, "#ff823d", "type-header", "2");
+        svg.Add(Text(contentX + Padding, headerY + 21, $"«{model.Kind}»", "#6b2e0c", "12", "normal"));
         var heading = string.IsNullOrWhiteSpace(model.Namespace) ? model.Name : model.Namespace + "." + model.Name;
-        svg.Add(Text(x + Padding, y + 43, heading, "#6b2e0c", "18", "700"));
-        y += HeaderHeight + Gap;
+        svg.Add(Text(contentX + Padding, headerY + 43, heading, "#6b2e0c", "18", "700"));
+        y = headerY + HeaderHeight + Gap;
 
         foreach (var section in sections)
-            y = DrawCategory(svg, x, y, panelWidth, section.Title, section.Kind, section.Stroke, section.Members);
+            y = DrawCategory(svg, contentX, y, contentWidth, section.Title, section.Kind, section.Stroke, section.Members);
 
         if (model.DeclaredRelationships.Count > 0)
         {
-            AddCard(svg, x, y, panelWidth, GroupHeaderHeight, NamespaceStroke, "#e8f4f1", "unresolved-references", "2");
-            svg.Add(Text(x + Padding, y + 20, "Declared type references — unresolved", Ink, "13", "700"));
+            AddCard(svg, contentX, y, contentWidth, GroupHeaderHeight, NamespaceStroke, "#e8f4f1", "unresolved-references", "2");
+            svg.Add(Text(contentX + Padding, y + 20, "Declared type references — unresolved", Ink, "13", "700"));
             y += GroupHeaderHeight;
             foreach (var relationship in model.DeclaredRelationships)
             {
-                svg.Add(Text(x + Padding * 2, y + 15, relationship, Ink, "12", "normal"));
+                svg.Add(Text(contentX + Padding * 2, y + 15, relationship, Ink, "12", "normal"));
                 y += LineHeight;
             }
         }
