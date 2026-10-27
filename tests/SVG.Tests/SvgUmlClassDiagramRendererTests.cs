@@ -10,26 +10,54 @@ public sealed class SvgUmlClassDiagramRendererTests
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
 
     [Fact]
-    public void Renders_accessible_class_compartments_and_declared_references()
+    public void Renders_nested_cards_in_category_and_visibility_order_with_accessible_description()
     {
         var model = new UmlClassDiagram(
             "DataCard",
             kind: "sealed class",
             @namespace: "TheSingularityWorkshop.Workshop.Gui",
-            fields: [new UmlMember("_children", "_children : ReadOnlyCollection<DataCard>", "private")],
+            fields:
+            [
+                new UmlMember("_children", "_children : ReadOnlyCollection<DataCard>", "private"),
+                new UmlMember("Cache", "Cache : int", "protected", isStatic: true)
+            ],
             properties: [new UmlMember("Id", "Id : string {get}", "public")],
-            operations: [new UmlMember("GetCollapsedSummary", "GetCollapsedSummary(isExpanded : bool) : string?", "public")],
+            operations:
+            [
+                new UmlMember("GetCollapsedSummary", "GetCollapsedSummary(isExpanded : bool) : string?", "public"),
+                new UmlMember("Validate", "Validate() : void", "protected"),
+                new UmlMember("Reset", "Reset() : void", "private")
+            ],
             declaredRelationships: ["DataCard → DataCard : Children (source-declared association candidate)"]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
         Assert.Equal("UML class diagram: DataCard", document.Root!.Element(Svg + "title")!.Value);
-        Assert.Contains("source-declared association candidate", document.Root.Element(Svg + "desc")!.Value);
+        var description = document.Root.Element(Svg + "desc")!.Value;
+        Assert.Contains("Static nested-card view", description);
+        Assert.Contains("source-declared association candidate", description);
+
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
-        Assert.Contains("Fields", text);
-        Assert.Contains("Properties", text);
-        Assert.Contains("Operations", text);
+        Assert.Contains("Properties (1)", text);
+        Assert.Contains("Methods (3)", text);
+        Assert.Contains("Fields (2)", text);
+        Assert.Contains("Public (1)", text);
+        Assert.Contains("Protected (1)", text);
+        Assert.Contains("Private (1)", text);
+        Assert.Contains("Internal / other (1)", text);
         Assert.Contains("GetCollapsedSummary", text);
         Assert.Contains("Children", text);
+
+        var categories = document.Descendants(Svg + "rect")
+            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category", StringComparison.Ordinal) == true)
+            .Select(element => (string)element.Attribute("data-card-kind")!)
+            .ToArray();
+        Assert.Equal(new[] { "member-category property", "member-category method", "member-category field" }, categories);
+
+        var strokes = document.Descendants(Svg + "rect").Select(element => (string?)element.Attribute("stroke")).ToArray();
+        Assert.Contains("#d6b82e", strokes);
+        Assert.Contains("#2e9d70", strokes);
+        Assert.Contains("#4a90e2", strokes);
+        Assert.Contains("#8b7ac8", strokes);
     }
 
     [Fact]
