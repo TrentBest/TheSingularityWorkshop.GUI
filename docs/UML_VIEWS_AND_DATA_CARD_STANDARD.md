@@ -29,18 +29,23 @@ This is the declaration hierarchy, not a consumer/dependency graph.
 3. Each field, property, event, constructor, and method is represented by its own member card nested under its declaring type. Nested types remain nested under their declaring type.
 4. Grouping may aid navigation, but must not flatten namespace → type → member ownership or erase source declaration identity.
 
-### Member order and default expansion
+### Member category order, accessibility, and progressive disclosure
 
-Present groups in this order: **Public → Static → Protected → Private**.
+Within each type card, present member categories in this order: **Properties → Methods → Fields**. Events and constructors must remain represented as source-accurate member kinds; place them in a clearly labeled category at a documented deterministic position rather than silently dropping or misclassifying them.
 
-This is a grouping precedence, not permission to duplicate a member. A public static member belongs in Public and is marked static there. Members with other access levels (such as internal, protected internal, or private protected) must retain their exact modifier in a clearly labeled additional group; do not misclassify them.
+Within each category, group members in this order: **Public → Protected → Private**. Members with other access levels (including internal, protected internal, and private protected) must retain their exact modifier in a clearly labeled additional group. A member appears once only. Static is a modifier, not a competing visibility group: mark static on the member within its accessibility group.
 
-- **Public members default expanded to their top-level contract:** fields/properties/events show name and type; methods/constructors show the callable signature, including parameters and parameter types, return type where applicable, and relevant generic information.
+- Each category and each accessibility group is itself a nested data card, and each member has a stable identity/header.
+- Public member cards default expanded to their top-level contract: fields/properties/events show name and type; methods/constructors show the callable signature, including parameters and parameter types, return type where applicable, and relevant generic information.
 - Public implementation/body and deeper declaration details default collapsed.
-- Static, protected, and private members default collapsed. Their visible header still identifies the member; expanding reveals its contract and deeper details.
+- Protected, private, and other non-public member cards default collapsed in an interactive viewer. Their headers still identify the member; expansion reveals the contract and deeper details.
 - Expansion is progressive: identity/header → contract/signature → declaration details/source spans → implementation/body, only where the source model provides that information.
-- Keep stable declaration order within groups unless a documented deterministic secondary order is required.
+- Usings/imports form a dedicated card in the namespace context and are collapsed by default in an interactive viewer.
+- The AI Header is a dedicated AI-facing metadata card, collapsed by default in an interactive viewer and read-only for ordinary users. It is metadata, not a normal editable source declaration. Any visible AI Header content must have explicit provenance and a defined schema.
+- Keep stable source declaration order within each group unless a documented deterministic secondary order is required.
 - Label the analysis method and gaps. Reflection-only output must not claim to be a full AST.
+
+These expansion defaults describe an interactive presentation. Static SVG exports are not interactive: render the complete information claimed by the export, or label the SVG as a deliberately limited summary and link to a complete representation. Never suggest a reader can click a static SVG to expand it.
 
 These are presentation defaults. Interactive AST editing is a separate feature: edits must be validated commands against the authoritative source/AST model, not direct mutations of SVG or renderer-owned copies.
 
