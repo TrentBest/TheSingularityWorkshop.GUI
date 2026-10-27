@@ -47,6 +47,16 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Contains("Internal / other (1)", text);
         Assert.Contains("GetCollapsedSummary", text);
         Assert.Contains("Children", text);
+        Assert.Contains("TheSingularityWorkshop.Workshop.Gui", text);
+
+        var cards = document.Descendants(Svg + "rect").ToDictionary(
+            element => (string)element.Attribute("data-card-kind")!,
+            StringComparer.Ordinal);
+        Assert.True(Contains(cards["namespace-container"], cards["type-container"]));
+        Assert.True(Contains(cards["type-container"], cards["type-header"]));
+        Assert.True(Contains(cards["type-container"], cards["member-category property"]));
+        Assert.True(Contains(cards["type-container"], cards["member-category method"]));
+        Assert.True(Contains(cards["type-container"], cards["member-category field"]));
 
         var categories = document.Descendants(Svg + "rect")
             .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category", StringComparison.Ordinal) == true)
@@ -59,6 +69,24 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Contains("#2e9d70", strokes);
         Assert.Contains("#4a90e2", strokes);
         Assert.Contains("#8b7ac8", strokes);
+    }
+
+    private static bool Contains(XElement outer, XElement inner)
+    {
+        static double Number(XElement element, string attribute) =>
+            double.Parse((string)element.Attribute(attribute)!, System.Globalization.CultureInfo.InvariantCulture);
+
+        var outerX = Number(outer, "x");
+        var outerY = Number(outer, "y");
+        var outerRight = outerX + Number(outer, "width");
+        var outerBottom = outerY + Number(outer, "height");
+        var innerX = Number(inner, "x");
+        var innerY = Number(inner, "y");
+        var innerRight = innerX + Number(inner, "width");
+        var innerBottom = innerY + Number(inner, "height");
+
+        return innerX >= outerX && innerY >= outerY &&
+            innerRight <= outerRight && innerBottom <= outerBottom;
     }
 
     [Fact]
