@@ -49,9 +49,9 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Contains("Children", text);
         Assert.Contains("TheSingularityWorkshop.Workshop.Gui", text);
 
-        var cards = document.Descendants(Svg + "rect").ToDictionary(
-            element => (string)element.Attribute("data-card-kind")!,
-            StringComparer.Ordinal);
+        var cards = document.Descendants(Svg + "rect")
+            .GroupBy(element => (string)element.Attribute("data-card-kind")!, StringComparer.Ordinal)
+            .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
         Assert.True(Contains(cards["namespace-container"], cards["type-container"]));
         Assert.True(Contains(cards["type-container"], cards["type-header"]));
         Assert.True(Contains(cards["type-container"], cards["member-category property"]));
