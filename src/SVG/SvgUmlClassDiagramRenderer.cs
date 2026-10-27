@@ -15,6 +15,7 @@ public sealed class SvgUmlClassDiagramRenderer
     private const double Left = 24;
     private const double Top = 24;
     private const double HeaderHeight = 54;
+    private const double NamespaceHeaderHeight = 32;
     private const double GroupHeaderHeight = 30;
     private const double MemberHeaderHeight = 28;
     private const double LineHeight = 19;
@@ -52,7 +53,8 @@ public sealed class SvgUmlClassDiagramRenderer
         var categoryHeight = sections.Sum(section => GroupHeight(section.Members, section.Stroke)) +
             Gap * sections.Length;
         var typeCardHeight = Padding * 2 + HeaderHeight + Gap + categoryHeight + relationshipHeight;
-        var height = Top * 2 + typeCardHeight;
+        var namespaceCardHeight = Padding * 2 + NamespaceHeaderHeight + Gap + typeCardHeight;
+        var height = Top * 2 + namespaceCardHeight;
 
         var svg = new XElement(Svg + "svg",
             new XAttribute("xmlns", Svg.NamespaceName),
@@ -67,9 +69,17 @@ public sealed class SvgUmlClassDiagramRenderer
             new XElement(Svg + "desc", new XAttribute("id", "uml-desc"),
                 $"{model.Description} Static nested-card view. Member categories are ordered Properties, Methods, Fields; accessibility groups appear in Public, Protected, Private, then Internal / other order when populated. All represented signatures are visible in this SVG."));
 
-        var x = Left;
-        var y = Top;
-        var panelWidth = width - Left * 2;
+        var namespaceX = Left;
+        var namespaceY = Top;
+        var namespaceWidth = width - Left * 2;
+        AddCard(svg, namespaceX, namespaceY, namespaceWidth, namespaceCardHeight,
+            NamespaceStroke, "#e8f4f1", "namespace-container", "3");
+        var namespaceName = string.IsNullOrWhiteSpace(model.Namespace) ? "(global namespace)" : model.Namespace;
+        svg.Add(Text(namespaceX + Padding, namespaceY + 21, namespaceName, Ink, "13", "700"));
+
+        var x = namespaceX + Padding;
+        var y = namespaceY + Padding + NamespaceHeaderHeight + Gap;
+        var panelWidth = namespaceWidth - Padding * 2;
         AddCard(svg, x, y, panelWidth, typeCardHeight, TypeStroke, "#fff0e5", "type-container", "4");
 
         var contentX = x + Padding;
