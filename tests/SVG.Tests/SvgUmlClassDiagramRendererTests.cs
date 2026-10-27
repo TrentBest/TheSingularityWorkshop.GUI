@@ -74,15 +74,7 @@ public sealed class SvgUmlClassDiagramRendererTests
 
         foreach (var visibility in visibilityRects)
         {
-            var category = categoryRects.Single(candidate =>
-                Contains(candidate, visibility) &&
-                (string)candidate.Attribute("data-card-kind")! switch
-                {
-                    "member-category property" => ((string)visibility.Attribute("data-card-kind")!).Contains("property", StringComparison.Ordinal),
-                    "member-category method" => ((string)visibility.Attribute("data-card-kind")!).Contains("method", StringComparison.Ordinal),
-                    "member-category field" => ((string)visibility.Attribute("data-card-kind")!).Contains("field", StringComparison.Ordinal),
-                    _ => false
-                });
+            var category = categoryRects.Single(candidate => Contains(candidate, visibility));
             Assert.True(Contains(category, visibility));
         }
 
