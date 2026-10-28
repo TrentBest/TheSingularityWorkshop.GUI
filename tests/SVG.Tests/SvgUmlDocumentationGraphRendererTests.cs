@@ -164,7 +164,7 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         var loop = document.Descendants(Svg + "path")
             .Single(path => ((string?)path.Attribute("d"))?.Contains(" C ", StringComparison.Ordinal) == true);
         var coordinates = System.Text.RegularExpressions.Regex.Matches(
-            (string)loop.Attribute("d")!, @"-?\\d+(?:\\.\\d+)?")
+            (string)loop.Attribute("d")!, @"-?\d+(?:\.\d+)?")
             .Select(match => double.Parse(match.Value, System.Globalization.CultureInfo.InvariantCulture))
             .ToArray();
 
