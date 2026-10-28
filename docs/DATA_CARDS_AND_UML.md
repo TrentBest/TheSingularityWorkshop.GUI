@@ -24,7 +24,7 @@ The existing `GuiNode` is a generic recursive GUI snapshot. It can carry a manif
 - **Usings section** appears before namespace/type content; it contains one card per directive and is collapsed by default.
 - **Namespace card** is a true content container, not just a heading: its body owns all namespace content represented by the tree. It appears after file-level directives where applicable; nested namespaces remain nested.
 - **Type cards** for classes, structs, interfaces, enums, records, and other declarations are children of the namespace that declares them; nested types remain inside their containing type.
-- **Member-group cards** group members by visibility in the fixed display order Public, Protected, Private. For example, `Public Properties` contains one child card per public property.
+- **Visibility-tier cards** form a vertical stack ordered Public → Protected → Internal / assembly-visible → Private / implementation-only. Within each tier, member-kind cards appear in the fixed order Properties → Methods → Fields → other supported kinds. Exact source accessibility is preserved separately from its navigation tier.
 - **Member cards** represent fields, properties, methods, constructors, events, and other declared members; expanding a property reveals accessors and initializer details.
 - **Header** identifies the represented item and can carry its kind/access metadata.
 - **Body** contains child members or expandable detail.
@@ -80,7 +80,7 @@ For C# source, the authoritative representation should be a real **Abstract Synt
 
 The source outline should place `using` directives in their own **Usings** section before namespace/type content. Each directive is an individual data card (for example, `using System.Collections.Generic;`); the section is collapsed by default. Keep directive order and aliases/static/global distinctions from the AST rather than flattening them into display-only strings.
 
-Each type should have explicit member groups in this order: **Public**, **Protected**, then **Private**. Each group is itself a data card (for properties, a card titled `Public Properties`, `Protected Properties`, or `Private Properties`). A group card's body contains a data card for every member in that category. Public member cards are expanded by default to expose the declaration/signature; protected and private group cards are collapsed by default. Apply the same predictable policy to fields, methods, constructors, events, and nested types. Preserve the exact C# accessibility in member metadata, including `internal`, `protected internal`, and `private protected`; document how these less common categories are assigned to display groups rather than pretending they are one of the three exact language modifiers.
+Each type contains visibility-tier cards in the canonical order **Public → Protected → Internal / assembly-visible → Private / implementation-only**. Within each non-empty tier, nest member-kind cards in the order **Properties → Methods → Fields → other supported kinds**; each subgroup contains an individual card for every represented declaration. Public member declarations are the most prominent content in interactive renderers, while less-exposed details may be collapsed there. A static SVG cannot expand or collapse: it must show every represented tier and signature. Preserve exact source accessibility independently of the display tier. In C#, `protected internal` means protected **or** internal access and is grouped with the Internal tier; `private protected` means protected **and** internal access and is grouped with the Private tier. Both exact modifiers must remain visible in the member's text/metadata. Blank or unrecognized accessibility must not silently become Internal; use an explicit Unspecified / unrecognized group and preserve the supplied value.
 
 Clicking a property card expands its details, including accessors and initializer, such as `{ get; private set; } = ...;`. The declaration and accessor visibility are distinct facts: a public property can legitimately have a private setter. Do not confuse the property's group with its accessor modifiers.
 
@@ -242,16 +242,7 @@ The source-code outline is not a conventional UML class box with a flat list of 
 
 ### Required presentation order
 
-Within each type, preserve this stable display order:
-
-1. Public properties
-2. Public methods
-3. Public fields
-4. Other public/static-public declaration groups, with static status visibly distinguished and their ordering defined consistently by the projection
-5. Protected declarations
-6. Private declarations
-
-Within a group, retain a deterministic order grounded in the source/model (prefer source order unless the projection explicitly defines another order). Preserve the exact language modifiers and signature even when the presentation groups related members together. In particular, do not lose `static`, `const`, `readonly`, generic parameters, overload distinctions, accessor modifiers, or nullable annotations. If the projection separates static public members into a dedicated group, it must document the exact sub-order and apply it consistently.
+Within each type, order visibility tiers from most exposed to most internal: **Public → Protected → Internal / assembly-visible → Private / implementation-only → Unspecified / unrecognized** (omit empty tiers in compact read-only views). Inside each tier, order member-kind groups **Properties → Methods → Fields → other supported kinds**. Keep declaration ordering deterministic within each group, grounded in source/model order unless the projection defines another explicit policy. Preserve exact source accessibility and signatures even when presentation groups related members together. In particular, do not lose `static`, `const`, `readonly`, generic parameters, overload distinctions, accessor modifiers, or nullable annotations. A static SVG shows the complete represented hierarchy; collapse/expand behavior applies only to an interactive renderer that actually implements it.
 
 ### Atomic signature pills are still cards
 
