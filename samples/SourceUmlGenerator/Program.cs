@@ -558,8 +558,12 @@ static async Task<int> RunProjectModelMode(string[] arguments)
 
             var reflectedNames = metadata.TypeDefinitions
                 .Select(handle => (Handle: handle, Definition: metadata.GetTypeDefinition(handle)))
-                .Where(item => !metadata.GetString(item.Definition.Name).Contains("<", StringComparison.Ordinal))
-                .Select(item => MetadataQualifiedTypeName(metadata, item.Handle))
+                // Compiler-generated implementation-detail types (for example
+                // <PrivateImplementationDetails>.__StaticArrayInitTypeSize=32) are
+                // not source-declared types and must not be required in the Roslyn model.
+                .Select(item => (item.Handle, item.Definition, QualifiedName: MetadataQualifiedTypeName(metadata, item.Handle)))
+                .Where(item => !item.QualifiedName.Contains("<", StringComparison.Ordinal))
+                .Select(item => item.QualifiedName)
                 .ToHashSet(StringComparer.Ordinal);
             var sourceNames = model.Types.Select(ModelMetadataQualifiedTypeName)
                 .ToHashSet(StringComparer.Ordinal);
