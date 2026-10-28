@@ -6,8 +6,8 @@ namespace TheSingularityWorkshop.Workshop.Gui.Svg;
 
 /// <summary>Renders a source-grounded UML type view as nested, static semantic data cards.</summary>
 /// <remarks>
-/// This is a static SVG projection, not an interactive viewer. The SVG therefore renders all
-/// modeled member signatures and accessibility groups instead of implying click-to-expand behavior.
+/// The SVG projection is static, so all modeled tiers and signatures are visible. The outer
+/// hierarchy is accessibility-first; each tier then repeats the Properties, Methods, Fields order.
 /// </remarks>
 public sealed class SvgUmlClassDiagramRenderer
 {
@@ -22,7 +22,7 @@ public sealed class SvgUmlClassDiagramRenderer
     private const double Gap = 8;
     private const double Padding = 12;
 
-    // Shared Workshop palette tokens: stable semantic meaning, not depth-based decoration.
+    // Shared Workshop palette tokens: visibility identifies the outer tier; member kind identifies its subgroup.
     private const string NamespaceStroke = "#6da99b";
     private const string TypeStroke = "#ff823d";
     private const string PropertyStroke = "#d6b82e";
@@ -30,29 +30,33 @@ public sealed class SvgUmlClassDiagramRenderer
     private const string FieldStroke = "#4a90e2";
     private const string PublicStroke = "#2e9d70";
     private const string ProtectedStroke = "#d6b82e";
+    private const string InternalStroke = "#6da99b";
     private const string PrivateStroke = "#8b7ac8";
     private const string Ink = "#172b3a";
     private const string Paper = "#f7fafc";
 
-    /// <summary>Creates an accessible UML type diagram with nested member-category and visibility cards.</summary>
+    private sealed record MemberCategory(string Title, string Kind, string Stroke, IReadOnlyList<UmlMember> Members);
+    private sealed record VisibilityTier(string Name, string Stroke, string Fill, string Key, IReadOnlyList<UmlMember> Members);
+
+    /// <summary>Creates an accessible UML type diagram with nested visibility and member-category cards.</summary>
     public string Render(UmlClassDiagram model, int width = 960)
     {
         ArgumentNullException.ThrowIfNull(model);
         if (width < 480)
             throw new ArgumentOutOfRangeException(nameof(width), "Width must be at least 480 pixels.");
 
-        var sections = new[]
+        var categories = new[]
         {
-            (Title: "Properties", Kind: "property", Stroke: PropertyStroke, Members: model.Properties),
-            (Title: "Methods", Kind: "method", Stroke: MethodStroke, Members: model.Operations),
-            (Title: "Fields", Kind: "field", Stroke: FieldStroke, Members: model.Fields)
+            new MemberCategory("Properties", "property", PropertyStroke, model.Properties),
+            new MemberCategory("Methods", "method", MethodStroke, model.Operations),
+            new MemberCategory("Fields", "field", FieldStroke, model.Fields)
         };
+        var tiers = AccessibilityTiers(model.Properties.Concat(model.Operations).Concat(model.Fields).ToArray());
+        var tierHeight = tiers.Sum(tier => TierHeight(tier, categories)) + Gap * tiers.Count;
         var relationshipHeight = model.DeclaredRelationships.Count == 0
             ? 0
             : GroupHeaderHeight + model.DeclaredRelationships.Count * LineHeight + Gap;
-        var categoryHeight = sections.Sum(section => GroupHeight(section.Members, section.Stroke)) +
-            Gap * sections.Length;
-        var typeCardHeight = Padding * 2 + HeaderHeight + Gap + categoryHeight + relationshipHeight;
+        var typeCardHeight = Padding * 2 + HeaderHeight + Gap + tierHeight + relationshipHeight;
         var namespaceCardHeight = Padding * 2 + NamespaceHeaderHeight + Gap + typeCardHeight;
         var height = Top * 2 + namespaceCardHeight;
 
@@ -67,7 +71,7 @@ public sealed class SvgUmlClassDiagramRenderer
             new XAttribute("font-size", "14"),
             new XElement(Svg + "title", new XAttribute("id", "uml-title"), $"UML class diagram: {model.Name}"),
             new XElement(Svg + "desc", new XAttribute("id", "uml-desc"),
-                $"{model.Description} Static nested-card view. Member categories are ordered Properties, Methods, Fields; accessibility groups appear in Public, Protected, Private, then Internal / other order when populated. All represented signatures are visible in this SVG."));
+                $"{model.Description} Static nested-card view. Visibility tiers are ordered Public, Protected, Internal / assembly-visible, then Private / implementation-only. Within each tier, member categories are ordered Properties, Methods, Fields. All represented signatures are visible in this SVG."));
 
         var namespaceX = Left;
         var namespaceY = Top;
@@ -91,8 +95,8 @@ public sealed class SvgUmlClassDiagramRenderer
         svg.Add(Text(contentX + Padding, headerY + 43, heading, "#6b2e0c", "18", "700"));
         y = headerY + HeaderHeight + Gap;
 
-        foreach (var section in sections)
-            y = DrawCategory(svg, contentX, y, contentWidth, section.Title, section.Kind, section.Stroke, section.Members);
+        foreach (var tier in tiers)
+            y = DrawTier(svg, contentX, y, contentWidth, tier, categories);
 
         if (model.DeclaredRelationships.Count > 0)
         {
@@ -109,43 +113,77 @@ public sealed class SvgUmlClassDiagramRenderer
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
     }
 
-    private static double GroupHeight(IReadOnlyList<UmlMember> members, string stroke)
+    private static List<VisibilityTier> AccessibilityTiers(IReadOnlyList<UmlMember> members)
     {
-        var groups = AccessibilityGroups(members);
-        var height = GroupHeaderHeight + Gap + Padding;
-        foreach (var group in groups)
-            height += GroupHeaderHeight + group.Members.Sum(member => MemberHeight(member)) + Gap;
-        return Math.Max(GroupHeaderHeight + LineHeight + Padding, height);
+        var definitions = new[]
+        {
+            (Name: "Public", Stroke: PublicStroke, Fill: "#e5f7ed", Key: "public"),
+            (Name: "Protected", Stroke: ProtectedStroke, Fill: "#fff7d5", Key: "protected"),
+            (Name: "Internal / assembly-visible", Stroke: InternalStroke, Fill: "#e5f2f0", Key: "internal"),
+            (Name: "Private / implementation-only", Stroke: PrivateStroke, Fill: "#eee8fb", Key: "private")
+        };
+        return definitions
+            .Select(definition => new VisibilityTier(
+                definition.Name, definition.Stroke, definition.Fill, definition.Key,
+                members.Where(member => NormalizeVisibility(member.Visibility) == definition.Key).ToArray()))
+            .Where(tier => tier.Members.Count > 0)
+            .ToList();
     }
 
-    private static double DrawCategory(XElement svg, double x, double y, double width, string title,
-        string kind, string stroke, IReadOnlyList<UmlMember> members)
+    private static string NormalizeVisibility(string visibility)
     {
-        var categoryHeight = GroupHeight(members, stroke);
-        AddCard(svg, x, y, width, categoryHeight, stroke, Paper, "member-category " + kind, "3");
-        svg.Add(Text(x + Padding, y + 20, $"{title} ({members.Count})", Ink, "14", "700"));
+        var normalized = (visibility ?? string.Empty).Trim().ToLowerInvariant();
+        if (normalized == "public") return "public";
+        if (normalized == "protected") return "protected";
+        if (normalized is "internal" or "protected internal" or "internal protected") return "internal";
+        if (normalized is "private" or "private protected" or "protected private") return "private";
+        return "internal";
+    }
+
+    private static double TierHeight(VisibilityTier tier, IReadOnlyList<MemberCategory> categories)
+    {
+        var categoryHeight = categories.Sum(category =>
+            CategoryHeight(category, tier.Members.Where(member => category.Members.Contains(member)).ToArray()));
+        return GroupHeaderHeight + Gap + categoryHeight + categories.Count(category =>
+            tier.Members.Any(member => category.Members.Contains(member))) * Gap;
+    }
+
+    private static double CategoryHeight(MemberCategory category, IReadOnlyList<UmlMember> members)
+    {
+        if (members.Count == 0) return 0;
+        return GroupHeaderHeight + Padding + members.Sum(MemberHeight) + Gap * (members.Count - 1);
+    }
+
+    private static double DrawTier(XElement svg, double x, double y, double width, VisibilityTier tier,
+        IReadOnlyList<MemberCategory> categories)
+    {
+        var tierCategories = categories
+            .Select(category => new MemberCategory(category.Title, category.Kind, category.Stroke,
+                tier.Members.Where(member => category.Members.Contains(member)).ToArray()))
+            .Where(category => category.Members.Count > 0)
+            .ToArray();
+        var height = GroupHeaderHeight + Gap +
+            tierCategories.Sum(category => CategoryHeight(category, category.Members)) +
+            Gap * tierCategories.Length;
+        AddCard(svg, x, y, width, height, tier.Stroke, tier.Fill,
+            "accessibility-tier " + tier.Key, "3");
+        svg.Add(Text(x + Padding, y + 20, $"{tier.Name} ({tier.Members.Count})", Ink, "14", "700"));
+
         var innerX = x + Padding;
         var innerWidth = width - Padding * 2;
         var innerY = y + GroupHeaderHeight + Gap;
-        var groups = AccessibilityGroups(members);
-        if (groups.Count == 0)
+        foreach (var category in tierCategories)
         {
-            svg.Add(Text(innerX + Padding, innerY + 14, "No members", "#506779", "12", "normal"));
-            return y + categoryHeight + Gap;
-        }
-
-        foreach (var group in groups)
-        {
-            var groupHeight = GroupHeaderHeight + group.Members.Sum(MemberHeight);
-            AddCard(svg, innerX, innerY, innerWidth, groupHeight, group.Stroke, group.Fill,
-                "accessibility-group " + group.Name.ToLowerInvariant(), "2");
-            svg.Add(Text(innerX + Padding, innerY + 20, $"{group.Name} ({group.Members.Count})", Ink, "12", "700"));
-            var memberY = innerY + GroupHeaderHeight;
-            foreach (var member in group.Members)
+            var categoryHeight = CategoryHeight(category, category.Members);
+            AddCard(svg, innerX, innerY, innerWidth, categoryHeight, category.Stroke, Paper,
+                "member-category " + category.Kind, "2");
+            svg.Add(Text(innerX + Padding, innerY + 20, $"{category.Title} ({category.Members.Count})", Ink, "13", "700"));
+            var memberY = innerY + GroupHeaderHeight + Padding;
+            foreach (var member in category.Members)
             {
                 var memberHeight = MemberHeight(member);
                 AddCard(svg, innerX + Padding, memberY, innerWidth - Padding * 2, memberHeight,
-                    stroke, "#ffffff", "member " + kind, "1");
+                    category.Stroke, "#ffffff", "member " + category.Kind, "1");
                 var marker = member.IsStatic ? "  {static}" : string.Empty;
                 var signature = string.IsNullOrWhiteSpace(member.Signature) ? member.Name : member.Signature;
                 var lines = signature.Split('\n');
@@ -153,40 +191,14 @@ public sealed class SvgUmlClassDiagramRenderer
                     svg.Add(Text(innerX + Padding * 2, memberY + 16 + line * LineHeight,
                         (line == 0 ? VisibilityMarker(member.Visibility) + " " : "  ") + lines[line].TrimEnd('\r') +
                         (line == lines.Length - 1 ? marker : string.Empty), Ink, "12", "normal"));
-                memberY += memberHeight;
+                memberY += memberHeight + Gap;
             }
-            innerY += groupHeight + Gap;
+            innerY += categoryHeight + Gap;
         }
-        return y + categoryHeight + Gap;
+        return y + height + Gap;
     }
 
-    private static List<(string Name, string Stroke, string Fill, List<UmlMember> Members)> AccessibilityGroups(
-        IReadOnlyList<UmlMember> members)
-    {
-        var result = new List<(string, string, string, List<UmlMember>)>();
-        Add("Public", PublicStroke, "#eaf7f0", "public");
-        Add("Protected", ProtectedStroke, "#fff9df", "protected");
-        Add("Private", PrivateStroke, "#f1edfb", "private");
-        Add("Internal / other", NamespaceStroke, "#e8f4f1", "other");
-        return result.Where(group => group.Item4.Count > 0).ToList();
-
-        void Add(string name, string stroke, string fill, string visibility)
-        {
-            var groupMembers = members.Where(member => NormalizeVisibility(member.Visibility) == visibility).ToList();
-            if (groupMembers.Count > 0)
-                result.Add((name, stroke, fill, groupMembers));
-        }
-    }
-
-    private static string NormalizeVisibility(string visibility) => visibility switch
-    {
-        "public" => "public",
-        "protected" => "protected",
-        "private" => "private",
-        _ => "other"
-    };
-
-    private static string VisibilityMarker(string visibility) => visibility switch
+    private static string VisibilityMarker(string visibility) => NormalizeVisibility(visibility) switch
     {
         "public" => "+",
         "protected" => "#",
