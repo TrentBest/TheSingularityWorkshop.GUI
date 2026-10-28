@@ -197,8 +197,10 @@ public sealed class SvgUmlDocumentationGraphRenderer
             double targetPortY;
             if (isSelf)
             {
-                var startX = sourcePosition.X + NodeWidth - 42;
-                var endX = sourcePosition.X + NodeWidth - 42;
+                // Attach the loop at the card boundary. Anchoring 42 px inside the node makes the
+                // connector visibly cut across the card border and can look like a clipped edge.
+                var startX = sourcePosition.X + NodeWidth;
+                var endX = sourcePosition.X + NodeWidth;
                 var startY = sourcePosition.Y + 36;
                 var endY = sourcePosition.Y + 92;
                 var loopX = sourcePosition.X + NodeWidth + 52;
