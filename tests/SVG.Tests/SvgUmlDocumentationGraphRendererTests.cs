@@ -90,6 +90,12 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             ]);
 
         var document = XDocument.Parse(new SvgUmlDocumentationGraphRenderer().Render(model, a.Id));
+        var reviewArtifactPath = Environment.GetEnvironmentVariable("GUI_UML_REVIEW_ARTIFACT");
+        if (!string.IsNullOrWhiteSpace(reviewArtifactPath))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(reviewArtifactPath))!);
+            document.Save(reviewArtifactPath);
+        }
         Assert.Equal("Source-derived UML neighborhood: Fixture.A", document.Root!.Element(Svg + "title")!.Value);
         Assert.Contains(document.Root.Elements(Svg + "rect"), rect =>
             ((string?)rect.Attribute("data-canvas-background")) == "true" &&
