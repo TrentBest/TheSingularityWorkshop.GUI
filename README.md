@@ -13,16 +13,16 @@ flowchart TD
   I[Interface intent] --> M[Neutral GUI model]
   M --> B[Recursive builders]
   B --> BL[Blazor adapter]
-  B --> SVG[SVG adapter]
+  B --> SVG[GUI.SVG interoperability adapter]
   B --> WPF[WPF renderer]
   BL --> WEB[Blazor host]
-  SVG --> ART[Inspectable SVG artifact]
+  SVG --> ART[SVG manifestation of a GUI tree]
   WPF --> NATIVE[Native WPF controls]
 ```
 
 ## 🟦 01 What
 
-Core provides the neutral recursive model and builder contracts. Adapters translate that model into platform-specific output; consuming applications retain their own domain meaning and behavior.
+Core provides the neutral recursive model and builder contracts. Adapters translate that model into platform-specific output; consuming applications retain their own domain meaning and behavior. GUI.SVG is specifically the adapter for manifesting a semantic GUI tree as SVG. General visual-scene and Visualizer-frame SVG artifacts belong to [Visualize](https://github.com/TrentBest/TheSingularityWorkshop.Visualize), not GUI.
 
 ## 🟣 02 Why
 
@@ -30,7 +30,7 @@ A neutral interface model lets one description of intent be manifested by differ
 
 ## 🔺 03 How
 
-Describe interface intent in the Core model, then pass it to an adapter. The current repository contains Blazor and WPF renderers plus an SVG manifestation adapter for supported scene nodes and coordinate-system scenes. Their contracts and coverage differ: the WPF renderer has focused Windows-native tests, while the shared conformance suite is intentionally narrow. SVG output is inspectable and may use declarative SVG animation; it is not a GUI-owned animation clock or a GPU pipeline.
+Describe interface intent in the Core model, then pass it to an adapter. The repository contains Blazor and WPF renderers plus GUI.SVG for semantic GUI-tree manifestation. Their contracts and coverage differ: the WPF renderer has focused Windows-native tests, while the shared conformance suite is intentionally narrow. SVG output is inspectable and may use declarative SVG animation; it is not a GUI-owned animation clock or a GPU pipeline. For general visual scenes and Visualizer frames, use Visualize's independent SVG artifact backend.
 
 ## 🟢 04 See it in a minute
 
@@ -52,14 +52,14 @@ Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md
 
 The visual above is a reference manifestation of the architectural idea: semantic interaction and runtime behavior remain distinct from platform-specific presentation.
 
-The repository exists to separate GUI intent from GUI manifestation. It includes the neutral Core model, a Blazor renderer, an SVG manifestation adapter for its supported scene vocabulary, and reusable WPF builders with a tested initial Core-to-WPF renderer. Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
+The repository exists to separate GUI intent from GUI manifestation. It includes the neutral Core model, a Blazor renderer, a GUI-tree-to-SVG interoperability adapter, and reusable WPF builders with a tested initial Core-to-WPF renderer. For general scene geometry, resources, draw commands, and SVG artifact output, use Visualize's GUI-independent [SVG artifact backend](https://github.com/TrentBest/TheSingularityWorkshop.Visualize/blob/development/SvgVisualizerBackend.cs). Unity UI Toolkit remains a candidate future adapter, not a currently supported target.
 
 ## Repository structure
 
 - `src/Core` — neutral recursive GUI model and platform-independent primitives.
 - `src/Blazor` — Blazor renderer and Core-to-web manifestation.
 - `src/WPF` — WPF renderer and WPF-specific identity bridge.
-- `src/SVG` — SVG manifestation adapter for supported 2D scene nodes.
+- `src/SVG` — SVG interoperability adapter for semantic GUI trees; general visual-scene SVG output belongs to Visualize.
 - `tests/Core.Tests` — platform-independent contract tests.
 - `tests/Blazor.Tests` — Blazor render-tree contract tests.
 - `tests/SVG.Tests` — SVG serialization and coordinate-mapping contract tests.
