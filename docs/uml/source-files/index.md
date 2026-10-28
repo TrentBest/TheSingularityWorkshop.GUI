@@ -1,7 +1,7 @@
 # Solution-level source-derived UML inventory
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Source revision: `35bb31b337c1340f8713babd0d411f86f0d602cd`
+- Source revision: `0644fd4a6c6dc743fb9882f25358651ebbed954b`
 - Scope: maintained product projects under `src/`; tests, samples, tooling, and documentation projects are deliberately excluded.
 - Evidence: each project is restored and built in Release, loaded with MSBuild/Roslyn, checked for compiler errors, and reconciled against the exact build output by assembly identity and type metadata inventory.
 - Framework policy: each included project must currently declare exactly one literal target framework. Multi-targeted projects fail closed until per-framework output partitioning is implemented.
