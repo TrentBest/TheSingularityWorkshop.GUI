@@ -90,7 +90,7 @@ jobs:
 
       - name: Test SVG
         env:
-          GUI_UML_REVIEW_ARTIFACT: ./artifacts/uml-self-reference-review.svg
+          GUI_UML_REVIEW_ARTIFACT: ${{ github.workspace }}/artifacts/uml-self-reference-review.svg
         run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
 
       - name: Upload focused UML self-reference review artifact
