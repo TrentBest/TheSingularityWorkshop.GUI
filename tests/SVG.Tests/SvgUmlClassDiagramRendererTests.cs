@@ -124,6 +124,42 @@ public sealed class SvgUmlClassDiagramRendererTests
     }
 
     [Fact]
+    public void Preserves_combined_and_unrecognized_accessibility_without_mislabelling()
+    {
+        var model = new UmlClassDiagram(
+            "AccessExample",
+            fields:
+            [
+                new UmlMember("Wide", "Wide : int", "protected internal"),
+                new UmlMember("Narrow", "Narrow : int", "private protected"),
+                new UmlMember("Mystery", "Mystery : int", "future-access"),
+                new UmlMember("Missing", "Missing : int", " ")
+            ]);
+
+        var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
+        var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
+
+        Assert.Contains("[protected internal] Wide : int", text);
+        Assert.Contains("[private protected] Narrow : int", text);
+        Assert.Contains("[visibility: future-access] Mystery : int", text);
+        Assert.Contains("[visibility: unspecified] Missing : int", text);
+        Assert.Contains("Internal / assembly-visible (1)", text);
+        Assert.Contains("Private / implementation-only (1)", text);
+        Assert.Contains("Unspecified / unrecognized (2)", text);
+
+        var tiers = document.Descendants(Svg + "rect")
+            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("accessibility-tier ", StringComparison.Ordinal) == true)
+            .Select(element => (string)element.Attribute("data-card-kind")!)
+            .ToArray();
+        Assert.Equal(new[]
+        {
+            "accessibility-tier internal",
+            "accessibility-tier private",
+            "accessibility-tier unknown"
+        }, tiers);
+    }
+
+    [Fact]
     public void Rejects_too_narrow_diagram_width()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
