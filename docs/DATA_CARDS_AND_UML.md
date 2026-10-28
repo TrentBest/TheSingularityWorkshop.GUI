@@ -39,8 +39,9 @@ The type's member surface is presented as a **vertical stack of nested visibilit
 
 1. **Public** — the first and most prominent visibility card.
 2. **Protected** — the next visibility card below Public.
-3. **Internal / assembly-visible** — include this tier when the source model has such members; preserve distinctions such as `internal` and `protected internal`.
-4. **Private / implementation-only** — the lowest and most internally scoped tier, including `private protected` where the documented grouping policy places it.
+3. **Internal / assembly-visible** — includes ordinary `internal` members and the navigation grouping for `protected internal`.
+4. **Private / implementation-only** — includes ordinary `private` members and the navigation grouping for `private protected`.
+5. **Unspecified / unrecognized** — a fail-visible fallback for blank or unsupported visibility values; never silently treat unknown input as Internal.
 
 The exact grouping policy must preserve the original language accessibility as metadata and display text. These tiers are a navigation and presentation hierarchy, not a claim that C# has only four accessibility modifiers. If a language-specific member cannot be assigned without losing meaning, retain its exact modifier and put it in the documented appropriate tier rather than silently relabeling it.
 
@@ -51,7 +52,7 @@ Within **each visibility card**, member categories are ordered consistently:
 3. **Fields**
 4. Other member kinds (constructors, events, operators, nested types, and any additional declarations) in documented subgroups.
 
-For example, the Public card contains a Public Properties subgroup, then Public Methods, then Public Fields. The Protected card repeats the same internal order, and so on for each lower tier. These category subgroups contain one identifiable data card per declaration. Do not put all properties, methods, and fields in one undifferentiated list, and do not place every visibility group side-by-side as peer columns: the intended reading direction is **top to bottom from most exposed to least exposed**.
+For example, the Public card contains a Properties subgroup, then Methods, then Fields. The Protected, Internal / assembly-visible, and Private / implementation-only cards repeat that same internal order. These category subgroups contain one identifiable data card per declaration. Do not put all properties, methods, and fields in one undifferentiated list, and do not place every visibility group side-by-side as peer columns: the intended reading direction is **top to bottom from most exposed to least exposed**.
 
 ### Color and visual distinction
 
@@ -94,7 +95,7 @@ The initial presentation policy is:
 | --- | --- |
 | Namespace and type hierarchy | Expanded enough to reveal the public structure |
 | Usings section and individual using-directive cards | Collapsed by default; preserve source order |
-| Public/Protected/Private member-group cards | Public expanded; Protected and Private collapsed |
+| Visibility-tier cards | Public first, then Protected, Internal / assembly-visible, Private / implementation-only, and Unspecified / unrecognized when present |
 | Public member cards | Expanded to show declaration/signature; details remain separately expandable |
 | Public field/property/method/constructor declaration | Expanded to its declaration/name/signature |
 | Public field/property initializer and accessor details | Collapsed until that member card is expanded |
