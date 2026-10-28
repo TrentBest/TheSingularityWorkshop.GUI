@@ -120,7 +120,8 @@ public sealed class SvgUmlClassDiagramRenderer
             (Name: "Public", Stroke: PublicStroke, Fill: "#e5f7ed", Key: "public"),
             (Name: "Protected", Stroke: ProtectedStroke, Fill: "#fff7d5", Key: "protected"),
             (Name: "Internal / assembly-visible", Stroke: InternalStroke, Fill: "#e5f2f0", Key: "internal"),
-            (Name: "Private / implementation-only", Stroke: PrivateStroke, Fill: "#eee8fb", Key: "private")
+            (Name: "Private / implementation-only", Stroke: PrivateStroke, Fill: "#eee8fb", Key: "private"),
+            (Name: "Unspecified / unrecognized", Stroke: "#777777", Fill: "#f0f0f0", Key: "unknown")
         };
         return definitions
             .Select(definition => new VisibilityTier(
@@ -137,7 +138,7 @@ public sealed class SvgUmlClassDiagramRenderer
         if (normalized == "protected") return "protected";
         if (normalized is "internal" or "protected internal" or "internal protected") return "internal";
         if (normalized is "private" or "private protected" or "protected private") return "private";
-        return "internal";
+        return "unknown";
     }
 
     private static double TierHeight(VisibilityTier tier, IReadOnlyList<MemberCategory> categories)
@@ -189,7 +190,7 @@ public sealed class SvgUmlClassDiagramRenderer
                 var lines = signature.Split('\n');
                 for (var line = 0; line < lines.Length; line++)
                     svg.Add(Text(innerX + Padding * 2, memberY + 16 + line * LineHeight,
-                        (line == 0 ? VisibilityMarker(member.Visibility) + " " : "  ") + lines[line].TrimEnd('\r') +
+                        (line == 0 ? VisibilityMarker(member.Visibility) + " " + VisibilityQualifier(member.Visibility) : "  ") + lines[line].TrimEnd('\r') +
                         (line == lines.Length - 1 ? marker : string.Empty), Ink, "12", "normal"));
                 memberY += memberHeight + Gap;
             }
@@ -203,8 +204,21 @@ public sealed class SvgUmlClassDiagramRenderer
         "public" => "+",
         "protected" => "#",
         "private" => "-",
+        "unknown" => "?",
         _ => "~"
     };
+
+    // Combined C# accessibility is grouped for navigation, but the exact modifier remains explicit.
+    // Unknown input is never silently mislabeled as assembly-visible.
+    private static string VisibilityQualifier(string visibility)
+    {
+        var normalized = (visibility ?? string.Empty).Trim().ToLowerInvariant();
+        if (normalized is "protected internal" or "internal protected" or "private protected" or "protected private")
+            return $"[{normalized}] ";
+        if (normalized.Length == 0 || NormalizeVisibility(normalized) == "unknown")
+            return $"[visibility: {(normalized.Length == 0 ? "unspecified" : normalized)}] ";
+        return string.Empty;
+    }
 
     private static double MemberHeight(UmlMember member) =>
         MemberHeaderHeight + Math.Max(1, (string.IsNullOrWhiteSpace(member.Signature) ? member.Name : member.Signature)
