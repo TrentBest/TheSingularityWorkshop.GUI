@@ -10,7 +10,7 @@ public sealed class SvgUmlClassDiagramRendererTests
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
 
     [Fact]
-    public void Renders_nested_cards_in_category_and_visibility_order_with_accessible_description()
+    public void Renders_visibility_tiers_outside_ordered_member_categories_with_accessible_description()
     {
         var model = new UmlClassDiagram(
             "DataCard",
@@ -19,7 +19,8 @@ public sealed class SvgUmlClassDiagramRendererTests
             fields:
             [
                 new UmlMember("_children", "_children : ReadOnlyCollection<DataCard>", "private"),
-                new UmlMember("Cache", "Cache : int", "internal", IsStatic: true)
+                new UmlMember("Cache", "Cache : int", "internal", IsStatic: true),
+                new UmlMember("Shared", "Shared : int", "protected internal")
             ],
             properties: [new UmlMember("Id", "Id : string {get}", "public")],
             operations:
@@ -34,68 +35,73 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Equal("UML class diagram: DataCard", document.Root!.Element(Svg + "title")!.Value);
         var description = document.Root.Element(Svg + "desc")!.Value;
         Assert.Contains("Static nested-card view", description);
-        Assert.Contains("Public, Protected, Private, then Internal / other order", description);
+        Assert.Contains("Visibility tiers are ordered Public, Protected, Internal / assembly-visible, then Private / implementation-only", description);
+        Assert.Contains("member categories are ordered Properties, Methods, Fields", description);
         Assert.Contains("source-declared association candidate", description);
 
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains("Properties (1)", text);
         Assert.Contains("Methods (3)", text);
-        Assert.Contains("Fields (2)", text);
-        Assert.Contains("Public (1)", text);
+        Assert.Contains("Fields (3)", text);
+        Assert.Contains("Public (2)", text);
         Assert.Contains("Protected (1)", text);
-        Assert.Contains("Private (1)", text);
-        Assert.Contains("Internal / other (1)", text);
+        Assert.Contains("Internal / assembly-visible (2)", text);
+        Assert.Contains("Private / implementation-only (2)", text);
         Assert.Contains("GetCollapsedSummary", text);
         Assert.Contains("Children", text);
         Assert.Contains("TheSingularityWorkshop.Workshop.Gui", text);
 
-        var cards = document.Descendants(Svg + "rect")
-            .GroupBy(element => (string)element.Attribute("data-card-kind")!, StringComparer.Ordinal)
-            .ToDictionary(group => group.Key, group => group.First(), StringComparer.Ordinal);
-        Assert.True(Contains(cards["namespace-container"], cards["type-container"]));
-        Assert.True(Contains(cards["type-container"], cards["type-header"]));
-        Assert.True(Contains(cards["type-container"], cards["member-category property"]));
-        Assert.True(Contains(cards["type-container"], cards["member-category method"]));
-        Assert.True(Contains(cards["type-container"], cards["member-category field"]));
+        var rects = document.Descendants(Svg + "rect").ToArray();
+        var namespaceCard = rects.Single(element => (string?)element.Attribute("data-card-kind") == "namespace-container");
+        var typeCard = rects.Single(element => (string?)element.Attribute("data-card-kind") == "type-container");
+        var typeHeader = rects.Single(element => (string?)element.Attribute("data-card-kind") == "type-header");
+        Assert.True(Contains(namespaceCard, typeCard));
+        Assert.True(Contains(typeCard, typeHeader));
 
-        // Assert every nested visibility card is inside its category, and every member card
-        // is inside both its visibility card and category. This catches overflow that a
-        // namespace/type-only containment check would miss.
-        var allRects = document.Descendants(Svg + "rect").ToArray();
-        var categoryRects = allRects
-            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category", StringComparison.Ordinal) == true)
-            .ToArray();
-        var visibilityRects = allRects
-            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("accessibility-group", StringComparison.Ordinal) == true)
-            .ToArray();
-        var memberRects = allRects
-            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member ", StringComparison.Ordinal) == true)
-            .ToArray();
-
-        foreach (var visibility in visibilityRects)
+        var tiers = rects.Where(element =>
+            ((string?)element.Attribute("data-card-kind"))?.StartsWith("accessibility-tier ", StringComparison.Ordinal) == true).ToArray();
+        Assert.Equal(new[]
         {
-            var category = categoryRects.Single(candidate => Contains(candidate, visibility));
-            Assert.True(Contains(category, visibility));
+            "accessibility-tier public",
+            "accessibility-tier protected",
+            "accessibility-tier internal",
+            "accessibility-tier private"
+        }, tiers.Select(element => (string)element.Attribute("data-card-kind")!));
+
+        var categories = rects.Where(element =>
+            ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category ", StringComparison.Ordinal) == true).ToArray();
+        Assert.Equal(new[]
+        {
+            "member-category property", "member-category method",
+            "member-category method",
+            "member-category field",
+            "member-category method", "member-category field"
+        }, categories.Select(element => (string)element.Attribute("data-card-kind")!));
+
+        foreach (var tier in tiers)
+        {
+            Assert.True(Contains(typeCard, tier), "every visibility tier must be nested inside the type card");
+            var tierCategories = categories.Where(category => Contains(tier, category)).ToArray();
+            Assert.NotEmpty(tierCategories);
+            foreach (var category in tierCategories)
+                Assert.True(Contains(tier, category), "member categories must be nested inside their visibility tier");
         }
 
-        foreach (var member in memberRects)
+        var members = rects.Where(element =>
+            ((string?)element.Attribute("data-card-kind"))?.StartsWith("member ", StringComparison.Ordinal) == true).ToArray();
+        foreach (var member in members)
         {
-            var visibility = visibilityRects.Single(candidate => Contains(candidate, member));
-            var category = categoryRects.Single(candidate => Contains(candidate, visibility));
-            Assert.True(Contains(visibility, member));
+            var category = categories.Single(candidate => Contains(candidate, member));
+            var tier = tiers.Single(candidate => Contains(candidate, category));
             Assert.True(Contains(category, member));
+            Assert.True(Contains(tier, member));
         }
 
-        var categories = document.Descendants(Svg + "rect")
-            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category", StringComparison.Ordinal) == true)
-            .Select(element => (string)element.Attribute("data-card-kind")!)
-            .ToArray();
-        Assert.Equal(new[] { "member-category property", "member-category method", "member-category field" }, categories);
-
-        var strokes = document.Descendants(Svg + "rect").Select(element => (string?)element.Attribute("stroke")).ToArray();
+        var strokes = rects.Select(element => (string?)element.Attribute("stroke")).ToArray();
         Assert.Contains("#d6b82e", strokes);
         Assert.Contains("#2e9d70", strokes);
         Assert.Contains("#4a90e2", strokes);
+        Assert.Contains("#6da99b", strokes);
         Assert.Contains("#8b7ac8", strokes);
     }
 
