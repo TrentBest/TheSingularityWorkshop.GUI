@@ -1,8 +1,8 @@
 # GUI.SVG adapter
 
-GUI.SVG is the SVG manifestation adapter for the platform-neutral GUI model. It accepts a `GuiNode` snapshot and produces a standalone SVG XML document. It is useful for inspectable 2D scenes, generated documentation diagrams, visual proofs, and CPU-side integrations such as the Visualize proof backend.
+GUI.SVG is the SVG interoperability adapter for the platform-neutral GUI model. It accepts a `GuiNode` snapshot and produces a standalone SVG XML document when an actual semantic GUI tree is the source.
 
-It is deliberately an adapter, not a second semantic model. Core owns the node tree; this package owns SVG element names, attributes, XML escaping, SVG coordinate conventions, and SVG animation instructions.
+It is deliberately an adapter, not a general visualization engine or a second semantic model. GUI Core owns the node tree; GUI.SVG owns GUI-node-to-SVG mapping, SVG element names and attributes, XML escaping, GUI coordinate conventions, and declarative animation instructions. General visual scenes, geometry, materials, draw commands, and Visualizer-frame-to-SVG artifacts belong to Visualize and must not require GUI merely to serialize a visual scene. See [Visualize issue #34](https://github.com/TrentBest/TheSingularityWorkshop.Visualize/issues/34) and [GUI issue #61](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/61).
 
 ## Quick example
 
@@ -117,7 +117,7 @@ Run:
 dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
 ```
 
-For the Visualize integration, see the [Visualize repository](https://github.com/TrentBest/TheSingularityWorkshop.Visualize) and its GUI.SVG proof output. Visualize consumes GUI.SVG through an explicit adapter; neither repository is a dependency of the other's Core model.
+For general Visualizer frames, geometry, materials, and draw commands, use Visualize's independent [SVG artifact backend](https://github.com/TrentBest/TheSingularityWorkshop.Visualize/blob/development/SvgVisualizerBackend.cs), which has no GUI.Core or GUI.SVG dependency. The [optional Visualize → GUI.SVG proof](https://github.com/TrentBest/TheSingularityWorkshop.Visualize/tree/development/integrations/GuiSvg) remains useful as an interoperability example, but it is not the owner-side implementation for general scene output.
 
 
 ## Capability boundaries: interaction, sound, and the fox/sheepdog scene
