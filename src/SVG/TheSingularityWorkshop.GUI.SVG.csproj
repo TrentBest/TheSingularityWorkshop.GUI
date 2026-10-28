@@ -10,8 +10,8 @@
     <Company>The Singularity Workshop</Company>
     <RepositoryUrl>https://github.com/TrentBest/TheSingularityWorkshop.GUI</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <PackageDescription>SVG manifestation adapter for the platform-neutral Workshop GUI model, including inspectable 2D scenes.</PackageDescription>
-    <PackageTags>gui;svg;2d;visualization;adapter;accessibility</PackageTags>
+    <PackageDescription>SVG interoperability adapter for the platform-neutral Workshop GUI semantic tree.</PackageDescription>
+    <PackageTags>gui;svg;semantic-ui;accessibility;adapter</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
