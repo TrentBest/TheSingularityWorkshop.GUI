@@ -33,6 +33,47 @@ The existing `GuiNode` is a generic recursive GUI snapshot. It can carry a manif
 
 The first implementation should support namespaces and classes without making the model class-only. Interfaces, structs, enums, records, nested types, and other member kinds should fit the same vocabulary when the domain model supplies them.
 
+## Visibility-tier composition: the intended visual hierarchy
+
+The type's member surface is presented as a **vertical stack of nested visibility data cards**, not as one flat list of member groups. Each tier is a complete, bordered, colored card. The most exposed tier comes first; progressively less accessible tiers appear below it, ending with the most internal tier:
+
+1. **Public** — the first and most prominent visibility card.
+2. **Protected** — the next visibility card below Public.
+3. **Internal / assembly-visible** — include this tier when the source model has such members; preserve distinctions such as `internal` and `protected internal`.
+4. **Private / implementation-only** — the lowest and most internally scoped tier, including `private protected` where the documented grouping policy places it.
+
+The exact grouping policy must preserve the original language accessibility as metadata and display text. These tiers are a navigation and presentation hierarchy, not a claim that C# has only four accessibility modifiers. If a language-specific member cannot be assigned without losing meaning, retain its exact modifier and put it in the documented appropriate tier rather than silently relabeling it.
+
+Within **each visibility card**, member categories are ordered consistently:
+
+1. **Properties**
+2. **Methods**
+3. **Fields**
+4. Other member kinds (constructors, events, operators, nested types, and any additional declarations) in documented subgroups.
+
+For example, the Public card contains a Public Properties subgroup, then Public Methods, then Public Fields. The Protected card repeats the same internal order, and so on for each lower tier. These category subgroups contain one identifiable data card per declaration. Do not put all properties, methods, and fields in one undifferentiated list, and do not place every visibility group side-by-side as peer columns: the intended reading direction is **top to bottom from most exposed to least exposed**.
+
+### Color and visual distinction
+
+Make this composition noticeably more colorful than the current restrained relationship-neighborhood cards, while keeping the palette systematic and readable:
+
+- Give each visibility tier its own stable semantic color family, with Public the clearest/highest-emphasis treatment and lower tiers visually stepping toward quieter, deeper, or more muted treatments.
+- Give the Properties, Methods, and Fields subgroups distinct but coordinated accents so category is immediately scannable inside every tier.
+- Use consistent header fills or bands, visible card borders, and a contrasting body surface; nested cards must remain visually enclosed rather than looking like colored text labels.
+- Use text labels and/or icons alongside color. Color must reinforce meaning, never be the only way to identify access level or member kind.
+- Keep text contrast, line weight, spacing, and nesting depth legible when many cards are present. Do not rely on color alone to communicate disabled, collapsed, selected, or editable states.
+- Define the palette as shared presentation tokens so SVG, WPF, and other renderers manifest the same semantics rather than independently inventing colors.
+
+This visibility-tier data-card view is distinct from the target-centered neighborhood diagram. The data-card view explains **what a type contains and how its members are exposed**. The neighborhood view explains **which other types consume or are used by the focal type**. They may share card primitives, identity, semantic colors, and interaction conventions, but they have different layout rules and must not be conflated into a single graph.
+
+### Default expansion for visibility tiers
+
+- Show the Public tier first and expanded enough to reveal its Properties, Methods, and Fields subgroups.
+- Public member cards reveal their declaration/signature by default; expensive or detailed content such as property accessors, initializers, and method bodies stays separately collapsed.
+- Show lower visibility tiers underneath Public in the defined order. Their headers remain visible even when their contents are collapsed, with direct-item counts where useful (for example, `Protected — Collapsed (4)`).
+- Preserve a stable vertical stack as the user expands or collapses a tier; expansion must not reorder semantic groups or alter the authoritative source model.
+- Empty tiers should be handled intentionally: omit them in compact read-only views, or retain an empty tier with a valid add affordance only when the edit-mode domain commands permit insertion.
+
 ## Source-code tree: AST-backed cards
 
 For C# source, the authoritative representation should be a real **Abstract Syntax Tree (AST)** or syntax model produced by a C#-aware parser. The AST is the source structure; the data-card tree is its renderer-neutral presentation. Do not make GUI Core parse C#, and do not let SVG/XML or a hand-maintained card hierarchy become a competing source of truth. A code-domain adapter translates AST nodes into data cards and maps validated edit commands back to the source model. Preserve source trivia and formatting where the chosen syntax technology supports it.
