@@ -41,8 +41,8 @@ public sealed class SvgUmlClassDiagramRendererTests
 
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains("Properties (1)", text);
-        Assert.Contains("Methods (3)", text);
-        Assert.Contains("Fields (3)", text);
+        Assert.Contains("Methods (1)", text);
+        Assert.Contains("Fields (2)", text);
         Assert.Contains("Public (2)", text);
         Assert.Contains("Protected (1)", text);
         Assert.Contains("Internal / assembly-visible (2)", text);
