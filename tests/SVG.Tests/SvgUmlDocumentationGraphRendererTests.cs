@@ -128,6 +128,52 @@ public sealed class SvgUmlDocumentationGraphRendererTests
     }
 
     [Fact]
+    public void Routes_self_reference_from_the_focus_card_boundary()
+    {
+        var source = new UmlSourceDeclaration("Fixture/Self.cs", new UmlSourceSpan(0, 20, 1, 1, 1, 21));
+        var self = new UmlDocumentedType(
+            "type:Fixture:Self",
+            new UmlTypeIdentity("Fixture", "Fixture", [], "Self", 0, "class"),
+            [source],
+            []);
+        var model = new UmlDocumentationModel(
+            "1.0",
+            new UmlModelProvenance("TrentBest/TheSingularityWorkshop.GUI", "0123456789abcdef0123456789abcdef01234567", "Fixture/Fixture.csproj", "Fixture", "net8.0", "Release", "project-semantic", null),
+            [self],
+            [new UmlDocumentedRelationship(
+                "edge:self:self",
+                UmlRelationshipKind.Association,
+                self.Id,
+                self.Id,
+                "global::Fixture.Self",
+                UmlRelationshipResolution.Resolved,
+                null,
+                "source-to-target",
+                "self reference",
+                null,
+                null,
+                new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "Self.Self"))]);
+
+        var document = XDocument.Parse(new SvgUmlDocumentationGraphRenderer().Render(model, self.Id));
+        var node = document.Descendants(Svg + "g")
+            .Single(group => (string?)group.Attribute("data-type-id") == self.Id &&
+                group.Attribute("id") is not null);
+        var rect = node.Element(Svg + "rect")!;
+        var right = double.Parse((string)rect.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture) +
+            double.Parse((string)rect.Attribute("width")!, System.Globalization.CultureInfo.InvariantCulture);
+        var loop = document.Descendants(Svg + "path")
+            .Single(path => ((string?)path.Attribute("d"))?.Contains(" C ", StringComparison.Ordinal) == true);
+        var coordinates = System.Text.RegularExpressions.Regex.Matches(
+            (string)loop.Attribute("d")!, @"-?\\d+(?:\\.\\d+)?")
+            .Select(match => double.Parse(match.Value, System.Globalization.CultureInfo.InvariantCulture))
+            .ToArray();
+
+        Assert.Equal(right, coordinates[0], 2);
+        Assert.Equal(right, coordinates[^2], 2);
+        Assert.Contains(document.Descendants(Svg + "text"), label => label.Value == "self-reference");
+    }
+
+    [Fact]
     public void Rejects_unknown_focus_type_id()
     {
         var model = new UmlDocumentationModel(
