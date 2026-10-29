@@ -3,7 +3,7 @@
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`0644fd4a6c6dc743fb9882f25358651ebbed954b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/0644fd4a6c6dc743fb9882f25358651ebbed954b)
+- Revision: [`8d11c5f449b73b519cfb1819c9c3942307f717c6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/8d11c5f449b73b519cfb1819c9c3942307f717c6)
 - Project: `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj`
 - Types: 6
 

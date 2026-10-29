@@ -3,7 +3,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`0644fd4a6c6dc743fb9882f25358651ebbed954b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/0644fd4a6c6dc743fb9882f25358651ebbed954b)
+- Revision: [`8d11c5f449b73b519cfb1819c9c3942307f717c6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/8d11c5f449b73b519cfb1819c9c3942307f717c6)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF`
 - Metadata name: `StackGuiPanelBuilderWPF`
@@ -16,22 +16,22 @@
 
 ## Source declarations
 
-- [`src/WPF/StackGuiPanelBuilderWPF.cs:6-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0644fd4a6c6dc743fb9882f25358651ebbed954b/src/WPF/StackGuiPanelBuilderWPF.cs#L6-15)
+- [`src/WPF/StackGuiPanelBuilderWPF.cs:6-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/WPF/StackGuiPanelBuilderWPF.cs#L6-15)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF.StackGuiPanelBuilderWPF(TheSingularityWorkshop.GUI.WPF.GuiConfiguration)` | [`src/WPF/StackGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0644fd4a6c6dc743fb9882f25358651ebbed954b/src/WPF/StackGuiPanelBuilderWPF.cs#L8-8) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF.WithOrientation(System.Windows.Controls.Orientation)` | [`src/WPF/StackGuiPanelBuilderWPF.cs:10-14`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0644fd4a6c6dc743fb9882f25358651ebbed954b/src/WPF/StackGuiPanelBuilderWPF.cs#L10-14) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF.StackGuiPanelBuilderWPF(TheSingularityWorkshop.GUI.WPF.GuiConfiguration)` | [`src/WPF/StackGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/WPF/StackGuiPanelBuilderWPF.cs#L8-8) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF.WithOrientation(System.Windows.Controls.Orientation)` | [`src/WPF/StackGuiPanelBuilderWPF.cs:10-14`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/WPF/StackGuiPanelBuilderWPF.cs#L10-14) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiPanelBuilderWPF` | `Resolved` | [`src/WPF/StackGuiPanelBuilderWPF.cs:6-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0644fd4a6c6dc743fb9882f25358651ebbed954b/src/WPF/StackGuiPanelBuilderWPF.cs#L6-15) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/StackGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0644fd4a6c6dc743fb9882f25358651ebbed954b/src/WPF/StackGuiPanelBuilderWPF.cs#L8-8) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF` | `Resolved` | [`src/WPF/StackGuiPanelBuilderWPF.cs:10-14`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0644fd4a6c6dc743fb9882f25358651ebbed954b/src/WPF/StackGuiPanelBuilderWPF.cs#L10-14) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiPanelBuilderWPF` | `Resolved` | [`src/WPF/StackGuiPanelBuilderWPF.cs:6-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/WPF/StackGuiPanelBuilderWPF.cs#L6-15) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/StackGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/WPF/StackGuiPanelBuilderWPF.cs#L8-8) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.StackGuiPanelBuilderWPF` | `Resolved` | [`src/WPF/StackGuiPanelBuilderWPF.cs:10-14`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/WPF/StackGuiPanelBuilderWPF.cs#L10-14) |
 
 [Back to the generated type index](index.md)
 
