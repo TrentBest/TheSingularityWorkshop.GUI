@@ -223,6 +223,9 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             .Single(group => (string?)group.Attribute("data-type-id") == self.Id &&
                 group.Attribute("id") is not null);
         var rect = node.Element(Svg + "rect")!;
+        var top = double.Parse((string)rect.Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
+        var height = double.Parse((string)rect.Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture);
+        var centerY = top + height / 2;
         var right = double.Parse((string)rect.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture) +
             double.Parse((string)rect.Attribute("width")!, System.Globalization.CultureInfo.InvariantCulture);
         var loop = document.Descendants(Svg + "path")
@@ -234,7 +237,11 @@ public sealed class SvgUmlDocumentationGraphRendererTests
 
         Assert.Equal(right, coordinates[0], 2);
         Assert.Equal(right, coordinates[^2], 2);
-        Assert.Contains(document.Descendants(Svg + "text"), label => label.Value == "self-reference");
+        Assert.All(coordinates.Where((_, index) => index % 2 == 0), x => Assert.True(x >= right - 1));
+        Assert.All(coordinates.Where((_, index) => index % 2 == 1), y => Assert.True(y < centerY));
+        var selfReferenceLabel = document.Descendants(Svg + "text").Single(label => label.Value == "self-reference");
+        var labelY = double.Parse((string)selfReferenceLabel.Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
+        Assert.True(labelY < centerY);
     }
 
 }

@@ -202,8 +202,8 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 // coordinates aligned with the source/target type ports recorded below.
                 var startX = sourcePosition.X + NodeWidth;
                 var endX = sourcePosition.X + NodeWidth;
-                var startY = sourcePosition.Y + 36;
-                var endY = sourcePosition.Y + 92;
+                var startY = sourcePosition.Y + 28;
+                var endY = sourcePosition.Y + 48;
                 var loopX = sourcePosition.X + NodeWidth + 52;
                 connector = new XElement(Svg + "path",
                     new XAttribute("d", $"M {F(startX)} {F(startY)} C {F(loopX)} {F(startY)}, {F(loopX)} {F(endY)}, {F(endX)} {F(endY)}"),
@@ -212,12 +212,12 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 // Keep the self-reference label above its loop and clear of horizontal
                 // dependency labels/lines that may leave the same focus card.
                 labelX = loopX + 5;
-                labelY = sourcePosition.Y + 27;
+                labelY = sourcePosition.Y + 16;
                 labelAnchor = "start";
                 sourcePortX = sourcePosition.X + NodeWidth;
-                sourcePortY = sourcePosition.Y + 62;
+                sourcePortY = sourcePosition.Y + 28;
                 targetPortX = sourcePortX;
-                targetPortY = sourcePosition.Y + 92;
+                targetPortY = sourcePosition.Y + 48;
             }
             else
             {
