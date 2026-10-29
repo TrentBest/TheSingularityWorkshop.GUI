@@ -5,7 +5,7 @@
 
 > A value reaches the end of its range, turns around, and comes back. No teleportation. No mysterious reset. Just a state machine doing exactly what we told it to do.
 
-**Status: runnable sample added; end-to-end verification pending.** The sample now defines real FSM_API states, advances them through the API's processing loop, and passes the resulting state to GUI Core / GUI.SVG. CI must still build and run the sample, and the generated artifact needs visual review before this is called a verified proof.
+**Status: CI-verified and artifact-reviewed** in [Package GUI run 40961583029](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/40961583029). The executable asserts the FSM_API transition trace, endpoint behavior for oversized steps, invalid configuration rejection, and the generated SVG's curve, final marker, grid, and axes. I also visually reviewed the generated SVG artifact from that run: it shows the sampled sine curve, correctly placed x=0/y=0 axes, grid, and final marker/Reverse label. This is a static snapshot, not a live animation.
 
 ## What you should see
 
