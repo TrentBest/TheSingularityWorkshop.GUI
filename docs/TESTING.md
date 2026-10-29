@@ -60,6 +60,27 @@ The source-derived UML workflow also verifies that generated Markdown retains th
 
 Platform-specific tests should verify behavior that cannot be established by Core tests alone, such as native WPF configuration, Blazor render output, event wiring, resource lifetime, and accessibility integration. State which platform and behavior a test covers. WPF tests require a Windows runner; a Linux cross-targeting build is not a substitute for running the native tests.
 
+## CI execution matrix
+
+The authoritative package workflow is [`.github/workflows/package.yml`](../.github/workflows/package.yml). Test execution is explicit; solution membership alone does not prove that a test project ran.
+
+| Check | Runner | Explicit project or action | Evidence scope |
+|---|---|---|---|
+| Core tests | `ubuntu-latest` | `tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj` | Core model invariants |
+| Blazor tests | `ubuntu-latest` | `tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj` | Blazor renderer behavior |
+| SVG tests | `ubuntu-latest` | `tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj` | SVG renderer/serialization contract |
+| Shared adapter conformance | `ubuntu-latest` | `tests/Adapter.Conformance.Tests/TheSingularityWorkshop.GUI.Adapter.Conformance.Tests.csproj` | Shared fixture for Core, Blazor, and SVG; does not cover WPF |
+| WPF renderer tests | `windows-latest` | `tests/WPF.Tests/TheSingularityWorkshop.GUI.WPF.Tests.csproj` | Native Windows/WPF behavior |
+| WPF packed-consumer check | `windows-latest` | Generated `net8.0-windows` consumer restored only from packed Core/WPF archives | Exercised package-only consumer path, not broad API parity |
+
+The workflow also builds WPF on Linux with `EnableWindowsTargeting=true`. That build is separate from native Windows test execution. The guarded `publish_nuget` job depends on both package and WPF jobs and remains hard-disabled until explicit owner authorization and Sith compliance are satisfied.
+
+### Test projects omitted from the solution manifest
+
+The current `TheSingularityWorkshop.GUI.slnx` includes Core, Blazor, and SVG test projects, but omits `tests/WPF.Tests` and `tests/Adapter.Conformance.Tests`. These tests are **not skipped**: the package workflow invokes both projects directly, with WPF tests on Windows.
+
+For now, keep these platform/conformance projects explicitly orchestrated by CI rather than silently changing solution-derived build and inventory scope. Before adding them to the solution manifest, verify the solution-derived UML workflow's intended product-project boundary. Revisit this decision if local solution builds are expected to include every CI test project.
+
 ## Evidence and status discipline
 
 Use the following rules when documenting correctness:
