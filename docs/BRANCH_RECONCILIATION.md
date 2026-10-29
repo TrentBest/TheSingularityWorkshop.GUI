@@ -97,9 +97,9 @@ The current `.github/workflows/package.yml` contains a `publish_nuget` job with 
 if: ${{ github.event_name == 'workflow_dispatch' && inputs.publish == true && false }}
 ```
 
-That explicit `&& false` keeps publication disabled. **Do not remove it as part of this audit.** The workflow does not currently verify that the remote branch inventory is exactly `master` + `development`; the hard-disabled condition is the present safety barrier, not a complete Sith compliance gate.
+That explicit `&& false` keeps publication disabled. **Do not remove it as part of this audit.** A new `Enforce Sith branch inventory before publication` step has been added to `development` (commit [`e12d793`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/e12d793e035c72eb4b84e701c23f10857ff603ca)). It queries the remote branch inventory and requires exactly `master` and `development`; an API failure or any extra/missing branch fails the step closed. Its workflow validation is still pending at this audit snapshot.
 
-Before anyone ever re-enables publication, a dedicated check must fail closed unless it can verify that the remote branch inventory contains exactly those two branches, policy evidence is current, the reviewed candidate is the intended source, and explicit owner authorization has been supplied. Build, test, pack, archive inspection, and consumer verification may continue independently. No NuGet publication is authorized here.
+Because the job remains hard-disabled, the branch check does not run as part of ordinary build/test/package runs. Keep the hard-disabled condition in place. Before anyone ever re-enables publication, verify this inventory step in CI and also ensure the reviewed candidate is the intended source, policy evidence is current, and explicit owner authorization has been supplied. Build, test, pack, archive inspection, and consumer verification may continue independently. No NuGet publication is authorized here.
 
 ## 05 — Rescue sequence
 
