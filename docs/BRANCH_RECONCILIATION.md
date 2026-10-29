@@ -101,6 +101,8 @@ That explicit `&& false` keeps publication disabled. **Do not remove it as part 
 
 Because the job remains hard-disabled, the branch check does not run as part of ordinary build/test/package runs. Keep the hard-disabled condition in place. Before anyone ever re-enables publication, verify this inventory step in CI and also ensure the reviewed candidate is the intended source, policy evidence is current, and explicit owner authorization has been supplied. Build, test, pack, archive inspection, and consumer verification may continue independently. No NuGet publication is authorized here.
 
+**Generated-documentation push race (2026-10-29):** the UML generator and promotion safety tests passed, but the promotion commit was rejected because `development` advanced during the run. This was a non-fast-forward push race, not a content-validation failure. A safe rebase/retry path was added to `promote-source-uml-docs.yml` in `f48dd15`; that retry workflow is pending validation. Do not claim a fresh generated-page provenance revision until the promotion run succeeds.
+
 ## 05 — Rescue sequence
 
 1. **Freeze the release path.** Keep `publish_nuget` hard-disabled; do not select package versions or a release candidate yet.
