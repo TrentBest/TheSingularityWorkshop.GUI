@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732)
+- Revision: [`d01597026d83f798e62a2a144bfd9400a3cd44a8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/d01597026d83f798e62a2a144bfd9400a3cd44a8)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind`
 - Metadata name: `UmlRelationshipKind`
@@ -19,23 +19,23 @@
 
 ## Source declarations
 
-- [`src/Core/UmlDocumentationModel.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L61-67)
+- [`src/Core/UmlDocumentationModel.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L61-67)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.Association` | [`src/Core/UmlDocumentationModel.cs:65-65`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L65-65) |
-| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.Dependency` | [`src/Core/UmlDocumentationModel.cs:66-66`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L66-66) |
-| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.Inheritance` | [`src/Core/UmlDocumentationModel.cs:63-63`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L63-63) |
-| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.InterfaceRealization` | [`src/Core/UmlDocumentationModel.cs:64-64`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L64-64) |
+| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.Association` | [`src/Core/UmlDocumentationModel.cs:65-65`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L65-65) |
+| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.Dependency` | [`src/Core/UmlDocumentationModel.cs:66-66`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L66-66) |
+| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.Inheritance` | [`src/Core/UmlDocumentationModel.cs:63-63`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L63-63) |
+| `Field` | `TheSingularityWorkshop.Workshop.Gui.UmlRelationshipKind.InterfaceRealization` | [`src/Core/UmlDocumentationModel.cs:64-64`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L64-64) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.UmlDocumentedRelationship` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:83-83`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L83-83) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.UmlDocumentedRelationship` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:81-93`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732/src/Core/UmlDocumentationModel.cs#L81-93) |
+| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.UmlDocumentedRelationship` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:83-83`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L83-83) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.UmlDocumentedRelationship` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:81-93`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/d01597026d83f798e62a2a144bfd9400a3cd44a8/src/Core/UmlDocumentationModel.cs#L81-93) |
 
 [Back to the generated type index](index.md)
 

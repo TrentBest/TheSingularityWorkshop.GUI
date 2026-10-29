@@ -6,7 +6,7 @@
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f5c9a2817cdcb9c9ab1ec235e7b67502bcd3b732)
+- Revision: [`d01597026d83f798e62a2a144bfd9400a3cd44a8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/d01597026d83f798e62a2a144bfd9400a3cd44a8)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Types: 23
 
@@ -33,7 +33,7 @@
 | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF` | `class` | 2 | 3 | [TheSingularityWorkshop-GUI-WPF-Layouts-UniformGridGuiBuilderWPF-e8d9792d1a.md](TheSingularityWorkshop-GUI-WPF-Layouts-UniformGridGuiBuilderWPF-e8d9792d1a.md) | [TheSingularityWorkshop-GUI-WPF-Layouts-UniformGridGuiBuilderWPF-e8d9792d1a.svg](TheSingularityWorkshop-GUI-WPF-Layouts-UniformGridGuiBuilderWPF-e8d9792d1a.svg) |
 | `TheSingularityWorkshop.GUI.WPF.Layouts.WrapGuiPanelBuilderWPF` | `class` | 3 | 4 | [TheSingularityWorkshop-GUI-WPF-Layouts-WrapGuiPanelBuilderWPF-623de62dc9.md](TheSingularityWorkshop-GUI-WPF-Layouts-WrapGuiPanelBuilderWPF-623de62dc9.md) | [TheSingularityWorkshop-GUI-WPF-Layouts-WrapGuiPanelBuilderWPF-623de62dc9.svg](TheSingularityWorkshop-GUI-WPF-Layouts-WrapGuiPanelBuilderWPF-623de62dc9.svg) |
 | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity` | `class` | 3 | 0 | [TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.md](TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.md) | [TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.svg](TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.svg) |
-| `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer` | `class` | 14 | 5 | [TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.md](TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.md) | [TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.svg](TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.svg) |
+| `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer` | `class` | 15 | 5 | [TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.md](TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.md) | [TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.svg](TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.svg) |
 | `TheSingularityWorkshop.GUI.WPF.WpfWindowBuilder` | `class` | 12 | 10 | [TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.md](TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.md) | [TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.svg](TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.svg) |
 
 ---
