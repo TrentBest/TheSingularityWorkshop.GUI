@@ -553,4 +553,46 @@ public sealed class SvgGuiRendererTests
         Assert.Contains("synthesized coordinate overlay", error.Message);
     }
 
+    [Fact]
+    public void Preserves_root_node_identity_as_the_svg_document_id()
+    {
+        var scene = GuiBuilder.Create("svg-scene", "workshop-scene")
+            .Child("svg-circle", "marker", marker => marker.Property("r", "4"))
+            .Build();
+
+        var document = XDocument.Parse(_renderer.Render(scene));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+
+        Assert.Equal("workshop-scene", (string?)document.Root!.Attribute("id"));
+        Assert.Equal("marker", (string?)document.Descendants(svg + "circle").Single().Attribute("id"));
+    }
+
+    [Theory]
+    [InlineData("gui-svg-title")]
+    [InlineData("gui-svg-description")]
+    public void Rejects_node_ids_that_collide_with_generated_accessibility_ids(string reservedId)
+    {
+        var scene = GuiBuilder.Create("svg-scene", "scene")
+            .Property("description", "Scene description.")
+            .Child("svg-circle", reservedId, marker => marker.Property("r", "4"))
+            .Build();
+
+        var error = Assert.Throws<ArgumentException>(() => _renderer.Render(scene));
+
+        Assert.Contains(reservedId, error.Message);
+    }
+
+    [Fact]
+    public void Rejects_scene_with_more_than_the_maximum_node_count_before_serialization()
+    {
+        var builder = GuiBuilder.Create("svg-scene", "scene");
+        for (var i = 0; i < 100_000; i++)
+            builder = builder.Child("svg-circle", $"marker-{i}");
+
+        var scene = builder.Build();
+        var error = Assert.Throws<InvalidOperationException>(() => _renderer.Render(scene));
+
+        Assert.Contains("maximum node count (100000)", error.Message);
+    }
+
 }

@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # GUI.SVG adapter
 
 GUI.SVG is the SVG interoperability adapter for the platform-neutral GUI model. It accepts a `GuiNode` snapshot and produces a standalone SVG XML document when an actual semantic GUI tree is the source.
@@ -82,7 +85,7 @@ The coordinate-system builder supplies a shared minimum/maximum range and can op
 
 ## Accessibility and output
 
-The root document receives a `role` and `aria-label`, plus a `title`. Set `description` on the root node to emit an SVG `desc`. Individual images can provide descriptive text. Text content is XML-escaped. The renderer validates output dimensions, coordinate ranges, finite numeric properties, non-negative radii/dimensions, unique node IDs (including synthesized coordinate overlays), and a maximum tree depth of 256. Tree-depth validation is iterative and runs before recursive serialization, so an excessively deep scene is rejected with a clear exception instead of exhausting the call stack.
+The root document receives a `role` and `aria-label`, plus a `title`. Set `description` on the root node to emit an SVG `desc`. Individual images can provide descriptive text. Text content is XML-escaped. The renderer preserves each node's identity as an SVG `id`, including the root scene on the `<svg>` element. It validates output dimensions, coordinate ranges, finite numeric properties, non-negative radii/dimensions, unique node IDs (including synthesized coordinate overlays), and a maximum tree depth of 256. Tree-depth validation is iterative and runs before recursive serialization, so an excessively deep scene is rejected with a clear exception instead of exhausting the call stack.
 
 ## Trust and security boundary
 
@@ -188,3 +191,8 @@ The generated gallery is a runnable integration example, not evidence that every
 | Linked heading and caption | `heading-link`, `heading`, `caption`; `svg-a` and `svg-text` | `Emits_navigable_svg_links_and_semantic_metadata_nodes` and `Escapes_xml_attribute_values_and_preserves_non_ascii_text` |
 
 The sample is maintained in `samples/SvgGallery/Program.cs`; the checked-in image is `docs/assets/svg-adapter-gallery.svg`. CI regenerates the image and checks it byte-for-byte, so the image should not be edited independently. The named tests are representative coverage, not a claim that the gallery exercises the entire vocabulary table above.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>

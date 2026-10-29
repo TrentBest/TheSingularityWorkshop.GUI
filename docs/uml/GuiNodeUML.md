@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # GuiNode — UML and Use Cases
 
 **Author:** Trent Best  
@@ -11,7 +14,7 @@
 
 ![Target-centered UML class diagram for GuiNode](../assets/uml/classes/Core/GuiNode.svg)
 
-The focal type is `GuiNode`. Its direct structural relationship is an ordered collection of child `GuiNode` instances. The constructor snapshots input properties and children; the public surface exposes immutable values and lookup operations. The class declares no base class or implemented interface.
+The focal type is `GuiNode`. Its direct structural relationship is an ordered collection of child `GuiNode` instances. The constructor snapshots input properties and children, rejects null child entries, and the public surface exposes immutable values and lookup operations. The class declares no base class or implemented interface.
 
 ## Use cases
 
@@ -52,9 +55,14 @@ The focal type is `GuiNode`. Its direct structural relationship is an ordered co
 
 - **Owns:** node identity, kind, optional text/source values, a string-to-string property snapshot, ordered child snapshot, and depth-first lookup.
 - **Does not own:** rendering, layout calculation, live UI state, event dispatch, command authorization, animation, or framework-specific objects.
-- **Verified source facts:** constructor validation, snapshot creation, read-only public properties, iterative depth-first lookup, and missing-node behavior are visible in the linked source.
-- **Test evidence:** direct-node regression assertions are maintained in [`GuiBuilderTests.cs`](../../tests/Core.Tests/GuiBuilderTests.cs), covering constructor validation, child snapshots, duplicate-ID traversal order, blank lookup identifiers, property snapshots, absent IDs, and deep-tree lookup. These assertions are not a substitute for a passing CI run on the exact commit, and they do not establish renderer behavior.
+- **Verified source facts:** constructor validation (including null child-entry rejection), snapshot creation, read-only public properties, iterative depth-first lookup, and missing-node behavior are visible in the linked source.
+- **Test evidence:** direct-node regression assertions are maintained in [`GuiBuilderTests.cs`](../../tests/Core.Tests/GuiBuilderTests.cs), covering constructor validation, null child-entry rejection, child snapshots, duplicate-ID traversal order, blank lookup identifiers, property snapshots, absent IDs, and deep-tree lookup. These assertions are not a substitute for a passing CI run on the exact commit, and they do not establish renderer behavior.
 
 ## Relationship semantics
 
 The child collection is an association from a node to zero or more ordered child nodes. It is not a claim that the tree is globally unique by ID, that nodes can be reparented, or that a renderer has successfully manifested the model. Source structure, documented use cases, and runtime observations are separate evidence categories.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>

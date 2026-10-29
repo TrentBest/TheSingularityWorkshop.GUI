@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # GuiNode
 
 **Author:** Trent Best  
@@ -23,7 +26,7 @@ See the companion [GuiNode UML and use cases](../../uml/GuiNodeUML.md).
 
 ## Construction and invariants
 
-The constructor rejects a null, empty, or whitespace `kind` or `id` with `ArgumentException`. It copies the input property dictionary using ordinal key comparison and exposes it through a read-only wrapper. It also snapshots the supplied child sequence into a read-only ordered collection. Later changes to the caller's original dictionary or child collection do not alter those snapshots.
+The constructor rejects a null, empty, or whitespace `kind` or `id` with `ArgumentException`. It rejects a child sequence containing a null entry with `ArgumentException` (parameter `children`) rather than allowing malformed structure to fail later during lookup or rendering. It copies the input property dictionary using ordinal key comparison and exposes it through a read-only wrapper. It also snapshots the supplied child sequence into a read-only ordered collection. Later changes to the caller's original dictionary or child collection do not alter those snapshots.
 
 The snapshots are shallow: child nodes are themselves immutable, while string keys and values are immutable values.
 
@@ -66,10 +69,15 @@ This builds a small immutable tree and finds the button by its ID. In an applica
 
 ## Verification status
 
-Direct-node regression coverage lives in [`GuiBuilderTests.cs`](../../../tests/Core.Tests/GuiBuilderTests.cs), alongside builder tests. The suite now explicitly checks blank kind/ID rejection, child-sequence snapshotting, duplicate-ID depth-first left-to-right lookup, and rejection of blank lookup identifiers. It also covers property snapshots, absent IDs, and iterative lookup over a deep tree. These are source-aligned regression assertions; they do not independently prove renderer behavior or replace a successful CI run for the exact commit.
+Direct-node regression coverage lives in [`GuiBuilderTests.cs`](../../../tests/Core.Tests/GuiBuilderTests.cs), alongside builder tests. The suite now explicitly checks blank kind/ID rejection, null child-entry rejection, child-sequence snapshotting, duplicate-ID depth-first left-to-right lookup, and rejection of blank lookup identifiers. It also covers property snapshots, absent IDs, and iterative lookup over a deep tree. These are source-aligned regression assertions; they do not independently prove renderer behavior or replace a successful CI run for the exact commit.
 
 ## Related documentation
 
 - [GuiBuilder](GuiBuilder.md) — fluent construction of immutable node trees.
 - [GuiNode UML and use cases](../../uml/GuiNodeUML.md)
 - [Per-Type Documentation and UML Standard](../../CLASS_DOCUMENTATION_STANDARD.md)
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
