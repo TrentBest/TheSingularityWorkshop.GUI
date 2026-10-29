@@ -27,6 +27,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: promote-source-uml-docs-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   promote:
     if: ${{ github.ref == 'refs/heads/development' && (github.event_name == 'push' || inputs.confirm_promotion == true) }}
@@ -38,13 +42,17 @@ jobs:
         uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           ref: development
+          fetch-depth: 0
+      - name: Capture source revision
+        id: source_revision
+        run: echo "revision=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       - name: Setup .NET
         uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9
         with:
           dotnet-version: 8.0.x
       - name: Generate and verify all maintained product projects
         env:
-          SOURCE_REVISION: ${{ github.sha }}
+          SOURCE_REVISION: ${{ steps.source_revision.outputs.revision }}
         run: python3 scripts/generate_solution_uml.py
       - name: Test and promote only manifest-owned generated files
         run: |
@@ -64,4 +72,40 @@ jobs:
             exit 0
           fi
           git commit -m "docs(uml): refresh four-package generated type pages"
-          git push origin HEAD:development
+
+          # Other safe documentation commits may land while generation runs.
+          # Rebase the generated-only commit when the source inputs are unchanged;
+          # if source inputs moved, leave the branch untouched and let that newer
+          # push trigger a fresh generation against the newer source revision.
+          source_paths=(
+            .github/workflows/promote-source-uml-docs.yml
+            scripts/generate_solution_uml.py
+            scripts/promote_source_uml.py
+            scripts/test_promote_source_uml.py
+            samples/SourceUmlGenerator
+            src/Core src/Blazor src/SVG src/WPF
+            ':(glob)**/*.sln'
+            ':(glob)**/*.csproj'
+          )
+
+          for attempt in 1 2 3; do
+            git fetch origin development
+            if ! git diff --quiet "$SOURCE_REVISION" origin/development -- "${source_paths[@]}"; then
+              echo "Source inputs changed during generation; skipping stale promotion. A newer source push must regenerate."
+              exit 0
+            fi
+
+            if ! git rebase origin/development; then
+              git rebase --abort || true
+              echo "::error::Generated UML changes conflict with concurrent development updates; rerun promotion after reconciling."
+              exit 1
+            fi
+
+            if git push origin HEAD:development; then
+              exit 0
+            fi
+            echo "Development advanced during the push; retrying safe rebase (attempt $attempt/3)."
+          done
+
+          echo "::error::Could not promote generated UML after three safe retries."
+          exit 1
