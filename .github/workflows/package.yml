@@ -505,10 +505,10 @@ jobs:
         run: |
           set -euo pipefail
           actual="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/branches?per_page=100" --jq '.[].name' | LC_ALL=C sort)"
-          expected="$(printf '%s\\n' development master | LC_ALL=C sort)"
+          expected="$(printf '%s\n' development master | LC_ALL=C sort)"
           if [[ "$actual" != "$expected" ]]; then
             echo "::error::Sith policy requires exactly the remote branches master and development."
-            printf 'Observed branches:\\n%s\\n' "$actual"
+            printf 'Observed branches:\n%s\n' "$actual"
             exit 1
           fi
           echo "Sith branch inventory verified: master and development only."
