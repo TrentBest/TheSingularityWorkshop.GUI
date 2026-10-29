@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`0f256ace8cf4a63c92d5edefcf667f2ee0238ee4`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4)
+- Revision: [`f48dd15256521c88fad88371742c89d5fd1d326f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f48dd15256521c88fad88371742c89d5fd1d326f)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities`
 - Metadata name: `CoordinateSystemUtilities`
@@ -19,17 +19,17 @@
 
 ## Source declarations
 
-- [`src/Core/CoordinateSystemUtilities.cs:6-57`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4/src/Core/CoordinateSystemUtilities.cs#L6-57)
+- [`src/Core/CoordinateSystemUtilities.cs:6-57`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f48dd15256521c88fad88371742c89d5fd1d326f/src/Core/CoordinateSystemUtilities.cs#L6-57)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Clamp(double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:9-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4/src/Core/CoordinateSystemUtilities.cs#L9-18) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Denormalize(double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:32-40`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4/src/Core/CoordinateSystemUtilities.cs#L32-40) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Distance(double, double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:43-44`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4/src/Core/CoordinateSystemUtilities.cs#L43-44) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Normalize(double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:21-29`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4/src/Core/CoordinateSystemUtilities.cs#L21-29) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.ValidateFiniteRange(double, double)` | [`src/Core/CoordinateSystemUtilities.cs:46-56`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0f256ace8cf4a63c92d5edefcf667f2ee0238ee4/src/Core/CoordinateSystemUtilities.cs#L46-56) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Clamp(double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:9-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f48dd15256521c88fad88371742c89d5fd1d326f/src/Core/CoordinateSystemUtilities.cs#L9-18) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Denormalize(double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:32-40`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f48dd15256521c88fad88371742c89d5fd1d326f/src/Core/CoordinateSystemUtilities.cs#L32-40) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Distance(double, double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:43-44`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f48dd15256521c88fad88371742c89d5fd1d326f/src/Core/CoordinateSystemUtilities.cs#L43-44) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.Normalize(double, double, double)` | [`src/Core/CoordinateSystemUtilities.cs:21-29`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f48dd15256521c88fad88371742c89d5fd1d326f/src/Core/CoordinateSystemUtilities.cs#L21-29) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities.ValidateFiniteRange(double, double)` | [`src/Core/CoordinateSystemUtilities.cs:46-56`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f48dd15256521c88fad88371742c89d5fd1d326f/src/Core/CoordinateSystemUtilities.cs#L46-56) |
 
 ## Relationships
 
