@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # GUI.SVG Demonstrations and Recipes
 
 Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries grouped by the actual package/repository boundary, each with a two-sentence summary and one source or walkthrough link.
@@ -19,7 +22,7 @@ Start with the **[Markdown recipe gallery](GALLERY.md)**: short visual entries g
 | # | Recipe | Package boundary | Evidence status |
 |---|---|---|---|
 | 06 | [Projectile trajectory from a recorded Physics run](recipes/03-projectile-trajectory.md) | GUI Core + GUI.SVG + Physics-owned JSON run record | Full workflow passed in [run 39453243758](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39453243758); SVG artifact visually reviewed; all nine plotted markers match the pinned Physics record |
-| 07 | State-driven behavior trace | FSM_API + verified presentation path | Planned; requires deterministic runtime state and trace |
+| 07 | [FSM-driven bounded oscillator](recipes/07-fsm-driven-oscillator.md) | FSM_API state transitions → sampled function → GUI.SVG | Runnable sample and trace/XML self-checks added; CI execution and visual artifact review pending |
 | 08 | FSM_API-driven fox and sheepdog | FSM_API + GUI.SVG; Renderer/Visualize separately | Planned; must be driven by real execution, not a parallel animation timeline |
 | 09 | UML/data → textual scene → Renderer → Visualize | Actual consuming package set to be verified | Planned; no integration claim until a runnable consumer exists |
 
@@ -43,3 +46,8 @@ A mathematical or physical concept should be explorable as a sequence rather tha
 A visible SVG is not, by itself, proof that GUI.SVG generated it, Physics computed the displayed values, FSM_API drove its behavior, or a Renderer/Visualize pipeline produced it. For generation claims, include the source, exact command, successful run or test, and artifact comparison; for behavior claims, include a trace or assertion from actual runtime execution.
 
 The gallery stays intentionally short. Detailed diagrams, implementation notes, commands, and acceptance criteria belong in each recipe's own Markdown file. The [HTML view](index.html) is a convenience view.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
