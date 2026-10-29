@@ -93,7 +93,9 @@ jobs:
           assert provenance["analysisMode"] == "project-semantic"
           assert model["types"], "expected compiled project types"
           inventory = Path("artifacts/Core.uml-inventory.md").read_text(encoding="utf-8")
-          assert inventory.startswith("# Generated UML type inventory")
+          assert inventory.startswith("<!-- The Singularity Workshop moniker -->")
+          assert "# Generated UML type inventory" in inventory
+          assert "<!-- THE SINGULARITY WORKSHOP FOOTER -->" in inventory
           assert "## TheSingularityWorkshop.Workshop.Gui.DataCard" in inventory
           assert "### Members" in inventory and "### Relationships" in inventory
           assert "Source declarations" in inventory and "sourceRevision" not in inventory
@@ -119,14 +121,18 @@ jobs:
           diagram_files = sorted(pages_dir.glob("*.svg"))
           assert len(page_files) == len(model["types"]), (len(page_files), len(model["types"]))
           assert len(diagram_files) == len(model["types"]), (len(diagram_files), len(model["types"]))
-          page_titles = sorted(path.read_text(encoding="utf-8").splitlines()[0][2:] for path in page_files)
+          page_titles = sorted(next(line[2:] for line in path.read_text(encoding="utf-8").splitlines() if line.startswith("# ")) for path in page_files)
           assert page_titles == expected_names, "standalone page set must cover every type exactly once"
           page_index = (pages_dir / "index.md").read_text(encoding="utf-8")
-          assert page_index.startswith("# Generated UML type pages")
+          assert page_index.startswith("<!-- The Singularity Workshop moniker -->")
+          assert "# Generated UML type pages" in page_index
+          assert "<!-- THE SINGULARITY WORKSHOP FOOTER -->" in page_index
           assert all("(" + path.name + ")" in page_index for path in page_files), "index must link every generated page"
           assert all("(" + path.name + ")" in page_index for path in diagram_files), "index must link every generated UML SVG"
           for page in page_files:
               page_text = page.read_text(encoding="utf-8")
+              assert page_text.startswith("<!-- The Singularity Workshop moniker -->"), page.name
+              assert "<!-- THE SINGULARITY WORKSHOP FOOTER -->" in page_text, page.name
               diagram = page.with_suffix(".svg")
               assert diagram.is_file(), f"missing UML SVG for {page.name}"
               assert "](" + diagram.name + ")" in page_text, f"page does not embed its UML SVG: {page.name}"
