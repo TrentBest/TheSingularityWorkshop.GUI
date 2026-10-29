@@ -498,6 +498,21 @@ jobs:
       contents: read
       id-token: write
     steps:
+      - name: Enforce Sith branch inventory before publication
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          actual="$(gh api --paginate "repos/${GITHUB_REPOSITORY}/branches?per_page=100" --jq '.[].name' | LC_ALL=C sort)"
+          expected="$(printf '%s\\n' development master | LC_ALL=C sort)"
+          if [[ "$actual" != "$expected" ]]; then
+            echo "::error::Sith policy requires exactly the remote branches master and development."
+            printf 'Observed branches:\\n%s\\n' "$actual"
+            exit 1
+          fi
+          echo "Sith branch inventory verified: master and development only."
+
       - name: Download NuGet package artifacts
         uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # pinned commit SHA
         with:
