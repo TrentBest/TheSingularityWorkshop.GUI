@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Theory Guide
 
 The theory track documents the ideas behind TheSingularityWorkshop.GUI as a body of engineering thought.
@@ -64,6 +67,12 @@ A GUI can represent subjects through independent views, viewports, and cameras. 
 
 [Read the chapter](THEORY/06_SPATIAL_REPRESENTATION.md)
 
+### 7. Evidence and Boundaries in Semantic GUI Systems
+
+Theory claims should be tied to implementation, tests, and consumer evidence without treating those as interchangeable. This chapter defines the evidence discipline and states what the current adapter split does—and does not—establish.
+
+[Read the chapter](THEORY/07-EVIDENCE-AND-BOUNDARIES.md)
+
 ## Textbook intent
 
 The chapters are written as reusable conceptual material rather than as marketing copy.
@@ -94,3 +103,8 @@ The implementation status remains authoritative in:
 Theory explains the design direction and derives consequences from it.
 
 When a theoretical concept has not yet been implemented, it is labeled as proposed rather than presented as an existing feature.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
