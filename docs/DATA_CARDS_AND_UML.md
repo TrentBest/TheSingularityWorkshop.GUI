@@ -1,4 +1,9 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # UML-Inspired Data Cards
+> **Status: draft, not a release-accepted member-order contract.** This document currently describes Public → Protected → Private visibility groups and treats `static` as a modifier. The current GUI domain gate also records a Public → Static → Protected → Private grouping requirement. That discrepancy remains unresolved; see the [Full GUI Domain Coverage Map](FULL_GUI_DOMAIN_COVERAGE.md). Do not treat either member-order rule as final until the owner accepts one and the semantic model, renderer, tests, and examples agree.
+
 
 > If a picture is worth a thousand words… then what is a living picture worth?
 
@@ -257,3 +262,7 @@ The diagram must be derived from the current source definition and updated in th
 
 For files that do not declare a type (for example, extension-only or utility files), document the actual unit and its dependencies with the appropriate diagram or a short explicit “class diagram not applicable” rationale; do not add a misleading empty UML diagram. Generated code and test fixtures should follow their repository-specific documentation policy, but must not be silently counted as complete coverage.
 
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
