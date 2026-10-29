@@ -22,7 +22,10 @@ internal static class ProjectUmlModelBuilder
         var assembly = compilation.Assembly;
         var assemblyIdentity = assembly.Identity.ToString();
         var symbols = EnumerateTypes(assembly.GlobalNamespace)
-            .Where(type => type.Locations.Any(location => location.IsInSource))
+            // MSBuildWorkspace can expose generated files from obj/ as source declarations.
+            // They are build artifacts, not authored project types, and may not exist in the exact output assembly.
+            .Where(type => type.DeclaringSyntaxReferences.Any(reference =>
+                IsAuthoredSourcePath(reference.SyntaxTree.FilePath)))
             .OrderBy(type => type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat), StringComparer.Ordinal)
             .ToArray();
         var ids = new Dictionary<INamedTypeSymbol, string>(SymbolEqualityComparer.Default);
@@ -275,6 +278,17 @@ internal static class ProjectUmlModelBuilder
             node.SpanStart, node.Span.Length,
             start.Line + 1, start.Character + 1,
             end.Line + 1, end.Character + 1));
+    }
+
+    private static bool IsAuthoredSourcePath(string path)
+    {
+        if (string.IsNullOrWhiteSpace(path))
+            return false;
+
+        var normalized = path.Replace((char)92, '/');
+        return !normalized.Split('/').Any(segment =>
+            string.Equals(segment, "obj", StringComparison.OrdinalIgnoreCase) ||
+            string.Equals(segment, "bin", StringComparison.OrdinalIgnoreCase));
     }
 
     private static IEnumerable<INamedTypeSymbol> EnumerateTypes(INamespaceSymbol root)

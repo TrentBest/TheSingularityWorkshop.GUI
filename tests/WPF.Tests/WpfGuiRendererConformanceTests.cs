@@ -37,6 +37,45 @@ public sealed class WpfGuiRendererConformanceTests
     }
 
     [Fact]
+    public void Renderer_supports_horizontal_rows_and_explicit_orientation()
+    {
+        RunOnSta(() =>
+        {
+            var root = GuiBuilder.Create("Row", "toolbar")
+                .Property("orientation", "Horizontal")
+                .Child("Button", "save", button => button.Text("Save"))
+                .Child("Button", "cancel", button => button.Text("Cancel"))
+                .Build();
+
+            var row = Assert.IsType<StackPanel>(WpfGuiRenderer.Render(root));
+            Assert.Equal(Orientation.Horizontal, row.Orientation);
+            Assert.Equal(2, row.Children.Count);
+            Assert.Equal("Save", Assert.IsType<Button>(row.Children[0]).Content);
+            Assert.Equal("Cancel", Assert.IsType<Button>(row.Children[1]).Content);
+            Assert.Equal("toolbar", WpfGuiIdentity.GetNodeId(row));
+        });
+    }
+
+    [Fact]
+    public void Renderer_maps_semantic_enabled_state_without_changing_command_authority()
+    {
+        RunOnSta(() =>
+        {
+            var enabled = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
+                "Button", "enabled-action", text: "Run",
+                properties: new Dictionary<string, string> { ["isEnabled"] = "true" })));
+            var disabled = Assert.IsType<Button>(WpfGuiRenderer.Render(new GuiNode(
+                "Button", "disabled-action", text: "Run",
+                properties: new Dictionary<string, string> { ["isEnabled"] = "false" })));
+
+            Assert.True(enabled.IsEnabled);
+            Assert.False(disabled.IsEnabled);
+            Assert.Equal("Run", disabled.Content);
+            // A semantic enabled flag affects presentation only; no command dispatcher is supplied here.
+        });
+    }
+
+    [Fact]
     public void Renderer_dispatches_declared_command_only_through_supplied_host_dispatcher()
     {
         RunOnSta(() =>
@@ -112,6 +151,33 @@ public sealed class WpfGuiRendererConformanceTests
             Assert.Equal("Arial", button.FontFamily.Source);
             Assert.Equal(HorizontalAlignment.Center, button.HorizontalAlignment);
             Assert.Equal(VerticalAlignment.Bottom, button.VerticalAlignment);
+        });
+    }
+
+    [Fact]
+    public void Renderer_resolves_live_host_resources_for_background_and_foreground()
+    {
+        RunOnSta(() =>
+        {
+            var node = new GuiNode(
+                "Button",
+                "themed-action",
+                text: "Run",
+                properties: new Dictionary<string, string>
+                {
+                    ["background"] = "resource:ArchitectPanelBrush",
+                    ["foreground"] = "resource:ArchitectAccentBrush"
+                });
+            var button = Assert.IsType<Button>(WpfGuiRenderer.Render(node));
+            button.Resources["ArchitectPanelBrush"] = new SolidColorBrush(Color.FromRgb(0x12, 0x34, 0x56));
+            button.Resources["ArchitectAccentBrush"] = new SolidColorBrush(Color.FromRgb(0x65, 0x43, 0x21));
+
+            Assert.Equal(Color.FromRgb(0x12, 0x34, 0x56), Assert.IsType<SolidColorBrush>(button.Background).Color);
+            Assert.Equal(Color.FromRgb(0x65, 0x43, 0x21), Assert.IsType<SolidColorBrush>(button.Foreground).Color);
+
+            // A later host resource update must flow through the DynamicResource reference.
+            button.Resources["ArchitectAccentBrush"] = new SolidColorBrush(Color.FromRgb(0xAA, 0xBB, 0xCC));
+            Assert.Equal(Color.FromRgb(0xAA, 0xBB, 0xCC), Assert.IsType<SolidColorBrush>(button.Foreground).Color);
         });
     }
 

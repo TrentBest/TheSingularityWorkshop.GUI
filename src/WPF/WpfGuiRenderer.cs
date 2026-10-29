@@ -46,6 +46,7 @@ public static class WpfGuiRenderer
             "Button" => new Button { Content = node.Text ?? string.Empty },
             "Text" => new TextBlock { Text = node.Text ?? string.Empty, TextWrapping = TextWrapping.Wrap },
             "Column" => new StackPanel { Orientation = Orientation.Vertical },
+            "Row" => new StackPanel { Orientation = Orientation.Horizontal },
             "Panel" => new Border { Child = new StackPanel { Orientation = Orientation.Vertical } },
             "Warning" => CreateWarning(node.Text),
             "Image" => CreateImage(node.Source),
@@ -182,6 +183,14 @@ public static class WpfGuiRenderer
                         else if (element is Border border) border.Padding = padding;
                     }
                     break;
+                case "orientation":
+                    if (element is StackPanel orientationPanel
+                        && Enum.TryParse<Orientation>(value, true, out var orientation))
+                        orientationPanel.Orientation = orientation;
+                    break;
+                case "isEnabled":
+                    if (bool.TryParse(value, out var isEnabled)) element.IsEnabled = isEnabled;
+                    break;
                 case "horizontalAlignment":
                     if (Enum.TryParse<HorizontalAlignment>(value, true, out var horizontal)) element.HorizontalAlignment = horizontal;
                     break;
@@ -190,14 +199,24 @@ public static class WpfGuiRenderer
                     break;
                 case "tooltip": element.ToolTip = value; break;
                 case "background":
-                    if (TryBrush(value, out var background))
+                    if (TryResourceKey(value, out var backgroundKey))
+                    {
+                        if (element is Control resourceControl) resourceControl.SetResourceReference(Control.BackgroundProperty, backgroundKey);
+                        else if (element is Border resourceBorder) resourceBorder.SetResourceReference(Border.BackgroundProperty, backgroundKey);
+                    }
+                    else if (TryBrush(value, out var background))
                     {
                         if (element is Control backgroundControl) backgroundControl.Background = background;
-                        else if (element is Border b) b.Background = background;
+                        else if (element is Border backgroundBorder) backgroundBorder.Background = background;
                     }
                     break;
                 case "foreground":
-                    if (TryBrush(value, out var foreground))
+                    if (TryResourceKey(value, out var foregroundKey))
+                    {
+                        if (element is Control resourceControl) resourceControl.SetResourceReference(Control.ForegroundProperty, foregroundKey);
+                        else if (element is TextBlock resourceTextBlock) resourceTextBlock.SetResourceReference(TextBlock.ForegroundProperty, foregroundKey);
+                    }
+                    else if (TryBrush(value, out var foreground))
                     {
                         if (element is Control foregroundControl) foregroundControl.Foreground = foreground;
                         else if (element is TextBlock foregroundTextBlock) foregroundTextBlock.Foreground = foreground;
@@ -268,6 +287,17 @@ public static class WpfGuiRenderer
         {
             return false;
         }
+    }
+
+    // resource: requests live WPF resource lookup instead of a one-time literal brush.
+    // This allows host themes to flow through the renderer without coupling GUI.Core to WPF.
+    private static bool TryResourceKey(string value, out string resourceKey)
+    {
+        const string prefix = "resource:";
+        resourceKey = string.Empty;
+        if (!value.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)) return false;
+        resourceKey = value[prefix.Length..].Trim();
+        return resourceKey.Length > 0;
     }
 
     private static bool TryBrush(string value, out Brush brush)

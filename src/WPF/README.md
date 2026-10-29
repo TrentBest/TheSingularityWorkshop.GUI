@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # GUI WPF
 
 The WPF project provides WPF-specific GUI construction and rendering support for the shared GUI model.
@@ -15,6 +18,23 @@ See the [GUI.WPF Guide](../../docs/WPF_GUIDE.md) for the current semantic bounda
 The WPF renderer is an initial implementation, not a claim of complete parity with Blazor or SVG. The tested surface includes hierarchy and child ordering, text, dimensions and spacing, colors, typography, alignment, null-root rejection, unknown-kind fallback, duplicate-ID rejection, depth-limit handling, and semantic ID preservation.
 
 Features outside that tested surface—including broader property mapping, accessibility, interaction/event behavior, and complete cross-adapter parity—must be treated as unverified until implementation and tests demonstrate them.
+
+## Host theme resources
+
+`WpfGuiRenderer` accepts `resource:ResourceKey` values for the `background` and `foreground` properties. It applies WPF dynamic resource references instead of converting those values to fixed brushes. The host can therefore supply theme resources (including Architect's existing palette) and update them without moving theme ownership into GUI.Core. Literal brush values such as `#FF336699` remain supported. Resource keys must be provided by the host application; missing keys are a host configuration issue, not silently replaced with a library-owned theme.
+
+Example semantic node:
+
+```csharp
+var status = GuiBuilder.Create("Panel", "status-panel")
+    .Property("background", "resource:PanelBackgroundColor")
+    .Child("Text", "status-title", text => text
+        .Text("SYSTEM STATUS")
+        .Property("foreground", "resource:AccentColor"))
+    .Build();
+
+var view = WpfGuiRenderer.Render(status);
+```
 
 ## Builder reuse audit
 
@@ -36,3 +56,8 @@ Run the WPF tests on Windows, as in the repository's `test-wpf` workflow job. Re
 The project currently declares package version `0.1.0`; the next release candidate must reconcile this with the public NuGet version before packaging. WPF is in scope for the planned GUI package-family release. Its package is Windows-specific (`net8.0-windows`) and is built/tested on Windows; Linux CI cross-targets it for package production.
 
 This README is configured as the WPF package README. The release workflow must verify that the resulting `.nupkg` contains it and declares the repository's MIT license. Treat archive inspection and Windows test results as release evidence, not assumptions.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
