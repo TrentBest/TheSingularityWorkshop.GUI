@@ -81,28 +81,54 @@ string SvgPoints(IEnumerable<(double X, double Y)> values) =>
 var last = trace[^1];
 var markerX = 10 + (last.Value - minimum) / (maximum - minimum) * 80;
 var markerY = 28.125 - Math.Sin(last.Value) * 18;
-var scene = GuiBuilder.Create("coordinate-system", "cartesian-plane")
+var sceneBuilder = GuiBuilder.Create("svg-scene", "cartesian-plane")
     .Text("FSM-driven bounded oscillator")
-    .Property("minimum", "0")
-    .Property("maximum", "10")
     .Property("description", "A sampled sine curve over x from 0 to 10; the marker shows the final FSM_API state.")
-    .Property("grid", "visible")
-    .Property("axes", "visible")
-    .Property("aria-label", $"Sine curve with current x={last.Value.ToString("0.###", CultureInfo.InvariantCulture)} moving {last.State.ToLowerInvariant()}")
-    .Child("svg-text", "plot-title", label => label.Text("y = sin(x), 0 ≤ x ≤ 10")
-        .Property("x", "7").Property("y", "5").Property("font-size", "3").Property("fill", "#eef6ff"))
-    .Child("svg-polyline", "sine-curve", curve => curve
-        .Property("points", SvgPoints(points))
-        .Property("fill", "none").Property("stroke", "#7ee0bd").Property("stroke-width", "0.7"))
-    .Child("svg-circle", "current-marker", marker => marker
-        .Property("cx", markerX.ToString("0.###", CultureInfo.InvariantCulture))
-        .Property("cy", markerY.ToString("0.###", CultureInfo.InvariantCulture))
-        .Property("r", "1.8").Property("fill", "#ffcf86"))
-    .Child("svg-text", "current-value", label => label
-        .Text($"x = {last.Value:0.###} | {last.State}")
-        .Property("x", "7").Property("y", "52").Property("font-size", "3").Property("fill", "#ffcf86"));
+    .Property("aria-label", $"Sine curve with current x={last.Value.ToString("0.###", CultureInfo.InvariantCulture)} moving {last.State.ToLowerInvariant()}");
 
-var svg = new SvgGuiRenderer().Render(scene.Build(), width: 960, height: 540);
+for (var index = 1; index < 10; index++)
+{
+    var x = (10 + index * 8).ToString("0.###", CultureInfo.InvariantCulture);
+    sceneBuilder.Child("svg-line", $"grid-vertical-{index}", line => line
+        .Property("x1", x).Property("y1", "8")
+        .Property("x2", x).Property("y2", "48")
+        .Property("stroke", "#294055").Property("stroke-width", "0.2"));
+}
+
+var horizontalGrid = new[] { 10d, 19.0625d, 28.125d, 37.1875d, 46.25d };
+for (var index = 0; index < horizontalGrid.Length; index++)
+{
+    var y = horizontalGrid[index].ToString("0.###", CultureInfo.InvariantCulture);
+    sceneBuilder.Child("svg-line", $"grid-horizontal-{index}", line => line
+        .Property("x1", "10").Property("y1", y)
+        .Property("x2", "90").Property("y2", y)
+        .Property("stroke", "#294055").Property("stroke-width", "0.2"));
+}
+
+sceneBuilder.Child("svg-line", "axis-y", line => line
+    .Property("x1", "10").Property("y1", "8")
+    .Property("x2", "10").Property("y2", "48")
+    .Property("stroke", "#7390a8").Property("stroke-width", "0.35"));
+sceneBuilder.Child("svg-line", "axis-x", line => line
+    .Property("x1", "10").Property("y1", "28.125")
+    .Property("x2", "90").Property("y2", "28.125")
+    .Property("stroke", "#7390a8").Property("stroke-width", "0.35"));
+
+sceneBuilder.Child("svg-text", "plot-title", label => label.Text("y = sin(x), 0 <= x <= 10")
+    .Property("x", "7").Property("y", "5").Property("font-size", "3").Property("fill", "#eef6ff"));
+sceneBuilder.Child("svg-polyline", "sine-curve", curve => curve
+    .Property("points", SvgPoints(points))
+    .Property("fill", "none").Property("stroke", "#7ee0bd").Property("stroke-width", "0.7"));
+sceneBuilder.Child("svg-circle", "current-marker", marker => marker
+    .Property("cx", markerX.ToString("0.###", CultureInfo.InvariantCulture))
+    .Property("cy", markerY.ToString("0.###", CultureInfo.InvariantCulture))
+    .Property("r", "1.8").Property("fill", "#ffcf86"));
+sceneBuilder.Child("svg-text", "current-value", label => label
+    .Text($"x = {last.Value:0.###} | {last.State}")
+    .Property("x", "7").Property("y", "52").Property("font-size", "3").Property("fill", "#ffcf86"));
+var scene = sceneBuilder.Build();
+
+var svg = new SvgGuiRenderer().Render(scene, width: 960, height: 540);
 var document = XDocument.Parse(svg);
 XNamespace ns = "http://www.w3.org/2000/svg";
 if (document.Root?.Name != ns + "svg")
