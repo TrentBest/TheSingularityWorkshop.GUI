@@ -1,0 +1,35 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
+# WpfWindowBuilder — API contract
+
+`WpfWindowBuilder` is a fluent wrapper around a single WPF `Window`. Each configuration method returns the same builder; `Build()` returns its configured window instance.
+
+## Configuration surface
+
+| Member | Behavior |
+|---|---|
+| `WithTitle(string)` | Sets the title; rejects null. |
+| `WithSize(double, double)` | Requires positive, finite width and height; selects manual sizing. |
+| `WithContent(FrameworkElement)` | Sets root content; rejects null. The element must not already have a visual parent. |
+| `OwnedBy(Window)` | Sets the owner; rejects null. |
+| `WithStartupLocation(WindowStartupLocation)` | Sets startup placement policy. |
+| `WithResizeMode(ResizeMode)` | Sets WPF resize policy. |
+| `WithWindowStyle(WindowStyle)` | Sets native window chrome style. |
+| `WithBackground(Brush)` | Sets background; rejects null. |
+| `WithIcon(ImageSource)` | Sets icon; rejects null. |
+| `ShowInTaskbar(bool)` | Controls taskbar representation. |
+| `Build()` | Returns the configured window without showing it. |
+
+## Lifecycle boundary
+
+The builder does not start an application, display the window, run a dispatcher, or manage window lifetime. The caller must follow WPF threading and visual-parent rules. Invalid size arguments throw `ArgumentOutOfRangeException`; null arguments to guarded methods throw `ArgumentNullException`.
+
+## Class diagram and use cases
+
+See [WpfWindowBuilderUML.md](../../uml/WpfWindowBuilderUML.md) for the focused class card and use cases, plus the [compiler-derived relationship SVG](../../uml/source-files/WPF/TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.svg).
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
