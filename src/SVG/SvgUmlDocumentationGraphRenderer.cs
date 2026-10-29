@@ -123,7 +123,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
         var bottom = focusY + NodeHeight + VerticalGap + (layoutRows - 1) * (NodeHeight + VerticalGap) + NodeHeight;
         if (externalNodes.Length > 0)
             bottom = Math.Max(bottom, externalStartY + externalHeight);
-        var canvasHeight = bottom + Margin + (hasSelfEdge ? 55 : 0);
+        var canvasHeight = bottom + Margin;
 
         var title = "Source-derived UML neighborhood: " + DisplayName(focus);
         var description = $"Compiler-model neighborhood for {DisplayName(focus)}. " +
@@ -191,14 +191,17 @@ public sealed class SvgUmlDocumentationGraphRenderer
             XElement connector;
             double labelX;
             double labelY;
+            var labelAnchor = "middle";
             double sourcePortX;
             double sourcePortY;
             double targetPortX;
             double targetPortY;
             if (isSelf)
             {
-                var startX = sourcePosition.X + NodeWidth - 42;
-                var endX = sourcePosition.X + NodeWidth - 42;
+                // Route the loop from the card edge, not through its interior. Keep these
+                // coordinates aligned with the source/target type ports recorded below.
+                var startX = sourcePosition.X + NodeWidth;
+                var endX = sourcePosition.X + NodeWidth;
                 var startY = sourcePosition.Y + 36;
                 var endY = sourcePosition.Y + 92;
                 var loopX = sourcePosition.X + NodeWidth + 52;
@@ -206,8 +209,11 @@ public sealed class SvgUmlDocumentationGraphRenderer
                     new XAttribute("d", $"M {F(startX)} {F(startY)} C {F(loopX)} {F(startY)}, {F(loopX)} {F(endY)}, {F(endX)} {F(endY)}"),
                     new XAttribute("fill", "none"), new XAttribute("stroke", stroke),
                     new XAttribute("stroke-width", "2"), new XAttribute("marker-end", marker));
-                labelX = loopX + 55;
-                labelY = sourcePosition.Y + 68;
+                // Keep the self-reference label above its loop and clear of horizontal
+                // dependency labels/lines that may leave the same focus card.
+                labelX = loopX + 5;
+                labelY = sourcePosition.Y + 27;
+                labelAnchor = "start";
                 sourcePortX = sourcePosition.X + NodeWidth;
                 sourcePortY = sourcePosition.Y + 62;
                 targetPortX = sourcePortX;
@@ -261,7 +267,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
             var relationshipText = isSelf ? "self-reference" : string.Join(" / ", labels);
             svg.Add(new XElement(Svg + "text",
                 new XAttribute("x", F(labelX)), new XAttribute("y", F(labelY)),
-                new XAttribute("text-anchor", "middle"), new XAttribute("font-size", "11"),
+                new XAttribute("text-anchor", labelAnchor), new XAttribute("font-size", "11"),
                 new XAttribute("fill", "#243b4a"), relationshipText));
 
             var sourcePortKey = $"source:{sourceId}:{typeIdentity}:{F(sourcePortX)}:{F(sourcePortY)}";

@@ -61,6 +61,19 @@ public sealed class SvgUmlDocumentationGraphRendererTests
                     new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "Fixture.B Link")),
                 external,
                 new UmlDocumentedRelationship(
+                    "edge:A:self",
+                    UmlRelationshipKind.Association,
+                    a.Id,
+                    a.Id,
+                    "global::Fixture.A",
+                    UmlRelationshipResolution.Resolved,
+                    null,
+                    "source-to-target",
+                    "self-reference",
+                    null,
+                    null,
+                    new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "A.Link -> A")),
+                new UmlDocumentedRelationship(
                     "edge:consumer:A",
                     UmlRelationshipKind.Dependency,
                     consumer.Id,
@@ -77,11 +90,17 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             ]);
 
         var document = XDocument.Parse(new SvgUmlDocumentationGraphRenderer().Render(model, a.Id));
+        var reviewArtifactPath = Environment.GetEnvironmentVariable("GUI_UML_REVIEW_ARTIFACT");
+        if (!string.IsNullOrWhiteSpace(reviewArtifactPath))
+        {
+            Directory.CreateDirectory(Path.GetDirectoryName(Path.GetFullPath(reviewArtifactPath))!);
+            document.Save(reviewArtifactPath);
+        }
         Assert.Equal("Source-derived UML neighborhood: Fixture.A", document.Root!.Element(Svg + "title")!.Value);
         Assert.Contains(document.Root.Elements(Svg + "rect"), rect =>
             ((string?)rect.Attribute("data-canvas-background")) == "true" &&
             ((string?)rect.Attribute("fill")) == "#ffffff");
-        Assert.Contains("4 type nodes and 3 typed relationships", document.Root.Element(Svg + "desc")!.Value);
+        Assert.Contains("4 type nodes and 4 typed relationships", document.Root.Element(Svg + "desc")!.Value);
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
         Assert.Contains(document.Descendants(Svg + "title"), title => title.Value.Contains("Fixture.B", StringComparison.Ordinal));
         Assert.Contains(document.Descendants(Svg + "a"), link =>
@@ -98,6 +117,21 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         Assert.Equal(ids.Length, ids.Distinct(StringComparer.Ordinal).Count());
         Assert.Contains(document.Descendants(Svg + "line"), line =>
             ((string?)line.Attribute("marker-end")) == "url(#uml-arrow)");
+
+        var focusRect = nodeGroupsForSelfEdge(document, "type:Fixture:A");
+        var focusCardX = double.Parse((string)focusRect.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture);
+        var focusCardWidth = double.Parse((string)focusRect.Attribute("width")!, System.Globalization.CultureInfo.InvariantCulture);
+        var selfLoop = Assert.Single(document.Descendants(Svg + "path"), path =>
+            ((string?)path.Attribute("d"))?.StartsWith("M ", StringComparison.Ordinal) == true &&
+            ((string?)path.Attribute("marker-end")) == "url(#uml-arrow)" &&
+            ((string?)path.Attribute("d"))?.Contains(" C ", StringComparison.Ordinal) == true);
+        var pathData = (string)selfLoop.Attribute("d")!;
+        var coordinates = System.Text.RegularExpressions.Regex.Matches(pathData, @"-?\d+(?:\.\d+)?")
+            .Select(match => double.Parse(match.Value, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
+        Assert.Equal(focusCardX + focusCardWidth, coordinates[0], precision: 2);
+        Assert.Equal(focusCardX + focusCardWidth, coordinates[^2], precision: 2);
+        Assert.True(coordinates[4] > focusCardX + focusCardWidth,
+            "the self-reference loop must route outside the focus card rather than through its interior");
 
         var nodeGroups = document.Descendants(Svg + "g")
             .Where(group => ((string?)group.Attribute("id"))?.StartsWith("uml-node-", StringComparison.Ordinal) == true)
@@ -127,6 +161,12 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             group.Element(Svg + "title")?.Value.Contains("Type conduit", StringComparison.Ordinal) == true);
     }
 
+    private static XElement nodeGroupsForSelfEdge(XDocument document, string typeId) =>
+        document.Descendants(Svg + "g")
+            .Where(group => ((string?)group.Attribute("id"))?.StartsWith("uml-node-", StringComparison.Ordinal) == true)
+            .Single(group => ((string?)group.Attribute("data-type-id")) == typeId)
+            .Element(Svg + "rect")!;
+
     [Fact]
     public void Rejects_unknown_focus_type_id()
     {
@@ -150,4 +190,51 @@ public sealed class SvgUmlDocumentationGraphRendererTests
 
         Assert.Throws<ArgumentOutOfRangeException>(() => new SvgUmlDocumentationGraphRenderer().Render(model, "missing", 400));
     }
+
+    [Fact]
+    public void Routes_self_reference_from_the_focus_card_boundary()
+    {
+        var source = new UmlSourceDeclaration("Fixture/Self.cs", new UmlSourceSpan(0, 20, 1, 1, 1, 21));
+        var self = new UmlDocumentedType(
+            "type:Fixture:Self",
+            new UmlTypeIdentity("Fixture", "Fixture", [], "Self", 0, "class"),
+            [source],
+            []);
+        var model = new UmlDocumentationModel(
+            "1.0",
+            new UmlModelProvenance("TrentBest/TheSingularityWorkshop.GUI", "0123456789abcdef0123456789abcdef01234567", "Fixture/Fixture.csproj", "Fixture", "net8.0", "Release", "project-semantic", null),
+            [self],
+            [new UmlDocumentedRelationship(
+                "edge:self:self",
+                UmlRelationshipKind.Association,
+                self.Id,
+                self.Id,
+                "global::Fixture.Self",
+                UmlRelationshipResolution.Resolved,
+                null,
+                "source-to-target",
+                "self reference",
+                null,
+                null,
+                new UmlRelationshipProvenance("roslyn-member-symbol", source.Path, source.Span, "Self.Self"))]);
+
+        var document = XDocument.Parse(new SvgUmlDocumentationGraphRenderer().Render(model, self.Id));
+        var node = document.Descendants(Svg + "g")
+            .Single(group => (string?)group.Attribute("data-type-id") == self.Id &&
+                group.Attribute("id") is not null);
+        var rect = node.Element(Svg + "rect")!;
+        var right = double.Parse((string)rect.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture) +
+            double.Parse((string)rect.Attribute("width")!, System.Globalization.CultureInfo.InvariantCulture);
+        var loop = document.Descendants(Svg + "path")
+            .Single(path => ((string?)path.Attribute("d"))?.Contains(" C ", StringComparison.Ordinal) == true);
+        var coordinates = System.Text.RegularExpressions.Regex.Matches(
+            (string)loop.Attribute("d")!, @"-?\d+(?:\.\d+)?")
+            .Select(match => double.Parse(match.Value, System.Globalization.CultureInfo.InvariantCulture))
+            .ToArray();
+
+        Assert.Equal(right, coordinates[0], 2);
+        Assert.Equal(right, coordinates[^2], 2);
+        Assert.Contains(document.Descendants(Svg + "text"), label => label.Value == "self-reference");
+    }
+
 }

@@ -89,7 +89,16 @@ jobs:
         run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release
 
       - name: Test SVG
+        env:
+          GUI_UML_REVIEW_ARTIFACT: ${{ github.workspace }}/artifacts/uml-self-reference-review.svg
         run: dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj --configuration Release
+
+      - name: Upload focused UML self-reference review artifact
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # pinned commit SHA
+        with:
+          name: uml-self-reference-review
+          path: ./artifacts/uml-self-reference-review.svg
+          if-no-files-found: error
 
       - name: Test shared adapter conformance
         run: dotnet test tests/Adapter.Conformance.Tests/TheSingularityWorkshop.GUI.Adapter.Conformance.Tests.csproj --configuration Release
