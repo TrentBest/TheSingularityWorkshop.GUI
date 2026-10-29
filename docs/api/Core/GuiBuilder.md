@@ -22,6 +22,12 @@ The focal `GuiBuilder` card is centered. Direct consumers are above; the immutab
 
 See the companion [GuiBuilder UML and use cases](../../uml/GuiBuilderUML.md).
 
+### Compiler-derived type neighborhood
+
+![Compiler-derived UML neighborhood for GuiBuilder](../../uml/source-files/Core/TheSingularityWorkshop-Workshop-Gui-GuiBuilder-415898c6b3.svg)
+
+This additional diagram is generated from compiler-backed source analysis and pinned to the committed inventory. It complements—not replaces—the manually authored target-centered diagram and use-case explanation above. Its relationships describe source structure, not observed runtime behavior.
+
 ## Public contract
 
 - `Create(kind, id)` creates a builder with a root kind and stable identifier. Blank values are rejected by the private `NodeBuilder` constructor.
@@ -39,7 +45,7 @@ See the companion [GuiBuilder UML and use cases](../../uml/GuiBuilderUML.md).
 - `NodeBuilder` is private implementation detail, not a public extension point.
 - The builder does not render, schedule animation, own a UI event loop, dispatch commands, or authorize domain actions.
 - Core's semantic command declaration is inert until a consuming host explicitly maps an allowed command ID to a host-owned operation.
-- The diagram's user/dependency relationships describe source structure and documented usage, not call timing or observed runtime execution.
+- Core does not enforce tree-wide unique IDs; individual adapters may impose stricter validation, including the SVG renderer's duplicate-ID check.
 
 ## Usage
 
