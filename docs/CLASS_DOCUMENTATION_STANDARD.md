@@ -1,4 +1,9 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Per-Type Documentation and UML Standard
+> **Status: draft pending owner acceptance of the UML member-order contract.** The current class-page examples use Public → Protected → Private visibility groups and treat `static` as a modifier, while the GUI domain gate records a Public → Static → Protected → Private grouping requirement. This conflict is open; see the [Full GUI Domain Coverage Map](FULL_GUI_DOMAIN_COVERAGE.md). Keep exact C# accessibility metadata intact and do not present either grouping as final until the owner accepts one.
+
 
 This standard applies to **every declared type in the GUI repository**, not only public API types. It is a documentation acceptance criterion for Core, Blazor, SVG, and WPF. XML API comments and generated package XML files remain valuable, but they do not replace a dedicated human-readable type page.
 
@@ -96,3 +101,8 @@ Use the documented declaration ordering and edit contract in [UML-Inspired Data 
 The type chooser must put supported built-in types first, followed by available user-defined and referenced types alphabetically, and include search at the top. Its choices come from the current project/compilation context. GUI Core remains language-neutral; C# parsing, symbol resolution, and AST mutation belong to a separate code-domain adapter/command handler.
 
 These are intended semantics, not a claim that interactive AST editing already exists. Track implementation and fixture-based tests in the roadmap; a static SVG image cannot by itself provide the trusted edit/validation bridge.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
