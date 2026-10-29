@@ -1,9 +1,12 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # TheSingularityWorkshop.Gui.WorkshopGui
 
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`3844b48b1a30f678cb8aa80c2a21aaaceed9348b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/3844b48b1a30f678cb8aa80c2a21aaaceed9348b)
+- Revision: [`59362b4a57a60809f338977e3e978b9eb3ee5099`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/59362b4a57a60809f338977e3e978b9eb3ee5099)
 - Project: `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Blazor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Gui.WorkshopGui`
 - Metadata name: `WorkshopGui`
@@ -16,27 +19,32 @@
 
 ## Source declarations
 
-- [`src/Blazor/WorkshopGuiBuilder.cs:8-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L8-20)
+- [`src/Blazor/WorkshopGuiBuilder.cs:8-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L8-20)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Button(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:17-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L17-17) |
-| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Element(object, string)` | [`src/Blazor/WorkshopGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L11-11) |
-| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Image(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L19-19) |
-| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.MultiPanel(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L15-15) |
-| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Panel(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L13-13) |
+| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Button(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:17-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L17-17) |
+| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Element(object, string)` | [`src/Blazor/WorkshopGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L11-11) |
+| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Image(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L19-19) |
+| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.MultiPanel(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L15-15) |
+| `Method` | `TheSingularityWorkshop.Gui.WorkshopGui.Panel(object)` | [`src/Blazor/WorkshopGuiBuilder.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L13-13) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ButtonGuiBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:17-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L17-17) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L11-11) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L19-19) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L15-15) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.PanelGuiBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Blazor/WorkshopGuiBuilder.cs#L13-13) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ButtonGuiBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:17-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L17-17) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L11-11) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L19-19) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L15-15) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.PanelGuiBuilder` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/59362b4a57a60809f338977e3e978b9eb3ee5099/src/Blazor/WorkshopGuiBuilder.cs#L13-13) |
 
 [Back to the generated type index](index.md)
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
 

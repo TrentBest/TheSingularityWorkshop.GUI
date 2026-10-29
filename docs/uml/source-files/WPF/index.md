@@ -1,9 +1,12 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Generated UML type pages
 
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`3844b48b1a30f678cb8aa80c2a21aaaceed9348b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/3844b48b1a30f678cb8aa80c2a21aaaceed9348b)
+- Revision: [`59362b4a57a60809f338977e3e978b9eb3ee5099`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/59362b4a57a60809f338977e3e978b9eb3ee5099)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Types: 23
 
@@ -32,4 +35,9 @@
 | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity` | `class` | 3 | 0 | [TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.md](TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.md) | [TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.svg](TheSingularityWorkshop-GUI-WPF-WpfGuiIdentity-064e7fd4b4.svg) |
 | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer` | `class` | 14 | 5 | [TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.md](TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.md) | [TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.svg](TheSingularityWorkshop-GUI-WPF-WpfGuiRenderer-09d386773a.svg) |
 | `TheSingularityWorkshop.GUI.WPF.WpfWindowBuilder` | `class` | 12 | 10 | [TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.md](TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.md) | [TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.svg](TheSingularityWorkshop-GUI-WPF-WpfWindowBuilder-8f86ce64e7.svg) |
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
 

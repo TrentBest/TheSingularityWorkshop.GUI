@@ -1,9 +1,12 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Generated UML type pages
 
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`3844b48b1a30f678cb8aa80c2a21aaaceed9348b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/3844b48b1a30f678cb8aa80c2a21aaaceed9348b)
+- Revision: [`59362b4a57a60809f338977e3e978b9eb3ee5099`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/59362b4a57a60809f338977e3e978b9eb3ee5099)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Types: 9
 
@@ -18,4 +21,9 @@
 | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `class` | 19 | 9 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-ef7118f7d2.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode` | `record` | 8 | 6 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition` | `record` | 3 | 1 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-NodePosition-76addb5852.svg) |
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
 

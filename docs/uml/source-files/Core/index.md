@@ -1,9 +1,12 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Generated UML type pages
 
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`3844b48b1a30f678cb8aa80c2a21aaaceed9348b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/3844b48b1a30f678cb8aa80c2a21aaaceed9348b)
+- Revision: [`59362b4a57a60809f338977e3e978b9eb3ee5099`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/59362b4a57a60809f338977e3e978b9eb3ee5099)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Types: 31
 
@@ -40,4 +43,9 @@
 | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseOwnership` | `record` | 4 | 3 | [TheSingularityWorkshop-Workshop-Gui-UmlUseCaseOwnership-3504d8304b.md](TheSingularityWorkshop-Workshop-Gui-UmlUseCaseOwnership-3504d8304b.md) | [TheSingularityWorkshop-Workshop-Gui-UmlUseCaseOwnership-3504d8304b.svg](TheSingularityWorkshop-Workshop-Gui-UmlUseCaseOwnership-3504d8304b.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseReview` | `record` | 4 | 3 | [TheSingularityWorkshop-Workshop-Gui-UmlUseCaseReview-81e6b143fb.md](TheSingularityWorkshop-Workshop-Gui-UmlUseCaseReview-81e6b143fb.md) | [TheSingularityWorkshop-Workshop-Gui-UmlUseCaseReview-81e6b143fb.svg](TheSingularityWorkshop-Workshop-Gui-UmlUseCaseReview-81e6b143fb.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep` | `record` | 4 | 5 | [TheSingularityWorkshop-Workshop-Gui-UmlUseCaseStep-ea1a9c83f9.md](TheSingularityWorkshop-Workshop-Gui-UmlUseCaseStep-ea1a9c83f9.md) | [TheSingularityWorkshop-Workshop-Gui-UmlUseCaseStep-ea1a9c83f9.svg](TheSingularityWorkshop-Workshop-Gui-UmlUseCaseStep-ea1a9c83f9.svg) |
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
 
