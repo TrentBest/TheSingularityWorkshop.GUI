@@ -3,7 +3,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`8d11c5f449b73b519cfb1819c9c3942307f717c6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/8d11c5f449b73b519cfb1819c9c3942307f717c6)
+- Revision: [`3844b48b1a30f678cb8aa80c2a21aaaceed9348b`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/3844b48b1a30f678cb8aa80c2a21aaaceed9348b)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow`
 - Metadata name: `UmlUseCaseAlternateFlow`
@@ -16,27 +16,27 @@
 
 ## Source declarations
 
-- [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L140-144)
+- [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L140-144)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.Condition` | [`src/Core/UmlDocumentationModel.cs:142-142`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L142-142) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.EvidenceIds` | [`src/Core/UmlDocumentationModel.cs:144-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L144-144) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.Id` | [`src/Core/UmlDocumentationModel.cs:141-141`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L141-141) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.Steps` | [`src/Core/UmlDocumentationModel.cs:143-143`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L143-143) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.UmlUseCaseAlternateFlow(string, string, System.Collections.Generic.IReadOnlyList<TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep>, System.Collections.Generic.IReadOnlyList<string>)` | [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L140-144) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.Condition` | [`src/Core/UmlDocumentationModel.cs:142-142`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L142-142) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.EvidenceIds` | [`src/Core/UmlDocumentationModel.cs:144-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L144-144) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.Id` | [`src/Core/UmlDocumentationModel.cs:141-141`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L141-141) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.Steps` | [`src/Core/UmlDocumentationModel.cs:143-143`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L143-143) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow.UmlUseCaseAlternateFlow(string, string, System.Collections.Generic.IReadOnlyList<TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep>, System.Collections.Generic.IReadOnlyList<string>)` | [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L140-144) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow>` | `External` | [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L140-144) |
-| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCase` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:129-129`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L129-129) |
-| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:143-143`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L143-143) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCase` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:121-134`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L121-134) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/8d11c5f449b73b519cfb1819c9c3942307f717c6/src/Core/UmlDocumentationModel.cs#L140-144) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.UmlUseCaseAlternateFlow>` | `External` | [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L140-144) |
+| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCase` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:129-129`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L129-129) |
+| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:143-143`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L143-143) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCase` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:121-134`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L121-134) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.UmlUseCaseStep` | `Resolved` | [`src/Core/UmlDocumentationModel.cs:140-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/3844b48b1a30f678cb8aa80c2a21aaaceed9348b/src/Core/UmlDocumentationModel.cs#L140-144) |
 
 [Back to the generated type index](index.md)
 
