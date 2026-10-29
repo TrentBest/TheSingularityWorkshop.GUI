@@ -267,6 +267,9 @@ jobs:
           assert root.tag == "{http://www.w3.org/2000/svg}svg", "output is not SVG"
           assert root.find(".//svg:polyline[@id='sine-curve']", ns) is not None, "sampled sine curve is missing"
           assert root.find(".//svg:circle[@id='current-marker']", ns) is not None, "runtime-state marker is missing"
+          assert root.find(".//svg:line[@id='axis-x']", ns) is not None, "horizontal zero axis is missing"
+          assert root.find(".//svg:line[@id='axis-y']", ns) is not None, "x=0 axis is missing"
+          assert root.find(".//svg:line[@id='grid-vertical-1']", ns) is not None, "plot grid is missing"
           text = " ".join(node.text or "" for node in root.findall(".//svg:text", ns))
           assert "x = 10" in text and "Reverse" in text, "final marker label does not reflect the final FSM state"
           print("Verified the FSM-driven oscillator curve, marker, and final state label.")
