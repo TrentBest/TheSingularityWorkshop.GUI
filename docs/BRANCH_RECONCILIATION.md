@@ -49,21 +49,21 @@ Counts below are relative to `development` at the audit head above. “Ahead/beh
 | `release/gui-closeout-2026-10-22` | 13 / 13 | [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32) | Preserve for reconciliation; contains release-closeout, evidence-boundary theory, and readiness changes. Do not treat the old readiness snapshot as current. |
 | `release/gui-root-id-contract-2026-10-22` | 9 / 12 | [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) | Root SVG identity/accessibility-ID collision fix, gallery artifact, and tests have since been integrated with the node-count guard into `development` at `3844b48`; old PR/branch remains open and must be dispositioned. |
 | `tests/core-builder-cycle-regression-2026-10-23` | 5 / 8 | [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41) | Null-child rejection, direct/indirect builder-cycle tests, and matching API/UML docs have since been integrated into `development` at `3844b48`; old PR/branch remains open and must be dispositioned. |
-| `work/automatic-uml-documentation-promotion` | 1 / 23 | — | Review unique workflow change against the current generated-doc promotion path; likely superseded, but not deletion-ready yet. |
-| `work/fix-promoted-uml-index-links` | 3 / 20 | — | Review generator/index-link changes and tests against current committed inventories before disposition. |
-| `work/fix-uml-promotion-generator-manifest` | 2 / 22 | — | Review manifest safety fix against the current promotion workflow and tests. |
+| `work/automatic-uml-documentation-promotion` | 1 / 23 | — | Its only unique change is the older `SOURCE_REVISION: github.sha`/direct-push implementation. Current `promote-source-uml-docs.yml` captures the checked-out source revision, checks source drift, serializes runs, and safely rebases/retries. **Ready for owner deletion**; no open PR. |
+| `work/fix-promoted-uml-index-links` | 3 / 20 | — | Its promotion script and tests match current `development`; only the generated index differs, and the current branded index has corrected package links. **Ready for owner deletion**; no open PR. |
+| `work/fix-uml-promotion-generator-manifest` | 2 / 22 | — | Its unique `index.md` copy/test is superseded by the current manifest-owned four-project promotion, which rewrites links and validates safe destinations. **Ready for owner deletion**; no open PR. |
 | `work/fix-uml-self-reference-clearance-2026-10-27` | 7 / 6 | [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55) | Its complete self-reference route/label/canvas fix and focused review-artifact workflow have since been integrated into `development` at `0f256ac`, combined with the focused regression test from #60. Follow-up commit `466167f` keeps the loop above the outgoing dependency edge; Package GUI passed and the artifact was visually reviewed. Old PR/branch remains open and must be dispositioned. |
-| `work/four-package-uml-promotion` | 19 / 24 | — | Review promotion generator/tests; likely contains useful intermediate work, but current promotion workflow and generated inventory already exist. |
-| `work/record-committed-uml-inventory` | 7 / 20 | — | Review documentation/evidence edits against the current 69-type committed inventory; avoid duplicating stale history. |
-| `work/record-current-package-archive-evidence` | 2 / 16 | — | Review readiness/queue edits; candidate-specific archive evidence is still a separate release gate. |
+| `work/four-package-uml-promotion` | 19 / 24 | — | The three changed files are older versions of the current promotion workflow/script/tests; current development contains four-project manifest safety, drift checks, branded pages, and race-safe retry. Its branch-only index copy is obsolete. **Ready for owner deletion**; no open PR. |
+| `work/record-committed-uml-inventory` | 7 / 20 | — | `docs/SOURCE_DERIVED_UML.md` matches current development; its README/queue/readiness content is older than the current branded README, domain gate, and newer artifact evidence. **Ready for owner deletion**; no open PR. |
+| `work/record-current-package-archive-evidence` | 2 / 16 | — | Its readiness/queue archive evidence is superseded by the current four-package artifact record and explicit selected-candidate gate. **Ready for owner deletion**; no open PR. |
 | `work/record-svg-vocabulary-coverage` | 0 / 13 | — | **READY FOR OWNER DELETION** based on this snapshot: no unique commits relative to `development`, no open PR, and all branch commits are reachable from `development`. Owner should recheck the head before deleting. |
-| `work/record-svg-vocabulary-coverage-status` | 2 / 13 | — | Review status/queue changes against current SVG vocabulary-to-test coverage; may be stale evidence history. |
-| `work/svg-vocabulary-test-coverage` | 2 / 14 | — | Review source/test changes against current explicit-mapping coverage before disposition. |
-| `work/trim-release-evidence-history` | 2 / 15 | — | Review release-history trimming against the current evidence standard; do not discard unique facts without checking. |
+| `work/record-svg-vocabulary-coverage-status` | 2 / 13 | — | The current queue marks the 60-mapping vocabulary-to-test audit complete, and `docs/SVG_ADAPTER.md` contains the matrix. Its old readiness estimate is stale. **Ready for owner deletion**; no open PR. |
+| `work/svg-vocabulary-test-coverage` | 2 / 14 | — | Current `docs/SVG_ADAPTER.md` and `SvgGuiRendererTests.cs` contain the newer, expanded mapping/test matrix and regression coverage; no branch-only test lines remain. **Ready for owner deletion**; no open PR. |
+| `work/trim-release-evidence-history` | 2 / 15 | — | Current `RELEASE_READINESS.md` has the concise current gate/checklist; this branch's unique history and readiness estimate are older than the current record. **Ready for owner deletion**; no open PR. |
 | `work/uml-neighborhood-self-reference-clearance-2026-10-28` | 4 / 4 | [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60) | Its focused boundary regression test is integrated into `development` at `0f256ac` alongside #55's broader layout fix. Follow-up commit `466167f` adds a no-crossing assertion; Package GUI passed and the new review artifact was visually inspected. Old PR/branch remains open and must be dispositioned. |
 | `work/uml-visibility-tier-data-cards-2026-10-28` | 3 / 4 | [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57) | Preserve; clarify visibility tiers and colorful data cards against the canonical standard. |
 | `work/uml-visual-data-cards-2026-10-27` | 19 / 6 | [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50) | Preserve; substantive nested data-card renderer/tests. Review alongside #57 and both self-reference fixes before integration. |
-| `work/wpf-package-only-consumer` | 5 / 22 | — | Review workflow change against the current Windows archive-only consumer step; avoid retaining duplicate or obsolete workflow logic. |
+| `work/wpf-package-only-consumer` | 5 / 22 | — | Current `package.yml` explicitly packs Core/WPF and restores a clean Windows consumer only from the local `.nupkg` folder; its queue/readiness notes are older. **Ready for owner deletion**; no open PR. |
 
 ### Canonical branches
 
@@ -72,22 +72,31 @@ Counts below are relative to `development` at the audit head above. “Ahead/beh
 
 ### READY FOR OWNER DELETION
 
-Only this branch meets the evidence threshold from the current snapshot:
+The following exact branches have no open PR and no remaining unique content after comparison with current `development`. The listed ahead/behind counts are the original audit snapshot; the deletion decision is based on current file-content comparison and supersession evidence. Recheck the live head once more immediately before deletion.
 
+- `TrentBest/TheSingularityWorkshop.GUI:work/automatic-uml-documentation-promotion`
+- `TrentBest/TheSingularityWorkshop.GUI:work/fix-promoted-uml-index-links`
+- `TrentBest/TheSingularityWorkshop.GUI:work/fix-uml-promotion-generator-manifest`
+- `TrentBest/TheSingularityWorkshop.GUI:work/four-package-uml-promotion`
+- `TrentBest/TheSingularityWorkshop.GUI:work/record-committed-uml-inventory`
+- `TrentBest/TheSingularityWorkshop.GUI:work/record-current-package-archive-evidence`
 - `TrentBest/TheSingularityWorkshop.GUI:work/record-svg-vocabulary-coverage`
+- `TrentBest/TheSingularityWorkshop.GUI:work/record-svg-vocabulary-coverage-status`
+- `TrentBest/TheSingularityWorkshop.GUI:work/svg-vocabulary-test-coverage`
+- `TrentBest/TheSingularityWorkshop.GUI:work/trim-release-evidence-history`
+- `TrentBest/TheSingularityWorkshop.GUI:work/wpf-package-only-consumer`
 
-No other noncanonical branch is currently certified ready for deletion in this audit. This is intentionally conservative: the remaining branches have unique commits, open PRs, or both. That does **not** mean every branch deserves to survive; it means the unique work needs a disposition first.
+These are recommendations for owner-performed deletion only. No branch was deleted by this audit.
 
 ## 03 — Open pull requests
 
-All 16 open PRs were drafts at the audit snapshot. Their unique commits must not be discarded merely because they are old or behind `development`.
+The audit snapshot had 17 open draft PRs; the audit itself adds one. Live inventory on 2026-10-29 is **18 open PRs, all drafts**. No PR has been merged or closed by this work.
 
-- Domain/documentation candidates: [#40](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/40), [#36](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/36), [#37](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/37), [#38](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/38), [#39](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39), [#43](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/43), [#45](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/45), [#47](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/47).
-- Implementation/renderer candidates: [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34), [#35](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/35), [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41), [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48).
-- UML/data-card candidates: [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50), [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55), [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57), [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60).
-- Release closeout candidate: [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32).
+- **Content already integrated; old PR needs owner disposition:** [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32), [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34), [#35](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/35), [#36](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/36), [#37](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/37), [#38](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/38), [#40](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/40), [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41), [#43](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/43), [#45](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/45), [#47](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/47), [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48), [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55), [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60). Their useful content has been integrated directly into `development`; their branches/PRs are not safe to delete/close until the owner disposes of the open PRs.
+- **Open domain decisions/prototypes:** [#39](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39) defines the UML view/data-card standard but conflicts with the unresolved static/member-order requirement; [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50) and [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57) overlap on data-card visibility tiers and must not be adopted as normative until the order is resolved.
+- **This audit PR:** [#64](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/64) carries this ledger. Its content is being integrated into `development` separately; it remains open until the owner decides how to dispose of it.
 
-These are not 16 independent pieces of work. Several overlap or represent earlier stages of a newer branch. In particular, #55 and #60 overlap on UML self-reference routing; #50 and #57 overlap on data-card presentation; #32 and the readiness/evidence branches overlap on release closeout. Reconcile by behavior, tests, documentation value, and current source—not by PR age or branch name.
+These are not 18 independent pieces of work. Several overlap or represent earlier stages of a newer branch. Reconcile by behavior, tests, documentation value, and current source—not by PR age or branch name.
 
 ## 04 — Sith publication gate
 
