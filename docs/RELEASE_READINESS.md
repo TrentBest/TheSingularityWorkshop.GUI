@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # GUI Package Release Readiness
 
 **Prioritized execution queue:** [Next-Release Work Queue](NEXT_RELEASE_WORK_QUEUE.md). **Renderer/package coverage audit:** [GUI Surface Coverage Audit](GUI_SURFACE_COVERAGE_AUDIT.md). Use the queue to sequence implementation and the audit to track current adapter contracts and gaps; this checklist remains the authoritative release gate.
@@ -134,3 +137,8 @@ Complete this section for each candidate.
 - Approval and publication evidence:
 
 A package is ready only when all hard gates for the selected package scope are checked, exceptions are explicitly accepted, and the exact candidate has been reviewed. An unchecked item is not implicitly waived.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
