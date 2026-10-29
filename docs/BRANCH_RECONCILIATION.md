@@ -10,6 +10,8 @@
 
 This is a point-in-time rescue ledger, not authorization to merge, close, delete, force-push, release, deploy, or publish. The repository owner performs branch deletion manually after reviewing the exact `owner/repository:branch` recommendations below.
 
+**Snapshot timing:** the 30-branch / 16-PR inventory below was captured before creating this audit's temporary branch and PR. The audit itself therefore temporarily adds one branch and one open draft PR (#64); the live count immediately after creation became 31 branches and 17 open PRs. Two subsequent documentation commits on `development` established the explicit domain-definition release gate, so this PR's base is now behind that documentation-only update. Re-audit the live inventory and rerun CI before treating this ledger as current. The temporary audit branch is not intended to remain after the work is integrated and the owner manually cleans up.
+
 ## 01 — What the audit found
 
 At the audit snapshot, GitHub reported **30 branches: the two canonical branches plus 28 noncanonical branches**. There were **16 open pull requests, all drafts**. This is a material Sith-policy violation and a work-management problem: useful implementation, tests, domain documentation, release evidence, and generated UML work are split across branches at different points in the history.
