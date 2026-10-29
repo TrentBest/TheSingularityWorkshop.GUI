@@ -2,6 +2,9 @@
 
 This standard applies to **every declared type in the GUI repository**, not only public API types. It is a documentation acceptance criterion for Core, Blazor, SVG, and WPF. XML API comments and generated package XML files remain valuable, but they do not replace a dedicated human-readable type page.
 
+
+> **Normative view semantics:** [UML Views and Data-Card Standard](UML_VIEWS_AND_DATA_CARD_STANDARD.md) defines the distinct data-card, AST class-diagram, class-neighborhood, and sequence-diagram views. Where older wording here conflicts with that taxonomy, the new standard takes precedence. An AST structure view and a relationship neighborhood are different diagrams and must not be blended.
+
 ## Required coverage
 
 - Every class, interface, struct, record, and enum declared in production source has its own Markdown page. Include nested and internal types when they are part of the maintained implementation; explicitly justify any generated, trivial, or intentionally undocumented type in the audit inventory rather than silently omitting it.
