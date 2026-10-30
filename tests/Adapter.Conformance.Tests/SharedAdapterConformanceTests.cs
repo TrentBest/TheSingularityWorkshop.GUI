@@ -161,6 +161,47 @@ public sealed class SharedAdapterConformanceTests
             () => new SvgGuiRenderer().Render(tooDeep));
     }
 
+
+    [Fact]
+    public void Both_adapters_preserve_unknown_kind_identity_and_descendants_using_documented_fallbacks()
+    {
+        var model = GuiBuilder.Create("Panel", "root")
+            .Child("FutureKind", "future", future => future
+                .Child("Text", "caption", text => text.Text("Still present")))
+            .Build();
+
+        var blazorBuilder = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(model)(blazorBuilder);
+        var blazorFrames = blazorBuilder.GetFrames().Array;
+        var blazorIds = blazorFrames
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Attribute &&
+                            frame.AttributeName == "id")
+            .Select(frame => (string)frame.AttributeValue!)
+            .ToArray();
+        var blazorElements = blazorFrames
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Element)
+            .ToArray();
+
+        var svgDocument = XDocument.Parse(new SvgGuiRenderer().Render(model));
+        XNamespace svg = "http://www.w3.org/2000/svg";
+        var svgFallback = svgDocument.Descendants(svg + "g")
+            .Single(element => (string?)element.Attribute("id") == "future");
+
+        Assert.Equal(new[] { "root", "future", "caption" }, blazorIds);
+        Assert.Equal("div", blazorElements[1].ElementName);
+        Assert.Equal(new[] { "root", "future", "caption" },
+            svgDocument.Root!.DescendantsAndSelf()
+                .Where(element => element.Name.LocalName != "title" && element.Name.LocalName != "desc")
+                .Select(element => (string?)element.Attribute("id"))
+                .Where(id => id is not null)
+                .Cast<string>());
+        Assert.Equal("Still present", svgFallback.Descendants(svg + "title").Single().Value);
+        Assert.Equal("Still present", blazorFrames
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Text)
+            .Select(frame => frame.TextContent)
+            .Single());
+    }
+
     private static GuiNode CreateDeepTree(int deepestNodeDepth)
     {
         GuiNode node = new("Panel", "node-0");
