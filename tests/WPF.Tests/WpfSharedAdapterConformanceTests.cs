@@ -66,6 +66,29 @@ public sealed class WpfSharedAdapterConformanceTests
         });
     }
 
+
+    [Fact]
+    public void Wpf_adapter_preserves_unknown_kind_identity_and_descendants_using_documented_fallback()
+    {
+        RunOnSta(() =>
+        {
+            var model = GuiBuilder.Create("Panel", "root")
+                .Child("FutureKind", "future", future => future
+                    .Child("Text", "caption", text => text.Text("Still present")))
+                .Build();
+
+            var rendered = Assert.IsType<Border>(WpfGuiRenderer.Render(model));
+            var rootHost = Assert.IsType<StackPanel>(rendered.Child);
+            var fallback = Assert.IsType<Border>(rootHost.Children[0]);
+            Assert.Equal("future", WpfGuiIdentity.GetNodeId(fallback));
+
+            var fallbackHost = Assert.IsType<StackPanel>(fallback.Child);
+            var caption = Assert.IsType<TextBlock>(fallbackHost.Children[0]);
+            Assert.Equal("caption", WpfGuiIdentity.GetNodeId(caption));
+            Assert.Equal("Still present", caption.Text);
+        });
+    }
+
     private static void RunOnSta(Action action)
     {
         Exception? failure = null;
