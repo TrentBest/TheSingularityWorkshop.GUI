@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop animated moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Theory Textbook Map
 
 This document defines how the theory track can be inserted into a textbook with minimal editorial rework.
@@ -75,6 +78,8 @@ Introduces:
 - manifestation lifecycle
 - `Gui.Execute(...)`
 
+**Status boundary:** this is a theoretical direction, not a claim that the execution-host API or lifecycle exists today.
+
 Primary source:
 
 [Execution Boundary](THEORY/04_EXECUTION_BOUNDARY.md)
@@ -114,6 +119,8 @@ Introduces:
 - spatial interaction and hit testing
 - selection and synchronization across views
 
+**Status boundary:** camera, viewport, projection, hit-testing, synchronization, and LOD remain specified or proposed; the current Core coordinate primitive is narrower.
+
 Primary source:
 
 [Spatial Representation](THEORY/06_SPATIAL_REPRESENTATION.md)
@@ -121,6 +128,50 @@ Primary source:
 Engineering companion:
 
 [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
+
+---
+
+### Chapter 7 — Evidence and Boundaries in Semantic GUI Systems
+
+**Core question:** How can an architectural claim be connected to implementation without overstating what source, tests, or consumer evidence prove?
+
+Introduces:
+
+- source inspection versus executable evidence
+- test scope and adapter-specific contracts
+- consumer verification
+- conceptual models versus captured runtime output
+- evidence confidence and counterexamples
+
+Primary source:
+
+[Evidence and Boundaries](THEORY/07-EVIDENCE-AND-BOUNDARIES.md)
+
+---
+
+### Chapter 8 — Semantic Presentation and Composition
+
+**Core question:** How can interface structure and intent be described independently of the platform that manifests it?
+
+Introduces:
+
+- semantic nodes and recursive GUI trees
+- identity, properties, text, source, and ordered children
+- builder composition and immutable snapshots
+- command identity versus command authority
+- composition versus observation
+- adapter-specific manifestation and conformance evidence
+- the current boundary between implemented composition and proposed camera/view/LOD contracts
+
+Primary source:
+
+[Semantic Presentation and Composition](THEORY/08_SEMANTIC_PRESENTATION_AND_COMPOSITION.md)
+
+Engineering companions:
+
+- [GUI Model](GUI_MODEL.md)
+- [Platform Adapters](PLATFORM_ADAPTERS.md)
+- [GUI Spatial Contracts](GUI_SPATIAL_CONTRACTS.md)
 
 ---
 
@@ -156,3 +207,8 @@ The theory documents the argument.
 The engineering documentation documents the implementation.
 
 Those are three related but distinct artifacts.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
