@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Explore the platform-neutral semantic GUI model and its Blazor, SVG, and WPF manifestations.">
+  <title>The Singularity Workshop · GUI</title>
+  <style>
+    :root{color-scheme:dark;--bg:#09121d;--surface:#111f2e;--surface-2:#172a3b;--line:#2b4358;--text:#eef5fb;--muted:#b7c8d8;--accent:#8ee4c4;--blue:#a9d8ff;--violet:#c6b7ff;--max:1160px}
+    *{box-sizing:border-box}
+    body{margin:0;background:radial-gradient(ellipse at 70% -10%,#20364b 0,transparent 42%),var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:var(--blue);text-underline-offset:4px}a:hover{color:#fff}
+    .wrap{width:min(var(--max),calc(100% - 40px));margin-inline:auto}
+    .top{padding:24px 0 18px;border-bottom:1px solid var(--line)}
+    .moniker{display:block;width:min(540px,90%);height:auto;margin:0 auto 18px}
+    nav{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:.92rem}
+    .hero{padding:clamp(48px,8vw,96px) 0 58px;text-align:center}
+    .eyebrow{color:var(--accent);font-size:.78rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+    h1{max-width:900px;margin:14px auto 18px;font-size:clamp(2.5rem,6vw,5.4rem);line-height:1.02;letter-spacing:-.045em}
+    .lead{max-width:780px;margin:0 auto;color:var(--muted);font-size:clamp(1.05rem,2vw,1.25rem)}
+    .actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .action{display:inline-flex;align-items:center;justify-content:center;padding:11px 17px;border:1px solid var(--line);border-radius:999px;text-decoration:none;font-weight:700}
+    .action.primary{background:var(--accent);border-color:var(--accent);color:#092018}
+    section{padding:38px 0}
+    .section-head{max-width:760px;margin-bottom:22px}
+    h2{font-size:clamp(1.7rem,3vw,2.5rem);line-height:1.1;margin:0 0 10px}
+    h3{font-size:1.22rem;margin:0 0 8px}
+    .muted{color:var(--muted)}
+    .architecture{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+    .stage{padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-height:130px}
+    .stage b{display:block;color:var(--accent);margin-bottom:8px}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .card{overflow:hidden;background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:18px}
+    .card-body{padding:22px}
+    .preview{display:block;width:100%;aspect-ratio:16/9;background:#07101a;border-block:1px solid var(--line)}
+    .preview img{width:100%;height:100%;object-fit:contain;display:block}
+    .tag{display:inline-block;color:var(--accent);font-size:.75rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+    .proof{border-left:3px solid var(--accent);padding:10px 13px;margin-top:14px;background:#0b1924;color:var(--muted);font-size:.9rem}
+    .limits{border-left-color:var(--violet)}
+    .wide{grid-column:1/-1}
+    .links{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .links a{font-weight:650}
+    footer{margin-top:36px;padding:34px 0 46px;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
+    footer img{width:112px;height:auto;margin-bottom:10px}
+    @media(max-width:760px){.architecture{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <img class="moniker" src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker">
+      <nav aria-label="Primary navigation">
+        <a href="#architecture">Architecture</a>
+        <a href="#gallery">Gallery</a>
+        <a href="demonstrations/index.html">Interactive demonstrations</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/docs">Documentation</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Source</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <div class="eyebrow">A semantic interface · many manifestations</div>
+      <h1>Make software meaning visible.</h1>
+      <p class="lead">Describe interface intent once in a platform-neutral model. Let adapters manifest that intent through the technologies they actually support—without moving your application's domain behavior into the GUI.</p>
+      <div class="actions">
+        <a class="action primary" href="#gallery">Explore working artifacts</a>
+        <a class="action" href="demonstrations/index.html">Open the demonstrations</a>
+        <a class="action" href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Read the engineering guide</a>
+      </div>
+    </section>
+
+    <section id="architecture" class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The boundary</div>
+        <h2>One semantic model. Separate platform adapters.</h2>
+        <p class="muted">The GUI model describes what the interface means. Each adapter owns the platform-specific work of presenting it. The consuming experience retains its own state, behavior, and domain meaning.</p>
+      </div>
+      <div class="architecture" aria-label="GUI architecture flow">
+        <div class="stage"><b>01 · Intent</b>Describe the interface and its semantic structure.</div>
+        <div class="stage"><b>02 · GUI Core</b>Build a recursive, platform-neutral GuiNode tree.</div>
+        <div class="stage"><b>03 · Adapters</b>Translate the tree into supported platform output.</div>
+        <div class="stage"><b>04 · Host</b>Connect the manifestation to the consuming experience.</div>
+      </div>
+      <div class="links">
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/ARCHITECTURE.md">Architecture →</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/PLATFORM_ADAPTERS.md">Adapter contracts →</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/FULL_GUI_DOMAIN_COVERAGE.md">Domain coverage and gaps →</a>
+      </div>
+    </section>
+
+    <section id="gallery" class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Inspect the output</div>
+        <h2>Real artifacts, with honest boundaries.</h2>
+        <p class="muted">These are generated or source-derived examples from the repository. Each one says what it demonstrates and what it does not establish.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <a class="preview" href="assets/svg-adapter-gallery.svg"><img src="assets/svg-adapter-gallery.svg" alt="Generated GUI.SVG gallery showing vector geometry, gradients, filters, markers, and declarative motion"></a>
+          <div class="card-body">
+            <span class="tag">Generated by GUI.SVG</span>
+            <h3>SVG adapter gallery</h3>
+            <p class="muted">A semantic GUI tree manifested as inspectable SVG, including geometry, reusable definitions, filters, and declarative animation.</p>
+            <div class="proof">Proof: the Pages build runs the actual SvgGallery sample and requires byte-for-byte equality with the committed artifact.</div>
+            <div class="proof limits">Limit: SVG viewer animation is not a GUI-owned clock, live FSM execution, or GPU renderer.</div>
+            <div class="links"><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/SVG_GUIDE.md">SVG guide →</a><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/samples/SvgGallery/Program.cs">Generator source →</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <a class="preview" href="assets/fox-sheepdog-10x10.svg"><img src="assets/fox-sheepdog-10x10.svg" alt="Ten by ten fox and sheepdog semantic scene rendered as SVG"></a>
+          <div class="card-body">
+            <span class="tag">Semantic scene</span>
+            <h3>Fox and sheepdog plane</h3>
+            <p class="muted">A composed semantic scene with a grid and declarative motion choreography, serialized through the SVG adapter.</p>
+            <div class="proof">Proof: the sample builds a GUI scene and serializes it through the adapter.</div>
+            <div class="proof limits">Limit: the checked-in illustration is not a live simulation or proof of algorithmic animal behavior.</div>
+            <div class="links"><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Gallery notes →</a><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/samples/FoxSheepdogPlane/Program.cs">Sample source →</a></div>
+          </div>
+        </article>
+
+        <article class="card wide">
+          <div class="card-body">
+            <span class="tag">Cross-repository data hand-off</span>
+            <h3>Physics-backed demonstrations</h3>
+            <p class="muted">Several GUI.SVG recipes consume versioned Physics run records. Physics owns the model and sampled data; GUI owns the semantic presentation and SVG manifestation. The renderer does not silently recompute the experiment.</p>
+            <div class="links"><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/samples/demonstrations/recipes">Open the recipes →</a><a href="https://github.com/TrentBest/TheSingularityWorkshop.Physics/tree/development">Physics source →</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <span class="tag">Interactive browser prototypes</span>
+            <h3>Explore the demonstration lab</h3>
+            <p class="muted">Open the demonstration index to inspect the offline control-room prototype, endpoint configurator, SVG recipes, and their stated evidence boundaries.</p>
+            <div class="proof">These browser prototypes are explicitly labelled where they use offline fixtures and do not dispatch real workflows or send endpoint requests.</div>
+            <div class="links"><a href="demonstrations/index.html">Launch demonstrations →</a></div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-body">
+            <span class="tag">Living engineering reference</span>
+            <h3>Source-derived UML</h3>
+            <p class="muted">Explore the generated type inventory, class diagrams, and relationship views alongside the authored contracts and use cases.</p>
+            <div class="proof">The committed inventory is generated from source at a recorded revision; inspect its provenance and freshness notes before treating it as current.</div>
+            <div class="links"><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/docs/uml/source-files">Type inventory →</a><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/LIVING_UML_ARCHITECTURE.md">UML architecture →</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Learn the engineering</div>
+        <h2>From theory to implementation to evidence.</h2>
+        <p class="muted">The documentation separates the architectural argument from the contracts that exist in code, and the tests that verify those contracts.</p>
+      </div>
+      <div class="grid">
+        <article class="card"><div class="card-body"><h3>Start here</h3><p class="muted">A guided evaluation path through the model, adapters, examples, and tests.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI →</a></div></article>
+        <article class="card"><div class="card-body"><h3>Theory textbook</h3><p class="muted">The GUI as an extrinsic interface layer, breakwater principle, digital shadows, execution boundaries, and representational compatibility.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/THEORY_GUIDE.md">Read the theory guide →</a></div></article>
+        <article class="card"><div class="card-body"><h3>Tests and conformance</h3><p class="muted">See which contracts are exercised across Core, Blazor, SVG, and WPF—and where evidence is still narrow.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/TESTING.md">Inspect the test strategy →</a></div></article>
+        <article class="card"><div class="card-body"><h3>Release readiness</h3><p class="muted">The package family remains gated by owner review of the fully defined GUI domain and candidate-specific evidence.</p><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/RELEASE_READINESS.md">Review the release gate →</a></div></article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop"></a>
+    <div><strong>The Singularity Workshop · GUI</strong></div>
+    <div>Making software meaning visible to people.</div>
+    <div><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and contributions</a></div>
+  </footer>
+</body>
+</html>
