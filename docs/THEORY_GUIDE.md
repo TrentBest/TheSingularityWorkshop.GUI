@@ -63,7 +63,7 @@ Interoperability does not require two systems to share implementation details. T
 
 ### 6. Spatial Representation and Controlled Observation
 
-A GUI can represent subjects through independent views, viewports, and cameras. The 2D presentation domain provides the composition surface; 3D extends the subject space without requiring a separate GUI theory.
+A GUI can represent subjects through independent views, viewports, and cameras. The 2D presentation domain provides the composition surface; 3D extends the subject space without requiring a separate GUI theory. The current chapter distinguishes the spatial theory from the narrower coordinate primitives implemented today.
 
 [Read the chapter](THEORY/06_SPATIAL_REPRESENTATION.md)
 
@@ -72,6 +72,12 @@ A GUI can represent subjects through independent views, viewports, and cameras. 
 Theory claims should be tied to implementation, tests, and consumer evidence without treating those as interchangeable. This chapter defines the evidence discipline and states what the current adapter split does—and does not—establish.
 
 [Read the chapter](THEORY/07-EVIDENCE-AND-BOUNDARIES.md)
+
+### 8. Semantic Presentation and Composition
+
+A semantic GUI tree describes interface structure and intent before an adapter manifests it. This chapter distinguishes composition from observation, explains identity and immutable snapshots, and maps the current model to its builders, adapters, and tests. Camera, viewport, and level-of-detail concepts remain proposed rather than implemented.
+
+[Read the chapter](THEORY/08_SEMANTIC_PRESENTATION_AND_COMPOSITION.md)
 
 ## Textbook intent
 
