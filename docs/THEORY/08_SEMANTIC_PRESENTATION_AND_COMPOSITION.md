@@ -138,7 +138,7 @@ The following mapping was source-checked against `development` at revision [`064
 | Composition | [`GuiBuilder`](../../src/Core/GuiBuilder.cs) | Fluent recursive construction; `Build()` creates an immutable tree and rejects direct or indirect builder cycles. |
 | Common factories | [`GuiBuilders`](../../src/Core/GuiBuilders.cs) | Provides semantic factories for Panel, Column, Text, Button, and Warning. |
 | Command identity | [`GuiBuilder.WithOnClick`](../../src/Core/GuiBuilder.cs) | Stores a host-neutral `onClickCommand` identifier; it does not execute the command. |
-| Coordinate primitive | [`CoordinateSystem`](../../src/Core/CoordinateSystem.cs) | Defines a finite normalized numeric range and validates coordinates; it is not a complete transform or camera system. |
+| Coordinate primitive | [`CoordinateSystem`](../../src/Core/CoordinateSystem.cs) | Stores configurable minimum/maximum/origin values and validates supplied coordinate values for finiteness and range; it does not validate the configuration as a whole or implement a transform or camera system. |
 | Blazor manifestation | [`BlazorGuiRenderer`](../../src/Blazor/BlazorGuiRenderer.cs) | Maps supported nodes into a Blazor render tree. |
 | SVG manifestation | [`SvgGuiRenderer`](../../src/SVG/SvgGuiRenderer.cs) | Serializes supported semantic nodes into SVG markup. |
 | WPF manifestation | [`WpfGuiRenderer`](../../src/WPF/WpfGuiRenderer.cs) | Maps supported nodes into native WPF elements. |
@@ -186,7 +186,7 @@ The last step is deliberately outside Core. The semantic tree can name an action
 - Core tests cover snapshot behavior, ordered composition, depth-safe lookup, and cycle rejection.
 - The shared adapter fixture verifies selected semantic properties across Blazor and SVG.
 - WPF has its own native tests for a related semantic surface and host-supplied command dispatch.
-- The current coordinate primitive validates values in a normalized range; it does not perform a general world/local/view/viewport transformation chain.
+- The current coordinate primitive validates supplied values against its configured minimum/maximum range; it does not validate the configuration as a whole or perform a general world/local/view/viewport transformation chain.
 
 ### What it does not support
 
