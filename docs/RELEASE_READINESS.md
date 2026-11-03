@@ -7,6 +7,8 @@
 
 This is the release gate for the packages produced by `TrentBest/TheSingularityWorkshop.GUI`. It is a working checklist, not a claim that a release is currently approved. Check an item only when the evidence is available for the exact release candidate commit.
 
+**Current CI snapshot (2026-11-03):** The latest `development` commit is [`bd8f5889e38c1c2f692ebb895fb19d8ac8c78b55`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/bd8f5889e38c1c2f692ebb895fb19d8ac8c78b55). The following five push-triggered workflows completed successfully on that exact commit: [Package GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41711327585), [Solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41711327427), [Documentation quality](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41711327389), [Source-derived diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41711327228), and [Build and deploy GUI showcase](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41711327227). This is a documentation-identity commit and a CI health snapshot; it does **not** supersede the older package-artifact evidence, prove live Pages rendering, close the GUI domain-definition gate, select a release candidate, or authorize publication. The domain gate remains open and owner acceptance is still required.
+
 ## Pre-release owner gate: fully define the GUI domain
 
 **Blocking decision: no release candidate or package version/channel is to be selected until the GUI domain is fully defined and documented.** This gate is independent of package builds, green CI, archive inspection, and the previously recorded readiness estimate.
