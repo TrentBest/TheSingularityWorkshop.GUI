@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
+
 # GUI Coverage Survey — Standing on the Shoulders of Existing Systems
 
 This document records what existing GUI systems teach us about the size of the representation domain.
@@ -328,3 +330,13 @@ The target is:
 The adapter determines how much of that representation a particular platform can manifest.
 
 That makes the repository a semantic GUI substrate, rather than another GUI toolkit.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
