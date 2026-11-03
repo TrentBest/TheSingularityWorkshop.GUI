@@ -327,6 +327,38 @@ public sealed class WpfGuiRendererConformanceTests
         });
     }
 
+    [Fact]
+    public void Renderer_preserves_shared_nested_fixture_identity_order_and_text()
+    {
+        RunOnSta(() =>
+        {
+            // Keep this fixture structurally identical to SharedAdapterConformanceTests.
+            var root = GuiBuilder.Create("Panel", "root")
+                .Child("Panel", "actions", panel => panel
+                    .Child("Button", "save", button => button.Text("Save"))
+                    .Child("Text", "status", text => text.Text("Ready")))
+                .Build();
+
+            var rendered = Assert.IsType<Border>(WpfGuiRenderer.Render(root));
+            Assert.Equal("root", WpfGuiIdentity.GetNodeId(rendered));
+            var rootHost = Assert.IsType<StackPanel>(rendered.Child);
+            Assert.Single(rootHost.Children);
+
+            var actions = Assert.IsType<Border>(rootHost.Children[0]);
+            Assert.Equal("actions", WpfGuiIdentity.GetNodeId(actions));
+            var actionHost = Assert.IsType<StackPanel>(actions.Child);
+            Assert.Equal(2, actionHost.Children.Count);
+
+            var save = Assert.IsType<Button>(actionHost.Children[0]);
+            Assert.Equal("save", WpfGuiIdentity.GetNodeId(save));
+            Assert.Equal("Save", save.Content);
+
+            var status = Assert.IsType<TextBlock>(actionHost.Children[1]);
+            Assert.Equal("status", WpfGuiIdentity.GetNodeId(status));
+            Assert.Equal("Ready", status.Text);
+        });
+    }
+
     private static void RunOnSta(Action action)
     {
         Exception? failure = null;
