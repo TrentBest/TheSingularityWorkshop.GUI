@@ -1,4 +1,4 @@
-![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
 
 # Living UML and per-type documentation architecture
 
@@ -81,3 +81,13 @@ Until those conditions are met, report the implemented slice and remaining gaps 
 The longer-term target is an opt-in installable build-time documentation package, not a runtime library dependency and not a generator that every repository must copy into its source tree. It should provide a versioned CLI, an opt-in MSBuild target, deterministic per-type Markdown/SVG/inventory outputs, a manifest with source/build provenance, and safe drift checking. Normal application execution must pay zero documentation-generation cost.
 
 This package lifecycle is a target architecture, not an implemented feature. The current proof remains the staging CLI and focused graph renderer. Package publication remains separately gated by explicit owner authorization.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
