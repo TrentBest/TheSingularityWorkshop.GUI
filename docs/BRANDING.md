@@ -1,4 +1,4 @@
-![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg)
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
 
 # GUI Documentation Branding
 
@@ -17,14 +17,11 @@ GUI is the boundary where semantic intent becomes something a person can inspect
 
 ## Shared Workshop identity
 
-- Place the animated Workshop moniker at the top of Markdown documents, before the title, using the canonical shared asset.
-- Use the canonical static avatar as the closing Markdown footer image, sourced from [FSM_API's branding asset](https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png). Keep identity, tagline, and navigation as readable text and real links rather than baking them into an image. Animated moniker artwork belongs at the top; it does not replace the canonical footer avatar.
+- Place the animated Workshop moniker at the top of Markdown documents, before the title, using the canonical shared asset: [Visualize moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg).
+- Use the canonical static PNG as the closing Markdown footer image: [FSM_API branding asset](https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png). Do not use Avatar.jpg, a personal avatar, or the SVG moniker as the footer. Keep identity, tagline, and navigation as readable text and real links rather than baking them into an image.
 - Keep the README reader journey where relevant: identity, a useful visual, What, Why, How, See it in a minute, and Documentation and theory.
 - Treat visual markers as redundant cues. Heading text carries the meaning too; never rely on color alone.
 - Keep deep-document titles focused. Shared branding frames the explanation rather than replacing it with boilerplate.
-
-Canonical moniker:
-https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Renderer/development/docs/assets/moniker.svg
 
 ## GUI-specific visual language
 
@@ -45,7 +42,7 @@ Keep navigation relevant to the destination document and verify every link on th
 <!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center">
   <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
-    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" />
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
   </a><br />
   <strong>The Singularity Workshop · GUI</strong><br />
   <em>Making software meaning visible to people.</em><br />
@@ -54,9 +51,9 @@ Keep navigation relevant to the destination document and verify every link on th
 
 ## Review checklist
 
-- [ ] Shared moniker is first and points to the canonical asset.
+- [ ] Shared moniker is first and points to the canonical Visualize asset.
 - [ ] The title and prose accurately describe the document's subject.
-- [ ] Footer identity and links are readable, relevant, and valid.
+- [ ] Footer uses the canonical FSM_API PNG, with readable and relevant links.
 - [ ] README section markers follow the shared semantic palette where applicable.
 - [ ] Visuals are evidence-labelled and distinguish implementation from concept.
 - [ ] GUI does not claim ownership of application execution or domain behavior.
