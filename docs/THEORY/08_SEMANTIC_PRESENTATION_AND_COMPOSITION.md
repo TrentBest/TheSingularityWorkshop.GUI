@@ -205,7 +205,35 @@ A practical test is to describe one small interface tree once, render it through
 
 The current source and tests provide focused evidence for the narrower composition claim. The theory remains broader than the implementation, and every proposed extension needs its own typed contract, tests, and consumer evidence.
 
-## 8. Practice and assessment
+## 8. Audit of related semantic and observer contracts
+
+This chapter was created after reviewing the existing open design issues rather than treating the GUI tree as the entire GUI domain. The audit below records the boundary questions that must be resolved before a larger observer API is proposed.
+
+| Existing issue | Domain question | Current evidence and status | Consequence for this chapter |
+|---|---|---|---|
+| [#6 — Semantic observer, camera, and LOD](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/6) | How does a subject acquire one or more independent observations, views, viewports, and detail requests? | `docs/GUI_SPATIAL_CONTRACTS.md` specifies vocabulary and scenarios, but marks camera, projection, visibility, hit-testing, synchronization, and LOD as proposed. Core currently has coordinate primitives, not an observer/view API. | Do not describe camera, viewport, or LOD as implemented. A future contract needs stable subject/observer identity and explicit multi-view relationships before adapter behavior is designed. |
+| [#7 — Datum ↔ human boundary](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/7) | How can a human-facing representation refer to domain data without GUI taking ownership of that data? | The domain owner remains authoritative for datum and experience state. GUI composes a representation and can name an intended command; the current command identifier is not a mutation, authorization, or execution receipt. | Keep subject identity and state outside the GUI tree. A user edit must become a semantic request to the owning host/domain, not a mutation of GUI-owned shadow state. |
+| [#58 — Semantic input bridge](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/58) | Where do physical signals become reusable semantic intents? | The issue explicitly keeps FSM_UserIO and device-specific input out of GUI.Core pending a separate contract decision. Current WPF command dispatch is host-supplied; the neutral tree does not own physical input. | Keep physical input, device mapping, and ProtocolAi identity/execution concerns outside this chapter's Core model. The GUI boundary may expose intent targets, but must not become an input-device package. |
+| [#52 — Interactive Experience presentation](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/52) | What is the GUI contract for presenting a complete interactive Experience? | The issue is open. Experience rules/state remain with the Experience; GUI, Renderer, and Visualize are separate presentation responsibilities. | A semantic tree is one presentation artifact, not proof of a complete interactive Experience contract. Lifecycle, state refresh, input routing, and cross-presentation responsibilities need explicit evidence. |
+| [#42 — Renderer-neutral charting](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/42) | Are charts first-class semantic GUI content, and what does each adapter support? | The chart model and adapter capability matrix remain proposed; the issue calls for validation, accessible descriptions, nonvisual fallback, adapter evidence, and a real gallery example. | Do not imply that generic nodes or arbitrary string properties already constitute a chart contract. Chart semantics need a separately reviewed model and capability evidence. |
+
+### Observer and level-of-detail ownership remains a cross-repository decision
+
+The spatial issue correctly identifies a need to describe *what is being observed* independently of the platform camera or rendering implementation. However, the current GUI domain map assigns observer-facing representation and visibility decisions to Renderer, while GUI owns semantic interface composition and the human interaction boundary. Those statements are not yet a complete, jointly accepted contract.
+
+A candidate separation to evaluate—not an implemented or accepted API—is:
+
+- **Subject owner:** owns authoritative datum, identity, and domain state.
+- **GUI:** composes the human-facing interface and carries stable references to the subject and declared interaction intent.
+- **Renderer:** resolves observer-facing representation, visibility, and level-of-detail policy for the represented content.
+- **Visualize / platform adapters:** produce the concrete visual manifestation using their supported capabilities.
+- **Host:** routes user input and authorizes/executes requests against the subject owner.
+
+Before introducing typed camera, view, viewport, or LOD members into Core, reconcile this candidate with [Renderer's ownership](https://github.com/TrentBest/TheSingularityWorkshop.Renderer) and the existing [spatial contract inventory](../GUI_SPATIAL_CONTRACTS.md). In particular, decide whether GUI carries only a semantic observation request, whether Renderer owns the resolved view/visibility state, and how a view remains stable when its subject or representation changes.
+
+This audit is intentionally a design boundary, not a proposal to add a large rendering engine or a new package. The related issues remain open and should not be marked complete merely because this chapter documents their current status.
+
+## 9. Practice and assessment
 
 1. Predict the result of calling `Find("status")` when two nodes share that ID. Then inspect the Core lookup contract and explain why duplicate IDs can be ambiguous.
 2. Build a tree, call `Build()`, mutate the original builder, and explain why the first node remains unchanged.
@@ -214,7 +242,7 @@ The current source and tests provide focused evidence for the narrower compositi
 5. Propose a typed view/viewport contract without using WPF, Blazor, SVG, or graphics-engine types. State what evidence would be required before calling it implemented.
 6. Give an example where a direct platform-specific UI is a better fit than a renderer-neutral tree.
 
-## 9. Further reading
+## 10. Further reading
 
 - [GUI Model](../GUI_MODEL.md) — the current neutral model and its boundaries.
 - [Architecture](../ARCHITECTURE.md) — package ownership and dependency direction.
@@ -225,7 +253,7 @@ The current source and tests provide focused evidence for the narrower compositi
 - [Issue #6](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/6) — semantic observer, camera, and LOD work.
 - [Issue #63](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/63) — GUI theory learning path.
 
-## 10. Instructor and editor notes
+## 11. Instructor and editor notes
 
 This chapter can be taught before the spatial-observation chapter. Ask learners to separate composition from observation before introducing cameras or viewports. A useful lab is to construct the same small tree, inspect its immutable snapshot, and compare the output of two adapters. Have learners record the exact properties compared rather than declaring the renderers equivalent.
 
@@ -233,7 +261,7 @@ For an advanced exercise, ask students to propose a typed observer contract and 
 
 ---
 
-**Evidence label:** Source-checked against the `development` revision linked above. The documentation-quality workflow passed for repository commit `ceac24ae82209c1170ea7bf357d20dc2fba52221`; that CI result verifies the documentation gate, not the runtime behavior of every claim in this chapter. The diagrams in this chapter are authored conceptual models, not captured runtime output.
+**Evidence label:** The implementation mapping is source-checked against the `development` revision linked above. The five CI workflows completed successfully on repository commit `e905103078f725f5bd3689b574e6ef48bcb4132a`, including [documentation quality](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41721321819). These workflows verify their respective repository gates, not the runtime behavior of every claim in this chapter. The diagrams in this chapter are authored conceptual models, not captured runtime output.
 
 <!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
