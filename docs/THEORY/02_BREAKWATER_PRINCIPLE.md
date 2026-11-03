@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # The Breakwater Principle
 
 ## The problem
@@ -135,3 +138,8 @@ The principle therefore favors explicit capability boundaries over false uniform
 The Core/adapter boundary is visible in [GuiNode](../../src/Core/GuiNode.cs), [GuiBuilder](../../src/Core/GuiBuilder.cs), and the separate [Blazor](../../src/Blazor/BlazorGuiRenderer.cs), [WPF](../../src/WPF/WpfGuiRenderer.cs), and [SVG](../../src/SVG/SvgGuiRenderer.cs) implementations. The [Blazor renderer tests](../../tests/Blazor.Tests/BlazorGuiRendererTests.cs) and [SVG renderer tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs) provide concrete adapter-level checks.
 
 This is evidence of separation, not proof that all environmental volatility is contained. The WPF adapter does not have equivalent contract-test coverage established by those links, and shared cross-adapter conformance remains a separate task tracked in the [roadmap](../../ROADMAP.md).
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
