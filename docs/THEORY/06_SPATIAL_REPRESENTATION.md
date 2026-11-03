@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Spatial Representation and Controlled Observation
 
 ![Workshop spatial reference](../assets/workshop-map-reference.jpg)
@@ -177,3 +180,8 @@ The theory therefore produces engineering questions rather than replacing engine
 The implemented spatial foundation is intentionally narrower than the full theory. [CoordinateSystem](../../src/Core/CoordinateSystem.cs) currently supplies a normalized numeric range, finite/in-range validation, and coordinate/delta helpers; [CoordinateSystemTests](../../tests/Core.Tests/CoordinateSystemTests.cs) cover its current contract. The SVG adapter also maps coordinate-system points into SVG's y-down coordinate convention, exercised by [SVG renderer tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs).
 
 These primitives do not yet implement the full world/local/view/viewport transform chain, semantic cameras, projection, hit testing, occlusion, multi-view synchronization, or persistence. Those remain explicitly proposed in [GUI Spatial Contracts](../GUI_SPATIAL_CONTRACTS.md).
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
