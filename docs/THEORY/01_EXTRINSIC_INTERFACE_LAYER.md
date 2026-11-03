@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # The Extrinsic Interface Layer
 
 ## The problem
@@ -159,3 +162,8 @@ That is the boundary this project is attempting to make explicit.
 The current implementation gives this principle a concrete, bounded test surface: [GuiNode](../../src/Core/GuiNode.cs) and [GuiBuilder](../../src/Core/GuiBuilder.cs) describe a platform-neutral tree, while [BlazorGuiRenderer](../../src/Blazor/BlazorGuiRenderer.cs), [WpfGuiRenderer](../../src/WPF/WpfGuiRenderer.cs), and [SvgGuiRenderer](../../src/SVG/SvgGuiRenderer.cs) are separate manifestation paths. This supports the narrower claim that the repository separates a semantic tree from platform-specific rendering.
 
 It does not establish that every domain can be represented, that every adapter preserves every behavior, or that the proposed execution host exists. See the adapter-specific tests and [ROADMAP](../../ROADMAP.md) before making broader claims.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
