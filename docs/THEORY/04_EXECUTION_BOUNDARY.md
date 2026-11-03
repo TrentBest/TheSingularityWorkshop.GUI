@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # From Renderer to Execution Boundary
 
 ## The problem
@@ -132,3 +135,8 @@ See [GUI Execution Model](../GUI_EXECUTION_MODEL.md) and [ROADMAP](../../ROADMAP
 The current source includes a semantic tree and manifestation adapters, but the execution-host model described here remains a design target. The [GUI Execution Model](../GUI_EXECUTION_MODEL.md), [Next Contract Surface](../NEXT_CONTRACT_SURFACE.md), and [roadmap](../../ROADMAP.md) are specifications and status records—not evidence that `Gui.Execute(...)`, capability resolution, execution context, or lifecycle ownership is already implemented.
 
 The present renderer surface can manifest a supplied model. Do not infer from that fact that it can host an arbitrary runnable experience. The next proof must be a defined execution contract, implementation, and tests for lifecycle and failure semantics.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
