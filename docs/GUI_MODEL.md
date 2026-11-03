@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
+
 # GUI Model Contract
 
 This document describes the current neutral GUI representation and the direction in which it is expected to evolve.
@@ -78,3 +80,13 @@ When introduced, serialized GUI trees should preserve semantic intent and stable
 A collapsed section/group may show a derived count such as `Collapsed (4)`. In edit mode, an explicit add-to-region action may target that collapsed region without forcing expansion first; an empty region should not offer a pointless disclosure control. View/inspect modes must not expose mutation affordances. Counts are derived from the current projected children, not independently mutable state. The Core `DataCard` contract now exposes `GetCollapsedSummary(isExpanded)`, which returns a direct-child count such as `Collapsed (4)` only when the presentation is collapsed and the card has children. It also exposes `CanRequestChildInsertion` as a capability hint for an add affordance, including on an empty region. This hint is not authorization: the domain command handler must validate each requested edit. The Core contract does not itself render controls or know whether the user is in view, inspect, or edit mode; adapters must gate mutation affordances on the active mode and domain capabilities.
 
 Exact C# modifiers such as `internal`, `protected internal`, and `private protected` must remain represented even where the display policy groups them. The code/creation domain owns the authoritative definition; the editor/command handler validates and applies edits; SVG/WPF/Blazor adapters manifest the model. Semantic add/edit actions and explicit header/body presentation regions remain follow-up work rather than being disguised as arbitrary string properties. See [UML-Inspired Data Cards](DATA_CARDS_AND_UML.md) for the intended boundary and acceptance criteria.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
