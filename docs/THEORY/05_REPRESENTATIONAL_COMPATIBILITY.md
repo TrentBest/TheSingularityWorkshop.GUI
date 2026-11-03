@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # Representational Compatibility
 
 ## The problem
@@ -106,3 +109,8 @@ That is the interoperability problem this project is trying to make explicit.
 The repository contains a platform-neutral [GuiNode](../../src/Core/GuiNode.cs) and distinct [Blazor](../../src/Blazor/BlazorGuiRenderer.cs), [WPF](../../src/WPF/WpfGuiRenderer.cs), and [SVG](../../src/SVG/SvgGuiRenderer.cs) manifestation paths. Existing [Blazor tests](../../tests/Blazor.Tests/BlazorGuiRendererTests.cs) and [SVG tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs) check behavior within those adapters.
 
 That is a starting point for representational compatibility, not proof of equivalent behavior across every platform. Visual resemblance is not sufficient evidence. A stronger compatibility claim requires a shared set of semantic scenarios and conformance assertions across adapters; the [roadmap](../../ROADMAP.md) tracks remaining coverage.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
