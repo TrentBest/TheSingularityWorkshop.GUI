@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
+
 # Nested Experiences
 
 > **Status — proposal, not current implementation (2026-10-20):** This document defines a desired recursive-experience model. The current `development` source does not contain the legacy `Gui.Hub` / `GuiHub` API described below. Treat those names and the lifecycle examples as design targets, not callable package contracts. Any future implementation must be designed and tested against the current source and preserve the boundary between GUI presentation and authoritative runtime execution.
@@ -148,3 +150,13 @@ This keeps the GUI technology broadly expressive rather than encoding today's im
 > If an experience can run, it can be nested. If it can host another runnable experience, it can establish a child execution boundary.
 
 The implementation should remain small until the semantic execution contract is proven by tests.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
