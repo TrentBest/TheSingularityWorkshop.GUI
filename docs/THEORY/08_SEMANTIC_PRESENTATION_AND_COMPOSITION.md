@@ -233,7 +233,7 @@ For an advanced exercise, ask students to propose a typed observer contract and 
 
 ---
 
-**Evidence label:** Source-checked against the `development` revision linked above. The cited test files were inspected, but this chapter's documentation change has not yet been CI-verified. The diagrams in this chapter are authored conceptual models, not captured runtime output.
+**Evidence label:** Source-checked against the `development` revision linked above. The documentation-quality workflow passed for repository commit `ceac24ae82209c1170ea7bf357d20dc2fba52221`; that CI result verifies the documentation gate, not the runtime behavior of every claim in this chapter. The diagrams in this chapter are authored conceptual models, not captured runtime output.
 
 <!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
