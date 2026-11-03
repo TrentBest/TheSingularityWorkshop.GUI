@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
+
 # GUI Execution Model
 
 **Status: proposed architecture, not a completed runtime contract.** The repository currently provides a semantic GUI tree and manifestation adapters; it does not yet provide the full execution host described here.
@@ -245,3 +247,13 @@ The larger model is:
 The next design task is therefore not "add a GUI runner."
 
 It is to define the **semantic execution contract** that makes `Gui.Execute(...)` meaningful without coupling Core to a particular application model, scheduler, renderer, operating system, or device API.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
