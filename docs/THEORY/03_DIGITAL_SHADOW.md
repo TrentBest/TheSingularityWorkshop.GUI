@@ -1,3 +1,6 @@
+<!-- The Singularity Workshop moniker -->
+<p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
+
 # The Digital Shadow
 
 ## The problem
@@ -128,3 +131,8 @@ Completeness is therefore relative to purpose.
 The model-to-manifestation path is visible in [GuiNode](../../src/Core/GuiNode.cs) and [SvgGuiRenderer](../../src/SVG/SvgGuiRenderer.cs). The [SVG renderer tests](../../tests/SVG.Tests/SvgGuiRendererTests.cs) exercise representative output such as geometry, transforms, text escaping, definitions, links, and accessibility-related attributes. The SVG adapter's own [README](../../src/SVG/README.md) describes the adapter as a serializer, not an execution engine.
 
 This is a concrete example of a digital shadow: the SVG output represents a GUI model without becoming the domain runtime. It does not prove the GUI model is a complete representation of arbitrary applications, nor that generated SVG is a GPU-rendered scene.
+
+---
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
