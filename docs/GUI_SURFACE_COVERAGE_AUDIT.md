@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
+
 # GUI Surface Coverage Audit
 
 **Purpose:** make renderer/package boundaries and unverified surface area explicit so release scope is deliberate and future adapters do not silently expand the compatibility promise.
@@ -174,3 +176,13 @@ XML construction provides escaping, but escaping does not validate schemes or ma
 
 
 **Core boundary audit verification (2026-10-19):** the expanded source-level findings were committed as [`b068968`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/b0689688093388c70d2b27604ed2962cf861f01d), and [workflow run 39274205080](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39274205080) passed. The package/test job and Windows WPF job both succeeded; the publish job was skipped. This confirms the audit update did not break the configured build/test/package pipeline, but it does not close the remaining contract, archive, version, consumer-integration, or SVG external-reference policy gates.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
