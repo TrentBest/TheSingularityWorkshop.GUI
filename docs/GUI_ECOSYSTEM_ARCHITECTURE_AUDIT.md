@@ -1,3 +1,5 @@
+![The Singularity Workshop animated moniker](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg)
+
 # GUI Ecosystem Architecture Audit
 
 **Review date:** 2026-10-21  
@@ -114,3 +116,13 @@ Those passing workflows are useful evidence, but they do not automatically close
 ## Bottom line
 
 The recursive-builder direction is right. Preserve it. The Core semantic builder is now consolidated in source around one fluent type; CI and generated API documentation must verify the consolidation before it is considered complete. Keep WPF's recursive composition and SVG manifestation boundaries coherent and defensively tested before expanding the feature catalog. The legacy Autodesk-facing builders are a proven design reference—not a mandate to import every old feature or its application-specific assumptions.
+
+<!-- THE SINGULARITY WORKSHOP FOOTER -->
+<p align="center">
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI" aria-label="Visit The Singularity Workshop GUI repository">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" />
+  </a><br />
+  <strong>The Singularity Workshop · GUI</strong><br />
+  <em>Making software meaning visible to people.</em><br />
+  <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Explore GUI</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/GALLERY.md">Visual Gallery</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and ideas</a>
+</p>
