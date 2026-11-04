@@ -371,6 +371,51 @@ public sealed class WpfGuiRendererConformanceTests
         });
     }
 
+    [Fact]
+    public void Shared_capsule_clinic_commands_reach_only_the_supplied_host_dispatcher()
+    {
+        RunOnSta(() =>
+        {
+            var state = new CapsuleClinicSnapshot(
+                240, 3, 60, "Player One", "Room A", true, false);
+            var tree = CapsuleClinicPresentation.Build(state);
+            var dispatched = new List<string>();
+
+            var rendered = WpfGuiRenderer.Render(tree, dispatched.Add);
+            var buttons = FindButtons(rendered).ToDictionary(WpfGuiIdentity.GetNodeId);
+
+            buttons["board.cell.0.1"].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            buttons["control.pause"].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+            buttons["control.restart"].RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+
+            Assert.Equal(new[]
+            {
+                "capsule.cell.select.0.1",
+                "capsule.pause",
+                "capsule.restart"
+            }, dispatched);
+        });
+    }
+
+    private static IEnumerable<Button> FindButtons(DependencyObject root)
+    {
+        if (root is Button button)
+            yield return button;
+
+        for (var index = 0; index < VisualTreeHelper.GetChildrenCount(root); index++)
+        {
+            foreach (var childButton in FindButtons(VisualTreeHelper.GetChild(root, index)))
+                yield return childButton;
+        }
+
+        if (root is ContentControl { Content: DependencyObject content }
+            && VisualTreeHelper.GetChildrenCount(root) == 0)
+        {
+            foreach (var childButton in FindButtons(content))
+                yield return childButton;
+        }
+    }
+
     private static void RunOnSta(Action action)
     {
         Exception? failure = null;
