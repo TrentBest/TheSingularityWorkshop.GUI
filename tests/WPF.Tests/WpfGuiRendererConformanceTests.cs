@@ -359,6 +359,8 @@ public sealed class WpfGuiRendererConformanceTests
             var cells = Assert.IsType<StackPanel>(board.Child);
             Assert.Equal(4, cells.Children.Count);
             Assert.Equal("board.cell.0.0", WpfGuiIdentity.GetNodeId(cells.Children[0]));
+            Assert.Equal("Select board cell row 1 column 1",
+                System.Windows.Automation.AutomationProperties.GetName(Assert.IsType<Button>(cells.Children[0])));
 
             var controls = Assert.IsType<Border>(content.Children[5]);
             var buttons = Assert.IsType<StackPanel>(controls.Child);
