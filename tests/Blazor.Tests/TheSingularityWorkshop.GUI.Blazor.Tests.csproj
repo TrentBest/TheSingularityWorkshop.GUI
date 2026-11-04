@@ -13,6 +13,9 @@
     <PackageReference Include="coverlet.collector" Version="6.0.2" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="../Shared/CapsuleClinicPresentation.cs" Link="Shared/CapsuleClinicPresentation.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="../../src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj" />
   </ItemGroup>
 </Project>
