@@ -102,6 +102,8 @@ public sealed class BlazorGuiRendererConformanceTests
         Assert.Contains("experience.board", ids);
         Assert.Contains("board.cell.0.0", ids);
         Assert.Contains("control.restart", ids);
+        Assert.Equal("Select board cell row 1 column 1",
+            FindAttribute(frames, "aria-label", "Select board cell row 1 column 1"));
         Assert.Contains("experience.instructions", ids);
         Assert.Contains(frames, frame => frame.FrameType == RenderTreeFrameType.Text &&
             frame.TextContent == "Score: 240");
