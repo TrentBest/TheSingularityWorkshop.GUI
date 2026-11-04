@@ -6,7 +6,7 @@
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`f48dd15256521c88fad88371742c89d5fd1d326f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f48dd15256521c88fad88371742c89d5fd1d326f)
+- Revision: [`7c730c4c5519f8e634ad5528580082591d9a371f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/7c730c4c5519f8e634ad5528580082591d9a371f)
 - Project: `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj`
 - Types: 6
 
@@ -17,7 +17,7 @@
 | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `class` | 4 | 7 | [TheSingularityWorkshop-Gui-MultiPanelGuiBuilder-a852af6bb1.md](TheSingularityWorkshop-Gui-MultiPanelGuiBuilder-a852af6bb1.md) | [TheSingularityWorkshop-Gui-MultiPanelGuiBuilder-a852af6bb1.svg](TheSingularityWorkshop-Gui-MultiPanelGuiBuilder-a852af6bb1.svg) |
 | `TheSingularityWorkshop.Gui.PanelGuiBuilder` | `class` | 7 | 10 | [TheSingularityWorkshop-Gui-PanelGuiBuilder-0787ce0795.md](TheSingularityWorkshop-Gui-PanelGuiBuilder-0787ce0795.md) | [TheSingularityWorkshop-Gui-PanelGuiBuilder-0787ce0795.svg](TheSingularityWorkshop-Gui-PanelGuiBuilder-0787ce0795.svg) |
 | `TheSingularityWorkshop.Gui.WorkshopGui` | `class` | 5 | 5 | [TheSingularityWorkshop-Gui-WorkshopGui-85b7f742aa.md](TheSingularityWorkshop-Gui-WorkshopGui-85b7f742aa.md) | [TheSingularityWorkshop-Gui-WorkshopGui-85b7f742aa.svg](TheSingularityWorkshop-Gui-WorkshopGui-85b7f742aa.svg) |
-| `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer` | `class` | 5 | 5 | [TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.md](TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.md) | [TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.svg](TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer` | `class` | 6 | 7 | [TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.md](TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.md) | [TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.svg](TheSingularityWorkshop-Workshop-Gui-BlazorGuiRenderer-43313af0a7.svg) |
 
 ---
 

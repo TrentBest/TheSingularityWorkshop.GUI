@@ -1,7 +1,7 @@
 # Solution-level source-derived UML inventory
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Source revision: `f48dd15256521c88fad88371742c89d5fd1d326f`
+- Source revision: `7c730c4c5519f8e634ad5528580082591d9a371f`
 - Scope: maintained product projects under `src/`; tests, samples, tooling, and documentation projects are deliberately excluded.
 - Evidence: each project is restored and built in Release, loaded with MSBuild/Roslyn, checked for compiler errors, and reconciled against the exact build output by assembly identity and type metadata inventory.
 - Framework policy: each included project must currently declare exactly one literal target framework. Multi-targeted projects fail closed until per-framework output partitioning is implemented.
@@ -10,7 +10,7 @@
 | Project | Types | Compiler-symbol relationships | Inventory | Type pages |
 |---|---:|---:|---|---|
 | `src/Core/TheSingularityWorkshop.GUI.Core.csproj` | 31 | 119 | [Core inventory](Core/inventory.md) | [Core type pages](Core/index.md) |
-| `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj` | 6 | 69 | [Blazor inventory](Blazor/inventory.md) | [Blazor type pages](Blazor/index.md) |
+| `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj` | 6 | 71 | [Blazor inventory](Blazor/inventory.md) | [Blazor type pages](Blazor/index.md) |
 | `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj` | 23 | 67 | [WPF inventory](WPF/inventory.md) | [WPF type pages](WPF/index.md) |
 | `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj` | 9 | 39 | [SVG inventory](SVG/inventory.md) | [SVG type pages](SVG/index.md) |
 
