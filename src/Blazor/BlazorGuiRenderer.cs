@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
+using Microsoft.AspNetCore.Components.Web;
 using TheSingularityWorkshop.Workshop.Gui;
 
 namespace TheSingularityWorkshop.Workshop.Gui;
@@ -11,12 +12,24 @@ public static class BlazorGuiRenderer
 {
     private const int MaximumTreeDepth = 256;
 
-    /// <summary>Creates a Blazor render fragment for a semantic GUI node.</summary>
+    /// <summary>Creates a Blazor render fragment for a semantic GUI node without dispatching host commands.</summary>
     public static RenderFragment Render(GuiNode node)
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node);
+        return builder => RenderNode(builder, node, commandDispatcher: null);
+    }
+
+    /// <summary>
+    /// Creates a Blazor render fragment and routes declared button commands to the supplied host dispatcher.
+    /// The host remains responsible for command allow-listing and domain authorization.
+    /// </summary>
+    public static RenderFragment Render(GuiNode node, Action<string> commandDispatcher)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+        ArgumentNullException.ThrowIfNull(commandDispatcher);
+        ValidateUniqueIds(node);
+        return builder => RenderNode(builder, node, commandDispatcher);
     }
 
     private static void ValidateUniqueIds(GuiNode root)
@@ -42,7 +55,10 @@ public static class BlazorGuiRenderer
         }
     }
 
-    private static void RenderNode(RenderTreeBuilder builder, GuiNode node)
+    private static void RenderNode(
+        RenderTreeBuilder builder,
+        GuiNode node,
+        Action<string>? commandDispatcher)
     {
         // Sequence numbers identify source-code positions, not runtime iteration
         // order. Keep each conditional/loop at a stable sequence position so
@@ -54,15 +70,29 @@ public static class BlazorGuiRenderer
         foreach (var property in node.Properties)
         {
             // Node identity is owned by GuiNode.Id, never by an arbitrary property.
-            if (string.Equals(property.Key, "id", StringComparison.OrdinalIgnoreCase))
+            // Host commands are never serialized as ordinary DOM attributes.
+            if (string.Equals(property.Key, "id", StringComparison.OrdinalIgnoreCase)
+                || string.Equals(property.Key, "onClickCommand", StringComparison.Ordinal))
                 continue;
 
             builder.AddAttribute(3, property.Key, property.Value);
         }
+
+        if (node.Kind == "Button"
+            && commandDispatcher is not null
+            && node.Properties.TryGetValue("onClickCommand", out var commandId)
+            && !string.IsNullOrWhiteSpace(commandId))
+        {
+            builder.AddAttribute(5, "onclick",
+                EventCallback.Factory.Create<MouseEventArgs>(
+                    commandDispatcher,
+                    _ => commandDispatcher(commandId)));
+        }
+
         if (node.Text is not null)
             builder.AddContent(4, node.Text);
         foreach (var child in node.Children)
-            RenderNode(builder, child);
+            RenderNode(builder, child, commandDispatcher);
         builder.CloseElement();
     }
 
