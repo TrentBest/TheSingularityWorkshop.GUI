@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.RenderTree;
 using TheSingularityWorkshop.Workshop.Gui;
+using TheSingularityWorkshop.GUI.Tests.Shared;
 
 namespace TheSingularityWorkshop.GUI.Blazor.Tests;
 
@@ -68,6 +69,42 @@ public sealed class BlazorGuiRendererConformanceTests
 
         var text = Assert.Single(frames.Where(frame => frame.FrameType == RenderTreeFrameType.Text));
         Assert.Equal(4, text.Sequence);
+    }
+
+    [Fact]
+    public void Renderer_presents_rebuilt_capsule_clinic_snapshots_without_owning_state()
+    {
+        var initial = CapsuleClinicPresentation.Build(new CapsuleClinicSnapshot(
+            120, 2, 35, "Player One", "Room A", true, false));
+        var updated = CapsuleClinicPresentation.Build(new CapsuleClinicSnapshot(
+            240, 3, 60, "Player One", "Room A", false, true, "Connection interrupted"));
+
+        Assert.Equal(initial.Find("board.cell.0.0").Id, updated.Find("board.cell.0.0").Id);
+        Assert.Equal("capsule.cell.select.0.0", initial.Find("board.cell.0.0").Properties["onClickCommand"]);
+        Assert.Equal("capsule.cell.select.0.0", updated.Find("board.cell.0.0").Properties["onClickCommand"]);
+        Assert.Equal("capsule.resume", updated.Find("control.pause").Properties["onClickCommand"]);
+        Assert.Equal("Score: 120", initial.Find("metrics.score").Text);
+        Assert.Equal("Score: 240", updated.Find("metrics.score").Text);
+        Assert.Equal("Level: 3", updated.Find("metrics.level").Text);
+        Assert.Equal("Progress: 60%", updated.Find("metrics.progress").Text);
+        Assert.Equal("Disconnected", updated.Find("status.connection").Text);
+        Assert.Equal("Connection interrupted", updated.Find("experience.error").Text);
+
+        var builder = new RenderTreeBuilder();
+        BlazorGuiRenderer.Render(updated)(builder);
+        var frames = builder.GetFrames().Array;
+        var ids = frames
+            .Where(frame => frame.FrameType == RenderTreeFrameType.Attribute && frame.AttributeName == "id")
+            .Select(frame => frame.AttributeValue?.ToString())
+            .ToArray();
+
+        Assert.Contains("experience.capsule-clinic", ids);
+        Assert.Contains("experience.board", ids);
+        Assert.Contains("board.cell.0.0", ids);
+        Assert.Contains("control.restart", ids);
+        Assert.Contains("experience.instructions", ids);
+        Assert.Contains(frames, frame => frame.FrameType == RenderTreeFrameType.Text &&
+            frame.TextContent == "Score: 240");
     }
 
     private static string? FindAttribute(
