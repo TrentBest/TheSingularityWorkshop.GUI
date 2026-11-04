@@ -78,6 +78,9 @@ public static class BlazorGuiRenderer
             builder.AddAttribute(3, property.Key, property.Value);
         }
 
+        if (node.Text is not null)
+            builder.AddContent(4, node.Text);
+
         if (node.Kind == "Button"
             && commandDispatcher is not null
             && node.Properties.TryGetValue("onClickCommand", out var commandId)
@@ -89,8 +92,6 @@ public static class BlazorGuiRenderer
                     _ => commandDispatcher(commandId)));
         }
 
-        if (node.Text is not null)
-            builder.AddContent(4, node.Text);
         foreach (var child in node.Children)
             RenderNode(builder, child, commandDispatcher);
         builder.CloseElement();
