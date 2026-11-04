@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`739f7199b9b378db810d03c31e1ca6a205092a08`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/739f7199b9b378db810d03c31e1ca6a205092a08)
+- Revision: [`15a501e405977c0fb3bbde77949100140775e52c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/15a501e405977c0fb3bbde77949100140775e52c)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition`
 - Metadata name: `GridDimensionDefinition`
@@ -19,29 +19,29 @@
 
 ## Source declarations
 
-- [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328)
+- [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.IsResizable` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.IsResizable.get` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.IsResizable.set` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.UnitType` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.UnitType.get` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.UnitType.set` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.Value` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.Value.get` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.Value.set` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.IsResizable` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.IsResizable.get` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.IsResizable.set` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.UnitType` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.UnitType.get` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.UnitType.set` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.Value` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.Value.get` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.GridDimensionDefinition.Value.set` | [`src/WPF/GridGuiBuilderWPF.cs:328-328`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L328-328) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L19-19) |
-| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:20-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L20-20) |
-| incoming | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:312-321`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/GridGuiBuilderWPF.cs#L312-321) |
+| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L19-19) |
+| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:20-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L20-20) |
+| incoming | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:312-321`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/GridGuiBuilderWPF.cs#L312-321) |
 
 [Back to the generated type index](index.md)
 

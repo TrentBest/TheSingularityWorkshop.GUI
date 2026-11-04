@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`739f7199b9b378db810d03c31e1ca6a205092a08`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/739f7199b9b378db810d03c31e1ca6a205092a08)
+- Revision: [`15a501e405977c0fb3bbde77949100140775e52c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/15a501e405977c0fb3bbde77949100140775e52c)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF`
 - Metadata name: `DockGuiPanelBuilderWPF`
@@ -19,24 +19,24 @@
 
 ## Source declarations
 
-- [`src/WPF/DockGuiPanelBuilderWPF.cs:8-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L8-36)
+- [`src/WPF/DockGuiPanelBuilderWPF.cs:8-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L8-36)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF.AddDocked(System.Windows.UIElement, System.Windows.Controls.Dock)` | [`src/WPF/DockGuiPanelBuilderWPF.cs:27-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L27-35) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF.DockGuiPanelBuilderWPF(TheSingularityWorkshop.GUI.WPF.GuiConfiguration)` | [`src/WPF/DockGuiPanelBuilderWPF.cs:12-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L12-12) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF.WithLastChildFill(bool)` | [`src/WPF/DockGuiPanelBuilderWPF.cs:17-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L17-21) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF.AddDocked(System.Windows.UIElement, System.Windows.Controls.Dock)` | [`src/WPF/DockGuiPanelBuilderWPF.cs:27-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L27-35) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF.DockGuiPanelBuilderWPF(TheSingularityWorkshop.GUI.WPF.GuiConfiguration)` | [`src/WPF/DockGuiPanelBuilderWPF.cs:12-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L12-12) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF.WithLastChildFill(bool)` | [`src/WPF/DockGuiPanelBuilderWPF.cs:17-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L17-21) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiPanelBuilderWPF` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:8-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L8-36) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:12-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L12-12) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:27-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L27-35) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:17-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/739f7199b9b378db810d03c31e1ca6a205092a08/src/WPF/DockGuiPanelBuilderWPF.cs#L17-21) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiPanelBuilderWPF` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:8-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L8-36) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:12-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L12-12) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:27-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L27-35) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.DockGuiPanelBuilderWPF` | `Resolved` | [`src/WPF/DockGuiPanelBuilderWPF.cs:17-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/15a501e405977c0fb3bbde77949100140775e52c/src/WPF/DockGuiPanelBuilderWPF.cs#L17-21) |
 
 [Back to the generated type index](index.md)
 
