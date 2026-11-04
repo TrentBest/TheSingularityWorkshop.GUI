@@ -4,6 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.GUI.WPF;
+using TheSingularityWorkshop.GUI.Tests.Shared;
 
 namespace TheSingularityWorkshop.GUI.WPF.Tests;
 
@@ -324,6 +325,49 @@ public sealed class WpfGuiRendererConformanceTests
 
             var exception = Assert.Throws<InvalidOperationException>(() => WpfGuiRenderer.Render(node));
             Assert.Contains("maximum depth (256)", exception.Message);
+        });
+    }
+
+    [Fact]
+    public void Renderer_presents_the_shared_capsule_clinic_snapshot_and_rebuilds_from_external_state()
+    {
+        RunOnSta(() =>
+        {
+            var initial = CapsuleClinicPresentation.Build(new CapsuleClinicSnapshot(
+                120, 2, 35, "Player One", "Room A", true, false));
+            var updated = CapsuleClinicPresentation.Build(new CapsuleClinicSnapshot(
+                240, 3, 60, "Player One", "Room A", false, true, "Connection interrupted"));
+
+            Assert.Equal(initial.Find("board.cell.0.0").Id, updated.Find("board.cell.0.0").Id);
+            Assert.Equal("capsule.cell.select.0.0", updated.Find("board.cell.0.0").Properties["onClickCommand"]);
+            Assert.Equal("capsule.resume", updated.Find("control.pause").Properties["onClickCommand"]);
+
+            var rendered = Assert.IsType<Border>(WpfGuiRenderer.Render(updated));
+            Assert.Equal("experience.capsule-clinic", WpfGuiIdentity.GetNodeId(rendered));
+            var content = Assert.IsType<StackPanel>(rendered.Child);
+            Assert.Equal(8, content.Children.Count);
+
+            Assert.Equal("Capsule Clinic", Assert.IsType<TextBlock>(content.Children[0]).Text);
+            var metrics = Assert.IsType<Border>(content.Children[2]);
+            var metricItems = Assert.IsType<StackPanel>(metrics.Child);
+            Assert.Equal("Score: 240", Assert.IsType<TextBlock>(metricItems.Children[0]).Text);
+            Assert.Equal("Level: 3", Assert.IsType<TextBlock>(metricItems.Children[1]).Text);
+            Assert.Equal("Progress: 60%", Assert.IsType<TextBlock>(metricItems.Children[2]).Text);
+
+            var board = Assert.IsType<Border>(content.Children[3]);
+            Assert.Equal("experience.board", WpfGuiIdentity.GetNodeId(board));
+            var cells = Assert.IsType<StackPanel>(board.Child);
+            Assert.Equal(4, cells.Children.Count);
+            Assert.Equal("board.cell.0.0", WpfGuiIdentity.GetNodeId(cells.Children[0]));
+
+            var controls = Assert.IsType<Border>(content.Children[5]);
+            var buttons = Assert.IsType<StackPanel>(controls.Child);
+            Assert.Equal("Resume", Assert.IsType<Button>(buttons.Children[0]).Content);
+            Assert.Equal("Restart", Assert.IsType<Button>(buttons.Children[1]).Content);
+            Assert.Equal("Rematch", Assert.IsType<Button>(buttons.Children[2]).Content);
+            Assert.Equal("Use arrow keys or a controller to navigate; activate a cell to select it.",
+                Assert.IsType<TextBlock>(content.Children[6]).Text);
+            Assert.Equal("Connection interrupted", Assert.IsType<TextBlock>(content.Children[7]).Text);
         });
     }
 
