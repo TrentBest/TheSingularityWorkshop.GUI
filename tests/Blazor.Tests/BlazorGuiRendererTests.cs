@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Rendering;
 using Microsoft.AspNetCore.Components.RenderTree;
 using Microsoft.AspNetCore.Components.Web;
@@ -47,7 +46,7 @@ public sealed class BlazorGuiRendererTests
     }
 
     [Fact]
-    public async Task Renderer_dispatches_button_command_only_through_supplied_host_dispatcher()
+    public void Renderer_dispatches_button_command_only_through_supplied_host_dispatcher()
     {
         string? dispatched = null;
         var node = GuiBuilders.Button("create-scene", "Create Scene")
@@ -60,8 +59,8 @@ public sealed class BlazorGuiRendererTests
         var clickFrame = builder.GetFrames().Array.Single(frame =>
             frame.FrameType == RenderTreeFrameType.Attribute &&
             frame.AttributeName == "onclick");
-        var callback = Assert.IsType<EventCallback<MouseEventArgs>>(clickFrame.AttributeValue);
-        await callback.InvokeAsync(new MouseEventArgs());
+        var callback = Assert.IsType<Action<MouseEventArgs>>(clickFrame.AttributeValue);
+        callback(new MouseEventArgs());
 
         Assert.Equal("storybuilder.scene.create", dispatched);
     }
