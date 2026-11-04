@@ -402,16 +402,12 @@ public sealed class WpfGuiRendererConformanceTests
         if (root is Button button)
             yield return button;
 
-        for (var index = 0; index < VisualTreeHelper.GetChildrenCount(root); index++)
+        foreach (var child in LogicalTreeHelper.GetChildren(root))
         {
-            foreach (var childButton in FindButtons(VisualTreeHelper.GetChild(root, index)))
-                yield return childButton;
-        }
+            if (child is not DependencyObject childNode)
+                continue;
 
-        if (root is ContentControl { Content: DependencyObject content }
-            && VisualTreeHelper.GetChildrenCount(root) == 0)
-        {
-            foreach (var childButton in FindButtons(content))
+            foreach (var childButton in FindButtons(childNode))
                 yield return childButton;
         }
     }
