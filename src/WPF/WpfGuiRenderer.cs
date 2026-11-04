@@ -198,6 +198,10 @@ public static class WpfGuiRenderer
                     if (Enum.TryParse<VerticalAlignment>(value, true, out var vertical)) element.VerticalAlignment = vertical;
                     break;
                 case "tooltip": element.ToolTip = value; break;
+                case "aria-label":
+                    if (element is FrameworkElement accessibleElement)
+                        System.Windows.Automation.AutomationProperties.SetName(accessibleElement, value);
+                    break;
                 case "background":
                     if (TryResourceKey(value, out var backgroundKey))
                     {
