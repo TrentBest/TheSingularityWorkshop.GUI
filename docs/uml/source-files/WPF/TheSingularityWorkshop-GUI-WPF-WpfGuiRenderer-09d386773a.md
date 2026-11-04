@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`a4a403909400cbefe15be48fa940aed3a216c194`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a4a403909400cbefe15be48fa940aed3a216c194)
+- Revision: [`53389370a66c58b15d0eecec398f9ae71a8a15a1`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/53389370a66c58b15d0eecec398f9ae71a8a15a1)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer`
 - Metadata name: `WpfGuiRenderer`
@@ -19,37 +19,37 @@
 
 ## Source declarations
 
-- [`src/WPF/WpfGuiRenderer.cs:18-321`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L18-321)
+- [`src/WPF/WpfGuiRenderer.cs:18-325`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L18-325)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.ApplyProperties(System.Windows.FrameworkElement, TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/WPF/WpfGuiRenderer.cs:160-249`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L160-249) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.CreateImage(string?)` | [`src/WPF/WpfGuiRenderer.cs:133-158`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L133-158) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.CreateWarning(string?)` | [`src/WPF/WpfGuiRenderer.cs:118-131`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L118-131) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.GetChildrenHost(System.Windows.FrameworkElement)` | [`src/WPF/WpfGuiRenderer.cs:111-116`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L111-116) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.IsLegalName(string)` | [`src/WPF/WpfGuiRenderer.cs:317-320`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L317-320) |
-| `Field` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.MaximumTreeDepth` | [`src/WPF/WpfGuiRenderer.cs:20-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L20-20) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/WPF/WpfGuiRenderer.cs:23-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L23-28) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>)` | [`src/WPF/WpfGuiRenderer.cs:34-40`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L34-40) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.RenderValidated(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>?)` | [`src/WPF/WpfGuiRenderer.cs:42-86`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L42-86) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryBrush(string, out System.Windows.Media.Brush)` | [`src/WPF/WpfGuiRenderer.cs:303-315`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L303-315) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryDouble(string, out double)` | [`src/WPF/WpfGuiRenderer.cs:251-253`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L251-253) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryFontFamily(string, out System.Windows.Media.FontFamily)` | [`src/WPF/WpfGuiRenderer.cs:278-290`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L278-290) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryResourceKey(string, out string)` | [`src/WPF/WpfGuiRenderer.cs:294-301`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L294-301) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryThickness(string, out System.Windows.Thickness, bool)` | [`src/WPF/WpfGuiRenderer.cs:255-276`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L255-276) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.ValidateTree(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/WPF/WpfGuiRenderer.cs:88-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L88-109) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.ApplyProperties(System.Windows.FrameworkElement, TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/WPF/WpfGuiRenderer.cs:160-253`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L160-253) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.CreateImage(string?)` | [`src/WPF/WpfGuiRenderer.cs:133-158`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L133-158) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.CreateWarning(string?)` | [`src/WPF/WpfGuiRenderer.cs:118-131`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L118-131) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.GetChildrenHost(System.Windows.FrameworkElement)` | [`src/WPF/WpfGuiRenderer.cs:111-116`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L111-116) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.IsLegalName(string)` | [`src/WPF/WpfGuiRenderer.cs:321-324`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L321-324) |
+| `Field` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.MaximumTreeDepth` | [`src/WPF/WpfGuiRenderer.cs:20-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L20-20) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/WPF/WpfGuiRenderer.cs:23-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L23-28) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>)` | [`src/WPF/WpfGuiRenderer.cs:34-40`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L34-40) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.RenderValidated(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>?)` | [`src/WPF/WpfGuiRenderer.cs:42-86`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L42-86) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryBrush(string, out System.Windows.Media.Brush)` | [`src/WPF/WpfGuiRenderer.cs:307-319`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L307-319) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryDouble(string, out double)` | [`src/WPF/WpfGuiRenderer.cs:255-257`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L255-257) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryFontFamily(string, out System.Windows.Media.FontFamily)` | [`src/WPF/WpfGuiRenderer.cs:282-294`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L282-294) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryResourceKey(string, out string)` | [`src/WPF/WpfGuiRenderer.cs:298-305`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L298-305) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.TryThickness(string, out System.Windows.Thickness, bool)` | [`src/WPF/WpfGuiRenderer.cs:259-280`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L259-280) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiRenderer.ValidateTree(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/WPF/WpfGuiRenderer.cs:88-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L88-109) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:160-249`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L160-249) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:23-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L23-28) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:34-40`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L34-40) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:42-86`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L42-86) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:88-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/WpfGuiRenderer.cs#L88-109) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:160-253`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L160-253) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:23-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L23-28) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:34-40`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L34-40) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:42-86`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L42-86) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/WPF/WpfGuiRenderer.cs:88-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/WpfGuiRenderer.cs#L88-109) |
 
 [Back to the generated type index](index.md)
 

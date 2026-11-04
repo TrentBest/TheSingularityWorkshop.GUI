@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`a4a403909400cbefe15be48fa940aed3a216c194`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a4a403909400cbefe15be48fa940aed3a216c194)
+- Revision: [`53389370a66c58b15d0eecec398f9ae71a8a15a1`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/53389370a66c58b15d0eecec398f9ae71a8a15a1)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement`
 - Metadata name: `ComponentPlacement`
@@ -19,28 +19,28 @@
 
 ## Source declarations
 
-- [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329)
+- [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Col` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Col.get` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Col.set` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Component` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Component.get` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Component.set` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Row` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Row.get` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Row.set` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Col` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Col.get` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Col.set` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Component` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Component.get` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Component.set` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Row` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Row.get` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF.ComponentPlacement.Row.set` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:21-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L21-21) |
-| outgoing | `Association` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a4a403909400cbefe15be48fa940aed3a216c194/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
+| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.Layouts.GridGuiBuilderWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:21-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L21-21) |
+| outgoing | `Association` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentWPF` | `Resolved` | [`src/WPF/GridGuiBuilderWPF.cs:329-329`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/53389370a66c58b15d0eecec398f9ae71a8a15a1/src/WPF/GridGuiBuilderWPF.cs#L329-329) |
 
 [Back to the generated type index](index.md)
 
