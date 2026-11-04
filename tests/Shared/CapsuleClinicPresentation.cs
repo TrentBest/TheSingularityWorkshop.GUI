@@ -36,10 +36,10 @@ internal static class CapsuleClinicPresentation
                 .Child("Text", "metrics.progress", progress => progress.Text($"Progress: {state.Progress}%")))
             .Child("Panel", "experience.board", board => board
                 .Property("role", "grid")
-                .Child("Button", "board.cell.0.0", cell => cell.Text("A").WithOnClick("capsule.cell.select.0.0"))
-                .Child("Button", "board.cell.0.1", cell => cell.Text("B").WithOnClick("capsule.cell.select.0.1"))
-                .Child("Button", "board.cell.1.0", cell => cell.Text("C").WithOnClick("capsule.cell.select.1.0"))
-                .Child("Button", "board.cell.1.1", cell => cell.Text("D").WithOnClick("capsule.cell.select.1.1")))
+                .Child("Button", "board.cell.0.0", cell => cell.Text("A").Property("aria-label", "Select board cell row 1 column 1").WithOnClick("capsule.cell.select.0.0"))
+                .Child("Button", "board.cell.0.1", cell => cell.Text("B").Property("aria-label", "Select board cell row 1 column 2").WithOnClick("capsule.cell.select.0.1"))
+                .Child("Button", "board.cell.1.0", cell => cell.Text("C").Property("aria-label", "Select board cell row 2 column 1").WithOnClick("capsule.cell.select.1.0"))
+                .Child("Button", "board.cell.1.1", cell => cell.Text("D").Property("aria-label", "Select board cell row 2 column 2").WithOnClick("capsule.cell.select.1.1")))
             .Child("Panel", "experience.preview", preview => preview
                 .Child("Text", "preview.heading", heading => heading.Text("Next capsule"))
                 .Child("Text", "preview.value", value => value.Text("Red / Blue")))
