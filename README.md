@@ -2,6 +2,7 @@
 
 # TheSingularityWorkshop.GUI
 
+[![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/workflows/sith-policy.yml)
 > **A platform-neutral GUI engineering layer built around a recursive semantic model and platform adapters.**
 
 GUI separates interface intent from the platform-specific work that presents it. Core owns the neutral model; each adapter owns its manifestation contract.
