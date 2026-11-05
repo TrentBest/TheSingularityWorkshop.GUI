@@ -9,11 +9,11 @@ This README follows the Workshop's shared [Documentation Standard](https://githu
 
 # ✳️ 00 The Singularity Workshop — GUI
 
-[![Sith Policy](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.GUI/master/assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/workflows/sith-policy.yml)
-
 [![Build](https://img.shields.io/github/actions/workflow/status/TrentBest/TheSingularityWorkshop.GUI/package.yml?branch=master&style=flat-square&logo=github)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Last commit](https://img.shields.io/github/last-commit/TrentBest/TheSingularityWorkshop.GUI/master?style=flat-square)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commits/master)
+
+[![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/workflows/sith-policy.yml)
 
 **A GUI should describe the experience—not become inseparable from the technology that displays it.**
 
