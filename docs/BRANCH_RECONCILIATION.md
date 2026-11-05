@@ -3,14 +3,24 @@
 
 # Operation Sith — GUI Branch Reconciliation
 
-**Audit timestamp:** 2026-11-05 00:55 UTC  
+**Audit timestamp:** 2026-11-05 01:21 UTC  
 **Repository:** `TrentBest/TheSingularityWorkshop.GUI`  
 **Canonical branches:** `master`, `development` only  
-**Current development head:** [`8a4393a316d04f8af337f077d2062c12ea3bd5fb`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/8a4393a316d04f8af337f077d2062c12ea3bd5fb)  
+**Development integration head for this update:** [`574d66a5fc6bd13e5adfc428a3375d3ce605d56a`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/574d66a5fc6bd13e5adfc428a3375d3ce605d56a)  
 **Comparison base for the branch-diff snapshot:** [`c48d32c652cf00493da8c6a66625f8406961a7aa`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c48d32c652cf00493da8c6a66625f8406961a7aa) (the development head immediately before this ledger was added)  
 **Master head:** [`36342df0654d6960f0ea36d3410d135366c09d1c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/36342df0654d6960f0ea36d3410d135366c09d1c)
 
 This is a point-in-time reconciliation ledger for [Operation Sith issue #62](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/62). It is intended to make branch work findable and support owner-directed cleanup. It does **not** authorize branch deletion, PR closure/merge, force-push, release, deployment, or package publication.
+
+## 0. Latest reconciliation update — 2026-11-05 01:21 UTC
+
+- PR [#74](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/74), `work/ciai-evidence-lane`, adds only `.github/workflows/ciai-evidence.yml` (194 lines).
+- The workflow was reviewed and copied unchanged to `development` in [commit `574d66a`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/574d66a5fc6bd13e5adfc428a3375d3ce605d56a).
+- GitHub reports the development and PR branch file blobs are identical: `944c0b4f8e47bfad115557c574d1e666b0b6a02b`.
+- The workflow is read-only (`contents: read`, `actions: read`), runs on pushes to `development`, resolves the authoritative `package.yml` run by exact source SHA, run ID and attempt, and retains evidence artifacts. Existing package/publication workflows are not modified.
+- The branch remains one commit ahead by ancestry and ten commits behind current development, but its only changed file is now content-identical on `development`. This is **content integrated, not ancestry merged**.
+- The PR remains open pending a live development-push validation and explicit PR disposition. No merge, close, or branch deletion was performed.
+- The development push's combined commit-status endpoint has not yet reported checks; this is **pending/unverified**, not a pass.
 
 ## 1. Current inventory
 
@@ -34,7 +44,7 @@ All comparisons below use `development` at `c48d32c652cf00493da8c6a66625f8406961
 
 | Last changed (UTC) | Branch | Ahead / behind | Open PR | Current unique file diff / work area |
 |---|---|---:|---:|---|
-| 2026-11-04 06:57 | `work/ciai-evidence-lane` | 1 / 5 | [#74](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/74) | `.github/workflows/ciai-evidence.yml` — read-only CiAi exact-run evidence workflow |
+| 2026-11-04 06:57 | `work/ciai-evidence-lane` | 1 / 10 | [#74](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/74) | `.github/workflows/ciai-evidence.yml` — **content integrated on development** (identical blob); ancestry/PR disposition still pending |
 | 2026-10-30 20:22 | `work/adapter-conformance-three-way-2026-10-30` | 7 / 59 | [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65) | `docs/TESTING.md`; shared adapter conformance tests; WPF shared conformance tests |
 | 2026-10-29 22:21 | `work/sith-branch-reconciliation-2026-10-29` | 22 / 99 | [#64](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/64) | `docs/BRANCH_RECONCILIATION.md` — prior rescue ledger; **this current ledger supersedes its stale snapshot** |
 | 2026-10-28 20:28 | `work/uml-neighborhood-self-reference-clearance-2026-10-28` | 4 / 103 | [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60) | UML graph renderer and regression tests — self-reference routing |
@@ -119,7 +129,7 @@ The WPF test job failed to compile `tests/WPF.Tests/WpfSharedAdapterConformanceT
 
 Every row below is an open draft PR, not an approved merge. Review in this order to reduce overlap and avoid losing newer work:
 
-1. **Newest CI evidence lane:** [#74](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/74). Review its workflow and exact-head checks independently; it is recent and not part of the older rescue audit.
+1. **Newest CI evidence lane:** [#74](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/74). Its workflow file is now content-integrated on development; verify the live development-push evidence and then disposition the still-open PR/branch explicitly.
 2. **Adapter conformance:** [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65). Compare with the more recent shared Experience work now in development; do not assume identical purpose merely because both touch WPF conformance.
 3. **UML implementation cluster:** [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50), [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55), [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60), and [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57). Review renderer behavior, regression tests, and generated artifacts together; preserve the owner's desired nested data-card visual language.
 4. **WPF/Architect integration:** [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48). Verify exact current consumer behavior before disposition.
