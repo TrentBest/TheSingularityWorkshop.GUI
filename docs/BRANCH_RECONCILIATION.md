@@ -6,7 +6,7 @@
 **Audit timestamp:** 2026-11-05 01:21 UTC  
 **Repository:** `TrentBest/TheSingularityWorkshop.GUI`  
 **Canonical branches:** `master`, `development` only  
-**Development integration head for this update:** [`574d66a5fc6bd13e5adfc428a3375d3ce605d56a`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/574d66a5fc6bd13e5adfc428a3375d3ce605d56a)  
+**Development integration head for this update:** [`11777f576f3348ca34b082ddf431dd80944f857f`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/11777f576f3348ca34b082ddf431dd80944f857f)  
 **Comparison base for the branch-diff snapshot:** [`c48d32c652cf00493da8c6a66625f8406961a7aa`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c48d32c652cf00493da8c6a66625f8406961a7aa) (the development head immediately before this ledger was added)  
 **Master head:** [`36342df0654d6960f0ea36d3410d135366c09d1c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/36342df0654d6960f0ea36d3410d135366c09d1c)
 
@@ -21,6 +21,19 @@ This is a point-in-time reconciliation ledger for [Operation Sith issue #62](htt
 - The branch remains one commit ahead by ancestry and ten commits behind current development, but its only changed file is now content-identical on `development`. This is **content integrated, not ancestry merged**.
 - The PR remains open pending a live development-push validation and explicit PR disposition. No merge, close, or branch deletion was performed.
 - The development push's combined commit-status endpoint has not yet reported checks; this is **pending/unverified**, not a pass.
+
+## 0.1. Adapter-conformance integration update
+
+PR [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65) was reviewed against the live `development` files. Its four changed-file contributions have now been ported to `development` as four small commits ending at [`11777f5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/11777f576f3348ca34b082ddf431dd80944f857f):
+
+- `tests/Adapter.Conformance.Tests/SharedAdapterConformanceTests.cs`: added the unknown-kind fallback/descendant-preservation shared fixture.
+- `tests/WPF.Tests/WpfGuiRendererConformanceTests.cs`: added the shared nested WPF identity/order/text fixture.
+- `tests/WPF.Tests/WpfSharedAdapterConformanceTests.cs`: added the WPF-side shared semantic cases.
+- `docs/TESTING.md`: updated the documented three-adapter evidence and explicit fallback behavior.
+
+**Compile defect corrected during port:** PR #65's new `WpfSharedAdapterConformanceTests.cs` referenced `Border`, `StackPanel`, and `TextBlock` without importing `System.Windows.Controls`. The port adds that using. The original branch's exact-head WPF compile failure is therefore addressed in the development copy, but only a fresh Windows CI run can establish the fix.
+
+PR #65 remains open; no merge or close action was taken. Current compare ancestry is 7 commits ahead / 69 behind development, and the four-file compare still reflects branch history rather than a clean ancestry integration. The relevant implementation has been ported, not cherry-picked. The new development commit's combined-status endpoint currently reports no statuses, so validation remains **pending/unverified**.
 
 ## 1. Current inventory
 
