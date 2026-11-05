@@ -80,7 +80,39 @@ All comparisons below use `development` at `c48d32c652cf00493da8c6a66625f8406961
   - #34: six SVG renderer/conformance/test/gallery files.
   - #32: seven release/theory/use-case/README files.
 - The old audit branch's own documentation describes many earlier PRs as already integrated. That is useful historical context, but it is not sufficient proof for current deletion: the comparison snapshot has advanced substantially, and each remaining PR still needs a deliberate disposition.
-- **CI status is not yet audited for all 20 exact branch-head SHAs.** Do not infer green from historical PR descriptions or from development CI. The next pass must query exact-head checks and inspect any unique code diffs before marking a PR/branch as resolved.
+- **Exact-head GitHub Actions checks have now been queried for all 20 branch-head SHAs.** Results are recorded below. These are historical results for the branch-head commit, not proof that the same patch will pass against today's development base. Do not infer integration readiness from a green historical run.
+
+
+### Exact branch-head CI snapshot
+
+The following results come from GitHub Actions check-runs queried against each exact branch-head SHA on 2026-11-05. “Checks passed” means all reported non-publication checks completed successfully. In every run that exposed a `publish_nuget` job, that job was **skipped**. No NuGet package was published by these runs.
+
+| PR | Branch head CI result |
+|---|---|
+| [#74](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/74) | **Passed** — `test-and-package`, `test-wpf`, `solution-uml`, `generate-and-verify`; publication skipped |
+| [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65) | **Failed** — `test-wpf` failed; `test-and-package`, `solution-uml`, source diagrams, and documentation checks passed; publication skipped. [Package GUI run](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41122606918) |
+| [#64](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/64) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60) | **Passed** — package, WPF, source diagrams, solution UML; publication skipped |
+| [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55) | **Passed** — package, WPF, source diagrams, solution UML; publication skipped |
+| [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50) | **Passed** — package, WPF, source diagrams, solution UML; publication skipped |
+| [#39](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48) | **Passed** — package, WPF, source diagrams, solution UML; publication skipped |
+| [#47](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/47) | **Passed** — package, WPF, source diagrams, solution UML; publication skipped |
+| [#45](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/45) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#43](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/43) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#40](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/40) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#37](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/37) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#36](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/36) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#35](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/35) | **Passed** — package, WPF, source diagrams, solution UML; publication skipped |
+| [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32) | **No check runs found** for the exact branch-head SHA; this is not a pass |
+| [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+| [#38](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/38) | **Passed** — package, WPF, source diagrams, solution UML, and documentation checks; publication skipped |
+
+#### Known failure detail — PR #65
+
+The WPF test job failed to compile `tests/WPF.Tests/WpfSharedAdapterConformanceTests.cs`: references to `Border`, `StackPanel`, and `TextBlock` were unresolved (`CS0246`). The package workflow's cross-targeted WPF build succeeded, but the dedicated Windows WPF test job failed. This is a concrete branch fix required before #65 can be considered green. Keep its PR/branch open; do not delete it.
 
 ## 4. PR disposition queue
 
