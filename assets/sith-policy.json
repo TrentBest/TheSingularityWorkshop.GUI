@@ -1,0 +1,37 @@
+{
+  "repository": "TrentBest/TheSingularityWorkshop.GUI",
+  "policy": "exactly-master-and-development",
+  "required_branches": [
+    "development",
+    "master"
+  ],
+  "actual_branches": [
+    "development",
+    "docs/charting-contract-adr-2026-10-23",
+    "docs/ci-test-coverage-matrix-2026-10-23",
+    "docs/fsm-driven-oscillator",
+    "docs/full-gui-domain-coverage-2026-10-23",
+    "docs/gui-blazor-svg-authored-contracts-2026-10-23",
+    "docs/gui-core-authored-contracts-2026-10-23",
+    "docs/gui-wpf-authored-contracts-2026-10-23",
+    "docs/uml-three-view-standard-2026-10-23",
+    "feature/architect-renderer-integration",
+    "fix/svg-node-count-limit-2026-10-23",
+    "master",
+    "release/gui-closeout-2026-10-22",
+    "release/gui-root-id-contract-2026-10-22",
+    "tests/core-builder-cycle-regression-2026-10-23",
+    "work/adapter-conformance-three-way-2026-10-30",
+    "work/ciai-evidence-lane",
+    "work/fix-uml-self-reference-clearance-2026-10-27",
+    "work/sith-branch-reconciliation-2026-10-29",
+    "work/uml-neighborhood-self-reference-clearance-2026-10-28",
+    "work/uml-visibility-tier-data-cards-2026-10-28",
+    "work/uml-visual-data-cards-2026-10-27"
+  ],
+  "branch_count": 22,
+  "status": "NON-COMPLIANT",
+  "evaluated_at": "2026-11-05T04:24:28Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41967601947",
+  "triggering_commit": "c5624b3d5c07facf563ff9035658929ac9488e5d"
+}
