@@ -6,7 +6,8 @@
 **Audit timestamp:** 2026-11-05 00:55 UTC  
 **Repository:** `TrentBest/TheSingularityWorkshop.GUI`  
 **Canonical branches:** `master`, `development` only  
-**Development head:** [`c48d32c652cf00493da8c6a66625f8406961a7aa`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c48d32c652cf00493da8c6a66625f8406961a7aa)  
+**Current development head:** [`8a4393a316d04f8af337f077d2062c12ea3bd5fb`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/8a4393a316d04f8af337f077d2062c12ea3bd5fb)  
+**Comparison base for the branch-diff snapshot:** [`c48d32c652cf00493da8c6a66625f8406961a7aa`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c48d32c652cf00493da8c6a66625f8406961a7aa) (the development head immediately before this ledger was added)  
 **Master head:** [`36342df0654d6960f0ea36d3410d135366c09d1c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/36342df0654d6960f0ea36d3410d135366c09d1c)
 
 This is a point-in-time reconciliation ledger for [Operation Sith issue #62](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/62). It is intended to make branch work findable and support owner-directed cleanup. It does **not** authorize branch deletion, PR closure/merge, force-push, release, deployment, or package publication.
@@ -143,7 +144,7 @@ Every row below is an open draft PR, not an approved merge. Review in this order
 
 ## 6. Next execution steps
 
-1. Audit exact-head CI for all 20 PR branches and record the result beside each PR.
+1. **Exact-head CI audit complete:** all 20 noncanonical branch-head SHAs were queried; see the matrix above. PR #65's WPF compile failure and PR #32's missing check-run evidence remain explicit blockers.
 2. Review the actual unique diffs in priority order; classify each as **already integrated**, **needs integration**, **preserve as open decision**, or **superseded/rejected**.
 3. Integrate only reviewed, useful changes into `development`, with tests and consumer evidence where behavior changes.
 4. Update this ledger after each reconciliation pass. Keep its table sorted by branch-head commit time, newest first.
