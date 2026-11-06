@@ -22,6 +22,7 @@
     "release/gui-root-id-contract-2026-10-22",
     "tests/core-builder-cycle-regression-2026-10-23",
     "work/adapter-conformance-three-way-2026-10-30",
+    "work/autonomous-design-badge",
     "work/ciai-evidence-lane",
     "work/fix-uml-self-reference-clearance-2026-10-27",
     "work/sith-branch-reconciliation-2026-10-29",
@@ -29,9 +30,9 @@
     "work/uml-visibility-tier-data-cards-2026-10-28",
     "work/uml-visual-data-cards-2026-10-27"
   ],
-  "branch_count": 22,
+  "branch_count": 23,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-05T04:42:17Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/41969429357",
-  "triggering_commit": "2cad37f4f7328eed4a39bc00ce72c75d7a4fe0b0"
+  "evaluated_at": "2026-11-06T12:11:15Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/42215727558",
+  "triggering_commit": "06ebf4388543e6503cd169bf55c7257c01d5926e"
 }
