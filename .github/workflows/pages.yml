@@ -36,18 +36,23 @@ jobs:
         run: |
           mkdir -p _site/samples/demonstrations
           cp site/index.html _site/index.html
+          cp site/badges.html _site/badges.html
           cp -R docs _site/docs
+          cp -R assets/autonomous-design _site/assets/autonomous-design
           cp -R samples/demonstrations/. _site/samples/demonstrations/
           cp docs/assets/fox-sheepdog-10x10.svg _site/assets/fox-sheepdog-10x10.svg
           cp docs/assets/concepts/gui-semantic-boundary.svg _site/assets/gui-semantic-boundary.svg
           touch _site/.nojekyll
           test -s _site/index.html
+          test -s _site/badges.html
           test -s _site/assets/svg-adapter-gallery.svg
+          test -s _site/assets/autonomous-design/off.svg
+          test -s _site/assets/autonomous-design/working.svg
           test -s _site/samples/demonstrations/index.html
           grep -F 'GUI.SVG Demonstrations' _site/samples/demonstrations/index.html
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # pinned commit SHA
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0 # pinned commit SHA
         with:
           path: _site
 
