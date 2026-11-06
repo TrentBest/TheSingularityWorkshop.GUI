@@ -52,7 +52,7 @@ jobs:
           grep -F 'GUI.SVG Demonstrations' _site/samples/demonstrations/index.html
 
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0 # pinned commit SHA
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # pinned commit SHA
         with:
           path: _site
 
