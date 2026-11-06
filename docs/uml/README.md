@@ -1,6 +1,15 @@
 # UML Documentation Index
 
-This directory separates generated source-file/type documentation from authored guides and use cases.
+This directory separates generated source-file/type documentation from authored guides and use cases. The canonical visual contract is [UML Views and Data-Card Standard](../UML_VIEWS_AND_DATA_CARD_STANDARD.md).
+
+## Diagram families — do not conflate
+
+- **Data card:** colored-border box and header with expandable nested content when hosted interactively.
+- **Class / AST view:** namespace-bounded declaration hierarchy, with nested type/member cards and explicit signature expansion defaults.
+- **Class neighborhood:** fully collapsed target class; consumers above, dependencies below, built-in type conduits on the left, and an external package/framework reference rail on the right.
+- **Sequence view:** ordered messages in a named, evidence-backed scenario.
+
+These views answer different questions and are not interchangeable layouts. See the canonical standard for member order, conduit semantics, and acceptance checks.
 
 ## Current state
 
