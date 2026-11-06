@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="112" viewBox="0 0 520 112" role="img" aria-labelledby="ad-title ad-desc">
+  <title id="ad-title">Autonomous Design: Working</title>
+  <desc id="ad-desc">Autonomous Design is actively processing work. CI activity does not change this lifecycle state.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#202b3b"/><stop offset="1" stop-color="#0b1220"/></linearGradient>
+  </defs>
+  <rect x="1" y="1" width="518" height="110" rx="16" fill="url(#panel)" stroke="#38bdf8" stroke-width="2"/>
+  <g transform="translate(54 56)" stroke="#38bdf8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"><g class="gear"><path d="M0 -24 L5 -20 L11 -22 L15 -16 L13 -10 L20 -6 L20 2 L13 6 L15 13 L9 19 L2 16 L-4 22 L-11 19 L-12 12 L-20 9 L-20 1 L-14 -4 L-16 -12 L-9 -17 L-3 -14 Z"/><circle r="7"/></g></g>
+  <text x="108" y="38" fill="#cbd5e1" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="2">THE SINGULARITY WORKSHOP · AD</text>
+  <text x="108" y="68" fill="#f8fafc" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="800">WORKING</text>
+  <text x="108" y="89" fill="#cbd5e1" font-family="Segoe UI,Arial,sans-serif" font-size="11">Autonomous work in progress</text>
+<style>@keyframes ad-turn{to{transform:rotate(360deg)}}.gear{transform-origin:0 0;animation:ad-turn 8s linear infinite}@media(prefers-reduced-motion:reduce){.gear{animation:none}}</style></svg>
