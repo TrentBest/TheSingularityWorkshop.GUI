@@ -83,10 +83,10 @@ jobs:
                 -H "Authorization: Bearer $GH_TOKEN" \
                 -H "X-GitHub-Api-Version: 2022-11-28" \
                 "$api?branch=$TARGET_BRANCH&event=pull_request&per_page=100")"
-              matches="$(jq --arg sha "$TARGET_SHA" --arg observer_sha "$OBSERVER_SHA" --arg base "$TARGET_BASE_BRANCH" --argjson pr "$PR_NUMBER" '
+              matches="$(jq --arg sha "$TARGET_SHA" --arg base "$TARGET_BASE_BRANCH" --argjson pr "$PR_NUMBER" '
                 [.workflow_runs[]
                   | select(.event == "pull_request")
-                  | select(.head_sha == $observer_sha)
+                  | select(.head_sha == $sha)
                   | select((.path | split("@")[0]) == ".github/workflows/package.yml")
                   | select(any(.pull_requests[]?; .number == $pr and .head.sha == $sha and .base.ref == $base))]
               ' <<< "$response")"
@@ -118,7 +118,7 @@ jobs:
               run_head_sha="$(jq -r '.[0].head_sha' <<< "$matches")"
               [[ "$run_id" =~ ^[1-9][0-9]*$ ]]
               [[ "$run_attempt" =~ ^[1-9][0-9]*$ ]]
-              [[ "$run_head_sha" == "$OBSERVER_SHA" ]]
+              [[ "$run_head_sha" == "$TARGET_SHA" ]]
               {
                 echo "run_id=$run_id"
                 echo "run_attempt=$run_attempt"
@@ -177,14 +177,14 @@ jobs:
           mkdir -p artifacts
           set +e
           dotnet run --project samples/TheSingularityWorkshop.CiAi.ObserveRun --configuration Release --no-build -- \
-            "$TARGET_REPOSITORY" "$OBSERVER_SHA" artifacts/commit-observation.json
+            "$TARGET_REPOSITORY" "$TARGET_SHA" artifacts/commit-observation.json
           observer_exit_code=$?
           set -e
           echo "CiAi observer exit code: $observer_exit_code"
           expected=".github/workflows/package.yml#$SOURCE_RUN_ID#$SOURCE_RUN_ATTEMPT"
           jq -e \
             --arg repo "$TARGET_REPOSITORY" \
-            --arg observer_sha "$OBSERVER_SHA" \
+            --arg source_sha "$TARGET_SHA" \
             --arg expected "$expected" \
             --arg event "$EVENT_NAME" \
             --arg run_id "$SOURCE_RUN_ID" \
@@ -192,7 +192,7 @@ jobs:
             --arg pr_number "$PR_NUMBER" '
               .schema == "ciai.commit-observation.v2" and
               .repository == $repo and
-              .headSha == $observer_sha and
+              .headSha == $source_sha and
               .discoveryComplete == true and
               .complete == true and
               (.requiredWorkflowResults | length) == 1 and
@@ -204,7 +204,7 @@ jobs:
               ([.runs[]
                 | select(.run.RunId == ($run_id | tonumber))
                 | select(.run.RunAttempt == ($run_attempt | tonumber))
-                | select(.run.HeadSha == $observer_sha)
+                | select(.run.HeadSha == $source_sha)
                 | select(.run.WorkflowPath == ".github/workflows/package.yml")
                 | select(.run.Event == $event)
                 | select(if $event == "pull_request"
