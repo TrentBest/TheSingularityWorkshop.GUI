@@ -29,6 +29,7 @@ jobs:
           TARGET_BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
           TARGET_BASE_BRANCH: ${{ github.event.pull_request.base.ref || github.ref_name }}
           TARGET_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          OBSERVER_SHA: ${{ github.sha }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PUSHED_REF: ${{ github.ref }}
         run: |
@@ -54,6 +55,7 @@ jobs:
             echo "branch=$TARGET_BRANCH"
             echo "base_branch=$TARGET_BASE_BRANCH"
             echo "sha=$TARGET_SHA"
+            echo "observer_sha=$OBSERVER_SHA"
           } >> "$GITHUB_OUTPUT"
 
       - name: Resolve exact authoritative package run and attempt
@@ -65,6 +67,7 @@ jobs:
           TARGET_BRANCH: ${{ steps.source.outputs.branch }}
           TARGET_BASE_BRANCH: ${{ steps.source.outputs.base_branch }}
           TARGET_SHA: ${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: ${{ steps.source.outputs.observer_sha }}
           EVENT_NAME: ${{ steps.source.outputs.event }}
           PR_NUMBER: ${{ steps.source.outputs.pr_number }}
         run: |
@@ -156,6 +159,7 @@ jobs:
           CIAI_REQUIRED_WORKFLOW_PATHS: ${{ steps.source-run.outputs.selector }}
           TARGET_REPOSITORY: ${{ steps.source.outputs.repository }}
           TARGET_SHA: ${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: ${{ steps.source.outputs.observer_sha }}
           SOURCE_RUN_ID: ${{ steps.source-run.outputs.run_id }}
           SOURCE_RUN_ATTEMPT: ${{ steps.source-run.outputs.run_attempt }}
           SOURCE_RUN_CONCLUSION: ${{ steps.source-run.outputs.conclusion }}
@@ -164,12 +168,12 @@ jobs:
           mkdir -p artifacts
           set +e
           dotnet run --project samples/TheSingularityWorkshop.CiAi.ObserveRun --configuration Release --no-build -- \
-            "$TARGET_REPOSITORY" "$TARGET_SHA" artifacts/commit-observation.json
+            "$TARGET_REPOSITORY" "$OBSERVER_SHA" artifacts/commit-observation.json
           observer_exit_code=$?
           set -e
           echo "CiAi observer exit code: $observer_exit_code"
           expected=".github/workflows/package.yml#$SOURCE_RUN_ID#$SOURCE_RUN_ATTEMPT"
-          jq -e --arg repo "$TARGET_REPOSITORY" --arg sha "$TARGET_SHA" --arg expected "$expected" '
+          jq -e --arg repo "$TARGET_REPOSITORY" --arg sha "$OBSERVER_SHA" --arg expected "$expected" '
             .schema == "ciai.commit-observation.v2" and
             .repository == $repo and
             .headSha == $sha and
@@ -201,6 +205,7 @@ jobs:
           REPOSITORY: ${{ steps.source.outputs.repository }}
           BRANCH: ${{ steps.source.outputs.branch }}
           SHA: ${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: ${{ steps.source.outputs.observer_sha }}
           RUN_ID: ${{ steps.source-run.outputs.run_id }}
           RUN_ATTEMPT: ${{ steps.source-run.outputs.run_attempt }}
           RUN_URL: ${{ steps.source-run.outputs.run_url }}
@@ -219,6 +224,7 @@ jobs:
             echo "- Repository: `$REPOSITORY`"
             echo "- Branch: `$BRANCH`"
             echo "- Source SHA: `$SHA`"
+            echo "- GitHub Actions observer SHA (PR merge ref when applicable): `$OBSERVER_SHA`"
             echo "- Authoritative package run: ${RUN_URL:-not uniquely resolved}"
             echo "- Run ID / attempt: ${RUN_ID:-unknown} / ${RUN_ATTEMPT:-unknown}"
             echo "- Provider conclusion: $RUN_CONCLUSION"
