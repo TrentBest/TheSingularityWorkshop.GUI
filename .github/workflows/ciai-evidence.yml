@@ -3,13 +3,15 @@ name: CiAi Commit Evidence
 on:
   push:
     branches: [development]
+  pull_request:
+    branches: [development]
 
 permissions:
   contents: read
   actions: read
 
 concurrency:
-  group: ciai-gui-evidence-${{ github.sha }}
+  group: ciai-gui-evidence-\${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: false
 
 jobs:
@@ -18,54 +20,94 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 40
     steps:
-      - name: Validate source identity
+      - name: Validate source and observer identities
         id: source
         shell: bash
         env:
-          TARGET_REPOSITORY: ${{ github.repository }}
-          TARGET_BRANCH: ${{ github.ref_name }}
-          TARGET_SHA: ${{ github.sha }}
-          PUSHED_REF: ${{ github.ref }}
+          TARGET_REPOSITORY: \${{ github.repository }}
+          EVENT_NAME: \${{ github.event_name }}
+          TARGET_BRANCH: \${{ github.event.pull_request.head.ref || github.ref_name }}
+          TARGET_BASE_BRANCH: \${{ github.event.pull_request.base.ref || github.ref_name }}
+          TARGET_SHA: \${{ github.event.pull_request.head.sha || github.sha }}
+          OBSERVER_SHA: \${{ github.sha }}
+          PR_NUMBER: \${{ github.event.pull_request.number }}
+          PUSHED_REF: \${{ github.ref }}
         run: |
           set -euo pipefail
           [[ "$TARGET_REPOSITORY" == "TrentBest/TheSingularityWorkshop.GUI" ]]
-          [[ "$TARGET_BRANCH" == "development" ]]
-          [[ "$PUSHED_REF" == "refs/heads/development" ]]
           [[ "$TARGET_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$OBSERVER_SHA" =~ ^[0-9a-f]{40}$ ]]
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            [[ "$TARGET_BASE_BRANCH" == "development" ]]
+            [[ -n "$TARGET_BRANCH" ]]
+            [[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]
+            echo "event=pull_request" >> "$GITHUB_OUTPUT"
+            echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+          elif [[ "$EVENT_NAME" == "push" ]]; then
+            [[ "$TARGET_BRANCH" == "development" ]]
+            [[ "$TARGET_BASE_BRANCH" == "development" ]]
+            [[ "$PUSHED_REF" == "refs/heads/development" ]]
+            echo "event=push" >> "$GITHUB_OUTPUT"
+            echo "pr_number=" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Unsupported event: $EVENT_NAME"
+            exit 1
+          fi
           {
             echo "repository=$TARGET_REPOSITORY"
             echo "branch=$TARGET_BRANCH"
+            echo "base_branch=$TARGET_BASE_BRANCH"
             echo "sha=$TARGET_SHA"
+            echo "observer_sha=$OBSERVER_SHA"
           } >> "$GITHUB_OUTPUT"
 
       - name: Resolve exact authoritative package run and attempt
         id: source-run
         shell: bash
         env:
-          GH_TOKEN: ${{ github.token }}
-          TARGET_REPOSITORY: ${{ steps.source.outputs.repository }}
-          TARGET_BRANCH: ${{ steps.source.outputs.branch }}
-          TARGET_SHA: ${{ steps.source.outputs.sha }}
+          GH_TOKEN: \${{ github.token }}
+          TARGET_REPOSITORY: \${{ steps.source.outputs.repository }}
+          TARGET_BRANCH: \${{ steps.source.outputs.branch }}
+          TARGET_BASE_BRANCH: \${{ steps.source.outputs.base_branch }}
+          TARGET_SHA: \${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: \${{ steps.source.outputs.observer_sha }}
+          EVENT_NAME: \${{ steps.source.outputs.event }}
+          PR_NUMBER: \${{ steps.source.outputs.pr_number }}
         run: |
           set -euo pipefail
           api="https://api.github.com/repos/$TARGET_REPOSITORY/actions/workflows/package.yml/runs"
           for poll in $(seq 1 90); do
-            response="$(curl --fail --silent --show-error \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "$api?branch=$TARGET_BRANCH&event=push&head_sha=$TARGET_SHA&per_page=100")"
-            matches="$(jq --arg repo "$TARGET_REPOSITORY" --arg branch "$TARGET_BRANCH" --arg sha "$TARGET_SHA" '
-              [.workflow_runs[]
-                | select(.head_sha == $sha)
-                | select(.event == "push" and .head_branch == $branch)
-                | select((.path | split("@")[0]) == ".github/workflows/package.yml")
-                | select(.head_repository.full_name == $repo)]
-            ' <<< "$response")"
+            if [[ "$EVENT_NAME" == "pull_request" ]]; then
+              response="$(curl --fail --silent --show-error \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "$api?branch=$TARGET_BRANCH&event=pull_request&per_page=100")"
+              matches="$(jq --arg sha "$TARGET_SHA" --arg observer_sha "$OBSERVER_SHA" --arg base "$TARGET_BASE_BRANCH" --argjson pr "$PR_NUMBER" '
+                [.workflow_runs[]
+                  | select(.event == "pull_request")
+                  | select(.head_sha == $observer_sha)
+                  | select((.path | split("@")[0]) == ".github/workflows/package.yml")
+                  | select(any(.pull_requests[]?; .number == $pr and .head.sha == $sha and .base.ref == $base))]
+              ' <<< "$response")"
+            else
+              response="$(curl --fail --silent --show-error \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "$api?branch=$TARGET_BRANCH&event=push&head_sha=$TARGET_SHA&per_page=100")"
+              matches="$(jq --arg repo "$TARGET_REPOSITORY" --arg branch "$TARGET_BRANCH" --arg sha "$TARGET_SHA" '
+                [.workflow_runs[]
+                  | select(.head_sha == $sha)
+                  | select(.event == "push" and .head_branch == $branch)
+                  | select((.path | split("@")[0]) == ".github/workflows/package.yml")
+                  | select(.head_repository.full_name == $repo)]
+              ' <<< "$response")"
+            fi
             count="$(jq 'length' <<< "$matches")"
             if [ "$count" -gt 1 ]; then
-              echo "::error::Multiple authoritative package.yml push runs match this exact source SHA."
-              jq -r '.[] | "run_id=\(.id) attempt=\(.run_attempt) status=\(.status)"' <<< "$matches"
+              echo "::error::Multiple authoritative package.yml runs match this exact source identity."
+              jq -r '.[] | "run_id=\(.id) attempt=\(.run_attempt) status=\(.status) head_sha=\(.head_sha)"' <<< "$matches"
               exit 1
             fi
             if [ "$count" -eq 1 ] && [ "$(jq -r '.[0].status' <<< "$matches")" = "completed" ]; then
@@ -73,22 +115,25 @@ jobs:
               run_attempt="$(jq -r '.[0].run_attempt' <<< "$matches")"
               conclusion="$(jq -r '.[0].conclusion // "none"' <<< "$matches")"
               run_url="$(jq -r '.[0].html_url' <<< "$matches")"
+              run_head_sha="$(jq -r '.[0].head_sha' <<< "$matches")"
               [[ "$run_id" =~ ^[1-9][0-9]*$ ]]
               [[ "$run_attempt" =~ ^[1-9][0-9]*$ ]]
+              [[ "$run_head_sha" == "$OBSERVER_SHA" ]]
               {
                 echo "run_id=$run_id"
                 echo "run_attempt=$run_attempt"
                 echo "conclusion=$conclusion"
                 echo "run_url=$run_url"
+                echo "run_head_sha=$run_head_sha"
                 echo "selector=.github/workflows/package.yml#$run_id#$run_attempt"
               } >> "$GITHUB_OUTPUT"
-              echo "Resolved exact GUI package run $run_id attempt $run_attempt ($conclusion)."
+              echo "Resolved exact GUI package run $run_id attempt $run_attempt ($conclusion; head_sha=$run_head_sha)."
               exit 0
             fi
             echo "Waiting for exact GUI package run (poll $poll/90; matches=$count)."
             sleep 20
           done
-          echo "::error::Timed out waiting for the exact package.yml push run for $TARGET_SHA."
+          echo "::error::Timed out waiting for the exact package.yml $EVENT_NAME run matching the source identity and observer SHA."
           exit 1
 
       - name: Check out pinned CiAi observer source
@@ -100,10 +145,10 @@ jobs:
           submodules: recursive
           persist-credentials: false
 
-      - name: Set up .NET
+      - name: Set up .NET 8 for the pinned observer
         uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68
         with:
-          dotnet-version: 10.0.x
+          dotnet-version: 8.0.x
 
       - name: Restore pinned observer
         working-directory: _tools/CiAi
@@ -117,60 +162,142 @@ jobs:
         working-directory: _tools/CiAi
         shell: bash
         env:
-          CIAI_GITHUB_TOKEN: ${{ github.token }}
-          CIAI_REQUIRED_WORKFLOW_PATHS: ${{ steps.source-run.outputs.selector }}
-          TARGET_REPOSITORY: ${{ steps.source.outputs.repository }}
-          TARGET_SHA: ${{ steps.source.outputs.sha }}
-          SOURCE_RUN_ID: ${{ steps.source-run.outputs.run_id }}
-          SOURCE_RUN_ATTEMPT: ${{ steps.source-run.outputs.run_attempt }}
-          SOURCE_RUN_CONCLUSION: ${{ steps.source-run.outputs.conclusion }}
+          CIAI_GITHUB_TOKEN: \${{ github.token }}
+          CIAI_REQUIRED_WORKFLOW_PATHS: \${{ steps.source-run.outputs.selector }}
+          TARGET_REPOSITORY: \${{ steps.source.outputs.repository }}
+          TARGET_SHA: \${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: \${{ steps.source.outputs.observer_sha }}
+          EVENT_NAME: \${{ steps.source.outputs.event }}
+          PR_NUMBER: \${{ steps.source.outputs.pr_number }}
+          SOURCE_RUN_ID: \${{ steps.source-run.outputs.run_id }}
+          SOURCE_RUN_ATTEMPT: \${{ steps.source-run.outputs.run_attempt }}
+          SOURCE_RUN_CONCLUSION: \${{ steps.source-run.outputs.conclusion }}
         run: |
           set -euo pipefail
           mkdir -p artifacts
           set +e
           dotnet run --project samples/TheSingularityWorkshop.CiAi.ObserveRun --configuration Release --no-build -- \
-            "$TARGET_REPOSITORY" "$TARGET_SHA" artifacts/commit-observation.json
+            "$TARGET_REPOSITORY" "$OBSERVER_SHA" artifacts/commit-observation.json
           observer_exit_code=$?
           set -e
           echo "CiAi observer exit code: $observer_exit_code"
           expected=".github/workflows/package.yml#$SOURCE_RUN_ID#$SOURCE_RUN_ATTEMPT"
-          jq -e --arg repo "$TARGET_REPOSITORY" --arg sha "$TARGET_SHA" --arg expected "$expected" '
-            .schema == "ciai.commit-observation.v2" and
-            .repository == $repo and
-            .headSha == $sha and
-            .discoveryComplete == true and
-            .complete == true and
-            (.requiredWorkflowResults | length) == 1 and
-            .requiredWorkflowResults[0].WorkflowPath == $expected and
-            .requiredWorkflowResults[0].State == "passed" and
-            .requiredWorkflowResults[0].EvidenceComplete == true and
-            .requiredWorkflowResults[0].Terminal == true and
-            .requiredWorkflowResults[0].Successful == true
-          ' artifacts/commit-observation.json >/dev/null
-          echo "CiAi verified exact GUI package run $SOURCE_RUN_ID attempt $SOURCE_RUN_ATTEMPT ($SOURCE_RUN_CONCLUSION)."
+          jq -e \
+            --arg repo "$TARGET_REPOSITORY" \
+            --arg observer_sha "$OBSERVER_SHA" \
+            --arg expected "$expected" \
+            --arg event "$EVENT_NAME" \
+            --arg run_id "$SOURCE_RUN_ID" \
+            --arg run_attempt "$SOURCE_RUN_ATTEMPT" \
+            --arg pr_number "$PR_NUMBER" '
+              .schema == "ciai.commit-observation.v2" and
+              .repository == $repo and
+              .headSha == $observer_sha and
+              .discoveryComplete == true and
+              .complete == true and
+              (.requiredWorkflowResults | length) == 1 and
+              .requiredWorkflowResults[0].WorkflowPath == $expected and
+              .requiredWorkflowResults[0].State == "passed" and
+              .requiredWorkflowResults[0].EvidenceComplete == true and
+              .requiredWorkflowResults[0].Terminal == true and
+              .requiredWorkflowResults[0].Successful == true and
+              ([.runs[]
+                | select(.run.RunId == ($run_id | tonumber))
+                | select(.run.RunAttempt == ($run_attempt | tonumber))
+                | select(.run.HeadSha == $observer_sha)
+                | select(.run.WorkflowPath == ".github/workflows/package.yml")
+                | select(.run.Event == $event)
+                | select(if $event == "pull_request"
+                         then (.run.PullRequestNumbers | index(($pr_number | tonumber)) != null)
+                         else true end)] | length) == 1
+            ' artifacts/commit-observation.json >/dev/null
+          if [ "$observer_exit_code" -ne 0 ]; then
+            echo "::error::CiAi report did not exit successfully despite producing a report."
+            exit "$observer_exit_code"
+          fi
+          echo "CiAi verified exact GUI package run $SOURCE_RUN_ID attempt $SOURCE_RUN_ATTEMPT ($SOURCE_RUN_CONCLUSION) for observer SHA $OBSERVER_SHA."
 
-      - name: Upload JSON and Markdown evidence
-        if: ${{ always() }}
+      - name: Write explicit source and observer provenance
+        if: \${{ always() }}
+        env:
+          REPOSITORY: \${{ steps.source.outputs.repository }}
+          EVENT_NAME: \${{ steps.source.outputs.event }}
+          SOURCE_BRANCH: \${{ steps.source.outputs.branch }}
+          BASE_BRANCH: \${{ steps.source.outputs.base_branch }}
+          SOURCE_SHA: \${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: \${{ steps.source.outputs.observer_sha }}
+          PR_NUMBER: \${{ steps.source.outputs.pr_number }}
+          RUN_ID: \${{ steps.source-run.outputs.run_id }}
+          RUN_ATTEMPT: \${{ steps.source-run.outputs.run_attempt }}
+          RUN_HEAD_SHA: \${{ steps.source-run.outputs.run_head_sha }}
+          RUN_URL: \${{ steps.source-run.outputs.run_url }}
+          RUN_CONCLUSION: \${{ steps.source-run.outputs.conclusion }}
+          OBSERVER_STATUS: \${{ job.status }}
+        shell: bash
+        run: |
+          mkdir -p _tools/CiAi/artifacts
+          jq -n \
+            --arg repository "$REPOSITORY" \
+            --arg event "$EVENT_NAME" \
+            --arg sourceBranch "$SOURCE_BRANCH" \
+            --arg baseBranch "$BASE_BRANCH" \
+            --arg sourceSha "$SOURCE_SHA" \
+            --arg observerSha "$OBSERVER_SHA" \
+            --arg prNumber "$PR_NUMBER" \
+            --arg workflowPath ".github/workflows/package.yml" \
+            --arg runId "$RUN_ID" \
+            --arg runAttempt "$RUN_ATTEMPT" \
+            --arg runHeadSha "$RUN_HEAD_SHA" \
+            --arg runUrl "$RUN_URL" \
+            --arg providerConclusion "$RUN_CONCLUSION" \
+            --arg observerJobStatus "$OBSERVER_STATUS" '
+              {
+                schema: "ciai.gui-evidence-provenance.v1",
+                repository: $repository,
+                event: $event,
+                sourceBranch: $sourceBranch,
+                baseBranch: $baseBranch,
+                sourceSha: $sourceSha,
+                observerSha: $observerSha,
+                pullRequestNumber: (if $prNumber == "" then null else ($prNumber | tonumber) end),
+                authoritativeWorkflowPath: $workflowPath,
+                authoritativeRunId: (if $runId == "" then null else ($runId | tonumber) end),
+                authoritativeRunAttempt: (if $runAttempt == "" then null else ($runAttempt | tonumber) end),
+                authoritativeRunHeadSha: $runHeadSha,
+                authoritativeRunUrl: $runUrl,
+                providerConclusion: $providerConclusion,
+                observerJobStatus: $observerJobStatus
+              }
+            ' > _tools/CiAi/artifacts/provenance.json
+
+      - name: Upload JSON, Markdown, and provenance evidence
+        if: \${{ always() }}
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
-          name: ciai-gui-evidence-${{ github.sha }}
+          name: ciai-gui-evidence-\${{ github.run_id }}-\${{ github.run_attempt }}
           path: |
             _tools/CiAi/artifacts/commit-observation.json
             _tools/CiAi/artifacts/commit-observation.md
+            _tools/CiAi/artifacts/provenance.json
           if-no-files-found: warn
           retention-days: 30
 
       - name: Summarize exact source provenance
-        if: ${{ always() }}
+        if: \${{ always() }}
         env:
-          REPOSITORY: ${{ steps.source.outputs.repository }}
-          BRANCH: ${{ steps.source.outputs.branch }}
-          SHA: ${{ steps.source.outputs.sha }}
-          RUN_ID: ${{ steps.source-run.outputs.run_id }}
-          RUN_ATTEMPT: ${{ steps.source-run.outputs.run_attempt }}
-          RUN_URL: ${{ steps.source-run.outputs.run_url }}
-          RUN_CONCLUSION: ${{ steps.source-run.outputs.conclusion }}
-          OBSERVER_STATUS: ${{ job.status }}
+          REPOSITORY: \${{ steps.source.outputs.repository }}
+          BRANCH: \${{ steps.source.outputs.branch }}
+          BASE_BRANCH: \${{ steps.source.outputs.base_branch }}
+          SOURCE_SHA: \${{ steps.source.outputs.sha }}
+          OBSERVER_SHA: \${{ steps.source.outputs.observer_sha }}
+          EVENT_NAME: \${{ steps.source.outputs.event }}
+          PR_NUMBER: \${{ steps.source.outputs.pr_number }}
+          RUN_ID: \${{ steps.source-run.outputs.run_id }}
+          RUN_ATTEMPT: \${{ steps.source-run.outputs.run_attempt }}
+          RUN_HEAD_SHA: \${{ steps.source-run.outputs.run_head_sha }}
+          RUN_URL: \${{ steps.source-run.outputs.run_url }}
+          RUN_CONCLUSION: \${{ steps.source-run.outputs.conclusion }}
+          OBSERVER_STATUS: \${{ job.status }}
         shell: bash
         run: |
           report="_tools/CiAi/artifacts/commit-observation.json"
@@ -181,14 +308,20 @@ jobs:
           {
             echo "## CiAi GUI exact commit evidence"
             echo
-            echo "- Repository: `$REPOSITORY`"
-            echo "- Branch: `$BRANCH`"
-            echo "- Source SHA: `$SHA`"
-            echo "- Authoritative package run: ${RUN_URL:-not uniquely resolved}"
-            echo "- Run ID / attempt: ${RUN_ID:-unknown} / ${RUN_ATTEMPT:-unknown}"
+            echo "- Repository: \`$REPOSITORY\`"
+            echo "- Event: \`$EVENT_NAME\`"
+            echo "- Source branch: \`$BRANCH\`"
+            echo "- Base branch: \`$BASE_BRANCH\`"
+            echo "- Pull request: \${PR_NUMBER:-not applicable}"
+            echo "- Source SHA: \`$SOURCE_SHA\`"
+            echo "- Observer SHA: \`$OBSERVER_SHA\`"
+            echo "- Authoritative package run: \${RUN_URL:-not uniquely resolved}"
+            echo "- Run ID / attempt: \${RUN_ID:-unknown} / \${RUN_ATTEMPT:-unknown}"
+            echo "- Package run head SHA: \`$RUN_HEAD_SHA\`"
             echo "- Provider conclusion: $RUN_CONCLUSION"
             echo "- CiAi policy state: $policy_state"
             echo "- Observer lane: **$OBSERVER_STATUS**"
             echo
+            echo "Source and observer identities are retained separately in provenance.json."
             echo "Read-only evidence only. Package publication remains behind the existing explicit manual gate; no release or deployment is authorized by this report."
           } >> "$GITHUB_STEP_SUMMARY"
