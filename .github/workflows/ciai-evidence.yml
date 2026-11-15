@@ -3,13 +3,15 @@ name: CiAi Commit Evidence
 on:
   push:
     branches: [development]
+  pull_request:
+    branches: [development]
 
 permissions:
   contents: read
   actions: read
 
 concurrency:
-  group: ciai-gui-evidence-${{ github.sha }}
+  group: ciai-gui-evidence-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: false
 
 jobs:
@@ -23,18 +25,34 @@ jobs:
         shell: bash
         env:
           TARGET_REPOSITORY: ${{ github.repository }}
-          TARGET_BRANCH: ${{ github.ref_name }}
-          TARGET_SHA: ${{ github.sha }}
+          EVENT_NAME: ${{ github.event_name }}
+          TARGET_BRANCH: ${{ github.event.pull_request.head.ref || github.ref_name }}
+          TARGET_BASE_BRANCH: ${{ github.event.pull_request.base.ref || github.ref_name }}
+          TARGET_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
           PUSHED_REF: ${{ github.ref }}
         run: |
           set -euo pipefail
           [[ "$TARGET_REPOSITORY" == "TrentBest/TheSingularityWorkshop.GUI" ]]
-          [[ "$TARGET_BRANCH" == "development" ]]
-          [[ "$PUSHED_REF" == "refs/heads/development" ]]
+          [[ "$TARGET_BASE_BRANCH" == "development" ]]
           [[ "$TARGET_SHA" =~ ^[0-9a-f]{40}$ ]]
+          if [[ "$EVENT_NAME" == "pull_request" ]]; then
+            [[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]
+            echo "event=pull_request" >> "$GITHUB_OUTPUT"
+            echo "pr_number=$PR_NUMBER" >> "$GITHUB_OUTPUT"
+          elif [[ "$EVENT_NAME" == "push" ]]; then
+            [[ "$TARGET_BRANCH" == "development" ]]
+            [[ "$PUSHED_REF" == "refs/heads/development" ]]
+            echo "event=push" >> "$GITHUB_OUTPUT"
+            echo "pr_number=" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::Unsupported event: $EVENT_NAME"
+            exit 1
+          fi
           {
             echo "repository=$TARGET_REPOSITORY"
             echo "branch=$TARGET_BRANCH"
+            echo "base_branch=$TARGET_BASE_BRANCH"
             echo "sha=$TARGET_SHA"
           } >> "$GITHUB_OUTPUT"
 
@@ -45,26 +63,43 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TARGET_REPOSITORY: ${{ steps.source.outputs.repository }}
           TARGET_BRANCH: ${{ steps.source.outputs.branch }}
+          TARGET_BASE_BRANCH: ${{ steps.source.outputs.base_branch }}
           TARGET_SHA: ${{ steps.source.outputs.sha }}
+          EVENT_NAME: ${{ steps.source.outputs.event }}
+          PR_NUMBER: ${{ steps.source.outputs.pr_number }}
         run: |
           set -euo pipefail
           api="https://api.github.com/repos/$TARGET_REPOSITORY/actions/workflows/package.yml/runs"
           for poll in $(seq 1 90); do
-            response="$(curl --fail --silent --show-error \
-              -H "Accept: application/vnd.github+json" \
-              -H "Authorization: Bearer $GH_TOKEN" \
-              -H "X-GitHub-Api-Version: 2022-11-28" \
-              "$api?branch=$TARGET_BRANCH&event=push&head_sha=$TARGET_SHA&per_page=100")"
-            matches="$(jq --arg repo "$TARGET_REPOSITORY" --arg branch "$TARGET_BRANCH" --arg sha "$TARGET_SHA" '
-              [.workflow_runs[]
-                | select(.head_sha == $sha)
-                | select(.event == "push" and .head_branch == $branch)
-                | select((.path | split("@")[0]) == ".github/workflows/package.yml")
-                | select(.head_repository.full_name == $repo)]
-            ' <<< "$response")"
+            if [[ "$EVENT_NAME" == "pull_request" ]]; then
+              response="$(curl --fail --silent --show-error \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "$api?branch=$TARGET_BRANCH&event=pull_request&per_page=100")"
+              matches="$(jq --arg sha "$TARGET_SHA" --arg base "$TARGET_BASE_BRANCH" --argjson pr "$PR_NUMBER" '
+                [.workflow_runs[]
+                  | select(.event == "pull_request")
+                  | select((.path | split("@")[0]) == ".github/workflows/package.yml")
+                  | select(any(.pull_requests[]?; .number == $pr and .head.sha == $sha and .base.ref == $base))]
+              ' <<< "$response")"
+            else
+              response="$(curl --fail --silent --show-error \
+                -H "Accept: application/vnd.github+json" \
+                -H "Authorization: Bearer $GH_TOKEN" \
+                -H "X-GitHub-Api-Version: 2022-11-28" \
+                "$api?branch=$TARGET_BRANCH&event=push&head_sha=$TARGET_SHA&per_page=100")"
+              matches="$(jq --arg repo "$TARGET_REPOSITORY" --arg branch "$TARGET_BRANCH" --arg sha "$TARGET_SHA" '
+                [.workflow_runs[]
+                  | select(.head_sha == $sha)
+                  | select(.event == "push" and .head_branch == $branch)
+                  | select((.path | split("@")[0]) == ".github/workflows/package.yml")
+                  | select(.head_repository.full_name == $repo)]
+              ' <<< "$response")"
+            fi
             count="$(jq 'length' <<< "$matches")"
             if [ "$count" -gt 1 ]; then
-              echo "::error::Multiple authoritative package.yml push runs match this exact source SHA."
+              echo "::error::Multiple authoritative package.yml runs match this exact source identity."
               jq -r '.[] | "run_id=\(.id) attempt=\(.run_attempt) status=\(.status)"' <<< "$matches"
               exit 1
             fi
@@ -88,7 +123,7 @@ jobs:
             echo "Waiting for exact GUI package run (poll $poll/90; matches=$count)."
             sleep 20
           done
-          echo "::error::Timed out waiting for the exact package.yml push run for $TARGET_SHA."
+          echo "::error::Timed out waiting for the exact package.yml $EVENT_NAME run for $TARGET_SHA."
           exit 1
 
       - name: Check out pinned CiAi observer source
