@@ -37,6 +37,7 @@ jobs:
           [[ "$TARGET_REPOSITORY" == "TrentBest/TheSingularityWorkshop.GUI" ]]
           [[ "$TARGET_BASE_BRANCH" == "development" ]]
           [[ "$TARGET_SHA" =~ ^[0-9a-f]{40}$ ]]
+          [[ "$OBSERVER_SHA" =~ ^[0-9a-f]{40}$ ]]
           if [[ "$EVENT_NAME" == "pull_request" ]]; then
             [[ "$PR_NUMBER" =~ ^[1-9][0-9]*$ ]]
             echo "event=pull_request" >> "$GITHUB_OUTPUT"
