@@ -1,4 +1,5 @@
 using System.Threading;
+using System.Windows.Controls;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.GUI.WPF;
 using Xunit;
@@ -65,7 +66,6 @@ public sealed class WpfSharedAdapterConformanceTests
             Assert.Contains("maximum depth (256)", exception.Message);
         });
     }
-
 
     [Fact]
     public void Wpf_adapter_preserves_unknown_kind_identity_and_descendants_using_documented_fallback()
