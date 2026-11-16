@@ -180,3 +180,76 @@ Every row below is an open draft PR, not an approved merge. Review in this order
 
 <!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="200" /></p>
+
+
+## 7. Live reconciliation refresh — 2026-11-16 03:55 UTC
+
+This section supersedes the inventory, branch-count, and compare-base figures in the earlier sections above. The historical findings remain useful context; the table below is the current live snapshot.
+
+**Live refs**
+- `development`: `1a4967c3589798a922ec8688d5463d807f4f67bd` — “Document package-aware release branch semantics”.
+- `master`: `bf4ed9e78a1c7683becadb53f9192419861aee4a` — “chore: refresh Sith policy evidence”.
+- Current remote inventory: **23 branches = 2 canonical + 21 noncanonical**.
+- Current open PR inventory: **21 open PRs; all 21 are drafts and each maps to one of the 21 noncanonical branches**.
+- Current noncanonical deletion recommendations: **0**. Every noncanonical branch still has an open PR; all have commits not reachable from current `development` by ancestry.
+
+### 7.1. Current branch-by-branch comparison
+
+All comparisons below use current `development` SHA `1a4967c3589798a922ec8688d5463d807f4f67bd`. Every branch is diverged and has one or more commits ahead. Ahead/behind is ancestry evidence, not a verdict on whether equivalent content was separately integrated.
+
+| Noncanonical branch | Open PR | Ahead / behind | Current branch-side file changes reported by compare |
+|---|---:|---:|---|
+| `docs/charting-contract-adr-2026-10-23` | [#43](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/43) | 4 / 155 | `docs/adr/CHARTING_SEMANTIC_CONTRACT.md` |
+| `docs/ci-test-coverage-matrix-2026-10-23` | [#45](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/45) | 1 / 155 | `docs/TESTING.md` |
+| `docs/fsm-driven-oscillator` | [#47](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/47) | 8 / 155 | Package workflow; oscillator project/program; demonstrations README and recipe |
+| `docs/full-gui-domain-coverage-2026-10-23` | [#40](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/40) | 4 / 155 | README; `docs/FULL_GUI_DOMAIN_COVERAGE.md`; release work queue |
+| `docs/gui-blazor-svg-authored-contracts-2026-10-23` | [#37](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/37) | 1 / 159 | Blazor/SVG API contracts, UML pages, and source companions (9 files) |
+| `docs/gui-core-authored-contracts-2026-10-23` | [#36](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/36) | 7 / 159 | Core API contracts, UML pages, and DataCard source companion (8 files) |
+| `docs/gui-wpf-authored-contracts-2026-10-23` | [#38](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/38) | 1 / 159 | WPF API contracts, UML pages, and source companions (6 files) |
+| `docs/uml-three-view-standard-2026-10-23` | [#39](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39) | 2 / 159 | Class documentation standard; UML views/data-card standard; UML index |
+| `feature/architect-renderer-integration` | [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48) | 16 / 155 | Source-UML generator/model builder; Core/WPF docs; WPF renderer and conformance tests (6 files) |
+| `fix/svg-node-count-limit-2026-10-23` | [#35](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/35) | 2 / 159 | SVG renderer and tests (2 files) |
+| `release/gui-closeout-2026-10-22` | [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32) | 13 / 160 | README; release queue/readiness; theory guide/chapter; SVG use case (7 files) |
+| `release/gui-root-id-contract-2026-10-22` | [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) | 9 / 159 | SVG adapter docs/gallery; renderer; shared conformance and SVG tests (6 files) |
+| `tests/core-builder-cycle-regression-2026-10-23` | [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41) | 5 / 155 | GuiNode source/API/UML and Core builder tests (4 files) |
+| `work/adapter-conformance-three-way-2026-10-30` | [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65) | 8 / 107 | Testing docs; shared adapter and WPF conformance tests (4 files) |
+| `work/autonomous-design-badge` | [#77](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/77) | 14 / 34 | Pages/Sith workflows; eight AD lifecycle/dependency SVGs; badge documentation and showcase pages (12 files) |
+| `work/ciai-evidence-lane-reconciled` | [#80](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/80) | 3 / 2 | `.github/workflows/ciai-evidence.yml` (177 additions, 44 deletions) |
+| `work/fix-uml-self-reference-clearance-2026-10-27` | [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55) | 7 / 153 | Package workflow; UML graph renderer and tests (3 files) |
+| `work/sith-branch-reconciliation-2026-10-29` | [#64](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/64) | 22 / 147 | `docs/BRANCH_RECONCILIATION.md` — older ledger snapshot |
+| `work/uml-neighborhood-self-reference-clearance-2026-10-28` | [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60) | 4 / 151 | UML graph renderer and tests (2 files) |
+| `work/uml-visibility-tier-data-cards-2026-10-28` | [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57) | 3 / 151 | `docs/DATA_CARDS_AND_UML.md` |
+| `work/uml-visual-data-cards-2026-10-27` | [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50) | 19 / 153 | UML class diagram renderer and tests (2 files) |
+
+### 7.2. Current disposition classes
+
+**Preserve for explicit review; do not delete**
+- `work/ciai-evidence-lane-reconciled` / PR #80: current evidence-observer implementation is a substantial workflow diff, not the old content-identical PR #74 branch. PR #80 reports successful exact CiAi evidence and Package GUI evidence in its description, but remains draft/unmerged. Its own latest Sith run is not a substitute for branch reconciliation.
+- `work/autonomous-design-badge` / PR #77: preserve the AD visual state assets and presentation contract. Foundry remains lifecycle authority; CiAi remains evidence/dependency authority; GUI owns presentation. This is not yet a live runtime integration.
+- `work/adapter-conformance-three-way-2026-10-30` / PR #65: preserve for exact-head Windows WPF conformance review. Do not assume the historical compile failure is fixed without current exact-head Windows checks.
+- `work/uml-visual-data-cards-2026-10-27` / PR #50 and `work/uml-visibility-tier-data-cards-2026-10-28` / PR #57: review together as one design/implementation cluster. Preserve the desired nested, colorful semantic data-card concept, but do not make an unresolved ordering proposal normative.
+- `work/fix-uml-self-reference-clearance-2026-10-27` / PR #55 and `work/uml-neighborhood-self-reference-clearance-2026-10-28` / PR #60: review as one implementation/test cluster against the current generated SVG artifacts and development tests.
+
+**Previously integrated or substantially reconciled; still require PR disposition**
+- PRs #32, #34, #35, #36, #37, #38, #40, #41, #43, #45, #47, and #48 have historical integration notes above. The current compare still reports branch-side diffs and unique ancestry, so this ledger does not certify those branches for deletion. Verify current file equivalence and exact-head CI, then have the owner disposition the stale open PRs before any deletion recommendation.
+- PR #39 remains an open design decision because the proposed UML member/visibility ordering has not been accepted as normative.
+- PR #64's branch contains an older version of this ledger. This refresh supersedes its inventory snapshot, but the PR remains open and needs explicit owner disposition.
+
+### 7.3. Sith workflow state
+
+The latest live Sith Policy run is [43799113783](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/43799113783), on `development` SHA `1a4967c3589798a922ec8688d5463d807f4f67bd`, completed **failure** at 2026-11-16 03:35:41 UTC. Its failure is expected under the current 23-branch inventory: the repository has 21 extras.
+
+The policy workflow itself is already strict: it queries all remote branches, requires exactly the sorted pair `development` and `master`, emits the live JSON/SVG badge evidence, and fails the job for every other state. The latest failure is not evidence that the policy is malfunctioning; it is the correct result for a non-compliant repository.
+
+The separate benchmark GUI repository remains the clean reference: its live inventory is exactly `master` and `development`, and its Sith workflow has passed.
+
+### 7.4. Updated execution plan
+
+1. Keep this repository on `development`; do not create cleanup branches.
+2. Treat #80, #77, #65, #50/#57, and #55/#60 as the first preservation/review clusters.
+3. For older PRs whose useful work is already in development, verify current file equivalence and exact-head validation, then prepare an owner disposition list. Do not merge stale branches merely to close PRs.
+4. Do not call any branch **READY FOR OWNER DELETION** while its PR remains open or its unique work has not been explicitly integrated/rejected.
+5. Keep `master` unchanged. Keep package publication hard-disabled; this audit does not authorize publication.
+6. Once the owner has dispositioned PRs and deleted a batch, rerun the full inventory. The only successful terminal state is exactly `master` + `development`.
+
+**Current conclusion:** Operation Sith is being enforced correctly, but this repository is not yet reconciled. The next useful work is to resolve the preservation clusters and produce a smaller, evidence-backed PR/branch disposition batch—not to delete blindly.
