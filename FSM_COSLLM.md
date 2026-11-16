@@ -304,3 +304,17 @@ FSM_COS should keep the interim Mermaid diagrams and alpha.7 UML gate open. Next
 **Update:** The package workflow referenced above has now completed successfully on the same staging candidate SHA `2da63840d418fac811145ba8175edfd3b517f999`. [Package GUI run 39469739655](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39469739655) is **success**; Core/Blazor/SVG/shared adapter tests, WPF renderer test, gallery generation/parity, package metadata verification, and clean-consumer package checks passed. NuGet publication was skipped. Together with [Source-derived diagrams run 39469739639](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39469739639), both configured GUI workflows are green for that exact candidate SHA.
 
 This closes the CI uncertainty for `2da63840d418fac811145ba8175edfd3b517f999` only. It does not close the semantic UML gate or mean the staging branch is integrated. The current candidate still lacks canonical-model emission from the generator, compiler-symbol extraction, semantic connector rendering, and full per-type inventory/page generation.
+
+
+## Package-aware release branch semantics — mandatory
+
+Branch meaning depends on whether this package has actually been published, not merely on the existence or name of a branch.
+
+- **Never published:** `development` is the authoritative source of truth. `master` is pre-release scaffolding, not a released-package baseline, and may be identical to `development`. Before the first release, the owner may replace/reset the pre-release `master` tree to the verified, approved `development` candidate. Do not preserve artificial pre-release history as though it represented a NuGet release.
+- **Previously published:** `master` must represent the exact source commit corresponding to the latest successfully published NuGet package. `development` remains the active forward-moving source. Do not move `master` merely to make it match newer development work.
+- **First release transition:** after the exact candidate has passed its release gates and the owner explicitly authorizes publication, publish that approved candidate. Establish `master` at the exact released source commit. Afterward, development may advance independently.
+- **Classification evidence:** verify publication history from the authoritative NuGet feed and release/publish evidence. Do not infer that a package was published from a project file, version string, tag, successful pack job, skipped publish job, or branch name.
+- **Branch count:** the permanent target remains exactly `master` and `development`. For an unreleased package, equality is normal and desirable; for a released package, divergence is normal after subsequent development.
+- **Authorization boundary:** this policy describes the intended release model; it is not blanket permission to publish, force-push, replace a branch, merge, delete branches, or deploy. Obtain explicit owner authorization for the specific operation. Never publish NuGet packages without explicit authorization.
+
+When auditing, record the package's verified publication state as `never-published` or `published`, the latest published version and source SHA when applicable, both branch SHAs, and the evidence used to classify it. If publication state cannot be verified, mark it `unknown` and preserve both refs until clarified.
