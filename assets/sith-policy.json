@@ -25,14 +25,16 @@
     "work/autonomous-design-badge",
     "work/ciai-evidence-lane-reconciled",
     "work/fix-uml-self-reference-clearance-2026-10-27",
+    "work/integrate-autonomous-design-presentation",
+    "work/integrate-nested-uml-data-cards",
     "work/sith-branch-reconciliation-2026-10-29",
     "work/uml-neighborhood-self-reference-clearance-2026-10-28",
     "work/uml-visibility-tier-data-cards-2026-10-28",
     "work/uml-visual-data-cards-2026-10-27"
   ],
-  "branch_count": 23,
+  "branch_count": 25,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-19T13:22:28Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/44532769270",
-  "triggering_commit": "aa93e4caa363afd0c5a77e5e592efdb5f6304113"
+  "evaluated_at": "2026-11-20T13:02:21Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/44740764497",
+  "triggering_commit": "7fe478f4e4620e5eab9786ed347bf68a0a3508c7"
 }
