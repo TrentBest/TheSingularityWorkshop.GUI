@@ -3,6 +3,16 @@
 
 # GUI Next-Release Work Queue
 
+## .NET 10 compatibility work — current state (2026-11-20)
+
+- [x] Migrate the maintained projects and .NET workflows to .NET 10; the inspected project set targets `net10.0` / `net10.0-windows`.
+- [x] Validate the migration baseline at [development commit `314ca6cb46742a3717ce93285c0b998b135eae3c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/314ca6cb46742a3717ce93285c0b998b135eae3c), including package, Windows WPF, Pages-build, CiAi-evidence, source-diagram, and solution-UML lanes.
+- [x] Correct PR [#80](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/80) to pin the .NET 10-compatible CiAi observer and validate its exact evidence lane; all five workflows passed on [`3017960e14f06cf2c443d831515dd4f98fa9b101`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/3017960e14f06cf2c443d831515dd4f98fa9b101). Publishing and deployment were skipped.
+- [ ] Re-run all candidate gates on the selected current .NET 10 release candidate. The previously inspected four-package archive contains historical .NET 8 assets and cannot satisfy candidate archive/consumer proof. Current development head [`b0740094e4b98534670d9f71289da90a6b801d61`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/b0740094e4b98534670d9f71289da90a6b801d61) returned no workflow runs or combined statuses at audit time.
+- [ ] Repeat archive inspection and clean archive-only consumer verification for the exact .NET 10 candidate, including native Windows WPF. Keep publication disabled pending explicit owner approval.
+
+This is a compatibility/validation update only. It does not select a release candidate, close the GUI domain-definition gate, or authorize publication.
+
 This is the execution queue for the next release of `TrentBest/TheSingularityWorkshop.GUI`. The authoritative release gate remains [Release Readiness](RELEASE_READINESS.md); this document prioritizes work and records the evidence required to call the release substantial. It does not authorize publication.
 
 **Review branch:** `development`. **Readiness percentage: intentionally not stated.** The former 80% estimate (2026-10-22) is stale and was superseded by the owner-accepted GUI domain-definition gate; no current percentage is decision-grade. The gate requires the GUI domain to be fully defined, documented, and owner-accepted before selecting a candidate or package versions. This is not a requirement to implement every future capability; it is a requirement to make ownership, current behavior, non-goals, specified/proposed work, and evidence gaps explicit. Core, Blazor, SVG, and WPF remain in scope; SVG is a centerpiece, not a reason to skip package-family validation.
