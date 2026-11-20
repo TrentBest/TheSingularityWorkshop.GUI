@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="The Singularity Workshop GUI badge gallery: purposeful, evidence-backed status and capability signals.">
+  <title>Badge Gallery · The Singularity Workshop</title>
+  <style>
+    :root{color-scheme:dark;--bg:#09121d;--surface:#111f2e;--line:#2b4358;--text:#eef5fb;--muted:#b7c8d8;--accent:#8ee4c4;--blue:#a9d8ff;--max:1080px}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+    a{color:var(--blue);text-underline-offset:4px}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+    header,footer{padding:24px 0;border-bottom:1px solid var(--line)}footer{border-top:1px solid var(--line);border-bottom:0;margin-top:42px;color:var(--muted)}
+    nav{display:flex;gap:18px;flex-wrap:wrap}h1{font-size:clamp(2.2rem,5vw,4rem);line-height:1.08;margin:38px 0 12px}
+    h2{margin:34px 0 8px}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-top:20px}
+    article{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px;min-width:0}
+    article img{display:block;width:100%;height:76px;object-fit:contain;object-position:left center;margin:4px 0 12px}
+    code{overflow-wrap:anywhere;color:var(--accent)}.note{border-left:3px solid var(--accent);padding:12px 16px;background:#102331;margin:20px 0}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+  </style>
+</head>
+<body>
+  <header><div class="wrap"><nav aria-label="Primary navigation"><a href="index.html">GUI showcase</a><a href="badges.html" aria-current="page">Badge gallery</a><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Source repository</a></nav></div></header>
+  <main class="wrap">
+    <h1>Badges with a job to do.</h1>
+    <p class="muted">A badge should communicate a meaningful property at a glance, point to its evidence, and make uncertainty visible. This gallery documents the visual vocabulary; it is not a claim that live status wiring is deployed.</p>
+    <div class="note"><strong>Important:</strong> these Autonomous Design SVGs are presentation assets. Foundry remains authoritative for lifecycle; CiAi remains authoritative for dependency evidence. Until those contracts and delivery are connected, do not interpret these static examples as current repository status.</div>
+    <h2>Autonomous Design lifecycle</h2>
+    <p class="muted">These states describe the autonomous-work lifecycle, not CI health. A failed build can occur while autonomous repair is still WORKING. Unknown or stale telemetry must never appear as OFF.</p>
+    <div class="grid">
+      <article><img src="assets/autonomous-design/off.svg" alt="OFF badge"><strong>OFF</strong><p class="muted">Explicitly disabled by the authoritative lifecycle owner.</p><code>assets/autonomous-design/off.svg</code></article>
+      <article><img src="assets/autonomous-design/working.svg" alt="WORKING badge"><strong>WORKING</strong><p class="muted">Autonomous work is actively progressing, including diagnosis, CI, repair, and revalidation.</p><code>assets/autonomous-design/working.svg</code></article>
+      <article><img src="assets/autonomous-design/review.svg" alt="Awaiting human approval badge"><strong>AWAITING HUMAN REVIEW</strong><p class="muted">A healthy handoff is waiting at a human decision or approval boundary.</p><code>assets/autonomous-design/review.svg</code></article>
+      <article><img src="assets/autonomous-design/unavailable.svg" alt="Status unavailable badge"><strong>STATUS UNAVAILABLE</strong><p class="muted">Missing, stale, malformed, or contradictory telemetry prevents a trustworthy lifecycle claim.</p><code>assets/autonomous-design/unavailable.svg</code></article>
+    </div>
+    <h2>Required dependency readiness</h2>
+    <p class="muted">Dependency readiness is a separate dimension supplied by CiAi. Optional dependencies must be marked non-gating and must not distort the required-dependency rollup.</p>
+    <div class="grid">
+      <article><img src="assets/autonomous-design/dependency-ready.svg" alt="Dependencies ready badge"><strong>READY</strong><p class="muted">Required dependency evidence satisfies its gate.</p><code>assets/autonomous-design/dependency-ready.svg</code></article>
+      <article><img src="assets/autonomous-design/dependency-waiting.svg" alt="Dependencies building or waiting badge"><strong>BUILDING / WAITING</strong><p class="muted">A required upstream dependency is building or awaiting an update.</p><code>assets/autonomous-design/dependency-waiting.svg</code></article>
+      <article><img src="assets/autonomous-design/dependency-failed.svg" alt="Dependency failed badge"><strong>FAILED</strong><p class="muted">A required dependency has failed its gate.</p><code>assets/autonomous-design/dependency-failed.svg</code></article>
+      <article><img src="assets/autonomous-design/dependency-unknown.svg" alt="Dependency state unknown or stale badge"><strong>UNKNOWN / STALE</strong><p class="muted">Available evidence cannot establish required dependency readiness.</p><code>assets/autonomous-design/dependency-unknown.svg</code></article>
+    </div>
+    <h2>When should we create another badge?</h2>
+    <p class="muted">Only when it answers a recurring, useful question that cannot be answered more clearly by an existing badge or link. Every proposed badge needs a defined audience, authoritative source, verifiable evidence, freshness behavior, and a useful destination. Avoid badges that merely decorate a README or duplicate a workflow's green check.</p>
+    <p><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/AUTONOMOUS_DESIGN_BADGE.md">Read the presentation and integration contract →</a></p>
+  </main>
+  <footer><div class="wrap">The Singularity Workshop · GUI — making software meaning visible to people.</div></footer>
+</body>
+</html>

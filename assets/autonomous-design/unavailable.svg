@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="112" viewBox="0 0 520 112" role="img" aria-labelledby="ad-title ad-desc">
+  <title id="ad-title">Autonomous Design status unavailable</title>
+  <desc id="ad-desc">The lifecycle status is unknown, stale, unavailable, or contradictory. It must not be presented as Off.</desc>
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#202b3b"/><stop offset="1" stop-color="#0b1220"/></linearGradient>
+  </defs>
+  <rect x="1" y="1" width="518" height="110" rx="16" fill="url(#panel)" stroke="#fb7185" stroke-width="2"/>
+  <g transform="translate(54 56)" stroke="#fb7185" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"><circle r="22"/><path d="M0 -12 V2 M0 11 V12"/></g>
+  <text x="108" y="38" fill="#cbd5e1" font-family="Segoe UI,Arial,sans-serif" font-size="12" font-weight="700" letter-spacing="2">THE SINGULARITY WORKSHOP · AD</text>
+  <text x="108" y="68" fill="#f8fafc" font-family="Segoe UI,Arial,sans-serif" font-size="22" font-weight="800">STATUS UNAVAILABLE</text>
+  <text x="108" y="89" fill="#cbd5e1" font-family="Segoe UI,Arial,sans-serif" font-size="11">Telemetry cannot establish the current state</text>
+</svg>
