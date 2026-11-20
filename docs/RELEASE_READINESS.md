@@ -3,6 +3,12 @@
 
 # GUI Package Release Readiness
 
+## .NET 10 compatibility refresh — 2026-11-20
+
+The maintained development tree has been migrated to .NET 10: the 19 inspected project files target `net10.0` or `net10.0-windows`, and the maintained .NET workflows install the .NET 10 SDK. The migration baseline at development commit [`314ca6cb46742a3717ce93285c0b998b135eae3c`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/314ca6cb46742a3717ce93285c0b998b135eae3c) passed its package, Windows WPF, Pages-build, CiAi-evidence, source-diagram, and solution-UML validation lanes. Separately, PR [#80](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/80) now validates its exact PR evidence lane on .NET 10: all five workflows passed on [`3017960e14f06cf2c443d831515dd4f98fa9b101`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/3017960e14f06cf2c443d831515dd4f98fa9b101); NuGet publication and Pages deployment were skipped.
+
+The older four-package archive inspection below records `.NET 8` assets and is historical implementation evidence only. It is **not** evidence for a .NET 10 release candidate. The current development head at this refresh, [`b0740094e4b98534670d9f71289da90a6b801d61`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/b0740094e4b98534670d9f71289da90a6b801d61), has no associated workflow runs or combined statuses returned by GitHub at the time of this audit. Therefore, rerun the full candidate gates—including Windows-native WPF and exact archive-only consumer verification—against the selected .NET 10 candidate. This note does not select a candidate, close the GUI domain-definition gate, or authorize publication.
+
 **Prioritized execution queue:** [Next-Release Work Queue](NEXT_RELEASE_WORK_QUEUE.md). **Renderer/package coverage audit:** [GUI Surface Coverage Audit](GUI_SURFACE_COVERAGE_AUDIT.md). Use the queue to sequence implementation and the audit to track current adapter contracts and gaps; this checklist remains the authoritative release gate.
 
 This is the release gate for the packages produced by `TrentBest/TheSingularityWorkshop.GUI`. It is a working checklist, not a claim that a release is currently approved. Check an item only when the evidence is available for the exact release candidate commit.
