@@ -3,7 +3,7 @@
 
 # It's the Weekend. What Are You Building?
 
-![A living SVG invitation: It's the weekend. What are you building?](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.GUI/development/docs/assets/weekend-workshop.svg)
+![A living SVG maker factory: robotic arms assemble glowing ideas on a moving conveyor.](https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.GUI/development/docs/assets/weekend-workshop.svg)
 
 That's the whole invitation.
 
