@@ -5,6 +5,7 @@
   <Project Path="src/WPF/TheSingularityWorkshop.GUI.WPF.csproj" />
   <Project Path="src/SVG/TheSingularityWorkshop.GUI.SVG.csproj" />
   <Project Path="samples/DroneConstructionVision/DroneConstructionVision.csproj" />
+  <Project Path="samples/BotStudioWebApp/BotStudioWebApp.csproj" />
   <Project Path="tests/Core.Tests/TheSingularityWorkshop.GUI.Core.Tests.csproj" />
   <Project Path="tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj" />
   <Project Path="tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj" />
