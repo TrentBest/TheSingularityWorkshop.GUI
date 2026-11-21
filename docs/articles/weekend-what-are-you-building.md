@@ -16,3 +16,8 @@ Start with [TheSingularityWorkshop.GUI](https://github.com/TrentBest/TheSingular
 No big plan required. Pick a small idea and make it real.
 
 **It's the weekend. What are you building?**
+
+---
+
+<!-- The Singularity Workshop canonical article footer -->
+<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="720" /></p>
