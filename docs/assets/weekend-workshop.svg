@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="title desc">
+  <title id="title">It's the weekend. What are you building?</title>
+  <desc id="desc">A glowing workshop window, a slowly turning gear, and a bright idea moving into view. The invitation reads: It's the weekend. What are you building?</desc>
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#102a3b"/>
+      <stop offset="1" stop-color="#11152c"/>
+    </linearGradient>
+    <linearGradient id="window" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#173e4c"/>
+      <stop offset="1" stop-color="#202c4b"/>
+    </linearGradient>
+    <radialGradient id="glow">
+      <stop offset="0" stop-color="#ffe4a6" stop-opacity=".8"/>
+      <stop offset="1" stop-color="#ffcf86" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"><feGaussianBlur stdDeviation="12"/></filter>
+    <g id="gear" fill="none" stroke="#ffcf86" stroke-width="5" stroke-linejoin="round">
+      <circle r="25"/>
+      <circle r="8" stroke="#7ee0bd" stroke-width="4"/>
+      <path d="M0-39V-25 M0 25V39 M-39 0H-25 M25 0H39 M-27-27L-18-18 M18 18L27 27 M27-27L18-18 M-18 18L-27 27"/>
+    </g>
+  </defs>
+  <rect width="960" height="420" rx="28" fill="url(#sky)"/>
+  <path d="M32 332H928" stroke="#31566a" stroke-width="2"/>
+  <circle cx="755" cy="166" r="108" fill="url(#glow)" filter="url(#soft)">
+    <animate attributeName="opacity" values=".55;1;.55" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <rect x="686" y="70" width="176" height="218" rx="16" fill="url(#window)" stroke="#5b8190" stroke-width="3"/>
+  <path d="M774 72V286 M688 178H860" stroke="#5b8190" stroke-width="3"/>
+  <path d="M704 92H844V164H704Z" fill="#ffcf86" opacity=".12"/>
+  <path d="M704 194H844V268H704Z" fill="#7ee0bd" opacity=".09"/>
+  <g transform="translate(774 178)">
+    <use href="#gear">
+      <animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="24s" repeatCount="indefinite"/>
+    </use>
+  </g>
+  <circle cx="774" cy="178" r="58" fill="none" stroke="#7ee0bd" stroke-opacity=".35" stroke-width="1.5" stroke-dasharray="4 10">
+    <animateTransform attributeName="transform" type="rotate" from="360" to="0" dur="32s" repeatCount="indefinite"/>
+  </circle>
+  <g fill="#7ee0bd">
+    <circle cx="650" cy="112" r="4"><animate attributeName="cy" values="112;98;112" dur="3s" repeatCount="indefinite"/></circle>
+    <circle cx="890" cy="132" r="3"><animate attributeName="opacity" values=".2;1;.2" dur="2.2s" repeatCount="indefinite"/></circle>
+    <circle cx="650" cy="256" r="3"><animate attributeName="opacity" values="1;.25;1" dur="2.8s" repeatCount="indefinite"/></circle>
+  </g>
+  <text x="70" y="104" fill="#7ee0bd" font-family="system-ui,sans-serif" font-size="18" font-weight="800" letter-spacing="5">THE WORKSHOP IS OPEN</text>
+  <text x="66" y="190" fill="#f2f7fb" font-family="system-ui,sans-serif" font-size="58" font-weight="850" letter-spacing="-2">IT'S THE</text>
+  <text x="66" y="258" fill="#ffcf86" font-family="system-ui,sans-serif" font-size="68" font-weight="900" letter-spacing="-3">WEEKEND.</text>
+  <text x="70" y="310" fill="#d7e7ef" font-family="system-ui,sans-serif" font-size="25" font-weight="650">What are you building?</text>
+  <path d="M70 350H580" stroke="#31566a" stroke-width="2"/>
+  <text x="70" y="382" fill="#91aebe" font-family="system-ui,sans-serif" font-size="15" letter-spacing="2">MAKE SOMETHING. MAKE IT VISIBLE. SHARE IT.</text>
+  <circle cx="596" cy="376" r="5" fill="#7ee0bd">
+    <animate attributeName="r" values="4;8;4" dur="2s" repeatCount="indefinite"/>
+    <animate attributeName="opacity" values="1;.45;1" dur="2s" repeatCount="indefinite"/>
+  </circle>
+</svg>
