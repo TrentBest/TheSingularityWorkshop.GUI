@@ -1,0 +1,43 @@
+@page "/"
+@rendermode InteractiveServer
+@using TheSingularityWorkshop.Workshop.Gui
+
+<PageTitle>SingularityBot Studio</PageTitle>
+<div class="app-frame">
+  <aside class="rail"><div class="brand-mark">S</div><div class="rail-label">BOT<br />STUDIO</div><div class="rail-spacer"></div><div class="rail-indicator" title="Local web interface"></div></aside>
+  <main class="workspace">
+    <header class="topbar"><div><div class="eyebrow">THE SINGULARITY WORKSHOP / STARCRAFT II</div><h1>SingularityBot <span>Studio</span></h1></div><div class="connection-pill"><span class="pulse"></span> BRIDGE OFFLINE</div></header>
+    <section class="hero-grid"><div class="hero-copy">
+      @BlazorGuiRenderer.Render(BuildSemanticHeader())
+      <p class="hero-description">A dedicated browser workspace for configuring, observing, and directing bot matches. The interface runs independently of any LLM session.</p>
+      <div class="hero-note"><strong>Runtime boundary</strong><span>The web UI is alive; the local bot-control bridge has not been connected yet. No match commands are sent from this page.</span></div>
+    </div><div class="hero-orbit" aria-hidden="true"><div class="orbit orbit-one"></div><div class="orbit orbit-two"></div><div class="orbit-core">FSM</div><div class="orbit-dot"></div></div></section>
+    <section class="section-heading"><div><div class="eyebrow">01 / MATCH SETUP</div><h2>Prepare a match</h2></div><span class="section-caption">Configuration only · execution disabled until bridge handshake</span></section>
+    <section class="panel-grid">
+      <article class="panel setup-panel"><div class="panel-head"><div><span class="panel-kicker">BOT CONFIGURATION</span><h3>Match profile</h3></div><span class="tag">LOCAL</span></div>
+        <label for="mode">Opening mode</label><select id="mode" @bind="SelectedMode"><option value="terran.marine.v1">Terran · Marine baseline</option><option value="zerg.zergling.v1">Zerg · Zergling experimental</option></select>
+        <label for="map">Map</label><input id="map" @bind="MapName" />
+        <div class="two-fields"><div><label for="opponent">Opponent</label><select id="opponent" @bind="Opponent"><option>Random</option><option>Terran</option><option>Zerg</option><option>Protoss</option></select></div><div><label for="difficulty">Difficulty</label><select id="difficulty" @bind="Difficulty"><option>VeryEasy</option><option>Easy</option><option>Medium</option><option>Hard</option></select></div></div>
+        <div class="button-row"><button class="primary" disabled title="Connect the local bot bridge to enable launch">Launch match <span>↗</span></button><span class="disabled-reason">Waiting for local bridge</span></div>
+      </article>
+      <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">RUNTIME STATUS</span><h3>Bot connection</h3></div><span class="status-dot offline"></span></div>
+        <div class="status-main"><div class="status-symbol">×</div><div><strong>Not connected</strong><p>Waiting for SingularityBot local host</p></div></div>
+        <div class="status-list"><div><span>Web interface</span><strong class="good">RUNNING</strong></div><div><span>Bot process</span><strong>NOT OBSERVED</strong></div><div><span>SC2 session</span><strong>NOT CONNECTED</strong></div><div><span>Telemetry stream</span><strong>NOT CONNECTED</strong></div></div>
+        <p class="panel-footnote">These states are intentionally explicit. The UI does not fabricate a bot process, game session, or telemetry.</p>
+      </article>
+    </section>
+    <section class="section-heading lower-heading"><div><div class="eyebrow">02 / OBSERVABILITY</div><h2>Match workspace</h2></div><span class="section-caption">Live data appears after the local bridge is implemented</span></section>
+    <section class="panel-grid lower-grid">
+      <article class="panel telemetry-panel"><div class="panel-head"><div><span class="panel-kicker">MATCH TELEMETRY</span><h3>Game state</h3></div><span class="tag muted">AWAITING DATA</span></div><div class="telemetry-empty"><div class="empty-glyph">⌁</div><strong>No match telemetry</strong><span>Game loop, resources, supply, workers, army and production will appear here.</span></div></article>
+      <article class="panel events-panel"><div class="panel-head"><div><span class="panel-kicker">EVENT STREAM</span><h3>Recent activity</h3></div><span class="tag muted">0 EVENTS</span></div><div class="event-empty">The event stream is waiting for a bot connection.</div></article>
+    </section>
+    <footer><span>THE SINGULARITY WORKSHOP</span><span>BOT STUDIO · DEVELOPMENT PREVIEW</span></footer>
+  </main>
+</div>
+@code {
+  private string SelectedMode { get; set; } = "terran.marine.v1";
+  private string MapName { get; set; } = "AcolyteLE.SC2Map";
+  private string Opponent { get; set; } = "Random";
+  private string Difficulty { get; set; } = "VeryEasy";
+  private static GuiNode BuildSemanticHeader() => GuiBuilder.Create("Panel", "bot-studio-semantic-header").Child("Text", "bot-studio-title", title => title.Text("BOT CONTROL / OBSERVABILITY")).Build();
+}
