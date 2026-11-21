@@ -9,6 +9,8 @@ GUI separates interface intent from the platform-specific work that presents it.
 
 **New here?** [Come play: see what works, explore the idea, and find a first contribution](docs/COME_PLAY.md).
 
+**Building a bot?** [Launch SingularityBot Studio](samples/BotStudioWebApp/README.md) — a standalone Blazor web app that runs independently of an LLM session.
+
 **It's the weekend. What are you building?** [A tiny living SVG invitation](docs/articles/weekend-what-are-you-building.md) — and a quick way into GUI.SVG.
 
 ```mermaid
