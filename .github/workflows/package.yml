@@ -76,6 +76,9 @@ jobs:
       - name: Restore Blazor
         run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
 
+      - name: Build standalone Bot Studio web app
+        run: dotnet build samples/BotStudioWebApp/BotStudioWebApp.csproj --configuration Release
+
       - name: Restore SVG
         run: dotnet restore src/SVG/TheSingularityWorkshop.GUI.SVG.csproj
 
