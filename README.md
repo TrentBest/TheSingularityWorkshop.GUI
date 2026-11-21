@@ -9,6 +9,8 @@ GUI separates interface intent from the platform-specific work that presents it.
 
 **New here?** [Come play: see what works, explore the idea, and find a first contribution](docs/COME_PLAY.md).
 
+**It's the weekend. What are you building?** [A tiny living SVG invitation](docs/articles/weekend-what-are-you-building.md) — and a quick way into GUI.SVG.
+
 ```mermaid
 flowchart TD
   I[Interface intent] --> M[Neutral GUI model]
