@@ -19,5 +19,11 @@ No big plan required. Pick a small idea and make it real.
 
 ---
 
-<!-- The Singularity Workshop canonical article footer -->
-<p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop" width="720" /></p>
+<!-- The Singularity Workshop support footer -->
+<p align="center">
+  <a href="https://www.patreon.com/TheSingularityWorkshop" target="_blank">
+    <img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="Support The Singularity Workshop on Patreon" height="200" />
+  </a>
+</p>
+
+<p align="center"><strong>Support the project:</strong> <a href="https://www.paypal.com/donate/?hosted_button_id=3Z7263LCQMV9J"><strong>Donate via PayPal</strong></a></p>
