@@ -2,6 +2,10 @@
 
 The Singularity Workshop GUI explores a portable semantic description of interface intent, with platform-specific manifestations kept at explicit boundaries. This gallery is an index of demonstrable capabilities in this repository—not a claim that every planned rendering or interaction capability is complete.
 
+## Weekend invitation
+
+[It's the weekend. What are you building?](docs/articles/weekend-what-are-you-building.md) — a short invitation accompanied by a living SVG. The SVG is an authored illustration; the [GUI.SVG adapter](docs/SVG_GUIDE.md) shows how to manifest semantic GUI trees as SVG documents.
+
 ## 01 — Semantic model to SVG
 
 **What it demonstrates:** a semantic GUI model can be represented independently of a native widget tree, then manifested as SVG.
