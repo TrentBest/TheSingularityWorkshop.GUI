@@ -28,7 +28,7 @@ The build-time generator has a syntax-only path and a compiler-backed project-se
 
 ## UML class-card visibility tiers
 
-**Picture:** generated class-card SVGs in the [UML class diagram assets](assets/uml/classes/) and the [source-derived UML inventory](uml/source-files/).
+**Implementation evidence:** [SVG class-card renderer](../src/SVG/SvgUmlClassDiagramRenderer.cs) and its [visibility-tier regression fixture](../tests/SVG.Tests/SvgUmlClassDiagramRendererTests.cs). The checked-in [UML class diagram assets](assets/uml/classes/) are legacy authored diagrams and are not claimed as fresh output from this renderer.
 
 The SVG class-card renderer now groups represented members into ordered visibility tiers (Public, Protected, Internal, Private, then Other visibility), and places Properties, Operations, and Fields within each tier. Visibility markers and static-member markers remain visible in signatures. The focused regression test covers the ordering and labels.
 
