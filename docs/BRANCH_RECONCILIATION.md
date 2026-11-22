@@ -1,3 +1,55 @@
+## 0.3 Live reconciliation refresh — 2026-11-22 11:21 UTC
+
+**Snapshot base:** `development` `cdae5b23d4b1f86a40e2a8a7b471d76eab9deb1c`.  
+**Live inventory:** **26 branches** = canonical `master` + `development` and **24 noncanonical branches**; **24 open PRs**. Every noncanonical branch maps to one open PR. The Operation Sith two-branch gate is **failing**. This is a read-only inventory refresh; no PR or branch disposition is implied.
+
+### Complete live PR-to-branch inventory
+
+Head SHAs below are the exact branch tips observed at refresh time. Updated timestamps are GitHub's PR metadata timestamps.
+
+| PR | Branch | Head SHA | Updated (UTC) | Assessment |
+|---:|---|---|---|---|
+| [#83](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/83) | `work/integrate-ciai-pr-evidence` | `682e413466b73e0ff0d23c10f9ea1d55d430c1d7` | 2026-11-21 04:58 | Exact duplicate implementation of #80's workflow file; retain as preferred integration candidate pending workflow/base review |
+| [#82](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/82) | `work/integrate-autonomous-design-presentation` | `925da7cd37b47c8c081520cc4cd013c7540dfc5c` | 2026-11-20 07:32 | Autonomous Design integration candidate; shares 11 identical content blobs with #77, but Pages workflow differs |
+| [#81](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/81) | `work/integrate-nested-uml-data-cards` | `79061a5c3267efba5d1b5744155f341b31ac790d` | 2026-11-20 05:43 | Exact duplicate renderer and test blobs from #50 |
+| [#80](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/80) | `work/ciai-evidence-lane-reconciled` | `3017960e14f06cf2c443d831515dd4f98fa9b101` | 2026-11-20 04:56 | Exact duplicate workflow blob from #83; competing PR history |
+| [#77](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/77) | `work/autonomous-design-badge` | `94029d60eee3c0179c6d747139d3e491cf696d35` | 2026-11-06 06:39 | Autonomous Design feature source; shares 11 identical content blobs with #82, Pages workflow differs |
+| [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65) | `work/adapter-conformance-three-way-2026-10-30` | `fb39b0a91662514159a0f26e0495e93059727b63` | 2026-11-15 04:42 | WPF/shared adapter conformance and testing docs; revalidate against current development |
+| [#64](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/64) | `work/sith-branch-reconciliation-2026-10-29` | `167c96119013f8ce81ad870578437d8de12d0577` | 2026-11-22 04:21 | Historical reconciliation-ledger-only branch; its snapshot is superseded by this refresh |
+| [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60) | `work/uml-neighborhood-self-reference-clearance-2026-10-28` | `62a6b432593ad4f47c8a0c066fc5ee31ff9facfe` | 2026-10-29 22:10 | UML self-reference connector clearance; overlapping but distinct from #55 |
+| [#57](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57) | `work/uml-visibility-tier-data-cards-2026-10-28` | `f8db621ca486badf1588910498227b9d856cd69f` | 2026-10-29 21:55 | UML visibility-tier/data-card documentation; content delta still needs review |
+| [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55) | `work/fix-uml-self-reference-clearance-2026-10-27` | `a71721160b34169b05b8882ff7f7b798c95cf85f` | 2026-10-29 22:10 | UML self-reference label/canvas/connector changes; review jointly with #60 |
+| [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50) | `work/uml-visual-data-cards-2026-10-27` | `05fb5596b41902752ef4ac929ac2c182bc03ecde` | 2026-10-29 21:55 | Nested semantic UML cards; exact duplicate implementation/test blobs from #81 |
+| [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48) | `feature/architect-renderer-integration` | `72de85c75fa712e62d34368b76e77d5608193531` | 2026-10-29 21:58 | WPF host theme/resource integration and source-UML generator work |
+| [#47](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/47) | `docs/fsm-driven-oscillator` | `2cb0ead4c7eb2eca3661abbab435aaf2b7be6033` | 2026-10-29 21:57 | FSM-driven bounded oscillator sample/docs; compare current .NET 10 sample before disposition |
+| [#45](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/45) | `docs/ci-test-coverage-matrix-2026-10-23` | `affe175400c97549b4569a47b361e0cbb9ff0655` | 2026-10-29 22:02 | CI test coverage matrix documentation |
+| [#43](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/43) | `docs/charting-contract-adr-2026-10-23` | `6c9592ff4d0e9b948c4019c152e6f3c260dedc32` | 2026-10-29 22:02 | Renderer-neutral charting contract ADR |
+| [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41) | `tests/core-builder-cycle-regression-2026-10-23` | `7b4d99f670c430144b457bbd104badad44ed4806` | 2026-10-29 21:45 | Core builder cycle/null-child regression; implementation/test behavior appears integrated, residual docs need review |
+| [#40](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/40) | `docs/full-gui-domain-coverage-2026-10-23` | `b7d453c8e023cb724f0313029b454df971f5beba` | 2026-10-29 21:27 | Full GUI domain coverage and release queue documentation |
+| [#39](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39) | `docs/uml-three-view-standard-2026-10-23` | `b7c372bd21cfd4bc071ce1c2882b4f52664c4b37` | 2026-10-29 21:39 | Canonical UML view/data-card standard proposal |
+| [#38](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/38) | `docs/gui-wpf-authored-contracts-2026-10-23` | `8c00c765f949925613780e1bcc6c08851f5b8eeb` | 2026-10-29 21:38 | WPF authored API/UML contract documentation |
+| [#37](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/37) | `docs/gui-blazor-svg-authored-contracts-2026-10-23` | `f89a748364e306a25723f58f540443485e04f7eb` | 2026-10-29 21:38 | Blazor/SVG authored API/UML contract documentation |
+| [#36](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/36) | `docs/gui-core-authored-contracts-2026-10-23` | `c2ca52fc48332efd262468dca2df0a0101540eb9` | 2026-10-29 21:38 | Core builder/API/UML contract documentation |
+| [#35](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/35) | `fix/svg-node-count-limit-2026-10-23` | `6b1577be270710c4175754ed5665388fdcfd361f` | 2026-10-29 21:45 | SVG 100,000-node guard behavior exists on development; verify exact regression/doc delta |
+| [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) | `release/gui-root-id-contract-2026-10-22` | `8ffd41a5a8df1bf10cf4e15b3fe43120a4bbf8de` | 2026-10-29 21:45 | SVG root identity behavior exists; accessibility collision/test/docs delta remains to review |
+| [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32) | `release/gui-closeout-2026-10-22` | `ac1f81767f93a05735847d204232ffe348cb4814` | 2026-10-29 22:05 | Release closeout/use-case evidence documentation |
+
+### Duplicate-work clusters verified by exact content blob identity
+
+- **#50 / #81:** both changed files are byte-for-byte identical: `src/SVG/SvgUmlClassDiagramRenderer.cs` blob `66c0c9fc1fdf5373c71ca6ecc8c1a4102b96378e`; `tests/SVG.Tests/SvgUmlClassDiagramRendererTests.cs` blob `780fc4b27e80c071f34f04b7398eab919b5d7a44`.
+- **#80 / #83:** both change only `.github/workflows/ciai-evidence.yml`, identical blob `d28966726cbce237444e3304015f86cfc8145965`.
+- **#77 / #82:** 11 feature assets/docs/gallery files have identical blobs. Their `.github/workflows/pages.yml` files differ (`82f23c8c09be51cae7d312f2bae1254da5d64d2d` vs `7ffe5599c2e1c914406b214a8983fe234452611a`); #77 also changes `.github/workflows/sith-policy.yml`. Treat as one feature with competing workflow integration, not as fully identical PRs.
+
+### Guardrails and immediate engineering queue
+
+1. No branch is marked deletion-ready. First reconcile each PR's unique diff, decide PR disposition, then recheck branch references and head SHAs.
+2. Do not merge/close PRs or delete branches as part of a documentation refresh. Batch branch deletion only after explicit owner disposition.
+3. Keep NuGet publication disabled; keep Pages deployment and privileged workflow dispatch behind explicit approval.
+4. Re-run validation against the current development head after each substantive port; historical green checks do not validate the current base.
+5. Next high-value implementation work: reconcile #55/#60's UML connector geometry, then port/test the unique #48 WPF host-resource behavior. Duplicate PR pairs should be reduced to one reviewed integration path only after their workflow differences and exact PR contents are reconciled.
+
+---
+
 ## 0.2 Live reconciliation refresh — 2026-11-20 05:16 UTC
 
 **Snapshot base:** development `b0740094e4b98534670d9f71289da90a6b801d61`.  
