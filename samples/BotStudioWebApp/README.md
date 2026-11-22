@@ -28,7 +28,7 @@ The integration currently performs:
 - bounded two-second polling while the dashboard remains connected;
 - manual disconnect and automatic polling shutdown after transport failure.
 
-The Blazor server makes the HTTP requests to the loopback bridge. The browser does not call the bridge directly, so bridge CORS remains disabled. This requires the Runner and the Bot Studio server process to run on the same computer; a static GitHub Pages deployment cannot connect to a user's local loopback bridge.
+The Blazor server makes the HTTP requests to the loopback bridge. The web host itself rejects non-loopback clients, and the browser does not call the bridge directly, so bridge CORS remains disabled. This requires the Runner and the Bot Studio server process to run on the same computer; a static GitHub Pages deployment cannot connect to a user's local loopback bridge.
 
 ### Security and runtime boundary
 
