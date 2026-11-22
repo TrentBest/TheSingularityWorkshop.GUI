@@ -22,20 +22,28 @@ public sealed class SvgUmlClassDiagramRenderer
         if (width < 320)
             throw new ArgumentOutOfRangeException(nameof(width), "Width must be at least 320 pixels.");
 
-        // Keep the data-card hierarchy consistent: the exposed API surface
-        // (properties and operations) precedes implementation storage (fields).
-        var sections = new[]
+        // Visibility tiers form the outer card hierarchy; within each tier,
+        // the exposed API surface precedes implementation storage.
+        var visibilityTiers = new[]
         {
-            (Title: "Properties", Members: model.Properties),
-            (Title: "Operations", Members: model.Operations),
-            (Title: "Fields", Members: model.Fields),
-            (Title: "Declared type references (unresolved)", Members: (IReadOnlyList<UmlMember>)Array.Empty<UmlMember>())
-        };
+            (Key: "public", Title: "Public", Color: "#2e9d70"),
+            (Key: "protected", Title: "Protected", Color: "#8a63b5"),
+            (Key: "internal", Title: "Internal", Color: "#4a90e2"),
+            (Key: "private", Title: "Private", Color: "#d97732"),
+            (Key: "other", Title: "Other visibility", Color: "#687987")
+        }.Select(tier => (
+            tier.Key,
+            tier.Title,
+            tier.Color,
+            Properties: model.Properties.Where(member => NormalizeVisibility(member.Visibility) == tier.Key).ToArray(),
+            Operations: model.Operations.Where(member => NormalizeVisibility(member.Visibility) == tier.Key).ToArray(),
+            Fields: model.Fields.Where(member => NormalizeVisibility(member.Visibility) == tier.Key).ToArray()))
+         .Where(tier => tier.Properties.Length + tier.Operations.Length + tier.Fields.Length > 0)
+         .ToArray();
         var relationshipLines = model.DeclaredRelationships;
         var height = Top * 2 + HeaderHeight +
-            sections.Take(3).Sum(s => SectionHeadingHeight + (s.Members.Count == 0
-                ? LineHeight
-                : s.Members.Sum(member => Math.Max(1, member.Signature.Split('\n').Length) * LineHeight))) +
+            visibilityTiers.Sum(tier => SectionHeadingHeight + 10 +
+                SectionHeight(tier.Properties) + SectionHeight(tier.Operations) + SectionHeight(tier.Fields)) +
             (relationshipLines.Count == 0 ? 0 : SectionHeadingHeight + relationshipLines.Count * LineHeight);
 
         var svg = new XElement(Svg + "svg",
@@ -72,9 +80,13 @@ public sealed class SvgUmlClassDiagramRenderer
         svg.Add(Text(x + panelWidth / 2, y + 25, $"«{model.Kind}»", "#6b2e0c", "12", "normal", "middle"));
         svg.Add(Text(x + panelWidth / 2, y + 49, heading, "#6b2e0c", "18", "700", "middle"));
         y += HeaderHeight;
-        y = DrawSection(svg, x, y, panelWidth, "Properties", model.Properties);
-        y = DrawSection(svg, x, y, panelWidth, "Operations", model.Operations);
-        y = DrawSection(svg, x, y, panelWidth, "Fields", model.Fields);
+        foreach (var tier in visibilityTiers)
+        {
+            y = DrawVisibilityHeading(svg, x, y, panelWidth, tier.Title, tier.Color);
+            y = DrawSection(svg, x, y, panelWidth, "Properties", tier.Properties);
+            y = DrawSection(svg, x, y, panelWidth, "Operations", tier.Operations);
+            y = DrawSection(svg, x, y, panelWidth, "Fields", tier.Fields);
+        }
         if (relationshipLines.Count > 0)
         {
             y = DrawSectionHeading(svg, x, y, panelWidth, "Declared type references (not semantically resolved)");
@@ -86,6 +98,30 @@ public sealed class SvgUmlClassDiagramRenderer
         }
 
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg).ToString(SaveOptions.DisableFormatting);
+    }
+
+    private static string NormalizeVisibility(string? visibility) => visibility switch
+    {
+        "public" => "public",
+        "protected" => "protected",
+        "internal" or "package" => "internal",
+        "private" => "private",
+        _ => "other"
+    };
+
+    private static double SectionHeight(IReadOnlyList<UmlMember> members) =>
+        SectionHeadingHeight + (members.Count == 0
+            ? LineHeight
+            : members.Sum(member => Math.Max(1, member.Signature.Split('\\n').Length) * LineHeight));
+
+    private static double DrawVisibilityHeading(XElement svg, double x, double y, double width, string title, string color)
+    {
+        svg.Add(new XElement(Svg + "rect",
+            new XAttribute("x", F(x)), new XAttribute("y", F(y)),
+            new XAttribute("width", F(width)), new XAttribute("height", "10"),
+            new XAttribute("fill", color)));
+        svg.Add(Text(x + Padding, y + 28, title + " visibility", color, "15", "700"));
+        return y + SectionHeadingHeight + 10;
     }
 
     private static double DrawSection(XElement svg, double x, double y, double width, string title, IReadOnlyList<UmlMember> members)
