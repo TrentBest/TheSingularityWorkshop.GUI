@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`c04f17592cdf57d76277bdc0ffbdadf3aca566ed`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/c04f17592cdf57d76277bdc0ffbdadf3aca566ed)
+- Revision: [`7622a197e8680d8febac0d7e917a730da4448be3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/7622a197e8680d8febac0d7e917a730da4448be3)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder`
 - Metadata name: `IComponentBuilder`
@@ -19,22 +19,22 @@
 
 ## Source declarations
 
-- [`src/WPF/IComponentBuilder.cs:9-16`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c04f17592cdf57d76277bdc0ffbdadf3aca566ed/src/WPF/IComponentBuilder.cs#L9-16)
+- [`src/WPF/IComponentBuilder.cs:9-16`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7622a197e8680d8febac0d7e917a730da4448be3/src/WPF/IComponentBuilder.cs#L9-16)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder.Parent` | [`src/WPF/IComponentBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c04f17592cdf57d76277bdc0ffbdadf3aca566ed/src/WPF/IComponentBuilder.cs#L15-15) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder.Parent.get` | [`src/WPF/IComponentBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c04f17592cdf57d76277bdc0ffbdadf3aca566ed/src/WPF/IComponentBuilder.cs#L15-15) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder.Parent.set` | [`src/WPF/IComponentBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c04f17592cdf57d76277bdc0ffbdadf3aca566ed/src/WPF/IComponentBuilder.cs#L15-15) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder.Parent` | [`src/WPF/IComponentBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7622a197e8680d8febac0d7e917a730da4448be3/src/WPF/IComponentBuilder.cs#L15-15) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder.Parent.get` | [`src/WPF/IComponentBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7622a197e8680d8febac0d7e917a730da4448be3/src/WPF/IComponentBuilder.cs#L15-15) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Abstractions.IComponentBuilder.Parent.set` | [`src/WPF/IComponentBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7622a197e8680d8febac0d7e917a730da4448be3/src/WPF/IComponentBuilder.cs#L15-15) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `InterfaceRealization` | `TheSingularityWorkshop.GUI.WPF.Abstractions.ICoreBuilder` | `Resolved` | [`src/WPF/IComponentBuilder.cs:9-16`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c04f17592cdf57d76277bdc0ffbdadf3aca566ed/src/WPF/IComponentBuilder.cs#L9-16) |
-| incoming | `InterfaceRealization` | `TheSingularityWorkshop.GUI.WPF.Abstractions.NativeGuiBuilder` | `Resolved` | [`src/WPF/NativeGuiBuilder.cs:14-123`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c04f17592cdf57d76277bdc0ffbdadf3aca566ed/src/WPF/NativeGuiBuilder.cs#L14-123) |
+| outgoing | `InterfaceRealization` | `TheSingularityWorkshop.GUI.WPF.Abstractions.ICoreBuilder` | `Resolved` | [`src/WPF/IComponentBuilder.cs:9-16`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7622a197e8680d8febac0d7e917a730da4448be3/src/WPF/IComponentBuilder.cs#L9-16) |
+| incoming | `InterfaceRealization` | `TheSingularityWorkshop.GUI.WPF.Abstractions.NativeGuiBuilder` | `Resolved` | [`src/WPF/NativeGuiBuilder.cs:14-123`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7622a197e8680d8febac0d7e917a730da4448be3/src/WPF/NativeGuiBuilder.cs#L14-123) |
 
 [Back to the generated type index](index.md)
 
