@@ -106,6 +106,36 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Contains("~ Create() : VisibilityKinds {static}", labels);
     }
 
+
+    [Fact]
+    public void Accounts_for_multiline_member_signatures_in_svg_height()
+    {
+        var model = new UmlClassDiagram(
+            "MultilineExample",
+            properties:
+            [
+                new UmlMember("Configuration", "Configuration : Options\\r\\n  {get; init;}\\n  // immutable after creation", "public")
+            ]);
+
+        var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
+        var labels = document.Descendants(Svg + "text").ToArray();
+        Assert.Contains(labels, element => element.Value == "+ Configuration : Options");
+        Assert.Contains(labels, element => element.Value == "  {get; init;}");
+        Assert.Contains(labels, element => element.Value == "  // immutable after creation");
+
+        var memberLines = labels
+            .Where(element => element.Value is "+ Configuration : Options" or "  {get; init;}" or "  // immutable after creation")
+            .Select(element => double.Parse(element.Attribute("y")!.Value, System.Globalization.CultureInfo.InvariantCulture))
+            .ToArray();
+        Assert.Equal(3, memberLines.Length);
+        Assert.Equal(22d, memberLines[1] - memberLines[0]);
+        Assert.Equal(22d, memberLines[2] - memberLines[1]);
+
+        var svgHeight = double.Parse(document.Root!.Attribute("height")!.Value, System.Globalization.CultureInfo.InvariantCulture);
+        Assert.True(svgHeight > memberLines[^1],
+            "the SVG canvas must extend beyond the final rendered signature line");
+    }
+
     [Fact]
     public void Rejects_too_narrow_diagram_width()
     {
