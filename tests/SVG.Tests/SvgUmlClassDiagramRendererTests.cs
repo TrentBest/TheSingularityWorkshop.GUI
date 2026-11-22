@@ -71,9 +71,9 @@ public sealed class SvgUmlClassDiagramRendererTests
             "visibility tiers must be ordered from most exposed to least exposed");
         Assert.True(Array.IndexOf(labels, "Properties") < Array.IndexOf(labels, "Operations"));
         Assert.True(Array.IndexOf(labels, "Operations") < Array.IndexOf(labels, "Fields"));
-        Assert.Contains("Name : string", labels);
-        Assert.Contains("Reset() : void", labels);
-        Assert.Contains("_secret : int", labels);
+        Assert.Contains("+ Name : string", labels);
+        Assert.Contains("- Reset() : void", labels);
+        Assert.Contains("- _secret : int", labels);
     }
 
     [Fact]
