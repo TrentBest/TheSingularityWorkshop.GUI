@@ -86,6 +86,18 @@ The command contract should describe intent (for example, add class to namespace
 
 ## SVG and living documentation
 
+### Implemented SVG class-card visibility tiers
+
+The current `SvgUmlClassDiagramRenderer` implements a bounded class-card projection from the renderer-neutral `UmlClassDiagram` model:
+
+- Non-empty visibility tiers are rendered in this order: **Public → Protected → Internal → Private → Other visibility**. The model's `package` visibility is normalized into the Internal tier.
+- Within each tier, the renderer emits **Properties → Operations → Fields**.
+- Each tier has a distinct header color, while member signatures retain their UML visibility marker (`+`, `#`, `-`, or `~`) and static members retain an explicit `{static}` marker.
+- The SVG height is calculated from the members and tier/section headings actually rendered; multiline signatures contribute their full line count.
+- Regression coverage verifies tier ordering, member-category ordering, and the rendered visibility markers.
+
+This is the implemented **static class-card renderer behavior**, not the final source-outline ordering contract. It does not implement nested clickable/keyboard-operable AST cards, validated source edits, or a dedicated Static visibility tier. The broader ordering discrepancy described at the top of this document remains open; do not silently reinterpret the current renderer as resolving it. See `SvgUmlClassDiagramRendererTests` for the executable fixture.
+
 SVG should render the diagram as a foundational proof surface: namespace and type cards, colored borders, headers/bodies, nested member rows, expansion states, and edit affordances when an interactive host supports them. A static SVG can faithfully depict structure but does not, by itself, provide a secure source-editing session. Editing requires a host/command bridge and a domain model that can validate the requested change.
 
 Prefer generating the SVG from the same diagram model used by tests and editor views. That makes the diagram a living picture of real definitions rather than a decorative mock-up. Keep SVG element names, XML attributes, and event mechanics inside the SVG adapter.
