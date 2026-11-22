@@ -22,11 +22,13 @@ public sealed class SvgUmlClassDiagramRenderer
         if (width < 320)
             throw new ArgumentOutOfRangeException(nameof(width), "Width must be at least 320 pixels.");
 
+        // Keep the data-card hierarchy consistent: the exposed API surface
+        // (properties and operations) precedes implementation storage (fields).
         var sections = new[]
         {
-            (Title: "Fields", Members: model.Fields),
             (Title: "Properties", Members: model.Properties),
             (Title: "Operations", Members: model.Operations),
+            (Title: "Fields", Members: model.Fields),
             (Title: "Declared type references (unresolved)", Members: (IReadOnlyList<UmlMember>)Array.Empty<UmlMember>())
         };
         var relationshipLines = model.DeclaredRelationships;
@@ -70,9 +72,9 @@ public sealed class SvgUmlClassDiagramRenderer
         svg.Add(Text(x + panelWidth / 2, y + 25, $"«{model.Kind}»", "#6b2e0c", "12", "normal", "middle"));
         svg.Add(Text(x + panelWidth / 2, y + 49, heading, "#6b2e0c", "18", "700", "middle"));
         y += HeaderHeight;
-        y = DrawSection(svg, x, y, panelWidth, "Fields", model.Fields);
         y = DrawSection(svg, x, y, panelWidth, "Properties", model.Properties);
         y = DrawSection(svg, x, y, panelWidth, "Operations", model.Operations);
+        y = DrawSection(svg, x, y, panelWidth, "Fields", model.Fields);
         if (relationshipLines.Count > 0)
         {
             y = DrawSectionHeading(svg, x, y, panelWidth, "Declared type references (not semantically resolved)");
