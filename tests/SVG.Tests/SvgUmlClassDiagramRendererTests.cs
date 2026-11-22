@@ -77,6 +77,36 @@ public sealed class SvgUmlClassDiagramRendererTests
     }
 
     [Fact]
+    public void Maps_internal_package_and_unknown_visibility_and_preserves_static_marker()
+    {
+        var model = new UmlClassDiagram(
+            "VisibilityKinds",
+            fields:
+            [
+                new UmlMember("_internal", "_internal : int", "internal"),
+                new UmlMember("_package", "_package : int", "package"),
+                new UmlMember("_unknown", "_unknown : int", "file")
+            ],
+            operations:
+            [
+                new UmlMember("Create", "Create() : VisibilityKinds", "internal", IsStatic: true)
+            ]);
+
+        var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
+        var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
+        var internalIndex = Array.IndexOf(labels, "Internal visibility");
+        var otherIndex = Array.IndexOf(labels, "Other visibility");
+
+        Assert.True(internalIndex >= 0 && otherIndex > internalIndex,
+            "internal/package members must share the Internal tier before unknown visibility");
+        Assert.Equal(1, labels.Count(label => label == "Internal visibility"));
+        Assert.Contains("~ _internal : int", labels);
+        Assert.Contains("~ _package : int", labels);
+        Assert.Contains("~ _unknown : int", labels);
+        Assert.Contains("~ Create() : VisibilityKinds {static}", labels);
+    }
+
+    [Fact]
     public void Rejects_too_narrow_diagram_width()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
