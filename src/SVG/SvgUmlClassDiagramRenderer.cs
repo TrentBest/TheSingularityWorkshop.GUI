@@ -30,7 +30,7 @@ public sealed class SvgUmlClassDiagramRenderer
             (Key: "protected", Title: "Protected", Color: "#8a63b5"),
             (Key: "internal", Title: "Internal", Color: "#4a90e2"),
             (Key: "private", Title: "Private", Color: "#d97732"),
-            (Key: "other", Title: "Other visibility", Color: "#687987")
+            (Key: "other", Title: "Other", Color: "#687987")
         }.Select(tier => (
             tier.Key,
             tier.Title,
