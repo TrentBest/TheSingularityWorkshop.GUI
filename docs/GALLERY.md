@@ -26,6 +26,16 @@ The build-time generator has a syntax-only path and a compiler-backed project-se
 
 **CI evidence (2026-10-22):** [Package GUI](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39843352488) · [source-derived diagrams](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39843352517) · [solution-derived UML inventory](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39843352626). All three passed on implementation commit [fdef14c](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/fdef14cb93430fa2678f5f117bf48d97554bedcd); NuGet publication was skipped.
 
+## UML class-card visibility tiers
+
+**Picture:** generated class-card SVGs in the [UML class diagram assets](assets/uml/classes/) and the [source-derived UML inventory](uml/source-files/).
+
+The SVG class-card renderer now groups represented members into ordered visibility tiers (Public, Protected, Internal, Private, then Other visibility), and places Properties, Operations, and Fields within each tier. Visibility markers and static-member markers remain visible in signatures. The focused regression test covers the ordering and labels.
+
+**Reproduce:** run the SVG test project and inspect `SvgUmlClassDiagramRendererTests.Groups_members_into_ordered_visibility_tiers_within_each_tier`.
+
+**Boundary:** this is a static renderer projection, not the interactive recursive AST editor described by the data-card specification. The Public → Static → Protected → Private contract remains unresolved; this implementation does not claim to settle it.
+
 ## GUI.SVG demonstration recipes
 
 **Picture collection:** [Markdown demonstration gallery](../samples/demonstrations/GALLERY.md) · [scrollable visual index](../samples/demonstrations/index.html)
