@@ -112,7 +112,7 @@ public sealed class SvgUmlClassDiagramRenderer
     private static double SectionHeight(IReadOnlyList<UmlMember> members) =>
         SectionHeadingHeight + (members.Count == 0
             ? LineHeight
-            : members.Sum(member => Math.Max(1, member.Signature.Split('\\n').Length) * LineHeight));
+            : members.Sum(member => Math.Max(1, member.Signature.Split('\n').Length) * LineHeight));
 
     private static double DrawVisibilityHeading(XElement svg, double x, double y, double width, string title, string color)
     {
