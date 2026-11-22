@@ -114,7 +114,7 @@ public sealed class SvgUmlClassDiagramRendererTests
             "MultilineExample",
             properties:
             [
-                new UmlMember("Configuration", "Configuration : Options\\r\\n  {get; init;}\\n  // immutable after creation", "public")
+                new UmlMember("Configuration", "Configuration : Options\r\n  {get; init;}\n  // immutable after creation", "public")
             ]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
