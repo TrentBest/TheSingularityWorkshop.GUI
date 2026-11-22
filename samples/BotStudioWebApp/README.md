@@ -24,8 +24,9 @@ The Runner prints its loopback bridge URL and a fresh bearer token. In Bot Studi
 
 The integration currently performs:
 - an unauthenticated loopback health check;
-- an authenticated `GET /api/snapshot`;
-- bounded two-second polling while the dashboard remains connected;
+- authenticated `GET /api/snapshot` and `GET /api/events?afterSequence=N&limit=100` requests;
+- bounded two-second polling for snapshots and ordered event replay while the dashboard remains connected;
+- a 100-event in-memory UI history, with the bridge retaining its bounded 256-event journal;
 - manual disconnect and automatic polling shutdown after transport failure.
 
 The Blazor server makes the HTTP requests to the loopback bridge. The web host itself rejects non-loopback clients, and the browser does not call the bridge directly, so bridge CORS remains disabled. This requires the Runner and the Bot Studio server process to run on the same computer; a static GitHub Pages deployment cannot connect to a user's local loopback bridge.
@@ -35,12 +36,12 @@ The Blazor server makes the HTTP requests to the loopback bridge. The web host i
 - The bridge address is restricted to `http://127.0.0.1`; arbitrary hosts and remote addresses are rejected.
 - The bearer token is entered manually and held only in the interactive server circuit's memory. It is not written to browser storage, URLs, or application logs.
 - Disconnecting the UI stops its polling only. It does not stop, pause, or otherwise control the bot process.
-- The bridge currently exposes health and authenticated read-only snapshots only. No match-start, command, script, or arbitrary execution endpoint is available.
+- The bridge exposes health, authenticated read-only snapshots, and authenticated bounded event replay only. No match-start, command, script, or arbitrary execution endpoint is available.
 - Match launch remains disabled in the UI until a separately reviewed and authorized command surface exists.
 
 ### Current boundary
 
-The dashboard now displays the latest authenticated bot snapshot, including lifecycle, game loop, actual race, active mode, phase, resources, supply, visible unit counts, and job counts. It does **not** yet provide structured event streaming or control a SingularityBot process.
+The dashboard now displays the latest authenticated bot snapshot, including lifecycle, game loop, actual race, active mode, phase, resources, supply, visible unit counts, and job counts. It displays structured lifecycle, action-result, and diagnostic events returned by the bot's bounded event journal. It does not control a SingularityBot process.
 
 The bot process remains independently launchable. The browser UI and any future LLM-assisted authoring layer are observers/controllers, not prerequisites for bot startup.
 
