@@ -28,6 +28,14 @@ public sealed class SvgUmlClassDiagramRendererTests
         Assert.Contains("Fields", text);
         Assert.Contains("Properties", text);
         Assert.Contains("Operations", text);
+        var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
+        var propertiesIndex = Array.IndexOf(labels, "Properties");
+        var operationsIndex = Array.IndexOf(labels, "Operations");
+        var fieldsIndex = Array.IndexOf(labels, "Fields");
+        Assert.True(propertiesIndex >= 0 && propertiesIndex < operationsIndex,
+            "properties must be presented before operations");
+        Assert.True(operationsIndex < fieldsIndex,
+            "implementation fields must follow the exposed API surface");
         Assert.Contains("GetCollapsedSummary", text);
         Assert.Contains("Children", text);
     }
