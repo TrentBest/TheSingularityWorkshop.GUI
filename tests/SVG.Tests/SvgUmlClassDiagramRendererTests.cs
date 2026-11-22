@@ -41,6 +41,42 @@ public sealed class SvgUmlClassDiagramRendererTests
     }
 
     [Fact]
+    public void Groups_members_into_ordered_visibility_tiers_within_each_tier()
+    {
+        var model = new UmlClassDiagram(
+            "VisibilityExample",
+            fields:
+            [
+                new UmlMember("_secret", "_secret : int", "private"),
+                new UmlMember("_state", "_state : int", "protected")
+            ],
+            properties:
+            [
+                new UmlMember("Name", "Name : string", "public"),
+                new UmlMember("ProtectedName", "ProtectedName : string", "protected")
+            ],
+            operations:
+            [
+                new UmlMember("Run", "Run() : void", "public"),
+                new UmlMember("Reset", "Reset() : void", "private")
+            ]);
+
+        var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
+        var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
+        var publicIndex = Array.IndexOf(labels, "Public visibility");
+        var protectedIndex = Array.IndexOf(labels, "Protected visibility");
+        var privateIndex = Array.IndexOf(labels, "Private visibility");
+
+        Assert.True(publicIndex >= 0 && publicIndex < protectedIndex && protectedIndex < privateIndex,
+            "visibility tiers must be ordered from most exposed to least exposed");
+        Assert.True(Array.IndexOf(labels, "Properties") < Array.IndexOf(labels, "Operations"));
+        Assert.True(Array.IndexOf(labels, "Operations") < Array.IndexOf(labels, "Fields"));
+        Assert.Contains("Name : string", labels);
+        Assert.Contains("Reset() : void", labels);
+        Assert.Contains("_secret : int", labels);
+    }
+
+    [Fact]
     public void Rejects_too_narrow_diagram_width()
     {
         Assert.Throws<ArgumentOutOfRangeException>(() =>
