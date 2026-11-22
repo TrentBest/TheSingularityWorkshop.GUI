@@ -8,3 +8,7 @@ public sealed record BotStudioEventDto(
     string Severity,
     uint GameLoop,
     string Message);
+
+public sealed record BotStudioEventReplayDto(
+    long LatestSequence,
+    IReadOnlyList<BotStudioEventDto> Events);
