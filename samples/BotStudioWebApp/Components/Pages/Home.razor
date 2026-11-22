@@ -69,7 +69,25 @@
           </div>
         }
       </article>
-      <article class="panel events-panel"><div class="panel-head"><div><span class="panel-kicker">EVENT STREAM</span><h3>Recent activity</h3></div><span class="tag muted">NOT IMPLEMENTED</span></div><div class="event-empty">Structured event streaming is a separate milestone. No events are fabricated.</div></article>
+      <article class="panel events-panel"><div class="panel-head"><div><span class="panel-kicker">EVENT STREAM</span><h3>Recent activity</h3></div><span class="tag muted">@(_connected ? "LIVE REPLAY" : "OFFLINE")</span></div>
+        @if (_studioEvents.Count == 0)
+        {
+          <div class="event-empty">No structured events received. Lifecycle, action results, and diagnostics will appear here when published by the bot.</div>
+        }
+        else
+        {
+          <div class="event-list">
+            @foreach (var item in _studioEvents.AsEnumerable().Reverse().Take(12))
+            {
+              <div class="event-entry">
+                <div class="event-entry-top"><strong>@item.Name</strong><span>@item.CapturedAtUtc.ToLocalTime().ToString("T")</span></div>
+                <div class="event-entry-detail">@item.Message</div>
+                <div class="event-entry-meta">LOOP @item.GameLoop · @item.Category · @item.Severity</div>
+              </div>
+            }
+          </div>
+        }
+      </article>
     </section>
     <footer><span>THE SINGULARITY WORKSHOP</span><span>BOT STUDIO · DEVELOPMENT PREVIEW</span></footer>
   </main>
@@ -86,6 +104,8 @@
   private bool _connected;
   private BotStudioSnapshotDto? _snapshot;
   private CancellationTokenSource? _pollCancellation;
+  private readonly List<BotStudioEventDto> _studioEvents = new();
+  private long _lastEventSequence;
 
   private static GuiNode BuildSemanticHeader() => GuiBuilder.Create("Panel", "bot-studio-semantic-header").Child("Text", "bot-studio-title", title => title.Text("BOT CONTROL / OBSERVABILITY")).Build();
 
@@ -135,6 +155,9 @@
       }
 
       _connected = true;
+      _lastEventSequence = 0;
+      _studioEvents.Clear();
+      await PollEventsAsync(baseUri, _bridgeToken.Trim(), CancellationToken.None);
       _connectionMessage = "Authenticated. Refreshing read-only telemetry every 2 seconds.";
       _pollCancellation = new CancellationTokenSource();
       _ = PollSnapshotsAsync(baseUri, _bridgeToken.Trim(), _pollCancellation.Token);
@@ -170,6 +193,7 @@
         var snapshot = await response.Content.ReadFromJsonAsync<BotStudioSnapshotDto>(cancellationToken: cancellationToken);
         if (snapshot is null) throw new HttpRequestException("Snapshot response was empty.");
         await InvokeAsync(() => { _snapshot = snapshot; StateHasChanged(); });
+        await PollEventsAsync(baseUri, token, cancellationToken);
       }
     }
     catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested) { }
@@ -179,11 +203,40 @@
       {
         _connected = false;
         _snapshot = null;
+        _studioEvents.Clear();
+        _lastEventSequence = 0;
         _bridgeToken = "";
         _connectionMessage = "Telemetry connection lost. Reconnect manually; the bot continues independently.";
         StateHasChanged();
       });
     }
+  }
+
+
+  private async Task PollEventsAsync(Uri baseUri, string token, CancellationToken cancellationToken)
+  {
+    using var client = HttpClientFactory.CreateClient();
+    client.Timeout = TimeSpan.FromSeconds(4);
+    var eventsUri = new Uri(baseUri, $"/api/events?afterSequence={_lastEventSequence}&limit=100");
+    using var request = new HttpRequestMessage(HttpMethod.Get, eventsUri);
+    request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    using var response = await client.SendAsync(request, cancellationToken);
+    if (!response.IsSuccessStatusCode)
+      throw new HttpRequestException($"Event replay request failed: {(int)response.StatusCode}.");
+    var payload = await response.Content.ReadFromJsonAsync<BotStudioEventReplayDto>(cancellationToken: cancellationToken);
+    if (payload is null) throw new HttpRequestException("Event replay response was empty.");
+    await InvokeAsync(() =>
+    {
+      foreach (var item in payload.Events.OrderBy(item => item.Sequence))
+      {
+        if (item.Sequence <= _lastEventSequence) continue;
+        _studioEvents.Add(item);
+        _lastEventSequence = item.Sequence;
+      }
+      if (_studioEvents.Count > 100)
+        _studioEvents.RemoveRange(0, _studioEvents.Count - 100);
+      StateHasChanged();
+    });
   }
 
   private void Disconnect()
@@ -193,6 +246,8 @@
     _pollCancellation = null;
     _connected = false;
     _snapshot = null;
+    _studioEvents.Clear();
+    _lastEventSequence = 0;
     _bridgeToken = "";
     _connectionMessage = "Disconnected. Bot process is unaffected.";
   }
