@@ -1,3 +1,31 @@
+## 0.5 Architect integration reconciliation — 2026-11-23
+
+**PR #48:** [Support host theme resources for Architect integration](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48)  
+**Branch:** `feature/architect-renderer-integration`  
+**Recorded branch head:** `72de85c75fa712e62d34368b76e77d5608193531`  
+**Compare to development at this audit:** 16 commits ahead / 312 behind; diverged from merge base `99e6c77caf03150ecfd8348390b3e10d50c35ff6`.
+
+### Implementation reconciliation
+
+The substantive implementation from PR #48 is already present in current `development`; this was verified by inspecting all six PR-changed paths, not inferred from the PR description:
+
+- WPF `resource:ResourceKey` dynamic background/foreground references are implemented in the current renderer; literal brush support remains.
+- Windows WPF conformance tests include live host-resource replacement behavior.
+- Semantic `Row` / orientation and `isEnabled` presentation mapping are present, with corresponding tests and builder documentation.
+- Source UML excludes generated `obj/` and `bin/` declarations via `IsAuthoredSourcePath`; this file is byte-for-byte identical between the PR branch and development.
+- Compiler-generated nested implementation types are filtered using their full metadata names in the current source-UML generator.
+- WPF host-resource documentation and semantic builder guidance are present in current docs.
+
+The other five changed files have evolved on development (so their full contents are not byte-identical to the old PR snapshots), but the PR's relevant behaviors and documentation are present. The PR branch's original workflow evidence was green at its own SHA, not at current development; no current exact-head validation is implied by that historical evidence.
+
+### Disposition
+
+**Implementation status: reconciled into development. PR/branch status: still open and not deletion-ready.** The branch has 16 commits not in development's ancestry, despite its substantive changes being represented in current files. Do not merge the stale branch. The owner should close PR #48 after reviewing this reconciliation; only after the PR is closed and a fresh comparison confirms no unrepresented content should its branch be considered for the next owner deletion batch.
+
+No PR was closed or merged, no branch was deleted, and no package was published.
+ 
+---
+
 ## 0.4 Live reconciliation refresh — 2026-11-23 03:22 UTC
 
 **Snapshot base:** `development` `edba52201efd9deb6ee4a4c1a0cd44203dd70836`.
