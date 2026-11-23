@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`c314067d1411b65a797609459058e454c46bb143`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/c314067d1411b65a797609459058e454c46bb143)
+- Revision: [`440eb79e15bf4b14ffe94389c39f0fe067f4b709`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/440eb79e15bf4b14ffe94389c39f0fe067f4b709)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.GuiAssetReference`
 - Metadata name: `GuiAssetReference`
@@ -19,27 +19,27 @@
 
 ## Source declarations
 
-- [`src/Core/BadgeDefinition.cs:24-52`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L24-52)
+- [`src/Core/BadgeDefinition.cs:24-52`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L24-52)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.External(System.Uri)` | [`src/Core/BadgeDefinition.cs:51-51`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L51-51) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.GuiAssetReference()` | [`src/Core/BadgeDefinition.cs:26-26`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L26-26) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.Repository(string)` | [`src/Core/BadgeDefinition.cs:49-49`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L49-49) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.External(System.Uri)` | [`src/Core/BadgeDefinition.cs:51-51`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L51-51) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.GuiAssetReference()` | [`src/Core/BadgeDefinition.cs:26-26`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L26-26) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.Repository(string)` | [`src/Core/BadgeDefinition.cs:49-49`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L49-49) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.ExternalAsset` | `Resolved` | [`src/Core/BadgeDefinition.cs:40-46`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L40-46) |
-| incoming | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset` | `Resolved` | [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L30-36) |
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.GuiAssetReference>` | `External` | [`src/Core/BadgeDefinition.cs:24-52`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L24-52) |
-| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.BadgeDefinition` | `Resolved` | [`src/Core/BadgeDefinition.cs:124-124`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L124-124) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.BadgeDefinition` | `Resolved` | [`src/Core/BadgeDefinition.cs:92-113`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L92-113) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:51-51`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L51-51) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:49-49`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/Core/BadgeDefinition.cs#L49-49) |
+| incoming | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.ExternalAsset` | `Resolved` | [`src/Core/BadgeDefinition.cs:40-46`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L40-46) |
+| incoming | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset` | `Resolved` | [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L30-36) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.GuiAssetReference>` | `External` | [`src/Core/BadgeDefinition.cs:24-52`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L24-52) |
+| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.BadgeDefinition` | `Resolved` | [`src/Core/BadgeDefinition.cs:124-124`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L124-124) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.BadgeDefinition` | `Resolved` | [`src/Core/BadgeDefinition.cs:92-113`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L92-113) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:51-51`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L51-51) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:49-49`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L49-49) |
 
 [Back to the generated type index](index.md)
 
