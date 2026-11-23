@@ -45,6 +45,20 @@ For example:
 
 This distinction is critical. If a Core property is merely a disguised HTML attribute, the architecture has already leaked.
 
+## Typed value controls
+
+`GuiNode.Control` carries a typed, immutable definition for the first three value controls:
+
+| Definition | Semantic value | Stable host command payload |
+| --- | --- | --- |
+| `TextInputDefinition` | Current text, placeholder, read-only state, optional validation message | New text |
+| `SelectDefinition` | Ordered options with unique stable IDs, selected option ID, read-only state, optional validation message | Selected option ID |
+| `ToggleDefinition` | Boolean state, read-only state, optional validation message | `true` or `false` |
+
+The command ID is a stable declaration, not executable code. Core stores no delegates and applies no domain changes. A renderer only dispatches a changed value when the host supplies a dispatcher; without one, the control is rendered non-mutating. The host must allow-list the command, validate the value, authorize the caller, and update the authoritative domain model. Select options are snapshotted and their IDs must be unique; the selected ID must refer to an available option. Value-control nodes are leaves and cannot contain child nodes.
+
+Blazor and WPF render interactive controls when a dispatcher is supplied. SVG renders a static, accessible visual preview only; it does not pretend that an SVG image is an interactive form or own an event lifecycle. The same typed value and validation metadata remain observable to all adapters.
+
 ## Planned contract growth
 
 The model should evolve deliberately toward explicit concepts rather than adding arbitrary string properties forever.
