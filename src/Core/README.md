@@ -3,15 +3,18 @@
 The platform-neutral model and recursive builder primitives for The Singularity Workshop GUI.
 
 **Package:** `TheSingularityWorkshop.GUI.Core`  
-**Current project target:** `.NET 8.0`
+**Current project target:** `.NET 10.0`
 
 ## What this package provides
 
 - `GuiNode`: an immutable recursive description with kind, stable string identity, optional text/source, a read-only property map, and ordered children.
 - `GuiBuilder`: a fluent way to construct a tree and produce a `GuiNode` snapshot.
+- Typed `TextInputDefinition`, `SelectDefinition`, and `ToggleDefinition` value controls with stable host command IDs.
+- `BadgeDefinition` and ordered immutable `BadgeSet` for semantic document badges.
+- Explicit repository-relative or HTTPS `GuiAssetReference` and `GuiLinkReference` values.
 - Tree lookup through `Find` and `TryFind`.
 
-Core does not render controls, own a UI lifecycle, or execute platform callbacks. Use an adapter package to turn a model into a platform-specific representation.
+Core does not render controls, own a UI lifecycle, or execute platform callbacks. Value-control definitions describe values and command identities only; the consuming host authorizes and handles changes. Badge definitions describe roles and assets without depending on Markdown, GitHub, a filesystem, or a particular static-site generator. Use adapter packages to turn those neutral contracts into platform-specific or document-specific representations.
 
 ## Minimal example
 
@@ -29,6 +32,26 @@ Console.WriteLine(saveButton.Text); // Save
 ```
 
 Node kinds and string properties are intentionally simple at this stage. Their interpretation belongs to an adapter's documented contract; arbitrary property names are not guaranteed to have identical meaning across adapters.
+
+## Semantic document badges
+
+```csharp
+var badges = BadgeSet.Empty
+    .WithBadge(new BadgeDefinition(
+        "lod-1",
+        BadgeRole.Classification,
+        "LOD 1",
+        "LOD 1 classification badge",
+        GuiAssetReference.Repository("docs/assets/rulebook-lod-1.svg")))
+    .WithBadge(new BadgeDefinition(
+        "sourcebook-cover",
+        BadgeRole.ArtifactIdentity,
+        "Dungeons and Underground",
+        "Dungeons and Underground sourcebook cover",
+        GuiAssetReference.Repository("docs/books/covers/dungeons-and-underground.svg")));
+```
+
+The order is intentional: classification and artifact identity are separate roles. The Markdown adapter receives a target document path and resolves both assets relative to that file.
 
 ## Current boundaries
 
