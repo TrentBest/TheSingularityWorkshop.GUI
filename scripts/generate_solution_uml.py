@@ -21,6 +21,7 @@ MAINTAINED_PROJECTS = (
     "src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj",
     "src/WPF/TheSingularityWorkshop.GUI.WPF.csproj",
     "src/SVG/TheSingularityWorkshop.GUI.SVG.csproj",
+    "src/Markdown/TheSingularityWorkshop.GUI.Markdown.csproj",
 )
 
 
