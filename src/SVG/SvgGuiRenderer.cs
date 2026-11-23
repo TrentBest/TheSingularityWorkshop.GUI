@@ -262,6 +262,12 @@ public sealed class SvgGuiRenderer
                         new XAttribute("y", F(Number(node, "y", 5.3))),
                         new XAttribute("fill", "#eef6ff"),
                         node.Text ?? node.Id));
+                if (!string.IsNullOrWhiteSpace(toggle.ValidationMessage))
+                    element.Add(new XElement(Svg + "text",
+                        new XAttribute("x", F(Number(node, "x", 2))),
+                        new XAttribute("y", F(Number(node, "y", 8))),
+                        new XAttribute("fill", "#ff9b9b"),
+                        toggle.ValidationMessage));
                 break;
             case "svg-title":
                 element = new XElement(Svg + "title", node.Text ?? string.Empty);
