@@ -213,7 +213,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
             external_index = root / "external-index.md"
             external_index.write_text("# External inventory\\n", encoding="utf-8")
             (source / "index.md").symlink_to(external_index)
-            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG"), ("markdown", "Markdown")):
                 project_dir = source / slug
                 types = project_dir / "types"
                 types.mkdir(parents=True)
@@ -241,13 +241,13 @@ class SourceUmlPromotionTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, "unsafe generated project directory"):
                 PROMOTER.promote(source, output)
 
-    def test_four_project_manifest_rejects_authored_paths(self) -> None:
+    def test_five_project_manifest_rejects_authored_paths(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / "solution-uml"
             source.mkdir()
             (source / "index.md").write_text("# inventory\\n", encoding="utf-8")
-            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG"), ("markdown", "Markdown")):
                 project_dir = source / slug
                 types = project_dir / "types"
                 types.mkdir(parents=True)
@@ -266,7 +266,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
             source = root / "solution-uml"
             source.mkdir()
             (source / "index.md").write_text("# Solution inventory\n", encoding="utf-8")
-            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG"), ("markdown", "Markdown")):
                 project_dir = source / slug
                 types = project_dir / "types"
                 types.mkdir(parents=True)
