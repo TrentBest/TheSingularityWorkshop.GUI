@@ -30,6 +30,12 @@
     .stage{padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-height:130px}
     .stage b{display:block;color:var(--accent);margin-bottom:8px}
     .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+    .catalog{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+    .package{padding:18px;background:var(--surface);border:1px solid var(--line);border-radius:14px;min-height:210px}
+    .package .tag{margin-bottom:10px}.package h3{color:var(--text)}
+    .path-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+    .path{padding:20px;background:var(--surface-2);border:1px solid var(--line);border-radius:14px}
+    .note{margin-top:18px;padding:16px 18px;border:1px solid var(--line);border-left:3px solid var(--violet);border-radius:10px;background:#0b1924;color:var(--muted)}
     .card{overflow:hidden;background:linear-gradient(160deg,var(--surface-2),var(--surface));border:1px solid var(--line);border-radius:18px}
     .card-body{padding:22px}
     .preview{display:block;width:100%;aspect-ratio:16/9;background:#07101a;border-block:1px solid var(--line)}
@@ -42,6 +48,7 @@
     .links a{font-weight:650}
     footer{margin-top:36px;padding:34px 0 46px;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
     footer img{width:112px;height:auto;margin-bottom:10px}
+    @media(max-width:980px){.catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.path-grid{grid-template-columns:1fr}}
     @media(max-width:760px){.architecture{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
   </style>
@@ -52,6 +59,7 @@
       <img class="moniker" src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker">
       <nav aria-label="Primary navigation">
         <a href="#architecture">Architecture</a>
+        <a href="#contents">What is inside</a>
         <a href="#gallery">Gallery</a>
         <a href="samples/demonstrations/index.html">Interactive demonstrations</a>
         <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/docs">Documentation</a>
@@ -88,6 +96,75 @@
         <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/ARCHITECTURE.md">Architecture →</a>
         <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/PLATFORM_ADAPTERS.md">Adapter contracts →</a>
         <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/FULL_GUI_DOMAIN_COVERAGE.md">Domain coverage and gaps →</a>
+      </div>
+    </section>
+
+    <section id="contents" class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">Repository map</div>
+        <h2>What is actually in this repository?</h2>
+        <p class="muted">Five packages divide the work by responsibility. The first is the neutral contract; the others are adapters with distinct targets. They are not five competing GUI frameworks.</p>
+      </div>
+      <div class="catalog">
+        <article class="package">
+          <span class="tag">Foundation</span>
+          <h3>GUI.Core</h3>
+          <p class="muted">The platform-neutral recursive GUI model, semantic nodes, builders, and shared contracts.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/src/Core">Explore Core source →</a>
+        </article>
+        <article class="package">
+          <span class="tag">Web</span>
+          <h3>GUI.Blazor</h3>
+          <p class="muted">Blazor-side builders and rendering that manifest the neutral model in a web host.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/src/Blazor">Explore Blazor source →</a>
+        </article>
+        <article class="package">
+          <span class="tag">Vector document</span>
+          <h3>GUI.SVG</h3>
+          <p class="muted">Semantic GUI-tree to SVG interoperability: inspectable vector output, not a general scene engine.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/src/SVG">Explore SVG source →</a>
+        </article>
+        <article class="package">
+          <span class="tag">Native desktop</span>
+          <h3>GUI.WPF</h3>
+          <p class="muted">WPF builders and an initial tested Core-to-WPF renderer for Windows desktop applications.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/src/WPF">Explore WPF source →</a>
+        </article>
+        <article class="package">
+          <span class="tag">Documentation</span>
+          <h3>GUI.Markdown</h3>
+          <p class="muted">Semantic badge composition for Markdown documents, including accessible text and relative asset paths.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/src/Markdown">Explore Markdown source →</a>
+        </article>
+      </div>
+      <div class="note"><strong>Important boundary:</strong> adapter support is capability-specific, not feature parity. A successful test proves the tested contract—not that every GUI concept, host integration, accessibility behavior, lifecycle, or immersive target is complete. Start with the <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/PLATFORM_ADAPTERS.md">adapter support map</a> and <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/FULL_GUI_DOMAIN_COVERAGE.md">domain coverage ledger</a>.</div>
+      <div style="height:28px"></div>
+      <div class="section-head">
+        <div class="eyebrow">Choose your path</div>
+        <h2>What are you here to do?</h2>
+      </div>
+      <div class="path-grid">
+        <article class="path">
+          <h3>I want to use GUI in an application</h3>
+          <p class="muted">Begin with the neutral model, then choose the adapter matching your host. Follow the clean-consumer examples and package documentation.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/START_HERE.md">Start the ten-minute evaluation →</a>
+        </article>
+        <article class="path">
+          <h3>I want to see what works</h3>
+          <p class="muted">Open generated artifacts and demonstrations. Each example identifies its source, reproducibility, and what it does not prove.</p>
+          <a href="samples/demonstrations/index.html">Open the demonstration lab →</a>
+        </article>
+        <article class="path">
+          <h3>I want to understand or contribute</h3>
+          <p class="muted">Trace a capability from its domain definition through public API, implementation, tests, and remaining gaps.</p>
+          <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/FULL_GUI_DOMAIN_COVERAGE.md">Read the domain and evidence map →</a>
+        </article>
+      </div>
+      <div class="links">
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/tests">Tests →</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/samples">Samples →</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/ROADMAP.md">Roadmap →</a>
+        <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/RELEASE_READINESS.md">Release gates →</a>
       </div>
     </section>
 
