@@ -24,7 +24,7 @@ public static class WpfGuiRenderer
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateTree(node);
-        return RenderValidated(node, commandDispatcher: null);
+        return RenderValidated(node, commandDispatcher: null, controlDispatcher: null);
     }
 
     /// <summary>
@@ -36,12 +36,37 @@ public static class WpfGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(commandDispatcher);
         ValidateTree(node);
-        return RenderValidated(node, commandDispatcher);
+        return RenderValidated(node, commandDispatcher, controlDispatcher: null);
     }
 
-    private static FrameworkElement RenderValidated(GuiNode node, Action<string>? commandDispatcher)
+    /// <summary>
+    /// Renders semantic value controls and routes their changed values to a host-owned dispatcher.
+    /// The host remains responsible for command allow-listing, validation, and domain authorization.
+    /// </summary>
+    public static FrameworkElement Render(GuiNode node, Action<string, string?> controlDispatcher)
     {
-        FrameworkElement element = node.Kind switch
+        ArgumentNullException.ThrowIfNull(node);
+        ArgumentNullException.ThrowIfNull(controlDispatcher);
+        ValidateTree(node);
+        return RenderValidated(node, commandDispatcher: null, controlDispatcher);
+    }
+
+    private static FrameworkElement RenderValidated(
+        GuiNode node,
+        Action<string>? commandDispatcher,
+        Action<string, string?>? controlDispatcher)
+    {
+        FrameworkElement element = node.Control switch
+        {
+            TextInputDefinition text => new TextBox
+            {
+                Text = text.Value,
+                ToolTip = text.ValidationMessage,
+                IsReadOnly = text.IsReadOnly || controlDispatcher is null
+            },
+            SelectDefinition select => CreateSelect(select, controlDispatcher),
+            ToggleDefinition toggle => CreateToggle(node, toggle, controlDispatcher),
+            _ => node.Kind switch
         {
             "Button" => new Button { Content = node.Text ?? string.Empty },
             "Text" => new TextBlock { Text = node.Text ?? string.Empty, TextWrapping = TextWrapping.Wrap },
@@ -51,9 +76,32 @@ public static class WpfGuiRenderer
             "Warning" => CreateWarning(node.Text),
             "Image" => CreateImage(node.Source),
             _ => new Border { Child = new StackPanel { Orientation = Orientation.Vertical } }
+            }
         };
 
         ApplyProperties(element, node);
+
+        if (element is TextBox textBox && node.Control is TextInputDefinition textDefinition
+            && controlDispatcher is not null && !textDefinition.IsReadOnly)
+        {
+            textBox.TextChanged += (_, _) =>
+                controlDispatcher(textDefinition.ChangeCommandId, textBox.Text);
+        }
+        else if (element is ComboBox comboBox && node.Control is SelectDefinition selectDefinition
+            && controlDispatcher is not null && !selectDefinition.IsReadOnly)
+        {
+            comboBox.SelectionChanged += (_, _) =>
+            {
+                if (comboBox.SelectedItem is ComboBoxItem { Tag: string optionId })
+                    controlDispatcher(selectDefinition.ChangeCommandId, optionId);
+            };
+        }
+        else if (element is CheckBox checkBox && node.Control is ToggleDefinition toggleDefinition
+            && controlDispatcher is not null && !toggleDefinition.IsReadOnly)
+        {
+            checkBox.Checked += (_, _) => controlDispatcher(toggleDefinition.ChangeCommandId, bool.TrueString);
+            checkBox.Unchecked += (_, _) => controlDispatcher(toggleDefinition.ChangeCommandId, bool.FalseString);
+        }
 
         if (element is Button actionableButton
             && commandDispatcher is not null
@@ -69,7 +117,7 @@ public static class WpfGuiRenderer
             if (childrenHost is not null)
             {
                 foreach (var child in node.Children)
-                    childrenHost.Children.Add(RenderValidated(child, commandDispatcher));
+                    childrenHost.Children.Add(RenderValidated(child, commandDispatcher, controlDispatcher));
             }
             else if (element is Button button)
             {
@@ -84,6 +132,39 @@ public static class WpfGuiRenderer
 
         return element;
     }
+
+    private static FrameworkElement CreateSelect(
+        SelectDefinition definition,
+        Action<string, string?>? dispatcher)
+    {
+        var selector = new ComboBox
+        {
+            IsEnabled = !definition.IsReadOnly && dispatcher is not null,
+            ToolTip = definition.ValidationMessage
+        };
+        ComboBoxItem? selected = null;
+        foreach (var option in definition.Options)
+        {
+            var item = new ComboBoxItem { Content = option.Label, Tag = option.Id };
+            selector.Items.Add(item);
+            if (string.Equals(option.Id, definition.SelectedOptionId, StringComparison.Ordinal))
+                selected = item;
+        }
+        selector.SelectedItem = selected;
+        return selector;
+    }
+
+    private static FrameworkElement CreateToggle(
+        GuiNode node,
+        ToggleDefinition definition,
+        Action<string, string?>? dispatcher) =>
+        new CheckBox
+        {
+            Content = node.Text ?? node.Id,
+            IsChecked = definition.IsChecked,
+            IsEnabled = !definition.IsReadOnly && dispatcher is not null,
+            ToolTip = definition.ValidationMessage
+        };
 
     private static void ValidateTree(GuiNode root)
     {
