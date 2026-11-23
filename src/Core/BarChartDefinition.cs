@@ -8,6 +8,10 @@ namespace TheSingularityWorkshop.Workshop.Gui;
 /// <summary>A stable category identity and its human-readable label in a categorical chart.</summary>
 public sealed class BarChartCategory
 {
+    /// <summary>Creates a category with a stable identifier and display label.</summary>
+    /// <param name="id">A non-empty identifier unique within the chart.</param>
+    /// <param name="label">The non-empty human-readable category label.</param>
+    /// <exception cref="ArgumentException">Thrown when an identifier or label is null, empty, or whitespace.</exception>
     public BarChartCategory(string id, string label)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
@@ -16,7 +20,10 @@ public sealed class BarChartCategory
         Label = label;
     }
 
+    /// <summary>Gets the stable, chart-local category identifier.</summary>
     public string Id { get; }
+
+    /// <summary>Gets the human-readable category label.</summary>
     public string Label { get; }
 }
 
@@ -28,6 +35,13 @@ public sealed class BarChartSeries
 {
     private readonly ReadOnlyCollection<double?> _values;
 
+    /// <summary>Creates an immutable series snapshot.</summary>
+    /// <param name="id">A non-empty identifier unique among the chart's series.</param>
+    /// <param name="label">The non-empty human-readable series label.</param>
+    /// <param name="values">Finite numeric observations or null entries for missing observations.</param>
+    /// <exception cref="ArgumentException">Thrown when the identifier or label is null, empty, or whitespace.</exception>
+    /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is null.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown when an observation is not finite.</exception>
     public BarChartSeries(string id, string label, IEnumerable<double?> values)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(id);
@@ -46,8 +60,16 @@ public sealed class BarChartSeries
         _values = new ReadOnlyCollection<double?>(snapshot);
     }
 
+    /// <summary>Gets the stable, chart-local series identifier.</summary>
     public string Id { get; }
+
+    /// <summary>Gets the human-readable series label.</summary>
     public string Label { get; }
+
+    /// <summary>
+    /// Gets the immutable, positionally aligned observations. A null entry means missing data,
+    /// not a numeric zero.
+    /// </summary>
     public IReadOnlyList<double?> Values => _values;
 }
 
@@ -67,6 +89,20 @@ public sealed class BarChartDefinition
     private readonly ReadOnlyCollection<BarChartCategory> _categories;
     private readonly ReadOnlyCollection<BarChartSeries> _series;
 
+    /// <summary>Creates an immutable renderer-neutral categorical bar-chart definition.</summary>
+    /// <param name="id">A non-empty chart identifier.</param>
+    /// <param name="title">A non-empty human-readable chart title.</param>
+    /// <param name="accessibleDescription">A non-empty description for assistive technologies and non-visual consumers.</param>
+    /// <param name="categories">The ordered category sequence shared by every series.</param>
+    /// <param name="series">The ordered data-series sequence; an empty sequence is valid.</param>
+    /// <param name="categoryAxisLabel">An optional category-axis label.</param>
+    /// <param name="valueAxisLabel">An optional numeric value-axis label.</param>
+    /// <param name="valueUnit">An optional unit associated with numeric observations.</param>
+    /// <exception cref="ArgumentException">
+    /// Thrown when required text is blank, a collection contains null entries, identifiers are duplicated,
+    /// or a series does not contain exactly one value per category.
+    /// </exception>
+    /// <exception cref="ArgumentNullException">Thrown when either collection is null.</exception>
     public BarChartDefinition(
         string id,
         string title,
@@ -112,12 +148,27 @@ public sealed class BarChartDefinition
         _series = new ReadOnlyCollection<BarChartSeries>(seriesSnapshot);
     }
 
+    /// <summary>Gets the stable chart identifier.</summary>
     public string Id { get; }
+
+    /// <summary>Gets the human-readable chart title.</summary>
     public string Title { get; }
+
+    /// <summary>Gets the chart's authored accessible description.</summary>
     public string AccessibleDescription { get; }
+
+    /// <summary>Gets the optional category-axis label.</summary>
     public string? CategoryAxisLabel { get; }
+
+    /// <summary>Gets the optional numeric value-axis label.</summary>
     public string? ValueAxisLabel { get; }
+
+    /// <summary>Gets the optional unit associated with numeric values.</summary>
     public string? ValueUnit { get; }
+
+    /// <summary>Gets the immutable ordered category sequence used by every series.</summary>
     public IReadOnlyList<BarChartCategory> Categories => _categories;
+
+    /// <summary>Gets the immutable ordered data-series sequence.</summary>
     public IReadOnlyList<BarChartSeries> Series => _series;
 }
