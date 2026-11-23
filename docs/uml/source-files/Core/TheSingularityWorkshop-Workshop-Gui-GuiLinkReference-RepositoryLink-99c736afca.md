@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`644c7a0c58665f16199da7181b392162475c99f8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/644c7a0c58665f16199da7181b392162475c99f8)
+- Revision: [`e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink`
 - Metadata name: `RepositoryLink`
@@ -19,22 +19,22 @@
 
 ## Source declarations
 
-- [`src/Core/BadgeDefinition.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/Core/BadgeDefinition.cs#L61-67)
+- [`src/Core/BadgeDefinition.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Core/BadgeDefinition.cs#L61-67)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink.Path` | [`src/Core/BadgeDefinition.cs:66-66`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/Core/BadgeDefinition.cs#L66-66) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink.Path.get` | [`src/Core/BadgeDefinition.cs:66-66`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/Core/BadgeDefinition.cs#L66-66) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink.RepositoryLink(string)` | [`src/Core/BadgeDefinition.cs:64-64`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/Core/BadgeDefinition.cs#L64-64) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink.Path` | [`src/Core/BadgeDefinition.cs:66-66`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Core/BadgeDefinition.cs#L66-66) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink.Path.get` | [`src/Core/BadgeDefinition.cs:66-66`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Core/BadgeDefinition.cs#L66-66) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink.RepositoryLink(string)` | [`src/Core/BadgeDefinition.cs:64-64`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Core/BadgeDefinition.cs#L64-64) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/Core/BadgeDefinition.cs#L61-67) |
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink>` | `External` | [`src/Core/BadgeDefinition.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/Core/BadgeDefinition.cs#L61-67) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiLinkReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Core/BadgeDefinition.cs#L61-67) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.GuiLinkReference.RepositoryLink>` | `External` | [`src/Core/BadgeDefinition.cs:61-67`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Core/BadgeDefinition.cs#L61-67) |
 
 [Back to the generated type index](index.md)
 
