@@ -8,7 +8,7 @@ The AD badge lets a repository present its current participation state in the Au
 
 ## Two independent dimensions
 
-### 1. AD lifecycle — Foundry authoritative
+### 1. AD lifecycle — FSM_Execution authoritative
 
 | Semantic state | Display label | Meaning |
 |---|---|---|
@@ -60,13 +60,13 @@ These are visual acceptance cases, not a wire-format or canonical schema:
 
 ## Integration boundary
 
-- Foundry supplies the authoritative AD lifecycle projection and durable human-attention state.
+- FSM_Execution supplies the authoritative AD lifecycle projection and durable human-attention state.
 - CiAi supplies dependency graph, required/optional edge semantics, readiness rollup, and exact evidence links.
 - GUI maps validated semantic states to these assets and to the embeddable GUI presentation.
 - Do not infer lifecycle from GitHub Actions, build results, branch names, badge delivery, or dependency health.
 - Do not infer dependency health from the AD lifecycle state.
 - Missing, stale, malformed, or contradictory inputs render the unavailable state for the affected dimension. Do not silently coerce them to OFF, READY, or success.
-- The final field names, freshness rules, and payload shape must be agreed with Foundry/CiAi before runtime integration. This proposal intentionally does not create a competing schema.
+- The final field names, freshness rules, and payload shape must be agreed with FSM_Execution/CiAi before runtime integration. This proposal intentionally does not create a competing schema.
 
 ## Distribution and security proposal
 
@@ -80,5 +80,5 @@ These are visual acceptance cases, not a wire-format or canonical schema:
 
 - Sith Policy / branch-governance status.
 - CI pass/fail as an AD lifecycle signal.
-- Defining Foundry's lifecycle schema or CiAi's dependency/evidence schema.
+- Defining FSM_Execution's lifecycle schema or CiAi's dependency/evidence schema.
 - Badge deployment, package publication, release, or merge.
