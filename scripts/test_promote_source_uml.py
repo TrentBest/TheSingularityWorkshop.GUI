@@ -155,7 +155,7 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 PROMOTER.promote(source, aliased_output)
             self.assertTrue((output / "authored.md").is_file())
 
-    def test_promotes_all_four_projects_and_preserves_authored_files(self) -> None:
+    def test_promotes_all_five_projects_and_preserves_authored_files(self) -> None:
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             source = root / "solution-uml"
@@ -165,14 +165,15 @@ class SourceUmlPromotionTests(unittest.TestCase):
                 "[core/inventory.md](core/inventory.md) [core/types/index.md](core/types/index.md)\\n"
                 "[blazor/inventory.md](blazor/inventory.md) [blazor/types/index.md](blazor/types/index.md)\\n"
                 "[wpf/inventory.md](wpf/inventory.md) [wpf/types/index.md](wpf/types/index.md)\\n"
-                "[svg/inventory.md](svg/inventory.md) [svg/types/index.md](svg/types/index.md)\\n",
+                "[svg/inventory.md](svg/inventory.md) [svg/types/index.md](svg/types/index.md)\\n"
+                "[markdown/inventory.md](markdown/inventory.md) [markdown/types/index.md](markdown/types/index.md)\\n",
                 encoding="utf-8",
             )
             output = root / "docs" / "source-files"
             output.mkdir(parents=True)
             authored = output / "Gallery.md"
             authored.write_text("# Authored gallery\\n", encoding="utf-8")
-            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG")):
+            for slug, project in (("core", "Core"), ("blazor", "Blazor"), ("wpf", "WPF"), ("svg", "SVG"), ("markdown", "Markdown")):
                 project_dir = source / slug
                 types = project_dir / "types"
                 types.mkdir(parents=True)
@@ -190,14 +191,14 @@ class SourceUmlPromotionTests(unittest.TestCase):
                     encoding="utf-8")
             self.assertEqual([], PROMOTER.promote(source, output))
             self.assertTrue((output / "index.md").is_file())
-            for project in ("Core", "Blazor", "WPF", "SVG"):
+            for project in ("Core", "Blazor", "WPF", "SVG", "Markdown"):
                 self.assertTrue((output / project / "inventory.md").is_file())
                 self.assertTrue((output / project / "index.md").is_file())
                 self.assertTrue((output / project / "TheSingularityWorkshop-Fixture-Type-deadbeef.svg").is_file())
                 self.assertFalse((output / project / ".source-uml-generated-files").exists())
             self.assertEqual("# Authored gallery\\n", authored.read_text(encoding="utf-8"))
             promoted_index = (output / "index.md").read_text(encoding="utf-8")
-            for project in ("Core", "Blazor", "WPF", "SVG"):
+            for project in ("Core", "Blazor", "WPF", "SVG", "Markdown"):
                 self.assertIn(f"[{project} inventory]({project}/inventory.md)", promoted_index)
                 self.assertIn(f"[{project} type pages]({project}/index.md)", promoted_index)
                 self.assertTrue((output / project / "inventory.md").is_file())
