@@ -133,7 +133,7 @@ public static class BlazorGuiRenderer
                 if (text.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "readonly", true);
                 AddValidationAttributes(builder, text.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(7, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         dispatcher, args => dispatcher(text.ChangeCommandId, args.Value?.ToString())));
                 builder.CloseElement();
                 break;
@@ -145,13 +145,15 @@ public static class BlazorGuiRenderer
                 if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(3, "disabled", true);
                 AddValidationAttributes(builder, select.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(7, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         dispatcher, args => dispatcher(select.ChangeCommandId, args.Value?.ToString())));
                 foreach (var option in select.Options)
                 {
-                    builder.OpenElement(8, "option");
-                    builder.AddAttribute(9, "value", option.Id);
-                    builder.AddContent(10, option.Label);
+                    builder.OpenElement(9, "option");
+                    builder.AddAttribute(10, "value", option.Id);
+                    builder.AddAttribute(11, "selected",
+                        string.Equals(option.Id, select.SelectedOptionId, StringComparison.Ordinal));
+                    builder.AddContent(12, option.Label);
                     builder.CloseElement();
                 }
                 builder.CloseElement();
@@ -165,7 +167,7 @@ public static class BlazorGuiRenderer
                 if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(4, "disabled", true);
                 AddValidationAttributes(builder, toggle.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(7, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         dispatcher, args => dispatcher(toggle.ChangeCommandId,
                             bool.TryParse(args.Value?.ToString(), out var value) ? value.ToString() : null)));
                 builder.CloseElement();
@@ -178,7 +180,7 @@ public static class BlazorGuiRenderer
         if (string.IsNullOrWhiteSpace(validationMessage))
             return;
         builder.AddAttribute(6, "aria-invalid", "true");
-        builder.AddAttribute(6, "title", validationMessage);
+        builder.AddAttribute(7, "title", validationMessage);
     }
 
     private static string ResolveTag(string kind) => kind switch
