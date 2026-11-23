@@ -71,6 +71,10 @@ This adapter does **not** apply a URL-scheme allow-list or fetch/resolve referen
 
 Consumers that handle untrusted or remotely supplied scenes must enforce their own scheme/origin policy before rendering or serving the SVG, and must consider the target viewer's external-resource and navigation behavior. Do not treat generated SVG as sanitized merely because it is well-formed XML. This package's contract is serialization, not URL authorization.
 
+## Renderer-neutral chart manifestation
+
+The optional chart entry point is `new BarChartSvgRenderer().Render(chart)`; it consumes Core's `BarChartDefinition` directly rather than requiring chart-specific SVG nodes in Core. The current implementation supports one categorical series, including negative values, missing observations, empty states, visible labels, and an accessible data summary. It rejects multiple series until grouped/stacked semantics are specified. See [the chart contract and SVG capability matrix](CHARTING.md) and the runnable [bar chart gallery sample](../samples/BarChartGallery/Program.cs).
+
 ## Generated gallery
 
 The checked-in `docs/assets/svg-adapter-gallery.svg` is a snapshot emitted by `samples/SvgGallery/Program.cs`. CI regenerates the SVG and compares it byte-for-byte with the snapshot before packing, so a scene change cannot silently leave the documentation image behind. When the sample changes intentionally, regenerate the image with the sample, review the resulting SVG, and update the snapshot in the same change.
