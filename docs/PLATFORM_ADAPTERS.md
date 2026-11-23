@@ -13,6 +13,7 @@ A platform adapter consumes the neutral GUI model and materializes it for a targ
 | Core → Blazor | `BlazorGuiRenderer` consumes `GuiNode`; render-tree tests cover hierarchy, commands, and typed text/select/toggle controls. | Typed controls dispatch values only through an explicit host dispatcher; without one they render read-only/disabled. Broader semantic parity remains open. |
 | Core → SVG | `SvgGuiRenderer` consumes `GuiNode`; tests cover scene serialization and static previews of typed text/select/toggle controls. | SVG controls are accessible visual snapshots, not interactive forms or a GUI event lifecycle. |
 | Core → WPF | `WpfGuiRenderer` consumes `GuiNode`; Windows tests cover hierarchy/order, identity/text, supported layout/color properties, and typed text/select/toggle controls. | Value changes route to a supplied host dispatcher; controls are read-only/disabled without one. Broader property, accessibility, and lifecycle coverage remains open. |
+| Core → Markdown | `MarkdownBadgeRenderer` consumes ordered `BadgeSet` values and a `MarkdownDocumentTarget`; tests cover the SURPS descriptor fixture, nested document paths, links, alt text, and missing-asset diagnostics. | This is a document-presentation adapter, not a widget renderer or publisher. It resolves repository assets relative to the target Markdown file and uses only caller-supplied path inventories for existence diagnostics. |
 | Unity UI Toolkit | No adapter implementation in this repository. | Candidate future target only. |
 
 Treat these as distinct evidence levels. A project build establishes that the project compiles under that workflow; it does not establish semantic parity with another adapter or prove an end-to-end application integration.
@@ -22,6 +23,14 @@ Treat these as distinct evidence levels. A project build establishes that the pr
 `TextInputDefinition`, `SelectDefinition`, and `ToggleDefinition` are shared Core contracts. Blazor and WPF translate them into native text, selection, and boolean controls. Each change reports the stable command ID plus the new value (text, option ID, or boolean string) to a host-supplied dispatcher. This is a transport boundary only: the consuming host owns command allow-listing, validation, authorization, and domain-state updates. No renderer executes arbitrary code or binds reflection-based handlers.
 
 When no value dispatcher is supplied, Blazor marks text input read-only and disables selection/toggle; WPF applies the corresponding read-only/disabled state. SVG shows the current value/selection/state for documentation and review, but cannot dispatch changes. These behaviors are intentionally not presented as complete cross-adapter interactive parity.
+
+## Semantic document presentation
+
+`BadgeDefinition` and `BadgeSet` are Core contracts, not Markdown constructs. The Markdown adapter maps each explicit asset reference to a Markdown image with accessible alt text and optional description, and may wrap that image in an optional repository-relative or HTTPS destination link. The set's order is preserved.
+
+`MarkdownDocumentTarget` is mandatory because the same badge composition can be inserted into `README.md`, `docs/books/dungeons-and-underground.md`, or a deeply nested chapter. Relative asset paths are computed from that target's directory. If the host supplies a repository path inventory, missing repository assets produce a `MISSING_ASSET` diagnostic and a readable text fallback; the adapter does not access the filesystem itself.
+
+The first acceptance fixture mirrors SURPS's `dungeons-and-underground.book.json` descriptor: its LOD 1 badge and cover are separate semantic roles and remain separate assets. SURPS owns the descriptor schema and mapping policy; GUI owns the composable badge contract; GUI.Markdown owns serialization and path resolution. Publication and deployment remain with the consuming repository's workflow.
 
 ## Adapter responsibilities
 
