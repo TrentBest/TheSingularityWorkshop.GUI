@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`792939b14c162608acaac5d2d1fda64a0c209304`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/792939b14c162608acaac5d2d1fda64a0c209304)
+- Revision: [`2c52512270bae4fa255ce922a2352852e35a6189`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/2c52512270bae4fa255ce922a2352852e35a6189)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.GuiRepositoryPath`
 - Metadata name: `GuiRepositoryPath`
@@ -19,14 +19,14 @@
 
 ## Source declarations
 
-- [`src/Core/BadgeDefinition.cs:163-191`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Core/BadgeDefinition.cs#L163-191)
+- [`src/Core/BadgeDefinition.cs:163-191`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Core/BadgeDefinition.cs#L163-191)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiRepositoryPath.Validate(string)` | [`src/Core/BadgeDefinition.cs:165-182`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Core/BadgeDefinition.cs#L165-182) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiRepositoryPath.ValidateHttps(System.Uri, string)` | [`src/Core/BadgeDefinition.cs:184-190`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Core/BadgeDefinition.cs#L184-190) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiRepositoryPath.Validate(string)` | [`src/Core/BadgeDefinition.cs:165-182`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Core/BadgeDefinition.cs#L165-182) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiRepositoryPath.ValidateHttps(System.Uri, string)` | [`src/Core/BadgeDefinition.cs:184-190`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Core/BadgeDefinition.cs#L184-190) |
 
 ## Relationships
 

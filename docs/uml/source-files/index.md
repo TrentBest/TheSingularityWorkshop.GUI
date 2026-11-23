@@ -1,7 +1,7 @@
 # Solution-level source-derived UML inventory
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Source revision: `792939b14c162608acaac5d2d1fda64a0c209304`
+- Source revision: `2c52512270bae4fa255ce922a2352852e35a6189`
 - Scope: maintained product projects under `src/`; tests, samples, tooling, and documentation projects are deliberately excluded.
 - Evidence: each project is restored and built in Release, loaded with MSBuild/Roslyn, checked for compiler errors, and reconciled against the exact build output by assembly identity and type metadata inventory.
 - Framework policy: each included project must currently declare exactly one literal target framework. Multi-targeted projects fail closed until per-framework output partitioning is implemented.
@@ -12,7 +12,7 @@
 | `src/Core/TheSingularityWorkshop.GUI.Core.csproj` | 49 | 168 | [Core inventory](Core/inventory.md) | [Core type pages](Core/index.md) |
 | `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj` | 6 | 78 | [Blazor inventory](Blazor/inventory.md) | [Blazor type pages](Blazor/index.md) |
 | `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj` | 23 | 71 | [WPF inventory](WPF/inventory.md) | [WPF type pages](WPF/index.md) |
-| `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj` | 9 | 40 | [SVG inventory](SVG/inventory.md) | [SVG type pages](SVG/index.md) |
+| `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj` | 11 | 43 | [SVG inventory](SVG/inventory.md) | [SVG type pages](SVG/index.md) |
 | `src/Markdown/TheSingularityWorkshop.GUI.Markdown.csproj` | 4 | 11 | [Markdown inventory](Markdown/inventory.md) | [Markdown type pages](Markdown/index.md) |
 
 **Coverage:** 5/5 maintained product projects analyzed, built, and reconciled successfully.

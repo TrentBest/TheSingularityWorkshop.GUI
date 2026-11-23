@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`792939b14c162608acaac5d2d1fda64a0c209304`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/792939b14c162608acaac5d2d1fda64a0c209304)
+- Revision: [`2c52512270bae4fa255ce922a2352852e35a6189`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/2c52512270bae4fa255ce922a2352852e35a6189)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Abstractions.GuiMode`
 - Metadata name: `GuiMode`
@@ -19,14 +19,14 @@
 
 ## Source declarations
 
-- [`src/WPF/GuiMode.cs:3-3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/WPF/GuiMode.cs#L3-3)
+- [`src/WPF/GuiMode.cs:3-3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/WPF/GuiMode.cs#L3-3)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Field` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiMode.Interactable` | [`src/WPF/GuiMode.cs:3-3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/WPF/GuiMode.cs#L3-3) |
-| `Field` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiMode.Reporting` | [`src/WPF/GuiMode.cs:3-3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/WPF/GuiMode.cs#L3-3) |
+| `Field` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiMode.Interactable` | [`src/WPF/GuiMode.cs:3-3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/WPF/GuiMode.cs#L3-3) |
+| `Field` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiMode.Reporting` | [`src/WPF/GuiMode.cs:3-3`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/WPF/GuiMode.cs#L3-3) |
 
 ## Relationships
 

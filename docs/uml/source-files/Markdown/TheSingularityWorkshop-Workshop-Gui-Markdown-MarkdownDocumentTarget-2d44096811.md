@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`792939b14c162608acaac5d2d1fda64a0c209304`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/792939b14c162608acaac5d2d1fda64a0c209304)
+- Revision: [`2c52512270bae4fa255ce922a2352852e35a6189`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/2c52512270bae4fa255ce922a2352852e35a6189)
 - Project: `src/Markdown/TheSingularityWorkshop.GUI.Markdown.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Markdown, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget`
 - Metadata name: `MarkdownDocumentTarget`
@@ -19,23 +19,23 @@
 
 ## Source declarations
 
-- [`src/Markdown/MarkdownDocumentTarget.cs:8-24`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownDocumentTarget.cs#L8-24)
+- [`src/Markdown/MarkdownDocumentTarget.cs:8-24`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownDocumentTarget.cs#L8-24)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget.MarkdownDocumentTarget(string)` | [`src/Markdown/MarkdownDocumentTarget.cs:11-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownDocumentTarget.cs#L11-20) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget.RepositoryRelativePath` | [`src/Markdown/MarkdownDocumentTarget.cs:23-23`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownDocumentTarget.cs#L23-23) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget.RepositoryRelativePath.get` | [`src/Markdown/MarkdownDocumentTarget.cs:23-23`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownDocumentTarget.cs#L23-23) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget.MarkdownDocumentTarget(string)` | [`src/Markdown/MarkdownDocumentTarget.cs:11-20`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownDocumentTarget.cs#L11-20) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget.RepositoryRelativePath` | [`src/Markdown/MarkdownDocumentTarget.cs:23-23`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownDocumentTarget.cs#L23-23) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownDocumentTarget.RepositoryRelativePath.get` | [`src/Markdown/MarkdownDocumentTarget.cs:23-23`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownDocumentTarget.cs#L23-23) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:53-99`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownBadgeRenderer.cs#L53-99) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:101-111`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownBadgeRenderer.cs#L101-111) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:113-121`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/Markdown/MarkdownBadgeRenderer.cs#L113-121) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:53-99`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownBadgeRenderer.cs#L53-99) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:101-111`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownBadgeRenderer.cs#L101-111) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:113-121`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/Markdown/MarkdownBadgeRenderer.cs#L113-121) |
 
 [Back to the generated type index](index.md)
 

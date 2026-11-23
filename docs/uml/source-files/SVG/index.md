@@ -6,14 +6,16 @@
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`792939b14c162608acaac5d2d1fda64a0c209304`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/792939b14c162608acaac5d2d1fda64a0c209304)
+- Revision: [`2c52512270bae4fa255ce922a2352852e35a6189`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/2c52512270bae4fa255ce922a2352852e35a6189)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
-- Types: 9
+- Types: 11
 
 | Type | Kind | Members | Relationships | Page | UML SVG |
 |---|---|---:|---:|---|---|
 | `TheSingularityWorkshop.GUI.SVG.SemanticGuiSvgRenderOptions` | `record` | 17 | 2 | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.md](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.md) | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.svg](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.svg) |
 | `TheSingularityWorkshop.GUI.SVG.SemanticGuiSvgRenderer` | `class` | 6 | 5 | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.md](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.md) | [TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.svg](TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer` | `class` | 7 | 2 | [TheSingularityWorkshop-Workshop-Gui-Svg-BarChartSvgRenderer-939476bfad.md](TheSingularityWorkshop-Workshop-Gui-Svg-BarChartSvgRenderer-939476bfad.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-BarChartSvgRenderer-939476bfad.svg](TheSingularityWorkshop-Workshop-Gui-Svg-BarChartSvgRenderer-939476bfad.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability` | `record` | 4 | 2 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgChartCapability-1476fa59e2.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgChartCapability-1476fa59e2.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgChartCapability-1476fa59e2.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgChartCapability-1476fa59e2.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgDataCardRenderer` | `class` | 13 | 4 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `class` | 16 | 13 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange` | `record-struct` | 4 | 4 | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.md](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.md) | [TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.svg](TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.svg) |

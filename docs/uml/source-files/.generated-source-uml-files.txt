@@ -127,6 +127,10 @@ SVG/TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.md
 SVG/TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderOptions-1347c009dd.svg
 SVG/TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.md
 SVG/TheSingularityWorkshop-GUI-SVG-SemanticGuiSvgRenderer-5c8fbf76c1.svg
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-BarChartSvgRenderer-939476bfad.md
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-BarChartSvgRenderer-939476bfad.svg
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgChartCapability-1476fa59e2.md
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgChartCapability-1476fa59e2.svg
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.md
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgDataCardRenderer-574471487a.svg
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.md
