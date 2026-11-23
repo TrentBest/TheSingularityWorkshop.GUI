@@ -8,10 +8,15 @@ namespace TheSingularityWorkshop.Workshop.Gui;
 /// <summary>Identifies the semantic purpose of a document badge.</summary>
 public enum BadgeRole
 {
+    /// <summary>A classification marker such as a level-of-detail badge.</summary>
     Classification,
+    /// <summary>The identity of the represented artifact, such as a sourcebook cover.</summary>
     ArtifactIdentity,
+    /// <summary>A lifecycle or readiness marker.</summary>
     Status,
+    /// <summary>A creator, publisher, or source attribution marker.</summary>
     Provenance,
+    /// <summary>A badge with another explicitly declared semantic purpose.</summary>
     Other
 }
 
@@ -34,7 +39,9 @@ public abstract record GuiAssetReference
         public Uri Uri { get; }
     }
 
+    /// <summary>Creates a repository-relative asset reference.</summary>
     public static GuiAssetReference Repository(string path) => new RepositoryAsset(path);
+    /// <summary>Creates an explicit HTTPS asset reference.</summary>
     public static GuiAssetReference External(Uri uri) => new ExternalAsset(uri);
 }
 
@@ -57,7 +64,9 @@ public abstract record GuiLinkReference
         public Uri Uri { get; }
     }
 
+    /// <summary>Creates a repository-relative destination reference.</summary>
     public static GuiLinkReference Repository(string path) => new RepositoryLink(path);
+    /// <summary>Creates an absolute HTTPS destination reference.</summary>
     public static GuiLinkReference External(Uri uri) => new ExternalLink(uri);
 }
 
@@ -67,6 +76,7 @@ public abstract record GuiLinkReference
 /// </summary>
 public sealed class BadgeDefinition
 {
+    /// <summary>Creates a semantic badge with an explicit role, accessible text, and asset reference.</summary>
     public BadgeDefinition(
         string id,
         BadgeRole role,
@@ -111,6 +121,7 @@ public sealed class BadgeSet
 {
     private readonly ReadOnlyCollection<BadgeDefinition> _badges;
 
+    /// <summary>Creates an immutable badge composition, rejecting null entries and duplicate IDs.</summary>
     public BadgeSet(IEnumerable<BadgeDefinition> badges)
     {
         ArgumentNullException.ThrowIfNull(badges);
@@ -129,6 +140,7 @@ public sealed class BadgeSet
     /// <summary>Gets the badges in their declared presentation order.</summary>
     public IReadOnlyList<BadgeDefinition> Badges => _badges;
 
+    /// <summary>Returns a new composition with the badge appended after existing badges.</summary>
     /// <summary>Returns a new composition with the badge appended after existing badges.</summary>
     public BadgeSet WithBadge(BadgeDefinition badge)
     {
