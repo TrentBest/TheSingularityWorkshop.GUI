@@ -9,7 +9,7 @@ namespace TheSingularityWorkshop.GUI.Blazor.Tests;
 public sealed class BlazorSemanticControlRendererTests
 {
     [Fact]
-    public async Task Text_input_renders_value_and_dispatches_changed_text()
+    public void Text_input_renders_value_and_dispatches_changed_text()
     {
         string? command = null;
         string? value = null;
@@ -29,15 +29,15 @@ public sealed class BlazorSemanticControlRendererTests
         Assert.Equal("Pilot", FindAttribute(frames, "value"));
         Assert.Equal("Enter a name", FindAttribute(frames, "placeholder"));
 
-        var callback = Assert.IsType<EventCallback<ChangeEventArgs>>(FindAttributeValue(frames, "onchange"));
-        await callback.InvokeAsync(new ChangeEventArgs { Value = "Ranger" });
+        var callback = Assert.IsType<Action<ChangeEventArgs>>(FindAttributeValue(frames, "onchange"));
+        callback(new ChangeEventArgs { Value = "Ranger" });
 
         Assert.Equal("bot.name.changed", command);
         Assert.Equal("Ranger", value);
     }
 
     [Fact]
-    public async Task Select_renders_stable_options_and_dispatches_selected_option_id()
+    public void Select_renders_stable_options_and_dispatches_selected_option_id()
     {
         string? command = null;
         string? value = null;
@@ -61,15 +61,15 @@ public sealed class BlazorSemanticControlRendererTests
             frame.AttributeName == "selected" &&
             Equals(frame.AttributeValue, true));
 
-        var callback = Assert.IsType<EventCallback<ChangeEventArgs>>(FindAttributeValue(frames, "onchange"));
-        await callback.InvokeAsync(new ChangeEventArgs { Value = "random" });
+        var callback = Assert.IsType<Action<ChangeEventArgs>>(FindAttributeValue(frames, "onchange"));
+        callback(new ChangeEventArgs { Value = "random" });
 
         Assert.Equal("bot.race.mode.changed", command);
         Assert.Equal("random", value);
     }
 
     [Fact]
-    public async Task Toggle_renders_boolean_state_and_dispatches_changed_value()
+    public void Toggle_renders_boolean_state_and_dispatches_changed_value()
     {
         string? command = null;
         string? value = null;
@@ -85,10 +85,10 @@ public sealed class BlazorSemanticControlRendererTests
         var frames = builder.GetFrames().Array;
         Assert.Equal("input", frames[0].ElementName);
         Assert.Equal("checkbox", FindAttribute(frames, "type"));
-        Assert.Equal(false, FindAttributeValue(frames, "checked"));
+        Assert.Null(FindAttributeValue(frames, "checked"));
 
-        var callback = Assert.IsType<EventCallback<ChangeEventArgs>>(FindAttributeValue(frames, "onchange"));
-        await callback.InvokeAsync(new ChangeEventArgs { Value = true });
+        var callback = Assert.IsType<Action<ChangeEventArgs>>(FindAttributeValue(frames, "onchange"));
+        callback(new ChangeEventArgs { Value = true });
 
         Assert.Equal("bot.enabled.changed", command);
         Assert.Equal(bool.TrueString, value);
