@@ -13,4 +13,13 @@ public static class GuiBuilders
     public static GuiBuilder Button(string id, string text) => GuiBuilder.Create("Button", id).Text(text);
     /// <summary>Creates a warning builder.</summary>
     public static GuiBuilder Warning(string id, string text) => GuiBuilder.Create("Warning", id).Text(text);
+    /// <summary>Creates a semantic text-input builder.</summary>
+    public static GuiBuilder TextInput(string id, TextInputDefinition definition) =>
+        GuiBuilder.Create("TextInput", id).WithControl(definition);
+    /// <summary>Creates a semantic single-selection builder.</summary>
+    public static GuiBuilder Select(string id, SelectDefinition definition) =>
+        GuiBuilder.Create("Select", id).WithControl(definition);
+    /// <summary>Creates a semantic boolean-toggle builder.</summary>
+    public static GuiBuilder Toggle(string id, ToggleDefinition definition) =>
+        GuiBuilder.Create("Toggle", id).WithControl(definition);
 }
