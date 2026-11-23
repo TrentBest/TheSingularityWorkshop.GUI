@@ -39,7 +39,7 @@
     <section class="section-heading"><div><div class="eyebrow">02 / MATCH SETUP</div><h2>Prepare a match</h2></div><span class="section-caption">Configuration only · execution disabled</span></section>
     <section class="panel-grid">
       <article class="panel setup-panel"><div class="panel-head"><div><span class="panel-kicker">BOT CONFIGURATION</span><h3>Match profile</h3></div><span class="tag">LOCAL</span></div>
-        @BlazorGuiRenderer.Render(BuildSemanticMatchControls(), this, HandleSemanticControlChanged)
+        @BlazorGuiRenderer.RenderWithValueDispatcher(BuildSemanticMatchControls(), this, HandleSemanticControlChanged)
         <div class="button-row"><button class="primary" disabled title="Match-start commands are not part of the read-only bridge">Launch match <span>↗</span></button><span class="disabled-reason">Command surface not implemented</span></div>
       </article>
       <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">RUNTIME STATUS</span><h3>Bot connection</h3></div><span class="status-dot @(_connected ? "online" : "offline")"></span></div>
