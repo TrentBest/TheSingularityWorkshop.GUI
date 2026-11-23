@@ -21,6 +21,14 @@ public sealed class GuiBuilder
     /// <summary>Sets an image source reference.</summary>
     public GuiBuilder Image(string source) { _root.Source = source; return this; }
 
+    /// <summary>Sets a typed semantic value-control definition.</summary>
+    public GuiBuilder WithControl(GuiControlDefinition control)
+    {
+        ArgumentNullException.ThrowIfNull(control);
+        _root.Control = control;
+        return this;
+    }
+
     /// <summary>Sets a string-valued node property.</summary>
     public GuiBuilder Property(string name, string value)
     {
@@ -88,7 +96,7 @@ public sealed class GuiBuilder
 
                 built[builder] = new GuiNode(
                     builder.Kind, builder.Id, builder.Text, builder.Source,
-                    builder.Properties, children);
+                    builder.Properties, children, builder.Control);
                 active.Remove(builder);
                 continue;
             }
@@ -122,7 +130,8 @@ public sealed class GuiBuilder
                 var builder = new NodeBuilder(current.Kind, current.Id)
                 {
                     Text = current.Text,
-                    Source = current.Source
+                    Source = current.Source,
+                    Control = current.Control
                 };
                 foreach (var property in current.Properties)
                     builder.Properties.Add(property.Key, property.Value);
@@ -157,6 +166,7 @@ public sealed class GuiBuilder
         public string Id { get; }
         public string? Text { get; set; }
         public string? Source { get; set; }
+        public GuiControlDefinition? Control { get; set; }
         public Dictionary<string, string> Properties { get; } = new(StringComparer.Ordinal);
         public List<NodeBuilder> Children { get; } = new();
     }
