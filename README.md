@@ -19,8 +19,10 @@ flowchart TD
   M --> B[Recursive builders]
   B --> BL[Blazor adapter]
   B --> SVG[GUI.SVG interoperability adapter]
+  B --> MD[Markdown adapter]
   B --> WPF[WPF renderer]
   BL --> WEB[Blazor host]
+  MD --> DOC[Markdown documents]
   SVG --> ART[SVG manifestation of a GUI tree]
   WPF --> NATIVE[Native WPF controls]
 ```
@@ -35,7 +37,7 @@ A neutral interface model lets one description of intent be manifested by differ
 
 ## 🔺 03 How
 
-Describe interface intent in the Core model, then pass it to an adapter. The repository contains Blazor and WPF renderers plus GUI.SVG for semantic GUI-tree manifestation. Their contracts and coverage differ: the WPF renderer has focused Windows-native tests, while the shared conformance suite is intentionally narrow. SVG output is inspectable and may use declarative SVG animation; it is not a GUI-owned animation clock or a GPU pipeline. For general visual scenes and Visualizer frames, use Visualize's independent SVG artifact backend.
+Describe interface intent in the Core model, then pass it to an adapter. The repository contains Blazor and WPF renderers, GUI.SVG for semantic GUI-tree manifestation, and GUI.Markdown for target-relative document badge composition. Their contracts and coverage differ: the WPF renderer has focused Windows-native tests, while the shared conformance suite is intentionally narrow. SVG output is inspectable and may use declarative SVG animation; it is not a GUI-owned animation clock or a GPU pipeline. For general visual scenes and Visualizer frames, use Visualize's independent SVG artifact backend.
 
 ## 🟢 04 See it in a minute
 
@@ -67,9 +69,11 @@ The repository exists to separate GUI intent from GUI manifestation. It includes
 - `src/Blazor` — Blazor renderer and Core-to-web manifestation.
 - `src/WPF` — WPF renderer and WPF-specific identity bridge.
 - `src/SVG` — SVG interoperability adapter for semantic GUI trees; general visual-scene SVG output belongs to Visualize.
+- `src/Markdown` — Markdown adapter for ordered semantic badges, accessible image text, optional destinations, and document-relative asset paths.
 - `tests/Core.Tests` — platform-independent contract tests.
 - `tests/Blazor.Tests` — Blazor render-tree contract tests.
 - `tests/SVG.Tests` — SVG serialization and coordinate-mapping contract tests.
+- `tests/Markdown.Tests` — semantic badge composition, missing-asset diagnostics, and nested Markdown path tests.
 - `tests/WPF.Tests` — Windows-native WPF renderer tests.
 - `tests/Adapter.Conformance.Tests` — initial shared semantic checks across adapters.
 - `docs` — architecture, model, adapter, testing, theory, and release documentation.
