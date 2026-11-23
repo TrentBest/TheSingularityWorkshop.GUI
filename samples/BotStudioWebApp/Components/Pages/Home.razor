@@ -39,9 +39,7 @@
     <section class="section-heading"><div><div class="eyebrow">02 / MATCH SETUP</div><h2>Prepare a match</h2></div><span class="section-caption">Configuration only · execution disabled</span></section>
     <section class="panel-grid">
       <article class="panel setup-panel"><div class="panel-head"><div><span class="panel-kicker">BOT CONFIGURATION</span><h3>Match profile</h3></div><span class="tag">LOCAL</span></div>
-        <label for="mode">Opening mode</label><select id="mode" @bind="SelectedMode"><option value="terran.marine.v1">Terran · Marine baseline</option><option value="zerg.zergling.v1">Zerg · Zergling experimental</option></select>
-        <label for="map">Map</label><input id="map" @bind="MapName" />
-        <div class="two-fields"><div><label for="opponent">Opponent</label><select id="opponent" @bind="Opponent"><option>Random</option><option>Terran</option><option>Zerg</option><option>Protoss</option></select></div><div><label for="difficulty">Difficulty</label><select id="difficulty" @bind="Difficulty"><option>VeryEasy</option><option>Easy</option><option>Medium</option><option>Hard</option></select></div></div>
+        @BlazorGuiRenderer.Render(BuildSemanticMatchControls(), this, HandleSemanticControlChanged)
         <div class="button-row"><button class="primary" disabled title="Match-start commands are not part of the read-only bridge">Launch match <span>↗</span></button><span class="disabled-reason">Command surface not implemented</span></div>
       </article>
       <article class="panel status-panel"><div class="panel-head"><div><span class="panel-kicker">RUNTIME STATUS</span><h3>Bot connection</h3></div><span class="status-dot @(_connected ? "online" : "offline")"></span></div>
@@ -108,6 +106,103 @@
   private long _lastEventSequence;
 
   private static GuiNode BuildSemanticHeader() => GuiBuilder.Create("Panel", "bot-studio-semantic-header").Child("Text", "bot-studio-title", title => title.Text("BOT CONTROL / OBSERVABILITY")).Build();
+
+  private GuiNode BuildSemanticMatchControls()
+  {
+    var modeField = GuiBuilders.Panel("opening-mode-field").Property("class", "semantic-field")
+      .Child(GuiBuilders.Text("opening-mode-label", "Opening mode").Property("class", "semantic-label"))
+      .Child(GuiBuilders.Select("mode", new SelectDefinition(
+        new[]
+        {
+          new GuiSelectOption("terran.marine.v1", "Terran · Marine baseline"),
+          new GuiSelectOption("zerg.zergling.v1", "Zerg · Zergling experimental")
+        },
+        SelectedMode,
+        "botstudio.match.mode.changed")).Text("Opening mode").Property("class", "semantic-select"));
+
+    var mapField = GuiBuilders.Panel("map-field").Property("class", "semantic-field")
+      .Child(GuiBuilders.Text("map-label", "Map").Property("class", "semantic-label"))
+      .Child(GuiBuilders.TextInput("map", new TextInputDefinition(
+        MapName, "botstudio.match.map.changed", "Map file name")).Text("Map").Property("class", "semantic-input"));
+
+    var opponentField = GuiBuilders.Panel("opponent-field").Property("class", "semantic-field")
+      .Child(GuiBuilders.Text("opponent-label", "Opponent").Property("class", "semantic-label"))
+      .Child(GuiBuilders.Select("opponent", new SelectDefinition(
+        new[]
+        {
+          new GuiSelectOption("random", "Random"),
+          new GuiSelectOption("terran", "Terran"),
+          new GuiSelectOption("zerg", "Zerg"),
+          new GuiSelectOption("protoss", "Protoss")
+        },
+        Opponent.ToLowerInvariant(),
+        "botstudio.match.opponent.changed")).Text("Opponent").Property("class", "semantic-select"));
+
+    var difficultyField = GuiBuilders.Panel("difficulty-field").Property("class", "semantic-field")
+      .Child(GuiBuilders.Text("difficulty-label", "Difficulty").Property("class", "semantic-label"))
+      .Child(GuiBuilders.Select("difficulty", new SelectDefinition(
+        new[]
+        {
+          new GuiSelectOption("very-easy", "Very Easy"),
+          new GuiSelectOption("easy", "Easy"),
+          new GuiSelectOption("medium", "Medium"),
+          new GuiSelectOption("hard", "Hard")
+        },
+        Difficulty switch
+        {
+          "VeryEasy" => "very-easy",
+          "Easy" => "easy",
+          "Medium" => "medium",
+          "Hard" => "hard",
+          _ => "very-easy"
+        },
+        "botstudio.match.difficulty.changed")).Text("Difficulty").Property("class", "semantic-select"));
+
+    var advancedFields = GuiBuilders.Panel("match-advanced-fields").Property("class", "semantic-two-fields")
+      .Child(opponentField)
+      .Child(difficultyField);
+
+    return GuiBuilders.Panel("match-profile-controls").Property("class", "semantic-match-controls")
+      .Child(modeField)
+      .Child(mapField)
+      .Child(advancedFields)
+      .Build();
+  }
+
+  private void HandleSemanticControlChanged(string commandId, string? value)
+  {
+    switch (commandId)
+    {
+      case "botstudio.match.mode.changed":
+        if (value is "terran.marine.v1" or "zerg.zergling.v1")
+          SelectedMode = value;
+        break;
+      case "botstudio.match.map.changed":
+        if (!string.IsNullOrWhiteSpace(value) && value.Length <= 128)
+          MapName = value;
+        break;
+      case "botstudio.match.opponent.changed":
+        Opponent = value switch
+        {
+          "random" => "Random",
+          "terran" => "Terran",
+          "zerg" => "Zerg",
+          "protoss" => "Protoss",
+          _ => Opponent
+        };
+        break;
+      case "botstudio.match.difficulty.changed":
+        Difficulty = value switch
+        {
+          "very-easy" => "VeryEasy",
+          "easy" => "Easy",
+          "medium" => "Medium",
+          "hard" => "Hard",
+          _ => Difficulty
+        };
+        break;
+    }
+  }
 
   private async Task ConnectAsync()
   {
