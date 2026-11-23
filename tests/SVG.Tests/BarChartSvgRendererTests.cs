@@ -27,6 +27,25 @@ public sealed class BarChartSvgRendererTests
                 .Select(x => x.Value).ToArray());
         Assert.Equal(new[] { "12", "18" }, root.Descendants(Svg + "rect").Select(x => (string?)x.Attribute("data-value")).ToArray());
         Assert.Contains("Revenue (USD thousands)", root.Value);
+        Assert.Equal(new[] { "18", "13.5", "9", "4.5", "0" },
+            root.Descendants(Svg + "text")
+                .Where(x => x.Attribute("data-axis-tick") is not null)
+                .Select(x => x.Value).ToArray());
+    }
+
+    [Fact]
+    public void Value_axis_ticks_span_negative_and_positive_data_around_zero()
+    {
+        var chart = new BarChartDefinition("profit", "Profit", "Profit by month.",
+            new[] { new BarChartCategory("jan", "January"), new BarChartCategory("feb", "February") },
+            new[] { new BarChartSeries("net", "Net", new double?[] { -4, 6 }) },
+            "Month", "Net", "USD");
+
+        var document = XDocument.Parse(_renderer.Render(chart));
+        Assert.Equal(new[] { "6", "3.5", "1", "-1.5", "-4" },
+            document.Descendants(Svg + "text")
+                .Where(x => x.Attribute("data-axis-tick") is not null)
+                .Select(x => x.Value).ToArray());
     }
 
     [Fact]
