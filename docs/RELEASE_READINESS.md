@@ -162,3 +162,10 @@ A package is ready only when all hard gates for the selected package scope are c
 
 <!-- THE SINGULARITY WORKSHOP FOOTER -->
 <p align="center"><img src="https://raw.githubusercontent.com/TrentBest/FSM_API/master/Documentation/Branding/TheSingularityWorkshop.png" alt="The Singularity Workshop avatar" width="200" /></p>
+
+
+## Development validation evidence — 2026-11-23
+
+[Package GUI run 45097249375](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45097249375) completed successfully on source revision `644c7a0c58665f16199da7181b392162475c99f8`. Core, Blazor, Markdown, SVG, shared adapter conformance, WPF, and the Bot Studio sample passed. All five development package archives passed metadata checks, and a clean archive-only consumer restored and exercised the packed packages. The Windows WPF lane also passed.
+
+The workflow uploaded package artifacts for inspection and **skipped `publish_nuget`**. This evidence does not change the approved release scope: GUI.Markdown remains a development-only candidate until explicitly approved, and no NuGet package was published.
