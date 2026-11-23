@@ -76,6 +76,9 @@ jobs:
       - name: Restore Blazor
         run: dotnet restore src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj
 
+      - name: Restore Markdown
+        run: dotnet restore src/Markdown/TheSingularityWorkshop.GUI.Markdown.csproj
+
       - name: Build standalone Bot Studio web app
         run: dotnet build samples/BotStudioWebApp/BotStudioWebApp.csproj --configuration Release
 
@@ -90,6 +93,9 @@ jobs:
 
       - name: Test Blazor
         run: dotnet test tests/Blazor.Tests/TheSingularityWorkshop.GUI.Blazor.Tests.csproj --configuration Release
+
+      - name: Test Markdown
+        run: dotnet test tests/Markdown.Tests/TheSingularityWorkshop.GUI.Markdown.Tests.csproj --configuration Release
 
       - name: Test SVG
         env:
@@ -341,17 +347,20 @@ jobs:
       - name: Pack Blazor
         run: dotnet pack src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj --configuration Release --output ./packages
 
+      - name: Pack Markdown
+        run: dotnet pack src/Markdown/TheSingularityWorkshop.GUI.Markdown.csproj --configuration Release --output ./packages
+
       - name: Pack SVG
         run: dotnet pack src/SVG/TheSingularityWorkshop.GUI.SVG.csproj --configuration Release --output ./packages
 
       - name: Pack WPF
         run: dotnet pack src/WPF/TheSingularityWorkshop.GUI.WPF.csproj --configuration Release -p:EnableWindowsTargeting=true --output ./packages
 
-      - name: Verify Core and Blazor package README metadata
+      - name: Verify Core, Blazor, and Markdown package README metadata
         shell: bash
         run: |
           set -euo pipefail
-          for id in TheSingularityWorkshop.GUI.Core TheSingularityWorkshop.GUI.Blazor; do
+          for id in TheSingularityWorkshop.GUI.Core TheSingularityWorkshop.GUI.Blazor TheSingularityWorkshop.GUI.Markdown; do
             package="$(find ./packages -maxdepth 1 -type f -name "${id}.*.nupkg" -print -quit)"
             test -n "$package" && test -s "$package"
             unzip -l "$package" | grep -q 'README.md'
@@ -364,7 +373,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for id in TheSingularityWorkshop.GUI.Core TheSingularityWorkshop.GUI.Blazor TheSingularityWorkshop.GUI.WPF TheSingularityWorkshop.GUI.SVG; do
+          for id in TheSingularityWorkshop.GUI.Core TheSingularityWorkshop.GUI.Blazor TheSingularityWorkshop.GUI.Markdown TheSingularityWorkshop.GUI.WPF TheSingularityWorkshop.GUI.SVG; do
             package="$(find ./packages -maxdepth 1 -type f -name "${id}.*.nupkg" -print -quit)"
             test -n "$package" && test -s "$package"
             nuspec="$(unzip -Z1 "$package" | grep -E '[.]nuspec$' | head -n 1)"
@@ -403,13 +412,16 @@ jobs:
           core_package="$(find ./packages -maxdepth 1 -type f -name 'TheSingularityWorkshop.GUI.Core.*.nupkg' -print -quit)"
           blazor_package="$(find ./packages -maxdepth 1 -type f -name 'TheSingularityWorkshop.GUI.Blazor.*.nupkg' -print -quit)"
           svg_package="$(find ./packages -maxdepth 1 -type f -name 'TheSingularityWorkshop.GUI.SVG.*.nupkg' -print -quit)"
-          test -n "$core_package" && test -n "$blazor_package" && test -n "$svg_package"
+          markdown_package="$(find ./packages -maxdepth 1 -type f -name 'TheSingularityWorkshop.GUI.Markdown.*.nupkg' -print -quit)"
+          test -n "$core_package" && test -n "$blazor_package" && test -n "$svg_package" && test -n "$markdown_package"
           core_version="$(basename "$core_package" .nupkg)"
           core_version="${core_version#TheSingularityWorkshop.GUI.Core.}"
           blazor_version="$(basename "$blazor_package" .nupkg)"
           blazor_version="${blazor_version#TheSingularityWorkshop.GUI.Blazor.}"
           svg_version="$(basename "$svg_package" .nupkg)"
           svg_version="${svg_version#TheSingularityWorkshop.GUI.SVG.}"
+          markdown_version="$(basename "$markdown_package" .nupkg)"
+          markdown_version="${markdown_version#TheSingularityWorkshop.GUI.Markdown.}"
           cat > ./artifacts/gui-clean-consumer/Consumer.csproj <<EOF
           <Project Sdk="Microsoft.NET.Sdk">
             <PropertyGroup>
@@ -422,11 +434,13 @@ jobs:
               <PackageReference Include="TheSingularityWorkshop.GUI.Core" Version="${core_version}" />
               <PackageReference Include="TheSingularityWorkshop.GUI.Blazor" Version="${blazor_version}" />
               <PackageReference Include="TheSingularityWorkshop.GUI.SVG" Version="${svg_version}" />
+              <PackageReference Include="TheSingularityWorkshop.GUI.Markdown" Version="${markdown_version}" />
             </ItemGroup>
           </Project>
           EOF
           cat > ./artifacts/gui-clean-consumer/Program.cs <<'EOF'
           using TheSingularityWorkshop.Workshop.Gui;
+          using TheSingularityWorkshop.Workshop.Gui.Markdown;
           using TheSingularityWorkshop.Workshop.Gui.Svg;
 
           var tree = GuiBuilder.Create("Panel", "root")
@@ -441,6 +455,18 @@ jobs:
           var svg = new SvgGuiRenderer().Render(scene);
           if (!svg.Contains("<svg", StringComparison.Ordinal))
               throw new InvalidOperationException("SVG package did not emit an SVG document.");
+
+          var badges = BadgeSet.Empty.WithBadge(new BadgeDefinition(
+              "lod-1",
+              BadgeRole.Classification,
+              "LOD 1",
+              "LOD 1 classification badge",
+              GuiAssetReference.Repository("docs/assets/lod-1.svg")));
+          var markdown = new MarkdownBadgeRenderer().Render(
+              badges,
+              new MarkdownDocumentTarget("docs/books/book.md"));
+          if (!markdown.Markdown.Contains("../assets/lod-1.svg", StringComparison.Ordinal))
+              throw new InvalidOperationException("Markdown package did not resolve the badge relative to its document.");
           Console.WriteLine("Clean package consumer passed.");
           EOF
           dotnet restore ./artifacts/gui-clean-consumer/Consumer.csproj --source ./packages --source https://api.nuget.org/v3/index.json
