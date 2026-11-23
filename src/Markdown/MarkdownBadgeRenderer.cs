@@ -6,11 +6,28 @@ using TheSingularityWorkshop.Workshop.Gui;
 namespace TheSingularityWorkshop.Workshop.Gui.Markdown;
 
 /// <summary>A diagnostic produced while rendering a semantic badge composition.</summary>
-public sealed record MarkdownBadgeDiagnostic(string Code, string Message, string ResourcePath);
+public sealed record MarkdownBadgeDiagnostic
+{
+    /// <summary>Creates a diagnostic for a missing or invalid badge resource.</summary>
+    public MarkdownBadgeDiagnostic(string code, string message, string resourcePath)
+    {
+        Code = code;
+        Message = message;
+        ResourcePath = resourcePath;
+    }
+
+    /// <summary>Gets the stable diagnostic code.</summary>
+    public string Code { get; }
+    /// <summary>Gets the human-readable diagnostic message.</summary>
+    public string Message { get; }
+    /// <summary>Gets the repository-relative resource path associated with the diagnostic.</summary>
+    public string ResourcePath { get; }
+}
 
 /// <summary>The Markdown fragment and any asset diagnostics produced by a render operation.</summary>
 public sealed class MarkdownBadgeRenderResult
 {
+    /// <summary>Creates a render result with its Markdown fragment and diagnostics.</summary>
     public MarkdownBadgeRenderResult(string markdown, IEnumerable<MarkdownBadgeDiagnostic> diagnostics)
     {
         Markdown = markdown ?? throw new ArgumentNullException(nameof(markdown));
@@ -28,6 +45,11 @@ public sealed class MarkdownBadgeRenderResult
 /// </summary>
 public sealed class MarkdownBadgeRenderer
 {
+    /// <summary>Renders the ordered badge set relative to a target Markdown document.</summary>
+    /// <param name="badges">The semantic badges to render.</param>
+    /// <param name="target">The repository-relative Markdown file receiving the fragment.</param>
+    /// <param name="existingRepositoryPaths">Optional repository path inventory used to report missing image assets.</param>
+    /// <returns>The Markdown fragment and any asset diagnostics.</returns>
     public MarkdownBadgeRenderResult Render(
         BadgeSet badges,
         MarkdownDocumentTarget target,
