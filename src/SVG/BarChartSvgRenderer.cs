@@ -25,6 +25,10 @@ public sealed class BarChartSvgRenderer
 
         var titleId = $"{chart.Id}-title";
         var descriptionId = $"{chart.Id}-description";
+        var dataSummary = chart.Series.Count == 0 || chart.Categories.Count == 0
+            ? " No data is available."
+            : $" {chart.Series[0].Label}: " + string.Join("; ", chart.Categories.Select((category, index) =>
+                $"{category.Label}: {(chart.Series[0].Values[index] is double value ? F(value) + UnitSuffix(chart.ValueUnit) : "missing")}."));
         var svg = new XElement(Svg + "svg",
             new XAttribute("id", chart.Id),
             new XAttribute("width", width),
@@ -34,7 +38,7 @@ public sealed class BarChartSvgRenderer
             new XAttribute("aria-label", chart.Title),
             new XAttribute("aria-labelledby", $"{titleId} {descriptionId}"),
             new XElement(Svg + "title", new XAttribute("id", titleId), chart.Title),
-            new XElement(Svg + "desc", new XAttribute("id", descriptionId), chart.AccessibleDescription));
+            new XElement(Svg + "desc", new XAttribute("id", descriptionId), chart.AccessibleDescription + dataSummary));
 
         svg.Add(new XElement(Svg + "text",
             new XAttribute("x", "50"), new XAttribute("y", "5"),
