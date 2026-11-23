@@ -14,12 +14,13 @@ on:
       - "src/Blazor/**"
       - "src/SVG/**"
       - "src/WPF/**"
+      - "src/Markdown/**"
       - "*.sln"
       - "**/*.csproj"
   workflow_dispatch:
     inputs:
       confirm_promotion:
-        description: "Confirm committing regenerated Core, Blazor, WPF, and SVG UML pages to development"
+        description: "Confirm committing regenerated Core, Blazor, WPF, SVG, and Markdown UML pages to development"
         required: true
         type: boolean
         default: false
@@ -70,10 +71,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add docs/uml/source-files
           if git diff --cached --quiet; then
-            echo "Generated four-package UML documentation is already current."
+            echo "Generated five-package UML documentation is already current."
             exit 0
           fi
-          git commit -m "docs(uml): refresh four-package generated type pages"
+          git commit -m "docs(uml): refresh five-package generated type pages"
 
           # Other safe documentation commits may land while generation runs.
           # Rebase the generated-only commit when the source inputs are unchanged;
@@ -85,7 +86,7 @@ jobs:
             scripts/promote_source_uml.py
             scripts/test_promote_source_uml.py
             samples/SourceUmlGenerator
-            src/Core src/Blazor src/SVG src/WPF
+            src/Core src/Blazor src/SVG src/WPF src/Markdown
             ':(glob)**/*.sln'
             ':(glob)**/*.csproj'
           )
