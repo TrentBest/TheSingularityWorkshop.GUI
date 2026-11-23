@@ -12,7 +12,7 @@ MANIFEST_NAME = ".generated-source-uml-files.txt"
 SAFE_SUFFIXES = {".md", ".svg"}
 # Keep this allowlist aligned with scripts/generate_solution_uml.py. Never discover
 # arbitrary directories as publishable documentation.
-PROJECTS = {"core": "Core", "blazor": "Blazor", "wpf": "WPF", "svg": "SVG"}
+PROJECTS = {"core": "Core", "blazor": "Blazor", "wpf": "WPF", "svg": "SVG", "markdown": "Markdown"}
 LEGACY_INVENTORY = "Core.uml-inventory.md"
 LEGACY_TYPES = "Core.uml-types"
 
@@ -42,7 +42,7 @@ def _collect_types(types_dir: Path, prefix: str, outputs: dict[str, bytes]) -> N
 
 def collect_generated(input_dir: Path) -> dict[str, bytes]:
     outputs: dict[str, bytes] = {}
-    # Preferred layout is the four-project solution inventory produced by
+    # Preferred layout is the five-project solution inventory produced by
     # scripts/generate_solution_uml.py: <slug>/inventory.md and <slug>/types/*.
     solution_index = input_dir / "index.md"
     if solution_index.is_file() and any((input_dir / slug / "types").is_dir() for slug in PROJECTS):
