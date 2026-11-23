@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`7166b391ef1f40b32ec7872ad7dba6872d2ee611`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/7166b391ef1f40b32ec7872ad7dba6872d2ee611)
+- Revision: [`0ed09cdac84f1bfac1b809bc27f6ce68bb23d385`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385)
 - Project: `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Blazor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer`
 - Metadata name: `BlazorGuiRenderer`
@@ -19,30 +19,38 @@
 
 ## Source declarations
 
-- [`src/Blazor/BlazorGuiRenderer.cs:11-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L11-109)
+- [`src/Blazor/BlazorGuiRenderer.cs:11-195`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L11-195)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Field` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.MaximumTreeDepth` | [`src/Blazor/BlazorGuiRenderer.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L13-13) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/Blazor/BlazorGuiRenderer.cs:16-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L16-21) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>)` | [`src/Blazor/BlazorGuiRenderer.cs:27-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L27-33) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.RenderNode(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder, TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>?)` | [`src/Blazor/BlazorGuiRenderer.cs:58-98`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L58-98) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.ResolveTag(string)` | [`src/Blazor/BlazorGuiRenderer.cs:100-108`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L100-108) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.ValidateUniqueIds(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/Blazor/BlazorGuiRenderer.cs:35-56`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L35-56) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.AddValidationAttributes(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder, string?)` | [`src/Blazor/BlazorGuiRenderer.cs:178-184`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L178-184) |
+| `Field` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.MaximumTreeDepth` | [`src/Blazor/BlazorGuiRenderer.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L13-13) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/Blazor/BlazorGuiRenderer.cs:16-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L16-21) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string, string?>)` | [`src/Blazor/BlazorGuiRenderer.cs:40-46`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L40-46) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.Render(TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>)` | [`src/Blazor/BlazorGuiRenderer.cs:27-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L27-33) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.RenderControl(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder, TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string, string?>?)` | [`src/Blazor/BlazorGuiRenderer.cs:120-176`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L120-176) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.RenderNode(Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder, TheSingularityWorkshop.Workshop.Gui.GuiNode, System.Action<string>?, System.Action<string, string?>?)` | [`src/Blazor/BlazorGuiRenderer.cs:71-118`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L71-118) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.ResolveTag(string)` | [`src/Blazor/BlazorGuiRenderer.cs:186-194`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L186-194) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.BlazorGuiRenderer.ValidateUniqueIds(TheSingularityWorkshop.Workshop.Gui.GuiNode)` | [`src/Blazor/BlazorGuiRenderer.cs:48-69`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L48-69) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.RenderFragment` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:16-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L16-21) |
-| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.RenderFragment` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:27-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L27-33) |
-| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:58-98`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L58-98) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:16-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L16-21) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:27-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L27-33) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:58-98`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L58-98) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:35-56`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Blazor/BlazorGuiRenderer.cs#L35-56) |
+| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.RenderFragment` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:16-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L16-21) |
+| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.RenderFragment` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:40-46`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L40-46) |
+| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.RenderFragment` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:27-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L27-33) |
+| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:178-184`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L178-184) |
+| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:120-176`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L120-176) |
+| outgoing | `Dependency` | `global::Microsoft.AspNetCore.Components.Rendering.RenderTreeBuilder` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:71-118`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L71-118) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:16-21`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L16-21) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:40-46`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L40-46) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:27-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L27-33) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:120-176`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L120-176) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:71-118`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L71-118) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.GuiNode` | `External` | [`src/Blazor/BlazorGuiRenderer.cs:48-69`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Blazor/BlazorGuiRenderer.cs#L48-69) |
 
 [Back to the generated type index](index.md)
 

@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`7166b391ef1f40b32ec7872ad7dba6872d2ee611`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/7166b391ef1f40b32ec7872ad7dba6872d2ee611)
+- Revision: [`0ed09cdac84f1bfac1b809bc27f6ce68bb23d385`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder`
 - Metadata name: `NodeBuilder`
@@ -19,36 +19,40 @@
 
 ## Source declarations
 
-- [`src/Core/GuiBuilder.cs:146-162`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L146-162)
+- [`src/Core/GuiBuilder.cs:155-172`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L155-172)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Children` | [`src/Core/GuiBuilder.cs:161-161`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L161-161) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Children.get` | [`src/Core/GuiBuilder.cs:161-161`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L161-161) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Id` | [`src/Core/GuiBuilder.cs:157-157`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L157-157) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Id.get` | [`src/Core/GuiBuilder.cs:157-157`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L157-157) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Kind` | [`src/Core/GuiBuilder.cs:156-156`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L156-156) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Kind.get` | [`src/Core/GuiBuilder.cs:156-156`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L156-156) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.NodeBuilder(string, string)` | [`src/Core/GuiBuilder.cs:148-154`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L148-154) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Properties` | [`src/Core/GuiBuilder.cs:160-160`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L160-160) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Properties.get` | [`src/Core/GuiBuilder.cs:160-160`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L160-160) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Source` | [`src/Core/GuiBuilder.cs:159-159`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L159-159) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Source.get` | [`src/Core/GuiBuilder.cs:159-159`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L159-159) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Source.set` | [`src/Core/GuiBuilder.cs:159-159`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L159-159) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Text` | [`src/Core/GuiBuilder.cs:158-158`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L158-158) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Text.get` | [`src/Core/GuiBuilder.cs:158-158`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L158-158) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Text.set` | [`src/Core/GuiBuilder.cs:158-158`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L158-158) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Children` | [`src/Core/GuiBuilder.cs:171-171`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L171-171) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Children.get` | [`src/Core/GuiBuilder.cs:171-171`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L171-171) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Control` | [`src/Core/GuiBuilder.cs:169-169`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L169-169) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Control.get` | [`src/Core/GuiBuilder.cs:169-169`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L169-169) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Control.set` | [`src/Core/GuiBuilder.cs:169-169`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L169-169) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Id` | [`src/Core/GuiBuilder.cs:166-166`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L166-166) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Id.get` | [`src/Core/GuiBuilder.cs:166-166`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L166-166) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Kind` | [`src/Core/GuiBuilder.cs:165-165`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L165-165) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Kind.get` | [`src/Core/GuiBuilder.cs:165-165`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L165-165) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.NodeBuilder(string, string)` | [`src/Core/GuiBuilder.cs:157-163`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L157-163) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Properties` | [`src/Core/GuiBuilder.cs:170-170`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L170-170) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Properties.get` | [`src/Core/GuiBuilder.cs:170-170`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L170-170) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Source` | [`src/Core/GuiBuilder.cs:168-168`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L168-168) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Source.get` | [`src/Core/GuiBuilder.cs:168-168`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L168-168) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Source.set` | [`src/Core/GuiBuilder.cs:168-168`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L168-168) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Text` | [`src/Core/GuiBuilder.cs:167-167`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L167-167) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Text.get` | [`src/Core/GuiBuilder.cs:167-167`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L167-167) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder.Text.set` | [`src/Core/GuiBuilder.cs:167-167`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L167-167) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:12-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L12-12) |
-| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:161-161`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L161-161) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L13-13) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:111-144`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/7166b391ef1f40b32ec7872ad7dba6872d2ee611/src/Core/GuiBuilder.cs#L111-144) |
+| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:12-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L12-12) |
+| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder.NodeBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:171-171`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L171-171) |
+| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.GuiControlDefinition` | `Resolved` | [`src/Core/GuiBuilder.cs:169-169`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L169-169) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:13-13`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L13-13) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilder` | `Resolved` | [`src/Core/GuiBuilder.cs:119-153`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/0ed09cdac84f1bfac1b809bc27f6ce68bb23d385/src/Core/GuiBuilder.cs#L119-153) |
 
 [Back to the generated type index](index.md)
 
