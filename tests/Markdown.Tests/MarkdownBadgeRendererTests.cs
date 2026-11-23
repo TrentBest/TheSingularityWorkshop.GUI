@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Xunit;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Markdown;
 
