@@ -49,6 +49,29 @@ public sealed class BarChartSvgRendererTests
     }
 
     [Fact]
+    public void Encodes_chart_identity_into_unique_xml_safe_document_ids()
+    {
+        var chart = new BarChartDefinition("sales chart:Q1", "Sales", "Sales by region.",
+            new[] { new BarChartCategory("west", "West") },
+            new[] { new BarChartSeries("revenue", "Revenue", new double?[] { 12 }) });
+
+        var document = XDocument.Parse(_renderer.Render(chart));
+        var root = document.Root!;
+        var ids = root.DescendantsAndSelf()
+            .Attributes("id")
+            .Select(attribute => attribute.Value)
+            .ToArray();
+        var referencedIds = ((string)root.Attribute("aria-labelledby")!)
+            .Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+        Assert.StartsWith("chart-", (string)root.Attribute("id")!);
+        Assert.All(ids, id => Assert.DoesNotContain(" ", id));
+        Assert.Equal(ids.Length, ids.Distinct(StringComparer.Ordinal).Count());
+        Assert.All(referencedIds, id => Assert.Contains(id, ids));
+        Assert.Contains(ids, id => id.EndsWith("-bar-0", StringComparison.Ordinal));
+    }
+
+    [Fact]
     public void Missing_values_are_not_rendered_as_zero_and_remain_visible_as_missing()
     {
         var document = XDocument.Parse(_renderer.Render(CreateChart()));
