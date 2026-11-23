@@ -18,7 +18,7 @@ public sealed class BarChartSvgRendererTests
 
         Assert.Equal("img", (string?)root.Attribute("role"));
         Assert.Equal("Quarterly sales", (string?)root.Attribute("aria-label"));
-        Assert.Equal("sales-title sales-description", (string?)root.Attribute("aria-labelledby"));
+        Assert.Equal("chart-sales-title chart-sales-description", (string?)root.Attribute("aria-labelledby"));
         Assert.StartsWith("Sales by quarter in thousands.", root.Element(Svg + "desc")!.Value);
         Assert.Contains("Quarter 2: missing", root.Element(Svg + "desc")!.Value);
         Assert.Contains("Quarter 3: 18 USD thousands", root.Element(Svg + "desc")!.Value);
