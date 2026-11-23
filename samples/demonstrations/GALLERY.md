@@ -27,12 +27,12 @@ Explore reusable SVG definitions, filters, and declarative animation, including 
 [**Read Recipe 04 — Animated scene**](recipes/04-animated-scene.md)
 
 ## GUI Core + GUI.SVG + Physics run data
+
 ### Recipe 05 — Seeded point set from Physics
 
 Physics generates a bounded, seeded point set and exports its actual coordinates into a versioned JSON run record; GUI.SVG consumes that record without regenerating the points. The consumer verifies the record identity, count, bounds, and every rendered marker against the source data, so the image is a manifestation of Physics output rather than a mock-up.
 
 [**Read Recipe 05 — Physics seeded point set**](recipes/05-seeded-point-set.md)
-
 
 ### Recipe 03 — Projectile trajectory from a recorded Physics run
 
@@ -40,12 +40,23 @@ The generator consumes the Physics-owned JSON run record at a pinned source comm
 
 [**Read Recipe 03 — Physics-backed projectile trajectory**](recipes/03-projectile-trajectory.md)
 
-
 ### Recipe 06 — Parameterized Mandelbrot field from Physics
 
 Physics generates a default overview and a configurable detail window using its actual escape-time sampler; GUI.SVG consumes each versioned run record and verifies every rendered cell against the stored classification. CI uploads both records and both SVGs, so resolution, iteration cap, and complex-plane bounds can be compared without moving mathematical work into the renderer.
 
 [**Read Recipe 06 — Parameterized Physics-backed Mandelbrot field**](recipes/06-mandelbrot-field.md)
+
+### Recipe 08 — Contact impulse from a recorded Physics result
+
+The consumer reads the actual `ContactImpulseResolver` run record and manifests the two bodies, equal-and-opposite normal impulses, and before/after velocities. It labels impulse in N*s—not force in N—and preserves the resolver's zero-time and pose-preservation limits; its dedicated workflow validates the SVG and uploads the source record alongside the artifact.
+
+[**Read Recipe 08 — Physics-backed contact impulse**](recipes/08-contact-impulse.md)
+
+### Recipe 07 — FSM-driven bounded oscillator
+
+The oscillator sample connects actual FSM_API state transitions to a sampled curve and a static GUI.SVG snapshot. The generated artifact shows the final state and marker; it is not a continuously running SVG simulation.
+
+[**Read Recipe 07 — FSM-driven bounded oscillator**](recipes/07-fsm-driven-oscillator.md)
 
 ## Harvested from TheSingularityWorkshop.Physics
 
