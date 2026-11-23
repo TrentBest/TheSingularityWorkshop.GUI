@@ -129,6 +129,7 @@ public static class BlazorGuiRenderer
                 builder.AddAttribute(1, "id", node.Id);
                 builder.AddAttribute(2, "type", "text");
                 builder.AddAttribute(3, "value", text.Value);
+                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(4, "aria-label", node.Text);
                 if (text.Placeholder is not null) builder.AddAttribute(4, "placeholder", text.Placeholder);
                 if (text.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "readonly", true);
                 AddValidationAttributes(builder, text.ValidationMessage);
@@ -141,8 +142,9 @@ public static class BlazorGuiRenderer
             case SelectDefinition select:
                 builder.OpenElement(0, "select");
                 builder.AddAttribute(1, "id", node.Id);
-                builder.AddAttribute(2, "value", select.SelectedOptionId);
-                if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(3, "disabled", true);
+                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(2, "aria-label", node.Text);
+                builder.AddAttribute(3, "value", select.SelectedOptionId);
+                if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(4, "disabled", true);
                 AddValidationAttributes(builder, select.ValidationMessage);
                 if (dispatcher is not null)
                     builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
@@ -163,8 +165,9 @@ public static class BlazorGuiRenderer
                 builder.OpenElement(0, "input");
                 builder.AddAttribute(1, "id", node.Id);
                 builder.AddAttribute(2, "type", "checkbox");
-                builder.AddAttribute(3, "checked", toggle.IsChecked);
-                if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(4, "disabled", true);
+                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(3, "aria-label", node.Text);
+                builder.AddAttribute(4, "checked", toggle.IsChecked);
+                if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "disabled", true);
                 AddValidationAttributes(builder, toggle.ValidationMessage);
                 if (dispatcher is not null)
                     builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
