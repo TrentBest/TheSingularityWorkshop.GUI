@@ -17,7 +17,7 @@ public static class BlazorGuiRenderer
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: null);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: null, controlEventReceiver: null);
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(commandDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher, controlDispatcher: null);
+        return builder => RenderNode(builder, node, commandDispatcher, controlDispatcher: null, controlEventReceiver: null);
     }
 
     /// <summary>
@@ -42,7 +42,23 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher, controlEventReceiver: controlDispatcher);
+    }
+
+    /// <summary>
+    /// Creates a render fragment that uses the supplied component/event receiver for Blazor's
+    /// event lifecycle, allowing the host component to re-render after it handles a value change.
+    /// </summary>
+    public static RenderFragment Render(
+        GuiNode node,
+        object eventReceiver,
+        Action<string, string?> controlDispatcher)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+        ArgumentNullException.ThrowIfNull(eventReceiver);
+        ArgumentNullException.ThrowIfNull(controlDispatcher);
+        ValidateUniqueIds(node);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher, eventReceiver);
     }
 
     private static void ValidateUniqueIds(GuiNode root)
@@ -72,11 +88,12 @@ public static class BlazorGuiRenderer
         RenderTreeBuilder builder,
         GuiNode node,
         Action<string>? commandDispatcher,
-        Action<string, string?>? controlDispatcher)
+        Action<string, string?>? controlDispatcher,
+        object? controlEventReceiver)
     {
         if (node.Control is not null)
         {
-            RenderControl(builder, node, controlDispatcher);
+            RenderControl(builder, node, controlDispatcher, controlEventReceiver);
             return;
         }
 
@@ -113,14 +130,15 @@ public static class BlazorGuiRenderer
             builder.AddContent(4, node.Text);
 
         foreach (var child in node.Children)
-            RenderNode(builder, child, commandDispatcher, controlDispatcher);
+            RenderNode(builder, child, commandDispatcher, controlDispatcher, controlEventReceiver);
         builder.CloseElement();
     }
 
     private static void RenderControl(
         RenderTreeBuilder builder,
         GuiNode node,
-        Action<string, string?>? dispatcher)
+        Action<string, string?>? dispatcher,
+        object? eventReceiver)
     {
         switch (node.Control)
         {
@@ -135,7 +153,7 @@ public static class BlazorGuiRenderer
                 AddValidationAttributes(builder, text.ValidationMessage);
                 if (dispatcher is not null)
                     builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
-                        dispatcher, args => dispatcher(text.ChangeCommandId, args.Value?.ToString())));
+                        eventReceiver ?? dispatcher, args => dispatcher(text.ChangeCommandId, args.Value?.ToString())));
                 builder.CloseElement();
                 break;
 
