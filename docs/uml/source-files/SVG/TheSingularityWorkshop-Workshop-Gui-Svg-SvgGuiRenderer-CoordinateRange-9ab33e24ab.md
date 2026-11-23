@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`9f97d0f9dfc28909415d04b521b9bd686d3d2060`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/9f97d0f9dfc28909415d04b521b9bd686d3d2060)
+- Revision: [`a95bc61121b500db4cada3fdfd03ab78e8127626`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a95bc61121b500db4cada3fdfd03ab78e8127626)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.SVG, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange`
 - Metadata name: `CoordinateRange`
@@ -19,25 +19,25 @@
 
 ## Source declarations
 
-- [`src/SVG/SvgGuiRenderer.cs:619-619`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L619-619)
+- [`src/SVG/SvgGuiRenderer.cs:625-625`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L625-625)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.CoordinateRange(double, double, double)` | [`src/SVG/SvgGuiRenderer.cs:619-619`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L619-619) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.Maximum` | [`src/SVG/SvgGuiRenderer.cs:619-619`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L619-619) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.Minimum` | [`src/SVG/SvgGuiRenderer.cs:619-619`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L619-619) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.ViewHeight` | [`src/SVG/SvgGuiRenderer.cs:619-619`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L619-619) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.CoordinateRange(double, double, double)` | [`src/SVG/SvgGuiRenderer.cs:625-625`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L625-625) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.Maximum` | [`src/SVG/SvgGuiRenderer.cs:625-625`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L625-625) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.Minimum` | [`src/SVG/SvgGuiRenderer.cs:625-625`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L625-625) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange.ViewHeight` | [`src/SVG/SvgGuiRenderer.cs:625-625`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L625-625) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange>` | `External` | [`src/SVG/SvgGuiRenderer.cs:619-619`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L619-619) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `Resolved` | [`src/SVG/SvgGuiRenderer.cs:84-446`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L84-446) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `Resolved` | [`src/SVG/SvgGuiRenderer.cs:448-500`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L448-500) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `Resolved` | [`src/SVG/SvgGuiRenderer.cs:572-580`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9f97d0f9dfc28909415d04b521b9bd686d3d2060/src/SVG/SvgGuiRenderer.cs#L572-580) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer.CoordinateRange>` | `External` | [`src/SVG/SvgGuiRenderer.cs:625-625`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L625-625) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `Resolved` | [`src/SVG/SvgGuiRenderer.cs:84-452`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L84-452) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `Resolved` | [`src/SVG/SvgGuiRenderer.cs:454-506`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L454-506) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgGuiRenderer` | `Resolved` | [`src/SVG/SvgGuiRenderer.cs:578-586`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a95bc61121b500db4cada3fdfd03ab78e8127626/src/SVG/SvgGuiRenderer.cs#L578-586) |
 
 [Back to the generated type index](index.md)
 

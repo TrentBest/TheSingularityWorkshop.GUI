@@ -6,7 +6,7 @@
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`9f97d0f9dfc28909415d04b521b9bd686d3d2060`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/9f97d0f9dfc28909415d04b521b9bd686d3d2060)
+- Revision: [`a95bc61121b500db4cada3fdfd03ab78e8127626`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a95bc61121b500db4cada3fdfd03ab78e8127626)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Types: 9
 
