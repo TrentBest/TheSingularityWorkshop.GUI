@@ -151,6 +151,36 @@ jobs:
           path: ./artifacts/svg-adapter-gallery.svg
           if-no-files-found: error
 
+      - name: Generate renderer-neutral GUI.SVG bar chart
+        run: dotnet run --project samples/BarChartGallery/BarChartGallery.csproj --configuration Release -- ./artifacts/bar-chart-gallery.svg
+
+      - name: Verify renderer-neutral GUI.SVG bar chart
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/bar-chart-gallery.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          assert root.attrib.get("role") == "img", "chart must expose an accessible image role"
+          assert root.attrib.get("aria-label") == "Quarterly revenue", "chart title is missing"
+          description = root.find("svg:desc", ns)
+          assert description is not None and "Q2: missing" in description.text, "accessible data fallback is missing"
+          bars = root.findall(".//svg:rect[@data-value]", ns)
+          assert [bar.attrib["data-value"] for bar in bars] == ["42", "58", "73"], "expected three observed bars"
+          assert all(bar.attrib.get("data-category-id") != "q2" for bar in bars), "missing Q2 must not become a zero bar"
+          labels = [node.text or "" for node in root.findall(".//svg:text", ns)]
+          assert "Q1" in labels and "Q2" in labels and "Q3" in labels and "Q4" in labels, "category labels are incomplete"
+          assert "Revenue (USD thousands)" in labels, "value axis unit is missing"
+          print(f"Verified accessible categorical bar chart with {len(bars)} observed values.")
+          PY
+
+      - name: Upload renderer-neutral GUI.SVG bar chart
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # pinned commit SHA
+        with:
+          name: gui-svg-bar-chart-gallery
+          path: ./artifacts/bar-chart-gallery.svg
+          if-no-files-found: error
+
       - name: Generate GUI.SVG fox/sheepdog plane
         run: dotnet run --project samples/FoxSheepdogPlane/FoxSheepdogPlane.csproj --configuration Release -- ./artifacts/fox-sheepdog-10x10.svg
 
