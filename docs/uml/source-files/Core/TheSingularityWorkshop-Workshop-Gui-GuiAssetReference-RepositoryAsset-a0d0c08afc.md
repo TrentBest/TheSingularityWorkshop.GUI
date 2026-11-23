@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`440eb79e15bf4b14ffe94389c39f0fe067f4b709`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/440eb79e15bf4b14ffe94389c39f0fe067f4b709)
+- Revision: [`9716d4dd70d9d5eb65bd00df2fcd9632f316828d`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/9716d4dd70d9d5eb65bd00df2fcd9632f316828d)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset`
 - Metadata name: `RepositoryAsset`
@@ -19,22 +19,22 @@
 
 ## Source declarations
 
-- [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L30-36)
+- [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/Core/BadgeDefinition.cs#L30-36)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset.Path` | [`src/Core/BadgeDefinition.cs:35-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L35-35) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset.Path.get` | [`src/Core/BadgeDefinition.cs:35-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L35-35) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset.RepositoryAsset(string)` | [`src/Core/BadgeDefinition.cs:33-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L33-33) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset.Path` | [`src/Core/BadgeDefinition.cs:35-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/Core/BadgeDefinition.cs#L35-35) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset.Path.get` | [`src/Core/BadgeDefinition.cs:35-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/Core/BadgeDefinition.cs#L35-35) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset.RepositoryAsset(string)` | [`src/Core/BadgeDefinition.cs:33-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/Core/BadgeDefinition.cs#L33-33) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L30-36) |
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset>` | `External` | [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/440eb79e15bf4b14ffe94389c39f0fe067f4b709/src/Core/BadgeDefinition.cs#L30-36) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiAssetReference` | `Resolved` | [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/Core/BadgeDefinition.cs#L30-36) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.GuiAssetReference.RepositoryAsset>` | `External` | [`src/Core/BadgeDefinition.cs:30-36`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/Core/BadgeDefinition.cs#L30-36) |
 
 [Back to the generated type index](index.md)
 
