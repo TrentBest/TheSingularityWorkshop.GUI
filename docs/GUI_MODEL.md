@@ -59,6 +59,19 @@ The command ID is a stable declaration, not executable code. Core stores no dele
 
 Blazor and WPF render interactive controls when a dispatcher is supplied. SVG renders a static, accessible visual preview only; it does not pretend that an SVG image is an interactive form or own an event lifecycle. The same typed value and validation metadata remain observable to all adapters.
 
+## Semantic document badges
+
+`BadgeDefinition` and `BadgeSet` extend the neutral model beyond widgets into reusable document presentation:
+
+- Each badge has a stable ID, a semantic `BadgeRole`, a concise fallback label, accessible alternative text, an explicit asset reference, and an optional description and destination.
+- Asset and destination references are typed as either repository-relative paths or absolute HTTPS URIs. Ambiguous positional image/path strings are not accepted.
+- `BadgeSet` is immutable and preserves declaration order. Duplicate badge IDs are rejected.
+- Roles distinguish classification (for example, an LOD badge) from artifact identity (for example, a sourcebook cover). GUI does not own SURPS categories, LOD policy, or book descriptor schemas.
+
+`GUI.Markdown` serializes the same composition to a Markdown fragment. The caller supplies a `MarkdownDocumentTarget`, so every repository-relative asset and destination is resolved from the target document's directory. The adapter can receive a repository path inventory and reports missing assets with diagnostics and a text fallback. It performs no filesystem access, descriptor parsing, publication, or deployment.
+
+The SURPS Dungeons and Underground descriptor is the first acceptance fixture. The same composition contract is also tested against a Markdown file several directories below the repository root, so README-relative assumptions cannot pass unnoticed.
+
 ## Planned contract growth
 
 The model should evolve deliberately toward explicit concepts rather than adding arbitrary string properties forever.
