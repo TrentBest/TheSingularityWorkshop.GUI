@@ -14,6 +14,19 @@ public sealed class BarChartSvgRenderer
 {
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
 
+    /// <summary>Explicit chart-family support declarations for this SVG renderer.</summary>
+    public static IReadOnlyList<SvgChartCapability> Capabilities { get; } = Array.AsReadOnly(new[]
+    {
+        new SvgChartCapability("categorical-bar", true, "Single series only; vertical bars with positive/negative values and explicit missing observations."),
+        new SvgChartCapability("grouped-bar", false, "Multiple-series grouping semantics are not yet defined."),
+        new SvgChartCapability("stacked-bar", false, "Stacking and normalization semantics are not yet defined."),
+        new SvgChartCapability("line-time-series", false, "Numeric/time axes and missing-sample connection rules are not yet defined."),
+        new SvgChartCapability("pie-donut", false, "Proportion and zero-total semantics are not yet defined."),
+        new SvgChartCapability("scatter", false, "Numeric X/Y point semantics are not yet defined."),
+        new SvgChartCapability("range-band", false, "Range and interval semantics are not yet defined."),
+        new SvgChartCapability("gauge", false, "Gauge scale, threshold, and status semantics are not yet defined.")
+    });
+
     /// <summary>Creates a standalone SVG manifestation of a categorical bar chart.</summary>
     public string Render(BarChartDefinition chart, int width = 960, int height = 540)
     {
