@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Automation;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.GUI.WPF;
 
@@ -29,6 +30,8 @@ public sealed class WpfSemanticControlRendererTests
 
             Assert.Equal("Pilot", control.Text);
             Assert.Equal("Enter a name", control.ToolTip);
+            Assert.Equal("Enter a name", control.Tag);
+            Assert.Equal("Required", AutomationProperties.GetHelpText(control));
             control.Text = "Ranger";
 
             Assert.Equal("bot.name.changed", command);
