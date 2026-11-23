@@ -32,7 +32,8 @@ public sealed class SvgSemanticControlRendererTests
         var node = GuiBuilders.Select("mode", new SelectDefinition(
             new[] { new GuiSelectOption("observe", "Observe"), new GuiSelectOption("execute", "Execute") },
             "execute",
-            "mode.changed")).Build();
+            "mode.changed",
+            validationMessage: "Choose a supported mode")).Build();
 
         var document = XDocument.Parse(new SvgGuiRenderer().Render(node));
         var group = document.Descendants(Svg + "g")
@@ -40,6 +41,7 @@ public sealed class SvgSemanticControlRendererTests
 
         Assert.Contains(group.Descendants(Svg + "text"), element => element.Value == "Execute");
         Assert.DoesNotContain(group.Descendants(Svg + "text"), element => element.Value == "execute");
+        Assert.Contains(group.Descendants(Svg + "text"), element => element.Value == "Choose a supported mode");
     }
 
     [Theory]
@@ -47,7 +49,7 @@ public sealed class SvgSemanticControlRendererTests
     [InlineData(false, "off")]
     public void Toggle_preview_communicates_boolean_state(bool isChecked, string expectedState)
     {
-        var node = GuiBuilders.Toggle("enabled", new ToggleDefinition(isChecked, "enabled.changed"))
+        var node = GuiBuilders.Toggle("enabled", new ToggleDefinition(isChecked, "enabled.changed", validationMessage: "Toggle requires review"))
             .Text("Enabled")
             .Build();
 
@@ -56,5 +58,6 @@ public sealed class SvgSemanticControlRendererTests
             .Single(element => (string?)element.Attribute("data-control-kind") == "toggle");
 
         Assert.Contains(expectedState, (string?)group.Attribute("aria-label"));
+        Assert.Contains(group.Descendants(Svg + "text"), element => element.Value == "Toggle requires review");
     }
 }
