@@ -13,7 +13,9 @@ public sealed class MarkdownBadgeRendererTests
     public void Surps_dungeons_book_descriptor_renders_lod_and_cover_roles_from_the_book_target()
     {
         var descriptorPath = Path.Combine(AppContext.BaseDirectory, "Fixtures", "dungeons-and-underground.book.json");
-        var descriptor = JsonSerializer.Deserialize<SurpsBookDescriptor>(File.ReadAllText(descriptorPath))!;
+        var descriptor = JsonSerializer.Deserialize<SurpsBookDescriptor>(
+            File.ReadAllText(descriptorPath),
+            new JsonSerializerOptions { PropertyNameCaseInsensitive = true })!;
 
         var badges = BadgeSet.Empty
             .WithBadge(new BadgeDefinition(
