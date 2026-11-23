@@ -42,7 +42,7 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher, controlEventReceiver: controlDispatcher);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: controlDispatcher, controlEventReceiver: controlDispatcher);
     }
 
     /// <summary>
