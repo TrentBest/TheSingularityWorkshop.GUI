@@ -7,6 +7,7 @@ namespace TheSingularityWorkshop.Workshop.Gui.Markdown;
 /// <summary>Identifies the Markdown file that will receive a rendered badge fragment.</summary>
 public sealed class MarkdownDocumentTarget
 {
+    /// <summary>Creates a target for a repository-relative Markdown file.</summary>
     public MarkdownDocumentTarget(string repositoryRelativePath)
     {
         var assetReference = GuiAssetReference.Repository(repositoryRelativePath);
