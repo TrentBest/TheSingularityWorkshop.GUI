@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Xml;
 using System.Xml.Linq;
 using TheSingularityWorkshop.Workshop.Gui;
 
@@ -36,14 +37,17 @@ public sealed class BarChartSvgRenderer
         if (chart.Series.Count > 1)
             throw new NotSupportedException("SVG bar charts currently support one series; grouped and stacked semantics are not defined.");
 
-        var titleId = $"{chart.Id}-title";
-        var descriptionId = $"{chart.Id}-description";
+        // SVG IDs are document-wide XML names. Encode the opaque model ID before
+        // deriving references so whitespace, punctuation, and Unicode stay valid.
+        var rootId = $"chart-{XmlConvert.EncodeLocalName(chart.Id)}";
+        var titleId = $"{rootId}-title";
+        var descriptionId = $"{rootId}-description";
         var dataSummary = chart.Series.Count == 0 || chart.Categories.Count == 0
             ? " No data is available."
             : $" {chart.Series[0].Label}: " + string.Join("; ", chart.Categories.Select((category, index) =>
                 $"{category.Label}: {(chart.Series[0].Values[index] is double value ? F(value) + UnitSuffix(chart.ValueUnit) : "missing")}."));
         var svg = new XElement(Svg + "svg",
-            new XAttribute("id", chart.Id),
+            new XAttribute("id", rootId),
             new XAttribute("width", width),
             new XAttribute("height", height),
             new XAttribute("viewBox", "0 0 100 60"),
@@ -128,7 +132,7 @@ public sealed class BarChartSvgRenderer
                 var barY = Math.Min(valueY, baseline);
                 var barHeight = Math.Abs(baseline - valueY);
                 svg.Add(new XElement(Svg + "rect",
-                    new XAttribute("id", $"bar-{index}"),
+                    new XAttribute("id", $"{rootId}-bar-{index}"),
                     new XAttribute("data-category-id", category.Id),
                     new XAttribute("data-value", F(value.Value)),
                     new XAttribute("x", F(center - barWidth / 2)),
