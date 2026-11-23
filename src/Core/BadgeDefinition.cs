@@ -27,7 +27,7 @@ public abstract record GuiAssetReference
         public string Path { get; }
     }
 
-    /// <summary>References an immutable HTTPS-hosted asset.</summary>
+    /// <summary>References an explicitly supplied HTTPS asset URI; callers own version pinning and immutability.</summary>
     public sealed record ExternalAsset : GuiAssetReference
     {
         public ExternalAsset(Uri uri) => Uri = GuiRepositoryPath.ValidateHttps(uri, nameof(uri));
