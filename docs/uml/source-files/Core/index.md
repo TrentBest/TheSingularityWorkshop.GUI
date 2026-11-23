@@ -6,15 +6,18 @@
 > Generated output. Do not edit by hand; regenerate from the source model.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`a9a0179aea747faa6e842574f1fd9cd65608a389`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a9a0179aea747faa6e842574f1fd9cd65608a389)
+- Revision: [`792939b14c162608acaac5d2d1fda64a0c209304`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/792939b14c162608acaac5d2d1fda64a0c209304)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
-- Types: 46
+- Types: 49
 
 | Type | Kind | Members | Relationships | Page | UML SVG |
 |---|---|---:|---:|---|---|
 | `TheSingularityWorkshop.Workshop.Gui.BadgeDefinition` | `class` | 15 | 10 | [TheSingularityWorkshop-Workshop-Gui-BadgeDefinition-196009d733.md](TheSingularityWorkshop-Workshop-Gui-BadgeDefinition-196009d733.md) | [TheSingularityWorkshop-Workshop-Gui-BadgeDefinition-196009d733.svg](TheSingularityWorkshop-Workshop-Gui-BadgeDefinition-196009d733.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.BadgeRole` | `enum` | 5 | 2 | [TheSingularityWorkshop-Workshop-Gui-BadgeRole-d07ae3d956.md](TheSingularityWorkshop-Workshop-Gui-BadgeRole-d07ae3d956.md) | [TheSingularityWorkshop-Workshop-Gui-BadgeRole-d07ae3d956.svg](TheSingularityWorkshop-Workshop-Gui-BadgeRole-d07ae3d956.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.BadgeSet` | `class` | 7 | 6 | [TheSingularityWorkshop-Workshop-Gui-BadgeSet-6e04c821b1.md](TheSingularityWorkshop-Workshop-Gui-BadgeSet-6e04c821b1.md) | [TheSingularityWorkshop-Workshop-Gui-BadgeSet-6e04c821b1.svg](TheSingularityWorkshop-Workshop-Gui-BadgeSet-6e04c821b1.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.BarChartCategory` | `class` | 5 | 3 | [TheSingularityWorkshop-Workshop-Gui-BarChartCategory-5f5fc901a8.md](TheSingularityWorkshop-Workshop-Gui-BarChartCategory-5f5fc901a8.md) | [TheSingularityWorkshop-Workshop-Gui-BarChartCategory-5f5fc901a8.svg](TheSingularityWorkshop-Workshop-Gui-BarChartCategory-5f5fc901a8.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.BarChartDefinition` | `class` | 19 | 6 | [TheSingularityWorkshop-Workshop-Gui-BarChartDefinition-1d13d85f25.md](TheSingularityWorkshop-Workshop-Gui-BarChartDefinition-1d13d85f25.md) | [TheSingularityWorkshop-Workshop-Gui-BarChartDefinition-1d13d85f25.svg](TheSingularityWorkshop-Workshop-Gui-BarChartDefinition-1d13d85f25.svg) |
+| `TheSingularityWorkshop.Workshop.Gui.BarChartSeries` | `class` | 8 | 3 | [TheSingularityWorkshop-Workshop-Gui-BarChartSeries-1560a53edf.md](TheSingularityWorkshop-Workshop-Gui-BarChartSeries-1560a53edf.md) | [TheSingularityWorkshop-Workshop-Gui-BarChartSeries-1560a53edf.svg](TheSingularityWorkshop-Workshop-Gui-BarChartSeries-1560a53edf.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystem` | `record-struct` | 19 | 5 | [TheSingularityWorkshop-Workshop-Gui-CoordinateSystem-6370e2bc48.md](TheSingularityWorkshop-Workshop-Gui-CoordinateSystem-6370e2bc48.md) | [TheSingularityWorkshop-Workshop-Gui-CoordinateSystem-6370e2bc48.svg](TheSingularityWorkshop-Workshop-Gui-CoordinateSystem-6370e2bc48.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemGuiBuilder` | `class` | 12 | 13 | [TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder-2858320f16.md](TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder-2858320f16.md) | [TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder-2858320f16.svg](TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder-2858320f16.svg) |
 | `TheSingularityWorkshop.Workshop.Gui.CoordinateSystemUtilities` | `class` | 5 | 0 | [TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities-f821ba6eab.md](TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities-f821ba6eab.md) | [TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities-f821ba6eab.svg](TheSingularityWorkshop-Workshop-Gui-CoordinateSystemUtilities-f821ba6eab.svg) |

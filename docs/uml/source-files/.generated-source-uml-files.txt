@@ -19,6 +19,12 @@ Core/TheSingularityWorkshop-Workshop-Gui-BadgeRole-d07ae3d956.md
 Core/TheSingularityWorkshop-Workshop-Gui-BadgeRole-d07ae3d956.svg
 Core/TheSingularityWorkshop-Workshop-Gui-BadgeSet-6e04c821b1.md
 Core/TheSingularityWorkshop-Workshop-Gui-BadgeSet-6e04c821b1.svg
+Core/TheSingularityWorkshop-Workshop-Gui-BarChartCategory-5f5fc901a8.md
+Core/TheSingularityWorkshop-Workshop-Gui-BarChartCategory-5f5fc901a8.svg
+Core/TheSingularityWorkshop-Workshop-Gui-BarChartDefinition-1d13d85f25.md
+Core/TheSingularityWorkshop-Workshop-Gui-BarChartDefinition-1d13d85f25.svg
+Core/TheSingularityWorkshop-Workshop-Gui-BarChartSeries-1560a53edf.md
+Core/TheSingularityWorkshop-Workshop-Gui-BarChartSeries-1560a53edf.svg
 Core/TheSingularityWorkshop-Workshop-Gui-CoordinateSystem-6370e2bc48.md
 Core/TheSingularityWorkshop-Workshop-Gui-CoordinateSystem-6370e2bc48.svg
 Core/TheSingularityWorkshop-Workshop-Gui-CoordinateSystemGuiBuilder-2858320f16.md

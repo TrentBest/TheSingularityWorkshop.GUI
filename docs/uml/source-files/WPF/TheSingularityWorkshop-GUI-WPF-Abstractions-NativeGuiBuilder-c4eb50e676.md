@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`a9a0179aea747faa6e842574f1fd9cd65608a389`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a9a0179aea747faa6e842574f1fd9cd65608a389)
+- Revision: [`792939b14c162608acaac5d2d1fda64a0c209304`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/792939b14c162608acaac5d2d1fda64a0c209304)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Abstractions.NativeGuiBuilder<T>`
 - Metadata name: `NativeGuiBuilder'1`
@@ -19,7 +19,7 @@
 
 ## Source declarations
 
-- [`src/WPF/NativeGuiBuilder.cs:130-133`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/WPF/NativeGuiBuilder.cs#L130-133)
+- [`src/WPF/NativeGuiBuilder.cs:130-133`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/WPF/NativeGuiBuilder.cs#L130-133)
 
 ## Members
 
@@ -29,7 +29,7 @@ _No explicit source members were recorded._
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.NativeGuiBuilder` | `Resolved` | [`src/WPF/NativeGuiBuilder.cs:130-133`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/WPF/NativeGuiBuilder.cs#L130-133) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.NativeGuiBuilder` | `Resolved` | [`src/WPF/NativeGuiBuilder.cs:130-133`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/792939b14c162608acaac5d2d1fda64a0c209304/src/WPF/NativeGuiBuilder.cs#L130-133) |
 
 [Back to the generated type index](index.md)
 
