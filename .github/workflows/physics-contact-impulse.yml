@@ -1,0 +1,81 @@
+name: Physics Contact Impulse SVG
+
+on:
+  push:
+    branches:
+      - development
+    paths:
+      - "samples/demonstrations/ContactImpulse/**"
+      - ".github/workflows/physics-contact-impulse.yml"
+      - "src/Core/**"
+      - "src/SVG/**"
+  pull_request:
+    branches:
+      - development
+    paths:
+      - "samples/demonstrations/ContactImpulse/**"
+      - ".github/workflows/physics-contact-impulse.yml"
+      - "src/Core/**"
+      - "src/SVG/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  render-recorded-contact-impulse:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout GUI development
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # pinned commit SHA
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@67a3573c9a986a3f9c594539f4ab511d57bb3ce9 # pinned commit SHA
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Fetch pinned Physics contact-impulse run record
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ./artifacts
+          curl --fail --silent --show-error --location \
+            "https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Physics/8b7b3f0e99bb90a4f17445fc438985925cb84048/docs/experiments/contact-impulse.run.json" \
+            --output ./artifacts/physics-contact-impulse.run.json
+          test -s ./artifacts/physics-contact-impulse.run.json
+
+      - name: Render Physics-owned result through GUI Core and GUI.SVG
+        run: dotnet run --project samples/demonstrations/ContactImpulse/ContactImpulse.csproj --configuration Release -- ./artifacts/physics-contact-impulse.run.json ./artifacts/08-contact-impulse.generated.svg
+
+      - name: Verify SVG evidence and accessibility
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          path = "./artifacts/08-contact-impulse.generated.svg"
+          root = ET.parse(path).getroot()
+          ns = {"svg": "http://www.w3.org/2000/svg"}
+          assert root.tag == "{http://www.w3.org/2000/svg}svg"
+          assert root.attrib.get("role") == "img"
+          assert root.attrib.get("aria-labelledby")
+          ids = [node.attrib["id"] for node in root.iter() if "id" in node.attrib]
+          assert len(ids) == len(set(ids)), "SVG ids must be unique"
+          required = {"body-a", "body-b", "impulse-a", "impulse-b", "impulse-label",
+                      "initial-caption", "final-caption", "gui-svg-description"}
+          assert required.issubset(set(ids)), f"missing SVG evidence nodes: {required - set(ids)}"
+          text = " ".join(node.text or "" for node in root.findall(".//svg:text", ns))
+          for phrase in ("1 N*s", "Body A", "Body B", "BEFORE", "AFTER",
+                         "impulse is not a force", "no physical time advanced"):
+              assert phrase.lower() in text.lower(), f"missing evidence label: {phrase}"
+          print(f"Verified {len(ids)} unique SVG ids and all contact-impulse evidence labels.")
+          PY
+
+      - name: Upload Physics-backed contact-impulse SVG
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # pinned commit SHA
+        with:
+          name: gui-svg-physics-contact-impulse
+          path: |
+            ./artifacts/physics-contact-impulse.run.json
+            ./artifacts/08-contact-impulse.generated.svg
+          if-no-files-found: error
