@@ -20,8 +20,8 @@ public sealed class BarChartSvgRendererTests
         Assert.Equal("Quarterly sales", (string?)root.Attribute("aria-label"));
         Assert.Equal("sales-title sales-description", (string?)root.Attribute("aria-labelledby"));
         Assert.StartsWith("Sales by quarter in thousands.", root.Element(Svg + "desc")!.Value);
-        Assert.Contains("Q2: missing", root.Element(Svg + "desc")!.Value);
-        Assert.Contains("Q3: 18 USD thousands", root.Element(Svg + "desc")!.Value);
+        Assert.Contains("Quarter 2: missing", root.Element(Svg + "desc")!.Value);
+        Assert.Contains("Quarter 3: 18 USD thousands", root.Element(Svg + "desc")!.Value);
         Assert.Equal(new[] { "Quarter 1", "Quarter 2", "Quarter 3" },
             root.Descendants(Svg + "text").Where(x => new[] { "Quarter 1", "Quarter 2", "Quarter 3" }.Contains(x.Value))
                 .Select(x => x.Value).ToArray());
@@ -55,7 +55,12 @@ public sealed class BarChartSvgRendererTests
         var baselineY = double.Parse((string)baseline.Attribute("y1")!, System.Globalization.CultureInfo.InvariantCulture);
         var barY = double.Parse((string)negativeBar.Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
 
-        Assert.True(barY > baselineY);
+        var barHeight = double.Parse((string)negativeBar.Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture);
+
+        // A negative bar begins exactly at zero and extends downward; its top edge
+        // therefore equals the baseline while its positive height reaches lower values.
+        Assert.Equal(baselineY, barY);
+        Assert.True(barHeight > 0);
     }
 
     [Fact]
