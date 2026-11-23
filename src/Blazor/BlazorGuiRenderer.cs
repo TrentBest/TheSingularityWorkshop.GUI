@@ -147,7 +147,7 @@ public static class BlazorGuiRenderer
                 if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(4, "disabled", true);
                 AddValidationAttributes(builder, select.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         dispatcher, args => dispatcher(select.ChangeCommandId, args.Value?.ToString())));
                 foreach (var option in select.Options)
                 {
@@ -170,7 +170,7 @@ public static class BlazorGuiRenderer
                 if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "disabled", true);
                 AddValidationAttributes(builder, toggle.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(8, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         dispatcher, args => dispatcher(toggle.ChangeCommandId,
                             bool.TryParse(args.Value?.ToString(), out var value) ? value.ToString() : null)));
                 builder.CloseElement();
