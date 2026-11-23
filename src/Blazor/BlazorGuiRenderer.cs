@@ -58,7 +58,7 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(eventReceiver);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher, eventReceiver);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: controlDispatcher, controlEventReceiver: eventReceiver);
     }
 
     private static void ValidateUniqueIds(GuiNode root)
@@ -166,7 +166,7 @@ public static class BlazorGuiRenderer
                 AddValidationAttributes(builder, select.ValidationMessage);
                 if (dispatcher is not null)
                     builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
-                        dispatcher, args => dispatcher(select.ChangeCommandId, args.Value?.ToString())));
+                        eventReceiver ?? dispatcher, args => dispatcher(select.ChangeCommandId, args.Value?.ToString())));
                 foreach (var option in select.Options)
                 {
                     builder.OpenElement(10, "option");
@@ -189,7 +189,7 @@ public static class BlazorGuiRenderer
                 AddValidationAttributes(builder, toggle.ValidationMessage);
                 if (dispatcher is not null)
                     builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
-                        dispatcher, args => dispatcher(toggle.ChangeCommandId,
+                        eventReceiver ?? dispatcher, args => dispatcher(toggle.ChangeCommandId,
                             bool.TryParse(args.Value?.ToString(), out var value) ? value.ToString() : null)));
                 builder.CloseElement();
                 break;
