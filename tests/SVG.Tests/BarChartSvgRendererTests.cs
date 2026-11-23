@@ -86,6 +86,21 @@ public sealed class BarChartSvgRendererTests
     }
 
     [Fact]
+    public void Declares_supported_and_unsupported_chart_families_explicitly()
+    {
+        var capabilities = BarChartSvgRenderer.Capabilities;
+
+        Assert.Contains(capabilities, item => item.ChartKind == "categorical-bar" && item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "grouped-bar" && !item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "stacked-bar" && !item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "line-time-series" && !item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "pie-donut" && !item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "scatter" && !item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "range-band" && !item.IsSupported);
+        Assert.Contains(capabilities, item => item.ChartKind == "gauge" && !item.IsSupported);
+    }
+
+    [Fact]
     public void Invalid_dimensions_are_rejected()
     {
         var chart = CreateChart();
