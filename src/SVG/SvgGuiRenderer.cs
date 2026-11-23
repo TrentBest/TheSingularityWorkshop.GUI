@@ -198,6 +198,71 @@ public sealed class SvgGuiRenderer
                     new XAttribute("preserveAspectRatio", Value(node, "preserveAspectRatio", "xMidYMid meet")));
                 if (node.Text is not null) element.SetAttributeValue("aria-label", node.Text);
                 break;
+            case "TextInput" when node.Control is TextInputDefinition textInput:
+                element = new XElement(Svg + "g",
+                    new XAttribute("role", "group"),
+                    new XAttribute("aria-label", node.Text ?? "Text input"),
+                    new XAttribute("data-control-kind", "text-input"),
+                    new XElement(Svg + "rect",
+                        new XAttribute("x", F(Number(node, "x", 2))),
+                        new XAttribute("y", F(Number(node, "y", 2))),
+                        new XAttribute("width", F(NonNegative(node, "width", 42))),
+                        new XAttribute("height", F(NonNegative(node, "height", 7))),
+                        new XAttribute("rx", "0.8"),
+                        new XAttribute("fill", "#142638"),
+                        new XAttribute("stroke", "#7390a8")),
+                    new XElement(Svg + "text",
+                        new XAttribute("x", F(Number(node, "x", 2) + 1.2)),
+                        new XAttribute("y", F(Number(node, "y", 6.5))),
+                        new XAttribute("fill", "#eef6ff"),
+                        textInput.Value.Length > 0 ? textInput.Value : textInput.Placeholder ?? string.Empty));
+                if (!string.IsNullOrWhiteSpace(textInput.ValidationMessage))
+                    element.Add(new XElement(Svg + "text",
+                        new XAttribute("x", F(Number(node, "x", 2))),
+                        new XAttribute("y", F(Number(node, "y", 11))),
+                        new XAttribute("fill", "#ff9b9b"),
+                        textInput.ValidationMessage));
+                break;
+            case "Select" when node.Control is SelectDefinition select:
+                var selectedLabel = select.Options.First(option =>
+                    string.Equals(option.Id, select.SelectedOptionId, StringComparison.Ordinal)).Label;
+                element = new XElement(Svg + "g",
+                    new XAttribute("role", "group"),
+                    new XAttribute("aria-label", node.Text ?? "Selection"),
+                    new XAttribute("data-control-kind", "select"),
+                    new XElement(Svg + "rect",
+                        new XAttribute("x", F(Number(node, "x", 2))),
+                        new XAttribute("y", F(Number(node, "y", 2))),
+                        new XAttribute("width", F(NonNegative(node, "width", 42))),
+                        new XAttribute("height", F(NonNegative(node, "height", 7))),
+                        new XAttribute("rx", "0.8"),
+                        new XAttribute("fill", "#142638"),
+                        new XAttribute("stroke", "#7390a8")),
+                    new XElement(Svg + "text",
+                        new XAttribute("x", F(Number(node, "x", 3.2))),
+                        new XAttribute("y", F(Number(node, "y", 6.5))),
+                        new XAttribute("fill", "#eef6ff"),
+                        selectedLabel));
+                break;
+            case "Toggle" when node.Control is ToggleDefinition toggle:
+                element = new XElement(Svg + "g",
+                    new XAttribute("role", "img"),
+                    new XAttribute("aria-label", $"{node.Text ?? node.Id}: {(toggle.IsChecked ? "on" : "off")}"),
+                    new XAttribute("data-control-kind", "toggle"),
+                    new XElement(Svg + "rect",
+                        new XAttribute("x", F(Number(node, "x", 2))),
+                        new XAttribute("y", F(Number(node, "y", 2))),
+                        new XAttribute("width", "4"),
+                        new XAttribute("height", "4"),
+                        new XAttribute("rx", "0.5"),
+                        new XAttribute("fill", toggle.IsChecked ? "#7ee0bd" : "#142638"),
+                        new XAttribute("stroke", "#7390a8")),
+                    new XElement(Svg + "text",
+                        new XAttribute("x", F(Number(node, "x", 7.5))),
+                        new XAttribute("y", F(Number(node, "y", 5.3))),
+                        new XAttribute("fill", "#eef6ff"),
+                        node.Text ?? node.Id));
+                break;
             case "svg-title":
                 element = new XElement(Svg + "title", node.Text ?? string.Empty);
                 break;
