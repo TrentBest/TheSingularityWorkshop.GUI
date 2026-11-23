@@ -22,7 +22,7 @@ Treat these as distinct evidence levels. A project build establishes that the pr
 
 `TextInputDefinition`, `SelectDefinition`, and `ToggleDefinition` are shared Core contracts. Blazor and WPF translate them into native text, selection, and boolean controls. Each change reports the stable command ID plus the new value (text, option ID, or boolean string) to a host-supplied dispatcher. This is a transport boundary only: the consuming host owns command allow-listing, validation, authorization, and domain-state updates. No renderer executes arbitrary code or binds reflection-based handlers.
 
-When no value dispatcher is supplied, Blazor marks text input read-only and disables selection/toggle; WPF applies the corresponding read-only/disabled state. SVG shows the current value/selection/state for documentation and review, but cannot dispatch changes. These behaviors are intentionally not presented as complete cross-adapter interactive parity.
+When no value dispatcher is supplied, Blazor marks text input read-only and disables selection/toggle; WPF applies the corresponding read-only/disabled state. WPF's native TextBox has no built-in placeholder-text property, so the current adapter exposes the placeholder through Tag/ToolTip metadata; a theme-specific visible watermark remains future work. WPF validation text is exposed through automation help text. SVG shows the current value/selection/state for documentation and review, but cannot dispatch changes. These behaviors are intentionally not presented as complete cross-adapter interactive parity.
 
 ## Semantic document presentation
 
