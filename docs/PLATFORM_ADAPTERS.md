@@ -10,12 +10,18 @@ A platform adapter consumes the neutral GUI model and materializes it for a targ
 
 | Path | Current evidence | Boundary |
 | --- | --- | --- |
-| Core → Blazor | `BlazorGuiRenderer` consumes `GuiNode`; Blazor render-tree tests exercise output. | Prototype renderer; property forwarding and semantic coverage are not yet a finalized cross-platform contract. |
-| Core → SVG | `SvgGuiRenderer` consumes `GuiNode`; SVG tests and the generated feature gallery cover scene serialization. | SVG scene vocabulary is explicit; generic unknown node kinds fall back to SVG groups and place node text in a title, not a general-purpose native widget layout. |
-| Core → WPF | `WpfGuiRenderer` consumes `GuiNode`; Windows CI runs native renderer tests for hierarchy/order, identity and text, supported layout/color properties, null-root rejection, and unknown-kind fallback. | Initial renderer contract coverage now exists. It does not establish parity with Blazor/SVG or cover the full node/property/lifecycle surface. |
+| Core → Blazor | `BlazorGuiRenderer` consumes `GuiNode`; render-tree tests cover hierarchy, commands, and typed text/select/toggle controls. | Typed controls dispatch values only through an explicit host dispatcher; without one they render read-only/disabled. Broader semantic parity remains open. |
+| Core → SVG | `SvgGuiRenderer` consumes `GuiNode`; tests cover scene serialization and static previews of typed text/select/toggle controls. | SVG controls are accessible visual snapshots, not interactive forms or a GUI event lifecycle. |
+| Core → WPF | `WpfGuiRenderer` consumes `GuiNode`; Windows tests cover hierarchy/order, identity/text, supported layout/color properties, and typed text/select/toggle controls. | Value changes route to a supplied host dispatcher; controls are read-only/disabled without one. Broader property, accessibility, and lifecycle coverage remains open. |
 | Unity UI Toolkit | No adapter implementation in this repository. | Candidate future target only. |
 
 Treat these as distinct evidence levels. A project build establishes that the project compiles under that workflow; it does not establish semantic parity with another adapter or prove an end-to-end application integration.
+
+## Typed value-control manifestation
+
+`TextInputDefinition`, `SelectDefinition`, and `ToggleDefinition` are shared Core contracts. Blazor and WPF translate them into native text, selection, and boolean controls. Each change reports the stable command ID plus the new value (text, option ID, or boolean string) to a host-supplied dispatcher. This is a transport boundary only: the consuming host owns command allow-listing, validation, authorization, and domain-state updates. No renderer executes arbitrary code or binds reflection-based handlers.
+
+When no value dispatcher is supplied, Blazor marks text input read-only and disables selection/toggle; WPF applies the corresponding read-only/disabled state. SVG shows the current value/selection/state for documentation and review, but cannot dispatch changes. These behaviors are intentionally not presented as complete cross-adapter interactive parity.
 
 ## Adapter responsibilities
 
