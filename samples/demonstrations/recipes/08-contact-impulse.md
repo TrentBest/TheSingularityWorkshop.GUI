@@ -32,7 +32,7 @@ dotnet run --project samples/demonstrations/ContactImpulse/ContactImpulse.csproj
 
 The consumer validates model/schema identity, units, finite vector values, positive masses, restitution range, unit contact normal, non-negative impulse, and zero physical time advanced. It then verifies the SVG contains the two bodies, both impulse vectors, the recorded magnitude, before/after captions, and accessible root description.
 
-The dedicated [CI workflow](../../../.github/workflows/physics-contact-impulse.yml) fetches the Physics record from the pinned commit, runs the consumer, validates the generated SVG structure and evidence labels, and uploads both source record and SVG. It does not publish packages or deploy Pages.
+The dedicated [CI workflow](../../../.github/workflows/physics-contact-impulse.yml) [passed on its first run](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45103020144): it fetched the Physics record from the pinned commit, ran the .NET consumer, validated the generated SVG structure and accessibility/evidence labels, and uploaded both source record and SVG. It does not publish packages or deploy Pages.
 
 ## Why this is useful to a SURPS sourcebook
 
