@@ -1,4 +1,5 @@
 using System.Xml.Linq;
+using Xunit;
 using TheSingularityWorkshop.Workshop.Gui;
 using TheSingularityWorkshop.Workshop.Gui.Svg;
 
