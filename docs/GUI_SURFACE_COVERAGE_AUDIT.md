@@ -14,6 +14,7 @@
 | GUI.Blazor | Blazor-facing renderer/adapter | Release tests and a clean local-package consumer passed. Real consumer-host demonstration and candidate-version WebPage run remain open. | Candidate scope; prove the documented path in a host. |
 | GUI.SVG | Portable vector output | Release tests, generated-gallery byte comparison, clean consumer using locally packed packages, XML-attribute escaping/Unicode round-trip, and repeat-render byte determinism passed in [workflow run 39185442472](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39185442472). Archive-only consumption and broader hostile-input coverage remain open. The external-reference policy is documented in `docs/SVG_ADAPTER.md`; targeted tests assert serialization for links, images, gradient inheritance, reusable symbols, filter images, and motion paths, but do not establish destination safety. | Candidate scope; likely headline feature, limitations explicit. |
 | GUI.WPF | Windows-native rendering surface | Windows tests and WPF package build/archive checks passed in [workflow run 39199107981](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/39199107981); the workflow now includes WPF packaging and a dedicated Windows test lane. This does not establish full adapter parity. | Candidate scope; verify the selected candidate archive and document adapter-specific behavior. |
+| GUI.Markdown | Semantic document badge serializer | New development-only adapter: ordered badge composition, document-relative repository asset paths, optional destinations, and missing-asset diagnostics. The release package scope is not yet approved. | Fifth development candidate; validate descriptor fixture and clean archive consumer before any release decision. |
 | WebPage consumer | Downstream integration / proof application | Existing NuGet-mode and repository-source CI passed for the configured dependency set, not a future GUI candidate. | Consumer proof, not another renderer package. Re-test candidate versions. |
 
 Do not infer full parity from multiple adapters. A renderer can be useful and deliberately partial; document and test its actual behavior and limitations.
@@ -41,7 +42,7 @@ Build a conformance matrix naming each contract, test location, each adapter res
 - [ ] Inventory actual public node/property vocabulary from source, not memory.
 - [ ] Map each documented property and node family to executable tests.
 - [ ] Identify shared tests for shared invariants, or explain why a test is adapter-specific.
-- [ ] Record Core, Blazor, SVG, and WPF results separately; distinguish not applicable from not tested.
+- [ ] Record Core, Blazor, SVG, WPF, and (if approved) Markdown results separately; distinguish not applicable from not tested.
 - [ ] Document intentional differences rather than forcing artificial pixel-level parity.
 - [ ] Link the matrix and evidence from the release checklist.
 
@@ -157,11 +158,11 @@ Update with exact links and candidate commit identifiers as work proceeds; do no
 
 ### GUI.Core platform boundary — partial source review
 
-**Observed:** `src/Core/TheSingularityWorkshop.GUI.Core.csproj` targets `.NET 8.0`, declares no `PackageReference` items, and identifies itself as platform-neutral in package metadata. The six current Core C# source files were reviewed: `GuiNode.cs`, `GuiBuilder.cs`, `GuiBuilders.cs`, `CoordinateSystem.cs`, `CoordinateSystemGuiBuilder.cs`, and `CoordinateSystemUtilities.cs`. Their visible APIs use base-library types; no WPF, Blazor, SVG, Unity, or other UI-framework references were found. `GuiNode` copies properties into a read-only dictionary and children into a read-only collection; `GuiNodeBuilder` validates property names/values and rejects null child inputs, while the simpler `GuiBuilder` defers most validation until `Build()` constructs a `GuiNode`.
+**Historical observation (2026-10-19):** `src/Core/TheSingularityWorkshop.GUI.Core.csproj` then targeted `.NET 8.0` and declared no `PackageReference` items. That target-framework observation is superseded by the .NET 10 migration. The current Core model also includes typed value-control definitions and semantic badge/asset contracts; the older six-file source review is not a complete inventory of today's Core API. Core remains platform-neutral and must continue to avoid WPF, Blazor, SVG, Unity, DOM, HTML, CSS, JavaScript, and XAML dependencies.
 
 **Contract details discovered:** `GuiNode.TryFind` performs depth-first traversal and returns the first matching ID; Core itself does not enforce document-wide unique IDs, while the SVG renderer rejects duplicate IDs. Coordinate utility methods reject non-finite values for clamp/normalize/denormalize, but `Normalize` and `Denormalize` do not clamp their inputs to the declared range. `CoordinateSystem` validates finite, in-range coordinates for its conversion methods; its `ToPanel`/ `FromPanel` operations currently preserve coordinates rather than rescaling them. These are observed implementation semantics, not yet a cross-adapter compatibility promise.
 
-**Still unproven:** the source review does not establish the transitive dependency graph or broader target-framework compatibility. Core currently targets only `net8.0`; do not imply support for older frameworks. The exact-candidate clean consumer build and full public API/documentation review remain release gates.
+**Still unproven:** the historical source review does not establish the current transitive dependency graph or broader target-framework compatibility. Core currently targets .NET 10; do not infer support for older frameworks from the prior .NET 8 snapshot. The exact-candidate clean consumer build and full public API/documentation review remain release gates.
 
 ### SVG reference policy — categories identified, policy still open
 
