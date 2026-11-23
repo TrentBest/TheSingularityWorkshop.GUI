@@ -48,7 +48,7 @@ Physics generates a default overview and a configurable detail window using its 
 
 ### Recipe 08 — Contact impulse from a recorded Physics result
 
-The consumer reads the actual `ContactImpulseResolver` run record and manifests the two bodies, equal-and-opposite normal impulses, and before/after velocities. It labels impulse in N*s—not force in N—and preserves the resolver's zero-time and pose-preservation limits; its dedicated workflow validates the SVG and uploads the source record alongside the artifact.
+The consumer reads the actual `ContactImpulseResolver` run record and manifests the two bodies, equal-and-opposite normal impulses, and before/after velocities. It labels impulse in N*s—not force in N—and preserves the resolver's zero-time and pose-preservation limits; its [dedicated workflow passed](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45103020144), validating the SVG and uploading the source record alongside the artifact.
 
 [**Read Recipe 08 — Physics-backed contact impulse**](recipes/08-contact-impulse.md)
 
