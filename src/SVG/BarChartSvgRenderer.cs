@@ -98,6 +98,16 @@ public sealed class BarChartSvgRenderer
                 new XAttribute("x1", F(plotLeft)), new XAttribute("x2", F(plotRight)),
                 new XAttribute("y1", F(y)), new XAttribute("y2", F(y)),
                 new XAttribute("stroke", "#294055"), new XAttribute("stroke-width", "0.15")));
+
+            var tickValue = maximum - (maximum - minimum) * tick / 4;
+            svg.Add(new XElement(Svg + "text",
+                new XAttribute("data-axis-tick", tick),
+                new XAttribute("x", F(plotLeft - 0.8)),
+                new XAttribute("y", F(y + 0.65)),
+                new XAttribute("text-anchor", "end"),
+                new XAttribute("font-size", "1.6"),
+                new XAttribute("fill", "#b8c9d8"),
+                F(tickValue)));
         }
 
         svg.Add(new XElement(Svg + "line",
