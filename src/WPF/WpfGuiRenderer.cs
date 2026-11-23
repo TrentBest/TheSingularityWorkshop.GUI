@@ -125,7 +125,7 @@ public static class WpfGuiRenderer
                 if (button.Content is string text && !string.IsNullOrEmpty(text))
                     content.Children.Add(new TextBlock { Text = text, TextWrapping = TextWrapping.Wrap });
                 foreach (var child in node.Children)
-                    content.Children.Add(RenderValidated(child, commandDispatcher));
+                    content.Children.Add(RenderValidated(child, commandDispatcher, controlDispatcher));
                 button.Content = content;
             }
         }
