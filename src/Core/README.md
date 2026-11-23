@@ -9,6 +9,7 @@ The platform-neutral model and recursive builder primitives for The Singularity 
 
 - `GuiNode`: an immutable recursive description with kind, stable string identity, optional text/source, a read-only property map, and ordered children.
 - `GuiBuilder`: a fluent way to construct a tree and produce a `GuiNode` snapshot.
+- `BarChartDefinition`, `BarChartCategory`, and `BarChartSeries`: renderer-neutral categorical chart data with stable identity, aligned finite/missing values, axis labels, units, and an accessible description.
 - Typed `TextInputDefinition`, `SelectDefinition`, and `ToggleDefinition` value controls with stable host command IDs.
 - `BadgeDefinition` and ordered immutable `BadgeSet` for semantic document badges.
 - Explicit repository-relative or HTTPS `GuiAssetReference` and `GuiLinkReference` values.
@@ -32,6 +33,22 @@ Console.WriteLine(saveButton.Text); // Save
 ```
 
 Node kinds and string properties are intentionally simple at this stage. Their interpretation belongs to an adapter's documented contract; arbitrary property names are not guaranteed to have identical meaning across adapters.
+
+## Categorical bar chart data
+
+```csharp
+var chart = new BarChartDefinition(
+    "quarterly-sales",
+    "Quarterly sales",
+    "Sales by quarter in thousands of dollars.",
+    new[] { new BarChartCategory("q1", "Quarter 1"), new BarChartCategory("q2", "Quarter 2") },
+    new[] { new BarChartSeries("revenue", "Revenue", new double?[] { 120, null }) },
+    categoryAxisLabel: "Quarter",
+    valueAxisLabel: "Revenue",
+    valueUnit: "USD thousands");
+```
+
+A missing value is `null`, not zero. Series values align by index with the chart category sequence. Empty charts are valid; duplicate identities, non-finite values, and mismatched series lengths are rejected. See [BarChartDefinition](BarChartDefinition.md) for the contract and current limits. This is a data model, not a renderer or a claim of adapter support.
 
 ## Semantic document badges
 
