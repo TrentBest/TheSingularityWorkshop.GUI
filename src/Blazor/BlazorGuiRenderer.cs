@@ -145,14 +145,15 @@ public static class BlazorGuiRenderer
             case TextInputDefinition text:
                 builder.OpenElement(0, "input");
                 builder.AddAttribute(1, "id", node.Id);
-                builder.AddAttribute(2, "type", "text");
-                builder.AddAttribute(3, "value", text.Value);
-                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(4, "aria-label", node.Text);
-                if (text.Placeholder is not null) builder.AddAttribute(5, "placeholder", text.Placeholder);
-                if (text.IsReadOnly || dispatcher is null) builder.AddAttribute(6, "readonly", true);
+                if (node.Properties.TryGetValue("class", out var textClass)) builder.AddAttribute(2, "class", textClass);
+                builder.AddAttribute(3, "type", "text");
+                builder.AddAttribute(4, "value", text.Value);
+                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(5, "aria-label", node.Text);
+                if (text.Placeholder is not null) builder.AddAttribute(6, "placeholder", text.Placeholder);
+                if (text.IsReadOnly || dispatcher is null) builder.AddAttribute(7, "readonly", true);
                 AddValidationAttributes(builder, text.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(10, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         eventReceiver ?? dispatcher, args => dispatcher(text.ChangeCommandId, args.Value?.ToString())));
                 builder.CloseElement();
                 break;
@@ -160,20 +161,21 @@ public static class BlazorGuiRenderer
             case SelectDefinition select:
                 builder.OpenElement(0, "select");
                 builder.AddAttribute(1, "id", node.Id);
-                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(2, "aria-label", node.Text);
-                builder.AddAttribute(3, "value", select.SelectedOptionId);
-                if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(4, "disabled", true);
+                if (node.Properties.TryGetValue("class", out var selectClass)) builder.AddAttribute(2, "class", selectClass);
+                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(3, "aria-label", node.Text);
+                builder.AddAttribute(4, "value", select.SelectedOptionId);
+                if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "disabled", true);
                 AddValidationAttributes(builder, select.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(10, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         eventReceiver ?? dispatcher, args => dispatcher(select.ChangeCommandId, args.Value?.ToString())));
                 foreach (var option in select.Options)
                 {
-                    builder.OpenElement(10, "option");
-                    builder.AddAttribute(11, "value", option.Id);
-                    builder.AddAttribute(12, "selected",
+                    builder.OpenElement(11, "option");
+                    builder.AddAttribute(12, "value", option.Id);
+                    builder.AddAttribute(13, "selected",
                         string.Equals(option.Id, select.SelectedOptionId, StringComparison.Ordinal));
-                    builder.AddContent(13, option.Label);
+                    builder.AddContent(14, option.Label);
                     builder.CloseElement();
                 }
                 builder.CloseElement();
@@ -183,12 +185,13 @@ public static class BlazorGuiRenderer
                 builder.OpenElement(0, "input");
                 builder.AddAttribute(1, "id", node.Id);
                 builder.AddAttribute(2, "type", "checkbox");
-                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(3, "aria-label", node.Text);
-                builder.AddAttribute(4, "checked", toggle.IsChecked);
-                if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "disabled", true);
+                if (node.Properties.TryGetValue("class", out var toggleClass)) builder.AddAttribute(3, "class", toggleClass);
+                if (!string.IsNullOrWhiteSpace(node.Text)) builder.AddAttribute(4, "aria-label", node.Text);
+                builder.AddAttribute(5, "checked", toggle.IsChecked);
+                if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(6, "disabled", true);
                 AddValidationAttributes(builder, toggle.ValidationMessage);
                 if (dispatcher is not null)
-                    builder.AddAttribute(9, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                    builder.AddAttribute(10, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
                         eventReceiver ?? dispatcher, args => dispatcher(toggle.ChangeCommandId,
                             bool.TryParse(args.Value?.ToString(), out var value) ? value.ToString() : null)));
                 builder.CloseElement();
@@ -200,8 +203,8 @@ public static class BlazorGuiRenderer
     {
         if (string.IsNullOrWhiteSpace(validationMessage))
             return;
-        builder.AddAttribute(7, "aria-invalid", "true");
-        builder.AddAttribute(8, "title", validationMessage);
+        builder.AddAttribute(8, "aria-invalid", "true");
+        builder.AddAttribute(9, "title", validationMessage);
     }
 
     private static string ResolveTag(string kind) => kind switch
