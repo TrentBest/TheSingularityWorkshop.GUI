@@ -14,7 +14,7 @@ The current generator is a staging tool under samples/SourceUmlGenerator. It is 
 2. **Project-semantic analysis:** loads the configured project through MSBuild/Roslyn and fails closed on compilation errors. Compiler symbols provide evidence for inheritance, interface realization, member associations, and signature dependencies.
 3. **Normalized documentation model:** carries type/member identities, source spans, repository/revision/project provenance, typed relationships, and resolution/evidence details. It must not be mislabeled as a Roslyn AST when it is a normalized model snapshot.
 4. **Focused UML rendering:** projects a selected type and its direct relationship neighborhood into SVG. It is not yet a full-project or solution-wide graph layout.
-5. **Inventory and per-type pages:** the four-project inventory is generated and safely promoted into `docs/uml/source-files`. Source/project/generator changes on `development` trigger regeneration, exact-build validation, manifest-owned promotion, a drift check, and a commit of the generated pages. Manual dispatch remains available for explicit refreshes.
+5. **Inventory and per-type pages:** the five-project inventory is generated and safely promoted into `docs/uml/source-files`. Source/project/generator changes on `development` trigger regeneration, exact-build validation, manifest-owned promotion, a drift check, and a commit of the generated pages. Manual dispatch remains available for explicit refreshes.
 6. **Validation:** exercises syntax mutations and malformed input, partial/generic declarations, project-semantic relationships, exact-build type-identity checks, SVG accessibility metadata, unique IDs, local references, and inventory coverage.
 
 ## Reproduce and inspect
