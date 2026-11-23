@@ -21,7 +21,7 @@ public sealed class WpfSemanticControlRendererTests
                 "pilot-name",
                 new TextInputDefinition("Pilot", "bot.name.changed", "Enter a name", "Required")).Build();
 
-            var control = Assert.IsType<TextBox>(WpfGuiRenderer.Render(node, (id, changed) =>
+            var control = Assert.IsType<TextBox>(WpfGuiRenderer.RenderWithValueDispatcher(node, (id, changed) =>
             {
                 command = id;
                 value = changed;
@@ -49,7 +49,7 @@ public sealed class WpfSemanticControlRendererTests
                 "bot.race.mode.changed");
             var node = GuiBuilders.Select("race-mode", definition).Build();
 
-            var control = Assert.IsType<ComboBox>(WpfGuiRenderer.Render(node, (id, changed) =>
+            var control = Assert.IsType<ComboBox>(WpfGuiRenderer.RenderWithValueDispatcher(node, (id, changed) =>
             {
                 command = id;
                 value = changed;
@@ -75,7 +75,7 @@ public sealed class WpfSemanticControlRendererTests
                 "enabled",
                 new ToggleDefinition(false, "bot.enabled.changed")).Build();
 
-            var control = Assert.IsType<CheckBox>(WpfGuiRenderer.Render(node, (id, changed) =>
+            var control = Assert.IsType<CheckBox>(WpfGuiRenderer.RenderWithValueDispatcher(node, (id, changed) =>
             {
                 command = id;
                 value = changed;
