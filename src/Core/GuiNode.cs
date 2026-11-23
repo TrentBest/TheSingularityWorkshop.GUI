@@ -17,7 +17,8 @@ public sealed class GuiNode
         string? text = null,
         string? source = null,
         IReadOnlyDictionary<string, string>? properties = null,
-        IEnumerable<GuiNode>? children = null)
+        IEnumerable<GuiNode>? children = null,
+        GuiControlDefinition? control = null)
     {
         if (string.IsNullOrWhiteSpace(kind))
             throw new ArgumentException("GUI node kind is required.", nameof(kind));
@@ -29,6 +30,13 @@ public sealed class GuiNode
         Id = id;
         Text = text;
         Source = source;
+        if (control is not null && !IsControlKind(kind))
+            throw new ArgumentException("A control definition requires a TextInput, Select, or Toggle node kind.", nameof(control));
+        if (control is TextInputDefinition && kind != "TextInput"
+            || control is SelectDefinition && kind != "Select"
+            || control is ToggleDefinition && kind != "Toggle")
+            throw new ArgumentException("The control definition must match the GUI node kind.", nameof(control));
+        Control = control;
 
         Properties = new ReadOnlyDictionary<string, string>(
             new Dictionary<string, string>(
@@ -50,10 +58,15 @@ public sealed class GuiNode
     public string? Text { get; }
     /// <summary>Gets the optional source or resource reference associated with this node.</summary>
     public string? Source { get; }
+    /// <summary>Gets the typed semantic value-control definition, when this node represents a value control.</summary>
+    public GuiControlDefinition? Control { get; }
     /// <summary>Gets a read-only snapshot of this node's string-valued properties.</summary>
     public IReadOnlyDictionary<string, string> Properties { get; }
     /// <summary>Gets the read-only, ordered child nodes.</summary>
     public IReadOnlyList<GuiNode> Children => _children;
+
+    private static bool IsControlKind(string kind) =>
+        kind is "TextInput" or "Select" or "Toggle";
 
     /// <summary>Finds the first node with the specified identifier using depth-first, left-to-right traversal.</summary>
     public GuiNode Find(string id)
