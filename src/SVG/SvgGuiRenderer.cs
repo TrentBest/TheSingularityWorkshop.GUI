@@ -243,6 +243,12 @@ public sealed class SvgGuiRenderer
                         new XAttribute("y", F(Number(node, "y", 6.5))),
                         new XAttribute("fill", "#eef6ff"),
                         selectedLabel));
+                if (!string.IsNullOrWhiteSpace(select.ValidationMessage))
+                    element.Add(new XElement(Svg + "text",
+                        new XAttribute("x", F(Number(node, "x", 2))),
+                        new XAttribute("y", F(Number(node, "y", 11))),
+                        new XAttribute("fill", "#ff9b9b"),
+                        select.ValidationMessage));
                 break;
             case "Toggle" when node.Control is ToggleDefinition toggle:
                 element = new XElement(Svg + "g",
