@@ -48,12 +48,11 @@ public sealed class BarChartSvgRendererTests
         var document = XDocument.Parse(_renderer.Render(chart));
         var negativeBar = document.Descendants(Svg + "rect").Single(x => (string?)x.Attribute("data-value") == "-4");
         var baseline = document.Descendants(Svg + "line")
-            .Select(x => (string?)x.Attribute("y1"))
-            .First(value => value == document.Descendants(Svg + "line").First(line =>
-                (string?)line.Attribute("stroke") == "#b8c9d8")!.Attribute("y1"));
+            .Single(line => (string?)line.Attribute("stroke") == "#b8c9d8");
+        var baselineY = double.Parse((string)baseline.Attribute("y1")!, System.Globalization.CultureInfo.InvariantCulture);
+        var barY = double.Parse((string)negativeBar.Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
 
-        Assert.True(double.Parse((string)negativeBar.Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture) > 28);
-        Assert.False(string.IsNullOrWhiteSpace(baseline));
+        Assert.True(barY > baselineY);
     }
 
     [Fact]
