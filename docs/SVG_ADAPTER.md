@@ -73,7 +73,7 @@ Consumers that handle untrusted or remotely supplied scenes must enforce their o
 
 ## Renderer-neutral chart manifestation
 
-The optional chart entry point is `new BarChartSvgRenderer().Render(chart)`; it consumes Core's `BarChartDefinition` directly rather than requiring chart-specific SVG nodes in Core. The current implementation supports one categorical series, including negative values, missing observations, empty states, visible labels, and an accessible data summary. It rejects multiple series until grouped/stacked semantics are specified. See [the chart contract and SVG capability matrix](CHARTING.md) and the runnable [bar chart gallery sample](../samples/BarChartGallery/Program.cs).
+The renderer also exposes `BarChartSvgRenderer.Capabilities`, a tested declaration of supported and unsupported chart families. It is adapter-specific, not a shared cross-adapter negotiation protocol. The optional chart entry point is `new BarChartSvgRenderer().Render(chart)`; it consumes Core's `BarChartDefinition` directly rather than requiring chart-specific SVG nodes in Core. The current implementation supports one categorical series, including negative values, missing observations, empty states, visible labels, and an accessible data summary. It rejects multiple series until grouped/stacked semantics are specified. See [the chart contract and SVG capability matrix](CHARTING.md) and the runnable [bar chart gallery sample](../samples/BarChartGallery/Program.cs).
 
 ## Generated gallery
 
