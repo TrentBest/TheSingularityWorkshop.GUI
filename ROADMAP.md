@@ -38,6 +38,8 @@ The roadmap follows the Land of Idealism: define the semantic boundary first, pr
 - [ ] Define capability terminology
 - [ ] Define representation/media contracts
 - [ ] Define semantic input/interaction contracts
+- [x] Initial typed text/select/toggle value-control contracts with host-dispatched values
+- [x] Initial ordered semantic badge composition with explicit asset and destination references
 - [ ] Define localization/internationalization contracts
 - [ ] Define accessibility/alternate-presentation contracts
 - [ ] Define lifecycle contracts
@@ -104,6 +106,7 @@ The model must first prove that it can describe more than conventional widgets.
 - [x] Initial WPF renderer contract tests (Windows-native coverage for nested tree order, text, supported dimensions/spacing/colors/typography/alignment, null root, unknown-kind fallback, duplicate-ID rejection, the 256-edge depth guard, and exact semantic-ID preservation through a WPF attached property when `FrameworkElement.Name` cannot represent the ID; broader semantic coverage remains open)
 - [x] Initial shared adapter conformance cases (identity, nested hierarchy, child order, and text; broader semantic coverage remains open)
 - [x] Build a second materially different adapter (SVG)
+- [x] Build the opt-in Markdown document-presentation adapter with target-relative asset resolution
 - [ ] Unity UI Toolkit adapter
 - [ ] Establish GUI benchmark methodology
 - [ ] Establish executable GUI benchmark project and baseline — tracked by [GUI issue #2](https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues/2)
