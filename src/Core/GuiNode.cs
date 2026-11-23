@@ -32,6 +32,9 @@ public sealed class GuiNode
         Source = source;
         if (control is not null && !IsControlKind(kind))
             throw new ArgumentException("A control definition requires a TextInput, Select, or Toggle node kind.", nameof(control));
+        if (control is not null
+            && control is not (TextInputDefinition or SelectDefinition or ToggleDefinition))
+            throw new ArgumentException("The supplied semantic control definition is not supported.", nameof(control));
         if (control is TextInputDefinition && kind != "TextInput"
             || control is SelectDefinition && kind != "Select"
             || control is ToggleDefinition && kind != "Toggle")
@@ -46,6 +49,8 @@ public sealed class GuiNode
         var childSnapshot = (children ?? Enumerable.Empty<GuiNode>()).ToList();
         if (childSnapshot.Any(child => child is null))
             throw new ArgumentException("GUI node children cannot contain null entries.", nameof(children));
+        if (control is not null && childSnapshot.Count > 0)
+            throw new ArgumentException("Value-control nodes cannot contain child nodes.", nameof(children));
 
         _children = new ReadOnlyCollection<GuiNode>(childSnapshot);
     }
