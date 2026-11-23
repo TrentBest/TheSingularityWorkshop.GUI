@@ -26,16 +26,22 @@ public abstract record GuiAssetReference
     private GuiAssetReference() { }
 
     /// <summary>References an asset checked into the repository.</summary>
+    /// <summary>A repository-relative image asset.</summary>
     public sealed record RepositoryAsset : GuiAssetReference
     {
+        /// <summary>Creates a repository-relative asset reference.</summary>
         public RepositoryAsset(string path) => Path = GuiRepositoryPath.Validate(path);
+        /// <summary>Gets the normalized repository-relative asset path.</summary>
         public string Path { get; }
     }
 
     /// <summary>References an explicitly supplied HTTPS asset URI; callers own version pinning and immutability.</summary>
+    /// <summary>An explicit HTTPS image asset.</summary>
     public sealed record ExternalAsset : GuiAssetReference
     {
+        /// <summary>Creates an HTTPS asset reference.</summary>
         public ExternalAsset(Uri uri) => Uri = GuiRepositoryPath.ValidateHttps(uri, nameof(uri));
+        /// <summary>Gets the absolute HTTPS asset URI.</summary>
         public Uri Uri { get; }
     }
 
@@ -51,16 +57,22 @@ public abstract record GuiLinkReference
     private GuiLinkReference() { }
 
     /// <summary>Links to another repository-relative document or resource.</summary>
+    /// <summary>A repository-relative destination.</summary>
     public sealed record RepositoryLink : GuiLinkReference
     {
+        /// <summary>Creates a repository-relative link reference.</summary>
         public RepositoryLink(string path) => Path = GuiRepositoryPath.Validate(path);
+        /// <summary>Gets the normalized repository-relative destination path.</summary>
         public string Path { get; }
     }
 
     /// <summary>Links to an absolute HTTPS destination.</summary>
+    /// <summary>An absolute HTTPS destination.</summary>
     public sealed record ExternalLink : GuiLinkReference
     {
+        /// <summary>Creates an absolute HTTPS link reference.</summary>
         public ExternalLink(Uri uri) => Uri = GuiRepositoryPath.ValidateHttps(uri, nameof(uri));
+        /// <summary>Gets the absolute HTTPS destination URI.</summary>
         public Uri Uri { get; }
     }
 
