@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`2c52512270bae4fa255ce922a2352852e35a6189`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/2c52512270bae4fa255ce922a2352852e35a6189)
+- Revision: [`bc09e46232d87c88d70bca98588662eabd2911ea`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/bc09e46232d87c88d70bca98588662eabd2911ea)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.SVG, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability`
 - Metadata name: `SvgChartCapability`
@@ -19,23 +19,23 @@
 
 ## Source declarations
 
-- [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/SvgChartCapability.cs#L7-7)
+- [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/SvgChartCapability.cs#L7-7)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.ChartKind` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/SvgChartCapability.cs#L7-7) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.Constraint` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/SvgChartCapability.cs#L7-7) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.IsSupported` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/SvgChartCapability.cs#L7-7) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.SvgChartCapability(string, bool, string)` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/SvgChartCapability.cs#L7-7) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.ChartKind` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/SvgChartCapability.cs#L7-7) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.Constraint` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/SvgChartCapability.cs#L7-7) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.IsSupported` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/SvgChartCapability.cs#L7-7) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability.SvgChartCapability(string, bool, string)` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/SvgChartCapability.cs#L7-7) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability>` | `External` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/SvgChartCapability.cs#L7-7) |
-| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer` | `Resolved` | [`src/SVG/BarChartSvgRenderer.cs:18-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/2c52512270bae4fa255ce922a2352852e35a6189/src/SVG/BarChartSvgRenderer.cs#L18-28) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability>` | `External` | [`src/SVG/SvgChartCapability.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/SvgChartCapability.cs#L7-7) |
+| incoming | `Association` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer` | `Resolved` | [`src/SVG/BarChartSvgRenderer.cs:18-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L18-28) |
 
 [Back to the generated type index](index.md)
 
