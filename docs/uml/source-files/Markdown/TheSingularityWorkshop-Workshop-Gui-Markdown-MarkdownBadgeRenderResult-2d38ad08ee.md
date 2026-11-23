@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e)
+- Revision: [`a9a0179aea747faa6e842574f1fd9cd65608a389`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/a9a0179aea747faa6e842574f1fd9cd65608a389)
 - Project: `src/Markdown/TheSingularityWorkshop.GUI.Markdown.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Markdown, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult`
 - Metadata name: `MarkdownBadgeRenderResult`
@@ -19,25 +19,25 @@
 
 ## Source declarations
 
-- [`src/Markdown/MarkdownBadgeRenderer.cs:28-39`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L28-39)
+- [`src/Markdown/MarkdownBadgeRenderer.cs:28-39`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L28-39)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Diagnostics` | [`src/Markdown/MarkdownBadgeRenderer.cs:38-38`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L38-38) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Diagnostics.get` | [`src/Markdown/MarkdownBadgeRenderer.cs:38-38`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L38-38) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Markdown` | [`src/Markdown/MarkdownBadgeRenderer.cs:37-37`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L37-37) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Markdown.get` | [`src/Markdown/MarkdownBadgeRenderer.cs:37-37`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L37-37) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.MarkdownBadgeRenderResult(string, System.Collections.Generic.IEnumerable<TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeDiagnostic>)` | [`src/Markdown/MarkdownBadgeRenderer.cs:31-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L31-35) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Diagnostics` | [`src/Markdown/MarkdownBadgeRenderer.cs:38-38`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L38-38) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Diagnostics.get` | [`src/Markdown/MarkdownBadgeRenderer.cs:38-38`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L38-38) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Markdown` | [`src/Markdown/MarkdownBadgeRenderer.cs:37-37`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L37-37) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.Markdown.get` | [`src/Markdown/MarkdownBadgeRenderer.cs:37-37`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L37-37) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderResult.MarkdownBadgeRenderResult(string, System.Collections.Generic.IEnumerable<TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeDiagnostic>)` | [`src/Markdown/MarkdownBadgeRenderer.cs:31-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L31-35) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeDiagnostic` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:38-38`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L38-38) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeDiagnostic` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:31-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L31-35) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:53-99`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/e6e60f1b05de084fa6286e27dcc8ba8aae9fcd9e/src/Markdown/MarkdownBadgeRenderer.cs#L53-99) |
+| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeDiagnostic` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:38-38`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L38-38) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeDiagnostic` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:31-35`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L31-35) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Markdown.MarkdownBadgeRenderer` | `Resolved` | [`src/Markdown/MarkdownBadgeRenderer.cs:53-99`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/a9a0179aea747faa6e842574f1fd9cd65608a389/src/Markdown/MarkdownBadgeRenderer.cs#L53-99) |
 
 [Back to the generated type index](index.md)
 
