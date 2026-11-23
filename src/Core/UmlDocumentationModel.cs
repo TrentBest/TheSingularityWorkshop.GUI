@@ -287,7 +287,9 @@ public static class UmlDocumentationModelJson
     private static void RequireText(string? value, string message) =>
         Require(!string.IsNullOrWhiteSpace(value), message);
 
-    private static void Require(bool condition, string message)
+    private static void Require(
+        [System.Diagnostics.CodeAnalysis.DoesNotReturnIf(false)] bool condition,
+        string message)
     {
         if (!condition)
             throw new ArgumentException(message, "model");
