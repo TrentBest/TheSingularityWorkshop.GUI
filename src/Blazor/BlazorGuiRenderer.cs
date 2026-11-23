@@ -17,7 +17,7 @@ public static class BlazorGuiRenderer
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: null);
     }
 
     /// <summary>
@@ -29,7 +29,20 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(commandDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher);
+        return builder => RenderNode(builder, node, commandDispatcher, controlDispatcher: null);
+    }
+
+    /// <summary>
+    /// Creates a render fragment that routes typed value changes to a host-owned command dispatcher.
+    /// Text values, selected option IDs, and boolean values are passed as strings; the host validates
+    /// and authorizes each command before applying domain changes.
+    /// </summary>
+    public static RenderFragment Render(GuiNode node, Action<string, string?> controlDispatcher)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+        ArgumentNullException.ThrowIfNull(controlDispatcher);
+        ValidateUniqueIds(node);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher);
     }
 
     private static void ValidateUniqueIds(GuiNode root)
@@ -58,8 +71,15 @@ public static class BlazorGuiRenderer
     private static void RenderNode(
         RenderTreeBuilder builder,
         GuiNode node,
-        Action<string>? commandDispatcher)
+        Action<string>? commandDispatcher,
+        Action<string, string?>? controlDispatcher)
     {
+        if (node.Control is not null)
+        {
+            RenderControl(builder, node, controlDispatcher);
+            return;
+        }
+
         // Sequence numbers identify source-code positions, not runtime iteration
         // order. Keep each conditional/loop at a stable sequence position so
         // optional source/text and changing property counts do not shift later frames.
@@ -93,8 +113,72 @@ public static class BlazorGuiRenderer
             builder.AddContent(4, node.Text);
 
         foreach (var child in node.Children)
-            RenderNode(builder, child, commandDispatcher);
+            RenderNode(builder, child, commandDispatcher, controlDispatcher);
         builder.CloseElement();
+    }
+
+    private static void RenderControl(
+        RenderTreeBuilder builder,
+        GuiNode node,
+        Action<string, string?>? dispatcher)
+    {
+        switch (node.Control)
+        {
+            case TextInputDefinition text:
+                builder.OpenElement(0, "input");
+                builder.AddAttribute(1, "id", node.Id);
+                builder.AddAttribute(2, "type", "text");
+                builder.AddAttribute(3, "value", text.Value);
+                if (text.Placeholder is not null) builder.AddAttribute(4, "placeholder", text.Placeholder);
+                if (text.IsReadOnly || dispatcher is null) builder.AddAttribute(5, "readonly", true);
+                AddValidationAttributes(builder, text.ValidationMessage);
+                if (dispatcher is not null)
+                    builder.AddAttribute(7, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                        dispatcher, args => dispatcher(text.ChangeCommandId, args.Value?.ToString())));
+                builder.CloseElement();
+                break;
+
+            case SelectDefinition select:
+                builder.OpenElement(0, "select");
+                builder.AddAttribute(1, "id", node.Id);
+                builder.AddAttribute(2, "value", select.SelectedOptionId);
+                if (select.IsReadOnly || dispatcher is null) builder.AddAttribute(3, "disabled", true);
+                AddValidationAttributes(builder, select.ValidationMessage);
+                if (dispatcher is not null)
+                    builder.AddAttribute(7, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                        dispatcher, args => dispatcher(select.ChangeCommandId, args.Value?.ToString())));
+                foreach (var option in select.Options)
+                {
+                    builder.OpenElement(8, "option");
+                    builder.AddAttribute(9, "value", option.Id);
+                    builder.AddContent(10, option.Label);
+                    builder.CloseElement();
+                }
+                builder.CloseElement();
+                break;
+
+            case ToggleDefinition toggle:
+                builder.OpenElement(0, "input");
+                builder.AddAttribute(1, "id", node.Id);
+                builder.AddAttribute(2, "type", "checkbox");
+                builder.AddAttribute(3, "checked", toggle.IsChecked);
+                if (toggle.IsReadOnly || dispatcher is null) builder.AddAttribute(4, "disabled", true);
+                AddValidationAttributes(builder, toggle.ValidationMessage);
+                if (dispatcher is not null)
+                    builder.AddAttribute(7, "onchange", EventCallback.Factory.Create<ChangeEventArgs>(
+                        dispatcher, args => dispatcher(toggle.ChangeCommandId,
+                            bool.TryParse(args.Value?.ToString(), out var value) ? value.ToString() : null)));
+                builder.CloseElement();
+                break;
+        }
+    }
+
+    private static void AddValidationAttributes(RenderTreeBuilder builder, string? validationMessage)
+    {
+        if (string.IsNullOrWhiteSpace(validationMessage))
+            return;
+        builder.AddAttribute(6, "aria-invalid", "true");
+        builder.AddAttribute(6, "title", validationMessage);
     }
 
     private static string ResolveTag(string kind) => kind switch
