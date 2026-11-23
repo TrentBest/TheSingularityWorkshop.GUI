@@ -16,6 +16,7 @@
     "docs/gui-wpf-authored-contracts-2026-10-23",
     "docs/uml-three-view-standard-2026-10-23",
     "feature/architect-renderer-integration",
+    "fix/svg-newline-char-literal",
     "fix/svg-node-count-limit-2026-10-23",
     "master",
     "release/gui-closeout-2026-10-22",
@@ -33,9 +34,9 @@
     "work/uml-visibility-tier-data-cards-2026-10-28",
     "work/uml-visual-data-cards-2026-10-27"
   ],
-  "branch_count": 26,
+  "branch_count": 27,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-22T12:39:19Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45023395608",
-  "triggering_commit": "c81d19a1b5c5932c5f8abd1fd365f88389154727"
+  "evaluated_at": "2026-11-23T01:47:54Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45096469794",
+  "triggering_commit": "0c2e79924f9dacdcc1cecfd62e0c6236b7c4a849"
 }
