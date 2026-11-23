@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba)
+- Revision: [`644c7a0c58665f16199da7181b392162475c99f8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/644c7a0c58665f16199da7181b392162475c99f8)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.ElementDefinition`
 - Metadata name: `ElementDefinition`
@@ -19,27 +19,27 @@
 
 ## Source declarations
 
-- [`src/WPF/ElementDefinition.cs:3-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L3-8)
+- [`src/WPF/ElementDefinition.cs:3-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L3-8)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Label` | [`src/WPF/ElementDefinition.cs:6-6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L6-6) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Label.get` | [`src/WPF/ElementDefinition.cs:6-6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L6-6) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Label.set` | [`src/WPF/ElementDefinition.cs:6-6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L6-6) |
-| `Property` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Properties` | [`src/WPF/ElementDefinition.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L7-7) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Properties.get` | [`src/WPF/ElementDefinition.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L7-7) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Properties.set` | [`src/WPF/ElementDefinition.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L7-7) |
-| `Property` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.TypeName` | [`src/WPF/ElementDefinition.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L5-5) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.TypeName.get` | [`src/WPF/ElementDefinition.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L5-5) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.TypeName.set` | [`src/WPF/ElementDefinition.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/ElementDefinition.cs#L5-5) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Label` | [`src/WPF/ElementDefinition.cs:6-6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L6-6) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Label.get` | [`src/WPF/ElementDefinition.cs:6-6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L6-6) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Label.set` | [`src/WPF/ElementDefinition.cs:6-6`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L6-6) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Properties` | [`src/WPF/ElementDefinition.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L7-7) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Properties.get` | [`src/WPF/ElementDefinition.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L7-7) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.Properties.set` | [`src/WPF/ElementDefinition.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L7-7) |
+| `Property` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.TypeName` | [`src/WPF/ElementDefinition.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L5-5) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.TypeName.get` | [`src/WPF/ElementDefinition.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L5-5) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.ElementDefinition.TypeName.set` | [`src/WPF/ElementDefinition.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/ElementDefinition.cs#L5-5) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/GuiConfiguration.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/29a8ea72d7be2d1496f9ba15ab1fd3f40cd35aba/src/WPF/GuiConfiguration.cs#L8-8) |
+| incoming | `Association` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/GuiConfiguration.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/644c7a0c58665f16199da7181b392162475c99f8/src/WPF/GuiConfiguration.cs#L8-8) |
 
 [Back to the generated type index](index.md)
 
