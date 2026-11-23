@@ -62,7 +62,8 @@ public static class WpfGuiRenderer
             TextInputDefinition text => new TextBox
             {
                 Text = text.Value,
-                ToolTip = text.ValidationMessage,
+                ToolTip = text.Placeholder,
+                Tag = text.Placeholder,
                 IsReadOnly = text.IsReadOnly || controlDispatcher is null
             },
             SelectDefinition select => CreateSelect(select, controlDispatcher),
