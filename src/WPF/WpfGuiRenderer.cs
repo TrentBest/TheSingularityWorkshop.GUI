@@ -44,7 +44,7 @@ public static class WpfGuiRenderer
     /// Renders semantic value controls and routes their changed values to a host-owned dispatcher.
     /// The host remains responsible for command allow-listing, validation, and domain authorization.
     /// </summary>
-    public static FrameworkElement Render(GuiNode node, Action<string, string?> controlDispatcher)
+    public static FrameworkElement RenderWithValueDispatcher(GuiNode node, Action<string, string?> controlDispatcher)
     {
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
