@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`bc09e46232d87c88d70bca98588662eabd2911ea`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/bc09e46232d87c88d70bca98588662eabd2911ea)
+- Revision: [`c314067d1411b65a797609459058e454c46bb143`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/c314067d1411b65a797609459058e454c46bb143)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.SVG, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer`
 - Metadata name: `BarChartSvgRenderer`
@@ -19,26 +19,26 @@
 
 ## Source declarations
 
-- [`src/SVG/BarChartSvgRenderer.cs:13-183`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L13-183)
+- [`src/SVG/BarChartSvgRenderer.cs:14-187`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L14-187)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Capabilities` | [`src/SVG/BarChartSvgRenderer.cs:18-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L18-28) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Capabilities.get` | [`src/SVG/BarChartSvgRenderer.cs:18-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L18-18) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Document(System.Xml.Linq.XElement)` | [`src/SVG/BarChartSvgRenderer.cs:177-178`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L177-178) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.F(double)` | [`src/SVG/BarChartSvgRenderer.cs:180-180`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L180-180) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Render(TheSingularityWorkshop.Workshop.Gui.BarChartDefinition, int, int)` | [`src/SVG/BarChartSvgRenderer.cs:31-175`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L31-175) |
-| `Field` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Svg` | [`src/SVG/BarChartSvgRenderer.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L15-15) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.UnitSuffix(string?)` | [`src/SVG/BarChartSvgRenderer.cs:182-182`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L182-182) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Capabilities` | [`src/SVG/BarChartSvgRenderer.cs:19-29`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L19-29) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Capabilities.get` | [`src/SVG/BarChartSvgRenderer.cs:19-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L19-19) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Document(System.Xml.Linq.XElement)` | [`src/SVG/BarChartSvgRenderer.cs:181-182`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L181-182) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.F(double)` | [`src/SVG/BarChartSvgRenderer.cs:184-184`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L184-184) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Render(TheSingularityWorkshop.Workshop.Gui.BarChartDefinition, int, int)` | [`src/SVG/BarChartSvgRenderer.cs:32-179`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L32-179) |
+| `Field` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.Svg` | [`src/SVG/BarChartSvgRenderer.cs:16-16`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L16-16) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.BarChartSvgRenderer.UnitSuffix(string?)` | [`src/SVG/BarChartSvgRenderer.cs:186-186`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L186-186) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability` | `Resolved` | [`src/SVG/BarChartSvgRenderer.cs:18-28`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L18-28) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.BarChartDefinition` | `External` | [`src/SVG/BarChartSvgRenderer.cs:31-175`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/bc09e46232d87c88d70bca98588662eabd2911ea/src/SVG/BarChartSvgRenderer.cs#L31-175) |
+| outgoing | `Association` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgChartCapability` | `Resolved` | [`src/SVG/BarChartSvgRenderer.cs:19-29`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L19-29) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.BarChartDefinition` | `External` | [`src/SVG/BarChartSvgRenderer.cs:32-179`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c314067d1411b65a797609459058e454c46bb143/src/SVG/BarChartSvgRenderer.cs#L32-179) |
 
 [Back to the generated type index](index.md)
 
