@@ -37,7 +37,7 @@ public static class BlazorGuiRenderer
     /// Text values, selected option IDs, and boolean values are passed as strings; the host validates
     /// and authorizes each command before applying domain changes.
     /// </summary>
-    public static RenderFragment Render(GuiNode node, Action<string, string?> controlDispatcher)
+    public static RenderFragment RenderWithValueDispatcher(GuiNode node, Action<string, string?> controlDispatcher)
     {
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
@@ -49,7 +49,7 @@ public static class BlazorGuiRenderer
     /// Creates a render fragment that uses the supplied component/event receiver for Blazor's
     /// event lifecycle, allowing the host component to re-render after it handles a value change.
     /// </summary>
-    public static RenderFragment Render(
+    public static RenderFragment RenderWithValueDispatcher(
         GuiNode node,
         object eventReceiver,
         Action<string, string?> controlDispatcher)
