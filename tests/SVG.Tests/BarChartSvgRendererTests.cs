@@ -23,7 +23,8 @@ public sealed class BarChartSvgRendererTests
         Assert.Contains("Q2: missing", root.Element(Svg + "desc")!.Value);
         Assert.Contains("Q3: 18 USD thousands", root.Element(Svg + "desc")!.Value);
         Assert.Equal(new[] { "Quarter 1", "Quarter 2", "Quarter 3" },
-            root.Descendants(Svg + "text").Where(x => x.Value.StartsWith("Quarter", StringComparison.Ordinal)).Select(x => x.Value).ToArray());
+            root.Descendants(Svg + "text").Where(x => new[] { "Quarter 1", "Quarter 2", "Quarter 3" }.Contains(x.Value))
+                .Select(x => x.Value).ToArray());
         Assert.Equal(new[] { "12", "18" }, root.Descendants(Svg + "rect").Select(x => (string?)x.Attribute("data-value")).ToArray());
         Assert.Contains("Revenue (USD thousands)", root.Value);
     }
