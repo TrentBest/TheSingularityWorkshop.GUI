@@ -21,6 +21,10 @@ GUI.SVG currently manifests a deliberately narrow subset through `BarChartSvgRen
 
 This is a capability statement for this SVG renderer, not a claim of parity with Blazor or WPF. The SVG adapter intentionally fails closed for multiple series rather than silently overlaying or stacking values. Core accepts multiple series as data; a renderer must not invent their composition semantics.
 
+## Adapter capability declaration
+
+`BarChartSvgRenderer.Capabilities` exposes stable SVG-specific capability entries for categorical bars, grouped/stacked bars, line/time-series, pie/donut, scatter, ranges, and gauges. The capability list is tested alongside the runtime rejection path; it is not a cross-adapter negotiation protocol.
+
 ## Runnable example
 
 Run:
