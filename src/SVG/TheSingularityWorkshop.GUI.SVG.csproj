@@ -21,6 +21,7 @@
   <ItemGroup>
     <None Include="README.md" Pack="true" PackagePath="/" />
     <None Include="..\..\docs\SVG_ADAPTER.md" Pack="true" PackagePath="docs/SVG_ADAPTER.md" />
+    <None Include="..\..\docs\CHARTING.md" Pack="true" PackagePath="docs/CHARTING.md" />
     <None Include="..\..\docs\assets\svg-adapter-gallery.svg"
           Pack="true"
           PackagePath="docs/assets/svg-adapter-gallery.svg" />
