@@ -141,7 +141,6 @@ public sealed class BadgeSet
     public IReadOnlyList<BadgeDefinition> Badges => _badges;
 
     /// <summary>Returns a new composition with the badge appended after existing badges.</summary>
-    /// <summary>Returns a new composition with the badge appended after existing badges.</summary>
     public BadgeSet WithBadge(BadgeDefinition badge)
     {
         ArgumentNullException.ThrowIfNull(badge);
