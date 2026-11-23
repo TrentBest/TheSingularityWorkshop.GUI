@@ -51,3 +51,13 @@ The bot process remains independently launchable. The browser UI and any future 
 - `TheSingularityWorkshop.GUI.Blazor` manifests the semantic header in Blazor.
 - This sample owns the application shell and server-side local transport adapter.
 - SingularityBot remains the authoritative owner of SC2 state and gameplay decisions.
+
+### Semantic match-profile controls
+
+The match-profile editor is composed from the public `GUI.Core` semantic control contracts and rendered by `GUI.Blazor`:
+
+- opening mode uses a stable-ID `SelectDefinition`;
+- map name uses a `TextInputDefinition`;
+- opponent and difficulty use stable-ID `SelectDefinition` options.
+
+The component supplies itself as the Blazor event receiver so accepted UI changes update the component's local configuration and re-render the semantic tree. The host handler allow-lists each command and validates every incoming option/value. These controls only edit an in-memory match profile: they do not start a match, issue bot commands, or imply that a selected strategy is executable. The authenticated bot bridge remains read-only.
