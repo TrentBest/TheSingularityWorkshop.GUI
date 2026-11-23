@@ -18,7 +18,7 @@ public sealed class BlazorSemanticControlRendererTests
             new TextInputDefinition("Pilot", "bot.name.changed", "Enter a name")).Build();
         var builder = new RenderTreeBuilder();
 
-        BlazorGuiRenderer.Render(node, (id, changed) =>
+        BlazorGuiRenderer.RenderWithValueDispatcher(node, (id, changed) =>
         {
             command = id;
             value = changed;
@@ -47,7 +47,7 @@ public sealed class BlazorSemanticControlRendererTests
             "bot.race.mode.changed")).Build();
         var builder = new RenderTreeBuilder();
 
-        BlazorGuiRenderer.Render(node, (id, changed) =>
+        BlazorGuiRenderer.RenderWithValueDispatcher(node, (id, changed) =>
         {
             command = id;
             value = changed;
@@ -76,7 +76,7 @@ public sealed class BlazorSemanticControlRendererTests
         var node = GuiBuilders.Toggle("enabled", new ToggleDefinition(false, "bot.enabled.changed")).Build();
         var builder = new RenderTreeBuilder();
 
-        BlazorGuiRenderer.Render(node, (id, changed) =>
+        BlazorGuiRenderer.RenderWithValueDispatcher(node, (id, changed) =>
         {
             command = id;
             value = changed;
