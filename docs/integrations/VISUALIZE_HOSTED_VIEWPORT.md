@@ -27,14 +27,22 @@ The callback receives the original `GuiNode`, so the host can use its stable ID 
 Example:
 
 ```csharp
-var page = GuiBuilder.Create("Panel", "experience")
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Rendering;
+using TheSingularityWorkshop.Workshop.Gui;
+
+var page = GuiBuilders.Panel("experience")
     .Child(GuiBuilders.Viewport("battlefield", "Battlefield view")
         .Property("class", "battlefield-viewport"))
     .Build();
 
 var content = BlazorGuiRenderer.RenderWithHostedSurface(
     page,
-    viewport => builder =>\n    {\n        builder.OpenComponent<BattlefieldSurface>(0);\n        builder.CloseComponent();\n    });
+    viewport => builder =>
+    {
+        builder.OpenComponent<BattlefieldSurface>(0);
+        builder.CloseComponent();
+    });
 ```
 
 `BattlefieldSurface` is host-owned. It may compose Visualize, consume Renderer policy, or provide another presentation implementation. The GUI package does not inspect or control that component.
