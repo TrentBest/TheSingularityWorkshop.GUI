@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`9716d4dd70d9d5eb65bd00df2fcd9632f316828d`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/9716d4dd70d9d5eb65bd00df2fcd9632f316828d)
+- Revision: [`f43434399731a230d7e2b21db24ebf1e0a58dafd`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f43434399731a230d7e2b21db24ebf1e0a58dafd)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.SVG, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition`
 - Metadata name: `NodePosition`
@@ -19,21 +19,21 @@
 
 ## Source declarations
 
-- [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456)
+- [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition.NodePosition(double, double)` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition.X` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition.Y` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition.NodePosition(double, double)` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition.X` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition.Y` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition>` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.NodePosition>` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
 
 [Back to the generated type index](index.md)
 

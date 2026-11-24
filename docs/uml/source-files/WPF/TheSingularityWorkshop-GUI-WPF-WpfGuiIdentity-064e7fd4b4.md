@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`9716d4dd70d9d5eb65bd00df2fcd9632f316828d`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/9716d4dd70d9d5eb65bd00df2fcd9632f316828d)
+- Revision: [`f43434399731a230d7e2b21db24ebf1e0a58dafd`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f43434399731a230d7e2b21db24ebf1e0a58dafd)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity`
 - Metadata name: `WpfGuiIdentity`
@@ -19,15 +19,15 @@
 
 ## Source declarations
 
-- [`src/WPF/WpfGuiIdentity.cs:9-34`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/WPF/WpfGuiIdentity.cs#L9-34)
+- [`src/WPF/WpfGuiIdentity.cs:9-34`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/WpfGuiIdentity.cs#L9-34)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity.GetNodeId(System.Windows.DependencyObject)` | [`src/WPF/WpfGuiIdentity.cs:22-26`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/WPF/WpfGuiIdentity.cs#L22-26) |
-| `Field` | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity.NodeIdProperty` | [`src/WPF/WpfGuiIdentity.cs:14-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/WPF/WpfGuiIdentity.cs#L14-19) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity.SetNodeId(System.Windows.DependencyObject, string?)` | [`src/WPF/WpfGuiIdentity.cs:29-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/9716d4dd70d9d5eb65bd00df2fcd9632f316828d/src/WPF/WpfGuiIdentity.cs#L29-33) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity.GetNodeId(System.Windows.DependencyObject)` | [`src/WPF/WpfGuiIdentity.cs:22-26`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/WpfGuiIdentity.cs#L22-26) |
+| `Field` | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity.NodeIdProperty` | [`src/WPF/WpfGuiIdentity.cs:14-19`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/WpfGuiIdentity.cs#L14-19) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.WpfGuiIdentity.SetNodeId(System.Windows.DependencyObject, string?)` | [`src/WPF/WpfGuiIdentity.cs:29-33`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/WpfGuiIdentity.cs#L29-33) |
 
 ## Relationships
 
