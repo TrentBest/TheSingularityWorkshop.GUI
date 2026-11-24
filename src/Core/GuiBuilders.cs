@@ -1,3 +1,5 @@
+using System;
+
 namespace TheSingularityWorkshop.Workshop.Gui;
 
 /// <summary>Semantic factory methods for the canonical platform-neutral GUI builder.</summary>
