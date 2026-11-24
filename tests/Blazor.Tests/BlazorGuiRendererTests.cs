@@ -87,6 +87,67 @@ public sealed class BlazorGuiRendererTests
         Assert.Throws<ArgumentNullException>(() => BlazorGuiRenderer.Render(node, null!));
     }
 
+
+    [Fact]
+    public void Renderer_delegates_nested_viewport_to_host_owned_surface()
+    {
+        var viewport = new GuiNode(
+            "Viewport",
+            "scene",
+            text: "Live scene",
+            properties: new Dictionary<string, string> { ["class"] = "visualize-host" });
+        var node = GuiBuilder.Create("Panel", "root")
+            .Child(viewport)
+            .Build();
+        GuiNode? delegated = null;
+        var builder = new RenderTreeBuilder();
+
+        BlazorGuiRenderer.RenderWithHostedSurface(node, target =>
+        {
+            delegated = target;
+            return surfaceBuilder => surfaceBuilder.AddContent(0, "host-owned Visualize surface");
+        })(builder);
+
+        var frames = builder.GetFrames().Array;
+        Assert.Equal("scene", delegated?.Id);
+        Assert.Contains(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Element && frame.ElementName == "section");
+        Assert.Contains(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Attribute &&
+            frame.AttributeName == "aria-label" &&
+            Equals(frame.AttributeValue, "Live scene"));
+        Assert.Contains(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Attribute &&
+            frame.AttributeName == "data-gui-viewport" &&
+            Equals(frame.AttributeValue, "true"));
+        Assert.Contains(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Attribute &&
+            frame.AttributeName == "class" &&
+            Equals(frame.AttributeValue, "visualize-host"));
+        Assert.Contains(frames, frame =>
+            frame.FrameType == RenderTreeFrameType.Text &&
+            frame.TextContent == "host-owned Visualize surface");
+    }
+
+    [Fact]
+    public void Renderer_requires_host_surface_for_each_delegated_viewport()
+    {
+        var node = new GuiNode("Viewport", "scene");
+        var fragment = BlazorGuiRenderer.RenderWithHostedSurface(node, _ => null);
+        var builder = new RenderTreeBuilder();
+
+        Assert.Throws<InvalidOperationException>(() => fragment(builder));
+    }
+
+    [Fact]
+    public void Renderer_rejects_null_hosted_surface_renderer()
+    {
+        var node = new GuiNode("Viewport", "scene");
+
+        Assert.Throws<ArgumentNullException>(() =>
+            BlazorGuiRenderer.RenderWithHostedSurface(node, null!));
+    }
+
     private static string? FindAttribute(
         RenderTreeFrame[] frames,
         string name,
