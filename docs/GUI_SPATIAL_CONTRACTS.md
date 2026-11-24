@@ -73,7 +73,7 @@ One subject may have several observations:
 
 A panel may also contain multiple viewports.
 
-Status: Specified.
+Status: Specified. Implementation evidence: Core provides a labelled `GuiBuilders.Viewport` factory, and Blazor can delegate nested viewport nodes to a host-owned presentation fragment. This proves a presentation slot, not the full view/viewport, camera, transform, or lifecycle contract.
 
 ## 6. Camera semantics
 
