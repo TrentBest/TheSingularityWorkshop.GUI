@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`f43434399731a230d7e2b21db24ebf1e0a58dafd`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f43434399731a230d7e2b21db24ebf1e0a58dafd)
+- Revision: [`c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9)
 - Project: `src/Blazor/TheSingularityWorkshop.GUI.Blazor.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Blazor, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Gui.MultiPanelGuiBuilder`
 - Metadata name: `MultiPanelGuiBuilder`
@@ -19,28 +19,28 @@
 
 ## Source declarations
 
-- [`src/Blazor/MultiPanelGuiBuilder.cs:3-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L3-12)
+- [`src/Blazor/MultiPanelGuiBuilder.cs:3-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L3-12)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.Content(TheSingularityWorkshop.Gui.ElementBuilder)` | [`src/Blazor/MultiPanelGuiBuilder.cs:9-9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L9-9) |
-| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.MultiPanelGuiBuilder(object)` | [`src/Blazor/MultiPanelGuiBuilder.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L5-5) |
-| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.Panel(System.Action<TheSingularityWorkshop.Gui.PanelGuiBuilder>)` | [`src/Blazor/MultiPanelGuiBuilder.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L7-7) |
-| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.Style(string, string)` | [`src/Blazor/MultiPanelGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L11-11) |
+| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.Content(TheSingularityWorkshop.Gui.ElementBuilder)` | [`src/Blazor/MultiPanelGuiBuilder.cs:9-9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L9-9) |
+| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.MultiPanelGuiBuilder(object)` | [`src/Blazor/MultiPanelGuiBuilder.cs:5-5`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L5-5) |
+| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.Panel(System.Action<TheSingularityWorkshop.Gui.PanelGuiBuilder>)` | [`src/Blazor/MultiPanelGuiBuilder.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L7-7) |
+| `Method` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder.Style(string, string)` | [`src/Blazor/MultiPanelGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L11-11) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:3-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L3-12) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:9-9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L9-9) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:9-9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L9-9) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L7-7) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L11-11) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.PanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/MultiPanelGuiBuilder.cs#L7-7) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Gui.WorkshopGui` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Blazor/WorkshopGuiBuilder.cs#L15-15) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:3-12`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L3-12) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.ElementBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:9-9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L9-9) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:9-9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L9-9) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L7-7) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.MultiPanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:11-11`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L11-11) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.Gui.PanelGuiBuilder` | `Resolved` | [`src/Blazor/MultiPanelGuiBuilder.cs:7-7`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/MultiPanelGuiBuilder.cs#L7-7) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Gui.WorkshopGui` | `Resolved` | [`src/Blazor/WorkshopGuiBuilder.cs:15-15`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Blazor/WorkshopGuiBuilder.cs#L15-15) |
 
 [Back to the generated type index](index.md)
 

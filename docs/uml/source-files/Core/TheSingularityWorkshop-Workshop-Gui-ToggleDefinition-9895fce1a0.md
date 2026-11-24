@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`f43434399731a230d7e2b21db24ebf1e0a58dafd`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f43434399731a230d7e2b21db24ebf1e0a58dafd)
+- Revision: [`c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9)
 - Project: `src/Core/TheSingularityWorkshop.GUI.Core.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.Core, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.ToggleDefinition`
 - Metadata name: `ToggleDefinition`
@@ -19,26 +19,26 @@
 
 ## Source declarations
 
-- [`src/Core/GuiControlDefinition.cs:96-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L96-109)
+- [`src/Core/GuiControlDefinition.cs:96-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L96-109)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsChecked` | [`src/Core/GuiControlDefinition.cs:106-106`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L106-106) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsChecked.get` | [`src/Core/GuiControlDefinition.cs:106-106`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L106-106) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsReadOnly` | [`src/Core/GuiControlDefinition.cs:108-108`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L108-108) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsReadOnly.get` | [`src/Core/GuiControlDefinition.cs:108-108`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L108-108) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.ToggleDefinition(bool, string, string?, bool)` | [`src/Core/GuiControlDefinition.cs:98-104`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L98-104) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.ValidationMessage` | [`src/Core/GuiControlDefinition.cs:107-107`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L107-107) |
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.ValidationMessage.get` | [`src/Core/GuiControlDefinition.cs:107-107`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L107-107) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsChecked` | [`src/Core/GuiControlDefinition.cs:106-106`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L106-106) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsChecked.get` | [`src/Core/GuiControlDefinition.cs:106-106`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L106-106) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsReadOnly` | [`src/Core/GuiControlDefinition.cs:108-108`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L108-108) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.IsReadOnly.get` | [`src/Core/GuiControlDefinition.cs:108-108`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L108-108) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.ToggleDefinition(bool, string, string?, bool)` | [`src/Core/GuiControlDefinition.cs:98-104`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L98-104) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.ValidationMessage` | [`src/Core/GuiControlDefinition.cs:107-107`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L107-107) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.ToggleDefinition.ValidationMessage.get` | [`src/Core/GuiControlDefinition.cs:107-107`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L107-107) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiControlDefinition` | `Resolved` | [`src/Core/GuiControlDefinition.cs:96-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiControlDefinition.cs#L96-109) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilders` | `Resolved` | [`src/Core/GuiBuilders.cs:23-24`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/Core/GuiBuilders.cs#L23-24) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.Workshop.Gui.GuiControlDefinition` | `Resolved` | [`src/Core/GuiControlDefinition.cs:96-109`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiControlDefinition.cs#L96-109) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.GuiBuilders` | `Resolved` | [`src/Core/GuiBuilders.cs:31-32`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/Core/GuiBuilders.cs#L31-32) |
 
 [Back to the generated type index](index.md)
 

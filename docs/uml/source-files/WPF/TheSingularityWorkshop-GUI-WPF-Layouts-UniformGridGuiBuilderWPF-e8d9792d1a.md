@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`f43434399731a230d7e2b21db24ebf1e0a58dafd`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/f43434399731a230d7e2b21db24ebf1e0a58dafd)
+- Revision: [`c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9)
 - Project: `src/WPF/TheSingularityWorkshop.GUI.WPF.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.WPF, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF`
 - Metadata name: `UniformGridGuiBuilderWPF`
@@ -19,22 +19,22 @@
 
 ## Source declarations
 
-- [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:6-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L6-18)
+- [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:6-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L6-18)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF.UniformGridGuiBuilderWPF(TheSingularityWorkshop.GUI.WPF.GuiConfiguration)` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L8-8) |
-| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF.WithMatrix(int, int)` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:10-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L10-17) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF.UniformGridGuiBuilderWPF(TheSingularityWorkshop.GUI.WPF.GuiConfiguration)` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L8-8) |
+| `Method` | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF.WithMatrix(int, int)` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:10-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L10-17) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiPanelBuilderWPF` | `Resolved` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:6-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L6-18) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L8-8) |
-| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF` | `Resolved` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:10-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/f43434399731a230d7e2b21db24ebf1e0a58dafd/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L10-17) |
+| outgoing | `Inheritance` | `TheSingularityWorkshop.GUI.WPF.Abstractions.GuiPanelBuilderWPF` | `Resolved` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:6-18`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L6-18) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.GuiConfiguration` | `Resolved` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:8-8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L8-8) |
+| outgoing | `Dependency` | `TheSingularityWorkshop.GUI.WPF.Layouts.UniformGridGuiBuilderWPF` | `Resolved` | [`src/WPF/UniformGridGuiPanelBuilderWPF.cs:10-17`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/c1f4fdd938163ed0a26f4b2c5dd4d88194d5f8d9/src/WPF/UniformGridGuiPanelBuilderWPF.cs#L10-17) |
 
 [Back to the generated type index](index.md)
 
