@@ -28,9 +28,8 @@ Example:
 
 ```csharp
 var page = GuiBuilder.Create("Panel", "experience")
-    .Child("Viewport", "battlefield", viewport =>
-        viewport.Text("Battlefield view")
-            .Property("class", "battlefield-viewport"))
+    .Child(GuiBuilders.Viewport("battlefield", "Battlefield view")
+        .Property("class", "battlefield-viewport"))
     .Build();
 
 var content = BlazorGuiRenderer.RenderWithHostedSurface(
@@ -57,7 +56,7 @@ The host must still validate commands and authorize all domain changes. A viewpo
 
 The Blazor renderer tests verify nested viewport delegation, stable wrapper identity, accessible region metadata, presentation-property forwarding, null callback rejection, and the requirement that every delegated viewport receive a host fragment.
 
-The next vertical slice is a real Blazor host that supplies the current Visualize WebGPU runner as its viewport implementation, with explicit resize, focus, input, capability, and disposal behavior. Browser execution must be tested on an actual supported browser/device; a .NET unit test cannot prove GPU execution.
+Core also provides `GuiBuilders.Viewport(id, accessibleLabel)` so callers can create a labelled viewport without repeating the raw kind string. The next vertical slice is a real Blazor host that supplies the current Visualize WebGPU runner as its viewport implementation, with explicit resize, focus, input, capability, and disposal behavior. Browser execution must be tested on an actual supported browser/device; a .NET unit test cannot prove GPU execution.
 
 ## References
 
