@@ -10,7 +10,7 @@ A platform adapter consumes the neutral GUI model and materializes it for a targ
 
 | Path | Current evidence | Boundary |
 | --- | --- | --- |
-| Core → Blazor | `BlazorGuiRenderer` consumes `GuiNode`; render-tree tests cover hierarchy, commands, and typed text/select/toggle controls. | Typed controls dispatch values only through an explicit host dispatcher; without one they render read-only/disabled. Broader semantic parity remains open. |
+| Core → Blazor | `BlazorGuiRenderer` consumes `GuiNode`; render-tree tests cover hierarchy, commands, typed text/select/toggle controls, and host-delegated `Viewport` nodes. | Typed controls dispatch values only through an explicit host dispatcher; without one they render read-only/disabled. `RenderWithHostedSurface` delegates the visual child to the host; scene state, Renderer policy, GPU execution, and lifecycle remain host/Visualize responsibilities. Broader semantic parity remains open. |
 | Core → SVG | `SvgGuiRenderer` consumes `GuiNode`; tests cover scene serialization and static previews of typed text/select/toggle controls. | SVG controls are accessible visual snapshots, not interactive forms or a GUI event lifecycle. |
 | Core → WPF | `WpfGuiRenderer` consumes `GuiNode`; Windows tests cover hierarchy/order, identity/text, supported layout/color properties, and typed text/select/toggle controls. | Value changes route to a supplied host dispatcher; controls are read-only/disabled without one. Broader property, accessibility, and lifecycle coverage remains open. |
 | Core → Markdown | `MarkdownBadgeRenderer` consumes ordered `BadgeSet` values and a `MarkdownDocumentTarget`; tests cover the SURPS descriptor fixture, nested document paths, links, alt text, and missing-asset diagnostics. | This is a document-presentation adapter, not a widget renderer or publisher. It resolves repository assets relative to the target Markdown file and uses only caller-supplied path inventories for existence diagnostics. |
@@ -67,6 +67,9 @@ This table describes implementation, not a recommendation to preserve every beha
 Its recursive render-tree builder uses source-stable sequence numbers: each invocation of the renderer method starts at the same local sequence positions instead of carrying a global counter through the tree. Optional source/text fields and property/child loops must not shift later sequence positions as runtime data changes; the property loop therefore uses one stable sequence position for each emitted property. Blazor conformance tests pin the recursive element positions and verify that source, multiple properties, and text retain their expected positions. Sequence numbers guide framework diffing; they are not node IDs or a runtime count. This still does not prove complete interactive diff correctness for arbitrary tree mutations.
 
 The SVG renderer has a separate explicit SVG scene vocabulary. It can serialize SVG-specific nodes and coordinate-system scenes, but a generic Core tree is not automatically equivalent to an interactive widget tree merely because it can be serialized as SVG.
+
+
+For experience-owned visual scenes, `RenderWithHostedSurface` recognizes semantic `Viewport` nodes and asks the host for a `RenderFragment`. It supplies a stable, accessible region wrapper and preserves the ordinary GUI tree around the delegated surface. This is an integration seam, not a Visualize dependency or a graphics implementation; see [Visualize and Renderer: hosted viewport boundary](integrations/VISUALIZE_HOSTED_VIEWPORT.md) for the exact contract and remaining work.
 
 ## Capability differences
 
