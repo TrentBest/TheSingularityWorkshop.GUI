@@ -47,6 +47,18 @@ var content = BlazorGuiRenderer.RenderWithHostedSurface(
 
 `BattlefieldSurface` is host-owned. It may compose Visualize, consume Renderer policy, or provide another presentation implementation. The GUI package does not inspect or control that component.
 
+## Pages demonstration
+
+The GUI Pages workflow also assembles a runnable Visualize integration preview:
+
+1. it checks out the public Visualize `development` branch;
+2. it runs the Visualize `renderer-policy.test.mjs` contract against the checked-in 45-decision Renderer/FSM manifest;
+3. it copies the complete Soldier Field WebGPU runner into `visualization-lab/`;
+4. it records the exact Visualize commit in `visualization-lab/source-revision.txt`;
+5. the GUI landing page embeds that local copy in an iframe.
+
+This static Pages embedding demonstrates the hosting and provenance boundary. It is distinct from the Blazor `RenderWithHostedSurface` unit tests; it does not claim that the static page executes the Blazor adapter. The WebGPU work runs in the visitor's browser/device, not on GitHub Pages.
+
 ## What this does not claim
 
 This seam is not yet a complete spatial GUI contract. It does not establish:
