@@ -70,6 +70,7 @@
         <a href="#architecture">Architecture</a>
         <a href="#contents">What is inside</a>
         <a href="#gallery">Gallery</a>
+        <a href="#visualization-host">Visualization host</a>
         <a href="samples/demonstrations/index.html">Interactive demonstrations</a>
         <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/development/docs">Documentation</a>
         <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Source</a>
@@ -242,6 +243,29 @@
           </div>
         </article>
       </div>
+    </section>
+
+
+    <section id="visualization-host" class="wrap">
+      <div class="section-head">
+        <div class="eyebrow">The next boundary</div>
+        <h2>Host a living scene without absorbing its engine.</h2>
+        <p class="muted">GUI now has a Blazor host seam for semantic Viewport nodes. The host supplies the actual presentation fragment; Renderer and Visualize remain responsible for observer policy and visual execution.</p>
+      </div>
+      <article class="card">
+        <div class="card-body">
+          <span class="tag">Renderer · Visualize · GUI.Blazor</span>
+          <h3>Host-owned visualization viewport</h3>
+          <p class="muted">A GUI page can declare where a visual experience belongs. A host can place a Visualize scene, WebGPU runner, or another renderer inside that region without making GUI own scene state, GPU resources, or domain execution.</p>
+          <div class="proof">Implemented slice: nested Viewport delegation, stable GUI identity, accessible region metadata, and explicit host-fragment requirements are covered by Blazor tests.</div>
+          <div class="proof limits">Not yet claimed: automatic Renderer policy negotiation, spatial input routing, resize/disposal lifecycle, GPU availability, or full spatial adapter parity.</div>
+          <div class="links">
+            <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/development/docs/integrations/VISUALIZE_HOSTED_VIEWPORT.md">Read the integration contract →</a>
+            <a href="https://trentbest.github.io/TheSingularityWorkshop.Visualize/">Explore Visualize's live experiments →</a>
+            <a href="https://github.com/TrentBest/TheSingularityWorkshop.Renderer/tree/development">Inspect Renderer →</a>
+          </div>
+        </div>
+      </article>
     </section>
 
     <section class="wrap">
