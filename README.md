@@ -213,6 +213,14 @@ The goal is not to build a larger widget library. The goal is to build a semanti
 
 This is also the foundation for VR: semantic interaction such as Activate, Select, Point, Navigate, or Rotate must not intrinsically mean mouse click, keyboard input, or any other particular physical device.
 
+## Hosted visual surfaces: Visualize and Renderer
+
+GUI's Blazor adapter now exposes a host-owned viewport seam. A semantic `Viewport` node reserves a stable, accessible region in the interface tree; the host supplies the Blazor fragment that actually presents the scene. This allows an application to compose Visualize and consume Renderer decisions without making GUI depend on either package or absorb their execution responsibilities.
+
+The first implementation is deliberately narrow: nested viewport delegation is tested, but camera/transform semantics, observer-policy negotiation, spatial input, resize/disposal lifecycle, and browser GPU behavior remain separate work. See [Visualize and Renderer: hosted viewport boundary](docs/integrations/VISUALIZE_HOSTED_VIEWPORT.md) for the contract and evidence limits.
+
+The [live GUI showcase](https://trentbest.github.io/TheSingularityWorkshop.GUI/) includes a section describing this integration. The Visualize showcase remains the runnable scene playground.
+
 ## Visual references
 
 Concrete images are useful as **reference manifestations** of the semantic model.
