@@ -2,6 +2,9 @@
 
 # TheSingularityWorkshop.GUI
 
+[**Explore the live GUI experience →**](https://trentbest.github.io/TheSingularityWorkshop.GUI/)
+
+
 [![Sith Policy](assets/sith-policy.svg)](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/workflows/sith-policy.yml)
 > **A platform-neutral GUI engineering layer built around a recursive semantic model and platform adapters.**
 
