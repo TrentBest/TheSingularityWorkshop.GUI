@@ -35,7 +35,7 @@ var page = GuiBuilder.Create("Panel", "experience")
 
 var content = BlazorGuiRenderer.RenderWithHostedSurface(
     page,
-    viewport => builder => builder.OpenComponent<BattlefieldSurface>(0));
+    viewport => builder =>\n    {\n        builder.OpenComponent<BattlefieldSurface>(0);\n        builder.CloseComponent();\n    });
 ```
 
 `BattlefieldSurface` is host-owned. It may compose Visualize, consume Renderer policy, or provide another presentation implementation. The GUI package does not inspect or control that component.
