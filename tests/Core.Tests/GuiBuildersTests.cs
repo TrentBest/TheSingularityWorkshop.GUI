@@ -35,6 +35,17 @@ public sealed class GuiBuildersTests
     }
 
     [Fact]
+    public void Viewport_factory_requires_and_preserves_its_accessible_label()
+    {
+        var viewport = GuiBuilders.Viewport("scene", "Live scene").Build();
+
+        Assert.Equal("Viewport", viewport.Kind);
+        Assert.Equal("scene", viewport.Id);
+        Assert.Equal("Live scene", viewport.Text);
+        Assert.Throws<ArgumentException>(() => GuiBuilders.Viewport("missing-label", " "));
+    }
+
+    [Fact]
     public void Child_accepts_existing_node_as_an_independent_snapshot()
     {
         var child = GuiBuilders.Text("child", "Hello").Build();
