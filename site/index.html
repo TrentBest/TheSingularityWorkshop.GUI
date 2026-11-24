@@ -48,6 +48,14 @@
     .links a{font-weight:650}
     footer{margin-top:36px;padding:34px 0 46px;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
     footer img{width:112px;height:auto;margin-bottom:10px}
+    /* The page remains scrollable, but each new focus arrives as a scene. */
+    main > section.reveal{opacity:0;transform:translate3d(var(--reveal-x,0),24px,0) scale(.985);filter:blur(3px);transition:opacity .72s ease,transform .82s cubic-bezier(.2,.75,.2,1),filter .72s ease}
+    main > section.reveal:nth-of-type(even){--reveal-x:44px}
+    main > section.reveal:nth-of-type(odd){--reveal-x:-44px}
+    main > section.reveal.is-visible{opacity:1;transform:translate3d(0,0,0) scale(1);filter:blur(0)}
+    main > section.reveal .stage,main > section.reveal .package,main > section.reveal .path,main > section.reveal .card{transition:transform .35s ease,border-color .35s ease,box-shadow .35s ease}
+    main > section.reveal .stage:hover,main > section.reveal .package:hover,main > section.reveal .path:hover,main > section.reveal .card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 16px 38px #0005}
+    @media(prefers-reduced-motion:reduce){main > section.reveal{opacity:1;transform:none;filter:none;transition:none}main > section.reveal .stage,main > section.reveal .package,main > section.reveal .path,main > section.reveal .card{transition:none}}
     @media(max-width:980px){.catalog{grid-template-columns:repeat(2,minmax(0,1fr))}.path-grid{grid-template-columns:1fr}}
     @media(max-width:760px){.architecture{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.wide{grid-column:auto}}
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
@@ -257,5 +265,19 @@
     <div>Making software meaning visible to people.</div>
     <div><a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI">Repository</a> · <a href="https://github.com/TrentBest/TheSingularityWorkshop.GUI/issues">Issues and contributions</a></div>
   </footer>
+  <script>
+    // Progressive scene entrances: content remains in normal document flow and works without JS.
+    (() => {
+      const scenes = [...document.querySelectorAll("main > section")];
+      if (!("IntersectionObserver" in window) || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      scenes.forEach(scene => scene.classList.add("reveal"));
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          entry.target.classList.toggle("is-visible", entry.isIntersecting);
+        }
+      }, { root: null, rootMargin: "-10% 0px -12% 0px", threshold: 0.08 });
+      scenes.forEach(scene => observer.observe(scene));
+    })();
+  </script>
 </body>
 </html>
