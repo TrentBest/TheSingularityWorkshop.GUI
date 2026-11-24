@@ -17,7 +17,7 @@ public static class BlazorGuiRenderer
     {
         ArgumentNullException.ThrowIfNull(node);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: null, controlEventReceiver: null);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: null, controlEventReceiver: null, hostedSurfaceRenderer: null);
     }
 
     /// <summary>
@@ -29,7 +29,7 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(commandDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher, controlDispatcher: null, controlEventReceiver: null);
+        return builder => RenderNode(builder, node, commandDispatcher, controlDispatcher: null, controlEventReceiver: null, hostedSurfaceRenderer: null);
     }
 
     /// <summary>
@@ -42,7 +42,7 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(node);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: controlDispatcher, controlEventReceiver: controlDispatcher);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: controlDispatcher, controlEventReceiver: controlDispatcher, hostedSurfaceRenderer: null);
     }
 
     /// <summary>
@@ -58,7 +58,24 @@ public static class BlazorGuiRenderer
         ArgumentNullException.ThrowIfNull(eventReceiver);
         ArgumentNullException.ThrowIfNull(controlDispatcher);
         ValidateUniqueIds(node);
-        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: controlDispatcher, controlEventReceiver: eventReceiver);
+        return builder => RenderNode(builder, node, commandDispatcher: null, controlDispatcher: controlDispatcher, controlEventReceiver: eventReceiver, hostedSurfaceRenderer: null);
+    }
+
+    /// <summary>
+    /// Creates a render fragment that delegates semantic Viewport nodes to a host-owned
+    /// presentation surface. The host may supply a Visualize scene, canvas, or another
+    /// renderer without making GUI own its execution or domain state.
+    /// </summary>
+    public static RenderFragment RenderWithHostedSurface(
+        GuiNode node,
+        Func<GuiNode, RenderFragment?> hostedSurfaceRenderer)
+    {
+        ArgumentNullException.ThrowIfNull(node);
+        ArgumentNullException.ThrowIfNull(hostedSurfaceRenderer);
+        ValidateUniqueIds(node);
+        return builder => RenderNode(
+            builder, node, commandDispatcher: null, controlDispatcher: null,
+            controlEventReceiver: null, hostedSurfaceRenderer: hostedSurfaceRenderer);
     }
 
     private static void ValidateUniqueIds(GuiNode root)
@@ -89,8 +106,35 @@ public static class BlazorGuiRenderer
         GuiNode node,
         Action<string>? commandDispatcher,
         Action<string, string?>? controlDispatcher,
-        object? controlEventReceiver)
+        object? controlEventReceiver,
+        Func<GuiNode, RenderFragment?>? hostedSurfaceRenderer)
     {
+        if (node.Kind == "Viewport" && hostedSurfaceRenderer is not null)
+        {
+            var surface = hostedSurfaceRenderer(node)
+                ?? throw new InvalidOperationException(
+                    $"The host did not provide a presentation surface for viewport '{node.Id}'.");
+
+            builder.OpenElement(0, "section");
+            builder.AddAttribute(1, "id", node.Id);
+            builder.AddAttribute(2, "role", "region");
+            builder.AddAttribute(3, "aria-label",
+                string.IsNullOrWhiteSpace(node.Text) ? "Visualization viewport" : node.Text);
+            builder.AddAttribute(4, "data-gui-viewport", "true");
+            foreach (var property in node.Properties)
+            {
+                if (string.Equals(property.Key, "id", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(property.Key, "role", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(property.Key, "aria-label", StringComparison.OrdinalIgnoreCase)
+                    || string.Equals(property.Key, "onClickCommand", StringComparison.Ordinal))
+                    continue;
+                builder.AddAttribute(5, property.Key, property.Value);
+            }
+            builder.AddContent(6, surface);
+            builder.CloseElement();
+            return;
+        }
+
         if (node.Control is not null)
         {
             RenderControl(builder, node, controlDispatcher, controlEventReceiver);
@@ -130,7 +174,7 @@ public static class BlazorGuiRenderer
             builder.AddContent(4, node.Text);
 
         foreach (var child in node.Children)
-            RenderNode(builder, child, commandDispatcher, controlDispatcher, controlEventReceiver);
+            RenderNode(builder, child, commandDispatcher, controlDispatcher, controlEventReceiver, hostedSurfaceRenderer);
         builder.CloseElement();
     }
 
