@@ -47,6 +47,8 @@ jobs:
           set -euo pipefail
           mkdir -p _site
           cp -R site/. _site/
+          mkdir -p _site/assets
+          cp -R assets/autonomous-design _site/assets/autonomous-design
           mkdir -p _site/visualization-lab
           cp -R _visualize/samples/SoldierField/WebGpuRunner/. _site/visualization-lab/
           git -C _visualize rev-parse HEAD > _site/visualization-lab/source-revision.txt
@@ -62,6 +64,15 @@ jobs:
           test -s _site/visualization-lab/renderer-policy.json
           test -s _site/visualization-lab/source-revision.txt
           test -s _site/assets/svg-adapter-gallery.svg
+          test -s _site/badges.html
+          test -s _site/assets/autonomous-design/off.svg
+          test -s _site/assets/autonomous-design/working.svg
+          test -s _site/assets/autonomous-design/review.svg
+          test -s _site/assets/autonomous-design/unavailable.svg
+          test -s _site/assets/autonomous-design/dependency-ready.svg
+          test -s _site/assets/autonomous-design/dependency-waiting.svg
+          test -s _site/assets/autonomous-design/dependency-failed.svg
+          test -s _site/assets/autonomous-design/dependency-unknown.svg
           test -s _site/samples/demonstrations/index.html
           grep -F 'GUI.SVG Demonstrations' _site/samples/demonstrations/index.html
           python3 scripts/validate-pages.py --root _site
