@@ -1,3 +1,40 @@
+# Live reconciliation refresh — 2026-11-24 06:01 UTC
+
+**Snapshot:** `development` `8297148ad4a0ef277561ce6eed27d39dde590bb7`.  
+**Live branch inventory:** **26 total** — canonical `master` + `development`, plus **24 noncanonical branches**.  
+**Open PR inventory:** **24 open PRs**, all drafts, each mapped to one of the 24 noncanonical branches.  
+**Owner-deletion candidates:** **0**. No surplus branch is deletion-ready while its PR remains open and its unique work has not received a documented disposition.
+
+This is a live inventory refresh, not a declaration that all 24 PRs contain unique unintegrated work. Ahead/behind counts alone are not integration evidence. The branch owner must delete surplus branches after receiving an exact, verified list; the assistant does not have branch-delete capability.
+
+## Current preservation clusters
+
+| Cluster | Branches / PRs | Finding | Action |
+|---|---|---|---|
+| CiAi evidence | `work/ciai-evidence-lane-reconciled` / [#80](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/80); `work/integrate-ciai-pr-evidence` / [#83](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/83) | Both modify only `.github/workflows/ciai-evidence.yml`. #83 is the later refinement: it separates source and observer SHA, resolves the PR-specific package run, validates exact run/attempt identity, and writes provenance JSON. | Preserve #83 as preferred candidate; keep #80 as competing historical proposal until #83 is reconciled and revalidated against current development. |
+| Autonomous Design presentation | `work/autonomous-design-badge` / [#77](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/77); `work/integrate-autonomous-design-presentation` / [#82](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/82) | Shared badge assets/docs with differences in Pages/Sith workflow integration. | Review the two workflow variants together; preserve the badge state assets and presentation contract. |
+| UML nested data cards | `work/uml-visual-data-cards-2026-10-27` / [#50](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/50); `work/integrate-nested-uml-data-cards` / [#81](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/81) | The renderer and test changes were byte-identical in the previous blob audit; verify against current development before disposition. | One implementation path only after exact content verification. |
+| UML self-reference clearance | `work/fix-uml-self-reference-clearance-2026-10-27` / [#55](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/55); `work/uml-neighborhood-self-reference-clearance-2026-10-28` / [#60](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/60) | Overlapping renderer/test changes, not assumed identical. | Reconcile together and run SVG tests plus generated-artifact checks. |
+
+## Additional preservation / verification queue
+
+- [#48](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48) Architect renderer integration: substantive WPF host-resource work was previously verified as represented in development; its stale PR still needs owner disposition.
+- [#65](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/65) adapter conformance: revalidate current WPF/shared conformance tests on Windows.
+- [#47](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/47) oscillator sample; [#41](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/41) builder-cycle regression; [#35](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/35) SVG node limit; [#34](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/34) SVG root identity: inspect exact current behavior/tests and preserve any missing deltas.
+- Documentation PRs [#32](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32), [#36](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/36), [#37](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/37), [#38](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/38), [#39](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39), [#40](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/40), [#43](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/43), [#45](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/45): compare authored contracts/standards with current docs; do not copy older snapshots over newer documentation.
+- [#64](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/64) is an older reconciliation-ledger snapshot and is superseded by this refresh.
+
+## Operational guardrails
+
+1. Keep normal work on `development`; do not create task branches.
+2. Preserve `master`; do not merge/release to it or publish NuGet packages.
+3. Do not close or merge draft PRs as a shortcut to branch cleanup.
+4. Mark a branch **READY FOR OWNER DELETION** only after its PR is closed/dispositioned, every useful change is integrated or explicitly rejected, fresh ancestry/content checks pass, and current validation exists.
+5. Recheck the live branch head immediately before presenting a deletion candidate.
+6. Target exactly `master` + `development`; Sith must continue to fail closed until that exact inventory is reached.
+
+---
+
 ## 0.5 Architect integration reconciliation — 2026-11-23
 
 **PR #48:** [Support host theme resources for Architect integration](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/48)  
