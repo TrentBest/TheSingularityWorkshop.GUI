@@ -32,19 +32,23 @@ jobs:
           dotnet run --project samples/SvgGallery/SvgGallery.csproj --configuration Release -- ./_site/assets/svg-adapter-gallery.svg
           cmp ./_site/assets/svg-adapter-gallery.svg ./docs/assets/svg-adapter-gallery.svg
 
-      - name: Assemble the showcase and runnable browser demonstrations
+      - name: Assemble the complete site and runnable browser demonstrations
         run: |
-          mkdir -p _site/samples/demonstrations
-          cp site/index.html _site/index.html
+          set -euo pipefail
+          mkdir -p _site
+          cp -R site/. _site/
           cp -R docs _site/docs
+          mkdir -p _site/samples/demonstrations
           cp -R samples/demonstrations/. _site/samples/demonstrations/
           cp docs/assets/fox-sheepdog-10x10.svg _site/assets/fox-sheepdog-10x10.svg
           cp docs/assets/concepts/gui-semantic-boundary.svg _site/assets/gui-semantic-boundary.svg
           touch _site/.nojekyll
           test -s _site/index.html
+          test -s _site/capability-atlas.html
           test -s _site/assets/svg-adapter-gallery.svg
           test -s _site/samples/demonstrations/index.html
           grep -F 'GUI.SVG Demonstrations' _site/samples/demonstrations/index.html
+          python3 scripts/validate-pages.py --root _site
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b # pinned commit SHA
