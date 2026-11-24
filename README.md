@@ -219,7 +219,7 @@ GUI's Blazor adapter now exposes a host-owned viewport seam. A semantic `Viewpor
 
 The first implementation is deliberately narrow: nested viewport delegation is tested, but camera/transform semantics, observer-policy negotiation, spatial input, resize/disposal lifecycle, and browser GPU behavior remain separate work. See [Visualize and Renderer: hosted viewport boundary](docs/integrations/VISUALIZE_HOSTED_VIEWPORT.md) for the contract and evidence limits.
 
-The [live GUI showcase](https://trentbest.github.io/TheSingularityWorkshop.GUI/) includes a section describing this integration. The Visualize showcase remains the runnable scene playground.
+The [live GUI showcase](https://trentbest.github.io/TheSingularityWorkshop.GUI/) embeds the Visualize Soldier Field WebGPU runner after validating its 45-decision Renderer/FSM policy manifest; the exact Visualize source revision is included in the Pages artifact. This static preview demonstrates the hosting boundary, while the separate Blazor API is covered by render-tree tests. WebGPU execution remains on the visitor's browser/device.
 
 ## Visual references
 
