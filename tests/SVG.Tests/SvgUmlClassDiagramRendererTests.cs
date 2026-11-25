@@ -10,102 +10,180 @@ public sealed class SvgUmlClassDiagramRendererTests
     private static readonly XNamespace Svg = "http://www.w3.org/2000/svg";
 
     [Fact]
-    public void Renders_accessible_class_compartments_and_declared_references()
+    public void Renders_visibility_tiers_outside_ordered_member_categories_with_accessible_description()
     {
         var model = new UmlClassDiagram(
             "DataCard",
             kind: "sealed class",
             @namespace: "TheSingularityWorkshop.Workshop.Gui",
-            fields: [new UmlMember("_children", "_children : ReadOnlyCollection<DataCard>", "private")],
+            fields:
+            [
+                new UmlMember("_children", "_children : ReadOnlyCollection<DataCard>", "private"),
+                new UmlMember("Cache", "Cache : int", "internal", IsStatic: true),
+                new UmlMember("Shared", "Shared : int", "protected internal")
+            ],
             properties: [new UmlMember("Id", "Id : string {get}", "public")],
-            operations: [new UmlMember("GetCollapsedSummary", "GetCollapsedSummary(isExpanded : bool) : string?", "public")],
+            operations:
+            [
+                new UmlMember("GetCollapsedSummary", "GetCollapsedSummary(isExpanded : bool) : string?", "public"),
+                new UmlMember("Validate", "Validate() : void", "protected"),
+                new UmlMember("Reset", "Reset() : void", "private")
+            ],
             declaredRelationships: ["DataCard → DataCard : Children (source-declared association candidate)"]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
         Assert.Equal("UML class diagram: DataCard", document.Root!.Element(Svg + "title")!.Value);
-        Assert.Contains("source-declared association candidate", document.Root.Element(Svg + "desc")!.Value);
+        var description = document.Root.Element(Svg + "desc")!.Value;
+        Assert.Contains("Static nested-card view", description);
+        Assert.Contains("Visibility tiers are ordered Public, Protected, Internal / assembly-visible, then Private / implementation-only", description);
+        Assert.Contains("member categories are ordered Properties, Methods, Fields", description);
+        Assert.Contains("source-declared association candidate", description);
+
         var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
-        Assert.Contains("Fields", text);
-        Assert.Contains("Properties", text);
-        Assert.Contains("Operations", text);
-        var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
-        var propertiesIndex = Array.IndexOf(labels, "Properties");
-        var operationsIndex = Array.IndexOf(labels, "Operations");
-        var fieldsIndex = Array.IndexOf(labels, "Fields");
-        Assert.True(propertiesIndex >= 0 && propertiesIndex < operationsIndex,
-            "properties must be presented before operations");
-        Assert.True(operationsIndex < fieldsIndex,
-            "implementation fields must follow the exposed API surface");
+        Assert.Contains("Properties (1)", text);
+        Assert.Contains("Methods (1)", text);
+        Assert.Contains("Fields (2)", text);
+        Assert.Contains("Public (2)", text);
+        Assert.Contains("Protected (1)", text);
+        Assert.Contains("Internal / assembly-visible (2)", text);
+        Assert.Contains("Private / implementation-only (2)", text);
         Assert.Contains("GetCollapsedSummary", text);
         Assert.Contains("Children", text);
+        Assert.Contains("TheSingularityWorkshop.Workshop.Gui", text);
+
+        var rects = document.Descendants(Svg + "rect").ToArray();
+        var namespaceCard = rects.Single(element => (string?)element.Attribute("data-card-kind") == "namespace-container");
+        var typeCard = rects.Single(element => (string?)element.Attribute("data-card-kind") == "type-container");
+        var typeHeader = rects.Single(element => (string?)element.Attribute("data-card-kind") == "type-header");
+        Assert.True(Contains(namespaceCard, typeCard));
+        Assert.True(Contains(typeCard, typeHeader));
+
+        var tiers = rects.Where(element =>
+            ((string?)element.Attribute("data-card-kind"))?.StartsWith("accessibility-tier ", StringComparison.Ordinal) == true).ToArray();
+        Assert.Equal(new[]
+        {
+            "accessibility-tier public",
+            "accessibility-tier protected",
+            "accessibility-tier internal",
+            "accessibility-tier private"
+        }, tiers.Select(element => (string)element.Attribute("data-card-kind")!));
+
+        var categories = rects.Where(element =>
+            ((string?)element.Attribute("data-card-kind"))?.StartsWith("member-category ", StringComparison.Ordinal) == true).ToArray();
+        Assert.Equal(new[]
+        {
+            "member-category property", "member-category method",
+            "member-category method",
+            "member-category field",
+            "member-category method", "member-category field"
+        }, categories.Select(element => (string)element.Attribute("data-card-kind")!));
+
+        foreach (var tier in tiers)
+        {
+            Assert.True(Contains(typeCard, tier), "every visibility tier must be nested inside the type card");
+            var tierCategories = categories.Where(category => Contains(tier, category)).ToArray();
+            Assert.NotEmpty(tierCategories);
+            foreach (var category in tierCategories)
+                Assert.True(Contains(tier, category), "member categories must be nested inside their visibility tier");
+        }
+
+        var members = rects.Where(element =>
+            ((string?)element.Attribute("data-card-kind"))?.StartsWith("member ", StringComparison.Ordinal) == true).ToArray();
+        foreach (var member in members)
+        {
+            var category = categories.Single(candidate => Contains(candidate, member));
+            var tier = tiers.Single(candidate => Contains(candidate, category));
+            Assert.True(Contains(category, member));
+            Assert.True(Contains(tier, member));
+        }
+
+        var strokes = rects.Select(element => (string?)element.Attribute("stroke")).ToArray();
+        Assert.Contains("#d6b82e", strokes);
+        Assert.Contains("#2e9d70", strokes);
+        Assert.Contains("#4a90e2", strokes);
+        Assert.Contains("#6da99b", strokes);
+        Assert.Contains("#8b7ac8", strokes);
+    }
+
+    private static bool Contains(XElement outer, XElement inner)
+    {
+        static double Number(XElement element, string attribute) =>
+            double.Parse((string)element.Attribute(attribute)!, System.Globalization.CultureInfo.InvariantCulture);
+
+        var outerX = Number(outer, "x");
+        var outerY = Number(outer, "y");
+        var outerRight = outerX + Number(outer, "width");
+        var outerBottom = outerY + Number(outer, "height");
+        var innerX = Number(inner, "x");
+        var innerY = Number(inner, "y");
+        var innerRight = innerX + Number(inner, "width");
+        var innerBottom = innerY + Number(inner, "height");
+
+        return innerX >= outerX && innerY >= outerY &&
+            innerRight <= outerRight && innerBottom <= outerBottom;
     }
 
     [Fact]
-    public void Groups_members_into_ordered_visibility_tiers_within_each_tier()
+    public void Preserves_combined_and_unrecognized_accessibility_without_mislabelling()
     {
         var model = new UmlClassDiagram(
-            "VisibilityExample",
+            "AccessExample",
             fields:
             [
-                new UmlMember("_secret", "_secret : int", "private"),
-                new UmlMember("_state", "_state : int", "protected")
-            ],
-            properties:
-            [
-                new UmlMember("Name", "Name : string", "public"),
-                new UmlMember("ProtectedName", "ProtectedName : string", "protected")
-            ],
-            operations:
-            [
-                new UmlMember("Run", "Run() : void", "public"),
-                new UmlMember("Reset", "Reset() : void", "private")
+                new UmlMember("Wide", "Wide : int", "protected internal"),
+                new UmlMember("Narrow", "Narrow : int", "private protected"),
+                new UmlMember("Mystery", "Mystery : int", "future-access"),
+                new UmlMember("Missing", "Missing : int", " ")
             ]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
-        var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
-        var publicIndex = Array.IndexOf(labels, "Public visibility");
-        var protectedIndex = Array.IndexOf(labels, "Protected visibility");
-        var privateIndex = Array.IndexOf(labels, "Private visibility");
+        var text = string.Join(" ", document.Descendants(Svg + "text").Select(element => element.Value));
 
-        Assert.True(publicIndex >= 0 && publicIndex < protectedIndex && protectedIndex < privateIndex,
-            "visibility tiers must be ordered from most exposed to least exposed");
-        Assert.True(Array.IndexOf(labels, "Properties") < Array.IndexOf(labels, "Operations"));
-        Assert.True(Array.IndexOf(labels, "Operations") < Array.IndexOf(labels, "Fields"));
-        Assert.Contains("+ Name : string", labels);
-        Assert.Contains("- Reset() : void", labels);
-        Assert.Contains("- _secret : int", labels);
+        Assert.Contains("[protected internal] Wide : int", text);
+        Assert.Contains("[private protected] Narrow : int", text);
+        Assert.Contains("[visibility: future-access] Mystery : int", text);
+        Assert.Contains("[visibility: unspecified] Missing : int", text);
+        Assert.Contains("Internal / assembly-visible (1)", text);
+        Assert.Contains("Private / implementation-only (1)", text);
+        Assert.Contains("Unspecified / unrecognized (2)", text);
+
+        var tiers = document.Descendants(Svg + "rect")
+            .Where(element => ((string?)element.Attribute("data-card-kind"))?.StartsWith("accessibility-tier ", StringComparison.Ordinal) == true)
+            .Select(element => (string)element.Attribute("data-card-kind")!)
+            .ToArray();
+        Assert.Equal(new[]
+        {
+            "accessibility-tier internal",
+            "accessibility-tier private",
+            "accessibility-tier unknown"
+        }, tiers);
     }
 
     [Fact]
-    public void Maps_internal_package_and_unknown_visibility_and_preserves_static_marker()
+    public void Rejects_too_narrow_diagram_width()
+    {
+        Assert.Throws<ArgumentOutOfRangeException>(() =>
+            new SvgUmlClassDiagramRenderer().Render(new UmlClassDiagram("Example"), width: 200));
+    }
+
+    [Fact]
+    public void Keeps_package_visibility_in_the_internal_tier_for_compatibility()
     {
         var model = new UmlClassDiagram(
-            "VisibilityKinds",
+            "PackageVisibility",
             fields:
             [
                 new UmlMember("_internal", "_internal : int", "internal"),
-                new UmlMember("_package", "_package : int", "package"),
-                new UmlMember("_unknown", "_unknown : int", "file")
-            ],
-            operations:
-            [
-                new UmlMember("Create", "Create() : VisibilityKinds", "internal", IsStatic: true)
+                new UmlMember("_package", "_package : int", "package")
             ]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
         var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
-        var internalIndex = Array.IndexOf(labels, "Internal visibility");
-        var otherIndex = Array.IndexOf(labels, "Other visibility");
-
-        Assert.True(internalIndex >= 0 && otherIndex > internalIndex,
-            "internal/package members must share the Internal tier before unknown visibility");
-        Assert.Equal(1, labels.Count(label => label == "Internal visibility"));
+        Assert.Contains("Internal / assembly-visible (2)", labels);
         Assert.Contains("~ _internal : int", labels);
         Assert.Contains("~ _package : int", labels);
-        Assert.Contains("~ _unknown : int", labels);
-        Assert.Contains("~ Create() : VisibilityKinds {static}", labels);
+        Assert.DoesNotContain(labels, label => label.StartsWith("[visibility:", StringComparison.Ordinal));
     }
-
 
     [Fact]
     public void Accounts_for_multiline_member_signatures_in_svg_height()
@@ -114,7 +192,7 @@ public sealed class SvgUmlClassDiagramRendererTests
             "MultilineExample",
             properties:
             [
-                new UmlMember("Configuration", "Configuration : Options\r\n{get; init;}\n// immutable after creation", "public")
+                new UmlMember("Configuration", "Configuration : Options\\r\\n{get; init;}\\n// immutable after creation", "public")
             ]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
@@ -128,18 +206,12 @@ public sealed class SvgUmlClassDiagramRendererTests
             .Select(element => double.Parse(element.Attribute("y")!.Value, System.Globalization.CultureInfo.InvariantCulture))
             .ToArray();
         Assert.Equal(3, memberLines.Length);
-        Assert.Equal(22d, memberLines[1] - memberLines[0]);
-        Assert.Equal(22d, memberLines[2] - memberLines[1]);
+        Assert.Equal(19d, memberLines[1] - memberLines[0]);
+        Assert.Equal(19d, memberLines[2] - memberLines[1]);
 
         var svgHeight = double.Parse(document.Root!.Attribute("height")!.Value, System.Globalization.CultureInfo.InvariantCulture);
         Assert.True(svgHeight > memberLines[^1],
             "the SVG canvas must extend beyond the final rendered signature line");
     }
 
-    [Fact]
-    public void Rejects_too_narrow_diagram_width()
-    {
-        Assert.Throws<ArgumentOutOfRangeException>(() =>
-            new SvgUmlClassDiagramRenderer().Render(new UmlClassDiagram("Example"), width: 200));
-    }
 }
