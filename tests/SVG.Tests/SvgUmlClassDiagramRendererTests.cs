@@ -175,13 +175,15 @@ public sealed class SvgUmlClassDiagramRendererTests
             [
                 new UmlMember("_internal", "_internal : int", "internal"),
                 new UmlMember("_package", "_package : int", "package")
-            ]);
+            ],
+            operations: [new UmlMember("Create", "Create() : PackageVisibility", "internal", IsStatic: true)]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
         var labels = document.Descendants(Svg + "text").Select(element => element.Value).ToArray();
-        Assert.Contains("Internal / assembly-visible (2)", labels);
+        Assert.Contains("Internal / assembly-visible (3)", labels);
         Assert.Contains("~ _internal : int", labels);
         Assert.Contains("~ _package : int", labels);
+        Assert.Contains("~ Create() : PackageVisibility  {static}", labels);
         Assert.DoesNotContain(labels, label => label.StartsWith("[visibility:", StringComparison.Ordinal));
     }
 
@@ -192,7 +194,7 @@ public sealed class SvgUmlClassDiagramRendererTests
             "MultilineExample",
             properties:
             [
-                new UmlMember("Configuration", "Configuration : Options\\r\\n{get; init;}\\n// immutable after creation", "public")
+                new UmlMember("Configuration", "Configuration : Options\r\n{get; init;}\n// immutable after creation", "public")
             ]);
 
         var document = XDocument.Parse(new SvgUmlClassDiagramRenderer().Render(model));
