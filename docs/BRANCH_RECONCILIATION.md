@@ -1,6 +1,7 @@
 # UML nested-card integration checkpoint — 2026-11-25 21:33 UTC
 
-**Development head:** `cdc3ba066fae7590fce1f6bc5ad0c0396721abe6`  
+**Implementation/test head before this ledger update:** `cdc3ba066fae7590fce1f6bc5ad0c0396721abe6`  
+**Ledger checkpoint commit:** `19156b9dc0949493ee46d5763a7ac97a8a821e83`  
 **Branch/PR inventory:** 26 branches (24 noncanonical), 24 open draft PRs.  
 **Deletion-ready branches:** 0.
 
