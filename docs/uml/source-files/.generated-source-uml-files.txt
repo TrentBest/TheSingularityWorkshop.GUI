@@ -137,6 +137,10 @@ SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.md
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-188b9d58e1.svg
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.md
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgGuiRenderer-CoordinateRange-9ab33e24ab.svg
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-MemberCategory-496027b711.md
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-MemberCategory-496027b711.svg
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-VisibilityTier-f97c03dd3e.md
+SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-VisibilityTier-f97c03dd3e.svg
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-aad146e7b8.md
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlClassDiagramRenderer-aad146e7b8.svg
 SVG/TheSingularityWorkshop-Workshop-Gui-Svg-SvgUmlDocumentationGraphRenderer-GraphNode-746c9a0037.md
