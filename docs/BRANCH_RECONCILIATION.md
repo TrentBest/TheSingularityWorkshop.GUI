@@ -1,3 +1,32 @@
+# Live reconciliation refresh — 2026-11-25 21:29 UTC
+
+**Snapshot:** `development` `b4268c8db4e69908fb0b876f081aa323497d00d3`.  
+**Live branch inventory:** **26 total** — canonical `master` + `development`, plus **24 noncanonical branches**.  
+**Open PR inventory:** **24 open PRs; all 24 are drafts**. Each noncanonical branch is the head of one open PR.  
+**Owner-deletion candidates:** **0**. Every surplus branch is still tied to an open draft PR; none meets the documented owner-deletion gate.
+
+### Current branch inventory
+
+`development`; `master`; `docs/charting-contract-adr-2026-10-23`; `docs/ci-test-coverage-matrix-2026-10-23`; `docs/fsm-driven-oscillator`; `docs/full-gui-domain-coverage-2026-10-23`; `docs/gui-blazor-svg-authored-contracts-2026-10-23`; `docs/gui-core-authored-contracts-2026-10-23`; `docs/gui-wpf-authored-contracts-2026-10-23`; `docs/uml-three-view-standard-2026-10-23`; `feature/architect-renderer-integration`; `fix/svg-node-count-limit-2026-10-23`; `release/gui-closeout-2026-10-22`; `release/gui-root-id-contract-2026-10-22`; `tests/core-builder-cycle-regression-2026-10-23`; `work/adapter-conformance-three-way-2026-10-30`; `work/autonomous-design-badge`; `work/ciai-evidence-lane-reconciled`; `work/fix-uml-self-reference-clearance-2026-10-27`; `work/integrate-autonomous-design-presentation`; `work/integrate-ciai-pr-evidence`; `work/integrate-nested-uml-data-cards`; `work/sith-branch-reconciliation-2026-10-29`; `work/uml-neighborhood-self-reference-clearance-2026-10-28`; `work/uml-visibility-tier-data-cards-2026-10-28`; `work/uml-visual-data-cards-2026-10-27`.
+
+### Current master/development relationship
+
+Comparing `master` to `development`: **development is 1,202 commits ahead and 155 commits behind**; the refs are diverged. This is not a promotion-ready relationship. The 155 master-only commits remain an explicit review requirement before any release alignment. No merge, reset, force-update, or promotion is authorized by this audit.
+
+### Verification boundary
+
+All 24 open PRs were individually re-read on 2026-11-25. Each is still open, draft, unmerged, and targets `development`; each head ref corresponds to one of the 24 noncanonical branches above. Current PR heads include #83 `work/integrate-ciai-pr-evidence`, #82 `work/integrate-autonomous-design-presentation`, #81 `work/integrate-nested-uml-data-cards`, #80 `work/ciai-evidence-lane-reconciled`, #77 `work/autonomous-design-badge`, #65 `work/adapter-conformance-three-way-2026-10-30`, #64 `work/sith-branch-reconciliation-2026-10-29`, #60 `work/uml-neighborhood-self-reference-clearance-2026-10-28`, #57 `work/uml-visibility-tier-data-cards-2026-10-28`, #55 `work/fix-uml-self-reference-clearance-2026-10-27`, #50 `work/uml-visual-data-cards-2026-10-27`, #48 `feature/architect-renderer-integration`, #47 `docs/fsm-driven-oscillator`, #45 `docs/ci-test-coverage-matrix-2026-10-23`, #43 `docs/charting-contract-adr-2026-10-23`, #41 `tests/core-builder-cycle-regression-2026-10-23`, #40 `docs/full-gui-domain-coverage-2026-10-23`, #39 `docs/uml-three-view-standard-2026-10-23`, #38 `docs/gui-wpf-authored-contracts-2026-10-23`, #37 `docs/gui-blazor-svg-authored-contracts-2026-10-23`, #36 `docs/gui-core-authored-contracts-2026-10-23`, #35 `fix/svg-node-count-limit-2026-10-23`, #34 `release/gui-root-id-contract-2026-10-22`, and #32 `release/gui-closeout-2026-10-22`.
+
+The commit-status and pull-request-run lookup for the current development SHA returned no check records through the available endpoint. Therefore this checkpoint does **not** claim exact-head CI is green. Historical validation listed below remains historical and SHA-scoped.
+
+### Decision
+
+Operation Sith remains correctly fail-closed: the repository does not meet the exact two-branch target. Continue reconciliation on `development`; keep `master` unchanged; do not close or merge draft PRs merely to enable branch deletion. A branch becomes **READY FOR OWNER DELETION** only after its PR is explicitly dispositioned, its unique useful content is integrated or rejected, fresh ancestry/content checks pass, and current validation is recorded. The owner performs branch deletion.
+
+No PR was closed or merged, no branch was deleted, no ref was moved, and no NuGet package was published in this refresh.
+
+---
+
 # Live reconciliation refresh — 2026-11-24 06:01 UTC
 
 **Snapshot:** `development` `8297148ad4a0ef277561ce6eed27d39dde590bb7`.  
