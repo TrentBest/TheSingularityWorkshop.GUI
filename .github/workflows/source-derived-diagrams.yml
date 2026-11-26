@@ -425,7 +425,7 @@ jobs:
 
       - name: Render self-reference geometry review fixture
         env:
-          GUI_UML_REVIEW_ARTIFACT: artifacts/UmlSelfReference.review.svg
+          GUI_UML_REVIEW_ARTIFACT: ${{ github.workspace }}/artifacts/UmlSelfReference.review.svg
         run: >-
           dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj
           --configuration Release
