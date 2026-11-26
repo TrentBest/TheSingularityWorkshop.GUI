@@ -504,3 +504,34 @@ The separate benchmark GUI repository remains the clean reference: its live inve
 6. Once the owner has dispositioned PRs and deleted a batch, rerun the full inventory. The only successful terminal state is exactly `master` + `development`.
 
 **Current conclusion:** Operation Sith is being enforced correctly, but this repository is not yet reconciled. The next useful work is to resolve the preservation clusters and produce a smaller, evidence-backed PR/branch disposition batch—not to delete blindly.
+
+
+### 7.5. Live refresh — 2026-11-25 (current development head)
+
+This subsection supersedes stale inventory/checkpoint statements above where they conflict with this live refresh. It does not change PR state or authorize deletion.
+
+- Live branch inventory: **26 total** — canonical `master` and `development`, plus 24 noncanonical branches.
+- Current `development` head observed by compare: `a2ad840a67ea2ead7a13ae48fe0375f347dec951`.
+- Current `master` remains divergent from development: development is 1,209 commits ahead and 155 commits behind master in the current compare. Do not promote, reset, merge, or otherwise modify master as part of this reconciliation.
+- Current-head CI could not be established from the commit-associated workflow-run lookup; it returned no runs for this SHA. Do not label the current development head green on the basis of older PR runs.
+
+#### CiAi evidence lane — PRs #80 and #83
+
+- The current development file `.github/workflows/ciai-evidence.yml` has blob SHA `d28966726cbce237444e3304015f86cfc8145965`.
+- The file on both PR #80 (`work/ciai-evidence-lane-reconciled`) and PR #83 (`work/integrate-ciai-pr-evidence`) has that exact same blob SHA. The evidence workflow implementation is therefore already present byte-for-byte on current development.
+- PR #83 reports successful exact-head CiAi evidence and Package GUI run #1488 on its stated source SHA. PR #80's recorded Package GUI run #1482 and CiAi evidence run #47 also passed on its historical source SHA. These are historical branch-head results, not current-development validation.
+- Both PRs remain open drafts. Their branch ancestry is divergent from current development; do not merge either stale branch. They require explicit owner PR disposition before their branches can become deletion candidates.
+
+#### Autonomous Design presentation — PRs #77 and #82
+
+- All eight lifecycle/dependency SVG assets on PR #82 match current development byte-for-byte (identical Git blob SHAs).
+- `docs/AUTONOMOUS_DESIGN_BADGE.md` and `site/badges.html` also match current development byte-for-byte.
+- PR #82's `site/index.html` is superseded by the newer current-development page. Its useful badge-gallery navigation remains present, alongside newer capability-atlas content and links.
+- PR #82's `.github/workflows/sith-policy.yml` matches current development byte-for-byte. PR #77's older version does not.
+- PR #82's `.github/workflows/pages.yml` is superseded by the more evolved current-development workflow: current development targets .NET 10, validates all eight badge assets, includes the Visualize WebGPU lab and renderer-policy validation, and delegates Pages deployment through the pinned CiAi reusable workflow. Do not replace it with either PR's older Pages workflow. PR #77's Pages workflow targets .NET 8.
+- The latest recorded Package GUI run for PR #82 head `fbaa88087c7975094404e1c93c0d645e7e80d90d` (run #1663) failed in the test-and-package job at the external Physics projectile run-record fetch: `curl: (22) The requested URL returned error: 503`. The preceding build, Core/Blazor/Markdown/SVG/shared-adapter tests and WPF job passed; later packaging steps were skipped. This is a transient external-data fetch failure, not evidence of a badge-asset defect. The PR description's earlier all-green run refers to a different head and must not be treated as validation of this head.
+- The Autonomous Design presentation tranche is already integrated on current development, but PRs #77 and #82 remain open drafts. Keep both open for explicit owner disposition; do not merge stale workflow or site snapshots, and do not mark either branch deletion-ready yet.
+
+#### Owner action boundary
+
+No PR was closed or merged, no branch was deleted, and no package was published in this refresh. The four PRs above are implementation-reconciled but still require owner disposition. They are **not** branch-deletion-ready while their PRs remain open. Continue reviewing the remaining PR clusters, then provide one consolidated branch list only after the PR dispositions and validation gates are satisfied.
