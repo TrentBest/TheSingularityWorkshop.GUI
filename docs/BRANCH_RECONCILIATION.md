@@ -699,3 +699,25 @@ Live review of the remaining unique documentation/design items:
 - Rechecked exact-head combined status and commit-associated workflow runs for `4dba2356d0a809011e754139a9a67366cbddf74e`: both returned empty results. CI remains **unverified**, not green.
 - Refreshed `development...master`: status remains **diverged**, now **155 commits ahead and 1,221 commits behind**. The behind count increased by one since §7.11; no merge-base or promotion action is authorized.
 - No PR was merged or closed, no branch was deleted, `master` was not modified, and no package publication or deployment was initiated. **No branch is READY FOR OWNER DELETION** while its corresponding PR remains open.
+
+
+### 7.13. Live verification refresh — 2026-11-26 04:25 UTC
+
+This refresh supersedes prior inventory, branch-count, and current-head statements where they conflict. It records the live repository state without changing PR disposition or authorizing cleanup.
+
+- Verified current `development` HEAD: `d0e5322aaf8a92daea6e244eac0119314e0cb9f0` ([commit](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/d0e5322aaf8a92daea6e244eac0119314e0cb9f0)).
+- Live branch enumeration returned **27 branches**: canonical `master` and `development`, plus **25 noncanonical branches**.
+- Live open-PR search returned **25 open draft PRs**: #32, #34, #35, #36, #37, #38, #39, #40, #41, #43, #45, #47, #48, #50, #55, #57, #60, #64, #65, #77, #80, #81, #82, #83, and #89. These correspond to the 25 noncanonical branches. No branch is ready for owner deletion while its PR remains open.
+- The exact-head workflow evidence observed for `d0e5322...` is:
+  - Package GUI run [45752767528](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767528): passed, including Linux/Core/Blazor/Markdown/SVG/shared-adapter validation, Windows WPF validation, package creation/metadata, and clean-consumer verification. NuGet publication was skipped.
+  - CiAi Commit Evidence run [45752767524](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767524): passed.
+  - Source-derived diagrams run [45752767518](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767518): passed.
+  - Solution-derived UML inventory run [45752767512](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767512): passed.
+  - Pages build run [45752767985](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767985): build and artifact validation passed; deployment was skipped because the deploy job now requires `workflow_dispatch`.
+  - Sith Policy run [45752767510](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767510): failed as expected because the live inventory contains 27 branches rather than exactly `master` and `development`.
+- The GitHub combined-status endpoint and the commit-associated PR-workflow lookup returned no entries for this push commit. The run-specific evidence above is recorded from the exact-head workflow runs; the empty lookup is not treated as a pass or as contradictory to those run records.
+- Current `development...master` compare is **diverged**: development is **155 commits ahead and 1,224 commits behind**. No merge, reset, force update, promotion, or modification of `master` is authorized by this reconciliation.
+- PR #89 remains open and draft. Its one-file validator patch is byte-identical to the current development version, but its branch remains divergent and its PR remains open. Do not merge or delete it as a cleanup shortcut; owner disposition is still required.
+- Pages deployment safety: the earlier push-triggered workflow revision did deploy during this development session (run [45752670631](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752670631)). This was unintended and is disclosed. The current workflow condition is `github.event_name == 'workflow_dispatch'`; exact-head Pages run #45752767985 confirmed deployment was skipped. No further deployment is authorized.
+- Repository branch protection remains disabled and required-check enforcement is not active. This is a separate governance gap from the Sith Policy failure. No branch protection or ruleset settings were changed; owner authorization is required before changing them.
+- No PR was merged or closed, no branch was deleted, `master` was not modified, no package was published, and no additional deployment was initiated. **No branch is READY FOR OWNER DELETION.** The owner must disposition the open PRs before a consolidated deletion batch can be prepared.
