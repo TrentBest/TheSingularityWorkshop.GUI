@@ -56,25 +56,20 @@ Direct PR refresh confirms #32, #39, and #57 are all `state=closed`, `merged=fal
 
 The canonical presentation rule now specifies Public instance → Static (all access levels, exact accessibility retained) → Protected instance → Internal instance → Private instance → Other/unrecognized. Static is a presentation bucket, not a language accessibility modifier; each declaration appears once. Within each bucket: Properties → Methods → Fields → other supported kinds. This remains a proposal pending owner acceptance, semantic-model/renderer alignment, fixtures, and tests. The full GUI domain-definition gate remains open.
 
-## Live inventory after proposal reconciliation
+## Final live inventory — 2026-11-26
 
-A fresh branch enumeration returned exactly five branches:
+A fresh paginated branch enumeration returned exactly two branches:
 
 - `development`
 - `master`
-- `release/gui-closeout-2026-10-22` — PR #32 closed, unmerged
-- `docs/uml-three-view-standard-2026-10-23` — PR #39 closed, unmerged
-- `work/uml-visibility-tier-data-cards-2026-10-28` — PR #57 closed, unmerged
 
-A direct refresh confirms there are no remaining open PRs among #32, #39, and #57. The three noncanonical branches are now ready for owner deletion. No branch was deleted by the assistant.
+The first page returned these two entries with a continuation cursor; the continuation page returned an empty branch list and no further cursor. This verifies the exact Sith branch target. The three reconciled proposal branches (`release/gui-closeout-2026-10-22`, `docs/uml-three-view-standard-2026-10-23`, and `work/uml-visibility-tier-data-cards-2026-10-28`) are no longer present. Their PRs #32, #39, and #57 remain closed and unmerged as previously verified.
 
-## READY FOR OWNER DELETION — 3 branches
+The owner performed branch deletion. The assistant did not delete branches.
 
-1. `release/gui-closeout-2026-10-22`
-2. `docs/uml-three-view-standard-2026-10-23`
-3. `work/uml-visibility-tier-data-cards-2026-10-28`
+## Inventory result
 
-The earlier 22-branch batch has already been removed by the owner. Once these three branches are deleted, re-enumerate and verify the exact two-branch target.
+<badge>Branch inventory verified</badge> Exactly `development` + `master`; no noncanonical branches remain in the paginated enumeration.
 
 ## Remaining gates
 
@@ -87,4 +82,4 @@ The earlier 22-branch batch has already been removed by the owner. Once these th
 - Pages deployment remains manual-dispatch-only. No dispatch or deployment was initiated during this reconciliation.
 - No NuGet package was published. No package scope/version/channel was selected and no release was approved.
 
-**Result:** PR cleanup is complete. All three proposal PRs are closed unmerged and their useful material is represented in current development documentation. The repository is at the final owner-deletion stage: exactly three noncanonical branches remain. After the owner deletes them, verify the exact two-branch Sith target and rerun the current-head gates.
+**Result:** PR cleanup and owner branch deletion are complete. All three proposal PRs are closed unmerged and their useful material is represented in current development documentation. The exact two-branch target is now verified. Exact-head CI and a post-deletion Sith workflow pass remain unverified and must not be represented as green.
