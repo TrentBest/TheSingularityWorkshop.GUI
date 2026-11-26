@@ -2,7 +2,7 @@
 <p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
 
 # UML-Inspired Data Cards
-> **Status: draft, not a release-accepted member-order contract.** This document currently describes Public → Protected → Private visibility groups and treats `static` as a modifier. The current GUI domain gate also records a Public → Static → Protected → Private grouping requirement. That discrepancy remains unresolved; see the [Full GUI Domain Coverage Map](FULL_GUI_DOMAIN_COVERAGE.md). Do not treat either member-order rule as final until the owner accepts one and the semantic model, renderer, tests, and examples agree.
+> **Status: presentation proposal pending owner acceptance and implementation evidence.** The reconciled view taxonomy and source-outline ordering are defined in [UML Views and Data-Card Standard](UML_VIEWS_AND_DATA_CARD_STANDARD.md). The Static bucket is a presentation category, not a C# accessibility level; exact modifiers remain visible and each declaration appears once. The renderer's current behavior is recorded separately below.
 
 
 > If a picture is worth a thousand words… then what is a living picture worth?
@@ -29,7 +29,7 @@ The existing `GuiNode` is a generic recursive GUI snapshot. It can carry a manif
 - **Usings section** appears before namespace/type content; it contains one card per directive and is collapsed by default.
 - **Namespace card** is a true content container, not just a heading: its body owns all namespace content represented by the tree. It appears after file-level directives where applicable; nested namespaces remain nested.
 - **Type cards** for classes, structs, interfaces, enums, records, and other declarations are children of the namespace that declares them; nested types remain inside their containing type.
-- **Member-group cards** group members by visibility in the fixed display order Public, Protected, Private. For example, `Public Properties` contains one child card per public property.
+- **Member-group cards** follow the ordered presentation buckets in [UML Views and Data-Card Standard](UML_VIEWS_AND_DATA_CARD_STANDARD.md): Public instance → Static (all access levels, exact accessibility retained) → Protected instance → Internal instance → Private instance → Other/unrecognized. Each declaration appears once.
 - **Member cards** represent fields, properties, methods, constructors, events, and other declared members; expanding a property reveals accessors and initializer details.
 - **Header** identifies the represented item and can carry its kind/access metadata.
 - **Body** contains child members or expandable detail.
@@ -44,7 +44,7 @@ For C# source, the authoritative representation should be a real **Abstract Synt
 
 The source outline should place `using` directives in their own **Usings** section before namespace/type content. Each directive is an individual data card (for example, `using System.Collections.Generic;`); the section is collapsed by default. Keep directive order and aliases/static/global distinctions from the AST rather than flattening them into display-only strings.
 
-Each type should have explicit member groups in this order: **Public**, **Protected**, then **Private**. Each group is itself a data card (for properties, a card titled `Public Properties`, `Protected Properties`, or `Private Properties`). A group card's body contains a data card for every member in that category. Public member cards are expanded by default to expose the declaration/signature; protected and private group cards are collapsed by default. Apply the same predictable policy to fields, methods, constructors, events, and nested types. Preserve the exact C# accessibility in member metadata, including `internal`, `protected internal`, and `private protected`; document how these less common categories are assigned to display groups rather than pretending they are one of the three exact language modifiers.
+Each type follows the ordered presentation buckets and member-kind ordering in [UML Views and Data-Card Standard](UML_VIEWS_AND_DATA_CARD_STANDARD.md). The Static bucket is orthogonal presentation precedence, not an accessibility modifier; exact accessibility and all source modifiers remain explicit. Each declaration appears once, and validated edits update the authoritative source model before the projection is regenerated.
 
 Clicking a property card expands its details, including accessors and initializer, such as `{ get; private set; } = ...;`. The declaration and accessor visibility are distinct facts: a public property can legitimately have a private setter. Do not confuse the property's group with its accessor modifiers.
 
@@ -58,7 +58,7 @@ The initial presentation policy is:
 | --- | --- |
 | Namespace and type hierarchy | Expanded enough to reveal the public structure |
 | Usings section and individual using-directive cards | Collapsed by default; preserve source order |
-| Public/Protected/Private member-group cards | Public expanded; Protected and Private collapsed |
+| Public / Static / Protected / Internal / Private / Other presentation buckets | Public contract expanded; less-exposed details may be collapsed while headers and counts remain visible |
 | Public member cards | Expanded to show declaration/signature; details remain separately expandable |
 | Public field/property/method/constructor declaration | Expanded to its declaration/name/signature |
 | Public field/property initializer and accessor details | Collapsed until that member card is expanded |
@@ -119,7 +119,7 @@ Prefer generating the SVG from the same diagram model used by tests and editor v
 - A collapsed region can show a model-derived count such as `Collapsed (4)` and accept an explicit add-to-region command in edit mode without requiring expansion; an empty region has no pointless disclosure control.
 - Cards have a complete border, distinct header and body, and documented color semantics.
 - The Usings section is collapsed by default and contains one card per source directive.
-- Public, Protected, and Private member groups appear in that order; Public is expanded by default and Protected/Private are collapsed.
+- Presentation buckets follow Public instance → Static → Protected instance → Internal instance → Private instance → Other, with exact source accessibility retained and no duplicate declarations.
 - Public declarations are expanded to their signature; property accessor/initializer details and method implementation bodies are collapsed until the member is expanded.
 - Non-public details are collapsed by default but remain represented and available to authorized workflows; changing visibility through an accepted edit moves the member to its new group without losing identity.
 - Plus buttons appear only where the current mode and domain command set permit an add operation.
@@ -218,16 +218,7 @@ The source-code outline is not a conventional UML class box with a flat list of 
 
 ### Required presentation order
 
-Within each type, preserve this stable display order:
-
-1. Public properties
-2. Public methods
-3. Public fields
-4. Other public/static-public declaration groups, with static status visibly distinguished and their ordering defined consistently by the projection
-5. Protected declarations
-6. Private declarations
-
-Within a group, retain a deterministic order grounded in the source/model (prefer source order unless the projection explicitly defines another order). Preserve the exact language modifiers and signature even when the presentation groups related members together. In particular, do not lose `static`, `const`, `readonly`, generic parameters, overload distinctions, accessor modifiers, or nullable annotations. If the projection separates static public members into a dedicated group, it must document the exact sub-order and apply it consistently.
+Use the canonical precedence and member-kind order in [UML Views and Data-Card Standard](UML_VIEWS_AND_DATA_CARD_STANDARD.md). In brief: Public instance → Static (all access levels, exact accessibility retained) → Protected instance → Internal instance → Private instance → Other/unrecognized; within each bucket: Properties → Methods → Fields → other supported kinds. Each declaration appears exactly once.
 
 ### Atomic signature pills are still cards
 
