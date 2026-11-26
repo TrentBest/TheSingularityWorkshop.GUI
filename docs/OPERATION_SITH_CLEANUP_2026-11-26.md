@@ -69,7 +69,7 @@ The owner performed branch deletion. The assistant did not delete branches.
 
 ## Inventory result
 
-<badge>Branch inventory verified</badge> Exactly `development` + `master`; no noncanonical branches remain in the paginated enumeration.
+**Verified inventory:** exactly `development` + `master`; no noncanonical branches remain in the paginated enumeration.
 
 ## Remaining gates
 
