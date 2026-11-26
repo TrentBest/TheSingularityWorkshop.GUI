@@ -29,7 +29,7 @@ The latest recorded product baseline is development commit [`d0e5322`](https://g
 | Pages build | [45752767985](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767985) | Build/artifact validation passed; deployment skipped by the manual-dispatch-only safeguard |
 | Sith Policy | [45752767510](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767510) | Correctly failed closed on the then-current 27-branch inventory |
 
-The branch inventory has since changed. This historical Sith failure is not the current result. The latest documentation reconciliation head recorded at the previous check was [`cf881a1`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/cf881a101997b369d139e612ac90e1793a79cef3); GitHub returned no combined status or associated workflow runs for that exact head when checked. Therefore its CI is **unverified**, not green. A fresh paginated branch enumeration now returns exactly `development` and `master`; this satisfies the inventory prerequisite but is not evidence that the Sith workflow has passed. Rerun the exact-head gates and obtain explicit workflow results before treating the checkpoint as verified.
+The branch inventory has since changed. This historical Sith failure is not the current result. The latest documentation checkpoint is [`c88ae2e`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/c88ae2e3b3c4259b60d0a045ef176a3f0ce79020). GitHub returned no combined statuses and no associated pull-request workflow runs for that exact SHA when checked; the available workflow-run connector is PR-filtered, so this does not establish whether push-triggered Actions runs exist. Exact-head CI is therefore **unverified**, not green. A fresh paginated branch enumeration returns exactly `development` and `master`; this satisfies the inventory prerequisite but is not evidence that the Sith workflow has passed.
 
 ## Domain and documentation closeout
 
@@ -51,7 +51,7 @@ The consumer-facing [semantic-tree-to-SVG use case](USE_CASES/01-SEMANTIC-TREE-T
 ## Repository governance and operational boundaries
 
 - The Sith target remains exactly `development` and `master`. A fresh paginated branch enumeration on 2026-11-26 returned exactly those two branches; the continuation page was empty. The three reconciled proposal branches are no longer present. This verifies the branch inventory, not a successful Sith workflow run; exact-head CI/Sith evidence remains outstanding. Never weaken the policy to obtain a green result.
-- `master` remains untouched. The latest compare confirms substantial divergence between `development` and `master`; this is not a promotion instruction. Do not merge, rebase, reset, or force-update `master` as part of cleanup. Do not merge, rebase, reset, or force-update `master` as part of cleanup.
+- `master` remains untouched. The latest compare confirms substantial divergence between `development` and `master`; this is not a promotion instruction. Do not merge, rebase, reset, or force-update `master` as part of cleanup.
 - Required status-check/branch-protection configuration remains an administrative gap; the connected GitHub integration cannot write protection settings. Do not claim the checks are enforced.
 - Pages deployment remains manual-dispatch-only. Build validation may run on push; deployment must not be dispatched without explicit authorization.
 - No NuGet package was published in this closeout.
