@@ -201,7 +201,10 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 // Route the loop from the card edge, not through its interior. Keep these
                 // coordinates aligned with the source/target type ports recorded below.
                 var startX = sourcePosition.X + NodeWidth;
-                var endX = sourcePosition.X + NodeWidth;
+                // The shared arrow marker is 20 user units wide at this stroke width.
+                // End the loop beyond the card so the arrowhead's base clears the border;
+                // the receiving type port remains anchored to the card boundary below.
+                var endX = sourcePosition.X + NodeWidth + 24;
                 var startY = sourcePosition.Y + 28;
                 var endY = sourcePosition.Y + 48;
                 var loopX = sourcePosition.X + NodeWidth + 52;
@@ -216,7 +219,7 @@ public sealed class SvgUmlDocumentationGraphRenderer
                 labelAnchor = "start";
                 sourcePortX = sourcePosition.X + NodeWidth;
                 sourcePortY = sourcePosition.Y + 28;
-                targetPortX = sourcePortX;
+                targetPortX = sourcePosition.X + NodeWidth;
                 targetPortY = sourcePosition.Y + 48;
             }
             else
