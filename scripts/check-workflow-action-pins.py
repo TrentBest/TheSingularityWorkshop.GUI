@@ -2,7 +2,7 @@
 """Fail when a workflow references an external GitHub Action by a mutable tag.
 
 Local composite actions and Docker image references are intentionally handled
-separately; this check targets owner/repository@<40-character commit SHA>.
+separately; this check targets owner/repository[/path]@<40-character commit SHA>.
 """
 from __future__ import annotations
 
@@ -12,7 +12,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 USES = re.compile(r"^\s*uses:\s*([^\s#]+)", re.MULTILINE)
-PIN = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+@[0-9a-fA-F]{40}$")
+PIN = re.compile(r"^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+(?:/[A-Za-z0-9_.-]+)*@[0-9a-fA-F]{40}$")
 
 
 def main() -> int:
