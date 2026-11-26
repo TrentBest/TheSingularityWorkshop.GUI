@@ -129,7 +129,8 @@ public sealed class SvgUmlDocumentationGraphRendererTests
         var coordinates = System.Text.RegularExpressions.Regex.Matches(pathData, @"-?\d+(?:\.\d+)?")
             .Select(match => double.Parse(match.Value, System.Globalization.CultureInfo.InvariantCulture)).ToArray();
         Assert.Equal(focusCardX + focusCardWidth, coordinates[0], precision: 2);
-        Assert.Equal(focusCardX + focusCardWidth, coordinates[^2], precision: 2);
+        Assert.True(coordinates[^2] >= focusCardX + focusCardWidth + 20,
+            "the receiving arrowhead must clear the focus-card border");
         Assert.True(coordinates[4] > focusCardX + focusCardWidth,
             "the self-reference loop must route outside the focus card rather than through its interior");
 
@@ -236,7 +237,8 @@ public sealed class SvgUmlDocumentationGraphRendererTests
             .ToArray();
 
         Assert.Equal(right, coordinates[0], 2);
-        Assert.Equal(right, coordinates[^2], 2);
+        Assert.True(coordinates[^2] >= right + 20,
+            "the receiving arrowhead must terminate far enough outside the card to avoid border collision");
         Assert.All(coordinates.Where((_, index) => index % 2 == 0), x => Assert.True(x >= right - 1));
         Assert.All(coordinates.Where((_, index) => index % 2 == 1), y => Assert.True(y < centerY));
         var selfReferenceLabel = document.Descendants(Svg + "text").Single(label => label.Value == "self-reference");
