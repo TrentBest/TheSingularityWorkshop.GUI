@@ -563,3 +563,37 @@ This review was performed against the code state observed at development `a2ad84
 - Keep PR #57 open for explicit owner disposition. This is an unresolved design decision, not an implementation omission to merge automatically.
 
 **Disposition:** PR #65, #55, #60, and #57 remain open drafts. Their current-development value has been reconciled or their design conflict identified, but none is authorized for merge/closure here and none is ready for owner branch deletion while its PR remains open.
+
+
+### 7.7. Additional implementation clusters — SVG identity, resource limits, tree validation, and Architect integration
+
+Reviewed against the current product files on development after the prior ledger refresh. The commit below records reconciliation evidence only.
+
+#### SVG root identity and node-count budget — PRs #34 and #35
+
+- Current development's `SvgGuiRenderer.cs` and `SvgGuiRendererTests.cs` are newer than the branch snapshots.
+- The current tests explicitly include `Preserves_root_node_identity_as_the_svg_document_id`, `Rejects_node_ids_that_collide_with_generated_accessibility_ids`, and `Rejects_scene_with_more_than_the_maximum_node_count_before_serialization`.
+- Exact PR #34 head `8ffd41a5a8df1bf10cf4e15b3fe43120a4bbf8de` passed Documentation quality, Package GUI, Source-derived diagrams, and Solution-derived UML inventory (runs #39868057379, #39868057414, #39868057323, #39868057518).
+- Exact PR #35 head `6b1577be270710c4175754ed5665388fdcfd361f` passed Package GUI, Source-derived diagrams, and Solution-derived UML inventory (runs #39885808614, #39885808599, #39885808611).
+- These implementation and regression-test requirements are present on current development. The historical exact-head passes do not certify current development's later head. Keep #34/#35 open for explicit owner disposition; do not merge their older branches.
+
+#### GUI tree validation and builder cycles — PR #41
+
+- Current development's `GuiNode.cs` includes the null-child-entry guard from PR #41 and has since expanded to include semantic value-control definitions and their child constraints.
+- `tests/Core.Tests/GuiBuilderTests.cs` is byte-identical between current development and PR #41, preserving the direct/indirect builder-cycle regression coverage.
+- Exact PR #41 head `7b4d99f670c430144b457bbd104badad44ed4806` passed Documentation quality, Package GUI, Source-derived diagrams, and Solution-derived UML inventory (runs #40037475471, #40037475497, #40037475499, #40037475385).
+- The useful source/test behavior is already on development. Keep #41 open for explicit owner disposition; do not merge its older branch.
+
+#### Architect renderer integration — PR #48
+
+- Current development's WPF renderer has evolved beyond the PR snapshot: it retains host-owned `resource:` theme lookup, row/orientation and enabled-state semantics, and command-dispatch boundaries, and now also supports explicit host-dispatched value controls. Current WPF conformance tests retain the PR's host-resource and semantic layout cases and add further shared-fixture/host-dispatch coverage.
+- `samples/SourceUmlGenerator/ProjectUmlModelBuilder.cs` is byte-identical between the PR branch and current development. `Program.cs` has since evolved on development.
+- Exact PR #48 head `72de85c75fa712e62d34368b76e77d5608193531` passed Package GUI, Source-derived diagrams, and Solution-derived UML inventory (runs #40361560130, #40361560307, #40361559971). These are historical exact-head results.
+- The current development implementation is the newer continuation. Do not merge the stale 16-commit branch. Keep #48 open for explicit owner disposition.
+
+#### Release closeout documentation — PR #32
+
+- PR #32 still contains unique `docs/RELEASE_CLOSEOUT.md`, which is absent from current development. Its evidence-boundary theory chapter and semantic-tree-to-SVG use case have newer counterparts on development, but the unique release closeout document has not been reconciled.
+- Preserve PR #32 for human review. Do not mark its branch deletion-ready until the unique closeout content is either deliberately integrated or explicitly rejected.
+
+**Disposition:** #34, #35, #41, and #48 are implementation-reconciled on development but remain open drafts requiring owner PR disposition. #32 retains unique documentation and remains a preservation item. No PR was closed/merged and no branch is marked ready for deletion.
