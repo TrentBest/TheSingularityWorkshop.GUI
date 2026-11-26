@@ -705,9 +705,10 @@ Live review of the remaining unique documentation/design items:
 
 This refresh supersedes prior inventory, branch-count, and current-head statements where they conflict. It records the live repository state without changing PR disposition or authorizing cleanup.
 
-- Verified current `development` HEAD: `d0e5322aaf8a92daea6e244eac0119314e0cb9f0` ([commit](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/d0e5322aaf8a92daea6e244eac0119314e0cb9f0)).
+- Audited product baseline immediately before this ledger-only refresh: `d0e5322aaf8a92daea6e244eac0119314e0cb9f0` ([commit](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/d0e5322aaf8a92daea6e244eac0119314e0cb9f0)).
 - Live branch enumeration returned **27 branches**: canonical `master` and `development`, plus **25 noncanonical branches**.
 - Live open-PR search returned **25 open draft PRs**: #32, #34, #35, #36, #37, #38, #39, #40, #41, #43, #45, #47, #48, #50, #55, #57, #60, #64, #65, #77, #80, #81, #82, #83, and #89. These correspond to the 25 noncanonical branches. No branch is ready for owner deletion while its PR remains open.
+- The reconciliation record was then committed to `development` as `2f45ff6af53153721200a8179ae8702a4e6dc6d4` ([ledger refresh commit](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/2f45ff6af53153721200a8179ae8702a4e6dc6d4)). This commit changes documentation only; its own exact-head CI has not yet been verified. The workflow evidence below applies to the audited product baseline `d0e5322...`, not to this newer ledger-only commit.
 - The exact-head workflow evidence observed for `d0e5322...` is:
   - Package GUI run [45752767528](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767528): passed, including Linux/Core/Blazor/Markdown/SVG/shared-adapter validation, Windows WPF validation, package creation/metadata, and clean-consumer verification. NuGet publication was skipped.
   - CiAi Commit Evidence run [45752767524](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767524): passed.
