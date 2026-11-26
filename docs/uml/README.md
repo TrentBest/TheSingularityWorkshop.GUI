@@ -1,6 +1,6 @@
 # UML Documentation Index
 
-This directory separates generated source-file/type documentation from authored guides and use cases.
+This directory separates generated source-file/type documentation from authored guides and use cases. The canonical view taxonomy and presentation proposal is [UML Views and Data-Card Standard](../UML_VIEWS_AND_DATA_CARD_STANDARD.md).
 
 ## Current state
 
