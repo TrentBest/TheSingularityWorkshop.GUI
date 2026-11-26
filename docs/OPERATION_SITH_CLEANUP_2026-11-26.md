@@ -42,55 +42,49 @@ The following 22 pull requests were individually refreshed immediately before di
 
 All 22 closure operations returned `state=closed` and `merged=false`. A subsequent direct PR refresh confirmed #64 and #89 closed. The live open-PR search now returns exactly three PRs.
 
-## Preserved open proposals
+## Reconciled proposal PRs — 2026-11-26
 
-These three unique proposals remain open and their branches are intentionally not in the deletion batch:
+All three previously preserved proposal PRs have now been individually refreshed and closed without merging:
 
-- [#32 — GUI release closeout](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/32): unique closeout document contains stale October 2026 readiness estimate, package scope, and .NET 8-era evidence. Preserve for rewrite/review; do not copy stale claims.
-- [#39 — canonical UML view/data-card standard](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/39): preserve its useful view taxonomy; member ordering and neighborhood rules conflict with current draft contracts and need deliberate resolution.
-- [#57 — visibility-tier UML data cards](https://github.com/TrentBest/TheSingularityWorkshop.GUI/pull/57): preserve tier semantics and presentation proposal; Internal/Private/Unspecified behavior and ordering need model, renderer, fixture, and documentation agreement.
+| PR | Branch | Disposition |
+|---:|---|---|
+| #32 | `release/gui-closeout-2026-10-22` | Closed unmerged. Its useful semantic-tree-to-SVG use case and evidence-boundary theory chapter already exist in the current development tree; a new current release-closeout snapshot was authored instead of copying the stale 80% / October / .NET 8 evidence. README now links the current closeout. |
+| #39 | `docs/uml-three-view-standard-2026-10-23` | Closed unmerged. Its view-family taxonomy and neighborhood layout are reconciled into `docs/UML_VIEWS_AND_DATA_CARD_STANDARD.md`, with links from the per-type standard and UML index. |
+| #57 | `work/uml-visibility-tier-data-cards-2026-10-28` | Closed unmerged. Its vertical visibility-card stack, Properties → Methods → Fields order, tier semantics, color/accessibility, and progressive disclosure are reconciled into the canonical standard and Data Cards and UML guide. |
 
-## Live inventory after PR closure
+Direct PR refresh confirms #32, #39, and #57 are all `state=closed`, `merged=false`. GitHub's search index briefly continued to return #32 as open after closure; the direct PR endpoint is authoritative for its current state.
 
-A fresh branch enumeration returned 27 branches: `development`, `master`, and the 25 noncanonical branches listed below. A fresh open-PR search returned exactly #32, #39, and #57. The 22 closed-PR branches below map one-to-one to the closed PRs above.
+The canonical presentation rule now specifies Public instance → Static (all access levels, exact accessibility retained) → Protected instance → Internal instance → Private instance → Other/unrecognized. Static is a presentation bucket, not a language accessibility modifier; each declaration appears once. Within each bucket: Properties → Methods → Fields → other supported kinds. This remains a proposal pending owner acceptance, semantic-model/renderer alignment, fixtures, and tests. The full GUI domain-definition gate remains open.
 
-## READY FOR OWNER DELETION — 22 branches
+## Live inventory after proposal reconciliation
 
-The implementation/content reconciliation was completed in the preceding branch audits. The closed PRs were not merged because their useful work is already represented on development or, for #64, the ledger is superseded. Do not merge these stale/divergent branch snapshots. The owner may now delete this exact batch:
+A fresh branch enumeration returned exactly five branches:
 
-1. `release/gui-root-id-contract-2026-10-22`
-2. `fix/svg-node-count-limit-2026-10-23`
-3. `docs/gui-core-authored-contracts-2026-10-23`
-4. `docs/gui-blazor-svg-authored-contracts-2026-10-23`
-5. `docs/gui-wpf-authored-contracts-2026-10-23`
-6. `docs/full-gui-domain-coverage-2026-10-23`
-7. `tests/core-builder-cycle-regression-2026-10-23`
-8. `docs/charting-contract-adr-2026-10-23`
-9. `docs/ci-test-coverage-matrix-2026-10-23`
-10. `docs/fsm-driven-oscillator`
-11. `feature/architect-renderer-integration`
-12. `work/uml-visual-data-cards-2026-10-27`
-13. `work/fix-uml-self-reference-clearance-2026-10-27`
-14. `work/uml-neighborhood-self-reference-clearance-2026-10-28`
-15. `work/sith-branch-reconciliation-2026-10-29`
-16. `work/adapter-conformance-three-way-2026-10-30`
-17. `work/autonomous-design-badge`
-18. `work/ciai-evidence-lane-reconciled`
-19. `work/integrate-nested-uml-data-cards`
-20. `work/integrate-autonomous-design-presentation`
-21. `work/integrate-ciai-pr-evidence`
-22. `fix/ci-action-pin-reusable-workflow`
+- `development`
+- `master`
+- `release/gui-closeout-2026-10-22` — PR #32 closed, unmerged
+- `docs/uml-three-view-standard-2026-10-23` — PR #39 closed, unmerged
+- `work/uml-visibility-tier-data-cards-2026-10-28` — PR #57 closed, unmerged
 
-Retain these three noncanonical branches because their PRs remain open: `release/gui-closeout-2026-10-22` (#32), `docs/uml-three-view-standard-2026-10-23` (#39), and `work/uml-visibility-tier-data-cards-2026-10-28` (#57).
+A direct refresh confirms there are no remaining open PRs among #32, #39, and #57. The three noncanonical branches are now ready for owner deletion. No branch was deleted by the assistant.
+
+## READY FOR OWNER DELETION — 3 branches
+
+1. `release/gui-closeout-2026-10-22`
+2. `docs/uml-three-view-standard-2026-10-23`
+3. `work/uml-visibility-tier-data-cards-2026-10-28`
+
+The earlier 22-branch batch has already been removed by the owner. Once these three branches are deleted, re-enumerate and verify the exact two-branch target.
 
 ## Remaining gates
 
-- Current branch inventory is still 27 until the owner deletes the 22 branches. Sith must remain fail-closed; do not weaken the policy to make the check pass.
-- After owner deletion, re-enumerate branches and verify exactly `development` + `master`; rerun Sith and current-head CI.
-- Prior audit: `development` and `master` are substantially diverged (155 commits ahead and over 1,200 behind in the last compare). Do not merge, rebase, reset, force-update, or promote `master` as part of branch cleanup.
-- Exact-head CI for the preceding ledger-only commit was unverified. This checkpoint is documentation-only; its own exact-head CI must be checked after commit.
+- Current inventory is five branches. The owner may now delete the three closed proposal branches listed above; do not delete branches through the assistant.
+- After owner deletion, re-enumerate branches and verify exactly `development` + `master`; rerun Sith and current-head CI. Do not weaken the branch policy.
+- Latest compare: `development` is 173 commits ahead and 1,235 behind `master`; the refs are diverged. Do not merge, rebase, reset, force-update, or promote `master` as part of cleanup.
+- Latest development head: `1ae2849eb1007917cca67b602ad2c3e1cfde2230`. GitHub returned no combined statuses or associated workflow runs for this exact SHA; CI is **unverified**, not green.
+- Latest verified product baseline remains `d0e5322aaf8a92daea6e244eac0119314e0cb9f0`; its package, CiAi evidence, source UML, solution UML, and Pages-build lanes passed. The Sith workflow correctly failed on the former 27-branch inventory. Rerun after deletion.
 - Required status checks/branch protection remain an administrative gap. The connected integration cannot write protection settings; do not claim they are configured.
-- Pages deployment remains manual-dispatch-only. No dispatch or deployment was initiated.
-- No NuGet package was published.
+- Pages deployment remains manual-dispatch-only. No dispatch or deployment was initiated during this reconciliation.
+- No NuGet package was published. No package scope/version/channel was selected and no release was approved.
 
-**Result:** PR cleanup is complete. The repository is now at the owner-deletion stage, not yet Sith-compliant. Once the owner deletes the 22 listed branches, only the three preserved proposal branches will remain to be reconciled; the final target is still exactly two branches.
+**Result:** PR cleanup is complete. All three proposal PRs are closed unmerged and their useful material is represented in current development documentation. The repository is at the final owner-deletion stage: exactly three noncanonical branches remain. After the owner deletes them, verify the exact two-branch Sith target and rerun the current-head gates.
