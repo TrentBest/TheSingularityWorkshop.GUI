@@ -2,7 +2,7 @@
 <p align="center"><a href="https://github.com/TrentBest"><img src="https://raw.githubusercontent.com/TrentBest/TheSingularityWorkshop.Visualize/development/docs/assets/moniker.svg" alt="The Singularity Workshop animated moniker" width="720" /></a></p>
 
 # Per-Type Documentation and UML Standard
-> **Status: draft pending owner acceptance of the UML member-order contract.** The current class-page examples use Public → Protected → Private visibility groups and treat `static` as a modifier, while the GUI domain gate records a Public → Static → Protected → Private grouping requirement. This conflict is open; see the [Full GUI Domain Coverage Map](FULL_GUI_DOMAIN_COVERAGE.md). Keep exact C# accessibility metadata intact and do not present either grouping as final until the owner accepts one.
+> **Status: presentation proposal pending owner acceptance and implementation evidence.** Use [UML Views and Data-Card Standard](UML_VIEWS_AND_DATA_CARD_STANDARD.md) for the reconciled view taxonomy and source-outline ordering. The Static bucket is a presentation category, not a C# accessibility level; exact modifiers remain visible and each declaration appears once.
 
 
 This standard applies to **every declared type in the GUI repository**, not only public API types. It is a documentation acceptance criterion for Core, Blazor, SVG, and WPF. XML API comments and generated package XML files remain valuable, but they do not replace a dedicated human-readable type page.
