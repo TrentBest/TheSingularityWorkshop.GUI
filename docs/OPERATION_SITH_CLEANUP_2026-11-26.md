@@ -80,8 +80,8 @@ The earlier 22-branch batch has already been removed by the owner. Once these th
 
 - Current inventory is five branches. The owner may now delete the three closed proposal branches listed above; do not delete branches through the assistant.
 - After owner deletion, re-enumerate branches and verify exactly `development` + `master`; rerun Sith and current-head CI. Do not weaken the branch policy.
-- Latest compare (after the release-closeout refresh): `development` is 173 commits ahead and 1,237 behind `master`; the refs are diverged. Do not merge, rebase, reset, force-update, or promote `master` as part of cleanup.
-- Latest development head at this checkpoint: `9d2e9b19e60009697210b0b59c542611073adf8c`. GitHub returned no combined statuses or associated workflow runs for this exact SHA; CI is **unverified**, not green.
+- The latest compare confirms substantial divergence between `development` and `master`. Do not merge, rebase, reset, force-update, or promote `master` as part of cleanup.
+- GitHub returned no combined statuses or associated workflow runs for the documentation-only checkpoint head when checked; exact-head CI is **unverified**, not green.
 - Latest verified product baseline remains `d0e5322aaf8a92daea6e244eac0119314e0cb9f0`; its package, CiAi evidence, source UML, solution UML, and Pages-build lanes passed. The Sith workflow correctly failed on the former 27-branch inventory. Rerun after deletion.
 - Required status checks/branch protection remain an administrative gap. The connected integration cannot write protection settings; do not claim they are configured.
 - Pages deployment remains manual-dispatch-only. No dispatch or deployment was initiated during this reconciliation.
