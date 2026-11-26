@@ -11,15 +11,13 @@
     "fix/ci-action-pin-reusable-workflow",
     "master",
     "release/gui-closeout-2026-10-22",
-    "work/ciai-evidence-lane-reconciled",
     "work/integrate-autonomous-design-presentation",
     "work/integrate-ciai-pr-evidence",
-    "work/integrate-nested-uml-data-cards",
     "work/uml-visibility-tier-data-cards-2026-10-28"
   ],
-  "branch_count": 10,
+  "branch_count": 8,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-26T06:20:02Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767428561",
-  "triggering_commit": "e188b23b8c195f46072f30ae896d6b851acd2935"
+  "evaluated_at": "2026-11-26T06:20:20Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767447192",
+  "triggering_commit": "c13e9f31431155d6a969bd3d4b30f8d4a32814ef"
 }
