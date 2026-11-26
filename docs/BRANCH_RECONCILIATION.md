@@ -597,3 +597,42 @@ Reviewed against the current product files on development after the prior ledger
 - Preserve PR #32 for human review. Do not mark its branch deletion-ready until the unique closeout content is either deliberately integrated or explicitly rejected.
 
 **Disposition:** #34, #35, #41, and #48 are implementation-reconciled on development but remain open drafts requiring owner PR disposition. #32 retains unique documentation and remains a preservation item. No PR was closed/merged and no branch is marked ready for deletion.
+
+
+### 7.8. Documentation, UML standards, charting, and oscillator clusters
+
+#### Authored API/source companion documentation — PRs #36, #37, and #38
+
+- The source companion documents for Core, Blazor/SVG, and WPF exist on current development and have evolved beyond their branch snapshots. Representative files checked: `src/Core/DataCard.md`, `src/Blazor/BlazorGuiRenderer.md`, and `src/WPF/WpfGuiRenderer.md`.
+- The branch snapshots are shorter and have different blob identities; current development is not a byte-for-byte copy, but the source-owned documentation is present in its newer form.
+- Preserve current development's evolved source companions. Keep #36/#37/#38 open for explicit owner PR disposition; do not merge older docs over them.
+
+#### UML view standard — PR #39
+
+- PR #39 contains a unique `docs/UML_VIEWS_AND_DATA_CARD_STANDARD.md` proposal that is absent at that path on current development. It separates class/AST data cards, target-centered relationship neighborhoods, and sequence diagrams.
+- The current data-card documentation still carries an explicit unresolved member-order conflict (see §7.6). The proposed standard also describes neighborhood layout/legend behavior that should be reconciled against the current renderer and generated artifacts before becoming normative.
+- Preserve #39 for owner review. Do not merge it automatically or mark its branch deletion-ready.
+
+#### Full domain coverage — PR #40
+
+- `docs/FULL_GUI_DOMAIN_COVERAGE.md` exists on current development and has grown substantially beyond the PR snapshot. It continues to distinguish implemented, partial, specified, proposed, unverified, and externally owned capabilities.
+- Keep the newer current-development coverage map and its explicit open gates. PR #40's useful traceability work is reconciled; keep its open draft for explicit owner disposition.
+
+#### Charting contract — PR #43
+
+- `docs/adr/CHARTING_SEMANTIC_CONTRACT.md` exists on current development and is more extensive than the PR snapshot. Preserve the current ADR; do not replace it with the older branch document.
+- PR #43's contract work is reconciled on development. Keep the open draft for explicit owner disposition.
+
+#### CI/test coverage matrix — PR #45
+
+- `docs/TESTING.md` exists on current development and is substantially more extensive than the PR snapshot. The current document preserves separate Windows-native WPF and cross-platform adapter validation lanes.
+- PR #45's useful test-coverage documentation is reconciled in the newer current-development document. Keep the open draft for explicit owner disposition.
+
+#### FSM-driven oscillator — PR #47
+
+- The bounded oscillator sample exists on current development in a more extensive form than the PR snapshot.
+- The current Package GUI workflow executes `samples/demonstrations/FsmDrivenOscillator/FsmDrivenOscillator.csproj`, verifies the generated SVG curve/marker/final-state label, and uploads the artifact `gui-svg-fsm-driven-oscillator`.
+- The sample is an executable proof/snapshot; it is not a continuously live viewer without a host loop. Preserve that evidence boundary.
+- PR #47's sample, recipe, and CI integration are reconciled on development. Keep the open draft for explicit owner disposition.
+
+**Disposition:** #36/#37/#38/#40/#43/#45/#47 have useful content represented in newer current-development files and should not be merged from stale snapshots. #39 remains a preservation/review item because its unique UML standard proposal and ordering decision are not yet accepted. #32 remains a preservation item because its unique release-closeout document is absent from development. No PR state changed.
