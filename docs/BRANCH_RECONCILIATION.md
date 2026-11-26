@@ -646,3 +646,34 @@ Reviewed against the current product files on development after the prior ledger
 - Current development exact-head combined-status and PR-associated workflow-run lookups returned no records for `ea8cd97bc5005beee660bf9cf864a7a049aed9ea`. Current-head CI is therefore **unverified**, not green.
 - Current `master` remains divergent: development is 1,213 commits ahead and 155 behind. No master promotion or reconciliation is authorized here.
 - No branch is **READY FOR OWNER DELETION** because every noncanonical branch still has an open PR. The owner must explicitly disposition PRs before any branch can enter the deletion batch.
+
+### 7.10. Focused preservation review — 2026-11-26
+
+Live review of the remaining unique documentation/design items:
+
+#### Release closeout — PR #32
+
+- PR #32's unique `docs/RELEASE_CLOSEOUT.md` is still absent from `development`. Its companion evidence-boundary chapter now exists on development at `docs/THEORY/07-EVIDENCE-AND-BOUNDARIES.md`; the semantic-tree-to-SVG use case is also represented in the current documentation tree.
+- The old closeout document is not safe to copy verbatim: it carries the October 2026 qualitative 80% estimate, a four-package release scope, and historical .NET 8-era package evidence. Current development has a .NET 10 migration record, a fifth development-only GUI.Markdown package candidate, an explicit owner gate requiring full GUI domain definition/acceptance before selecting a release candidate, and an instruction not to state a readiness percentage.
+- The useful evidence discipline and remaining-work categories are preserved in current release readiness/work-queue/theory material. The unique closeout page may be rewritten as a current, non-authorizing snapshot later; do not import the stale page or its readiness claims.
+- Keep #32 open for owner disposition. Its branch is not deletion-ready.
+
+#### Three-view UML standard — PR #39
+
+- The unique `docs/UML_VIEWS_AND_DATA_CARD_STANDARD.md` exists on PR #39's branch but is absent from current `development`. Its taxonomy usefully distinguishes the data-card primitive, AST/source-structure class view, target-centered relationship neighborhood, and sequence view.
+- The proposed standard also prescribes Public → Protected → Private member grouping, with other access levels in an additional group and `static` treated as a modifier. Current development explicitly records an unresolved conflict between that approach and the GUI domain gate's Public → Static → Protected → Private grouping.
+- The proposal's neighborhood layout/conduit rules also require reconciliation against current renderer output and evidence before they become normative. Do not merge or copy the standard as-is. Preserve #39 for owner review.
+
+#### Visibility-tier refinement — PR #57
+
+- PR #57 proposes a vertical stack of visibility cards, category ordering (Properties → Methods → Fields), tier-specific color treatment, and progressive disclosure. These are useful presentation ideas, but the PR branch's document conflicts with current `development` documentation and the unresolved member-order gate.
+- Current `docs/DATA_CARDS_AND_UML.md` explicitly labels its ordering contract as draft and records the Public/Protected/Private versus Public/Static/Protected/Private discrepancy. The PR #57 branch's tier taxonomy additionally introduces Internal/assembly-visible, Private/implementation-only, and Unspecified/unrecognized groupings; those semantics must be accepted and tested consistently across the model, renderers, fixtures, and docs before becoming canonical.
+- Preserve #57 for owner review. Do not merge its older documentation or mark its branch deletion-ready.
+
+#### Live inventory checkpoint
+
+- Development HEAD observed during this review: `bd57744f221fa315bfc0b53ecf637a38d7eb5f60` (2026-11-26).
+- Remote branch inventory: 26 total — `master`, `development`, and 24 noncanonical branches.
+- Open PR search: 24 open PRs, corresponding to the 24 noncanonical branches.
+- No PR was merged or closed; no branch was deleted; `master` was not modified; no package was published and no deployment was initiated.
+- No branch is READY FOR OWNER DELETION while its corresponding PR remains open. The owner must disposition PRs before a consolidated deletion batch can be prepared.
