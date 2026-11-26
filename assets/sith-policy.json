@@ -8,14 +8,13 @@
   "actual_branches": [
     "development",
     "docs/uml-three-view-standard-2026-10-23",
-    "fix/ci-action-pin-reusable-workflow",
     "master",
     "release/gui-closeout-2026-10-22",
     "work/uml-visibility-tier-data-cards-2026-10-28"
   ],
-  "branch_count": 6,
+  "branch_count": 5,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-26T06:20:37Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767488240",
-  "triggering_commit": "3fdd6707abfe1494530f0a8dbff959bb326129a6"
+  "evaluated_at": "2026-11-26T06:20:53Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767525725",
+  "triggering_commit": "d3776810ca1ff2a3d3772c58e28d21fbafcfab1b"
 }
