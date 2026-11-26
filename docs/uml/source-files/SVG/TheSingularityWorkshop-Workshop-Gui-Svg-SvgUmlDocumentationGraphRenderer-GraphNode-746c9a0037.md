@@ -6,7 +6,7 @@
 > Generated from compiler-backed source analysis. Do not edit by hand.
 
 - Repository: `TrentBest/TheSingularityWorkshop.GUI`
-- Revision: [`ab72064a71716d2a2240016baaac9257896d425a`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/ab72064a71716d2a2240016baaac9257896d425a)
+- Revision: [`4fa33208ca046ee81f02d3dc3f244ffe960bcec8`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/tree/4fa33208ca046ee81f02d3dc3f244ffe960bcec8)
 - Project: `src/SVG/TheSingularityWorkshop.GUI.SVG.csproj`
 - Type ID: `type:TheSingularityWorkshop.GUI.SVG, Version=0.1.0.0, Culture=neutral, PublicKeyToken=null:global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode`
 - Metadata name: `GraphNode`
@@ -19,31 +19,31 @@
 
 ## Source declarations
 
-- [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:447-454`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L447-454)
+- [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:450-457`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L450-457)
 
 ## Members
 
 | Kind | Signature | Source |
 |---|---|---|
-| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.GraphNode(string, string, string, string, System.Collections.Generic.IReadOnlyList<TheSingularityWorkshop.Workshop.Gui.UmlDocumentedMember>, bool, bool)` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:447-454`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L447-454) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Id` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:448-448`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L448-448) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.IsExternal` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:454-454`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L454-454) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.IsFocus` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:453-453`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L453-453) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Kind` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:450-450`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L450-450) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Members` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:452-452`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L452-452) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Name` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:449-449`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L449-449) |
-| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Namespace` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:451-451`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L451-451) |
+| `Method` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.GraphNode(string, string, string, string, System.Collections.Generic.IReadOnlyList<TheSingularityWorkshop.Workshop.Gui.UmlDocumentedMember>, bool, bool)` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:450-457`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L450-457) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Id` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:451-451`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L451-451) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.IsExternal` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:457-457`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L457-457) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.IsFocus` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:456-456`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L456-456) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Kind` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:453-453`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L453-453) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Members` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:455-455`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L455-455) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Name` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:452-452`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L452-452) |
+| `Property` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode.Namespace` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:454-454`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L454-454) |
 
 ## Relationships
 
 | Direction | Kind | Related type | Resolution | Evidence |
 |---|---|---|---|---|
-| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode>` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:447-454`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L447-454) |
-| outgoing | `Association` | `global::TheSingularityWorkshop.Workshop.Gui.UmlDocumentedMember` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:452-452`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L452-452) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `Resolved` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:437-437`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L437-437) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `Resolved` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:382-387`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L382-387) |
-| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `Resolved` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:379-380`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L379-380) |
-| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.UmlDocumentedMember` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:447-454`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/ab72064a71716d2a2240016baaac9257896d425a/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L447-454) |
+| outgoing | `InterfaceRealization` | `global::System.IEquatable<global::TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer.GraphNode>` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:450-457`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L450-457) |
+| outgoing | `Association` | `global::TheSingularityWorkshop.Workshop.Gui.UmlDocumentedMember` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:455-455`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L455-455) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `Resolved` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:440-440`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L440-440) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `Resolved` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:385-390`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L385-390) |
+| incoming | `Dependency` | `TheSingularityWorkshop.Workshop.Gui.Svg.SvgUmlDocumentationGraphRenderer` | `Resolved` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:382-383`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L382-383) |
+| outgoing | `Dependency` | `global::TheSingularityWorkshop.Workshop.Gui.UmlDocumentedMember` | `External` | [`src/SVG/SvgUmlDocumentationGraphRenderer.cs:450-457`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/blob/4fa33208ca046ee81f02d3dc3f244ffe960bcec8/src/SVG/SvgUmlDocumentationGraphRenderer.cs#L450-457) |
 
 [Back to the generated type index](index.md)
 
