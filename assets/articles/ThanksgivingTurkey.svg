@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     viewBox="0 0 1408 1056" role="img"
+     aria-labelledby="title description">
+  <title id="title">Happy Thanksgiving</title>
+  <desc id="description">A richly colored turkey among autumn leaves and pumpkins. The scene gently moves while the greeting alternates between Happy and Thanksgiving.</desc>
+
+  <defs>
+    <linearGradient id="banner" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#32180f" stop-opacity=".78"/>
+      <stop offset="1" stop-color="#32180f" stop-opacity=".40"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff4cb"/>
+      <stop offset=".55" stop-color="#f7d98a"/>
+      <stop offset="1" stop-color="#e8ad4c"/>
+    </linearGradient>
+    <filter id="titleGlow" x="-30%" y="-60%" width="160%" height="220%">
+      <feGaussianBlur stdDeviation="7" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="12" result="blur"/>
+      <feOffset dy="5" result="offset"/>
+      <feComponentTransfer><feFuncA type="linear" slope=".55"/></feComponentTransfer>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <clipPath id="sceneClip"><rect width="1408" height="1056"/></clipPath>
+  </defs>
+
+  <g clip-path="url(#sceneClip)">
+    <g id="livingScene">
+      <image x="0" y="0" width="1408" height="1056"
+             xlink:href="CoderLegion_Turkey.jpg" href="CoderLegion_Turkey.jpg"
+             preserveAspectRatio="xMidYMid slice"/>
+      <animateTransform attributeName="transform" type="scale"
+                        values="1 1;1.018 1.018;1 1" dur="18s"
+                        repeatCount="indefinite"/>
+    </g>
+
+    <!-- A soft header veil preserves the original artwork while giving the greeting room. -->
+    <path d="M0 0H1408V190 Q704 230 0 190Z" fill="url(#banner)"/>
+    <path d="M0 190 Q704 230 1408 190" fill="none"
+          stroke="#f6d28a" stroke-opacity=".55" stroke-width="2"/>
+
+    <g font-family="Georgia, 'Palatino Linotype', serif" text-anchor="middle"
+       font-weight="700" filter="url(#softShadow)" fill="url(#gold)"
+       stroke="#4b2411" stroke-width="2.4" paint-order="stroke fill">
+      <text x="704" y="128" font-size="104" letter-spacing="2" opacity="0">
+        Happy
+        <animate attributeName="opacity" values="1;1;0;0;0;1"
+                 keyTimes="0;.32;.42;.88;.96;1" dur="8s" repeatCount="indefinite"/>
+      </text>
+      <text x="704" y="128" font-size="88" letter-spacing="1" opacity="0">
+        Thanksgiving
+        <animate attributeName="opacity" values="0;0;1;1;0;0"
+                 keyTimes="0;.34;.44;.88;.96;1" dur="8s" repeatCount="indefinite"/>
+      </text>
+    </g>
+
+    <!-- Floating leaves drift gently across the foreground. -->
+    <g fill="#f5a33d" opacity=".92">
+      <path d="M0-12 Q18-5 14 12 Q-2 10-8 0 Q-5-8 0-12Z">
+        <animateMotion path="M120 260 C250 360 50 500 190 650" dur="13s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="rotate" values="0;160;360" dur="13s" repeatCount="indefinite"/>
+      </path>
+      <path d="M0-12 Q18-5 14 12 Q-2 10-8 0 Q-5-8 0-12Z" fill="#d84e2f">
+        <animateMotion path="M1190 230 C1080 350 1300 500 1160 690" dur="16s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="rotate" values="20;190;380" dur="16s" repeatCount="indefinite"/>
+      </path>
+      <path d="M0-12 Q18-5 14 12 Q-2 10-8 0 Q-5-8 0-12Z" fill="#f7cf62">
+        <animateMotion path="M930 40 C820 170 1030 260 900 390" dur="11s" repeatCount="indefinite"/>
+        <animateTransform attributeName="transform" type="rotate" values="0;-180;-360" dur="11s" repeatCount="indefinite"/>
+      </path>
+    </g>
+
+    <!-- Warm, slow glints: just enough motion to make the still image feel alive. -->
+    <g fill="#fff0b0">
+      <circle cx="230" cy="300" r="3"><animate attributeName="opacity" values=".15;1;.15" dur="3.8s" repeatCount="indefinite"/></circle>
+      <circle cx="1160" cy="390" r="4"><animate attributeName="opacity" values=".1;.9;.1" dur="4.6s" repeatCount="indefinite"/></circle>
+      <circle cx="1030" cy="170" r="2.5"><animate attributeName="opacity" values=".2;1;.2" dur="3.2s" repeatCount="indefinite"/></circle>
+    </g>
+
+    <text x="704" y="1010" text-anchor="middle"
+          font-family="Georgia, serif" font-size="25" letter-spacing="5"
+          fill="#fff1ce" opacity=".92"
+          style="paint-order:stroke;stroke:#3d2114;stroke-width:3">
+      GATHER • GIVE THANKS • SHARE THE GOOD
+    </text>
+  </g>
+
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+      #livingScene { animation: none !important; }
+      animateTransform, animateMotion { display: none; }
+      text { animation: none !important; }
+    }
+  </style>
+</svg>
