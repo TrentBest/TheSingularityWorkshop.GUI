@@ -7,7 +7,6 @@
   ],
   "actual_branches": [
     "development",
-    "docs/fsm-driven-oscillator",
     "docs/uml-three-view-standard-2026-10-23",
     "feature/architect-renderer-integration",
     "fix/ci-action-pin-reusable-workflow",
@@ -25,9 +24,9 @@
     "work/uml-visibility-tier-data-cards-2026-10-28",
     "work/uml-visual-data-cards-2026-10-27"
   ],
-  "branch_count": 18,
+  "branch_count": 17,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-26T06:18:18Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767238146",
+  "evaluated_at": "2026-11-26T06:18:37Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767258161",
   "triggering_commit": "2bef03415be5cd431759844809cfdc0fbd453041"
 }
