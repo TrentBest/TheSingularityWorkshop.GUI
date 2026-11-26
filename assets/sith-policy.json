@@ -7,8 +7,6 @@
   ],
   "actual_branches": [
     "development",
-    "docs/charting-contract-adr-2026-10-23",
-    "docs/ci-test-coverage-matrix-2026-10-23",
     "docs/fsm-driven-oscillator",
     "docs/uml-three-view-standard-2026-10-23",
     "feature/architect-renderer-integration",
@@ -27,9 +25,9 @@
     "work/uml-visibility-tier-data-cards-2026-10-28",
     "work/uml-visual-data-cards-2026-10-27"
   ],
-  "branch_count": 20,
+  "branch_count": 18,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-26T06:17:59Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767206698",
-  "triggering_commit": "c5ee3df273c5ff181f1a202991e277c2fa06a3b3"
+  "evaluated_at": "2026-11-26T06:18:18Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767238146",
+  "triggering_commit": "2bef03415be5cd431759844809cfdc0fbd453041"
 }
