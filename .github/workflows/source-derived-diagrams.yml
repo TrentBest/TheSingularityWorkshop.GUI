@@ -427,7 +427,7 @@ jobs:
         env:
           GUI_UML_REVIEW_ARTIFACT: artifacts/UmlSelfReference.review.svg
         run: >-
-          dotnet test tests/SVG.Tests
+          dotnet test tests/SVG.Tests/TheSingularityWorkshop.GUI.SVG.Tests.csproj
           --configuration Release
           --filter FullyQualifiedName~SvgUmlDocumentationGraphRendererTests.Renders_focused_semantic_neighborhood_with_accessible_relationships
 
