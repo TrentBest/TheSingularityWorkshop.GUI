@@ -423,11 +423,20 @@ jobs:
       - name: Test safe source-UML documentation promotion
         run: python3 scripts/test_promote_source_uml.py
 
+      - name: Render self-reference geometry review fixture
+        env:
+          GUI_UML_REVIEW_ARTIFACT: artifacts/UmlSelfReference.review.svg
+        run: >-
+          dotnet test tests/SVG.Tests
+          --configuration Release
+          --filter FullyQualifiedName~SvgUmlDocumentationGraphRendererTests.Renders_focused_semantic_neighborhood_with_accessible_relationships
+
       - name: Upload generated source-derived diagram
         uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9
         with:
           name: source-derived-gui-svg-diagrams
           path: |
+            artifacts/UmlSelfReference.review.svg
             artifacts/DataCard.*.svg
             artifacts/Core.uml-inventory.md
             artifacts/Core.uml-types/**
