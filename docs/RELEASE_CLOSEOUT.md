@@ -50,7 +50,7 @@ The consumer-facing [semantic-tree-to-SVG use case](USE_CASES/01-SEMANTIC-TREE-T
 
 ## Repository governance and operational boundaries
 
-- The Sith target remains exactly `development` and `master`. The live inventory is currently five branches; three proposal branches have been reconciled/closed and await owner deletion. Re-enumerate after deletion and require the Sith workflow to pass; never weaken the policy to obtain a green result.
+- The Sith target remains exactly `development` and `master`. A fresh paginated branch enumeration on 2026-11-26 returned exactly those two branches; the continuation page was empty. The three reconciled proposal branches are no longer present. This verifies the branch inventory, not a successful Sith workflow run; exact-head CI/Sith evidence remains outstanding. Never weaken the policy to obtain a green result.
 - `master` remains untouched. The latest compare confirms substantial divergence between `development` and `master`; this is not a promotion instruction. Do not merge, rebase, reset, or force-update `master` as part of cleanup. Do not merge, rebase, reset, or force-update `master` as part of cleanup.
 - Required status-check/branch-protection configuration remains an administrative gap; the connected GitHub integration cannot write protection settings. Do not claim the checks are enforced.
 - Pages deployment remains manual-dispatch-only. Build validation may run on push; deployment must not be dispatched without explicit authorization.
