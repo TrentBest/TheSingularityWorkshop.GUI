@@ -29,7 +29,7 @@ The latest recorded product baseline is development commit [`d0e5322`](https://g
 | Pages build | [45752767985](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767985) | Build/artifact validation passed; deployment skipped by the manual-dispatch-only safeguard |
 | Sith Policy | [45752767510](https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45752767510) | Correctly failed closed on the then-current 27-branch inventory |
 
-The branch inventory has since changed. This historical Sith failure is not the current result. The latest documentation reconciliation head is [`cf881a1`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/cf881a101997b369d139e612ac90e1793a79cef3); GitHub returned no combined status or associated workflow runs for that exact head when checked. Therefore its CI is **unverified**, not green. Rerun the exact-head gates after branch cleanup and documentation review.
+The branch inventory has since changed. This historical Sith failure is not the current result. The latest documentation reconciliation head recorded at the previous check was [`cf881a1`](https://github.com/TrentBest/TheSingularityWorkshop.GUI/commit/cf881a101997b369d139e612ac90e1793a79cef3); GitHub returned no combined status or associated workflow runs for that exact head when checked. Therefore its CI is **unverified**, not green. A fresh paginated branch enumeration now returns exactly `development` and `master`; this satisfies the inventory prerequisite but is not evidence that the Sith workflow has passed. Rerun the exact-head gates and obtain explicit workflow results before treating the checkpoint as verified.
 
 ## Domain and documentation closeout
 
