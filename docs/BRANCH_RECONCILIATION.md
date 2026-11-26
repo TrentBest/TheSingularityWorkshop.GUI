@@ -535,3 +535,31 @@ This subsection supersedes stale inventory/checkpoint statements above where the
 #### Owner action boundary
 
 No PR was closed or merged, no branch was deleted, and no package was published in this refresh. The four PRs above are implementation-reconciled but still require owner disposition. They are **not** branch-deletion-ready while their PRs remain open. Continue reviewing the remaining PR clusters, then provide one consolidated branch list only after the PR dispositions and validation gates are satisfied.
+
+
+### 7.6. Preservation-cluster refresh — adapter conformance and UML self-reference
+
+This review was performed against the code state observed at development `a2ad840a67ea2ead7a13ae48fe0375f347dec951`; the following ledger-only update advances development to commit `c948fcaab2ed7217e0c96f36fba6fcfd77d3be75`. No product source or tests were changed by this ledger update.
+
+#### Adapter conformance — PR #65
+
+- The current development WPF conformance suite contains the same four semantic regression cases as PR #65: semantic identity despite a conflicting `Id` property, duplicate-ID rejection, the shared depth limit, and preservation of unknown-kind identity/descendants.
+- The current development WPF renderer conformance suite also contains `Renderer_preserves_shared_nested_fixture_identity_order_and_text`, covering the nested Panel → Panel → Button/Text fixture described by PR #65.
+- The current cross-platform shared conformance suite retains the Blazor/SVG side of the proof. The current `docs/TESTING.md` has evolved beyond the PR snapshot and still documents WPF as its own Windows-native validation lane.
+- The current development files are not byte-identical to PR #65's older snapshots, but the relevant WPF and shared semantic tests are present in the newer development suites.
+- The exact PR #65 head `fb39b0a91662514159a0f26e0495e93059727b63` returned no commit-associated PR workflow runs in the available lookup. This is not a pass. Keep PR #65 open for explicit owner disposition; do not merge its stale branch. Its implementation is substantially reconciled, but exact-head validation and PR disposition remain outstanding.
+
+#### UML self-reference clearance — PRs #55 and #60
+
+- Current development's `SvgUmlDocumentationGraphRenderer.cs` contains the right-boundary self-loop routing and the additional canvas/label-clearance behavior. The current test suite contains `Routes_self_reference_from_the_focus_card_boundary`.
+- PR #60 contains that focused self-reference test; PR #55's older test snapshot does not. Both branches contain older renderer snapshots than current development.
+- Historical PR #55 workflow runs #1292 Package GUI, #370 Solution-derived UML inventory, and #507 Source-derived diagrams completed successfully. Historical PR #60 workflow runs #1302 Package GUI, #380 Solution-derived UML inventory, and #517 Source-derived diagrams completed successfully. These runs validate their historical branch heads, not the current development head.
+- Current development therefore contains the useful self-reference fix and regression coverage. Keep #55/#60 open for explicit owner disposition; do not merge either stale branch. Their branches are not deletion-ready while their PRs remain open.
+
+#### UML visibility-tier proposal — PR #57
+
+- Current development's `docs/DATA_CARDS_AND_UML.md` retains the visibility-tier and recursive-card design but explicitly marks member-ordering as unresolved: the current GUI domain gate records a Public → Static → Protected → Private grouping requirement, while the older proposal describes a different Public → Protected → Private order and treats static as a modifier.
+- The PR #57 proposal must not be copied over the current document or promoted to a normative standard until the owner resolves that discrepancy and the semantic model, renderer, tests, and examples agree.
+- Keep PR #57 open for explicit owner disposition. This is an unresolved design decision, not an implementation omission to merge automatically.
+
+**Disposition:** PR #65, #55, #60, and #57 remain open drafts. Their current-development value has been reconciled or their design conflict identified, but none is authorized for merge/closure here and none is ready for owner branch deletion while its PR remains open.
