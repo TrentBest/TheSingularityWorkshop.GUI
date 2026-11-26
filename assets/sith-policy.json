@@ -7,14 +7,12 @@
   ],
   "actual_branches": [
     "development",
-    "docs/uml-three-view-standard-2026-10-23",
     "master",
-    "release/gui-closeout-2026-10-22",
     "work/uml-visibility-tier-data-cards-2026-10-28"
   ],
-  "branch_count": 5,
+  "branch_count": 3,
   "status": "NON-COMPLIANT",
-  "evaluated_at": "2026-11-26T06:21:07Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45767544480",
-  "triggering_commit": "3ba80474c1f0f133e1e93d08a70335d0e61a0db8"
+  "evaluated_at": "2026-11-26T07:45:14Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/45777630554",
+  "triggering_commit": "a16adabb35d44b9c13fad4cc6556435d4862919f"
 }
