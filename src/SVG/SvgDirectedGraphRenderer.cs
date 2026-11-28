@@ -126,7 +126,6 @@ public sealed class SvgDirectedGraphRenderer
                         new XAttribute("fill", "#315b72")))));
 
         // Translate every primitive into a positive, padded viewBox.
-        Point TranslatePoint(Point p) => new(p.X - canvas.X, p.Y - canvas.Y);
         Bounds TranslateBounds(Bounds b) => new(b.X - canvas.X, b.Y - canvas.Y, b.Width, b.Height);
 
         svg.Add(new XElement(Svg + "rect", new XAttribute("width", F(width)),
