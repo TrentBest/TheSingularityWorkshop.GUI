@@ -253,6 +253,15 @@ public sealed class SvgDirectedGraphRenderer
         var others = nodes.Where(n => n.Id != focalId).OrderBy(n => n.Id, StringComparer.Ordinal).ToArray();
         var columns = Math.Max(1, (int)Math.Ceiling(Math.Sqrt(nodes.Length)));
         var rows = Math.Max(1, (int)Math.Ceiling(nodes.Length / (double)columns));
+        if (focalId is not null)
+        {
+            // Reserve a true central cell. Odd grid dimensions keep the focal rectangle
+            // centered in the canvas without overlapping adjacent node slots.
+            columns = Math.Max(3, columns);
+            rows = Math.Max(1, (int)Math.Ceiling((nodes.Length + 1) / (double)columns));
+            if (columns % 2 == 0) columns++;
+            if (rows % 2 == 0) rows++;
+        }
         var centerColumn = (columns - 1) / 2.0;
         var centerRow = (rows - 1) / 2.0;
         if (focalId is not null)
