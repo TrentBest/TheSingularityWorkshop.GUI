@@ -99,4 +99,12 @@ This artifact belongs to Visualize's primitive gallery and demonstrates a GUI.SV
 ---
 
 [Demonstration roadmap and evidence policy](README.md) · [SVG adapter contract](../../docs/SVG_ADAPTER.md)
-\n\n### Directed repository graph with explicit ADP clusters\n\n![Directed graph SVG gallery example](directed-graph.svg)\n\nA focal repository, directed relationships, and a dashed cluster whose membership is supplied explicitly. This is a static gallery plate, not live build evidence.\n\n[**Read the directed graph renderer walkthrough**](directed-graph.md)\n
+
+
+### Directed repository graph with explicit ADP clusters
+
+![Directed graph SVG gallery example](directed-graph.svg)
+
+A focal repository, directed relationships, and a dashed cluster whose membership is supplied explicitly. This is a static gallery plate, not live build evidence.
+
+[**Read the directed graph renderer walkthrough**](directed-graph.md)
