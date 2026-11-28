@@ -133,7 +133,7 @@ public sealed class SvgDirectedGraphRenderer
             new XAttribute("height", F(height)), new XAttribute("fill", "#ffffff")));
 
         // Containers are painted first. A title gap is created by drawing two top-border segments.
-        foreach (var cluster in clusters.OrderByDescending(c => ClusterDepth(c, clusters), Comparer<int>.Default)
+        foreach (var cluster in clusters.OrderBy(c => ClusterDepth(c, clusters), Comparer<int>.Default)
                      .ThenBy(c => c.Id, StringComparer.Ordinal))
         {
             var b = T(clusterBounds[cluster.Id]);
@@ -260,6 +260,7 @@ public sealed class SvgDirectedGraphRenderer
                 o.Margin + centerRow * (o.NodeHeight + o.VerticalGap), o.NodeWidth, o.NodeHeight);
         var slots = Enumerable.Range(0, rows * columns)
             .Select(i => (Row: i / columns, Column: i % columns))
+            .Where(p => focalId is null || p.Row != (int)centerRow || p.Column != (int)centerColumn)
             .OrderBy(p => Math.Pow(p.Row - centerRow, 2) + Math.Pow(p.Column - centerColumn, 2))
             .ThenBy(p => p.Row).ThenBy(p => p.Column).ToArray();
         foreach (var (node, slot) in others.Zip(slots))
