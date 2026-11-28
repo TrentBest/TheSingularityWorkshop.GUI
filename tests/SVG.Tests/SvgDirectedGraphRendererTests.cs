@@ -95,6 +95,69 @@ public sealed class SvgDirectedGraphRendererTests
             Array.Empty<SvgGraphEdge>())));
     }
 
+    [Fact]
+    public void Centers_the_focal_node_in_the_final_viewBox()
+    {
+        var graph = new SvgDirectedGraph(
+            new[]
+            {
+                new SvgGraphNode("a", "A"),
+                new SvgGraphNode("b", "B"),
+                new SvgGraphNode("c", "C")
+            },
+            Array.Empty<SvgGraphEdge>(),
+            FocalNodeId: "a");
+        var root = XDocument.Parse(_renderer.Render(graph)).Root!;
+        var viewBox = ((string)root.Attribute("viewBox")!).Split(' ').Select(double.Parse).ToArray();
+        var focal = root.Descendants(Svg + "g").Single(x => (string?)x.Attribute("data-node-id") == "a")
+            .Element(Svg + "rect")!;
+        var x = double.Parse((string)focal.Attribute("x")!, System.Globalization.CultureInfo.InvariantCulture);
+        var y = double.Parse((string)focal.Attribute("y")!, System.Globalization.CultureInfo.InvariantCulture);
+        var width = double.Parse((string)focal.Attribute("width")!, System.Globalization.CultureInfo.InvariantCulture);
+        var height = double.Parse((string)focal.Attribute("height")!, System.Globalization.CultureInfo.InvariantCulture);
+
+        Assert.Equal(viewBox[2] / 2, x + width / 2, 3);
+        Assert.Equal(viewBox[3] / 2, y + height / 2, 3);
+    }
+
+    [Fact]
+    public void Preserves_parallel_edges_self_loops_and_disconnected_nodes()
+    {
+        var graph = new SvgDirectedGraph(
+            new[]
+            {
+                new SvgGraphNode("a", "Node A"),
+                new SvgGraphNode("b", "Node B"),
+                new SvgGraphNode("isolated", "Isolated node")
+            },
+            new[]
+            {
+                new SvgGraphEdge("self", "a", "a", "loops"),
+                new SvgGraphEdge("parallel-a", "a", "b", "first"),
+                new SvgGraphEdge("parallel-b", "a", "b", "second")
+            });
+        var root = XDocument.Parse(_renderer.Render(graph)).Root!;
+
+        Assert.Equal(3, root.Descendants(Svg + "path").Count(x => x.Attribute("marker-end") is not null));
+        Assert.Contains(root.Descendants(Svg + "text"), x => x.Value == "Isolated node");
+        Assert.Contains(root.Descendants(Svg + "text"), x => x.Value == "first");
+        Assert.Contains(root.Descendants(Svg + "text"), x => x.Value == "second");
+    }
+
+    [Fact]
+    public void Preserves_long_labels_and_bounds_large_graphs()
+    {
+        const string longLabel = "A deliberately long repository label that remains caller-owned and is not silently truncated";
+        var graph = new SvgDirectedGraph(
+            new[] { new SvgGraphNode("long-label", longLabel) },
+            Array.Empty<SvgGraphEdge>());
+        var root = XDocument.Parse(_renderer.Render(graph)).Root!;
+
+        Assert.Contains(root.Descendants(Svg + "text"), x => x.Value == longLabel);
+        var nodes = Enumerable.Range(0, 250).Select(i => new SvgGraphNode($"node-{i}", $"Node {i}")).ToArray();
+        Assert.NotEmpty(XDocument.Parse(_renderer.Render(new SvgDirectedGraph(nodes, Array.Empty<SvgGraphEdge>()))).Root!.Elements());
+    }
+
     private static SvgDirectedGraph CreateGraph() => new(
         new[]
         {
