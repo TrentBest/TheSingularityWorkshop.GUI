@@ -46,7 +46,7 @@ Describe interface intent in the Core model, then pass it to an adapter. The rep
 
 Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generated SVG gallery](docs/assets/svg-adapter-gallery.svg), and follow the [semantic-tree-to-SVG use case](docs/USE_CASES/01-SEMANTIC-TREE-TO-SVG.md). The [committed type inventory and source-derived UML](docs/uml/source-files/index.md) is a deeper technical reference; build and test the adapter you intend to use.
 
-## SVG demonstration samples
+## SVG demonstration samples\n\nThe generic [directed graph SVG renderer](docs/SVG_DIRECTED_GRAPHS.md) adds deterministic repository-style graph presentation with explicit nested/overlapping clusters; see the [gallery example](samples/demonstrations/directed-graph.md).
 
 Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md), where each entry embeds its SVG preview, explains what it proves, identifies the packages actually consumed, and links to a deeper implementation walkthrough. The [scrollable card view](samples/demonstrations/index.html) is a convenience; the [demonstration index and evidence plan](samples/demonstrations/README.md) tracks the progressive proof ladder.
 
