@@ -58,9 +58,7 @@ The current implementation is an initial graph layout capability. It does not pr
 
 Write the generated SVG and a companion Markdown file from the same validated graph snapshot. Use a relative path so the pair can be consumed from a repository checkout, a downloaded artifact, or a Pages artifact:
 
-```markdown
-![Repository dependency graph](./REPOSITORY_BUILD_GRAPH.svg)
-```
+In the companion Markdown file, use a relative image destination such as `REPOSITORY_BUILD_GRAPH.svg` so the pair remains portable.
 
 For CI/Pages, generate into the build output and validate the artifact pair. Do not push generated output back to a branch as a side effect. A provenance caption should identify the source revision and projection type when the consumer has that evidence.
 
