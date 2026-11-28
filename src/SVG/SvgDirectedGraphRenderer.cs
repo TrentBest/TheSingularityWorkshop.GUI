@@ -95,6 +95,8 @@ public sealed class SvgDirectedGraphRenderer
             .OrderBy(c => c.Id, StringComparer.Ordinal).ToArray();
         var nodeBounds = Layout(nodes, graph.FocalNodeId, options);
         var clusterBounds = BuildClusterBounds(clusters, nodeBounds, options);
+        var legendByCategory = (graph.Legend ?? Array.Empty<SvgGraphLegendEntry>())
+            .ToDictionary(item => item.Category, StringComparer.Ordinal);
 
         var allBounds = nodeBounds.Values.Aggregate((a, b) => Bounds.Union(a, b));
         foreach (var bounds in clusterBounds.Values)
@@ -212,11 +214,10 @@ public sealed class SvgDirectedGraphRenderer
         {
             var b = TranslateBounds(nodeBounds[node.Id]);
             var group = new XElement(Svg + "g", new XAttribute("data-node-id", node.Id),
-                new XElement(Svg + "rect", new XAttribute("x", F(b.X)), new XAttribute("y", F(b.Y)),
-                    new XAttribute("width", F(b.Width)), new XAttribute("height", F(b.Height)),
-                    new XAttribute("rx", "8"), new XAttribute("fill", DefaultNodeFill),
-                    new XAttribute("stroke", node.Id == graph.FocalNodeId ? "#9a5b16" : DefaultNodeStroke),
-                    new XAttribute("stroke-width", node.Id == graph.FocalNodeId ? "3" : "1.6")),
+                CreateCategoryShape(b, node.Category is not null && legendByCategory.TryGetValue(node.Category, out var categoryLegend)
+                    ? categoryLegend.Shape : null, DefaultNodeFill,
+                    node.Id == graph.FocalNodeId ? "#9a5b16" : DefaultNodeStroke,
+                    node.Id == graph.FocalNodeId ? "3" : "1.6"),
                 new XElement(Svg + "text", new XAttribute("x", F(b.X + b.Width / 2)),
                     new XAttribute("y", F(b.Y + 27)), new XAttribute("text-anchor", "middle"),
                     new XAttribute("font-size", "14"), new XAttribute("font-weight", "600"),
@@ -237,9 +238,8 @@ public sealed class SvgDirectedGraphRenderer
             var x = 12.0;
             foreach (var item in graph.Legend.OrderBy(i => i.Category, StringComparer.Ordinal))
             {
-                svg.Add(new XElement(Svg + "rect", new XAttribute("x", F(x)), new XAttribute("y", F(y - 10)),
-                    new XAttribute("width", "12"), new XAttribute("height", "12"),
-                    new XAttribute("fill", "#f7fafc"), new XAttribute("stroke", "#315b72")));
+                svg.Add(CreateCategoryShape(new Bounds(x, y - 10, 12, 12), item.Shape,
+                    "#f7fafc", "#315b72", "1"));
                 svg.Add(new XElement(Svg + "text", new XAttribute("x", F(x + 18)),
                     new XAttribute("y", F(y)), new XAttribute("font-size", "11"), item.Label));
                 x += 32 + item.Label.Length * 7;
@@ -253,6 +253,33 @@ public sealed class SvgDirectedGraphRenderer
 
         return new XDocument(new XDeclaration("1.0", "utf-8", null), svg)
             .ToString(SaveOptions.DisableFormatting);
+    }
+
+    private static XElement CreateCategoryShape(Bounds b, string? shape, string fill, string stroke, string strokeWidth)
+    {
+        var normalized = string.IsNullOrWhiteSpace(shape) ? "rounded-rectangle" : shape.Trim().ToLowerInvariant();
+        XElement element = normalized switch
+        {
+            "rounded-rectangle" => new XElement(Svg + "rect",
+                new XAttribute("x", F(b.X)), new XAttribute("y", F(b.Y)),
+                new XAttribute("width", F(b.Width)), new XAttribute("height", F(b.Height)),
+                new XAttribute("rx", "8")),
+            "square" => new XElement(Svg + "rect",
+                new XAttribute("x", F(b.X)), new XAttribute("y", F(b.Y)),
+                new XAttribute("width", F(b.Width)), new XAttribute("height", F(b.Height))),
+            "circle" => new XElement(Svg + "ellipse",
+                new XAttribute("cx", F(b.X + b.Width / 2)), new XAttribute("cy", F(b.Y + b.Height / 2)),
+                new XAttribute("rx", F(b.Width / 2)), new XAttribute("ry", F(b.Height / 2))),
+            "diamond" => new XElement(Svg + "polygon",
+                new XAttribute("points", $"{F(b.X + b.Width / 2)},{F(b.Y)} {F(b.Right)},{F(b.Y + b.Height / 2)} {F(b.X + b.Width / 2)},{F(b.Bottom)} {F(b.X)},{F(b.Y + b.Height / 2)}")),
+            "hexagon" => new XElement(Svg + "polygon",
+                new XAttribute("points", $"{F(b.X + b.Width * .22)},{F(b.Y)} {F(b.X + b.Width * .78)},{F(b.Y)} {F(b.Right)},{F(b.Y + b.Height / 2)} {F(b.X + b.Width * .78)},{F(b.Bottom)} {F(b.X + b.Width * .22)},{F(b.Bottom)} {F(b.X)},{F(b.Y + b.Height / 2)}")),
+            _ => throw new ArgumentException($"Unsupported graph category shape '{shape}'.", nameof(shape))
+        };
+        element.SetAttributeValue("fill", fill);
+        element.SetAttributeValue("stroke", stroke);
+        element.SetAttributeValue("stroke-width", strokeWidth);
+        return element;
     }
 
     private static Dictionary<string, Bounds> Layout(SvgGraphNode[] nodes, string? focalId, SvgDirectedGraphRenderOptions o)
@@ -371,7 +398,14 @@ public sealed class SvgDirectedGraphRenderer
                 (cluster.MemberClusterIds ?? Array.Empty<string>()).Any(id => !clusterIds.Contains(id) || id == cluster.Id))
                 throw new ArgumentException($"Cluster '{cluster.Id}' references an unknown member.");
         }
-        if (graph.Legend is not null) UniqueIds(graph.Legend.Select(l => l.Category), "Legend category");
+        if (graph.Legend is not null)
+        {
+            UniqueIds(graph.Legend.Select(l => l.Category), "Legend category");
+            var supportedShapes = new HashSet<string>(new[] { "rounded-rectangle", "square", "circle", "diamond", "hexagon" }, StringComparer.OrdinalIgnoreCase);
+            foreach (var item in graph.Legend)
+                if (item.Shape is not null && !supportedShapes.Contains(item.Shape.Trim()))
+                    throw new ArgumentException($"Legend category '{item.Category}' uses an unsupported shape.");
+        }
         _ = Required(graph.Title ?? "Directed graph", "Graph title");
     }
 
