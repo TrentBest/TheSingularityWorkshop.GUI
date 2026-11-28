@@ -10,6 +10,7 @@ GUI.SVG can render a renderer-neutral directed graph without taking ownership of
 - The optional focal node is emphasized and placed at the center of the deterministic layout. Other nodes are placed in stable identifier order. The renderer does not interpret edge meaning to decide placement.
 - Optional links must be absolute HTTPS URLs without embedded credentials.
 - SVG is emitted as a standalone document with `title`, `desc`, `role="img"`, stable `aria-labelledby`, a responsive `viewBox`, directed arrow markers, node/edge labels, and a visible caller-supplied legend.
+- Legend categories may declare one supported node shape: `rounded-rectangle` (default), `square`, `circle`, `diamond`, or `hexagon`. Nodes with the matching category use that shape, and the legend swatch repeats it. Unsupported shape names are rejected rather than silently rendered as a different shape.
 - XML text and attributes are serialized through `XElement`; no scripts, external resources, or runtime interaction are added.
 
 The renderer is deliberately not a generic diagram language. It does not decide whether an edge means dependency, execution order, authorization, or readiness. It does not claim that a partial graph is complete.
