@@ -126,8 +126,8 @@ public sealed class SvgDirectedGraphRenderer
                         new XAttribute("fill", "#315b72")))));
 
         // Translate every primitive into a positive, padded viewBox.
-        Point T(Point p) => new(p.X - canvas.X, p.Y - canvas.Y);
-        Bounds T(Bounds b) => new(b.X - canvas.X, b.Y - canvas.Y, b.Width, b.Height);
+        Point TranslatePoint(Point p) => new(p.X - canvas.X, p.Y - canvas.Y);
+        Bounds TranslateBounds(Bounds b) => new(b.X - canvas.X, b.Y - canvas.Y, b.Width, b.Height);
 
         svg.Add(new XElement(Svg + "rect", new XAttribute("width", F(width)),
             new XAttribute("height", F(height)), new XAttribute("fill", "#ffffff")));
@@ -136,7 +136,7 @@ public sealed class SvgDirectedGraphRenderer
         foreach (var cluster in clusters.OrderBy(c => ClusterDepth(c, clusters), Comparer<int>.Default)
                      .ThenBy(c => c.Id, StringComparer.Ordinal))
         {
-            var b = T(clusterBounds[cluster.Id]);
+            var b = TranslateBounds(clusterBounds[cluster.Id]);
             var titleWidth = Math.Min(b.Width - 28, Math.Max(42, cluster.Title.Length * 8 + 20));
             var gapStart = b.X + (b.Width - titleWidth) / 2;
             var gapEnd = gapStart + titleWidth;
@@ -159,8 +159,8 @@ public sealed class SvgDirectedGraphRenderer
             for (var i = 0; i < parallel.Length; i++)
             {
                 var edge = parallel[i];
-                var source = T(nodeBounds[edge.SourceNodeId]);
-                var target = T(nodeBounds[edge.TargetNodeId]);
+                var source = TranslateBounds(nodeBounds[edge.SourceNodeId]);
+                var target = TranslateBounds(nodeBounds[edge.TargetNodeId]);
                 var offset = (i - (parallel.Length - 1) / 2.0) * 12;
                 var start = new Point(source.X + source.Width / 2 + offset, source.Y + source.Height / 2);
                 var end = new Point(target.X + target.Width / 2 + offset, target.Y + target.Height / 2);
@@ -193,8 +193,8 @@ public sealed class SvgDirectedGraphRenderer
 
                 if (!string.IsNullOrWhiteSpace(edge.Label))
                     svg.Add(new XElement(Svg + "text",
-                        new XAttribute("x", F((T(nodeBounds[edge.SourceNodeId]).X + T(nodeBounds[edge.TargetNodeId]).X) / 2 + options.NodeWidth / 2)),
-                        new XAttribute("y", F((T(nodeBounds[edge.SourceNodeId]).Y + T(nodeBounds[edge.TargetNodeId]).Y) / 2 - 7 + offset)),
+                        new XAttribute("x", F((TranslateBounds(nodeBounds[edge.SourceNodeId]).X + TranslateBounds(nodeBounds[edge.TargetNodeId]).X) / 2 + options.NodeWidth / 2)),
+                        new XAttribute("y", F((TranslateBounds(nodeBounds[edge.SourceNodeId]).Y + TranslateBounds(nodeBounds[edge.TargetNodeId]).Y) / 2 - 7 + offset)),
                         new XAttribute("text-anchor", "middle"), new XAttribute("font-size", "11"),
                         new XAttribute("fill", "#344955"), edge.Label));
             }
@@ -202,7 +202,7 @@ public sealed class SvgDirectedGraphRenderer
 
         foreach (var node in nodes)
         {
-            var b = T(nodeBounds[node.Id]);
+            var b = TranslateBounds(nodeBounds[node.Id]);
             var group = new XElement(Svg + "g", new XAttribute("data-node-id", node.Id),
                 new XElement(Svg + "rect", new XAttribute("x", F(b.X)), new XAttribute("y", F(b.Y)),
                     new XAttribute("width", F(b.Width)), new XAttribute("height", F(b.Height)),
