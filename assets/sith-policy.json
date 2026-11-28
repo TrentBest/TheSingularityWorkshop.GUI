@@ -7,11 +7,12 @@
   ],
   "actual_branches": [
     "development",
+    "feature/gui-90-deterministic-svg-graph",
     "master"
   ],
-  "branch_count": 2,
-  "status": "COMPLIANT",
-  "evaluated_at": "2026-11-27T13:57:20Z",
-  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/46011542937",
-  "triggering_commit": "dec1fef2be8bc7477a6b7fa6f8bc63bac22572cc"
+  "branch_count": 3,
+  "status": "NON-COMPLIANT",
+  "evaluated_at": "2026-11-28T13:09:44Z",
+  "workflow_run": "https://github.com/TrentBest/TheSingularityWorkshop.GUI/actions/runs/46148197497",
+  "triggering_commit": "b83be80ed916588a79e6511a596e95b51e1e38f3"
 }
