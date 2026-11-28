@@ -79,8 +79,8 @@ public sealed class SvgDirectedGraphRendererTests
             Array.Empty<SvgGraphEdge>(),
             new[]
             {
-                new SvgGraphCluster("cluster-a", "A", Array.Empty<string>(), new[] { "cluster-b" }),
-                new SvgGraphCluster("cluster-b", "B", Array.Empty<string>(), new[] { "cluster-a" })
+                new SvgGraphCluster("cluster-a", "A", new[] { "node" }, new[] { "cluster-b" }),
+                new SvgGraphCluster("cluster-b", "B", new[] { "node" }, new[] { "cluster-a" })
             });
         Assert.Throws<ArgumentException>(() => _renderer.Render(cyclic));
     }
