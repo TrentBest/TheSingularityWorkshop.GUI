@@ -42,6 +42,42 @@ public sealed class SvgDirectedGraphRendererTests
     }
 
     [Fact]
+    public void Applies_legend_category_shapes_to_nodes_and_legend_swatches()
+    {
+        var graph = new SvgDirectedGraph(
+            new[]
+            {
+                new SvgGraphNode("diamond-node", "Diamond", Category: "decision"),
+                new SvgGraphNode("circle-node", "Circle", Category: "event")
+            },
+            Array.Empty<SvgGraphEdge>(),
+            Legend: new[]
+            {
+                new SvgGraphLegendEntry("decision", "Decision", "diamond"),
+                new SvgGraphLegendEntry("event", "Event", "circle")
+            });
+        var root = XDocument.Parse(_renderer.Render(graph)).Root!;
+
+        Assert.Contains(root.Descendants(Svg + "polygon"), x =>
+            (string?)x.Parent?.Attribute("data-node-id") == "diamond-node");
+        Assert.Contains(root.Descendants(Svg + "ellipse"), x =>
+            (string?)x.Parent?.Attribute("data-node-id") == "circle-node");
+        Assert.Equal(2, root.Descendants(Svg + "polygon").Count());
+        Assert.Equal(2, root.Descendants(Svg + "ellipse").Count());
+    }
+
+    [Fact]
+    public void Rejects_unsupported_legend_category_shapes()
+    {
+        var graph = new SvgDirectedGraph(
+            new[] { new SvgGraphNode("node", "Node", Category: "unknown") },
+            Array.Empty<SvgGraphEdge>(),
+            Legend: new[] { new SvgGraphLegendEntry("unknown", "Unknown", "starburst") });
+
+        Assert.Throws<ArgumentException>(() => _renderer.Render(graph));
+    }
+
+    [Fact]
     public void Escapes_text_and_emits_only_validated_https_links()
     {
         var graph = new SvgDirectedGraph(
