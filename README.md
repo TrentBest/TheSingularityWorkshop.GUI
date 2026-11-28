@@ -48,6 +48,8 @@ Start with the [Explore the GUI guide](docs/START_HERE.md), inspect the [generat
 
 ## SVG demonstration samples
 
+The generic [directed graph SVG renderer](docs/SVG_DIRECTED_GRAPHS.md) adds deterministic repository-style graph presentation with explicit nested/overlapping clusters; see the [gallery example](samples/demonstrations/directed-graph.md).
+
 Browse the [Markdown-first SVG recipe gallery](samples/demonstrations/GALLERY.md), where each entry embeds its SVG preview, explains what it proves, identifies the packages actually consumed, and links to a deeper implementation walkthrough. The [scrollable card view](samples/demonstrations/index.html) is a convenience; the [demonstration index and evidence plan](samples/demonstrations/README.md) tracks the progressive proof ladder.
 
 ## 🟪 05 Documentation and theory
