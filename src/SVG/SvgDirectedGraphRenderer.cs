@@ -99,6 +99,15 @@ public sealed class SvgDirectedGraphRenderer
         var allBounds = nodeBounds.Values.Aggregate((a, b) => Bounds.Union(a, b));
         foreach (var bounds in clusterBounds.Values)
             allBounds = Bounds.Union(allBounds, bounds);
+        if (graph.FocalNodeId is not null)
+        {
+            var focal = nodeBounds[graph.FocalNodeId];
+            var centerX = focal.X + focal.Width / 2;
+            var centerY = focal.Y + focal.Height / 2;
+            var halfWidth = Math.Max(centerX - allBounds.X, allBounds.Right - centerX);
+            var halfHeight = Math.Max(centerY - allBounds.Y, allBounds.Bottom - centerY);
+            allBounds = new Bounds(centerX - halfWidth, centerY - halfHeight, halfWidth * 2, halfHeight * 2);
+        }
         var canvas = allBounds.Expand(options.Margin);
         var width = Math.Max(1, canvas.Width);
         var height = Math.Max(1, canvas.Height);
